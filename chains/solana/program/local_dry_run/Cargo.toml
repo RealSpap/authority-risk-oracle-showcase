@@ -1,0 +1,13 @@
+[package]
+name = "local_dry_run"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "local_dry_run"
+path = "src/main.rs"
+
+[dependencies]
+solana-client = "1.18.26"
+solana-sdk = "1.18.26"
+sha2 = "0.10"

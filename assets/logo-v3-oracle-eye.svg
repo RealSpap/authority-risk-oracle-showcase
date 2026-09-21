@@ -1,0 +1,21 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<style>
+  .bg { fill: #F3F5F9; }
+  .eye { fill: #0C8C7D; }
+  .cut { fill: #F3F5F9; }
+  @media (prefers-color-scheme: dark) {
+    .bg { fill: #0B0E15; }
+    .eye { fill: #5EEAD4; }
+    .cut { fill: #0B0E15; }
+  }
+</style>
+</defs>
+
+<rect class="bg" x="0" y="0" width="400" height="400" rx="56"/>
+
+<path class="eye" d="M 70 210 Q 200 90 330 210 Q 200 330 70 210 Z"/>
+
+<circle class="cut" cx="200" cy="197" r="15"/>
+<path class="cut" d="M 187 208 L 213 208 L 204 244 L 196 244 Z"/>
+</svg>

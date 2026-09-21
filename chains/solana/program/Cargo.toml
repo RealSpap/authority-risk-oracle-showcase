@@ -1,0 +1,16 @@
+[workspace]
+members = ["programs/*"]
+# local_dry_run is a separate, native-only client crate (solana-client/
+# solana-sdk against a localhost solana-test-validator) used to prove the
+# program's instructions actually round-trip -- NOT part of the SBF program
+# build itself (cargo build-sbf only ever targets `programs/*`), kept out of
+# this workspace's dependency resolution so the two don't fight over
+# solana-program version pins. See local_dry_run/README or
+# ../program/README.md's "Local dry run actually performed this phase".
+exclude = ["local_dry_run"]
+resolver = "2"
+
+[profile.release]
+overflow-checks = true
+lto = "fat"
+codegen-units = 1

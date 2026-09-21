@@ -1,0 +1,54 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  python-unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - run: pip install -r scripts/requirements.txt
+
+      - name: Run scripts/lib/tests (pure logic, no live RPC)
+        run: python3 -m unittest discover -s scripts/lib/tests -v
+
+      - name: Run scripts/tests (update_scores.py's failure-alerting wrapper)
+        run: python3 -m unittest discover -s scripts/tests -v
+
+      # Wired in 2026-09-22: these chains/*/tests directories existed and were only ever run
+      # manually per their own docstrings (see review of commit 585d949, reservation "ALL 15 NEW
+      # TESTS ARE OUTSIDE CI") -- the genuinely valuable retry/divergence/wiring tests this pass
+      # added under chains/ethereum-l1 and chains/tempo would have had nothing to notice a
+      # regression. chains/base-ecosystem's pre-existing tests were in the same, silently-unrun
+      # state; wired in for the same reason while touching this file.
+      - name: Run chains/base-ecosystem/tests (pure logic, no live RPC)
+        run: python3 -m unittest discover -s chains/base-ecosystem/tests -v
+
+      - name: Run chains/ethereum-l1/tests (pure logic, no live RPC)
+        run: python3 -m unittest discover -s chains/ethereum-l1/tests -v
+
+      - name: Run chains/tempo/tests (pure logic, no live RPC)
+        run: python3 -m unittest discover -s chains/tempo/tests -v
+
+      - name: Run chains/hyperliquid/tests (pure logic, no live RPC)
+        run: python3 -m unittest discover -s chains/hyperliquid/tests -v
+
+  solidity-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: foundry-rs/foundry-toolchain@v1
+
+      - name: Install forge-std and OpenZeppelin
+        run: forge install foundry-rs/forge-std OpenZeppelin/openzeppelin-contracts --no-git
+
+      - name: Run forge test
+        run: forge test -vv

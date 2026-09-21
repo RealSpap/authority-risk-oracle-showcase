@@ -1,0 +1,33 @@
+[toolchain]
+# anchor_version left unpinned deliberately -- no `anchor` CLI (avm) is
+# installed in this project's build environment yet (see
+# chains/solana/program/README.md). This program is built directly with
+# `cargo build-sbf` (bundled with the Solana CLI), which does not read this
+# file at all; `Anchor.toml` is kept for the day a real `anchor` CLI is
+# available (`anchor build`/`anchor test` would read this), not load-bearing
+# for the current build path.
+
+[features]
+seeds = false
+skip-lint = false
+
+[programs.localnet]
+solana_authority_oracle = "5VhiTAGLEViGgajhxPbzdWz7WLUAiRy42DY6qi6tYh4W"
+
+[programs.devnet]
+# Deployed to Solana Devnet on 2026-09-20 -- record, transactions and
+# read-back in ../deploy/README.md ("2026-09-20 -- real deploy on Devnet").
+solana_authority_oracle = "5VhiTAGLEViGgajhxPbzdWz7WLUAiRy42DY6qi6tYh4W"
+
+[registry]
+url = "https://api.apr.dev"
+
+[provider]
+cluster = "localnet"
+# NEVER "mainnet" for this pipeline -- see ../../../auto_push_gate.json's
+# shared rule and this ecosystem's own network config in ../../../ecosystems.json
+# ("mainnet_read_only" / "testnet_deploy": Solana Devnet only).
+wallet = "~/.config/solana/id.json"
+
+[scripts]
+test = "echo 'no anchor-CLI TS test harness in this sketch -- see chains/solana/program/README.md for the cargo build-sbf / solana-test-validator dry-run actually used'"

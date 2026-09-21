@@ -1,0 +1,53 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<style>
+  .bg { fill: #F3F5F9; }
+  .arcfaint { fill: none; stroke: #0C8C7D; stroke-width: 14; stroke-linecap: round; opacity: 0.18; }
+  .arc {
+    fill: none; stroke: #0C8C7D; stroke-width: 14; stroke-linecap: round;
+    stroke-dasharray: 388; stroke-dashoffset: 388;
+    animation: draw 1.3s cubic-bezier(.34,1.1,.4,1) 0.15s forwards;
+  }
+  .tick {
+    stroke: #0C8C7D; stroke-width: 4; stroke-linecap: round;
+    opacity: 0; animation: fadeIn 0.4s ease-out 1.15s forwards;
+  }
+  .needlegrp {
+    transform-origin: 200px 210px; transform: rotate(-135deg);
+    animation: sweep 1.5s cubic-bezier(.22,1.6,.36,1) 0.15s forwards;
+  }
+  .needle { fill: #121826; }
+  .pivot { fill: #121826; }
+  .pivotring { fill: #F3F5F9; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @keyframes fadeIn { to { opacity: 1; } }
+  @keyframes sweep { to { transform: rotate(50deg); } }
+  @media (prefers-color-scheme: dark) {
+    .bg { fill: #0B0E15; }
+    .arc, .arcfaint, .tick { stroke: #5EEAD4; }
+    .needle, .pivot { fill: #E8ECF4; }
+    .pivotring { fill: #0B0E15; }
+  }
+</style>
+</defs>
+
+<rect class="bg" x="0" y="0" width="400" height="400" rx="56"/>
+
+<path class="arcfaint" d="M 115.1 294.9 A 120 120 0 1 1 284.9 294.9"/>
+<path class="arc" d="M 115.1 294.9 A 120 120 0 1 1 291.9 132.9"/>
+
+<line class="tick" x1="129.3" y1="280.7" x2="115.1" y2="294.9"/>
+<line class="tick" x1="200" y1="110" x2="200" y2="90"/>
+<line class="tick" x1="270.7" y1="280.7" x2="284.9" y2="294.9"/>
+
+<g class="needlegrp">
+  <rect class="needle" x="196" y="118" width="8" height="88" rx="4"/>
+  <circle class="needle" cx="200" cy="108" r="20"/>
+  <circle class="pivotring" cx="200" cy="108" r="9"/>
+  <rect class="needle" x="204" y="178" width="16" height="8" rx="2"/>
+  <rect class="needle" x="204" y="194" width="12" height="8" rx="2"/>
+</g>
+
+<circle class="pivot" cx="200" cy="210" r="16"/>
+<circle class="pivotring" cx="200" cy="210" r="6"/>
+</svg>

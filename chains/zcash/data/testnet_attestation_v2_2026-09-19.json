@@ -1,0 +1,229 @@
+{
+  "anchor": {
+    "blockHeight": 4368539,
+    "blockTimeUnix": 1789852632,
+    "blockTimeUtc": "2026-09-19T21:17:12Z",
+    "changeZat": 9965000,
+    "expiryHeight": 4368638,
+    "explorer": "https://testnet.cipherscan.app/tx/18791a4cdaa00b5d0aefc1dcce5576c6e43ea9e203db03b0d973772dfe32cc37",
+    "feeZat": 15000,
+    "network": "Zcash Testnet",
+    "rawTxBytes": 255,
+    "rawTxHex": "0600008098b684d85b16a53700000000fea8420001e575d5d4f795ade5dd7a0ae307d3a59372656dab6c4bfa792a1d389f090a78f0010000006b483045022100d2c37b91ff02975aef8ebec4805a9cac62ab25bc91c2f4b766393c2460b23f80022041bd33061d90ceeb62dde8674ac78f8fa5a7e55ea99a6b39363f983a9fe6256c01210388e6af60fe4d0fe63248e3953165f6f13dd57f733ed7283d68f12f2acfb3b41fffffffff020000000000000000266a2441524f3274f6ba041e253bb75e523e1b0d00422e44221c7a0240757cd1a40ad15d513662c80d9800000000001976a9142e1ee4d4133c8d426b3fa1f5ed8ee1755a2e491388ac00000000",
+    "spentUtxo": "f0780a099f381d2a79fa4b6cab6d657293a5d307e30a7adde5ad95f7d4d575e5:1",
+    "txVersion": 6,
+    "txid": "18791a4cdaa00b5d0aefc1dcce5576c6e43ea9e203db03b0d973772dfe32cc37"
+  },
+  "attestationSignatureDer": "30440220553d06409f49e3df922ba5e2bee4e39e706cbd6fd01cb25b1dc3a8f203aad6c302206e511340897f78a2c56daa82ac312af5cfc7373b68fe249bdc0058bba4f8ec6a",
+  "commitmentBlake2b256": "74f6ba041e253bb75e523e1b0d00422e44221c7a0240757cd1a40ad15d513662",
+  "ecosystem": "zcash",
+  "format": "aro-zcash-attestation-v2",
+  "header": {
+    "ecosystem": "zcash",
+    "format": "aro-zcash-batch-v1",
+    "merkleRoot": "a323d59c09351e9cda29f27cab34ad2078568995b7e911bc40f1c0e3012c3c93",
+    "methodologyHashSha256": "8a3a1042690bfda50555667496ab9510bc86fd2d250cdb6a56334600996f4bb5",
+    "targetCount": 7
+  },
+  "magic": "ARO2",
+  "methodologyFile": "chains/zcash/METHODOLOGY.md",
+  "methodologyPinnedAt": {
+    "gitCommit": "783326342d5bbc05c07cd43f649e8878a78353d6",
+    "note": "header.methodologyHashSha256 is the SHA-256 of METHODOLOGY.md as committed there (`git show <commit>:chains/zcash/METHODOLOGY.md | sha256sum`); the file was edited afterwards to document this very publication, so the CURRENT file hashes differently."
+  },
+  "network": "Zcash Testnet (never Mainnet)",
+  "opReturnDataHex": "41524f3274f6ba041e253bb75e523e1b0d00422e44221c7a0240757cd1a40ad15d513662",
+  "project": "authority-risk-oracle",
+  "publishedAtNote": "Informational only, NOT part of the commitment or the signature. The trust-bearing timestamp is the block time in `anchor`.",
+  "publishedAtUtc": "2026-09-19T21:16:27Z",
+  "publisherAddress_ZcashTestnet": "tmDvDRYD7meGJXFoeTqtjFcrNF5378ZzaBo",
+  "publisherKeyNote": "Zcash TESTNET-only throwaway key, zero value. Its private half was committed in clear in 40ca1a4 and stays readable in the private repo's history: a signature by it proves 'someone with access to that history', not a specific publisher (risk accepted by the maintainer, see chains/zcash/METHODOLOGY.md 9.6).",
+  "publisherPubkeyCompressed": "0388e6af60fe4d0fe63248e3953165f6f13dd57f733ed7283d68f12f2acfb3b41f",
+  "records": [
+    {
+      "adminKeyScore": 20,
+      "compositeScore": 34,
+      "crossExposureScore": 100,
+      "inclusionProof": [
+        [
+          "14f29ce9df4577bd355dc45998685e230f95a9164a941655ddfc30fd37244e03",
+          "R"
+        ],
+        [
+          "553bd5acb49ed2e2f3a86746884e020a8784f8cb8a6030bb274d91a3d4d3d086",
+          "R"
+        ],
+        [
+          "b85a2594ba4f954622fd83df5b7c2d5a9ed2cc1fc9160c18d25243f57a0e03fa",
+          "R"
+        ]
+      ],
+      "l1CappedComposite": null,
+      "label": "Zcash L1 (consensus-rule-change authority)",
+      "leafHash": "5cf1bf5bb173f7fc11c7c03d1103ebf121981eff6630956472b27db2d864c12c",
+      "multisigScore": 50,
+      "oracleAuthorityScore": 100,
+      "target": "0xB8e62E6AeB4C400b6F3e66cAb69ACe55439035c3",
+      "timelockScore": 35
+    },
+    {
+      "adminKeyScore": 65,
+      "compositeScore": 44,
+      "crossExposureScore": 100,
+      "inclusionProof": [
+        [
+          "5cf1bf5bb173f7fc11c7c03d1103ebf121981eff6630956472b27db2d864c12c",
+          "L"
+        ],
+        [
+          "553bd5acb49ed2e2f3a86746884e020a8784f8cb8a6030bb274d91a3d4d3d086",
+          "R"
+        ],
+        [
+          "b85a2594ba4f954622fd83df5b7c2d5a9ed2cc1fc9160c18d25243f57a0e03fa",
+          "R"
+        ]
+      ],
+      "l1CappedComposite": null,
+      "label": "Zenrock zenZEC dMPC custody keyring (\"Zenrock MPC\")",
+      "leafHash": "14f29ce9df4577bd355dc45998685e230f95a9164a941655ddfc30fd37244e03",
+      "multisigScore": 60,
+      "oracleAuthorityScore": 100,
+      "target": "keyring1k6vc6vhp6e6l3rxalue9v4ux",
+      "timelockScore": 0
+    },
+    {
+      "adminKeyScore": 65,
+      "compositeScore": 56,
+      "crossExposureScore": 100,
+      "inclusionProof": [
+        [
+          "d634d9813d91b3508f91ea4f72c6643f920fd64c75e3e2cdc0553f9b63bf754f",
+          "R"
+        ],
+        [
+          "5ab71d131d63c51300a1e49e3cfc38f7063941f4ab127e9deeaf0e14e98929d6",
+          "L"
+        ],
+        [
+          "b85a2594ba4f954622fd83df5b7c2d5a9ed2cc1fc9160c18d25243f57a0e03fa",
+          "R"
+        ]
+      ],
+      "l1CappedComposite": null,
+      "label": "Maya Protocol Asgard vault mayapub1addwnpepqdgafgd6... (native ZEC custody, TSS)",
+      "leafHash": "68b579707fd3e0da32e6f7371fa2d010d67fcd4317af9b05219c5303289897e4",
+      "multisigScore": 100,
+      "oracleAuthorityScore": 100,
+      "target": "t1RBiXrLRdrHgsuSGQEusG2wCzPFczEVMfT",
+      "timelockScore": 0
+    },
+    {
+      "adminKeyScore": 65,
+      "compositeScore": 56,
+      "crossExposureScore": 100,
+      "inclusionProof": [
+        [
+          "68b579707fd3e0da32e6f7371fa2d010d67fcd4317af9b05219c5303289897e4",
+          "L"
+        ],
+        [
+          "5ab71d131d63c51300a1e49e3cfc38f7063941f4ab127e9deeaf0e14e98929d6",
+          "L"
+        ],
+        [
+          "b85a2594ba4f954622fd83df5b7c2d5a9ed2cc1fc9160c18d25243f57a0e03fa",
+          "R"
+        ]
+      ],
+      "l1CappedComposite": null,
+      "label": "Maya Protocol Asgard vault mayapub1addwnpepq24t2hk5... (native ZEC custody, TSS)",
+      "leafHash": "d634d9813d91b3508f91ea4f72c6643f920fd64c75e3e2cdc0553f9b63bf754f",
+      "multisigScore": 100,
+      "oracleAuthorityScore": 100,
+      "target": "t1VtnnhTYhmADh7L2uKU3Sev7GscBHT6HfE",
+      "timelockScore": 0
+    },
+    {
+      "adminKeyScore": 50,
+      "compositeScore": 32,
+      "crossExposureScore": 100,
+      "inclusionProof": [
+        [
+          "947c434b53c737ffeb262f7735580991e8f81ea4703e29ce3ec6102ebd72bee0",
+          "R"
+        ],
+        [
+          "318f930e70227d7ae441d0e95e4ab8da4646ad34f416baf5fcbc7750f5781eff",
+          "R"
+        ],
+        [
+          "a303d86d77ec7543098c13abad67501eaf033427d9385fef6e8bf2ac2dfc76b1",
+          "L"
+        ]
+      ],
+      "l1CappedComposite": 32,
+      "label": "ZCG funding stream (FS_FPF_ZCG_H3)",
+      "leafHash": "517cd168ee027743cdfe08e52f95cb9347dd73b047eb215f2034de80101b6de2",
+      "multisigScore": 39,
+      "oracleAuthorityScore": 100,
+      "target": "t3cFfPt1Bcvgez9ZbMBFWeZsskxTkPzGCow",
+      "timelockScore": 0
+    },
+    {
+      "adminKeyScore": 50,
+      "compositeScore": 32,
+      "crossExposureScore": 100,
+      "inclusionProof": [
+        [
+          "517cd168ee027743cdfe08e52f95cb9347dd73b047eb215f2034de80101b6de2",
+          "L"
+        ],
+        [
+          "318f930e70227d7ae441d0e95e4ab8da4646ad34f416baf5fcbc7750f5781eff",
+          "R"
+        ],
+        [
+          "a303d86d77ec7543098c13abad67501eaf033427d9385fef6e8bf2ac2dfc76b1",
+          "L"
+        ]
+      ],
+      "l1CappedComposite": 32,
+      "label": "ZIP 271 one-time lockbox disbursement",
+      "leafHash": "947c434b53c737ffeb262f7735580991e8f81ea4703e29ce3ec6102ebd72bee0",
+      "multisigScore": 39,
+      "oracleAuthorityScore": 100,
+      "target": "t3ev37Q2uL1sfTsiJQJiWJoFzQpDhmnUwYo",
+      "timelockScore": 0
+    },
+    {
+      "adminKeyScore": 5,
+      "compositeScore": 7,
+      "crossExposureScore": 100,
+      "inclusionProof": [
+        [
+          "df80b8ab7d8f05535092c5645bb997ac4339e48e6ebd77ea1b83bfd98624fe1a",
+          "L"
+        ],
+        [
+          "a303d86d77ec7543098c13abad67501eaf033427d9385fef6e8bf2ac2dfc76b1",
+          "L"
+        ]
+      ],
+      "l1CappedComposite": null,
+      "label": "zec.omft.near (NEAR PoA bridge, ZEC)",
+      "leafHash": "318f930e70227d7ae441d0e95e4ab8da4646ad34f416baf5fcbc7750f5781eff",
+      "multisigScore": 18,
+      "oracleAuthorityScore": 100,
+      "target": "zec.omft.near",
+      "timelockScore": 0
+    }
+  ],
+  "repo": "RealSpap/authority-risk-oracle (private)",
+  "scoreComputedBy": "chains/zcash/scorers.py score_all()",
+  "signedMessage": "the 32 raw bytes of commitmentBlake2b256, ECDSA secp256k1 (RFC 6979, low-S, DER)",
+  "sourceDataFile": "chains/zcash/data/scored_targets_2026-09-19.md",
+  "supersedesV1": false,
+  "v1AttestationFile": "chains/zcash/data/testnet_attestation_2026-09-19.json",
+  "v1Note": "The ARO1 attestation and its transaction are untouched and remain independently valid."
+}

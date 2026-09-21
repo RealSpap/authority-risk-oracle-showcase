@@ -1,0 +1,40 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<style>
+  .bg { fill: #F3F5F9; }
+  .ring { fill: none; stroke: #0C8C7D; stroke-width: 2; opacity: 0.15; }
+  .trail { stroke: #0C8C7D; stroke-width: 5; stroke-linecap: round; }
+  .lead { stroke: #0C8C7D; stroke-width: 6; stroke-linecap: round; }
+  .key { fill: #121826; stroke: #121826; }
+  .keyshaft { stroke: #121826; stroke-width: 7; stroke-linecap: round; }
+  .dot { fill: #121826; }
+  @media (prefers-color-scheme: dark) {
+    .bg { fill: #0B0E15; }
+    .ring, .trail, .lead { stroke: #5EEAD4; }
+    .key, .keyshaft, .dot { fill: #E8ECF4; stroke: #E8ECF4; }
+  }
+</style>
+</defs>
+
+<rect class="bg" x="0" y="0" width="400" height="400" rx="56"/>
+
+<circle class="ring" cx="200" cy="200" r="50"/>
+<circle class="ring" cx="200" cy="200" r="90"/>
+<circle class="ring" cx="200" cy="200" r="130"/>
+
+<line class="trail" x1="200" y1="200" x2="173.0" y2="72.8" opacity="0.09"/>
+<line class="trail" x1="200" y1="200" x2="188.7" y2="70.5" opacity="0.2"/>
+<line class="trail" x1="200" y1="200" x2="204.5" y2="70.1" opacity="0.31"/>
+<line class="trail" x1="200" y1="200" x2="220.3" y2="71.6" opacity="0.42"/>
+<line class="trail" x1="200" y1="200" x2="235.8" y2="75.0" opacity="0.53"/>
+<line class="trail" x1="200" y1="200" x2="250.8" y2="80.3" opacity="0.64"/>
+<line class="lead" x1="200" y1="200" x2="265.0" y2="87.4"/>
+
+<line class="keyshaft" x1="249.5" y1="114.3" x2="232.5" y2="143.7"/>
+<polygon class="key" points="244.5,122.9 235.8,117.9 232.3,124.0 241.0,129.0"/>
+<polygon class="key" points="238.5,133.3 231.6,129.3 228.1,135.4 235.0,139.4"/>
+<circle class="key" cx="256.0" cy="103.0" r="15"/>
+<circle class="bg" cx="256.0" cy="103.0" r="6.5"/>
+
+<circle class="dot" cx="200" cy="200" r="11"/>
+</svg>

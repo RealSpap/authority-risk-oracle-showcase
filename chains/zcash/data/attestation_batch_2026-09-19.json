@@ -1,0 +1,191 @@
+{
+  "commitmentBlake2b256": "74f6ba041e253bb75e523e1b0d00422e44221c7a0240757cd1a40ad15d513662",
+  "header": {
+    "ecosystem": "zcash",
+    "format": "aro-zcash-batch-v1",
+    "merkleRoot": "a323d59c09351e9cda29f27cab34ad2078568995b7e911bc40f1c0e3012c3c93",
+    "methodologyHashSha256": "8a3a1042690bfda50555667496ab9510bc86fd2d250cdb6a56334600996f4bb5",
+    "targetCount": 7
+  },
+  "opReturnDataHex": "41524f3274f6ba041e253bb75e523e1b0d00422e44221c7a0240757cd1a40ad15d513662",
+  "records": [
+    {
+      "adminKeyScore": 20,
+      "compositeScore": 34,
+      "crossExposureScore": 100,
+      "inclusionProof": [
+        [
+          "14f29ce9df4577bd355dc45998685e230f95a9164a941655ddfc30fd37244e03",
+          "R"
+        ],
+        [
+          "553bd5acb49ed2e2f3a86746884e020a8784f8cb8a6030bb274d91a3d4d3d086",
+          "R"
+        ],
+        [
+          "b85a2594ba4f954622fd83df5b7c2d5a9ed2cc1fc9160c18d25243f57a0e03fa",
+          "R"
+        ]
+      ],
+      "l1CappedComposite": null,
+      "label": "Zcash L1 (consensus-rule-change authority)",
+      "leafHash": "5cf1bf5bb173f7fc11c7c03d1103ebf121981eff6630956472b27db2d864c12c",
+      "multisigScore": 50,
+      "oracleAuthorityScore": 100,
+      "target": "0xB8e62E6AeB4C400b6F3e66cAb69ACe55439035c3",
+      "timelockScore": 35
+    },
+    {
+      "adminKeyScore": 65,
+      "compositeScore": 44,
+      "crossExposureScore": 100,
+      "inclusionProof": [
+        [
+          "5cf1bf5bb173f7fc11c7c03d1103ebf121981eff6630956472b27db2d864c12c",
+          "L"
+        ],
+        [
+          "553bd5acb49ed2e2f3a86746884e020a8784f8cb8a6030bb274d91a3d4d3d086",
+          "R"
+        ],
+        [
+          "b85a2594ba4f954622fd83df5b7c2d5a9ed2cc1fc9160c18d25243f57a0e03fa",
+          "R"
+        ]
+      ],
+      "l1CappedComposite": null,
+      "label": "Zenrock zenZEC dMPC custody keyring (\"Zenrock MPC\")",
+      "leafHash": "14f29ce9df4577bd355dc45998685e230f95a9164a941655ddfc30fd37244e03",
+      "multisigScore": 60,
+      "oracleAuthorityScore": 100,
+      "target": "keyring1k6vc6vhp6e6l3rxalue9v4ux",
+      "timelockScore": 0
+    },
+    {
+      "adminKeyScore": 65,
+      "compositeScore": 56,
+      "crossExposureScore": 100,
+      "inclusionProof": [
+        [
+          "d634d9813d91b3508f91ea4f72c6643f920fd64c75e3e2cdc0553f9b63bf754f",
+          "R"
+        ],
+        [
+          "5ab71d131d63c51300a1e49e3cfc38f7063941f4ab127e9deeaf0e14e98929d6",
+          "L"
+        ],
+        [
+          "b85a2594ba4f954622fd83df5b7c2d5a9ed2cc1fc9160c18d25243f57a0e03fa",
+          "R"
+        ]
+      ],
+      "l1CappedComposite": null,
+      "label": "Maya Protocol Asgard vault mayapub1addwnpepqdgafgd6... (native ZEC custody, TSS)",
+      "leafHash": "68b579707fd3e0da32e6f7371fa2d010d67fcd4317af9b05219c5303289897e4",
+      "multisigScore": 100,
+      "oracleAuthorityScore": 100,
+      "target": "t1RBiXrLRdrHgsuSGQEusG2wCzPFczEVMfT",
+      "timelockScore": 0
+    },
+    {
+      "adminKeyScore": 65,
+      "compositeScore": 56,
+      "crossExposureScore": 100,
+      "inclusionProof": [
+        [
+          "68b579707fd3e0da32e6f7371fa2d010d67fcd4317af9b05219c5303289897e4",
+          "L"
+        ],
+        [
+          "5ab71d131d63c51300a1e49e3cfc38f7063941f4ab127e9deeaf0e14e98929d6",
+          "L"
+        ],
+        [
+          "b85a2594ba4f954622fd83df5b7c2d5a9ed2cc1fc9160c18d25243f57a0e03fa",
+          "R"
+        ]
+      ],
+      "l1CappedComposite": null,
+      "label": "Maya Protocol Asgard vault mayapub1addwnpepq24t2hk5... (native ZEC custody, TSS)",
+      "leafHash": "d634d9813d91b3508f91ea4f72c6643f920fd64c75e3e2cdc0553f9b63bf754f",
+      "multisigScore": 100,
+      "oracleAuthorityScore": 100,
+      "target": "t1VtnnhTYhmADh7L2uKU3Sev7GscBHT6HfE",
+      "timelockScore": 0
+    },
+    {
+      "adminKeyScore": 50,
+      "compositeScore": 32,
+      "crossExposureScore": 100,
+      "inclusionProof": [
+        [
+          "947c434b53c737ffeb262f7735580991e8f81ea4703e29ce3ec6102ebd72bee0",
+          "R"
+        ],
+        [
+          "318f930e70227d7ae441d0e95e4ab8da4646ad34f416baf5fcbc7750f5781eff",
+          "R"
+        ],
+        [
+          "a303d86d77ec7543098c13abad67501eaf033427d9385fef6e8bf2ac2dfc76b1",
+          "L"
+        ]
+      ],
+      "l1CappedComposite": 32,
+      "label": "ZCG funding stream (FS_FPF_ZCG_H3)",
+      "leafHash": "517cd168ee027743cdfe08e52f95cb9347dd73b047eb215f2034de80101b6de2",
+      "multisigScore": 39,
+      "oracleAuthorityScore": 100,
+      "target": "t3cFfPt1Bcvgez9ZbMBFWeZsskxTkPzGCow",
+      "timelockScore": 0
+    },
+    {
+      "adminKeyScore": 50,
+      "compositeScore": 32,
+      "crossExposureScore": 100,
+      "inclusionProof": [
+        [
+          "517cd168ee027743cdfe08e52f95cb9347dd73b047eb215f2034de80101b6de2",
+          "L"
+        ],
+        [
+          "318f930e70227d7ae441d0e95e4ab8da4646ad34f416baf5fcbc7750f5781eff",
+          "R"
+        ],
+        [
+          "a303d86d77ec7543098c13abad67501eaf033427d9385fef6e8bf2ac2dfc76b1",
+          "L"
+        ]
+      ],
+      "l1CappedComposite": 32,
+      "label": "ZIP 271 one-time lockbox disbursement",
+      "leafHash": "947c434b53c737ffeb262f7735580991e8f81ea4703e29ce3ec6102ebd72bee0",
+      "multisigScore": 39,
+      "oracleAuthorityScore": 100,
+      "target": "t3ev37Q2uL1sfTsiJQJiWJoFzQpDhmnUwYo",
+      "timelockScore": 0
+    },
+    {
+      "adminKeyScore": 5,
+      "compositeScore": 7,
+      "crossExposureScore": 100,
+      "inclusionProof": [
+        [
+          "df80b8ab7d8f05535092c5645bb997ac4339e48e6ebd77ea1b83bfd98624fe1a",
+          "L"
+        ],
+        [
+          "a303d86d77ec7543098c13abad67501eaf033427d9385fef6e8bf2ac2dfc76b1",
+          "L"
+        ]
+      ],
+      "l1CappedComposite": null,
+      "label": "zec.omft.near (NEAR PoA bridge, ZEC)",
+      "leafHash": "318f930e70227d7ae441d0e95e4ab8da4646ad34f416baf5fcbc7750f5781eff",
+      "multisigScore": 18,
+      "oracleAuthorityScore": 100,
+      "target": "zec.omft.near",
+      "timelockScore": 0
+    }
+  ]
+}

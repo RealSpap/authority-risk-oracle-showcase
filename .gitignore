@@ -1,0 +1,12 @@
+cache/
+out/
+broadcast/
+.env
+
+# Rust/Anchor/Solana build output (chains/solana/program/) -- never commit,
+# hundreds of MB of compiled deps per ecosystem's own local build; the
+# source (programs/, Anchor.toml, Cargo.toml) is what's tracked.
+target/
+test-ledger/
+**/*.so
+

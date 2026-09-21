@@ -1,0 +1,24 @@
+[package]
+name = "solana-authority-oracle"
+version = "0.1.0"
+description = "Authority-risk-oracle score publication program for Solana (sketch, scoring_build phase)"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "solana_authority_oracle"
+
+[features]
+no-entrypoint = []
+cpi = ["no-entrypoint"]
+default = []
+
+[dependencies]
+# init-if-needed enabled explicitly: `update_score`'s UpdateScore accounts
+# struct uses `init_if_needed` on the per-target `score` PDA (create on
+# first push, overwrite on every later one) -- Anchor gates that constraint
+# behind this feature, and omitting it produced a real cascading compile
+# failure the first build attempt (`UpdateScore: Bumps` not satisfied,
+# `try_accounts` not found -- both symptoms of the constraint's macro
+# expansion being skipped, not genuine trait-bound bugs in this file).
+anchor-lang = { version = "0.30.1", features = ["init-if-needed"] }

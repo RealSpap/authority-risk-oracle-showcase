@@ -1096,13 +1096,11 @@ class TestSimpleScorersList(unittest.TestCase):
     # UPDATED 2026-09-20: 12 -> 16 entries (Lido stETH, EigenLayer
     # StrategyManager, Curve Stableswap-NG factory, Rocket Pool RocketStorage;
     # branch tests in chains/ethereum-l1/tests/test_new_targets_2026_09_20.py).
-    # UPDATED 2026-09-25: 17 -> 18 entries (score_convex_finance_booster, appended last; its own tests
-    # live in chains/ethereum-l1/tests/test_new_targets_2026_09_25.py).
     # This guard is deliberately an exact count AND an exact name set: it is the
     # one shared-file line an ecosystem worker has to touch when it adds a
     # target, which is exactly what makes an accidental addition visible.
-    def test_eighteen_entries_matching_module_functions(self):
-        self.assertEqual(len(scorers.SIMPLE_SCORERS), 18)
+    def test_seventeen_entries_matching_module_functions(self):
+        self.assertEqual(len(scorers.SIMPLE_SCORERS), 17)
         names = {fn.__name__ for fn in scorers.SIMPLE_SCORERS}
         self.assertEqual(names, {
             "score_uniswap_v3_factory", "score_aave_v3_pool", "score_makerdao_sky_pause",
@@ -1111,7 +1109,7 @@ class TestSimpleScorersList(unittest.TestCase):
             "score_morpho_blue_l1", "score_wbtc",
             "score_lido_steth", "score_eigenlayer_strategy_manager",
             "score_curve_stableswap_ng_factory", "score_rocketpool_storage",
-            "score_aave_v3_horizon_pool", "score_convex_finance_booster",
+            "score_aave_v3_horizon_pool",
         })
 
 

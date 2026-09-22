@@ -519,13 +519,9 @@ class TestDefaultAdminRole(_Base):
 
 
 class TestRegistry(unittest.TestCase):
-    # UPDATED 2026-09-25: score_convex_finance_booster was appended after Horizon (its own tests live
-    # in chains/ethereum-l1/tests/test_new_targets_2026_09_25.py), so Horizon is no longer last --
-    # this pins its position immediately before the newest entry instead.
-    def test_horizon_keeps_its_position_ahead_of_later_additions(self):
-        self.assertIs(scorers.SIMPLE_SCORERS[-2], scorers.score_aave_v3_horizon_pool)
-        self.assertIs(scorers.SIMPLE_SCORERS[-1], scorers.score_convex_finance_booster)
-        self.assertEqual(len(scorers.SIMPLE_SCORERS), 18)
+    def test_horizon_is_last_so_the_existing_targets_keep_their_order(self):
+        self.assertIs(scorers.SIMPLE_SCORERS[-1], scorers.score_aave_v3_horizon_pool)
+        self.assertEqual(len(scorers.SIMPLE_SCORERS), 17)
 
 
 if __name__ == "__main__":

@@ -194,7 +194,7 @@ def build_record(bundle, sig, pub, address, publish_time, plan, anchor, reanchor
         "publisherKeyNote": key_note(address),
         "methodologyFile": "chains/zcash/METHODOLOGY.md",
         "methodologyPinnedAt": {
-            "gitCommit": "9fe6270df6d2b524da48a4d8f3956065019ca4d1",
+            "gitCommit": "783326342d5bbc05c07cd43f649e8878a78353d6",
             "note": ("header.methodologyHashSha256 is the SHA-256 of METHODOLOGY.md as committed there "
                      "(`git show <commit>:chains/zcash/METHODOLOGY.md | sha256sum`); the file was edited "
                      "afterwards to document this very publication, so the CURRENT file hashes differently."),

@@ -5,7 +5,7 @@ closed -- the shared testnet key was rotated on 2026-09-18 (new address
 `0x20630C6Ab4BA48a80edA46F77b9b6e987A8f32f5`, replacing the old
 `0xA08a76457b758aFF9702dBf5b870679E1232B715`, which was flagged as possibly
 exposed in a local session transcript and is now abandoned with 0 funds --
-see `keys/authority-risk-oracle/evm-testnet-shared/.env`'s own `superseded_key_note` in the
+see `keys/evm-testnet-shared.json`'s own `superseded_key_note` in the
 pipeline's local config, not in this repo) and funded by Spap manually via a
 Sepolia faucet. `AuthorityRiskOracle` and `ExampleConsumer` were deployed for
 real to Sepolia, and the 9 scores below were pushed on-chain for real (not a
@@ -216,7 +216,7 @@ own copy of the Solidity) will be deployed to Sepolia in the next phase
 | Chain ID | 11155111 (confirmed live via `cast chain-id`, see below) |
 | Public RPC used | `https://ethereum-sepolia-rpc.publicnode.com` |
 | Explorer | https://sepolia.etherscan.io |
-| Deployer / updater key | `keys/authority-risk-oracle/evm-testnet-shared/.env` (shared throwaway EVM testnet key, see that file's own `note` field -- never funded with real value, never reused for any mainnet deploy) |
+| Deployer / updater key | `keys/evm-testnet-shared.json` (shared throwaway EVM testnet key, see that file's own `note` field -- never funded with real value, never reused for any mainnet deploy) |
 | Deployer / updater address | `0x20630C6Ab4BA48a80edA46F77b9b6e987A8f32f5` (rotated 2026-09-18; the old `0xA08a76457b758aFF9702dBf5b870679E1232B715` below is abandoned, 0 funds, do not reuse) |
 
 Chain ID confirmed live (not assumed from docs):
@@ -258,7 +258,7 @@ Robinhood Chain deploy documented in the repo root README -- it already takes
 Solidity or script is needed:
 
 ```bash
-PRIVATE_KEY=<from keys/authority-risk-oracle/evm-testnet-shared/.env, never printed/committed> \
+PRIVATE_KEY=<from keys/evm-testnet-shared.json, never printed/committed> \
 forge script script/Deploy.s.sol \
   --rpc-url https://ethereum-sepolia-rpc.publicnode.com \
   --broadcast
@@ -298,7 +298,7 @@ The non-dry-run path (build/sign/send a real transaction) was run for real on
 ```bash
 ORACLE_RPC_URL=https://ethereum-sepolia-rpc.publicnode.com \
 ORACLE_ADDRESS=0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 \
-PRIVATE_KEY=<from keys/authority-risk-oracle/evm-testnet-shared/.env, never printed/committed> \
+PRIVATE_KEY=<from keys/evm-testnet-shared.json, never printed/committed> \
 READ_RPC_URL=https://ethereum.publicnode.com \
 python3 chains/ethereum-l1/deploy/update_scores_ethereum_l1.py \
   --oracle-address 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906

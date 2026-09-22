@@ -38,15 +38,12 @@ Usage:
     python3 chains/solana/deploy/update_scores_solana.py --dry-run
 
 Non-dry-run (deploy_testnet phase; implemented 2026-09-19, rehearsed on a
-localhost solana-test-validator -- see deploy/README.md; deployed and pushed
-for real on Devnet 2026-09-20, see deploy_record_solana.txt):
+localhost solana-test-validator -- see deploy/README.md; not yet run
+against Devnet because the devnet key has 0 SOL):
     READ_RPC_URL=https://api.mainnet-beta.solana.com \
     ORACLE_RPC_URL=https://api.devnet.solana.com \
     ORACLE_PROGRAM_ID=<base58, from an actual devnet deploy> \
-    KEYPAIR_FILE=<path to keys/authority-risk-oracle/solana-devnet/.env, a raw
-    solana-keygen-style JSON uint8[64] array despite the .env name, never
-    printed/committed -- confirmed live 2026-09-24, see
-    scripts/repush_all_oracles.sh and chains/solana/deploy/check_keypair_matches.py> \
+    KEYPAIR_FILE=<path to keys/solana-devnet.json, never printed/committed> \
     python3 chains/solana/deploy/update_scores_solana.py --out pushed.json
 
 The write path lives in push_live() + deploy/solana_tx.py (stdlib +

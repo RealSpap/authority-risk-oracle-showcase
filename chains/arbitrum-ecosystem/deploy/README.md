@@ -77,7 +77,7 @@ the exact re-runnable commands.
 
 ## Real deployment (2026-09-18)
 
-**Deploy key.** Uses the shared EVM testnet key, `keys/authority-risk-oracle/evm-testnet-shared/.env`.
+**Deploy key.** Uses the shared EVM testnet key, `keys/evm-testnet-shared.json`.
 **Public address is now `0x20630C6Ab4BA48a80edA46F77b9b6e987A8f32f5`.** The
 address documented in every earlier section of this README and in
 `data/deploy_rehearsal_*.md`,
@@ -108,7 +108,7 @@ bytes; `ExampleConsumer` returns a 2,421-character/1,209-byte string) -- the
 contract genuinely exists on-chain, not just in the broadcast log.
 
 **Score push (real, not `--dry-run`):**
-`ORACLE_RPC_URL=https://sepolia-rollup.arbitrum.io/rpc ORACLE_ADDRESS=0x50840a7667baEa9D05ad4ae3dCeb384724b58720 READ_RPC_URL=https://arb1.arbitrum.io/rpc PRIVATE_KEY=<from keys/authority-risk-oracle/evm-testnet-shared/.env> python3 chains/arbitrum-ecosystem/deploy/push_scores.py`
+`ORACLE_RPC_URL=https://sepolia-rollup.arbitrum.io/rpc ORACLE_ADDRESS=0x50840a7667baEa9D05ad4ae3dCeb384724b58720 READ_RPC_URL=https://arb1.arbitrum.io/rpc PRIVATE_KEY=<from keys/evm-testnet-shared.json> python3 chains/arbitrum-ecosystem/deploy/push_scores.py`
 sent `updateScores()` tx
 `0x1c6f9bb9644eaaed87d21ee5fe9d594d9b04bc35b6e374541ba4caf089a85649`,
 confirmed in block 310268519, `status: 1` (success), 5 `ScoreUpdated`-style
@@ -162,7 +162,7 @@ The paragraphs below are preserved as-written from the attempts before the
 deployer address `0xA08a76457b758aFF9702dBf5b870679E1232B715` and its 0
 balance, not the current state.
 
-Uses the shared EVM testnet key, `keys/authority-risk-oracle/evm-testnet-shared/.env` (public
+Uses the shared EVM testnet key, `keys/evm-testnet-shared.json` (public
 address `0xA08a76457b758aFF9702dBf5b870679E1232B715`; private key never
 copied into this repo, never printed to any output or log). Balance on
 Arbitrum Sepolia, checked live this run via
@@ -234,7 +234,7 @@ This is the exact command that was actually run on 2026-09-18, with the new
 key's address as the resulting `admin`/`Updater`:
 
 ```
-PRIVATE_KEY=<from keys/authority-risk-oracle/evm-testnet-shared/.env, never echoed/logged> \
+PRIVATE_KEY=<from keys/evm-testnet-shared.json, never echoed/logged> \
 forge script script/Deploy.s.sol \
   --rpc-url https://sepolia-rollup.arbitrum.io/rpc \
   --broadcast \

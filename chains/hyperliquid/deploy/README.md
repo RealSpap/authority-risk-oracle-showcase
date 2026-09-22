@@ -112,7 +112,7 @@ introduced this pass), **20/20 tests passed** (5 in
 
 ## Deploy key and current balance
 
-Uses the shared EVM testnet key, `keys/authority-risk-oracle/evm-testnet-shared/.env`. **This
+Uses the shared EVM testnet key, `keys/evm-testnet-shared.json`. **This
 key was rotated on 2026-09-18**, after the `scoring_build` pass above was
 committed: the address `0xA08a76457b758aFF9702dBf5b870679E1232B715` used
 in that pass is now superseded (flagged as possibly written into a local
@@ -201,7 +201,7 @@ at the start of the calldata matching the `cast sig` value above exactly,
 ## Deploy command (run on 2026-09-20, record at the end of this file)
 
 ```
-PRIVATE_KEY=<from keys/authority-risk-oracle/evm-testnet-shared/.env, never echoed/logged> \
+PRIVATE_KEY=<from keys/evm-testnet-shared.json, never echoed/logged> \
 forge script script/Deploy.s.sol \
   --rpc-url https://rpc.hyperliquid-testnet.xyz/evm \
   --broadcast --legacy --with-gas-price <3x eth_gasPrice, 0.3 gwei on 2026-09-20> \

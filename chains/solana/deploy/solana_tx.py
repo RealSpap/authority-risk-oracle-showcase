@@ -3,8 +3,8 @@ Minimal Solana write/read helpers for the deploy_testnet phase
 (chains/solana/deploy/update_scores_solana.py and read_scores_solana.py).
 
 Stdlib + PyNaCl only (PyNaCl is what generated the pipeline's throwaway
-devnet key in the first place, see keys/authority-risk-oracle/solana-devnet/.env's
-own "generated" note). No solana-py / anchorpy dependency, same discipline as
+devnet key in the first place, see keys/solana-devnet.json's own
+"generated" note). No solana-py / anchorpy dependency, same discipline as
 chains/solana/scripts/sol_read.py.
 
 What is here, and nothing more:

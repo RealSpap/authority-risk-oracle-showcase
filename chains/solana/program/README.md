@@ -147,7 +147,7 @@ which does not exist until `deploy_testnet`.
 ## What deploy_testnet still needs to do
 
 1. `solana program deploy` the same `.so` to Solana Devnet using
-   `keys/authority-risk-oracle/solana-devnet/.env` (the pipeline's existing zero-value devnet
+   `keys/solana-devnet.json` (the pipeline's existing zero-value devnet
    keypair) as the payer/upgrade-authority -- NOT the throwaway program
    keypair used for this phase's local build (that one was never intended
    to hold real SOL or persist).

@@ -237,21 +237,7 @@ ETHEREUM_L1_GROUPS = {
     "eigenlayer": {
         "targets": ["0x858646372CC42E1A627fcE94aa7A7033e7CF075A"],
         "known_eoa": [],
-        # ADDED 2026-09-25: StrategyManager.pauserRegistry() -> isPauser() resolves a THIRD root, a
-        # 1-of-7 Safe (`0x5050389572f2d220ad927CcbeA0D406831012390`) never previously registered --
-        # a single signature on this Safe can pause the whole contract, disclosed the same day in
-        # chains/ethereum-l1/scorers.py's score_eigenlayer_strategy_manager(). Added here so the
-        # sweep can find any of its 7 signers sitting on another tracked Safe.
-        "safes": ["0x369e6F597e22EaB55fFb173C6d9cD234BD699111", "0xFEA47018D632A77bA579846c840d5706705Dc598", "0x5050389572f2d220ad927CcbeA0D406831012390"],
-    },
-    # ADDED 2026-09-25: Convex Finance Booster, new Ethereum L1 target (chains/ethereum-l1/scorers.py::
-    # score_convex_finance_booster). Two intermediate owner contracts (BoosterOwner, sealed, 30-day
-    # forced delay; BoosterOwnerSecondary, unsealed) sit above the Safe -- only the Safe itself is a
-    # signer committee the sweep can compare, so only it is registered here.
-    "convex_finance": {
-        "targets": ["0xF403C135812408BFbE8713b5A23a04b3D48AAE31"],
-        "known_eoa": [],
-        "safes": ["0xa3C5A1e09150B75ff251c1a7815A07182c3de2FB"],
+        "safes": ["0x369e6F597e22EaB55fFb173C6d9cD234BD699111", "0xFEA47018D632A77bA579846c840d5706705Dc598"],
     },
     "rocket_pool": {
         "targets": ["0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46"],
@@ -333,15 +319,6 @@ ARBITRUM_GROUPS = {
         "targets": ["0x3c3d99FD298f679DBC2CEcd132b4eC4d0F5e6e72"],  # RoleStore
         "known_eoa": [],
         "safes": ["0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D"],  # TIMELOCK_MULTISIG holder, 5-of-8
-    },
-    # ADDED 2026-09-25: gTrade's Diamond's real binding constraint, found the same day -- a 10-hour
-    # OZ TimelockController (0x893FCf48...) whose PROPOSER/CANCELLER set includes a bare EOA plus two
-    # Safes, not the 3-day/14-day timelocks the target's docstring names up front. See
-    # chains/arbitrum-ecosystem/scorers.py's gTrade entry for the full derivation.
-    "gtrade_emergency_timelock": {
-        "targets": ["0xFF162c694eAA571f685030649814282eA457f169"],  # Diamond
-        "known_eoa": ["0x80Fd0AcCc8dA81b0852d2dCA17B5DdaB68f22253"],  # bare EOA, PROPOSER+CANCELLER
-        "safes": ["0xc07EEd650aB255190CA9766162CfB47cFDf72f3a", "0xe8997C502fCD0729B462FCA19A50cF0DAEA0cAB5"],
     },
     # ADDED 2026-09-20 (maintenance run) with score_gmx_v1_vault(). The second
     # Safe is deliberately the SAME address as gmx_timelock_multisig's: on GMX V1

@@ -33,13 +33,6 @@ Non-dry-run (deploy_testnet phase only, not usable yet):
     ORACLE_ADDRESS=0x... \
     PRIVATE_KEY=0x... \
     python3 chains/ethereum-l1/deploy/update_scores_ethereum_l1.py
-
-PRIVATE_KEY is the raw hex value, not a file path. The actual value lives in a JSON file named by
-work/ecosystems.json's own "key_file" field (a "private_key" field inside it, despite the file itself
-being named ".env" -- confirmed live 2026-09-24, see scripts/repush_all_oracles.sh::read_key for the
-exact extraction pattern):
-    PRIVATE_KEY=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["private_key"])' <key_file>) \
-    ...rest of the command above...
 """
 import argparse
 import os

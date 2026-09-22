@@ -1358,9 +1358,6 @@ _STORAGE_GET_ADDRESS = [{"name": "getAddress", "type": "function", "stateMutabil
 # target 80 oracleAuthority points on the first live dry-run of this scorer.
 _HASH_CONSENSUS_GET_MEMBERS = [{"name": "getMembers", "type": "function", "stateMutability": "view",
                                 "inputs": [], "outputs": [{"type": "address[]"}, {"type": "uint256[]"}]}]
-# ADDED 2026-09-25 for score_eigenlayer_strategy_manager()'s Pauser disclosure (see its docstring).
-_IS_PAUSER_ABI = [{"name": "isPauser", "type": "function", "stateMutability": "view",
-                   "inputs": [{"type": "address"}], "outputs": [{"type": "bool"}]}]
 
 # The EIP-1967 admin storage slot, and the two Aragon role ids this file reads.
 # The roles are COMPUTED, not pasted, and checked against the value an
@@ -1391,10 +1388,8 @@ def score_lido_steth(w3) -> dict:
     DefiLlama-Adapters projects/helper/coreAssets.json `ethereum.STETH`
     (0xae7ab965...); re-confirmed on-chain by the token itself, whose
     getLidoLocator() returns the LidoLocator this scorer then reads.
-    TVL: $26.29B on Ethereum (DefiLlama api.llama.fi/protocol/lido,
-    currentChainTvls.Ethereum, read 2026-09-25 -- refreshed from the
-    $25.22B read on 2026-09-20; corroborated on-chain, stETH.totalSupply()
-    = 9,764,974.0285 x ETH price ~$2,680).
+    TVL: $25.22B on Ethereum (DefiLlama api.llama.fi/protocol/lido,
+    currentChainTvls.Ethereum, read 2026-09-20).
 
     Authority (traced live on publicnode + drpc, nothing read from a file):
     stETH is an Aragon AppProxyUpgradeable. kernel() -> Lido Kernel;
@@ -1485,9 +1480,8 @@ def score_lido_steth(w3) -> dict:
 def score_eigenlayer_strategy_manager(w3) -> dict:
     """EigenLayer StrategyManager (Ethereum L1). ADDED 2026-09-20. Address
     source: DefiLlama-Adapters projects/eigenlayer/index.js
-    (`0x858646372cc42e1a627fce94aa7a7033e7cf075a`). TVL: $7.05B on Ethereum
-    (DefiLlama api.llama.fi/protocol/eigenlayer, read 2026-09-25 -- refreshed
-    from the $6.87B read on 2026-09-20).
+    (`0x858646372cc42e1a627fce94aa7a7033e7cf075a`). TVL: $6.87B on Ethereum
+    (DefiLlama api.llama.fi/protocol/eigenlayer, read 2026-09-20).
 
     Authority (traced live on publicnode + drpc): the StrategyManager is a
     transparent proxy; its EIP-1967 admin slot holds ProxyAdmin 0x8b9566ad,
@@ -1506,33 +1500,10 @@ def score_eigenlayer_strategy_manager(w3) -> dict:
     the 60-75 a delay with no bypass would earn. Attenuating context was
     looked for and is recorded: no Safe module is enabled on the executor
     Safe (getModulesPaginated returns an empty list), so there is no third,
-    quieter path beyond those two owners.
-
-    ADDED 2026-09-25 (real modeling gap, previously not read by this scorer
-    at all): the StrategyManager's Pauser is a SEPARATE authority path from
-    the owner/upgrade chain above -- StrategyManager.pauserRegistry() ->
-    PauserRegistry 0xB8765ed72235d279c3Fb53936E4606db0Ef12806, whose
-    isPauser() confirms 0x5050389572f2d220ad927CcbeA0D406831012390 (a real
-    Gnosis Safe, getThreshold() = 1 over 7 owners) can pause() the ENTIRE
-    StrategyManager instantly -- one signature out of 7, no delay. The
-    unpauser() on that same registry is 0x369e6F597e22EaB55fFb173C6d9cD234BD699111,
-    the SAME executor Safe already scored above (threshold 1, timelock +
-    community-Safe owners), so un-pausing is already covered by the scoring
-    above; only the pause side is new. This is disclosed in the notes, NOT
-    folded into any sub-score above: it is a bounded (freeze-only, not
-    fund-redirect) power, same shape as score_compound_v3_cusdc()'s
-    pauseGuardian, but unlike that scorer this one already scores its root
-    as a threshold-1 Safe bypass, not a clean DAO+Timelock -- there is no
-    existing convention in this file for stacking a second, independent
-    bypass discount on top of a bypass already reflected in timelockScore,
-    so one is not invented here; the finding is disclosed in full instead,
-    the same convention score_aave_v3_horizon_pool() uses for its bounded,
-    disclosed-not-scored RISK_ADMIN Safe."""
+    quieter path beyond those two owners."""
     target = "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
     timelock_addr = "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
     community_safe = "0xFEA47018D632A77bA579846c840d5706705Dc598"
-    pauser_safe_addr = "0x5050389572f2d220ad927CcbeA0D406831012390"
-    unpauser_expected = "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
     notes = []
 
     proxy_admin = read_slot_as_address(w3, target, _EIP1967_ADMIN_SLOT)
@@ -1574,28 +1545,6 @@ def score_eigenlayer_strategy_manager(w3) -> dict:
     else:
         admin_key, multisig, timelock_score = 20, 0, 0
         notes.append("ProxyAdmin/executor/timelock chain did not fully resolve this run -- conservative score, nothing assumed")
-
-    # ADDED 2026-09-25: the Pauser, a completely separate authority path from the owner/upgrade
-    # chain scored above -- disclosed only, per this function's own docstring (no existing
-    # convention in this file for stacking a second bypass discount on the one already in
-    # timelockScore above).
-    pauser_registry = call_raw(w3, target, _ADDR_GETTER("pauserRegistry"), "pauserRegistry")
-    is_pauser = call_raw(w3, pauser_registry, _IS_PAUSER_ABI, "isPauser", pauser_safe_addr) if pauser_registry else None
-    unpauser = call_raw(w3, pauser_registry, _ADDR_GETTER("unpauser"), "unpauser") if pauser_registry else None
-    pauser_safe = safe_owners_and_threshold(w3, pauser_safe_addr)
-    if pauser_registry and is_pauser is True and pauser_safe:
-        p_owners, p_threshold = pauser_safe
-        notes.append(
-            f"StrategyManager.pauserRegistry() = {pauser_registry} ; isPauser({pauser_safe_addr}) = True ; that address "
-            f"is a real Gnosis Safe {p_threshold}-of-{len(p_owners)} that can pause() the ENTIRE StrategyManager "
-            f"instantly, no delay -- a full-halt power NOT modeled by any sub-score above (those describe the "
-            f"owner/upgrade path only). unpauser() = {unpauser}"
-            + (f", the SAME executor Safe already scored above" if _same(unpauser, unpauser_expected) else " (expected the executor Safe already scored above, but it did not match this run)")
-            + ". Disclosed, not scored -- see this function's docstring for why no sub-score is adjusted for it."
-        )
-    else:
-        notes.append("StrategyManager.pauserRegistry()/isPauser()/Pauser-Safe chain did not fully resolve this run -- "
-                      "the disclosed pause-authority check is skipped, existing sub-scores above are unaffected")
 
     return {
         "target": target, "label": "EigenLayer StrategyManager (Ethereum L1)",
@@ -2032,95 +1981,6 @@ def score_aave_v3_horizon_pool(w3) -> dict:
     }
 
 
-_ISSEALED_ABI = _BOOL_GETTER("isSealed")
-_FORCE_DELAY_ABI = _UINT_GETTER("FORCE_DELAY")
-
-
-def score_convex_finance_booster(w3) -> dict:
-    """Convex Finance Booster (Ethereum L1). ADDED 2026-09-25. Address source:
-    DefiLlama-Adapters projects/convex-finance/index.js (Booster
-    0xF403C135812408BFbE8713b5A23a04b3D48AAE31). TVL: $593.47M on Ethereum
-    (DefiLlama api.llama.fi/protocol/convex-finance, read 2026-09-25).
-
-    Authority chain, 3 hops, each re-read live rather than assumed:
-    Booster.owner() = BoosterOwner 0x3cE6408F923326f81A7D7929952947748180f1E6
-    (isSealed() = true, FORCE_DELAY() = 2,592,000s = 30 days) -> .owner() =
-    BoosterOwnerSecondary 0x256e1bbA846611C37CF89844a02435E6C098b86D
-    (isSealed() = false) -> .owner() = Gnosis Safe
-    0xa3C5A1e09150B75ff251c1a7815A07182c3de2FB, getThreshold() = 3,
-    getOwners() = 5 addresses (only partial prefixes were on hand from the
-    verification pass this scorer is built from: 0xbd0a74e5..., 0xf7bd34dd...,
-    0xade9e51c..., 0xaac0aa43..., 0x4d1b5627... -- the full addresses are read
-    live via getOwners() below, never hardcoded, so a partial brief can never
-    become a wrong literal here), getModulesPaginated() empty (also gated
-    automatically by safe_owners_and_threshold()'s own module check).
-
-    Scored with the SAME Ethereum L1 Safe rule already used by
-    score_morpho_blue_l1() and score_aave_v3_horizon_pool(): adminKeyScore 65
-    for a threshold of 3 or more, multisigScore = min(100, 15t + 5(n - t)) --
-    3-of-5 gives 65 / 55.
-
-    The two layers ABOVE the scored Safe -- BoosterOwnerSecondary (unsealed)
-    directly under the Safe, and BoosterOwner (sealed, 30-day FORCE_DELAY)
-    under that -- are disclosed, not scored. The 30-day delay looks like it
-    should raise timelockScore, but it sits one hop above the Safe's own path
-    to authority, not on it: the Safe can change the unsealed
-    BoosterOwnerSecondary with no delay at all, so the sealed 30-day layer is
-    not on the Safe's fastest path. This file has no existing convention for
-    scoring a forced delay that sits on an intermediate authority layer above
-    the scored root rather than gating the root's own action (the closest
-    analogues -- EigenLayer's TimelockController co-owner, Curve's veCRV vote
-    period -- both gate the SAME hop being scored), so timelockScore stays 0,
-    matching Morpho Blue's and Aave Horizon's own Safe-rooted,
-    no-Timelock-on-that-hop convention, and the shape is disclosed instead of
-    inventing a new sub-score for it."""
-    booster = "0xF403C135812408BFbE8713b5A23a04b3D48AAE31"
-    booster_owner = "0x3cE6408F923326f81A7D7929952947748180f1E6"
-    booster_owner_secondary = "0x256e1bbA846611C37CF89844a02435E6C098b86D"
-    notes = []
-
-    owner1 = call_raw(w3, booster, _ADDR_GETTER("owner"), "owner")
-    notes.append(f"Booster.owner() = {owner1} (expected BoosterOwner {booster_owner})")
-    sealed1 = call_raw(w3, owner1, _ISSEALED_ABI, "isSealed") if owner1 else None
-    force_delay = call_raw(w3, owner1, _FORCE_DELAY_ABI, "FORCE_DELAY") if owner1 else None
-    notes.append(f"BoosterOwner.isSealed() = {sealed1} ; FORCE_DELAY() = {force_delay}s")
-
-    owner2 = call_raw(w3, owner1, _ADDR_GETTER("owner"), "owner") if owner1 else None
-    notes.append(f"BoosterOwner.owner() = {owner2} (expected BoosterOwnerSecondary {booster_owner_secondary})")
-    sealed2 = call_raw(w3, owner2, _ISSEALED_ABI, "isSealed") if owner2 else None
-    notes.append(f"BoosterOwnerSecondary.isSealed() = {sealed2}")
-
-    safe_addr = call_raw(w3, owner2, _ADDR_GETTER("owner"), "owner") if owner2 else None
-    notes.append(f"BoosterOwnerSecondary.owner() = {safe_addr} (root Safe)")
-    safe = safe_owners_and_threshold(w3, safe_addr) if safe_addr else None
-
-    if _same(owner1, booster_owner) and _same(owner2, booster_owner_secondary) and safe:
-        owners, threshold = safe
-        notes.append(f"root Safe {safe_addr}: {threshold}-of-{len(owners)}")
-        notes.append(
-            "Two intermediate authority layers sit above this Safe on the path to Booster: "
-            "BoosterOwnerSecondary (unsealed -- nothing there enforces a wait) directly under the Safe, and "
-            "BoosterOwner (sealed, FORCE_DELAY 2,592,000s = 30 days) under that. The Safe can change the "
-            "unsealed BoosterOwnerSecondary with no delay, so the 30-day BoosterOwner delay is not on the "
-            "Safe's fastest path to authority -- disclosed, not folded into timelockScore (no existing "
-            "convention in this file scores a delay one hop removed from the scored root)."
-        )
-        admin_key = 65 if threshold >= 3 else (50 if threshold == 2 else 10)
-        multisig = min(100, threshold * 15 + max(0, len(owners) - threshold) * 5)
-        timelock_score = 0
-    else:
-        admin_key, multisig, timelock_score = 20, 0, 0
-        notes.append("Booster -> BoosterOwner -> BoosterOwnerSecondary -> Safe chain did not fully resolve or match "
-                     "the expected intermediate addresses this run -- conservative score, nothing assumed")
-
-    return {
-        "target": booster, "label": "Convex Finance Booster (Ethereum L1)",
-        "adminKeyScore": admin_key, "multisigScore": multisig, "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100, "compositeScore": _composite(admin_key, multisig, timelock_score),
-        "notes": notes, "_rootGroup": "convex-finance-booster-owner-safe-0xa3c5a1e0",
-    }
-
-
 SIMPLE_SCORERS = [
     score_uniswap_v3_factory,
     score_aave_v3_pool,
@@ -2139,7 +1999,6 @@ SIMPLE_SCORERS = [
     score_curve_stableswap_ng_factory,
     score_rocketpool_storage,
     score_aave_v3_horizon_pool,
-    score_convex_finance_booster,
 ]
 
 

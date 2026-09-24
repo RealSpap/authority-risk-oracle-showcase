@@ -85,7 +85,7 @@ Re-confirmed 2026-09-18: `Compiler run successful!`, 20/20 tests passed
 
 ## Deploy key and current balance
 
-Uses the shared EVM testnet key, `keys/evm-testnet-shared.json`. **The
+Uses the shared EVM testnet key, `keys/authority-risk-oracle/evm-testnet-shared/.env`. **The
 address changed on 2026-09-18**: the previous address,
 `0xA08a76457b758aFF9702dBf5b870679E1232B715`, is abandoned -- it was flagged
 as possibly written into a local session transcript on 2026-09-17, and was
@@ -103,7 +103,7 @@ The current, funded address is:
 ```
 
 Private key never copied into this repo, never printed to any output or
-log; read from `keys/evm-testnet-shared.json` (outside this repo, in the
+log; read from `keys/authority-risk-oracle/evm-testnet-shared/.env` (outside this repo, in the
 pipeline's local config directory) and passed only as the `PRIVATE_KEY`
 environment variable to `forge`/`cast`/`push_scores.py`.
 
@@ -123,7 +123,7 @@ Chain ID was confirmed live immediately before broadcasting: `cast chain-id
 --rpc-url https://sepolia.base.org` returned `84532`.
 
 ```
-PRIVATE_KEY=<read from keys/evm-testnet-shared.json, never echoed/logged> \
+PRIVATE_KEY=<read from keys/authority-risk-oracle/evm-testnet-shared/.env, never echoed/logged> \
 forge script script/Deploy.s.sol \
   --rpc-url https://sepolia.base.org \
   --broadcast \
@@ -172,7 +172,7 @@ deployed above):
 READ_RPC_URL=https://mainnet.base.org \
 ORACLE_RPC_URL=https://sepolia.base.org \
 ORACLE_ADDRESS=0x50840a7667baEa9D05ad4ae3dCeb384724b58720 \
-PRIVATE_KEY=<read from keys/evm-testnet-shared.json, never echoed/logged> \
+PRIVATE_KEY=<read from keys/authority-risk-oracle/evm-testnet-shared/.env, never echoed/logged> \
 python3 chains/base-ecosystem/deploy/push_scores.py
 ```
 

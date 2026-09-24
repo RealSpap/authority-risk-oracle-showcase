@@ -19,6 +19,13 @@ and the key is funded):
     PRIVATE_KEY=0x... \
     python3 chains/arbitrum-ecosystem/deploy/push_scores.py
 
+PRIVATE_KEY is the raw hex value, not a file path. The actual value lives in a JSON file named by
+work/ecosystems.json's own "key_file" field (a "private_key" field inside it, despite the file itself
+being named ".env" -- confirmed live 2026-09-24, see scripts/repush_all_oracles.sh::read_key for the
+exact extraction pattern):
+    PRIVATE_KEY=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["private_key"])' <key_file>) \
+    ...rest of the command above...
+
 READ_RPC_URL and ORACLE_RPC_URL are deliberately separate, same reasoning as
 the root script and the Base sibling: every scored target (GMX, Camelot,
 Radiant, the Arbitrum Security Council Safe, Aave) is a real contract that

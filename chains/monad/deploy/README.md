@@ -157,7 +157,7 @@ this, because it stopped being true later the same day):**
 1. When the 2 targets were added, the shared EVM testnet key
    (`0x20630C6Ab4BA48a80edA46F77b9b6e987A8f32f5`, shared across every EVM
    testnet in `authority-risk-oracle-multichain-pipeline` per
-   `ecosystems.json`'s `key_file: keys/evm-testnet-shared.json`) held only
+   `ecosystems.json`'s `key_file: keys/authority-risk-oracle/evm-testnet-shared/.env`) held only
    0.00204 MON. A real `eth_estimateGas` for the 9-target `updateScores()`
    was 445,108 gas at ~102 gwei, i.e. ~0.0568 MON at the usual 1.25x
    buffer, ~0.0547 MON more than the key had. Per this project's standing

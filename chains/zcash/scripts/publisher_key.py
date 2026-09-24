@@ -32,7 +32,7 @@ import zcash_read as zr
 
 ENV_VAR = "ARO_ZCASH_TESTNET_KEY_FILE"
 DEFAULT_KEY_FILE = os.path.expanduser(
-    "~/Desktop/workspace/authority-risk-oracle-multichain-pipeline/keys/zcash-testnet.json")
+    "keys/zcash-testnet.json")
 
 # Public values only (safe to commit): the CURRENT publisher, rotated 2026-09-19 (UTC).
 PUBKEY_HEX = "02e6a829db766cdf6488cfae3cd9588b1871317b625becdd5381c356923004a8cd"

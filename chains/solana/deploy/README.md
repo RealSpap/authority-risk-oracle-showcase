@@ -137,7 +137,7 @@ solana program deploy target/deploy/solana_authority_oracle.so \
 cd ../../..
 python3 chains/solana/deploy/update_scores_solana.py --oracle-rpc-url https://api.devnet.solana.com \
   --program-id 5VhiTAGLEViGgajhxPbzdWz7WLUAiRy42DY6qi6tYh4W \
-  --keypair-file <pipeline>/keys/solana-devnet.json --out pushed_devnet.json
+  --keypair-file keys/authority-risk-oracle/solana-devnet/.env --out pushed_devnet.json
 python3 chains/solana/deploy/read_scores_solana.py --oracle-rpc-url https://api.devnet.solana.com \
   --program-id 5VhiTAGLEViGgajhxPbzdWz7WLUAiRy42DY6qi6tYh4W
 ```

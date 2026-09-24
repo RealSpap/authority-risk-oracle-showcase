@@ -28,7 +28,7 @@ import subprocess
 import sys
 import time
 
-CAST = "~/.foundry/bin/cast"
+CAST = "cast"
 ORACLE = "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906"
 SEPOLIA_RPCS = [
     "https://ethereum-sepolia-rpc.publicnode.com",

@@ -12,10 +12,13 @@
 #   DRY=1 bash scripts/repush_all_oracles.sh               # recompute + encode only: no key read, nothing sent
 #   ONLY="base plasma" bash scripts/repush_all_oracles.sh  # a subset (names: base plasma monad arbitrum l1 tempo hyperliquid solana robinhood)
 #
-# Keys (never printed, never written anywhere): KEYS_DIR/evm-testnet-shared.json for base, plasma, monad,
-# arbitrum, l1, tempo and hyperliquid; KEYS_DIR/robinhood-chain-testnet.json for robinhood (its own updater
-# key); both are JSON files with a "private_key" field. Solana takes a keypair FILE path
-# (KEYS_DIR/solana-devnet.json), not a key value. Override KEYS_DIR if your keys live elsewhere.
+# Keys (never printed, never written anywhere): KEYS_DIR/evm-testnet-shared/.env for base, plasma, monad,
+# arbitrum, l1, tempo and hyperliquid; KEYS_DIR/robinhood-chain-testnet/.env for robinhood (its own updater
+# key) -- confirmed live 2026-09-24 against work/ecosystems.json's own key_file field, the authoritative
+# source if this ever drifts again. Both are JSON files (despite the .env name) with a "private_key" field.
+# Solana takes a keypair FILE path (KEYS_DIR/solana-devnet/.env -- a raw solana-keygen-style JSON
+# uint8[64] array despite the .env name, confirmed live 2026-09-24, matches work/ecosystems.json's
+# own key_file field), not a key value. Override KEYS_DIR if your keys live elsewhere.
 #
 # Time: each step recomputes every target live before it sends. base/plasma/monad/arbitrum/l1 take about a
 # minute each, tempo about 9 minutes, robinhood about 25 (run it alone in a second terminal:
@@ -24,7 +27,7 @@
 set -uo pipefail
 
 cd "$(dirname "$0")/.."
-KEYS_DIR="${KEYS_DIR:-$HOME/Desktop/workspace/authority-risk-oracle-multichain-pipeline/keys}"
+KEYS_DIR="${KEYS_DIR:-$HOME/keys/authority-risk-oracle}"
 SHARED_ORACLE=0x50840a7667baEa9D05ad4ae3dCeb384724b58720
 ROBINHOOD_ORACLE=0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52
 L1_ORACLE=0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906
@@ -71,22 +74,22 @@ step() {  # $1 = name, $2 = key file (shared or robinhood), rest = env assignmen
 echo "--- freshness before"
 python3 scripts/oracle_freshness.py || true
 
-step base evm-testnet-shared.json "READ_RPC_URL=https://mainnet.base.org ORACLE_RPC_URL=https://sepolia.base.org ORACLE_ADDRESS=$SHARED_ORACLE python3 chains/base-ecosystem/deploy/push_scores.py"
-step plasma evm-testnet-shared.json "READ_RPC_URL=https://rpc.plasma.to ORACLE_RPC_URL=https://testnet-rpc.plasma.to ORACLE_ADDRESS=$SHARED_ORACLE python3 chains/plasma-ecosystem/deploy/push_scores.py"
-step monad evm-testnet-shared.json "READ_RPC_URL=https://rpc.monad.xyz ORACLE_RPC_URL=https://testnet-rpc.monad.xyz/ ORACLE_ADDRESS=$SHARED_ORACLE python3 chains/monad/deploy/push_scores.py"
-step arbitrum evm-testnet-shared.json "READ_RPC_URL=https://arb1.arbitrum.io/rpc ORACLE_RPC_URL=https://sepolia-rollup.arbitrum.io/rpc ORACLE_ADDRESS=$SHARED_ORACLE python3 chains/arbitrum-ecosystem/deploy/push_scores.py"
-step l1 evm-testnet-shared.json "READ_RPC_URL=https://ethereum-rpc.publicnode.com ORACLE_RPC_URL=https://ethereum-sepolia-rpc.publicnode.com ORACLE_ADDRESS=$L1_ORACLE python3 chains/ethereum-l1/deploy/update_scores_ethereum_l1.py"
-step tempo evm-testnet-shared.json "ORACLE_RPC_URL=https://rpc.moderato.tempo.xyz ORACLE_ADDRESS=$SHARED_ORACLE python3 chains/tempo/deploy/push_scores.py"
-step hyperliquid evm-testnet-shared.json "ORACLE_RPC_URL=https://rpc.hyperliquid-testnet.xyz/evm ORACLE_ADDRESS=$SHARED_ORACLE python3 chains/hyperliquid/deploy/push_scores.py"
+step base evm-testnet-shared/.env "READ_RPC_URL=https://mainnet.base.org ORACLE_RPC_URL=https://sepolia.base.org ORACLE_ADDRESS=$SHARED_ORACLE python3 chains/base-ecosystem/deploy/push_scores.py"
+step plasma evm-testnet-shared/.env "READ_RPC_URL=https://rpc.plasma.to ORACLE_RPC_URL=https://testnet-rpc.plasma.to ORACLE_ADDRESS=$SHARED_ORACLE python3 chains/plasma-ecosystem/deploy/push_scores.py"
+step monad evm-testnet-shared/.env "READ_RPC_URL=https://rpc.monad.xyz ORACLE_RPC_URL=https://testnet-rpc.monad.xyz/ ORACLE_ADDRESS=$SHARED_ORACLE python3 chains/monad/deploy/push_scores.py"
+step arbitrum evm-testnet-shared/.env "READ_RPC_URL=https://arb1.arbitrum.io/rpc ORACLE_RPC_URL=https://sepolia-rollup.arbitrum.io/rpc ORACLE_ADDRESS=$SHARED_ORACLE python3 chains/arbitrum-ecosystem/deploy/push_scores.py"
+step l1 evm-testnet-shared/.env "READ_RPC_URL=https://ethereum-rpc.publicnode.com ORACLE_RPC_URL=https://ethereum-sepolia-rpc.publicnode.com ORACLE_ADDRESS=$L1_ORACLE python3 chains/ethereum-l1/deploy/update_scores_ethereum_l1.py"
+step tempo evm-testnet-shared/.env "ORACLE_RPC_URL=https://rpc.moderato.tempo.xyz ORACLE_ADDRESS=$SHARED_ORACLE python3 chains/tempo/deploy/push_scores.py"
+step hyperliquid evm-testnet-shared/.env "ORACLE_RPC_URL=https://rpc.hyperliquid-testnet.xyz/evm ORACLE_ADDRESS=$SHARED_ORACLE python3 chains/hyperliquid/deploy/push_scores.py"
 
 # Solana (Devnet, native program): a keypair file, no PRIVATE_KEY value is read by this script.
 if wanted solana; then
   echo
   echo "=== solana"
-  if ! eval "READ_RPC_URL=https://api.mainnet-beta.solana.com ORACLE_RPC_URL=https://api.devnet.solana.com ORACLE_PROGRAM_ID=$SOLANA_PROGRAM_ID KEYPAIR_FILE=$KEYS_DIR/solana-devnet.json python3 chains/solana/deploy/update_scores_solana.py $DRYFLAG"; then FAILED="$FAILED solana"; fi
+  if ! eval "READ_RPC_URL=https://api.mainnet-beta.solana.com ORACLE_RPC_URL=https://api.devnet.solana.com ORACLE_PROGRAM_ID=$SOLANA_PROGRAM_ID KEYPAIR_FILE=$KEYS_DIR/solana-devnet/.env python3 chains/solana/deploy/update_scores_solana.py $DRYFLAG"; then FAILED="$FAILED solana"; fi
 fi
 
-step robinhood robinhood-chain-testnet.json "READ_RPC_URL=https://rpc.mainnet.chain.robinhood.com ORACLE_RPC_URL=https://rpc.testnet.chain.robinhood.com/rpc ORACLE_ADDRESS=$ROBINHOOD_ORACLE python3 scripts/update_scores.py"
+step robinhood robinhood-chain-testnet/.env "READ_RPC_URL=https://rpc.mainnet.chain.robinhood.com ORACLE_RPC_URL=https://rpc.testnet.chain.robinhood.com/rpc ORACLE_ADDRESS=$ROBINHOOD_ORACLE python3 scripts/update_scores.py"
 
 echo
 echo "--- freshness after"

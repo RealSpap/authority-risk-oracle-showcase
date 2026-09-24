@@ -287,7 +287,7 @@ identical on `rpc.moderato.tempo.xyz`, `rpc.tempo.xyz` and the independent
 `tempo-rpc.publicnode.com`.
 
 **Key decision**: reused the shared EVM testnet key
-(`keys/evm-testnet-shared.json`, address
+(`keys/authority-risk-oracle/evm-testnet-shared/.env`, address
 `0x20630C6Ab4BA48a80edA46F77b9b6e987A8f32f5`) -- the same key already used
 for Ethereum L1 (Sepolia), Arbitrum Sepolia, Base Sepolia and Hyperliquid
 Testnet -- rather than a Tempo-specific dedicated key. Reasoning: Tempo is a

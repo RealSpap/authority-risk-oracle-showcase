@@ -1067,5 +1067,90 @@ class TestScoreT3trisVault(unittest.TestCase):
         self.assertTrue(any("role rotated" in n for n in result["notes"]))
 
 
+# --------------------------------------------------------------------- Flock Credit Vault (independent verification pass, 2026-09-25)
+class TestScoreFlockCreditVault(unittest.TestCase):
+    """score_flock_credit_vault() -- single admin surface (`governance()`,
+    no owner()/pause() to compare it against), so this exercises the same
+    standalone lone-EOA convention as TestScoreT3trisVault above, plus the
+    two disclosed-not-scored notes (setYieldVestingPeriod() no-op,
+    utilization() over its own cap())."""
+
+    VAULT = scorers.FLOCK_CREDIT_VAULT
+    GOVERNANCE = RealWeb3.to_checksum_address("0x097bA31b7ACffD75b909Fc7Bef2e55424D2Dacdc")
+
+    def _base_fake(self, governance=None):
+        fake = FakeHelpers()
+        if governance is not None:
+            fake.address_getters[(self.VAULT, "governance")] = governance
+        fake.call_raw_results[(self.VAULT, "totalAssets", ())] = 69_300_000000  # ~$69.3k, 6-decimal units
+        fake.call_raw_results[(self.VAULT, "utilization", ())] = 9160
+        fake.call_raw_results[(self.VAULT, "cap", ())] = 8000
+        return fake
+
+    def test_bare_eoa_governance_scores_5_0_0(self):
+        fake = self._base_fake(self.GOVERNANCE)
+        fake.eoa_results[self.GOVERNANCE] = True
+        _patch_helpers(self, fake)
+
+        result = scorers.score_flock_credit_vault(FakeW3())
+        self.assertEqual(result["target"], self.VAULT)
+        self.assertEqual(result["label"], "Flock Credit Vault (Robinhood Chain)")
+        self.assertEqual(
+            (result["adminKeyScore"], result["multisigScore"], result["timelockScore"]),
+            (5, 0, 0),
+        )
+        self.assertEqual(result["compositeScore"], scorers._composite(5, 0, 0))
+        self.assertTrue(any("bare EOA = True" in n for n in result["notes"]))
+
+    def test_disclosed_notes_present_but_do_not_change_composite(self):
+        fake = self._base_fake(self.GOVERNANCE)
+        fake.eoa_results[self.GOVERNANCE] = True
+        _patch_helpers(self, fake)
+
+        result = scorers.score_flock_credit_vault(FakeW3())
+        self.assertEqual(result["compositeScore"], scorers._composite(5, 0, 0))
+        self.assertTrue(any("setYieldVestingPeriod" in n and "DISCLOSED" in n for n in result["notes"]))
+        self.assertTrue(any("utilization() = 9160, cap() = 8000" in n and "DISCLOSED" in n for n in result["notes"]))
+
+    def test_utilization_under_cap_omits_the_over_cap_disclosure(self):
+        fake = self._base_fake(self.GOVERNANCE)
+        fake.eoa_results[self.GOVERNANCE] = True
+        fake.call_raw_results[(self.VAULT, "utilization", ())] = 4000
+        _patch_helpers(self, fake)
+
+        result = scorers.score_flock_credit_vault(FakeW3())
+        util_notes = [n for n in result["notes"] if n.startswith("utilization()")]
+        self.assertEqual(len(util_notes), 1)
+        self.assertNotIn("DISCLOSED", util_notes[0])
+        # the setYieldVestingPeriod disclosure is unconditional, independent of live utilization
+        self.assertTrue(any("setYieldVestingPeriod" in n for n in result["notes"]))
+
+    def test_governance_now_a_contract_scores_40_with_warning(self):
+        fake = self._base_fake(self.GOVERNANCE)
+        fake.eoa_results[self.GOVERNANCE] = False
+        _patch_helpers(self, fake)
+
+        result = scorers.score_flock_credit_vault(FakeW3())
+        self.assertEqual(
+            (result["adminKeyScore"], result["multisigScore"], result["timelockScore"]),
+            (40, 0, 0),
+        )
+        self.assertTrue(any("WARNING: governance() is now a contract" in n for n in result["notes"]))
+
+    def test_governance_unresolved_fails_closed_to_40(self):
+        fake = self._base_fake(governance=None)
+        _patch_helpers(self, fake)
+
+        result = scorers.score_flock_credit_vault(FakeW3())  # must not raise
+        self.assertEqual(
+            (result["adminKeyScore"], result["multisigScore"], result["timelockScore"]),
+            (40, 0, 0),
+        )
+        self.assertTrue(any("WARNING: governance() did not resolve this run" in n for n in result["notes"]))
+
+    def test_registered_in_simple_scorers(self):
+        self.assertIn(scorers.score_flock_credit_vault, scorers.SIMPLE_SCORERS)
+
+
 if __name__ == "__main__":
     unittest.main()

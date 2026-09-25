@@ -2849,6 +2849,106 @@ def score_orvex_v4_vault(w3: Web3) -> dict:
     return _safe_rooted_entry(w3, ORVEX_V4_VAULT, "Orvex V4 Vault (Robinhood Chain)", owner, notes)
 
 
+# ---------------------------------------------------------------------------
+# Independent verification pass, 2026-09-25 -- new target found outside the
+# usual DefiLlama-adapter rotation-audit sweep.
+# ---------------------------------------------------------------------------
+
+FLOCK_CREDIT_VAULT = "0xd42174d3Db28B0fA2BD25381c3521b18AE9dB490"
+
+
+def score_flock_credit_vault(w3: Web3) -> dict:
+    """Flock Credit Vault on Robinhood Chain (chain 4663) -- independent
+    verification pass, 2026-09-25. Sourcify-verified (`FlockCreditVault`) --
+    NOT an illegible stub, contrary to what an earlier pass assumed before
+    this one re-checked it. Address and every fact below are from that
+    independent research, not re-derived from zero here.
+
+    Unlike every other vault tracked in this file, this one exposes NEITHER
+    `owner()` NOR `pause()`/`paused()` -- both revert. Its one real authority
+    surface is `governance()`, read live below. Confirmed a plain bare EOA
+    (0 bytecode) that is genuinely active (high nonce, recent transfers), not
+    a dormant or vanity address. Transfer is 2-step
+    (`transferGovernance()`/`acceptGovernance()`), which only protects
+    against a mistyped destination -- there is NO timelock/delay on the
+    transfer itself, so the same key can hand control to a new address
+    instantly with no notice window.
+
+    A single bare EOA, no multisig, no delay, holding the vault's ONLY admin
+    surface -- there is no second role (no owner(), no pause()) to compare it
+    against, so this is the standalone lone-EOA case already scored 5/0/0 for
+    `score_t3tris_vault()` and the `single_key`-without-`same_key` branch of
+    `score_saffron_vault_factory()`, not the same-key 2/0/0
+    (`score_curve_dex()`/`score_snuggle_maxfi_vault()`: two roles collapsing
+    into one key) -- there is only one role here to begin with -- and not the
+    principal-moving bottom-of-band 2/0/0 either (`score_orvex_v4_vault()`:
+    that one required an explicit eth_call simulation confirming the EOA
+    could move vault reserves through a specific function; no such check has
+    been done here, so this docstring claims nothing beyond what's known).
+
+    `totalAssets()` read live below for THIS vault only, ~$69.3k at time of
+    this pass -- not the ~$340.7k protocol-wide figure an earlier pass used,
+    which folds in a second vault plus non-vault collateral.
+
+    DISCLOSED, not scored -- two facts about the scored protocol's OWN
+    deployed code, not something this oracle's adminKey/multisig/timelock
+    methodology penalizes a score for: (1) `setYieldVestingPeriod()` never
+    assigns its argument, confirmed by eth_call simulation -- the relevant
+    storage does not change after the call, i.e. the setter is a no-op
+    regardless of who calls it; (2) `utilization()`/`cap()` (read live below)
+    were 9160/8000 at time of this pass -- already above its own configured
+    ceiling. Grepped `signer_overlap.py` for the vault and governance
+    addresses before adding this entry: neither appears in any other tracked
+    group."""
+    vault = FLOCK_CREDIT_VAULT
+    notes = []
+
+    governance = read_address_getter(w3, vault, "governance")
+    notes.append(f"governance() = {governance} (vault has neither owner() nor pause()/paused() -- this is the only admin surface)")
+
+    total_assets = call_raw(w3, vault, _UINT256_GETTER("totalAssets"), "totalAssets")
+    notes.append(f"totalAssets() = {total_assets} (this vault only, not the protocol-wide figure)")
+
+    utilization = call_raw(w3, vault, _UINT256_GETTER("utilization"), "utilization")
+    cap = call_raw(w3, vault, _UINT256_GETTER("cap"), "cap")
+    over_cap = utilization is not None and cap is not None and utilization > cap
+    notes.append(
+        f"utilization() = {utilization}, cap() = {cap}"
+        + (" -- DISCLOSED, not scored: already above its own configured cap" if over_cap else "")
+    )
+    notes.append(
+        "DISCLOSED, not scored: setYieldVestingPeriod() never assigns its argument (confirmed by "
+        "eth_call simulation -- the relevant storage does not change after the call). A fact about "
+        "the scored protocol's own deployed code, not this oracle's admin-key/multisig/timelock "
+        "methodology."
+    )
+
+    if governance is None:
+        admin_key = 40
+        notes.append("WARNING: governance() did not resolve this run -- re-score by hand, do not trust this default")
+    else:
+        controller_is_eoa = is_eoa(w3, governance)
+        notes.append(f"governance {governance}: bare EOA = {controller_is_eoa}")
+        if controller_is_eoa:
+            admin_key = 5  # standalone lone-EOA convention (score_t3tris_vault()/score_saffron_vault_factory()'s single_key branch) -- no second role here to make this a same-key 2
+        else:
+            admin_key = 40
+            notes.append("WARNING: governance() is now a contract -- re-score by hand, do not trust this default")
+    multisig = 0
+    timelock_score = 0  # 2-step transfer guards a typo'd destination, not a delay -- no timelock on the transfer itself
+
+    return {
+        "target": vault,
+        "label": "Flock Credit Vault (Robinhood Chain)",
+        "adminKeyScore": admin_key,
+        "multisigScore": multisig,
+        "timelockScore": timelock_score,
+        "oracleAuthorityScore": 100,
+        "compositeScore": _composite(admin_key, multisig, timelock_score),
+        "notes": notes,
+    }
+
+
 SIMPLE_SCORERS = [
     score_morpho_steakhouse_usdg,
     score_uniswap_v3_factory,
@@ -2883,6 +2983,7 @@ SIMPLE_SCORERS = [
     score_orvex_v2_pair_factory,
     score_orvex_v4_pool_manager,
     score_orvex_v4_vault,
+    score_flock_credit_vault,
 ]
 
 LONGBOW_TARGETS = [

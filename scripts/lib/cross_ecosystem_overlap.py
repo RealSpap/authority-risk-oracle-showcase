@@ -237,7 +237,21 @@ ETHEREUM_L1_GROUPS = {
     "eigenlayer": {
         "targets": ["0x858646372CC42E1A627fcE94aa7A7033e7CF075A"],
         "known_eoa": [],
-        "safes": ["0x369e6F597e22EaB55fFb173C6d9cD234BD699111", "0xFEA47018D632A77bA579846c840d5706705Dc598"],
+        # ADDED 2026-09-25: StrategyManager.pauserRegistry() -> isPauser() resolves a THIRD root, a
+        # 1-of-7 Safe (`0x5050389572f2d220ad927CcbeA0D406831012390`) never previously registered --
+        # a single signature on this Safe can pause the whole contract, disclosed the same day in
+        # chains/ethereum-l1/scorers.py's score_eigenlayer_strategy_manager(). Added here so the
+        # sweep can find any of its 7 signers sitting on another tracked Safe.
+        "safes": ["0x369e6F597e22EaB55fFb173C6d9cD234BD699111", "0xFEA47018D632A77bA579846c840d5706705Dc598", "0x5050389572f2d220ad927CcbeA0D406831012390"],
+    },
+    # ADDED 2026-09-25: Convex Finance Booster, new Ethereum L1 target (chains/ethereum-l1/scorers.py::
+    # score_convex_finance_booster). Two intermediate owner contracts (BoosterOwner, sealed, 30-day
+    # forced delay; BoosterOwnerSecondary, unsealed) sit above the Safe -- only the Safe itself is a
+    # signer committee the sweep can compare, so only it is registered here.
+    "convex_finance": {
+        "targets": ["0xF403C135812408BFbE8713b5A23a04b3D48AAE31"],
+        "known_eoa": [],
+        "safes": ["0xa3C5A1e09150B75ff251c1a7815A07182c3de2FB"],
     },
     "rocket_pool": {
         "targets": ["0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46"],
@@ -319,6 +333,15 @@ ARBITRUM_GROUPS = {
         "targets": ["0x3c3d99FD298f679DBC2CEcd132b4eC4d0F5e6e72"],  # RoleStore
         "known_eoa": [],
         "safes": ["0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D"],  # TIMELOCK_MULTISIG holder, 5-of-8
+    },
+    # ADDED 2026-09-25: gTrade's Diamond's real binding constraint, found the same day -- a 10-hour
+    # OZ TimelockController (0x893FCf48...) whose PROPOSER/CANCELLER set includes a bare EOA plus two
+    # Safes, not the 3-day/14-day timelocks the target's docstring names up front. See
+    # chains/arbitrum-ecosystem/scorers.py's gTrade entry for the full derivation.
+    "gtrade_emergency_timelock": {
+        "targets": ["0xFF162c694eAA571f685030649814282eA457f169"],  # Diamond
+        "known_eoa": ["0x80Fd0AcCc8dA81b0852d2dCA17B5DdaB68f22253"],  # bare EOA, PROPOSER+CANCELLER
+        "safes": ["0xc07EEd650aB255190CA9766162CfB47cFDf72f3a", "0xe8997C502fCD0729B462FCA19A50cF0DAEA0cAB5"],
     },
     # ADDED 2026-09-20 (maintenance run) with score_gmx_v1_vault(). The second
     # Safe is deliberately the SAME address as gmx_timelock_multisig's: on GMX V1
@@ -687,3 +710,50 @@ MONAD_GROUPS = {
         "safes": ["0xc887455536CBD4e615B745e70CaCde15B3117e74"],
     },
 }
+
+# ADDED 2026-09-25 ("voit large" round 2, roadmap item 5): closes this project's own gap against the
+# differentiation README.md already claims over SolGov ("no cross-protocol signer-overlap
+# detection... crossExposureScore does") -- true of every OTHER tracked ecosystem, but Hyperliquid
+# had never been wired into this registry. NOT a key-format problem: HyperEVM is a standard EVM
+# chain, the same 0x/Gnosis-Safe address space every group above already uses (an earlier internal
+# research pass claimed Hyperliquid needed a "key-format normalization bridge" alongside
+# Solana/Zcash -- checked live before trusting it, and that claim was wrong; Solana/Zcash's
+# genuinely incompatible formats, base58 and shielded/transparent, are the real reason those two
+# stay out of scope, not Hyperliquid).
+#
+# Only the 4 HyperEVM-side targets that are REAL Gnosis Safes are in scope here -- most Hyperliquid
+# targets are HyperCore-native (a different, non-EVM multisig concept, `userToMultiSigSigners`, not
+# readable via safe_owners_and_threshold() at all). Every address below is the live root-role
+# holder (DEFAULT_ADMIN_ROLE or RoleRegistry.owner()), read 2026-09-25 via
+# chains/hyperliquid/scripts/methodology_test.py's own scorer functions, not guessed from a
+# docstring's prose description.
+HYPERLIQUID_GROUPS = {
+    "kinetiq_staking": {
+        # DEFAULT_ADMIN_ROLE + MANAGER_ROLE on both kHYPE StakingManager and kmHYPE
+        # HIP3StakingManager (chains/hyperliquid/scorers.py already folds THIS overlap within
+        # Hyperliquid itself via _apply_hyperevm_shared_root_exposure -- registered here for the
+        # separate cross-ECOSYSTEM question, does another chain's tracked target share a signer).
+        "targets": [],
+        "known_eoa": [],
+        "safes": ["0x18a82C968B992D28D4D812920Eb7B4305306f8F1"],  # 4-of-8
+    },
+    "para_staking_vault": {
+        "targets": [],
+        "known_eoa": [],
+        "safes": ["0x8D23a255656f4C8E26D1010e0Aa2B6D20885Ca91"],  # RoleRegistry.owner(), 1-of-1 (a bare single-owner Safe, not a bare EOA -- getOwners()/getThreshold() both resolve)
+    },
+    "ventuals_vhype": {
+        "targets": [],
+        "known_eoa": [],
+        "safes": ["0x72298a4cB6E571241331172FD90149D38fEAfE08"],  # RoleRegistry.owner() and OPERATOR_ROLE, 2-of-3
+    },
+    "sthype_liquid_staking": {
+        "targets": [],
+        "known_eoa": [],
+        "safes": ["0x97Dee0eA4CA10560F260a0f6F45BDC128A1d51F9"],  # DEFAULT_ADMIN_ROLE, 4-of-6
+    },
+}
+# Checked live 2026-09-25 (all 4 Safes' owner sets resolved and compared against every signer/EOA
+# already registered across the 7 other ecosystems this project tracks): NO overlap found. A real,
+# checked negative -- not "never looked", the exact distinction this project's own discipline
+# insists on (see check_cross_ecosystem_overlap.py's own docstring).

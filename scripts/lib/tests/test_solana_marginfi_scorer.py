@@ -1,38 +1,45 @@
 """
 Unit tests for `chains/solana/scorers.py::score_marginfi` (marginfi main
-lending group, added 2026-09-18/19).
+lending group, added 2026-09-18/19; third path added 2026-09-25).
 
 This is an ORCHESTRATION test, not a byte-decode test: `score_marginfi`'s
-own two full-power paths (program-upgrade authority, `MarginfiGroup.admin`)
-are exercised end to end by monkeypatching the `sol_read.read_program` /
-`sol_read.read_marginfi_group` / `sol_read.read_squads` primitives it calls
--- same convention as `test_drift_protocol.py` and
-`test_switchboard_on_demand.py` (patch the module-level `sol_read`
-reference `scorers.py` itself imported, accessible here as
-`solana.sol_read`, not a separately-loaded module object).
+own three full-power paths (program-upgrade authority, `MarginfiGroup.
+admin`, `MarginfiGroup.delegate_curve_admin`) are exercised end to end by
+monkeypatching the `sol_read.read_program` / `sol_read.read_marginfi_group`
+/ `sol_read.read_squads` primitives it calls -- same convention as
+`test_drift_protocol.py` and `test_switchboard_on_demand.py` (patch the
+module-level `sol_read` reference `scorers.py` itself imported, accessible
+here as `solana.sol_read`, not a separately-loaded module object).
 
 `sol_read.read_marginfi_group` already has dedicated byte-level decode
 coverage in `test_solana_defi_config_admins.py` (per this function's own
 task notes), so it is faked here at a high level (a plain dict return
-matching its documented `{"group": ..., "admin": ...}` shape) rather than
-re-built from new byte fixtures. `_score_full_power_path`'s own formula
-correctness (the "squads_v4"/"none" bands) is already tested elsewhere in
-this repo (`test_drift_protocol.py`, `test_switchboard_on_demand.py`,
+matching its documented shape) rather than re-built from new byte
+fixtures. `_score_full_power_path`'s own formula correctness (the
+"squads_v4"/"none" bands) is already tested elsewhere in this repo
+(`test_drift_protocol.py`, `test_switchboard_on_demand.py`,
 `test_solend_governance.py`) and is NOT re-tested here -- these tests only
 check that `score_marginfi` calls it with the right arguments, combines
-the two paths' outputs with `min()` per METHODOLOGY.md 6.2, and degrades/
-short-circuits on the right conditions.
+the three paths' outputs with `min()` per METHODOLOGY.md 6.2, and
+degrades/short-circuits on the right conditions.
+
+`delegate_curve_admin` (2026-09-25) defaults, in every test that doesn't
+target it specifically, to a DELIBERATELY very strong resolved band
+(9-of-9, 999999s delay) -- never the binding term in min(), so every
+pre-existing test's expected value keeps meaning exactly what it did
+before this path existed, the same "pin the other path strong" pattern
+`test_solana_raydium_scorer.py` already uses for its own two-path
+combination.
 
 One thing IS computed for real rather than faked: `sol_read.
 read_squads_vault` is a pure, deterministic, offline PDA derivation (no
 RPC call at all -- see its own docstring) of the Squads v4 vault-0 address
 for a given multisig account. Rather than guessing or hardcoding a vault
 address, these tests call the REAL function once at import time against
-the two multisig constants `score_marginfi` itself hardcodes
-(`UPGRADE_MS`, `ADMIN_MS`) to get the genuine expected vault addresses --
-the same two addresses already documented in `score_marginfi`'s own
-docstring (`J3oBkTkDXU3TcAggJEa3YeBZE5om5yNAdTtLVNXFD47` and
-`CYXEgwbPHu2f9cY3mcUkinzDoDcsSan7myh1uBvYRbEw`), confirmed to match below.
+the three multisig constants `score_marginfi` itself hardcodes
+(`UPGRADE_MS`, `ADMIN_MS`, `DELEGATE_MS`) to get the genuine expected
+vault addresses -- the same addresses already documented in
+`score_marginfi`'s own docstring, confirmed to match below.
 """
 import importlib.util
 import os
@@ -60,17 +67,20 @@ MARGINFI_PROGRAM = "MFv2hWf31Z9kbCa1snEPYctwafyhdvnV7FZnsebVacA"
 MAIN_GROUP = "4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8"
 UPGRADE_MS = "7FCPipJWVbPbdHymVt1gJYwKciakkJz5GahdQySemvHk"
 ADMIN_MS = "74QKjjvoSrq2cGqFzzQNN8ox3gomYS1mBwcLsbiYaH8j"
+DELEGATE_MS = "7VVPGwvWh37LyhL1tVm6pGUzm3S1u6p17H6ttT9ZEFex"
 
-# Real vault-0 PDAs of the two hardcoded multisig constants, computed via
+# Real vault-0 PDAs of the three hardcoded multisig constants, computed via
 # the REAL sol_read.read_squads_vault (pure offline derivation, no network)
 # rather than guessed -- these are the values `score_marginfi` requires an
 # "authority" to exactly equal for that path to resolve as MATCHED.
 UPGRADE_VAULT = solana.sol_read.read_squads_vault(UPGRADE_MS, 0)["vault"]
 ADMIN_VAULT = solana.sol_read.read_squads_vault(ADMIN_MS, 0)["vault"]
+DELEGATE_VAULT = solana.sol_read.read_squads_vault(DELEGATE_MS, 0)["vault"]
 
 # Docstring-documented, so cross-checked against score_marginfi's own text.
 assert UPGRADE_VAULT == "J3oBkTkDXU3TcAggJEa3YeBZE5om5yNAdTtLVNXFD47"
 assert ADMIN_VAULT == "CYXEgwbPHu2f9cY3mcUkinzDoDcsSan7myh1uBvYRbEw"
+assert DELEGATE_VAULT == "BACjgGYJYwVRRpnHJfcjykfkp2Xu118ghx5fYL1wgY7p"
 
 # A syntactically-unrelated pubkey-shaped string that is NOT either derived
 # vault -- used to exercise the mismatch/degrade branch.
@@ -92,6 +102,14 @@ def _squads(threshold, member_masks, time_lock_s=0):
     }
 
 
+# delegate_curve_admin's default fixture, used by every test below that doesn't target that
+# path itself: deliberately far stronger (9-of-9, 999999s delay) than anything else in this
+# file, so it is never the binding term in min() and every pre-existing test's own expected
+# value keeps meaning exactly what it did before this third path existed -- same "pin the
+# other path strong" pattern test_solana_raydium_scorer.py already uses.
+_STRONG_DELEGATE_SQUADS = _squads(threshold=9, member_masks=[6] * 9, time_lock_s=999_999)
+
+
 class ScoreMarginfiTestCase(unittest.TestCase):
     """Shared monkeypatch/restore scaffolding for the sol_read primitives
     `score_marginfi` calls -- patches `scorers.py`'s own module-level
@@ -108,14 +126,31 @@ class ScoreMarginfiTestCase(unittest.TestCase):
         solana.sol_read.read_marginfi_group = self._orig_read_marginfi_group
         solana.sol_read.read_squads = self._orig_read_squads
 
-    def _patch(self, upgrade_authority, group_admin, squads_by_pk):
+    def _patch(self, upgrade_authority, group_admin, squads_by_pk, delegate_curve_admin=DELEGATE_VAULT,
+               risk_admin=None, emode_admin=None, delegate_limit_admin=None, delegate_emissions_admin=None,
+               metadata_admin="MetadataAdminEOA1111111111111111111111111X"):
+        # risk_admin/emode_admin/delegate_limit_admin/delegate_emissions_admin default to
+        # whatever the caller passed for the field they mirror on the real chain (group_admin,
+        # delegate_curve_admin) -- matching the live-observed shape this fixture stands in for,
+        # not an arbitrary placeholder.
+        risk_admin = group_admin if risk_admin is None else risk_admin
+        emode_admin = group_admin if emode_admin is None else emode_admin
+        delegate_limit_admin = delegate_curve_admin if delegate_limit_admin is None else delegate_limit_admin
+        delegate_emissions_admin = delegate_curve_admin if delegate_emissions_admin is None else delegate_emissions_admin
+        squads_by_pk = dict(squads_by_pk)
+        squads_by_pk.setdefault(DELEGATE_MS, _STRONG_DELEGATE_SQUADS)
+
         def fake_read_program(url, pk):
             self.assertEqual(pk, MARGINFI_PROGRAM)
             return {"program": pk, "upgrade_authority": upgrade_authority}
 
         def fake_read_marginfi_group(url, pk):
             self.assertEqual(pk, MAIN_GROUP)
-            return {"group": pk, "admin": group_admin}
+            return {
+                "group": pk, "admin": group_admin, "risk_admin": risk_admin, "emode_admin": emode_admin,
+                "delegate_curve_admin": delegate_curve_admin, "delegate_limit_admin": delegate_limit_admin,
+                "delegate_emissions_admin": delegate_emissions_admin, "metadata_admin": metadata_admin,
+            }
 
         def fake_read_squads(url, pk):
             if pk in squads_by_pk:
@@ -158,7 +193,7 @@ class TestBothPathsResolveAndCombineViaMin(ScoreMarginfiTestCase):
         self.assertEqual(result["label"], "marginfi (main lending group)")
         self.assertEqual(result["oracleAuthorityScore"], 100)
         self.assertEqual(result["compositeScore"], solana._composite(*expected))
-        self.assertTrue(any("combined (min over both full-power paths" in n for n in result["notes"]))
+        self.assertTrue(any("combined (min over all three full-power paths" in n for n in result["notes"]))
 
     def test_subset_caveat_note_fires_when_upgrade_voters_subset_of_admin_voters(self):
         upgrade_sq = _squads(threshold=7, member_masks=[6] * 15)
@@ -211,7 +246,13 @@ class TestNoSubsetCaveatWhenVotersAreIndependent(ScoreMarginfiTestCase):
             squads_by_pk={UPGRADE_MS: upgrade_sq, ADMIN_MS: admin_sq},
         )
         result = solana.score_marginfi("unused-url")
-        expected_signers = {f"upgrade_member{i}" for i in range(3)} | {f"admin_member{i}" for i in range(3)}
+        # Union of all THREE paths' member keys -- the third (delegate_curve_admin) path uses
+        # this test's implicit _STRONG_DELEGATE_SQUADS default (see _patch), whose members are
+        # named member0..member8 by _squads()'s own naming convention.
+        expected_signers = (
+            {f"upgrade_member{i}" for i in range(3)} | {f"admin_member{i}" for i in range(3)}
+            | {m["key"] for m in _STRONG_DELEGATE_SQUADS["member_list"]}
+        )
         self.assertEqual(result["_signers"], expected_signers)
 
 
@@ -304,6 +345,105 @@ class TestMarginfiGroupAdminNoneIsNotTreatedAsRenounced(ScoreMarginfiTestCase):
             (result["adminKeyScore"], result["multisigScore"], result["timelockScore"]), expected)
         self.assertTrue(any("MarginfiGroup.admin" in n and "MISMATCH" in n for n in result["notes"]))
         self.assertFalse(any("MarginfiGroup.admin" in n and "renounced" in n for n in result["notes"]))
+
+
+class TestDelegateCurveAdminPath(ScoreMarginfiTestCase):
+    """The third full-power path added 2026-09-25: `MarginfiGroup.
+    delegate_curve_admin`, classified full-power per METHODOLOGY.md 6.2
+    (interest-rate curves are a risk parameter, the same category
+    `MarginfiGroup.admin`'s own docstring already cites)."""
+
+    def test_normal_resolution_feeds_the_third_path_into_the_combination(self):
+        # Upgrade and admin paths both pinned strong (matching the file's
+        # existing convention); delegate_curve_admin alone is the weak
+        # 2-of-4 real-world shape, so the final result must equal ITS OWN
+        # numbers, not the other two paths'.
+        strong_upgrade = _squads(threshold=8, member_masks=[6] * 10, time_lock_s=200_000)
+        strong_admin = _squads(threshold=8, member_masks=[6] * 10, time_lock_s=200_000)
+        weak_delegate = _squads(threshold=2, member_masks=[6] * 4)  # real live shape: 2-of-4, no delay
+        self._patch(
+            upgrade_authority=UPGRADE_VAULT, group_admin=ADMIN_VAULT,
+            squads_by_pk={UPGRADE_MS: strong_upgrade, ADMIN_MS: strong_admin, DELEGATE_MS: weak_delegate},
+            delegate_curve_admin=DELEGATE_VAULT,
+        )
+        result = solana.score_marginfi("unused-url")
+        expected_c = solana._score_full_power_path("squads_v4", threshold=2, voters=4, delay_s=0)
+        self.assertEqual(
+            (result["adminKeyScore"], result["multisigScore"], result["timelockScore"]), expected_c)
+        self.assertIn("member0", result["_signers"])  # weak_delegate's own members, via _squads()'s naming
+        self.assertTrue(any("delegate_curve_admin Squads v4: 2-of-4" in n for n in result["notes"]))
+
+    def test_delegate_curve_admin_mismatch_degrades_to_20_20_0(self):
+        # A delegate_curve_admin that does NOT match the offline-re-derived
+        # vault-0 of DELEGATE_MS must degrade, exactly like the other two
+        # paths' own mismatch branches -- even though upgrade/admin both
+        # resolve cleanly and strongly.
+        strong_upgrade = _squads(threshold=8, member_masks=[6] * 10, time_lock_s=200_000)
+        strong_admin = _squads(threshold=8, member_masks=[6] * 10, time_lock_s=200_000)
+        self._patch(
+            upgrade_authority=UPGRADE_VAULT, group_admin=ADMIN_VAULT,
+            squads_by_pk={UPGRADE_MS: strong_upgrade, ADMIN_MS: strong_admin},
+            delegate_curve_admin=UNRELATED_PUBKEY,
+        )
+        result = solana.score_marginfi("unused-url")
+        self.assertEqual(
+            (result["adminKeyScore"], result["multisigScore"], result["timelockScore"]), (20, 20, 0))
+        self.assertTrue(any("delegate_curve_admin" in n and "MISMATCH" in n for n in result["notes"]))
+
+
+class TestRiskAndEmodeAdminDisclosure(ScoreMarginfiTestCase):
+    """risk_admin/emode_admin are disclosed, not independently resolved
+    (re-resolving the same already-known vault would be a redundant RPC
+    round-trip for zero new information) -- but a future divergence from
+    `admin` must be flagged, not silently absorbed into the "identical"
+    note."""
+
+    def test_equal_to_admin_note_fires_when_risk_and_emode_admin_match(self):
+        upgrade_sq = _squads(threshold=7, member_masks=[6] * 15)
+        admin_sq = _squads(threshold=5, member_masks=[6] * 15 + [0, 1])
+        self._patch(
+            upgrade_authority=UPGRADE_VAULT, group_admin=ADMIN_VAULT,
+            squads_by_pk={UPGRADE_MS: upgrade_sq, ADMIN_MS: admin_sq},
+        )
+        result = solana.score_marginfi("unused-url")
+        self.assertTrue(any("risk_admin and emode_admin both equal MarginfiGroup.admin exactly" in n for n in result["notes"]))
+        self.assertFalse(any(n.startswith("WARNING: risk_admin") for n in result["notes"]))
+
+    def test_warning_note_fires_when_risk_admin_diverges_from_admin(self):
+        upgrade_sq = _squads(threshold=7, member_masks=[6] * 15)
+        admin_sq = _squads(threshold=5, member_masks=[6] * 15 + [0, 1])
+        self._patch(
+            upgrade_authority=UPGRADE_VAULT, group_admin=ADMIN_VAULT,
+            squads_by_pk={UPGRADE_MS: upgrade_sq, ADMIN_MS: admin_sq},
+            risk_admin=UNRELATED_PUBKEY,
+        )
+        result = solana.score_marginfi("unused-url")
+        self.assertTrue(any(n.startswith("WARNING: risk_admin") for n in result["notes"]))
+        self.assertFalse(any("risk_admin and emode_admin both equal MarginfiGroup.admin exactly" in n for n in result["notes"]))
+
+
+class TestBoundedFieldsDisclosureOnly(ScoreMarginfiTestCase):
+    """delegate_limit_admin/delegate_emissions_admin/metadata_admin are
+    disclosed as notes only, per METHODOLOGY.md 6.2's bounded class --
+    they must NEVER change adminKeyScore/multisigScore/timelockScore no
+    matter what value they hold, since score_marginfi never feeds them
+    into a `_score_full_power_path` call at all."""
+
+    def test_bounded_fields_appear_in_notes_and_never_affect_the_score(self):
+        upgrade_sq = _squads(threshold=7, member_masks=[6] * 15)
+        admin_sq = _squads(threshold=5, member_masks=[6] * 15 + [0, 1])
+        self._patch(
+            upgrade_authority=UPGRADE_VAULT, group_admin=ADMIN_VAULT,
+            squads_by_pk={UPGRADE_MS: upgrade_sq, ADMIN_MS: admin_sq},
+            metadata_admin="SomeBareEoaAddress1111111111111111111111X",
+        )
+        result = solana.score_marginfi("unused-url")
+        expected_a = solana._score_full_power_path("squads_v4", threshold=7, voters=15, delay_s=0)
+        expected_b = solana._score_full_power_path("squads_v4", threshold=5, voters=15, delay_s=0)
+        expected = tuple(min(a, b) for a, b in zip(expected_a, expected_b))
+        self.assertEqual(
+            (result["adminKeyScore"], result["multisigScore"], result["timelockScore"]), expected)
+        self.assertTrue(any("Bounded, disclosed not scored" in n and "SomeBareEoaAddress" in n for n in result["notes"]))
 
 
 if __name__ == "__main__":

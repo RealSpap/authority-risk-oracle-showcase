@@ -278,6 +278,61 @@ MORPHO_OWNERS = [_cs(a) for a in (
 )]
 
 
+# --- Morpho V1 vaults added 2026-09-25 (chains/base-ecosystem/scorers.py, commit 15543f2) -----
+# REAL (live-read 2026-09-25, see data/finding_2026-09-25-controller-concentration.md): the
+# threshold/owner-count of each Safe below and the KNOWN Steakhouse constants; individual owner
+# addresses are not written down anywhere -> SYNTHETIC, same convention as every other block above.
+GAUNTLET_VAULT = "0xeE8F4eC5672F09119b96Ab6fB59C27E1b7e44b61"
+GAUNTLET_OWNER_SAFE = _cs("0x" + "70" * 20)
+GAUNTLET_CURATOR_SAFE = _cs("0x" + "71" * 20)
+GAUNTLET_GUARDIAN_SAFE = _cs("0x" + "72" * 20)
+GAUNTLET_SHARED_OWNERS = _synthetic(7, 0x7200)  # REAL: all three roles share the SAME 7 signers
+
+SPARK_VAULT = "0x7BfA7C4f149E7415b73bdeDfe609237e29CBF34A"
+SPARK_OWNER_CONTRACT = _cs("0x" + "73" * 20)      # bespoke, not Ownable-shaped: owner()/owner() both unresolved
+SPARK_CURATOR_SAFE = _cs("0x" + "74" * 20)
+SPARK_GUARDIAN_SAFE = _cs("0x" + "75" * 20)
+SPARK_CURATOR_OWNERS = _synthetic(5, 0x7300)      # REAL: 3-of-5
+SPARK_GUARDIAN_OWNERS = _synthetic(5, 0x7400)     # REAL: disjoint from curator's, zero shared signers
+
+STEAKHOUSE_USDC_BASE_VAULT = "0xbeeF010f9cb27031ad51e3333f9aF9C6B1228183"
+GROVE_STEAKHOUSE_VAULT = "0xBeEf2d50B428675a1921bC6bBF4bfb9D8cF1461A"
+STEAKHOUSE_GUARDIAN_PLACEHOLDER = _cs("0x" + "76" * 20)  # read and disclosed in notes, never Safe-resolved or scored
+# REAL: the LITERAL constants chains/base-ecosystem/scorers.py compares owner()/curator() against
+# (COPY of the scorer's own constants, same convention as Moonwell's SENDER above).
+KNOWN_STEAKHOUSE_OWNER_SAFE = _cs("0x0A0e559bc3b0950a7e448F0d4894db195b9cf8DD")
+KNOWN_STEAKHOUSE_CURATOR_SAFE = _cs("0x827e86072B06674a077f592A531dcE4590aDeCdB")
+STEAKHOUSE_OWNER_OWNERS = _synthetic(9, 0x7500)   # REAL: 5-of-9 on Base
+STEAKHOUSE_CURATOR_OWNERS = _synthetic(6, 0x7600)  # REAL: 2-of-6 on Base
+
+
+def wire_morpho_vaults(fake):
+    """The 4 Morpho V1 vaults added 2026-09-25. Not covered by the module docstring's four
+    functions under test -- wired only so score_all() runs the full current target set without
+    tripping ReaderFake's strict 'unexpected read' check, same reasoning
+    wire_the_five_older_targets_that_are_not_under_test gives for the original five."""
+    fake.getters[(GAUNTLET_VAULT, "owner")] = GAUNTLET_OWNER_SAFE
+    fake.getters[(GAUNTLET_VAULT, "curator")] = GAUNTLET_CURATOR_SAFE
+    fake.getters[(GAUNTLET_VAULT, "guardian")] = GAUNTLET_GUARDIAN_SAFE
+    fake.safes[GAUNTLET_OWNER_SAFE] = (GAUNTLET_SHARED_OWNERS, 4)
+    fake.safes[GAUNTLET_CURATOR_SAFE] = (GAUNTLET_SHARED_OWNERS, 3)
+    fake.safes[GAUNTLET_GUARDIAN_SAFE] = (GAUNTLET_SHARED_OWNERS, 3)
+
+    fake.getters[(SPARK_VAULT, "owner")] = SPARK_OWNER_CONTRACT
+    fake.getters[(SPARK_OWNER_CONTRACT, "owner")] = None  # bespoke contract, not Ownable-shaped
+    fake.getters[(SPARK_VAULT, "curator")] = SPARK_CURATOR_SAFE
+    fake.getters[(SPARK_VAULT, "guardian")] = SPARK_GUARDIAN_SAFE
+    fake.safes[SPARK_CURATOR_SAFE] = (SPARK_CURATOR_OWNERS, 3)
+    fake.safes[SPARK_GUARDIAN_SAFE] = (SPARK_GUARDIAN_OWNERS, 3)
+
+    for vault in (STEAKHOUSE_USDC_BASE_VAULT, GROVE_STEAKHOUSE_VAULT):
+        fake.getters[(vault, "owner")] = KNOWN_STEAKHOUSE_OWNER_SAFE
+        fake.getters[(vault, "curator")] = KNOWN_STEAKHOUSE_CURATOR_SAFE
+        fake.getters[(vault, "guardian")] = STEAKHOUSE_GUARDIAN_PLACEHOLDER
+    fake.safes[KNOWN_STEAKHOUSE_OWNER_SAFE] = (STEAKHOUSE_OWNER_OWNERS, 5)
+    fake.safes[KNOWN_STEAKHOUSE_CURATOR_SAFE] = (STEAKHOUSE_CURATOR_OWNERS, 2)
+
+
 def _vector(r):
     return (r["adminKeyScore"], r["multisigScore"], r["timelockScore"],
             r["oracleAuthorityScore"], r["crossExposureScore"], r["compositeScore"])
@@ -1209,6 +1264,32 @@ PUBLISHED_READBACK = [
     ("0x498581fF718922c3f8e6A244956aF099B2652b2b", 80, 100, 75, 100, 100, 85),  # 7 Uniswap V4
     ("0xfBb21d0380beE3312B33c4353c8936a0F13EF26C", 65, 100, 50, 100, 100, 71),  # 8 Moonwell
 ]
+# PUBLISHED_READBACK above is pinned VERBATIM to the committed CSV (TestFixtureProvenance checks
+# this byte for byte) -- never edit it to reflect a later drift or a newly added target. Both go
+# in a SINCE_PUBLISHED-style override or, for genuinely new targets, a separate list instead; see
+# TIMELOCK_COMPOSITE_SINCE_PUBLISHED and MORPHO_VAULTS_READBACK below.
+
+# 2026-09-25: timelockScore capped at 60 for the pauseGuardian bypass (commit d6dca5e, same fix
+# already applied to test_base_ecosystem_scorers.py and test_arbitrum_ecosystem_scorers.py -- this
+# third fixture file was missed by that pass, found running the full suite before committing the
+# controller-concentration work below, not by re-reading that earlier diff). Column indices match
+# _vector()'s tuple: 2 = timelockScore, 5 = compositeScore.
+TIMELOCK_COMPOSITE_SINCE_PUBLISHED = {4: (60, 78)}
+
+# Added 2026-09-25 (commit 15543f2): the 4 new Morpho V1 vaults, appended at the end of
+# SIMPLE_SCORERS so the original 9 above keep their published indices 0-8 and PUBLISHED_READBACK
+# stays untouched. A SEPARATE list, not folded into PUBLISHED_READBACK, because these were never
+# on the 2026-09-19 CSV -- there is no historical row to pin, only today's live read (verified
+# directly against chains/base-ecosystem/scorers.py, 2026-09-25) reproduced by the SYNTHETIC wiring
+# in wire_morpho_vaults(). crossExposure 60 (not the standalone 80) on the two Steakhouse-rooted
+# vaults is _apply_intra_base_overlap() compounding their shared rootSafeOwners with EACH OTHER,
+# exercised here for the first time by this fixture, not asserted before.
+MORPHO_VAULTS_READBACK = [
+    (GAUNTLET_VAULT, 60, 65, 55, 100, 100, 60),                # 9 Gauntlet USDC Prime
+    (SPARK_VAULT, 60, 55, 75, 100, 100, 63),                   # 10 Spark USDC Vault
+    (STEAKHOUSE_USDC_BASE_VAULT, 70, 50, 75, 100, 60, 66),     # 11 Steakhouse USDC
+    (GROVE_STEAKHOUSE_VAULT, 70, 50, 75, 100, 60, 66),         # 12 Grove x Steakhouse USDC High Yield
+]
 
 # What the scorers return NOW where it differs from what was published on 2026-09-19 (PUBLISHED_READBACK stays
 # pinned to the committed CSV). 2026-09-20: the three Uniswap targets share one L1 Timelock root with 8 more tracked
@@ -1302,16 +1383,20 @@ class TestScoreAllPublishedReadback(unittest.TestCase):
         wire_forwarder(fake, UNI_V2_FACTORY, "feeToSetter")
         wire_forwarder(fake, UNI_V4_POOLMANAGER, "owner")
         wire_moonwell(fake)
+        wire_morpho_vaults(fake)
         return fake
 
     def test_all_nine_targets_reproduce_the_published_readback_in_oracle_index_order(self):
         results = self._run(self._wire_everything())
-        self.assertEqual([r["target"] for r in results], [row[0] for row in PUBLISHED_READBACK])
-        for i, (row, r) in enumerate(zip(PUBLISHED_READBACK, results)):
+        full_expected = PUBLISHED_READBACK + MORPHO_VAULTS_READBACK
+        self.assertEqual([r["target"] for r in results], [row[0] for row in full_expected])
+        for i, (row, r) in enumerate(zip(full_expected, results)):
             with self.subTest(index=i, label=r["label"]):
                 expected = list(row[1:])
                 if i in CROSS_EXPOSURE_SINCE_PUBLISHED:
                     expected[4] = CROSS_EXPOSURE_SINCE_PUBLISHED[i]  # crossExposure column
+                if i in TIMELOCK_COMPOSITE_SINCE_PUBLISHED:
+                    expected[2], expected[5] = TIMELOCK_COMPOSITE_SINCE_PUBLISHED[i]  # timelockScore, compositeScore columns
                 self.assertEqual(_vector(r), tuple(expected))
 
     def test_slipstream_and_aerodrome_notes_name_each_other_after_the_overlap_pass(self):

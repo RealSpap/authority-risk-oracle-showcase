@@ -831,7 +831,10 @@ class TestScoreCompoundV3CometArbitrumUsdc(unittest.TestCase):
     def test_closed_chain_scores_like_base_sibling(self):
         fake = FakeHelpers(); self._wire(fake); _patch_helpers(self, fake)
         r = scorers.score_compound_v3_comet_arbitrum_usdc(FakeW3())
-        self.assertEqual((r["adminKeyScore"], r["multisigScore"], r["timelockScore"], r["compositeScore"]), (75, 100, 65, 80))
+        # UPDATED 2026-09-25 (d6dca5e): a resolved pauseGuardian Safe (any Safe, wired by default in
+        # _wire above) now caps timelockScore at 60, not 65 -- matches L1's twin Comet scorer's own
+        # already-existing cap for the identical bypass shape. adminKeyScore/multisigScore unaffected.
+        self.assertEqual((r["adminKeyScore"], r["multisigScore"], r["timelockScore"], r["compositeScore"]), (75, 100, 60, 78))
 
     def test_pause_guardian_committee_shared_with_l1_and_base_folds_cross_exposure_to_80(self):
         # ADDED 2026-09-20 (real finding): the same 9-signer 5-of-9 pauseGuardian committee sits on Ethereum L1 and Base.
@@ -840,7 +843,7 @@ class TestScoreCompoundV3CometArbitrumUsdc(unittest.TestCase):
         _patch_helpers(self, fake)
         r = scorers.score_compound_v3_comet_arbitrum_usdc(FakeW3())
         self.assertEqual(r["crossExposureScore"], 80)
-        self.assertEqual(r["compositeScore"], 80)  # unchanged: crossExposure is not a composite input
+        self.assertEqual(r["compositeScore"], 78)  # UPDATED 2026-09-25 (d6dca5e): timelockScore capped at 60, not 65; crossExposure is still not a composite input
         self.assertIn("IDENTICAL, as an exact set", " ".join(r["notes"]))
 
     def test_unrelated_or_unresolved_guardian_keeps_cross_exposure_100(self):
@@ -1143,10 +1146,203 @@ class TestScoreAllIncludesNewTargetsAfterExistingOnes(unittest.TestCase):
                                      "score_arbitrum_security_council_safe", "score_aave_v3_pool_arbitrum"])
         self.assertEqual(names[5:9], ["score_compound_v3_comet_arbitrum_usdc", "score_pendle_v2_arbitrum",
                                       "score_fluid_liquidity_arbitrum", "score_uniswap_v3_factory_arbitrum"])
-        # UPDATED 2026-09-20: the tenth target is appended LAST so the nine
-        # already pushed to the testnet oracle keep their trackedTargets()
-        # indices. Asserting the exact tail, not just a prefix, is the point.
-        self.assertEqual(names[9:], ["score_gmx_v1_vault"])
+        # UPDATED 2026-09-25: the tenth target (score_gmx_v1_vault) is still appended right after the nine
+        # already pushed to the testnet oracle, and the 3 targets added 2026-09-25 are appended LAST of all,
+        # so indices 0-9 keep their meaning. Asserting the exact tail, not just a prefix, is the point.
+        self.assertEqual(names[9:], ["score_gmx_v1_vault", "score_dolomite_margin_arbitrum",
+                                     "score_usdai_bridge_adapter_arbitrum", "score_gains_network_diamond_arbitrum"])
+
+
+# ------------------------------------------------------- Dolomite Margin (index 10)
+# ADDED 2026-09-25: closes the gap the 2026-09-20 scouting note left open ("Scouted,
+# traced, NOT scored") -- the DEFAULT_ADMIN_ROLE holder on DolomiteMargin.owner() is
+# now confirmed as a real 2-of-3 Safe, and owner().secondsTimeLocked() = 300s.
+class TestScoreDolomiteMarginArbitrum(unittest.TestCase):
+    MARGIN = "0x6Bd780E7fDf01D77e4d475c821f1e7AE05409072"
+    OWNER = ADDR_A
+    ADMIN_ROLE_HOLDER = "0xa75c21C5BE284122a87A37a76cc6C4DD3E55a1D4"
+    _KEEP = object()
+
+    def _wire(self, fake, owner=_KEEP, seconds_locked=300, has_role=True, safe=(2, 3)):
+        owner = self.OWNER if owner is self._KEEP else owner
+        fake.address_getters[(self.MARGIN, "owner")] = owner
+        if owner:
+            fake.call_raw_results[(owner, "secondsTimeLocked", ())] = seconds_locked
+            fake.call_raw_results[(owner, "hasRole", (b"\x00" * 32, self.ADMIN_ROLE_HOLDER))] = has_role
+        if safe and has_role:
+            th, n = safe
+            fake.safe_results[self.ADMIN_ROLE_HOLDER] = (_owners(n, start=1), th)
+
+    def _score(self, fake):
+        _patch_helpers(self, fake)
+        return scorers.score_dolomite_margin_arbitrum(FakeW3())
+
+    def test_live_shape_2_of_3_safe_with_300s_delay(self):
+        fake = FakeHelpers(); self._wire(fake)
+        r = self._score(fake)
+        self.assertEqual((r["adminKeyScore"], r["multisigScore"], r["timelockScore"]), (50, 35, 30))
+        self.assertEqual(r["compositeScore"], 40)
+        self.assertEqual(r["target"], self.MARGIN)
+
+    def test_a_day_or_longer_delay_would_score_the_full_band(self):
+        # Regression guard: confirms the 30/60 split is keyed on the 86400s threshold, not hardcoded to 300.
+        fake = FakeHelpers(); self._wire(fake, seconds_locked=86400)
+        r = self._score(fake)
+        self.assertEqual(r["timelockScore"], 60)
+
+    def test_no_delay_read_scores_timelock_zero(self):
+        fake = FakeHelpers(); self._wire(fake, seconds_locked=None)
+        r = self._score(fake)
+        self.assertEqual(r["timelockScore"], 0)
+
+    def test_owner_unread_is_conservative(self):
+        fake = FakeHelpers(); self._wire(fake, owner=None)
+        r = self._score(fake)
+        self.assertEqual((r["adminKeyScore"], r["multisigScore"], r["timelockScore"]), (20, 0, 0))
+
+    def test_admin_role_not_held_by_the_expected_safe_is_conservative(self):
+        fake = FakeHelpers(); self._wire(fake, has_role=False)
+        r = self._score(fake)
+        self.assertEqual((r["adminKeyScore"], r["multisigScore"], r["timelockScore"]), (20, 0, 0))
+
+    def test_admin_role_holder_not_a_safe_is_conservative(self):
+        fake = FakeHelpers(); self._wire(fake, safe=None)
+        r = self._score(fake)
+        self.assertEqual((r["adminKeyScore"], r["multisigScore"], r["timelockScore"]), (20, 0, 0))
+
+    def test_threshold_1_scores_weak(self):
+        fake = FakeHelpers(); self._wire(fake, safe=(1, 3))
+        r = self._score(fake)
+        self.assertEqual((r["adminKeyScore"], r["multisigScore"]), (10, 25))  # 1*15 + 2*5
+
+    def test_threshold_3_scores_strong(self):
+        fake = FakeHelpers(); self._wire(fake, safe=(3, 5))
+        r = self._score(fake)
+        self.assertEqual(r["adminKeyScore"], 65)
+
+    def test_does_not_reference_the_old_dead_pool_or_its_1day_delayed_multisig(self):
+        # Regression guard for the correction this closes: the OLD DelayedMultiSig
+        # (0xE412991F..., 86400s delay) governs a DIFFERENT, near-empty pool
+        # (0x6a769862...) and must never appear in this scorer's source.
+        import inspect
+        src = inspect.getsource(scorers.score_dolomite_margin_arbitrum)
+        self.assertNotIn("0xE412991Fb026df586C2f2F9EE06ACaD1A34f585B", src)
+        self.assertNotIn("0x6a76986201E1906eb8d887Bb4Ad74b55888617af", src)
+
+
+# ------------------------------------------------------- USD AI (index 11)
+# ADDED 2026-09-25: closes the gap the 2026-09-19 "considered, not added" note left
+# open -- the _bridgeAdapter's own owner() chain (a 3-of-3 Safe, no timelock) is now
+# traced, so the mint/burn authority is scored instead of skipped.
+class TestScoreUsdaiBridgeAdapterArbitrum(unittest.TestCase):
+    ADAPTER = "0xffA10065Ce1d1C42FABc46e06B84Ed8FfEb4baE5"
+    _KEEP = object()
+
+    def _wire(self, fake, owner=_KEEP, safe=(3, 3)):
+        owner = ADDR_A if owner is self._KEEP else owner
+        fake.address_getters[(self.ADAPTER, "owner")] = owner
+        if safe and owner:
+            th, n = safe
+            fake.safe_results[owner] = (_owners(n, start=1), th)
+
+    def _score(self, fake):
+        _patch_helpers(self, fake)
+        return scorers.score_usdai_bridge_adapter_arbitrum(FakeW3())
+
+    def test_live_shape_3_of_3_safe_no_timelock(self):
+        fake = FakeHelpers(); self._wire(fake)
+        r = self._score(fake)
+        self.assertEqual((r["adminKeyScore"], r["multisigScore"], r["timelockScore"]), (65, 45, 0))
+        self.assertEqual(r["compositeScore"], 40)
+        self.assertEqual(r["target"], self.ADAPTER)
+        self.assertIn(scorers._USDAI_UPGRADE_TIMELOCK, " ".join(r["notes"]))
+
+    def test_owner_unread_is_conservative(self):
+        fake = FakeHelpers(); self._wire(fake, owner=None)
+        r = self._score(fake)
+        self.assertEqual((r["adminKeyScore"], r["multisigScore"], r["timelockScore"]), (20, 0, 0))
+
+    def test_owner_not_a_safe_is_conservative(self):
+        fake = FakeHelpers(); self._wire(fake, safe=None)
+        r = self._score(fake)
+        self.assertEqual((r["adminKeyScore"], r["multisigScore"], r["timelockScore"]), (20, 0, 0))
+
+    def test_threshold_2_scores_medium(self):
+        fake = FakeHelpers(); self._wire(fake, safe=(2, 3))
+        r = self._score(fake)
+        self.assertEqual((r["adminKeyScore"], r["multisigScore"]), (50, 35))
+
+    def test_threshold_1_scores_weak(self):
+        fake = FakeHelpers(); self._wire(fake, safe=(1, 3))
+        r = self._score(fake)
+        self.assertEqual(r["adminKeyScore"], 10)
+
+
+# ------------------------------------------------------- Gains Network gTrade Diamond (index 12)
+# ADDED 2026-09-25: closes the gap the 2026-09-20 scouting note left open ("Left for
+# a next run rather than scored from one hop") -- the real weakest path is a 4th,
+# previously-missed GOV_EMERGENCY_TIMELOCK holder set: a bare EOA can propose alone,
+# only 10h stand between that and execution by the weaker of two Safes.
+class TestScoreGainsNetworkDiamondArbitrum(unittest.TestCase):
+    TIMELOCK = "0x893FCf48D56CE2e92AFB4a085941135243D5E75a"
+    SAFE_4_7 = "0xc07EEd650aB255190CA9766162CfB47cFDf72f3a"
+    SAFE_2_4 = "0xe8997C502fCD0729B462FCA19A50cF0DAEA0cAB5"
+    EOA = RealWeb3.to_checksum_address("0x80Fd0AcCc8dA81b0852d2dCA17B5DdaB68f22253")
+
+    def _wire(self, fake, delay=36000, proposers=None, executors=None, eoa_is_eoa=True):
+        proposers = {self.SAFE_4_7, self.SAFE_2_4, self.EOA} if proposers is None else proposers
+        executors = {self.SAFE_4_7, self.SAFE_2_4} if executors is None else executors
+        fake.call_raw_results[(self.TIMELOCK, "getMinDelay", ())] = delay
+        for a in (self.SAFE_4_7, self.SAFE_2_4, self.EOA):
+            fake.call_raw_results[(self.TIMELOCK, "hasRole", (RealWeb3.keccak(text="PROPOSER_ROLE"), a))] = a in proposers
+            fake.call_raw_results[(self.TIMELOCK, "hasRole", (RealWeb3.keccak(text="EXECUTOR_ROLE"), a))] = a in executors
+        fake.safe_results[self.SAFE_4_7] = (_owners(7, start=1), 4)
+        fake.safe_results[self.SAFE_2_4] = (_owners(4, start=100), 2)
+        fake.eoa_results[self.EOA] = eoa_is_eoa
+
+    def _score(self, fake):
+        _patch_helpers(self, fake)
+        return scorers.score_gains_network_diamond_arbitrum(FakeW3())
+
+    def test_live_shape_bare_eoa_is_the_weakest_proposer(self):
+        fake = FakeHelpers(); self._wire(fake)
+        r = self._score(fake)
+        self.assertEqual((r["adminKeyScore"], r["multisigScore"], r["timelockScore"]), (10, 0, 0))
+        self.assertEqual(r["compositeScore"], 4)
+        self.assertEqual(r["target"], scorers._GAINS_DIAMOND)
+        notes = " | ".join(r["notes"])
+        self.assertIn("36000s", notes)
+        self.assertIn("10h", notes)
+
+    def test_without_the_eoa_the_weaker_safe_sets_the_score(self):
+        fake = FakeHelpers(); self._wire(fake, proposers={self.SAFE_4_7, self.SAFE_2_4})
+        r = self._score(fake)
+        # weakest PROPOSER initiator is the 2-of-4 Safe: 50/40 (2*15 + 2*5).
+        self.assertEqual((r["adminKeyScore"], r["multisigScore"]), (50, 40))
+
+    def test_zero_delay_is_conservative(self):
+        fake = FakeHelpers(); self._wire(fake, delay=0)
+        r = self._score(fake)
+        self.assertEqual((r["adminKeyScore"], r["multisigScore"], r["timelockScore"]), (20, 0, 0))
+
+    def test_no_readable_proposer_is_conservative(self):
+        fake = FakeHelpers(); self._wire(fake, proposers=set())
+        r = self._score(fake)
+        self.assertEqual((r["adminKeyScore"], r["multisigScore"], r["timelockScore"]), (20, 0, 0))
+
+    def test_eoa_executor_membership_is_disclosed(self):
+        fake = FakeHelpers(); self._wire(fake, executors={self.SAFE_4_7, self.SAFE_2_4, self.EOA})
+        r = self._score(fake)
+        self.assertTrue(any("single-key finish" in n and ": True" in n for n in r["notes"]))
+        fake2 = FakeHelpers(); self._wire(fake2)
+        r2 = self._score(fake2)
+        self.assertTrue(any("single-key finish" in n and ": False" in n for n in r2["notes"]))
+
+    def test_admin_safe_timelock_admin_role_is_disclosed_not_scored(self):
+        fake = FakeHelpers(); self._wire(fake)
+        r = self._score(fake)
+        self.assertTrue(any("TIMELOCK_ADMIN_ROLE on all three" in n for n in r["notes"]))
+        self.assertEqual(r["compositeScore"], 4)  # disclosure only, no score change
 
 
 if __name__ == "__main__":

@@ -68,6 +68,23 @@ verified derivation and what remains open.
 re-confirmed at exactly zero open interest this pass), each scoutable the
 same way with `score_hip3_dex(name)` if a future sweep finds real usage.
 
+stHYPE liquid staking (`score_sthype_liquid_staking`, `methodology_test.py`)
+added 2026-09-25: a FOURTH HyperEVM-native target, `0xffaa4a3d97fe9107cef8
+a3f48c069f577ff76cc1` (NOT `0x94e8396e0869c9f2200760af0621afd240e1cf38`,
+which is `wstHYPE`, an ERC-4626 wrapper around it -- a same-day mislabel
+caught before this scorer was written). `defaultAdmin()` and `REBASER_ROLE`
+(held by an intermediary "Overseer V1" controller contract whose own
+`owner()` was checked live) both resolve to the SAME 4-of-6 Gnosis Safe,
+live-checked for signer overlap against Kinetiq's/HyperLend's/para's own
+root Safes (none found -- see the scorer's own docstring). CORRECTED before
+being written at all: today's proposed multisigScore=78/compositeScore=49
+read `key_score(4,6)` off METHODOLOGY.md 4.6's HyperCore-multisig example
+table, the wrong ladder for a REAL on-chain Gnosis Safe -- this project's
+own `_safe_rooted_scores_hyperevm` (already used by every other Safe-rooted
+HyperEVM target here, and the one `score_hyperlend_pooled`'s own docstring
+names for exactly this case) gives multisigScore=70, compositeScore=47
+instead; full derivation in the scorer's own docstring.
+
 HIP-4 outcome-market deployers (`out`, `txyz`, `skew`, live on mainnet, found
 2026-09-19) were sized and given a scorer the same day --
 `score_hip4_outcome_deployer(venue)` in `scripts/scoring_build_2026_09_19_hip4.py`,
@@ -94,7 +111,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "scripts"))
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "..", "scripts", "lib"))
 import abi_returndata_guard  # noqa: E402
 abi_returndata_guard.ensure_installed("raise")
-from methodology_test import score_hip3_dex, score_l1, score_kinetiq_staking_manager, score_para_staking_vault, score_ventuals_vhype_staking, admin_key_score, key_score, composite as _mt_composite  # noqa: E402
+from methodology_test import score_hip3_dex, score_l1, score_kinetiq_staking_manager, score_para_staking_vault, score_ventuals_vhype_staking, score_sthype_liquid_staking, admin_key_score, key_score, composite as _mt_composite  # noqa: E402
 from scoring_build_2026_09_18 import (  # noqa: E402
     score_kinetiq_khype_staking_manager, score_hlp_vault, score_unit_treasury,
     score_bridge2, score_hyperlend_pooled, kmhype_oracle_authority_correction,
@@ -386,6 +403,7 @@ SIMPLE_SCORERS = [
     score_kinetiq_staking_manager,
     score_para_staking_vault,
     score_ventuals_vhype_staking,
+    score_sthype_liquid_staking,
     # scoring_build additions, 2026-09-18:
     score_kinetiq_khype_staking_manager,
     score_hlp_vault,

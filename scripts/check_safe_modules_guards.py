@@ -15,7 +15,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
 from lib.cross_ecosystem_overlap import (  # noqa: E402
-    ARBITRUM_GROUPS, BASE_GROUPS, ETHEREUM_L1_GROUPS, MONAD_GROUPS, PLASMA_GROUPS, TEMPO_GROUPS,
+    ARBITRUM_GROUPS, BASE_GROUPS, ETHEREUM_L1_GROUPS, HYPERLIQUID_GROUPS, MONAD_GROUPS, PLASMA_GROUPS, TEMPO_GROUPS,
 )
 from lib.safe_modules import (  # noqa: E402
     KNOWN_ANALYSES, KNOWN_SINGLETON_ANALYSES, classify, classify_fallback_handler, classify_singleton,
@@ -42,10 +42,12 @@ RPC = {
     "plasma": "https://rpc.plasma.to",
     "monad": "https://rpc.monad.xyz",
     "tempo": "https://rpc.tempo.xyz",
+    "hyperliquid": "https://rpc.hyperliquid.xyz/evm",
 }
 GROUPS = {
     "robinhood": ROBINHOOD_GROUPS, "ethereum-l1": ETHEREUM_L1_GROUPS, "arbitrum": ARBITRUM_GROUPS,
     "base": BASE_GROUPS, "plasma": PLASMA_GROUPS, "monad": MONAD_GROUPS, "tempo": TEMPO_GROUPS,
+    "hyperliquid": HYPERLIQUID_GROUPS,
 }
 
 

@@ -519,9 +519,17 @@ class TestDefaultAdminRole(_Base):
 
 
 class TestRegistry(unittest.TestCase):
-    def test_horizon_is_last_so_the_existing_targets_keep_their_order(self):
-        self.assertIs(scorers.SIMPLE_SCORERS[-1], scorers.score_aave_v3_horizon_pool)
-        self.assertEqual(len(scorers.SIMPLE_SCORERS), 17)
+    # UPDATED 2026-09-25 (twice): score_convex_finance_booster was appended right after Horizon
+    # (its own tests live in chains/ethereum-l1/tests/test_new_targets_2026_09_25.py); then 4 more
+    # Morpho V1 vault scorers (commit 15543f2, same day) were appended after THAT -- found by
+    # running the full suite before committing the controller-concentration work, not by re-reading
+    # that earlier diff. Horizon and Convex both keep their relative order, just further from the
+    # end now; pinned by position from the end (-6, -5) rather than a hardcoded absolute count, so
+    # the next addition doesn't silently break this test's own assumption a second time.
+    def test_horizon_keeps_its_position_ahead_of_later_additions(self):
+        self.assertIs(scorers.SIMPLE_SCORERS[-6], scorers.score_aave_v3_horizon_pool)
+        self.assertIs(scorers.SIMPLE_SCORERS[-5], scorers.score_convex_finance_booster)
+        self.assertEqual(len(scorers.SIMPLE_SCORERS), 22)
 
 
 if __name__ == "__main__":

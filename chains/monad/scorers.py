@@ -555,9 +555,21 @@ _KNOWN_ROBINHOOD_STEAKHOUSE_OWNER_OWNERS_2026_09_19 = frozenset({
 
 
 def score_morpho_vault_monad(w3) -> dict:
-    """Morpho -- the largest MetaMorpho vault on Monad mainnet by TVL,
+    """Morpho -- the largest Morpho V1 (MetaMorpho) vault on Monad mainnet by TVL,
     "Grove x Steakhouse High Yield AUSD". Source: Morpho's official
     GraphQL API (blue-api.morpho.org), cross-checked live on-chain.
+
+    CORRECTED 2026-09-25 (roadmap item 10, "voit large" round 2 -- a documentation accuracy fix, not
+    a scoring change): this docstring used to say "the largest MetaMorpho vault on Monad mainnet by
+    TVL" and "the largest of only 26 vaults deployed on Monad", true only among V1 vaults.
+    `data/finding_2026-09-20-competitor-gaps-and-morpho-vault-layer.md`'s own research (18/19-09) found
+    Monad also has 6 Morpho Vault V2 vaults, created Jan-Jul 2026, holding **$110M combined** (Steakhouse
+    Prime ETH ~$47.4M, Hyperithm USDC Apex ~$39.8M, August USDC V2 ~$11.7M, +3 more) -- roughly 1,000x
+    this V1 vault's TVL. NOT tracked by this scorer or any other in this file: Vault V2 has a
+    materially different authority architecture (per-function timelocks, permanently abdicated exit
+    gates, no single `guardian()`) that the owner/curator/guardian model below cannot represent without
+    inventing a new scoring approach -- a genuine calibration decision, not attempted this pass. See
+    `data/finding_2026-09-25-vault-v2-scoring-scope.md` for what building that would require.
 
     Confirmed live, 2026-09-19, https://rpc.monad.xyz: the Morpho Blue
     singleton itself (0xD5D960E8C380B724a48AC59E2DfF1b2CB4a1eAee -- NOT
@@ -568,8 +580,9 @@ def score_morpho_vault_monad(w3) -> dict:
     (immutable-once-created) underlying markets. This scorer targets the
     vault itself, where the operationally relevant risk actually sits:
     vault (0x32841A8511D5c2c5b253f45668780B99139e476D, ~$108K TVL, the
-    largest of only 26 vaults deployed on Monad as of this pass -- a very
-    early-stage deployment) has `owner()` = a real 5-of-8 Gnosis Safe, and
+    largest V1 vault of only 26 V1 vaults deployed on Monad as of the
+    2026-09-19 pass -- a very early-stage V1 deployment, separate from the
+    much larger V2 vaults above) has `owner()` = a real 5-of-8 Gnosis Safe, and
     `curator()` = `guardian()` = the SAME separate 2-of-6 Gnosis Safe --
     confirmed live via two independent getter calls returning an identical
     address, not assumed from a shared name.
@@ -587,19 +600,36 @@ def score_morpho_vault_monad(w3) -> dict:
 
     Real cross-chain finding, added 2026-09-19 after wiring Monad into
     `scripts/check_cross_ecosystem_overlap.py`: this vault's curator Safe
-    (2-of-6) is a full subset of Robinhood Chain's own "steakhouse"
-    curator Safe (3-of-7, `scripts/lib/signer_overlap.py`
-    `GROUPS["steakhouse"]`), and its owner Safe (5-of-8) is a full subset
-    of Robinhood Chain's own "steakhouse" owner Safe (5-of-10,
-    `GROUPS["ethena_steakhouse"]`/`["steakhouse_turbo"]`/
-    `["grove_steakhouse"]`) -- independently re-confirmed live against
-    both chains, not assumed from a shared "Steakhouse"-branded name.
-    Steakhouse Financial curating vaults on multiple chains with largely
-    the same team is a plausible, legitimate operating pattern for a
-    professional curator firm -- but it also means the same small group of
-    individuals is the real, exploitable choke point for this vault AND
-    at least 3 separate Robinhood Chain Morpho vaults this oracle already
-    tracks."""
+    is a full subset of Robinhood Chain's own "steakhouse" curator Safe
+    (3-of-7, `scripts/lib/signer_overlap.py` `GROUPS["steakhouse"]`), and
+    its owner Safe is a full subset of Robinhood Chain's own "steakhouse"
+    owner Safe (5-of-10, `GROUPS["ethena_steakhouse"]`/
+    `["steakhouse_turbo"]`/`["grove_steakhouse"]`) -- independently
+    re-confirmed live against both chains, not assumed from a shared
+    "Steakhouse"-branded name. Steakhouse Financial curating vaults on
+    multiple chains with largely the same team is a plausible, legitimate
+    operating pattern for a professional curator firm -- but it also means
+    the same small group of individuals is the real, exploitable choke
+    point for this vault AND at least 3 separate Robinhood Chain Morpho
+    vaults this oracle already tracks.
+
+    STRONGER FINDING, confirmed 2026-09-25 while building
+    `scripts/check_controller_concentration.py`: this vault's owner
+    (`0x0A0e559bc3b0950a7e448F0d4894db195b9cf8DD`) and curator/guardian
+    (`0x827e86072B06674a077f592A531dcE4590aDeCdB`) are not merely
+    subset-related to Robinhood Chain's committee -- they are the LITERAL
+    SAME Safe addresses as this pass's own new Ethereum L1 and Base
+    Steakhouse vaults (`_KNOWN_STEAKHOUSE_OWNER_SAFE_2026_09_25` /
+    `_KNOWN_STEAKHOUSE_CURATOR_SAFE_2026_09_25` in `chains/ethereum-l1/
+    scorers.py` and `chains/base-ecosystem/scorers.py`). A same-address
+    Safe is NOT synced across chains, though: live-read 2026-09-25, the
+    owner Safe is 5-of-10 on Ethereum L1, 5-of-9 on Base and 5-of-8 here on
+    Monad; the curator Safe is 2-of-7 on Ethereum L1 and Monad but 2-of-6
+    on Base -- each chain's copy has its own, independently-set owner list
+    (this docstring previously said 2-of-6/5-of-8 as if those were fixed
+    values; they are this chain's current reading, not a global constant).
+    See `data/finding_2026-09-25-controller-concentration.md` for the
+    full cross-chain controller rollup this discovery fed into."""
     vault = "0x32841A8511D5c2c5b253f45668780B99139e476D"
     notes = []
 
@@ -863,6 +893,11 @@ _KNOWN_AAVE_GUARDIAN_OWNERS_2026_09_17 = frozenset({
 # gate. The Executor holds DEFAULT_ADMIN and can revoke it; the Safe cannot grant roles.
 # CHANGED 2026-09-20: this seat is now SCORED by score_aave_v3_monad() (Safe-no-timelock rule,
 # read live from the ACLManager), no longer notes-only.
+# EXTENDED 2026-09-25: the same 7 signers were confirmed live on 13 MORE chains beyond the 5 this
+# project tracks (Avalanche, Optimism, Polygon, BNB, Celo, Gnosis, Linea, Mantle, Metis, Scroll,
+# Sonic, XLayer, Soneium -- 18 of ~19 real Aave V3 deployments checked share this exact committee).
+# See chains/ethereum-l1/scorers.py's own _KNOWN_AAVE_PROTOCOL_GUARDIAN_OWNERS_2026_09_20 (the
+# canonical copy of this comment) and data/finding_2026-09-25-aave-guardian-18-chains.md.
 _MONAD_AAVE_PROTOCOL_GUARDIAN_SAFE = "0xc887455536CBD4e615B745e70CaCde15B3117e74"
 
 

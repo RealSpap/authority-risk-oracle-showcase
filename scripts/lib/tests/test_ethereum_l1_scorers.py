@@ -354,6 +354,96 @@ class TestScoreAaveV3Pool(unittest.TestCase):
         self.assertEqual(result["adminKeyScore"], 20)
 
 
+# ADDED 2026-09-25: the same "[backlog note]" gap already
+# closed for score_aave_v3_horizon_pool, applied here for the first time -- this scorer had
+# checked isEmergencyAdmin on two hardcoded addresses only, with no discovery mechanism. Purely
+# additive: the discovery block never touches admin_key/multisig/timelock_score, only `notes`.
+class TestScoreAaveV3PoolRoleDiscovery(unittest.TestCase):
+    def _base_fake(self):
+        fake = FakeHelpers()
+        fake.call_raw_results[(PROVIDER, "owner", ())] = EXECUTOR
+        fake.call_raw_results[(EXECUTOR, "owner", ())] = PAYLOADS_CONTROLLER
+        fake.call_raw_results[(PAYLOADS_CONTROLLER, "getExecutorSettingsByAccessControl", (1,))] = (EXECUTOR, 86400)
+        fake.call_raw_results[(PAYLOADS_CONTROLLER, "guardian", ())] = EXECUTOR
+        fake.call_raw_results[(ACL_MANAGER, "isEmergencyAdmin", (EXECUTOR,))] = False
+        fake.call_raw_results[(ACL_MANAGER, "isEmergencyAdmin", (PROTOCOL_GUARDIAN,))] = True
+        fake.safe_results[PROTOCOL_GUARDIAN] = (_owners(7), 4)
+        return fake
+
+    def _known_clean_replay(self):
+        return {
+            "POOL_ADMIN": {EXECUTOR.lower()},
+            "EMERGENCY_ADMIN": {PROTOCOL_GUARDIAN.lower()},
+            "RISK_ADMIN": set(scorers._MAIN_POOL_KNOWN_RISK_ADMIN),
+        }
+
+    def test_clean_replay_names_every_known_risk_admin_and_flags_no_extra(self):
+        fake = self._base_fake()
+        fake.replay_role_holders_result = self._known_clean_replay()
+        _patch_helpers(self, fake)
+
+        result = scorers.score_aave_v3_pool(FakeW3())
+        self.assertEqual(result["adminKeyScore"], 78)  # unaffected -- disclosure only
+        self.assertTrue(any("no POOL_ADMIN or EMERGENCY_ADMIN holder found beyond" in n for n in result["notes"]))
+        risk_note = next(n for n in result["notes"] if n.startswith("RISK_ADMIN"))
+        for name in scorers._MAIN_POOL_KNOWN_RISK_ADMIN.values():
+            self.assertIn(name, risk_note)
+        self.assertNotIn("UNNAMED", risk_note)
+
+    def test_extra_pool_admin_confirmed_by_hasrole_is_disclosed_but_does_not_move_the_score(self):
+        extra = RealWeb3.to_checksum_address("0x" + "9a" * 20)
+        fake = self._base_fake()
+        replay = self._known_clean_replay()
+        replay["POOL_ADMIN"] = replay["POOL_ADMIN"] | {extra.lower()}
+        fake.replay_role_holders_result = replay
+        fake.call_raw_results[(ACL_MANAGER, "hasRole", (scorers._acl_role("POOL_ADMIN"), extra))] = True
+        _patch_helpers(self, fake)
+
+        result = scorers.score_aave_v3_pool(FakeW3())
+        self.assertEqual(result["adminKeyScore"], 78)  # disclosure only, same as the clean case
+        self.assertTrue(any("Live role discovery found a POOL_ADMIN or EMERGENCY_ADMIN holder beyond" in n for n in result["notes"]))
+        self.assertTrue(any(extra.lower() in n for n in result["notes"]))
+
+    def test_extra_pool_admin_unconfirmed_by_hasrole_is_dropped_as_phantom(self):
+        # Same shape as Horizon's own "grant-then-revoke in a truncated window" defect: a raw
+        # "extra" from the replay must be hasRole-confirmed before being treated as real. No
+        # call_raw_results entry for hasRole(POOL_ADMIN, extra) -> FakeHelpers.call_raw defaults
+        # to None, not True -- must NOT be reported as a confirmed extra.
+        extra = RealWeb3.to_checksum_address("0x" + "9b" * 20)
+        fake = self._base_fake()
+        replay = self._known_clean_replay()
+        replay["POOL_ADMIN"] = replay["POOL_ADMIN"] | {extra.lower()}
+        fake.replay_role_holders_result = replay
+        _patch_helpers(self, fake)
+
+        result = scorers.score_aave_v3_pool(FakeW3())
+        self.assertFalse(any("Live role discovery found a POOL_ADMIN or EMERGENCY_ADMIN holder beyond" in n for n in result["notes"]))
+        self.assertTrue(any("phantom" in n and extra.lower() in n for n in result["notes"]))
+
+    def test_unnamed_risk_admin_holder_is_flagged_for_manual_review(self):
+        unnamed = RealWeb3.to_checksum_address("0x" + "9c" * 20)
+        fake = self._base_fake()
+        replay = self._known_clean_replay()
+        replay["RISK_ADMIN"] = replay["RISK_ADMIN"] | {unnamed.lower()}
+        fake.replay_role_holders_result = replay
+        _patch_helpers(self, fake)
+
+        result = scorers.score_aave_v3_pool(FakeW3())
+        risk_note = next(n for n in result["notes"] if n.startswith("RISK_ADMIN"))
+        self.assertIn("UNNAMED", risk_note)
+        self.assertIn(unnamed.lower(), risk_note)
+
+    def test_replay_failure_is_disclosed_and_does_not_crash_or_move_the_score(self):
+        fake = self._base_fake()
+        fake.replay_role_holders_raises = RuntimeError("log fetch failed")
+        _patch_helpers(self, fake)
+
+        result = scorers.score_aave_v3_pool(FakeW3())
+        self.assertEqual(result["adminKeyScore"], 78)
+        self.assertTrue(any("Live role-holder discovery" in n and "FAILED this run" in n for n in result["notes"]))
+        self.assertFalse(any(n.startswith("RISK_ADMIN") for n in result["notes"]))  # no claim made from a failed replay
+
+
 class TestAaveV3PayloadsGuardianCommitteeNote(unittest.TestCase):
     """PayloadsController.guardian() used to be only logged, never resolved; it is a
     5-of-9 Safe whose owners are identical to the Aave guardian committee on
@@ -1096,11 +1186,16 @@ class TestSimpleScorersList(unittest.TestCase):
     # UPDATED 2026-09-20: 12 -> 16 entries (Lido stETH, EigenLayer
     # StrategyManager, Curve Stableswap-NG factory, Rocket Pool RocketStorage;
     # branch tests in chains/ethereum-l1/tests/test_new_targets_2026_09_20.py).
+    # UPDATED 2026-09-25: 17 -> 18 entries (score_convex_finance_booster, appended last; its own tests
+    # live in chains/ethereum-l1/tests/test_new_targets_2026_09_25.py).
+    # UPDATED 2026-09-25 (later, same day): 18 -> 22 entries (4 Morpho V1 vault targets -- Adpend USDC,
+    # 1337 USDC, Steakhouse USDT, Steakhouse USDC -- Morpho vault layer, `data/finding_2026-09-20-
+    # competitor-gaps-and-morpho-vault-layer.md` backlog item 1, appended last).
     # This guard is deliberately an exact count AND an exact name set: it is the
     # one shared-file line an ecosystem worker has to touch when it adds a
     # target, which is exactly what makes an accidental addition visible.
-    def test_seventeen_entries_matching_module_functions(self):
-        self.assertEqual(len(scorers.SIMPLE_SCORERS), 17)
+    def test_twentytwo_entries_matching_module_functions(self):
+        self.assertEqual(len(scorers.SIMPLE_SCORERS), 22)
         names = {fn.__name__ for fn in scorers.SIMPLE_SCORERS}
         self.assertEqual(names, {
             "score_uniswap_v3_factory", "score_aave_v3_pool", "score_makerdao_sky_pause",
@@ -1109,7 +1204,9 @@ class TestSimpleScorersList(unittest.TestCase):
             "score_morpho_blue_l1", "score_wbtc",
             "score_lido_steth", "score_eigenlayer_strategy_manager",
             "score_curve_stableswap_ng_factory", "score_rocketpool_storage",
-            "score_aave_v3_horizon_pool",
+            "score_aave_v3_horizon_pool", "score_convex_finance_booster",
+            "score_morpho_adpend_usdc", "score_morpho_1337_usdc",
+            "score_morpho_steakhouse_usdt_l1", "score_morpho_steakhouse_usdc_l1",
         })
 
 

@@ -458,7 +458,10 @@ class TestScoreCompoundV3CometBaseUsdc(unittest.TestCase):
 
         r = scorers.score_compound_v3_comet_base_usdc(FakeW3())
         self.assertEqual(r["crossExposureScore"], 80)
-        self.assertEqual((r["adminKeyScore"], r["timelockScore"]), (75, 65))  # scores unchanged
+        # UPDATED 2026-09-25 (d6dca5e): timelockScore is now capped at 60, not 65, when the resolved
+        # pauseGuardian matches the known committee -- this test wires exactly that committee, so it
+        # must see the capped value, not the pre-fix uncapped one. adminKeyScore is unaffected.
+        self.assertEqual((r["adminKeyScore"], r["timelockScore"]), (75, 60))
         self.assertIn("IDENTICAL, as an exact set", " ".join(r["notes"]))
 
     def test_no_guardian_read_or_other_committee_keeps_cross_exposure_100(self):

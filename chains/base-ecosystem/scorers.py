@@ -564,14 +564,25 @@ def score_compound_v3_comet_base_usdc(w3) -> dict:
 
     pause_guardian = read_address_getter(w3, target, "pauseGuardian")
     pg = safe_owners_and_threshold(w3, pause_guardian) if pause_guardian else None
-    notes.append(f"Comet.pauseGuardian() = {pause_guardian} ({f'{pg[1]}-of-{len(pg[0])} Safe' if pg else 'not a Safe this run'}) -- pause-only path outside the timelock, disclosed, not scored")
+    notes.append(f"Comet.pauseGuardian() = {pause_guardian} ({f'{pg[1]}-of-{len(pg[0])} Safe' if pg else 'not a Safe this run'}) -- pause-only path outside the timelock")
     cross_ecosystem = bool(pg) and {o.lower() for o in pg[0]} == _KNOWN_COMPOUND_PAUSE_GUARDIAN_OWNERS_2026_09_20
     cross_exposure = 80 if cross_ecosystem else 100
     notes.append("Real cross-chain finding, independently re-confirmed 2026-09-20: this pauseGuardian Safe's 9 owners are IDENTICAL, as an exact set, to the pauseGuardian Safes of Compound V3 on Ethereum L1 (0xbbf3f142...) and Arbitrum (0x78E6317D...) at the same 5-of-9 (three different Safe addresses), so one committee can freeze three Comets. Folded into crossExposureScore as a flat 80 (dated snapshot _KNOWN_COMPOUND_PAUSE_GUARDIAN_OWNERS_2026_09_20 compared with the owners read this run, no second-chain RPC)." if cross_ecosystem else _CROSS_EXPOSURE_NOTE)
     chain_closed = bool(governor) and proxy_admin_owner == governor and bool(gov_timelock) and local_check == governor
     admin_key = 75 if chain_closed else 35
     multisig = 100  # not applicable: LocalTimelock/BaseBridgeReceiver pair is not a Safe
-    timelock_score = 65 if delay and delay > 0 else 0  # confirmed real 1-day LOCAL delay live; the L1 Compound Timelock's own delay is not queried by this Base-RPC scorer
+    if delay and delay > 0:
+        # FIXED 2026-09-25: was 65, uncapped, while chains/ethereum-l1/scorers.py's twin Comet
+        # scorer already caps this same real delay at 60 for the identical pauseGuardian bypass
+        # (a same-shaped Safe, same convention this ecosystem's own Fluid Liquidity guardian
+        # path already applies elsewhere) -- METHODOLOGY.md's own rule ("a confirmed bypass
+        # that is bounded... caps the score at 55") was applied on L1 but not here, an
+        # inconsistency found and verified 2026-09-25 (data/finding_2026-09-25-repo-wide-sweep.md).
+        # Same cap as L1, not the stricter 55, since the bypass shape (an identified Safe,
+        # instant pause, no fund redirect) is identical to what earned L1's Comet its 60.
+        timelock_score = 60 if pg else 65
+    else:
+        timelock_score = 0  # confirmed real 1-day LOCAL delay live; the L1 Compound Timelock's own delay is not queried by this Base-RPC scorer
 
     return {
         "target": target,
@@ -799,6 +810,210 @@ def score_moonwell_comptroller_base(w3) -> dict:
     }
 
 
+# ADDED 2026-09-25 (Morpho vault layer, `data/finding_2026-09-20-competitor-gaps-and-morpho-vault-layer.md`
+# backlog item 1 -- same pass as 4 new Ethereum L1 Morpho vault targets, see that file's own module-level
+# comment for the full context). Largest Morpho V1 vaults on Base above $20M TVL by Morpho's own public API
+# (blue-api.morpho.org, `chains/ethereum-l1/scripts/sweep_morpho_vault_owners.py --chains 8453`, re-read live
+# 2026-09-25), same `owner()`/`curator()`/`guardian()` read and same formula as `chains/monad/scorers.py::
+# score_morpho_vault_monad` and this pass's own Ethereum L1 Steakhouse vaults -- no new methodology.
+_KNOWN_STEAKHOUSE_OWNER_SAFE_2026_09_25 = "0x0A0e559bc3b0950a7e448F0d4894db195b9cf8DD"
+_KNOWN_STEAKHOUSE_CURATOR_SAFE_2026_09_25 = "0x827e86072B06674a077f592A531dcE4590aDeCdB"
+
+
+def score_morpho_gauntlet_usdc_prime_base(w3) -> dict:
+    """Morpho V1 (MetaMorpho) "Gauntlet USDC Prime" (Base) -- $415.7M by Morpho's API
+    2026-09-25, the largest Morpho vault on Base above $20M not already Steakhouse-curated.
+    Live-read `owner()`, `curator()` and `guardian()` resolve to THREE DIFFERENT Safe
+    addresses (4-of-7, 3-of-7, 3-of-7) -- but their owner SETS are IDENTICAL, the same 7
+    signers on all three, independently re-confirmed live this pass (matching `data/
+    finding_2026-09-20-...`'s own citation for this exact vault: "the three Safes have
+    exactly the same 7 signers... a guardian veto held by the same signers as the owner
+    and curator is not an independent check"). The 14-day curator timelock is real, but its
+    only independent check (the guardian) is nominal."""
+    vault = "0xeE8F4eC5672F09119b96Ab6fB59C27E1b7e44b61"
+    notes = []
+    owner = read_address_getter(w3, vault, "owner")
+    curator = read_address_getter(w3, vault, "curator")
+    guardian = read_address_getter(w3, vault, "guardian")
+    notes.append(f"vault.owner() = {owner}, vault.curator() = {curator}, vault.guardian() = {guardian}")
+    owner_safe = safe_owners_and_threshold(w3, owner) if owner else None
+    curator_safe = safe_owners_and_threshold(w3, curator) if curator else None
+    guardian_safe = safe_owners_and_threshold(w3, guardian) if guardian else None
+    if owner_safe and curator_safe and guardian_safe:
+        owner_owners, owner_threshold = owner_safe
+        curator_owners, curator_threshold = curator_safe
+        guardian_owners, _ = guardian_safe
+        notes.append(f"owner Safe: {owner_threshold}-of-{len(owner_owners)}, curator Safe: {curator_threshold}-of-{len(curator_owners)}, guardian Safe: {guardian_safe[1]}-of-{len(guardian_owners)}")
+        same_signers = {o.lower() for o in owner_owners} == {o.lower() for o in curator_owners} == {o.lower() for o in guardian_owners}
+        notes.append(
+            f"owner, curator and guardian Safes' signer sets are IDENTICAL: {same_signers} -- if true, the guardian's "
+            "veto during the curator's timelock is exercised by the same people who queued the change, not an "
+            "independent check, even though the three Safe contracts are genuinely distinct addresses"
+        )
+        admin_key = 70 if owner_threshold >= 5 else (60 if owner_threshold >= 3 else 30)
+        multisig = min(100, curator_threshold * 15 + max(0, len(curator_owners) - curator_threshold) * 5)
+        timelock_score = 55 if same_signers else 75  # same convention as score_morpho_vault_monad: a real delay whose only veto party is the same signers as the proposer scores well below one with an independent guardian
+        signers = set(owner_owners) | set(curator_owners) | set(guardian_owners)
+    else:
+        notes.append("owner/curator/guardian did not all resolve as Gnosis Safes this run -- conservative score")
+        admin_key, multisig, timelock_score = 20, 20, 0
+        signers = set()
+    notes.append(_CROSS_EXPOSURE_NOTE)
+    return {
+        "rootSafeOwners": list(owner_safe[0]) if owner_safe else [],
+        "target": vault,
+        "label": "Morpho V1: Gauntlet USDC Prime (Base)",
+        "adminKeyScore": admin_key,
+        "multisigScore": multisig,
+        "timelockScore": timelock_score,
+        "oracleAuthorityScore": 100,
+        "crossExposureScore": 100,
+        "compositeScore": _composite(admin_key, multisig, timelock_score),
+        "notes": notes,
+    }
+
+
+def score_morpho_spark_usdc_vault_base(w3) -> dict:
+    """Morpho V1 (MetaMorpho) "Spark USDC Vault" (Base) -- $312.0M by Morpho's API
+    2026-09-25. Live-read `owner()` is a bespoke 8,210-byte contract that answers neither
+    `owner()` nor `admin()` (not Ownable/proxy-admin shaped, not opened further this pass --
+    Spark's own custom relayer/allocator pattern, disclosed as an open point rather than
+    guessed at). `curator()` and `guardian()` ARE real, DIFFERENT Safes with NO shared
+    signers (5 of 5 each, zero overlap, independently re-confirmed live) -- a genuine,
+    verified role separation, the same shape `data/finding_2026-09-20-...` found for Yearn's
+    vaults ("one shared signer: a real separation") but here with none shared at all."""
+    vault = "0x7BfA7C4f149E7415b73bdeDfe609237e29CBF34A"
+    notes = []
+    owner = read_address_getter(w3, vault, "owner")
+    curator = read_address_getter(w3, vault, "curator")
+    guardian = read_address_getter(w3, vault, "guardian")
+    notes.append(f"vault.owner() = {owner}, vault.curator() = {curator}, vault.guardian() = {guardian}")
+    owner_inner = read_address_getter(w3, owner, "owner") if owner else None
+    notes.append(f"owner's own owner() = {owner_inner} -- unresolved, this contract is not a plain Ownable/proxy-admin shape, not opened further this pass (disclosed open point)")
+    curator_safe = safe_owners_and_threshold(w3, curator) if curator else None
+    guardian_safe = safe_owners_and_threshold(w3, guardian) if guardian else None
+    if curator_safe and guardian_safe:
+        curator_owners, curator_threshold = curator_safe
+        guardian_owners, guardian_threshold = guardian_safe
+        notes.append(f"curator Safe: {curator_threshold}-of-{len(curator_owners)}, guardian Safe: {guardian_threshold}-of-{len(guardian_owners)}")
+        shared = {o.lower() for o in curator_owners} & {o.lower() for o in guardian_owners}
+        notes.append(f"curator/guardian shared signers: {len(shared)} of {len(curator_owners)} -- {'a real, independent veto party' if not shared else 'partial overlap, not a fully independent check'}")
+        # owner() unresolved this pass -- score on the curator path alone (the timelocked cap-setting authority
+        # this project's own convention treats as the real operationally-relevant risk for a V1 vault), same
+        # reasoning score_morpho_vault_monad's own docstring already gives for why the vault, not Morpho Blue
+        # itself, is the scored target.
+        admin_key = 70 if curator_threshold >= 5 else (60 if curator_threshold >= 3 else 30)
+        multisig = min(100, curator_threshold * 15 + max(0, len(curator_owners) - curator_threshold) * 5)
+        timelock_score = 75 if not shared else 55
+        signers = set(curator_owners) | set(guardian_owners)
+    else:
+        notes.append("curator/guardian did not both resolve as Gnosis Safes this run -- conservative score")
+        admin_key, multisig, timelock_score = 20, 20, 0
+        signers = set()
+    notes.append(_CROSS_EXPOSURE_NOTE)
+    return {
+        "rootSafeOwners": list(curator_safe[0]) if curator_safe else [],
+        "target": vault,
+        "label": "Morpho V1: Spark USDC Vault (Base)",
+        "adminKeyScore": admin_key,
+        "multisigScore": multisig,
+        "timelockScore": timelock_score,
+        "oracleAuthorityScore": 100,
+        "crossExposureScore": 100,
+        "compositeScore": _composite(admin_key, multisig, timelock_score),
+        "notes": notes,
+    }
+
+
+def _score_steakhouse_base_vault(w3, vault, guardian_note_prefix):
+    """Shared read+score body for Steakhouse-curated Morpho V1 vaults on Base -- both use the
+    SAME owner Safe (`_KNOWN_STEAKHOUSE_OWNER_SAFE_2026_09_25`) and curator Safe
+    (`_KNOWN_STEAKHOUSE_CURATOR_SAFE_2026_09_25`) as this pass's own Ethereum L1 Steakhouse
+    vaults -- the LITERAL SAME ADDRESSES, not merely the same signer set at a different
+    address, live-confirmed on both chains this pass (owner 5-of-9 on Base vs 5-of-10 on
+    Ethereum, curator 2-of-6 on Base vs 2-of-7 on Ethereum -- matching `data/
+    finding_2026-09-20-...`'s own citation of these exact thresholds)."""
+    notes = []
+    owner = read_address_getter(w3, vault, "owner")
+    curator = read_address_getter(w3, vault, "curator")
+    guardian = read_address_getter(w3, vault, "guardian")
+    notes.append(f"vault.owner() = {owner}, vault.curator() = {curator}, vault.guardian() = {guardian}")
+    notes.append(f"{guardian_note_prefix} guardian() = {guardian}")
+    owner_matches = bool(owner) and owner.lower() == _KNOWN_STEAKHOUSE_OWNER_SAFE_2026_09_25.lower()
+    curator_matches = bool(curator) and curator.lower() == _KNOWN_STEAKHOUSE_CURATOR_SAFE_2026_09_25.lower()
+    if owner_matches and curator_matches:
+        owner_safe = safe_owners_and_threshold(w3, owner)
+        curator_safe = safe_owners_and_threshold(w3, curator)
+        if owner_safe and curator_safe:
+            owner_owners, owner_threshold = owner_safe
+            curator_owners, curator_threshold = curator_safe
+            notes.append(f"owner Safe: {owner_threshold}-of-{len(owner_owners)} (SAME ADDRESS as this pass's own Ethereum L1 Steakhouse vaults' owner Safe)")
+            notes.append(f"curator Safe: {curator_threshold}-of-{len(curator_owners)} (SAME ADDRESS as this pass's own Ethereum L1 Steakhouse vaults' curator Safe)")
+            admin_key = 70 if owner_threshold >= 5 else (60 if owner_threshold >= 3 else 30)
+            multisig = min(100, curator_threshold * 15 + max(0, len(curator_owners) - curator_threshold) * 5)
+            timelock_score = 75
+            notes.append(
+                "Same owner AND curator Safe address as this pass's own tracked Ethereum L1 Steakhouse vaults "
+                "(live-confirmed both chains 2026-09-25) -- cross-ecosystem finding, folded into crossExposureScore as a flat 80"
+            )
+            return admin_key, multisig, timelock_score, notes, set(owner_owners) | set(curator_owners), 80
+        notes.append("owner/curator matched the known Steakhouse Safe addresses, but getOwners()/getThreshold() did not resolve this run -- conservative score")
+    else:
+        notes.append("owner/curator did NOT match the known Steakhouse Safes this run -- Steakhouse may have rotated, re-verify before trusting the shared-controller finding above")
+    notes.append(_CROSS_EXPOSURE_NOTE)
+    return 20, 20, 0, notes, set(), 100
+
+
+def score_morpho_steakhouse_usdc_base(w3) -> dict:
+    """Morpho V1 (MetaMorpho) "Steakhouse USDC" (Base) -- $127.1M by Morpho's API 2026-09-25.
+    See `_score_steakhouse_base_vault`'s own docstring for the shared cross-chain owner/curator
+    Safe finding. `guardian()` resolves to a bare on-curve EOA, `0x9e0FdDDa790651E6a05CD2dE69e
+    624B94C04eAf5` -- a single key, not a Safe, holds the independent-veto seat for this vault's
+    14-day curator timelock (disclosed, not folded in: this project's own convention scores the
+    curator/guardian RELATIONSHIP -- shared signers or not -- not a bare-key guardian's own
+    strength, which no existing formula in this file covers)."""
+    vault = "0xbeeF010f9cb27031ad51e3333f9aF9C6B1228183"
+    admin_key, multisig, timelock_score, notes, owner_signers, cross_exposure = _score_steakhouse_base_vault(
+        w3, vault, "A bare on-curve EOA (not a Safe) holds this vault's guardian seat --")
+    return {
+        "rootSafeOwners": list(owner_signers) if owner_signers else [],
+        "target": vault,
+        "label": "Morpho V1: Steakhouse USDC (Base)",
+        "adminKeyScore": admin_key,
+        "multisigScore": multisig,
+        "timelockScore": timelock_score,
+        "oracleAuthorityScore": 100,
+        "crossExposureScore": cross_exposure,
+        "compositeScore": _composite(admin_key, multisig, timelock_score),
+        "notes": notes,
+    }
+
+
+def score_morpho_grove_steakhouse_usdc_high_yield_base(w3) -> dict:
+    """Morpho V1 (MetaMorpho) "Grove x Steakhouse USDC High Yield" (Base) -- $101.1M by
+    Morpho's API 2026-09-25, NOT listed on Morpho's own app (no red warnings recorded,
+    unlike Adpend/1337 USDC above -- simply not surfaced in the interface). See
+    `_score_steakhouse_base_vault`'s own docstring for the shared cross-chain owner/curator
+    Safe finding. `guardian()` resolves to an 8,113-byte contract, `0x491EDFB0B8b608044e227
+    225C715981a30F3A44E` -- not independently resolved to a Safe or opened this pass."""
+    vault = "0xBeEf2d50B428675a1921bC6bBF4bfb9D8cF1461A"
+    admin_key, multisig, timelock_score, notes, owner_signers, cross_exposure = _score_steakhouse_base_vault(
+        w3, vault, "A separate 8,113-byte contract (not independently resolved to a Safe or opened this pass) holds this vault's guardian seat --")
+    notes.append("Morpho API: NOT listed on Morpho's own app, no red warnings recorded -- disclosed context, not scored")
+    return {
+        "rootSafeOwners": list(owner_signers) if owner_signers else [],
+        "target": vault,
+        "label": "Morpho V1: Grove x Steakhouse USDC High Yield (Base)",
+        "adminKeyScore": admin_key,
+        "multisigScore": multisig,
+        "timelockScore": timelock_score,
+        "oracleAuthorityScore": 100,
+        "crossExposureScore": cross_exposure,
+        "compositeScore": _composite(admin_key, multisig, timelock_score),
+        "notes": notes,
+    }
+
+
 def _apply_intra_base_overlap(results) -> None:
     """ADDED 2026-09-19: crossExposureScore WITHIN Base's own tracked set, per
     the contract's own definition (-20 per OTHER tracked target sharing at
@@ -834,6 +1049,12 @@ SIMPLE_SCORERS = [
     score_uniswap_v2_factory_base,
     score_uniswap_v4_poolmanager_base,
     score_moonwell_comptroller_base,
+    # ADDED 2026-09-25 (Morpho vault layer, backlog item 1) -- appended, never reordered: the
+    # oracle's trackedTargets(i) index order is the first-push order.
+    score_morpho_gauntlet_usdc_prime_base,
+    score_morpho_spark_usdc_vault_base,
+    score_morpho_steakhouse_usdc_base,
+    score_morpho_grove_steakhouse_usdc_high_yield_base,
 ]
 
 

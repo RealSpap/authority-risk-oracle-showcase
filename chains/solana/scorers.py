@@ -932,9 +932,18 @@ def score_raydium(url) -> dict:
         notes.append(f"shared program upgrade Squads v4: {upgrade_sq['threshold']}-of-{upgrade_sq['members']} delay={upgrade_sq['time_lock_s']}s")
 
     idl = sol_read.read_anchor_idl(url, RAYDIUM_CLMM)
-    hardcoded = {(h["instruction"], h["account"]): h["address"] for h in idl["hardcoded_addresses"]}
-    admin_id = hardcoded.get(("update_amm_config", "owner"))
-    notes.append(f"CLMM on-chain Anchor IDL: update_amm_config.owner fixed address (admin::ID) = {admin_id}")
+    if idl is None:
+        # FIXED 2026-09-25: this used to crash score_all() outright (idl["hardcoded_addresses"] on None),
+        # skipping Raydium's score every run since sol_read.read_anchor_idl started returning None instead of
+        # raising for a genuinely absent on-chain IDL account -- verified live 2026-09-25, CLMM's derived IDL
+        # PDA (FbDNAPsgm8Y5jWXQkXjpfN6Bp8xHeRkhMmsstAooPyY9) resolves to null on mainnet-beta, unlike when this
+        # function was written 2026-09-17/18. Same degrade as "admin::ID not found", not a new failure mode.
+        admin_id = None
+        notes.append("CLMM has no on-chain Anchor IDL account this run (getAccountInfo -> null) -- can't read admin::ID off it")
+    else:
+        hardcoded = {(h["instruction"], h["account"]): h["address"] for h in idl["hardcoded_addresses"]}
+        admin_id = hardcoded.get(("update_amm_config", "owner"))
+        notes.append(f"CLMM on-chain Anchor IDL: update_amm_config.owner fixed address (admin::ID) = {admin_id}")
     if admin_id is None:
         admin_b, multisig_b, timelock_b = 20, 20, 0
         notes.append("admin::ID not found in the live on-chain IDL this run -- degraded rather than trusting a hardcoded citation")
@@ -968,7 +977,10 @@ def score_marginfi(url) -> dict:
     path than the upper bound assumed (which only had the program upgrade
     authority to go on).
 
-    Two full-power paths, both re-derived live every run:
+    Three full-power paths, all re-derived live every run (path 3 ADDED
+    2026-09-25, closing `sol_read.read_marginfi_group`'s own "SEVEN more
+    admin-named fields... not done this pass" disclosure -- see that
+    function's docstring for the byte-offset derivation):
 
       1. **Program upgrade authority** -- Squads v4 vault
          `J3oBkTkDXU3TcAggJEa3YeBZE5om5yNAdTtLVNXFD47` (vault 0 of
@@ -1004,22 +1016,40 @@ def score_marginfi(url) -> dict:
     were always read correctly), only the honesty of what "two paths"
     means here.
 
-    NOT decoded this pass (disclosed, not folded in -- see `sol_read.
-    read_marginfi_group`'s own docstring): SEVEN more admin-named fields
-    the same on-chain IDL lists on `MarginfiGroup` (`emode_admin`,
-    `delegate_curve_admin`, `delegate_limit_admin`, `delegate_emissions_
-    admin`, `risk_admin`, `metadata_admin`, `delegate_flow_admin`) --
-    their byte offsets depend on resolving several nested `defined` types
-    first (`FeeStateCache`, `PanicStateCache`, `WithdrawWindowCache`,
-    `GroupRateLimiter`), not done this pass. Per METHODOLOGY.md 6.2, any
-    of these could only LOWER the composite below what is published
-    here, never raise it -- this function's own output is itself still an
-    upper bound, now a tighter one than the original scouting pass, not a
-    final number."""
+    FIXED 2026-09-25 (closes the "NOT decoded this pass" gap above): six of
+    the seven further admin-named fields on the same on-chain IDL are now
+    decoded (`sol_read.read_marginfi_group`). `emode_admin`/`risk_admin`
+    both equal `admin` exactly, live-confirmed -- disclosed as notes, not a
+    fourth redundant path. `delegate_curve_admin` resolves to a THIRD,
+    genuinely separate Squads v4 multisig (`DELEGATE_MS`, found by testing
+    every account key of a real, live `LendingPoolConfigureBankInterestOnly`
+    transaction against its vault-0 PDA until one matched) -- classified
+    full-power per METHODOLOGY.md 6.2 (interest-rate curves are the same
+    "risk parameter" category `MarginfiGroup.admin`'s own full-power
+    classification already cites), folded into the per-dimension minimum
+    below. This DID lower the published composite, exactly as METHODOLOGY.md
+    6.2 said any of these fields only could. `delegate_limit_admin` and
+    `delegate_emissions_admin` (same vault as `delegate_curve_admin`) and
+    `metadata_admin` (a bare on-curve EOA) stay disclosed, not scored --
+    each is bounded by its own on-chain docstring to caps, emissions config,
+    or Bank metadata, never user funds or a risk parameter this file's own
+    6.2 classification would call full-power. `delegate_flow_admin` (past
+    `rate_limiter`, still not offset-resolved) stays open -- its own
+    docstring says a compromised holder "does not itself compromise any
+    funds", so leaving it undecoded costs nothing per 6.2's own bounded
+    class; the composite above is a tighter bound than before, still not
+    guaranteed final."""
     MARGINFI_PROGRAM = "MFv2hWf31Z9kbCa1snEPYctwafyhdvnV7FZnsebVacA"
     MAIN_GROUP = "4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8"
     UPGRADE_MS = "7FCPipJWVbPbdHymVt1gJYwKciakkJz5GahdQySemvHk"
     ADMIN_MS = "74QKjjvoSrq2cGqFzzQNN8ox3gomYS1mBwcLsbiYaH8j"
+    # ADDED 2026-09-25: MarginfiGroup.delegate_curve_admin's own Squads v4 multisig (config account,
+    # NOT the vault -- vault 0 of this multisig is BACjgGYJYwVRRpnHJfcjykfkp2Xu118ghx5fYL1wgY7p, found
+    # by testing every non-lookup-table account key in a real recent VaultTransactionExecute against
+    # this vault, not guessed: `getSignaturesForAddress` on the vault turned up a live
+    # LendingPoolConfigureBankInterestOnly call, cross-derived offline against every account key in
+    # that transaction until one's own vault-0 PDA matched).
+    DELEGATE_MS = "7VVPGwvWh37LyhL1tVm6pGUzm3S1u6p17H6ttT9ZEFex"
     notes = []
     signers = set()
 
@@ -1059,10 +1089,47 @@ def score_marginfi(url) -> dict:
                     "same governing body voting under a lower threshold, not an independent "
                     "second check, even though the two multisig accounts are genuinely distinct")
 
-    admin = min(admin_a, admin_b)
-    multisig = min(multisig_a, multisig_b)
-    timelock = min(timelock_a, timelock_b)
-    notes.append(f"combined (min over both full-power paths, METHODOLOGY.md 6.2): adminKey={admin} multisig={multisig} timelock={timelock}")
+    # ADDED 2026-09-25: closes score_marginfi's own "NOT decoded this pass" gap (sol_read.
+    # read_marginfi_group's prior docstring) for 6 of the 7 disclosed admin-named fields.
+    # risk_admin/emode_admin currently equal `admin` exactly (live-verified, not assumed) --
+    # informational only, re-resolving the SAME vault as a THIRD path would be a redundant RPC
+    # round-trip for zero new information, so this is a note, not a fourth call into
+    # _resolve_squads_v4.
+    if group["risk_admin"] == group_admin and group["emode_admin"] == group_admin:
+        notes.append("risk_admin and emode_admin both equal MarginfiGroup.admin exactly -- not a separate weaker path this run, disclosed rather than silently assumed")
+    else:
+        notes.append(f"WARNING: risk_admin ({group['risk_admin']}) or emode_admin ({group['emode_admin']}) now DIFFERS from admin ({group_admin}) -- was identical when this check was written 2026-09-25, re-verify before trusting the note above on a future run")
+
+    # delegate_curve_admin: "Can modify the fields in config.interest_rate_config... for every
+    # bank under this group" (on-chain IDL docstring) -- interest-rate curves are a risk
+    # parameter in METHODOLOGY.md 6.2's own full-power definition (the SAME category `admin`'s
+    # full-power classification already cites for this file: "bank risk configs, interest
+    # curves, etc."), not a bounded/bank-owned-balance case, so a SEPARATE, WEAKER multisig
+    # holding it is a genuine third full-power path, not a disclosed-only note.
+    notes.append(f"MarginfiGroup.delegate_curve_admin = {group['delegate_curve_admin']}")
+    curve_sq = _resolve_squads_v4(url, "MarginfiGroup.delegate_curve_admin", group["delegate_curve_admin"], DELEGATE_MS, notes)
+    if curve_sq is None:
+        admin_c, multisig_c, timelock_c = 20, 20, 0
+    else:
+        admin_c, multisig_c, timelock_c = _score_full_power_path(
+            "squads_v4", threshold=curve_sq["threshold"], voters=_voters_with_vote_permission(curve_sq), delay_s=curve_sq["time_lock_s"])
+        signers |= {m["key"] for m in curve_sq["member_list"]}
+        notes.append(f"MarginfiGroup.delegate_curve_admin Squads v4: {curve_sq['threshold']}-of-{curve_sq['members']} delay={curve_sq['time_lock_s']}s -- a THIRD, separate multisig, live-confirmed exercising this exact power (LendingPoolConfigureBankInterestOnly, via getSignaturesForAddress on its vault)")
+
+    # delegate_limit_admin/delegate_emissions_admin: bounded per their own docs ("but nothing
+    # else" -- caps and emissions-reward config only, no fund movement or risk-parameter reach),
+    # METHODOLOGY.md 6.2's bounded class -- disclosed, not folded in. metadata_admin: bounded to
+    # Bank metadata (cosmetic) and, live-verified, a bare on-curve EOA (no multisig at all).
+    same_as_curve = group["delegate_limit_admin"] == group["delegate_curve_admin"] and group["delegate_emissions_admin"] == group["delegate_curve_admin"]
+    notes.append(
+        f"Bounded, disclosed not scored (METHODOLOGY.md 6.2 -- reach limited to caps/emissions config, not user funds or risk parameters): "
+        f"delegate_limit_admin and delegate_emissions_admin {'both equal delegate_curve_admin' if same_as_curve else ('= ' + group['delegate_limit_admin'] + ' / ' + group['delegate_emissions_admin'] + ', DIFFER from delegate_curve_admin')}; "
+        f"metadata_admin = {group['metadata_admin']} (bare on-curve EOA, no multisig -- bounded to Bank metadata only, per its own docstring 'and nothing else')")
+
+    admin = min(admin_a, admin_b, admin_c)
+    multisig = min(multisig_a, multisig_b, multisig_c)
+    timelock = min(timelock_a, timelock_b, timelock_c)
+    notes.append(f"combined (min over all three full-power paths, METHODOLOGY.md 6.2): adminKey={admin} multisig={multisig} timelock={timelock}")
 
     return {
         "target": MAIN_GROUP, "label": "marginfi (main lending group)",
@@ -1104,18 +1171,29 @@ def score_kamino_liquidity(url) -> dict:
     down to the admin path's zero-delay band, since METHODOLOGY.md 6.2
     takes the minimum per DIMENSION, not per path as a whole.
 
-    NOT decoded this pass (disclosed, not folded in): `GlobalConfig.
+    CLOSED 2026-09-25 (was: "not chased this pass"): `GlobalConfig.
     actionsAuthority`, the field immediately BEFORE `adminAuthority` in
-    the same struct -- name suggests an operational/keeper role (compare
-    Hyperliquid's own MANAGER_ROLE-triggers-batch-processing pattern),
-    not chased this pass. `pendingAdmin` (a proposed-but-not-yet-accepted
-    transfer target, not a live authority) and `emergencyCouncil`/
-    `unfreezeAuthority` (named, by Kamino's own doc-comment on the
-    latter, as a "may only unset emergency/block flags" role -- restrict-
-    only per METHODOLOGY.md 6.2's own definition, not full-power) are
-    also present on this struct but not scored, matching this project's
-    existing convention of not force-fitting restrict-only paths into
-    the full-power minimum."""
+    the same struct, decoded (`sol_read.read_kliquidity_global_config`)
+    and checked against its real, live transaction history rather than
+    left as a name-based guess. It resolves to a bare on-curve EOA, which
+    WOULD have been a real, score-lowering full-power path (the same
+    class of finding marginfi's `delegate_curve_admin` turned out to be,
+    2026-09-25) if it exercised risk-parameter or fund-redirection power
+    -- it does not: 20 sampled recent transactions are exclusively
+    CollectFeesAndRewards/UpdateFeesAndRewards/CollectFeesV2/
+    CollectRewardV2/ClaimFee (harvesting already-accrued fees),
+    Invest/AddLiquidityByWeight (deploying already-deposited capital
+    within the strategy's own already-set price range) and
+    FlashSwapUnevenVaultsStart/.../End (rebalancing swaps within the
+    vault) -- a keeper/operational role per METHODOLOGY.md 6.2's bounded
+    class, confirmed rather than assumed, disclosed as a note. `pending
+    Admin` (a proposed-but-not-yet-accepted transfer target, not a live
+    authority) and `emergencyCouncil`/`unfreezeAuthority` (named, by
+    Kamino's own doc-comment on the latter, as a "may only unset
+    emergency/block flags" role -- restrict-only per METHODOLOGY.md 6.2's
+    own definition, not full-power) are also present on this struct but
+    not scored, matching this project's existing convention of not
+    force-fitting restrict-only paths into the full-power minimum."""
     KLIQUIDITY_PROGRAM = "6LtLpnUFNByNXLyCoK9wA2MykKAmQNZKBdY8s47dehDc"
     GLOBAL_CONFIG = "GKnHiWh3RRrE1zsNzWxRkomymHc374TvJPSTv2wPeYdB"
     UPGRADE_MS = "E7994UpSGhSpbpnuSepPXHBuMy3eRvHJL36DjTs1kb2b"
@@ -1139,6 +1217,16 @@ def score_kamino_liquidity(url) -> dict:
 
     gc = sol_read.read_kliquidity_global_config(url, GLOBAL_CONFIG)
     admin_authority = gc["admin_authority"]
+    # ADDED 2026-09-25: closes the "not chased this pass" open point on actionsAuthority.
+    # Live-checked, not guessed: getSignaturesForAddress on this exact key (20 recent
+    # transactions sampled) shows ONLY CollectFeesAndRewards/UpdateFeesAndRewards/
+    # CollectFeesV2/CollectRewardV2/ClaimFee (harvesting already-accrued fees),
+    # Invest/AddLiquidityByWeight (deploying already-deposited capital within the
+    # strategy's own already-set price range) and FlashSwapUnevenVaultsStart/.../End
+    # (rebalancing swaps within the vault) -- a keeper/operational role, never a risk-
+    # parameter or fund-redirection instruction, in every sampled transaction. Bounded
+    # per METHODOLOGY.md 6.2, disclosed rather than folded in.
+    notes.append(f"GlobalConfig.actionsAuthority = {gc['actions_authority']} (bare on-curve EOA) -- 20 recent transactions sampled, all keeper-type (CollectFeesAndRewards/Invest/FlashSwapUnevenVaults), bounded per METHODOLOGY.md 6.2, not scored")
     notes.append(f"GlobalConfig({GLOBAL_CONFIG}).adminAuthority = {admin_authority}")
     admin_sq = _resolve_squads_v4(url, "GlobalConfig.adminAuthority", admin_authority, ADMIN_MS, notes)
     if admin_sq is None:
@@ -1283,10 +1371,33 @@ def score_jupiter_lend(url) -> dict:
     never stronger, so this function's own output remains a valid (if
     possibly still-not-final) tighter bound.
 
-    NOT decoded this pass: the `AuthorizationList` account (`auth_users`/
-    `guardians` fields) this same program's IDL also defines -- name
-    suggests a possible restrict-only/emergency-response role, not
-    chased further."""
+    CLOSED 2026-09-25 (was: "NOT decoded this pass"): the `AuthorizationList`
+    account (`sol_read.read_jupiter_lend_authorization_list`), PDA
+    `b"auth_list"` per jup-ag/jupiter-lend's own published IDL. `auth_users`
+    has exactly one entry, the SAME already-scored `Liquidity.authority`
+    vault -- no new information. `guardians` has TWO: the same vault, plus
+    a genuinely NEW address (a separate off-curve, System-Program-owned
+    PDA -- live-confirmed via `VaultTransactionExecute` in its own recent
+    transaction history to be Squads-v4-vault-shaped, not a bare key).
+    Left DISCLOSED, not folded into the full-power minimum, for a reason
+    that is a real limit of this pass rather than a settled classification
+    either way: the on-chain program's Rust source is not public (only
+    `target/idl/liquidity.json` is, in jup-ag/jupiter-lend), so which
+    instructions actually gate on `guardians` specifically (as opposed to
+    `auth_users`) cannot be read from source -- only inferred from the
+    field's own name and the fact that `pause_token`/`pause_user`/
+    `unpause_token`/`unpause_user` are the only instructions in the IDL
+    whose own names suggest a pause-class (restrict-only per METHODOLOGY.md
+    6.2) role, matching this project's own Kamino emergencyCouncil/
+    unfreezeAuthority precedent. The new guardian address's 15 most recent
+    transactions never touch this program at all (a different, unrelated
+    protocol's `VaultTransactionExecute` calls, itself a real but separate
+    cross-signer observation, not chased further this pass) -- consistent
+    with an emergency-only role that simply has not fired recently, so
+    absence of a Jupiter-Lend-specific transaction is not itself evidence
+    either way, unlike Kamino's actionsAuthority (a routine keeper role
+    whose absence of any risk-parameter call across 20 sampled runs WAS
+    meaningful)."""
     LIQUIDITY_PROGRAM = "jupeiUmn818Jg1ekPURTpr4mFo29p46vygyykFJ3wZC"
     LIQUIDITY_ACCOUNT = "7s1da8DduuBFqGra5bJBjpnvL5E9mGzCuMk1Qkh4or2Z"
     UPGRADE_MS = "J3mJ3wz6xkVUk3T8qHnuAYNxsRH3ixHsryYNZAU2vG8P"
@@ -1319,6 +1430,15 @@ def score_jupiter_lend(url) -> dict:
             "squads_v4", threshold=admin_sq["threshold"], voters=_voters_with_vote_permission(admin_sq), delay_s=admin_sq["time_lock_s"])
         signers |= {m["key"] for m in admin_sq["member_list"]}
         notes.append(f"Liquidity.authority Squads v4: {admin_sq['threshold']}-of-{admin_sq['members']} delay={admin_sq['time_lock_s']}s -- a DIFFERENT multisig than the program upgrade authority")
+
+    # ADDED 2026-09-25: closes the "NOT decoded this pass" open point on AuthorizationList.
+    auth_list = sol_read.read_jupiter_lend_authorization_list(url, LIQUIDITY_PROGRAM)
+    new_guardians = [g for g in auth_list["guardians"] if g != liq_authority and g not in auth_list["auth_users"]]
+    notes.append(
+        f"AuthorizationList({auth_list['auth_list']}): auth_users={auth_list['auth_users']} (all already the scored Liquidity.authority -- no new information), "
+        f"guardians={auth_list['guardians']}"
+        + (f" -- {len(new_guardians)} beyond the scored authority: {new_guardians}, disclosed not scored (pause_token/pause_user/unpause_token/unpause_user are the only instructions this program's IDL names that look guardian-gated, restrict-only per METHODOLOGY.md 6.2; program source is not public, so this is not independently confirmed from the instruction handlers themselves)" if new_guardians else " (no entries beyond the already-scored authority)")
+    )
 
     admin = min(admin_a, admin_b)
     multisig = min(multisig_a, multisig_b)

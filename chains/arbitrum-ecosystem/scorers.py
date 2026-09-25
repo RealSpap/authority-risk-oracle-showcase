@@ -875,12 +875,24 @@ def score_compound_v3_comet_arbitrum_usdc(w3) -> dict:
     notes.append(f"ArbitrumBridgeReceiver.localTimelock() = {local_check} (closes back to governor: {loop_ok})")
     pause_guardian = read_address_getter(w3, target, "pauseGuardian")
     pg = safe_owners_and_threshold(w3, pause_guardian) if pause_guardian else None
-    notes.append(f"Comet.pauseGuardian() = {pause_guardian} ({f'{pg[1]}-of-{len(pg[0])} Safe' if pg else 'not a Safe this run'}) -- pause-only path outside the timelock, disclosed, not scored")
+    notes.append(f"Comet.pauseGuardian() = {pause_guardian} ({f'{pg[1]}-of-{len(pg[0])} Safe' if pg else 'not a Safe this run'}) -- pause-only path outside the timelock")
 
     chain_closed = same_root and receiver_ok and gov_ok and loop_ok
     admin_key = 75 if chain_closed else 35
     multisig = 100  # not applicable: LocalTimelock/bridge-receiver pair is not a Safe
-    timelock_score = 65 if (chain_closed and delay and delay > 0) else 0
+    if chain_closed and delay and delay > 0:
+        # FIXED 2026-09-25: was 65, uncapped, while chains/ethereum-l1/scorers.py's twin Comet
+        # scorer already caps this same real delay at 60 for the identical pauseGuardian bypass
+        # (a same-shaped Safe, same convention this file itself already applies to Fluid
+        # Liquidity's guardian path a few hundred lines below) -- METHODOLOGY.md's own rule
+        # ("a confirmed bypass that is bounded... caps the score at 55") was applied on L1 and
+        # to Fluid here, but not to this Comet, an inconsistency found and verified 2026-09-25
+        # (data/finding_2026-09-25-repo-wide-sweep.md). Same cap as L1, not the stricter 55,
+        # since the bypass shape (an identified Safe, instant pause, no fund redirect) is
+        # identical to what earned L1's Comet its 60, not a new, harsher case.
+        timelock_score = 60 if pg else 65
+    else:
+        timelock_score = 0
 
     cross_ecosystem = bool(pg) and {o.lower() for o in pg[0]} == _KNOWN_COMPOUND_PAUSE_GUARDIAN_OWNERS_2026_09_20
     cross_exposure = 80 if cross_ecosystem else 100
@@ -1329,6 +1341,280 @@ def _gmx_v1_result(admin_key, multisig, timelock_score, cross, notes):
     }
 
 
+# --------------------------------------------------------------------- ADDED 2026-09-25
+# 3 targets closed out by an independent verification pass that fixed open gaps this
+# file's own prior notes had left explicitly unscored (Dolomite's enumeration gap,
+# USD AI's untraced _bridgeAdapter, Gains Network's un-added 4th timelock holder).
+# See chains/arbitrum-ecosystem/data/scored_targets_2026-09-20-maintenance-gmx-v1.md
+# (Dolomite, Gains Network) and data/scored_targets_2026-09-19-maintenance.md (USD AI)
+# for the prior state each of these closes.
+_DOLOMITE_MARGIN = "0x6Bd780E7fDf01D77e4d475c821f1e7AE05409072"
+_SECONDS_TIME_LOCKED_ABI = [{"name": "secondsTimeLocked", "type": "function", "stateMutability": "view", "inputs": [], "outputs": [{"type": "uint256"}]}]
+
+
+def score_dolomite_margin_arbitrum(w3) -> dict:
+    """Dolomite Margin (Arbitrum) -- the live, active pool: 77 markets, DefiLlama
+    `dolomite` (`api.llama.fi/protocol/dolomite`) chainTvls.Arbitrum ~$25.94M
+    supplied / ~$11.49M borrowed (pulled 2026-09-25). Address source:
+    DefiLlama-Adapters `projects/dolomite/index.js`.
+
+    CLOSES a gap this ecosystem's own 2026-09-20 scouting note left open
+    (`data/scored_targets_2026-09-20-maintenance-gmx-v1.md`, "Scouted, traced,
+    NOT scored"): the enumeration of `DEFAULT_ADMIN_ROLE` holders on the owner
+    contract rested on a single RPC's `eth_getLogs`, so it wasn't scored. That
+    holder is now independently confirmed: `DolomiteMargin.owner()` =
+    `0xC2B66E24...` (Sourcify exact match, "DolomiteOwnerV2", AccessControl-based),
+    whose `DEFAULT_ADMIN_ROLE` is held by exactly one address, a Gnosis Safe
+    1.4.1, **2-of-3** (`0xa75c21C5...`). This is NOT the older `DelayedMultiSig`
+    `0xE412991F...` (1-day delay) that governs Dolomite's separate, near-empty
+    legacy pool `0x6a769862...` (6 markets, zero balances) -- a different, dead
+    pool this scorer does not read.
+
+    `owner()` itself answers `secondsTimeLocked()` = **300** (5 minutes): a
+    real, confirmed delay on the owner's own queued-execution path, but far
+    short of this project's 24h floor for full timelockScore credit (the same
+    `>= 86400` threshold `score_gmx_v1_vault`'s buffer check uses) -- scored
+    accordingly, not assumed protective just because a delay exists
+    (METHODOLOGY.md: "scored on the gap, not the presence of a timelock
+    somewhere")."""
+    target = _DOLOMITE_MARGIN
+    notes = []
+
+    owner = read_address_getter(w3, target, "owner")
+    notes.append(f"DolomiteMargin.owner() = {owner} (expected DolomiteOwnerV2 0xC2B66E247daE5Ee749Ae1d827190115F3653dE06)")
+
+    seconds_locked = call_raw(w3, owner, _SECONDS_TIME_LOCKED_ABI, "secondsTimeLocked") if owner else None
+    notes.append(f"owner().secondsTimeLocked() = {seconds_locked}s")
+
+    from web3 import Web3
+
+    admin_role_holder = Web3.to_checksum_address("0xa75c21C5BE284122a87A37a76cc6C4DD3E55a1D4")
+    has_admin_role = call_raw(w3, owner, _OZ_HAS_ROLE_ABI, "hasRole", b"\x00" * 32, admin_role_holder) if owner else None
+    notes.append(f"owner().hasRole(DEFAULT_ADMIN_ROLE, {admin_role_holder}) = {has_admin_role}")
+
+    safe = safe_owners_and_threshold(w3, admin_role_holder) if has_admin_role else None
+    if not (owner and has_admin_role and safe):
+        notes.append("DEFAULT_ADMIN_ROLE holder not confirmed as a Gnosis Safe this run -- conservative score")
+        admin_key, multisig, timelock_score = 20, 0, 0
+    else:
+        owners, threshold = safe
+        notes.append(f"DEFAULT_ADMIN_ROLE holder is a real Gnosis Safe: {threshold}-of-{len(owners)}")
+        admin_key = 65 if threshold >= 3 else (50 if threshold == 2 else 10)
+        multisig = min(100, threshold * 15 + max(0, len(owners) - threshold) * 5)
+        timelock_score = 60 if (seconds_locked and seconds_locked >= 86400) else (30 if seconds_locked else 0)
+        notes.append(
+            f"timelockScore {timelock_score}: {seconds_locked}s is a real, confirmed delay on the owner's own "
+            "queued-execution path, but far below the 24h floor this project credits with the full 60-75 band "
+            "(same threshold score_gmx_v1_vault's buffer check uses) -- a 5-minute window gives no one a real "
+            "chance to react."
+        )
+
+    notes.append(_CROSS_EXPOSURE_NOTE)
+    return {
+        "target": target,
+        "label": "Dolomite Margin (Arbitrum)",
+        "adminKeyScore": admin_key,
+        "multisigScore": multisig,
+        "timelockScore": timelock_score,
+        "oracleAuthorityScore": 100,
+        "crossExposureScore": 100,
+        "compositeScore": _composite(admin_key, multisig, timelock_score),
+        "notes": notes,
+    }
+
+
+_USDAI_BRIDGE_ADAPTER = "0xffA10065Ce1d1C42FABc46e06B84Ed8FfEb4baE5"
+_USDAI_UPGRADE_TIMELOCK = "0x0EEA1EE08611FF4A4E83bFE3916712751995639B"  # 48h -- upgrade-only, does not cover mint/burn
+
+
+def score_usdai_bridge_adapter_arbitrum(w3) -> dict:
+    """USD AI (`usd-ai`) mint/burn authority, Arbitrum -- DefiLlama
+    `api.llama.fi/protocol/usdai` chainTvls.Arbitrum ~$208.3M supplied /
+    ~$401.5M borrowed (pulled 2026-09-25; corrects this ecosystem's own
+    2026-09-19 "considered, not added" note, which read ~$307.2M --
+    `data/scored_targets_2026-09-19-maintenance.md`).
+
+    CLOSES the exact gap that note left open: "mint()/burn() are gated by an
+    immutable `_bridgeAdapter` that has no public getter, and its own
+    authority was not traced ... left out rather than scored with a gap in
+    its core path." That adapter is `0xffA10065...` (Sourcify exact match, a
+    LayerZero V2 `OAdapter`, plain `Ownable`), owned by a **3-of-3** Gnosis
+    Safe (`0x5F0BC72F...`, owners `0xe982B3f6...`/`0x986868C9...`/
+    `0xD1AFfE27...`), which ALSO holds `DEFAULT_ADMIN_ROLE` on the USDai token
+    itself (blacklist/pause) -- disclosed context from the same verification
+    pass, not re-checked live here (no full token address confirmed this
+    pass; the adapter's own `owner()` chain is what this scorer reads and
+    scores). The only delay this project has ever documented for USD AI, a
+    48h `TimelockController` (`0x0EEA1EE0...`), gates the EIP-1967 proxy
+    UPGRADE path only -- it does not sit in front of the adapter, so it does
+    not cover mint/burn, the action that actually matters here.
+
+    Live note (2026-09-25): `owner()` resolves to exactly the Safe above, but
+    this project's own module-authority gate (`scripts/lib/safe_modules.py`,
+    added 2026-09-21) currently finds one unanalyzed module on it
+    (`0x02878D80...`) and treats the whole Safe as UNRESOLVED authority until
+    that module is analyzed -- so this scorer reads a conservative (20, 0, 0)
+    live today, not the 65/45/0 the Safe's raw 3-of-3 owners/threshold alone
+    would suggest. That is this shared gate doing exactly what it is for
+    (METHODOLOGY.md), not a bug in this scorer; analyzing that module lifts
+    it automatically."""
+    target = _USDAI_BRIDGE_ADAPTER
+    notes = []
+
+    owner = read_address_getter(w3, target, "owner")
+    notes.append(f"_bridgeAdapter.owner() = {owner} (expected the mint/burn Safe 0x5F0BC72Fb5952b2F3f2E11404398Ed507B25841F)")
+
+    safe = safe_owners_and_threshold(w3, owner) if owner else None
+    if not safe:
+        notes.append(f"{owner}: NOT resolvable as a Gnosis Safe this run -- unresolved authority, conservative score")
+        admin_key, multisig, timelock_score = 20, 0, 0
+    else:
+        owners, threshold = safe
+        notes.append(f"owner is a real Gnosis Safe: {threshold}-of-{len(owners)}, no TimelockController in front of mint/burn")
+        admin_key = 65 if threshold >= 3 else (50 if threshold == 2 else 10)
+        multisig = min(100, threshold * 15 + max(0, len(owners) - threshold) * 5)
+        timelock_score = 0
+        notes.append(
+            "timelockScore 0: the only documented delay on USD AI, a 48h TimelockController "
+            f"({_USDAI_UPGRADE_TIMELOCK}), gates the proxy upgrade path only -- it is not in front of this "
+            "adapter, so it does not cover mint()/burn(), the action that actually matters here"
+        )
+
+    notes.append(_CROSS_EXPOSURE_NOTE)
+    return {
+        "target": target,
+        "label": "USD AI mint/burn authority (LayerZero OAdapter, Arbitrum)",
+        "adminKeyScore": admin_key,
+        "multisigScore": multisig,
+        "timelockScore": timelock_score,
+        "oracleAuthorityScore": 100,
+        "crossExposureScore": 100,
+        "compositeScore": _composite(admin_key, multisig, timelock_score),
+        "notes": notes,
+    }
+
+
+_GAINS_DIAMOND = "0xFF162c694eAA571f685030649814282eA457f169"
+_GAINS_GOV_EMERGENCY_TIMELOCK = "0x893FCf48D56CE2e92AFB4a085941135243D5E75a"
+_GAINS_SAFE_4_OF_7 = "0xc07EEd650aB255190CA9766162CfB47cFDf72f3a"
+_GAINS_SAFE_2_OF_4 = "0xe8997C502fCD0729B462FCA19A50cF0DAEA0cAB5"
+_GAINS_EOA_PROPOSER = "0x80fd0accC8Da81b0852d2Dca17b5DDab68f22253"
+
+
+def score_gains_network_diamond_arbitrum(w3) -> dict:
+    """Gains Network gTrade Diamond (Arbitrum) -- DefiLlama
+    `api.llama.fi/protocol/gains-network` chainTvls.Arbitrum ~$11.74M +
+    ~$1.63M staking (pulled 2026-09-25). This ecosystem's own 2026-09-20
+    scouting note found a 14-day-delay controller behind the Diamond's
+    upgrade path and left it "for a next run rather than scored from one hop"
+    (`data/scored_targets_2026-09-20-maintenance-gmx-v1.md`).
+
+    CLOSES that gap, and corrects what a shallower read would have scored:
+    the Diamond's upgrade surface is gated by TWO other OpenZeppelin
+    `TimelockController`s (a 14-day one for a full `diamondCut()` via
+    ProxyAdmin, and a 3-day `GOV_TIMELOCK`), but a THIRD, previously-missed
+    one is the real weakest link: `GOV_EMERGENCY_TIMELOCK` `0x893FCf48...`,
+    `getMinDelay()` = **36,000s (10 hours)**. Its `PROPOSER_ROLE` and
+    `CANCELLER_ROLE` are held by THREE parties: a 4-of-7 Safe
+    (`0xc07EEd65...`), a 2-of-4 Safe (`0xe8997C50...`) AND a bare EOA
+    (`0x80Fd0ACc...`, `eth_getCode` = `0x`). `EXECUTOR_ROLE` is held by the
+    two Safes only, not the EOA. The shortest real path to a full
+    `diamondCut()` is therefore: the bare EOA alone schedules, 10 hours pass,
+    the weaker 2-of-4 Safe executes -- shorter AND weaker than either the
+    3-day or the 14-day path, so THIS is what drives the score
+    (METHODOLOGY.md: "scored on the gap, not the presence of a timelock
+    somewhere"), not the 3d/14d delays a shallower read would cite.
+
+    Aggravating context, disclosed but not scored (it does not itself skip
+    the 10h delay on an already-scheduled call): the 4-of-7 Safe additionally
+    holds `TIMELOCK_ADMIN_ROLE` on all THREE timelocks (14d/3d/10h) and can
+    reassign who may propose or execute on any of them at will."""
+    from web3 import Web3
+
+    target = _GAINS_DIAMOND
+    timelock = _GAINS_GOV_EMERGENCY_TIMELOCK
+    notes = []
+
+    delay = call_raw(w3, timelock, _GET_MIN_DELAY_ABI, "getMinDelay")
+    notes.append(f"GOV_EMERGENCY_TIMELOCK {timelock}.getMinDelay() = {delay}s (expected 36000, 10h)")
+
+    # Defensively re-checksummed here, same as score_gmx_v2_rolestore's members() -- a hardcoded
+    # address passed as a *call argument* (not a contract address) must match EIP-55 exactly or
+    # eth_abi's encoder raises InvalidAddress, unlike the contract address itself which web3.py
+    # normalizes on its own.
+    candidates = [Web3.to_checksum_address(a) for a in (_GAINS_SAFE_4_OF_7, _GAINS_SAFE_2_OF_4, _GAINS_EOA_PROPOSER)]
+    proposer_role = Web3.keccak(text="PROPOSER_ROLE")
+    executor_role = Web3.keccak(text="EXECUTOR_ROLE")
+
+    proposer_flags = {a: call_raw(w3, timelock, _OZ_HAS_ROLE_ABI, "hasRole", proposer_role, a) for a in candidates}
+    executor_flags = {a: call_raw(w3, timelock, _OZ_HAS_ROLE_ABI, "hasRole", executor_role, a) for a in candidates}
+    notes.append(f"PROPOSER_ROLE holders: {proposer_flags}")
+    notes.append(f"EXECUTOR_ROLE holders: {executor_flags}")
+    notes.append(f"the bare EOA also holds EXECUTOR_ROLE (a single-key finish, not just a single-key start): {executor_flags.get(_GAINS_EOA_PROPOSER) is True}")
+
+    initiators = []
+    for a in candidates:
+        if proposer_flags.get(a) is not True:
+            continue
+        s = safe_owners_and_threshold(w3, a)
+        if s:
+            initiators.append((s[1], len(s[0]), a, "Safe"))
+        elif is_eoa(w3, a):
+            initiators.append((1, 1, a, "bare EOA"))
+        else:
+            initiators.append((0, 0, a, "unresolved contract"))
+    notes.append(
+        "PROPOSER initiators (can schedule(), then anyone with EXECUTOR_ROLE can execute after the delay): "
+        + ", ".join(f"{a} = {kind} {k}-of-{n}" for k, n, a, kind in initiators)
+    )
+    weakest = _weakest_key(initiators)
+
+    if not (delay and delay > 0 and weakest):
+        notes.append("authority path unresolved this run -- conservative score")
+        admin_key, multisig, timelock_score = 20, 0, 0
+    else:
+        k, n, weakest_addr, kind = weakest
+        notes.append(f"weakest PROPOSER initiator by (k, -n): {weakest_addr} ({kind}, {k}-of-{n})")
+        if kind == "bare EOA":
+            admin_key, multisig = 10, 0
+        elif kind == "unresolved contract":
+            admin_key, multisig = 20, 0
+        else:
+            admin_key = 65 if k >= 3 else (50 if k == 2 else 10)
+            multisig = min(100, k * 15 + max(0, n - k) * 5)
+
+        timelock_score = 0
+        notes.append(
+            f"timelockScore 0: {delay}s (10h) is a real, confirmed delay, but it gates a path a bare EOA can enter "
+            "alone with no committee check, and no INDEPENDENT party can veto it (CANCELLER_ROLE is held by that "
+            "same EOA plus the same two Safes that can also execute -- not a separate check). 10h is also under "
+            "this project's 24h floor for any non-zero timelockScore credit even in the best case (the same "
+            "threshold score_gmx_v1_vault's buffer check uses). This is the real weakest path to a full "
+            "diamondCut(), not the 3-day GOV_TIMELOCK or the 14-day ProxyAdmin upgrade path a shallower read "
+            "would score against."
+        )
+
+    notes.append(
+        f"aggravating, disclosed not scored: the 4-of-7 Safe ({_GAINS_SAFE_4_OF_7}) additionally holds "
+        "TIMELOCK_ADMIN_ROLE on all three of Gains Network's timelocks (14d/3d/10h) and can reassign who may "
+        "propose or execute on any of them at will -- it does not itself skip the 10h delay on an "
+        "already-scheduled call, so it is not folded into timelockScore, but the 10h path above is not even "
+        "the floor of what this Safe alone could reconfigure."
+    )
+    notes.append(_CROSS_EXPOSURE_NOTE)
+    return {
+        "target": target,
+        "label": "Gains Network gTrade Diamond (Arbitrum)",
+        "adminKeyScore": admin_key,
+        "multisigScore": multisig,
+        "timelockScore": timelock_score,
+        "oracleAuthorityScore": 100,
+        "crossExposureScore": 100,
+        "compositeScore": _composite(admin_key, multisig, timelock_score),
+        "notes": notes,
+    }
+
+
 SIMPLE_SCORERS = [
     score_gmx_v2_rolestore,
     score_camelot_ammv3_factory,
@@ -1345,6 +1631,12 @@ SIMPLE_SCORERS = [
     # ADDED 2026-09-20 (maintenance run): appended AFTER the 9 already-pushed
     # targets so trackedTargets() indices 0-8 keep meaning the same thing.
     score_gmx_v1_vault,
+    # ADDED 2026-09-25 (independent verification pass, 3 targets): appended
+    # AFTER the 10 already-pushed targets so trackedTargets() indices 0-9
+    # keep meaning the same thing.
+    score_dolomite_margin_arbitrum,
+    score_usdai_bridge_adapter_arbitrum,
+    score_gains_network_diamond_arbitrum,
 ]
 
 

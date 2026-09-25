@@ -101,6 +101,14 @@ def _safe_owners(w3, addr):
 #     docstring); ignored by cross_ecosystem_overlap.group_root_signers(), which
 #     only reads known_eoa/safes.
 GROUPS = {
+    # ADDED 2026-09-25: Flock Credit Vault, new target -- governance() is a bare, active EOA
+    # (no multisig, no timelock on the 2-step transfer itself). Registered so the sweep can
+    # find this EOA sitting on another tracked ecosystem's committee.
+    "flock_credit": {
+        "targets": ["0xd42174d3Db28B0fA2BD25381c3521b18AE9dB490"],
+        "known_eoa": ["0x097bA31b7ACffD75b909Fc7Bef2e55424D2Dacdc"],
+        "safes": [],
+    },
     "steakhouse": {
         "targets": ["0xBeEff033F34C046626B8D0A041844C5d1A5409dd"],
         "known_eoa": ["0x337feFE49514fb901eB455A501b8Be76CDeF7660"],

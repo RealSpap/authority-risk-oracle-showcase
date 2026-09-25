@@ -95,10 +95,10 @@ class _KaminoLiquidityScorerTestCase(unittest.TestCase):
         solana.sol_read.read_kliquidity_global_config = self._orig_read_gc
         solana.sol_read.read_squads = self._orig_read_squads
 
-    def _patch(self, upgrade_authority, admin_authority, squads_by_ms):
+    def _patch(self, upgrade_authority, admin_authority, squads_by_ms, actions_authority="ActionsAuthorityEOA111111111111111111111X"):
         solana.sol_read.read_program = lambda url, pk: {"upgrade_authority": upgrade_authority}
         solana.sol_read.read_kliquidity_global_config = lambda url, pk: {
-            "global_config": pk, "admin_authority": admin_authority}
+            "global_config": pk, "admin_authority": admin_authority, "actions_authority": actions_authority}
 
         def fake_read_squads(url, pk):
             return squads_by_ms[pk]

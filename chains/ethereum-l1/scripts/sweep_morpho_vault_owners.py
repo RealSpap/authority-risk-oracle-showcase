@@ -19,6 +19,7 @@ RPC = {1: ["https://ethereum-rpc.publicnode.com", "https://eth.drpc.org"], 8453:
 ap = argparse.ArgumentParser()
 ap.add_argument("--chains", default="1,8453")
 ap.add_argument("--min", type=float, default=None, help="minimum deposits in USD for both V1 and V2 (default: V1 2M, V2 1M)")
+ap.add_argument("--dump", default=None, help="write one JSON row per vault (owner and curator with their kind) for analyze_controllers.py")
 ARGS = ap.parse_args()
 CHAINS = [int(c) for c in ARGS.chains.split(",")]
 V1_MIN, V2_MIN = (ARGS.min, ARGS.min) if ARGS.min else (2000000, 1000000)
@@ -67,15 +68,22 @@ def kind(ch, a):
         h = own[2:]; k = int(h[64:128], 16)
         return ("Safe", int(thr, 16), ["0x" + h[128 + 64 * i + 24: 128 + 64 * (i + 1)] for i in range(k)])
     return (f"contract({n}B)", None, [])
+def curator_of(v):
+    o = rpc(v["chain"]["id"], "eth_call", [{"to": v["address"], "data": sel("curator()")}, "latest"])
+    return Web3.to_checksum_address("0x" + o[-40:]) if o else None
 with ThreadPoolExecutor(8) as ex: owners = list(ex.map(owner_of, vaults))
-uniq = sorted({(v["chain"]["id"], o) for v, o in zip(vaults, owners) if o})
+with ThreadPoolExecutor(8) as ex: curators = list(ex.map(curator_of, vaults))
+ZERO = "0x0000000000000000000000000000000000000000"
+uniq = sorted({(v["chain"]["id"], a) for v, o, c in zip(vaults, owners, curators) for a in (o, c) if a and a != ZERO})
 with ThreadPoolExecutor(8) as ex: kinds = dict(zip(uniq, ex.map(lambda t: kind(*t), uniq)))
 sole = {k: (k[0], Web3.to_checksum_address(v[2][0])) for k, v in kinds.items() if v[0] == "Safe" and v[1] == 1 and len(v[2]) == 1}
 with ThreadPoolExecutor(4) as ex: signer = dict(zip(sole.values(), ex.map(lambda t: kind(*t), sole.values())))
 def tier(k):
+    if k[1] == ZERO: return "no owner (zero address)"
     kd = kinds[k]
     if kd[0] in ("EOA", "EOA-7702"): return "single key (" + kd[0] + ")"
-    if kd[0] == "Safe" and kd[1] == 1: return "1-of-1 Safe, signer is " + signer[sole[k]][0]
+    if kd[0] == "Safe" and kd[1] == 1 and k in sole: return "1-of-1 Safe, signer is " + signer[sole[k]][0]
+    if kd[0] == "Safe" and kd[1] == 1: return f"Safe 1-of-{len(kd[2])} (any one signer acts)"
     return f"Safe {kd[1]}-of-{len(kd[2])}" if kd[0] == "Safe" else kd[0]
 def report(subset, label):
     tiers = collections.defaultdict(lambda: [0, 0.0])
@@ -105,3 +113,13 @@ for v, o in pairs:
     if not v.get("listed"): r[4] += 1; r[5] += v["usd"]
 for ch, (n, t, ns, ts, nu, tu) in sorted(pc.items(), key=lambda kv: -kv[1][1]):
     print(f"  chain {ch:>7}: {n:3d} vaults ${t/1e6:7.1f}M | listed single-key owner: {ns:2d} vaults ${ts/1e6:7.1f}M | unlisted: {nu:2d} vaults ${tu/1e6:6.1f}M")
+
+if ARGS.dump:
+    rows = []
+    for v, o, c in zip(vaults, owners, curators):
+        ch = v["chain"]["id"]
+        rows.append({"family": "morpho-" + v["ver"], "chain": ch, "vault": v["address"], "name": v["name"], "usd": v["usd"], "listed": bool(v.get("listed")),
+                     "owner": o, "owner_kind": tier((ch, o)) if o else "UNREAD", "curator": c if c and c != ZERO else None,
+                     "curator_kind": tier((ch, c)) if c and c != ZERO else None})
+    json.dump(rows, open(ARGS.dump, "w"))
+    print(f"\nwrote {len(rows)} rows to {ARGS.dump}")

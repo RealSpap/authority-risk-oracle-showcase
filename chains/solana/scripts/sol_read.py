@@ -251,8 +251,15 @@ def read_kliquidity_global_config(url, pk):
     # confirmed 2026-09-18 by also searching the raw account bytes for
     # the expected pubkey and finding it at this exact offset, not just
     # trusting the arithmetic.
+    #
+    # ADDED 2026-09-25: `actionsAuthority` (offset 2192, the "2×Address(64)"
+    # pair immediately before `adminAuthority`'s own Address(32) in the same
+    # field list) -- cross-checked exactly like `admin_authority`: decoding
+    # BOTH at once and confirming `admin_authority` still lands on its own
+    # already-published value proves this second offset in the same
+    # sequential read is sound too, not a fluke.
     d = base64.b64decode(acct(url, pk)["data"][0])
-    return {"global_config": pk, "admin_authority": b58(d[2224:2256])}
+    return {"global_config": pk, "actions_authority": b58(d[2192:2224]), "admin_authority": b58(d[2224:2256])}
 
 
 def read_jupiter_perpetuals(url, pk):
@@ -276,6 +283,26 @@ def read_jupiter_lend_liquidity(url, pk):
     # field order Anchor's IDL generator emits, not guessed).
     d = base64.b64decode(acct(url, pk)["data"][0])
     return {"liquidity": pk, "authority": b58(d[8:40])}
+
+
+def read_jupiter_lend_authorization_list(url, program_id):
+    # ADDED 2026-09-25: closes score_jupiter_lend's own "NOT decoded this pass" open point on
+    # the AuthorizationList account. Ordinary Borsh (Vec<Pubkey> fields, standard Anchor, NOT the
+    # bytemuck/zero-copy style marginfi/Kamino use), so each field is a 4-byte little-endian
+    # length prefix followed by that many 32-byte pubkeys -- type confirmed live via jup-ag/
+    # jupiter-lend's own published target/idl/liquidity.json ("AuthorizationList": auth_users:
+    # Vec<pubkey>, guardians: Vec<pubkey>, user_classes: Vec<UserClass> -- only the first two are
+    # decoded here, user_classes not needed for authority scoring). PDA seed (b"auth_list", no
+    # per-account variance) from the SAME IDL's own init_liquidity instruction account list, not
+    # guessed.
+    addr, _ = find_program_address([b"auth_list"], program_id)
+    d = base64.b64decode(acct(url, addr)["data"][0])
+    o = 8
+    n_auth_users = int.from_bytes(d[o:o + 4], "little"); o += 4
+    auth_users = [b58(d[o + i * 32:o + i * 32 + 32]) for i in range(n_auth_users)]; o += 32 * n_auth_users
+    n_guardians = int.from_bytes(d[o:o + 4], "little"); o += 4
+    guardians = [b58(d[o + i * 32:o + i * 32 + 32]) for i in range(n_guardians)]
+    return {"auth_list": addr, "auth_users": auth_users, "guardians": guardians}
 
 
 def read_pumpswap_global_config(url, pk):
@@ -308,24 +335,42 @@ def read_whirlpools_config(url, pk):
 
 
 def read_marginfi_group(url, pk):
-    # marginfi's MarginfiGroup (Anchor zero-copy, 8-byte discriminator).
-    # ONLY the `admin` field is decoded here -- confirmed 2026-09-18 via
-    # the on-chain Anchor IDL (discriminator [182,23,173,240,151,206,182,
-    # 67] matched byte-for-byte against the live account's own first 8
-    # bytes, AND the IDL's own field list confirms `admin: pubkey` is
-    # literally the FIRST field, so offset 8 is correct with no guessing).
-    # The SAME IDL also lists SEVEN more admin-named fields on this
-    # struct (`emode_admin`, `delegate_curve_admin`, `delegate_limit_
-    # admin`, `delegate_emissions_admin`, `risk_admin`, `metadata_admin`,
-    # `delegate_flow_admin`) whose exact byte offsets were NOT computed
-    # this pass -- they sit after several fields of not-yet-resolved size
-    # (`fee_state_cache`, `panic_state_cache`, `deleverage_withdraw_
-    # window_cache`, `rate_limiter`, all `defined` types requiring their
-    # own layout lookup). Deliberately not guessed at rather than risk a
-    # wrong offset silently decoding garbage as a pubkey -- disclosed as
-    # an open point for whoever scores this target, not folded in.
+    # marginfi's MarginfiGroup (Anchor zero-copy, 8-byte discriminator,
+    # #[repr(C)] + bytemuck::Pod -- every gap is a hand-inserted pad field
+    # in the struct itself, so no implicit-compiler-padding guesswork is
+    # needed between fields; offsets are a plain running sum of field sizes
+    # in declared order). `admin` (offset 8) decoded since 2026-09-18.
+    #
+    # FIXED 2026-09-25: the SIX further admin-named fields this account's
+    # own on-chain IDL lists were "not computed" until now, sitting after
+    # `fee_state_cache`/`panic_state_cache`/`deleverage_withdraw_window_
+    # cache` (three `defined` types whose own field lists were fetched from
+    # the same live IDL, not guessed -- FeeStateCache 72B, PanicStateCache
+    # 24B, WithdrawWindowCache 16B, each independently size-checked against
+    # its own field list before use). Every field below cross-checks two
+    # ways before being trusted: (a) three offsets in the SAME sequential
+    # read (`admin`@8, `emode_admin`@128, `risk_admin`@296) independently
+    # decode to the exact SAME already-known, already-published pubkey
+    # (CYXEgwbPHu2f9cY3mcUkinzDoDcsSan7myh1uBvYRbEw) -- a coincidental
+    # garbage match at three unrelated offsets is not a realistic failure
+    # mode, so this confirms the whole offset chain up to risk_admin is
+    # sound; (b) read on 2 independent RPCs (api.mainnet-beta.solana.com,
+    # solana-rpc.publicnode.com), byte-identical. `delegate_flow_admin`
+    # (past `rate_limiter`, a further not-yet-resolved `defined` type)
+    # stays undecoded -- its own docstring already says a compromised
+    # holder "does not itself compromise any funds", so leaving it open
+    # costs nothing per METHODOLOGY.md 6.2's own bounded/full-power split.
     d = base64.b64decode(acct(url, pk)["data"][0])
-    return {"group": pk, "admin": b58(d[8:40])}
+    return {
+        "group": pk,
+        "admin": b58(d[8:40]),                      # offset 0 (+8 discriminator)
+        "emode_admin": b58(d[128:160]),              # offset 120: 32(admin)+8(group_flags)+72(fee_state_cache)+2(banks)+6(pad0)
+        "delegate_curve_admin": b58(d[160:192]),     # offset 152: += 32 (emode_admin)
+        "delegate_limit_admin": b58(d[192:224]),     # offset 184: += 32 (delegate_curve_admin)
+        "delegate_emissions_admin": b58(d[224:256]), # offset 216: += 32 (delegate_limit_admin)
+        "risk_admin": b58(d[296:328]),               # offset 288: += 32(delegate_emissions_admin)+24(panic_state_cache)+16(withdraw_window_cache)
+        "metadata_admin": b58(d[328:360]),           # offset 320: += 32 (risk_admin)
+    }
 
 
 def read_klend_market(url, pk):
@@ -369,7 +414,11 @@ def read_anchor_idl(url, pk):
     import zlib
     base, _ = find_program_address([], pk)
     idl = b58(hashlib.sha256(b58dec(base) + b"anchor:idl" + b58dec(pk)).digest())
-    d = base64.b64decode(acct(url, idl)["data"][0]); n = int.from_bytes(d[40:44], "little")
+    raw = acct(url, idl)
+    if raw is None:
+        return None  # FIXED 2026-09-25: no on-chain IDL account for this program (getAccountInfo -> null) is a
+        # real, distinct outcome from a malformed/unreadable one -- callers must check for it, not crash on ["data"]
+    d = base64.b64decode(raw["data"][0]); n = int.from_bytes(d[40:44], "little")
     j = json.loads(zlib.decompress(d[44:44+n]))
     fixed = sorted({(i["name"], a["name"], a["address"]) for i in j["instructions"] for a in i["accounts"]
                     if "address" in a and not a["address"].endswith("1111111111111111") and a["address"] != "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"})

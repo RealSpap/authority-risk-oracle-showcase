@@ -109,14 +109,23 @@ class ScoreJupiterLendTestCase(unittest.TestCase):
     def setUp(self):
         self._orig_read_program = solana.sol_read.read_program
         self._orig_read_jupiter_lend_liquidity = solana.sol_read.read_jupiter_lend_liquidity
+        self._orig_read_jupiter_lend_authorization_list = solana.sol_read.read_jupiter_lend_authorization_list
         self._orig_read_squads = solana.sol_read.read_squads
 
     def tearDown(self):
         solana.sol_read.read_program = self._orig_read_program
         solana.sol_read.read_jupiter_lend_liquidity = self._orig_read_jupiter_lend_liquidity
+        solana.sol_read.read_jupiter_lend_authorization_list = self._orig_read_jupiter_lend_authorization_list
         solana.sol_read.read_squads = self._orig_read_squads
 
-    def _patch(self, upgrade_authority, liquidity_authority, squads_by_pk):
+    def _patch(self, upgrade_authority, liquidity_authority, squads_by_pk, auth_users=None, guardians=None):
+        # auth_users/guardians default to [liquidity_authority] each -- the real, live-observed
+        # shape (both lists contain only the already-scored authority) -- so every existing test
+        # that doesn't target AuthorizationList itself keeps meaning exactly what it did before
+        # that account existed in this scorer.
+        auth_users = [liquidity_authority] if auth_users is None else auth_users
+        guardians = [liquidity_authority] if guardians is None else guardians
+
         def fake_read_program(url, pk):
             self.assertEqual(pk, LIQUIDITY_PROGRAM)
             return {"program": pk, "upgrade_authority": upgrade_authority}
@@ -125,6 +134,10 @@ class ScoreJupiterLendTestCase(unittest.TestCase):
             self.assertEqual(pk, LIQUIDITY_ACCOUNT)
             return {"liquidity": pk, "authority": liquidity_authority}
 
+        def fake_read_jupiter_lend_authorization_list(url, program_id):
+            self.assertEqual(program_id, LIQUIDITY_PROGRAM)
+            return {"auth_list": "unused-auth-list-pda", "auth_users": auth_users, "guardians": guardians}
+
         def fake_read_squads(url, pk):
             if pk in squads_by_pk:
                 return squads_by_pk[pk]
@@ -132,6 +145,7 @@ class ScoreJupiterLendTestCase(unittest.TestCase):
 
         solana.sol_read.read_program = fake_read_program
         solana.sol_read.read_jupiter_lend_liquidity = fake_read_jupiter_lend_liquidity
+        solana.sol_read.read_jupiter_lend_authorization_list = fake_read_jupiter_lend_authorization_list
         solana.sol_read.read_squads = fake_read_squads
 
 
@@ -278,6 +292,38 @@ class TestLiquidityAuthorityNoneIsNotTreatedAsRenounced(ScoreJupiterLendTestCase
             (result["adminKeyScore"], result["multisigScore"], result["timelockScore"]), expected)
         self.assertTrue(any("Liquidity.authority" in n and "MISMATCH" in n for n in result["notes"]))
         self.assertFalse(any("Liquidity.authority" in n and "renounced" in n for n in result["notes"]))
+
+
+class TestAuthorizationListDisclosure(ScoreJupiterLendTestCase):
+    """AuthorizationList (added 2026-09-25) is disclosed only -- it must
+    NEVER change adminKeyScore/multisigScore/timelockScore no matter what
+    it contains, since score_jupiter_lend never feeds it into
+    `_score_full_power_path` at all."""
+
+    def _run(self, auth_users=None, guardians=None):
+        upgrade_sq = _squads(threshold=4, member_masks=[6] * 6, time_lock_s=43200)
+        admin_sq = _squads(threshold=5, member_masks=[6] * 10, time_lock_s=21600)
+        self._patch(
+            upgrade_authority=UPGRADE_VAULT, liquidity_authority=ADMIN_VAULT,
+            squads_by_pk={UPGRADE_MS: upgrade_sq, ADMIN_MS: admin_sq},
+            auth_users=auth_users, guardians=guardians,
+        )
+        return solana.score_jupiter_lend("unused-url")
+
+    def test_no_new_guardian_note_when_both_lists_only_contain_the_scored_authority(self):
+        result = self._run(auth_users=[ADMIN_VAULT], guardians=[ADMIN_VAULT])
+        self.assertTrue(any("no entries beyond the already-scored authority" in n for n in result["notes"]))
+        self.assertFalse(any("disclosed not scored" in n for n in result["notes"]))
+
+    def test_new_guardian_beyond_scored_authority_is_disclosed_not_scored(self):
+        result = self._run(auth_users=[ADMIN_VAULT], guardians=[ADMIN_VAULT, "SomeNewGuardianPda111111111111111111111X"])
+        self.assertTrue(any("SomeNewGuardianPda111111111111111111111X" in n and "disclosed not scored" in n for n in result["notes"]))
+        # Score must be untouched by the new guardian -- it is never passed to _score_full_power_path.
+        expected_a = solana._score_full_power_path("squads_v4", threshold=4, voters=6, delay_s=43200)
+        expected_b = solana._score_full_power_path("squads_v4", threshold=5, voters=10, delay_s=21600)
+        expected = tuple(min(a, b) for a, b in zip(expected_a, expected_b))
+        self.assertEqual(
+            (result["adminKeyScore"], result["multisigScore"], result["timelockScore"]), expected)
 
 
 if __name__ == "__main__":

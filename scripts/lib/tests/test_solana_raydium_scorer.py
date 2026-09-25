@@ -97,6 +97,16 @@ def _idl_without_admin_id(url, pk):
     return {"hardcoded_addresses": []}
 
 
+def _idl_account_missing(url, pk):
+    # sol_read.read_anchor_idl's own real return value (FIXED 2026-09-25)
+    # when the on-chain IDL account itself doesn't exist at all -- a
+    # DIFFERENT failure mode than "exists but has no admin::ID entry"
+    # above: this one used to crash score_raydium with a TypeError on
+    # `idl["hardcoded_addresses"]` before the fix, skipping the whole
+    # scorer instead of degrading path B like every other unreadable case.
+    return None
+
+
 def _resolve_v4_returning(value):
     def fake(url, label, authority, ms_candidate, notes, none_means_renounced=False):
         return value
@@ -290,6 +300,23 @@ class TestAdminIdSquadsV3Resolution(unittest.TestCase):
             result = solana.score_raydium("unused-url")
         self.assertEqual((result["adminKeyScore"], result["multisigScore"], result["timelockScore"]), (20, 20, 0))
         self.assertTrue(any("admin::ID not found in the live on-chain IDL this run" in n for n in result["notes"]))
+
+    def test_idl_account_itself_missing_degrades_path_b_to_20_20_0_not_a_crash(self):
+        # FIXED 2026-09-25 regression: read_anchor_idl returning None (no
+        # on-chain IDL account at all, reproduced live against CLMM's real
+        # derived PDA on 2026-09-25) must degrade path B exactly like the
+        # "IDL exists but lacks admin::ID" case, not raise a TypeError that
+        # takes down the whole scorer (and silently drops Raydium from
+        # score_all() every run, as it did between 2026-09-18 and today).
+        with _patched(
+            read_program=_read_program_same_authority,
+            read_anchor_idl=_idl_account_missing,
+            resolve_v4=_resolve_v4_returning(A_STRONG),
+            resolve_v3=_never_called("_resolve_squads_v3"),
+        ):
+            result = solana.score_raydium("unused-url")
+        self.assertEqual((result["adminKeyScore"], result["multisigScore"], result["timelockScore"]), (20, 20, 0))
+        self.assertTrue(any("no on-chain Anchor IDL account this run" in n for n in result["notes"]))
 
     def test_admin_id_found_but_squads_v3_unresolved_degrades_path_b_to_20_20_0(self):
         # admin_id WAS read from the live IDL (not None), but the offline

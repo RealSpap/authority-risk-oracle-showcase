@@ -4,8 +4,8 @@ Standalone cross-ecosystem signer-overlap check -- see
 scripts/lib/cross_ecosystem_overlap.py for why this is deliberately NOT
 wired into the live score_all() pipeline. Re-derives every group's root
 signer set live (Robinhood Chain's signer_overlap.py GROUPS plus the Ethereum
-L1, Arbitrum, Base, Tempo, Plasma and Monad registries in
-cross_ecosystem_overlap.py: 7 ecosystems) and reports any signer, any
+L1, Arbitrum, Base, Tempo, Plasma, Monad and Hyperliquid registries in
+cross_ecosystem_overlap.py: 8 ecosystems) and reports any signer, any
 identical Safe address, any identical bare-EOA address and any full committee
 containment shared across ecosystems.
 
@@ -14,8 +14,11 @@ each scorer folds a cross-ecosystem overlap into crossExposureScore from a dated
 snapshot of the other chain's committee (Robinhood Chain: a hand-set dated flag in
 signer_overlap.py), never a live second-chain call. This script is what those
 snapshots and flags are checked against: re-run it after a committee rotation or
-a new tracked target, and update whatever it contradicts. It does not cover
-Solana, Hyperliquid or Zcash, and covers Tempo only for its two resolvable Safes.
+a new tracked target, and update whatever it contradicts. Hyperliquid was added
+2026-09-25 (only its 4 HyperEVM-side Gnosis-Safe-rooted targets -- most of its
+targets are HyperCore-native, a non-EVM multisig concept this tool cannot read).
+It still does not cover Solana or Zcash (genuinely incompatible key formats, not
+merely unbuilt), and covers Tempo only for its two resolvable Safes.
 
 Usage:
     python3 scripts/check_cross_ecosystem_overlap.py
@@ -30,6 +33,7 @@ from lib.cross_ecosystem_overlap import (  # noqa: E402
     ARBITRUM_GROUPS,
     BASE_GROUPS,
     ETHEREUM_L1_GROUPS,
+    HYPERLIQUID_GROUPS,
     MONAD_GROUPS,
     PLASMA_GROUPS,
     TEMPO_GROUPS,
@@ -56,6 +60,7 @@ BASE_RPC = "https://mainnet.base.org"
 TEMPO_RPC = "https://rpc.tempo.xyz"
 PLASMA_RPC = "https://rpc.plasma.to"
 MONAD_RPC = "https://rpc.monad.xyz"
+HYPERLIQUID_RPC = "https://rpc.hyperliquid.xyz/evm"
 
 
 def main():
@@ -66,6 +71,7 @@ def main():
     tempo_w3 = get_w3(TEMPO_RPC)
     plasma_w3 = get_w3(PLASMA_RPC)
     monad_w3 = get_w3(MONAD_RPC)
+    hyperliquid_w3 = get_w3(HYPERLIQUID_RPC)
 
     ecosystem_groups = {}
     ecosystem_safes = {}
@@ -90,12 +96,13 @@ def main():
     _collect("tempo", tempo_w3, TEMPO_GROUPS, safe_owners_and_threshold)
     _collect("plasma", plasma_w3, PLASMA_GROUPS, safe_owners_and_threshold)
     _collect("monad", monad_w3, MONAD_GROUPS, safe_owners_and_threshold)
+    _collect("hyperliquid", hyperliquid_w3, HYPERLIQUID_GROUPS, safe_owners_and_threshold)
 
     print(f"Resolved {len(ecosystem_groups)} groups across "
           f"{len({eco for eco, _ in ecosystem_groups})} ecosystems "
           f"(robinhood: {len(ROBINHOOD_GROUPS)}, ethereum-l1: {len(ETHEREUM_L1_GROUPS)}, "
           f"arbitrum: {len(ARBITRUM_GROUPS)}, base: {len(BASE_GROUPS)}, tempo: {len(TEMPO_GROUPS)}, "
-          f"plasma: {len(PLASMA_GROUPS)}, monad: {len(MONAD_GROUPS)}).\n")
+          f"plasma: {len(PLASMA_GROUPS)}, monad: {len(MONAD_GROUPS)}, hyperliquid: {len(HYPERLIQUID_GROUPS)}).\n")
 
     signer_overlaps = find_cross_ecosystem_overlaps(ecosystem_groups)
     print("=== Cross-ecosystem SIGNER overlaps ===")

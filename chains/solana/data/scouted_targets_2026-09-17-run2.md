@@ -14,6 +14,18 @@ Aggregator v6, Kamino Lend main market) are not repeated.
 Reproducible checker: [`../scripts/scout_check.py`](../scripts/scout_check.py). Each
 subcommand prints `OK` only if the assertion holds on both RPCs.
 
+> **Status update (2026-09-25):** Raydium, Orca Whirlpool, marginfi and Marinade were only
+> upper bounds when this file was written -- their protocol-level config admin (Raydium's
+> `admin::ID`, Whirlpools config, `MarginfiGroup.admin`, Marinade's `State.admin_authority`)
+> hadn't been decoded yet. All four are decoded and live-scored in `scorers.py`
+> (`score_raydium`, `score_orca_whirlpool`, `score_marginfi`, `score_marinade`) since
+> 2026-09-18, re-verified live today -- see
+> [`scored_targets_2026-09-18-defi-config-admins.md`](scored_targets_2026-09-18-defi-config-admins.md)
+> and [`scored_targets_2026-09-18-marinade-liquid-staking.md`](scored_targets_2026-09-18-marinade-liquid-staking.md).
+> The composites and "not decoded" notes for these four in the table and in "Open points for
+> scoring_build" below are the original 2026-09-17 scouting snapshot and are superseded --
+> `scorers.py` is the source of truth for their current numbers, not this file.
+
 ## What changed from the rejected morning draft
 
 | Morning claim | What the chain actually shows | Evidence |
@@ -32,10 +44,10 @@ so an undecoded admin path can only lower it. Decoded config admins are listed i
 
 | # | Protocol | Program id(s) | Source of the address | TVL on Solana (DefiLlama, 2026-09-17) | Authority pattern (live) | admin / multisig / timelock | composite | Verification (claims file ids) | Mitigating / aggravating context |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | Raydium (AMM v4, CLMM, CPMM, LaunchLab) | `675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8`, `CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK`, `CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C`, `LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj` | raydium-io/raydium-sdk-V2 `src/common/programId.ts` | > $1.0B (`raydium-amm`, per-program split not verified) | One Squads v4 vault `FytDrV...` (vault 0 of `tr8rga...`) for all 4 programs, 3-of-4, `time_lock = 0`, autonomous | 50 / 75 / 0 | **43** (upper bound) | 1, 2, 3 | Aggravating: one 3-of-4 with no delay upgrades four programs. Mitigating: moved on 2026-04-22 from a Squads v3 2-of-3 to this 3-of-4 (a strict improvement, not a hot-wallet migration). Pool/config admins not decoded. |
-| 2 | Orca Whirlpool | `whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc` | orca-so/whirlpools README | > $200M (`orca-dex`) | Squads v4 `BQsDWk...` vault 0, threshold 5, 13 members of which **9 voters**, `time_lock = 86400` | 80 / 97 / 50 | **76** (upper bound) | 4 | Mitigating: 24 h delay, 5-of-9 real quorum. `WhirlpoolsConfig` fee/reward authorities not decoded. |
-| 3 | Marinade Liquid Staking | `MarBmsSgKXdrN1egZf5sqe1TMai9K1rChYNDJgjq7aD` | marinade-finance/liquid-staking-program `lib.rs` `declare_id!` | > $200M (`marinade-liquid-staking`) | Legacy serum-style multisig program `msigmtwz...` (immutable), account `magrsH...`, 6-of-13, signer PDA `551FBX...` re-derived with bump = stored nonce 253 | 60 / 100 / 0 | **54** (upper bound) | 5, 6 | Methodology gap H1 still open: this multisig type has no timelock field, scored like Squads v3. Marinade `State.admin_authority` not decoded. Shares a signer with the SPL Stake Pool committee and with Sanctum (see cross-exposure). |
-| 4 | marginfi | `MFv2hWf31Z9kbCa1snEPYctwafyhdvnV7FZnsebVacA` | mrgnlabs/marginfi-v2 `Anchor.toml` `[programs.mainnet]` | > $25M (`marginfi-lending`) | Squads v4 `7FCPip...` vault 0, 7-of-15, all voters, `time_lock = 0` | 60 / 100 / 0 | **54** (upper bound) | 7 | Aggravating: no delay on a lending program. `MarginfiGroup.admin` and oracle setup not decoded. |
+| 1 | Raydium (AMM v4, CLMM, CPMM, LaunchLab) | `675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8`, `CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK`, `CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C`, `LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj` | raydium-io/raydium-sdk-V2 `src/common/programId.ts` | > $1.0B (`raydium-amm`, per-program split not verified) | One Squads v4 vault `FytDrV...` (vault 0 of `tr8rga...`) for all 4 programs, 3-of-4, `time_lock = 0`, autonomous | 50 / 75 / 0 | **43** (2026-09-17 upper bound, superseded -- see status note above) | 1, 2, 3 | Aggravating: one 3-of-4 with no delay upgrades four programs. Mitigating: moved on 2026-04-22 from a Squads v3 2-of-3 to this 3-of-4 (a strict improvement, not a hot-wallet migration). Pool/config admin (`admin::ID`) now decoded in `scorers.py` (`score_raydium`); see status note above for the current composite. |
+| 2 | Orca Whirlpool | `whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc` | orca-so/whirlpools README | > $200M (`orca-dex`) | Squads v4 `BQsDWk...` vault 0, threshold 5, 13 members of which **9 voters**, `time_lock = 86400` | 80 / 97 / 50 | **76** (2026-09-17 upper bound, superseded -- see status note above) | 4 | Mitigating: 24 h delay, 5-of-9 real quorum. `WhirlpoolsConfig` fee/reward authorities now decoded in `scorers.py` (`score_orca_whirlpool`); see status note above -- the real composite is far below this upper bound. |
+| 3 | Marinade Liquid Staking | `MarBmsSgKXdrN1egZf5sqe1TMai9K1rChYNDJgjq7aD` | marinade-finance/liquid-staking-program `lib.rs` `declare_id!` | > $200M (`marinade-liquid-staking`) | Legacy serum-style multisig program `msigmtwz...` (immutable), account `magrsH...`, 6-of-13, signer PDA `551FBX...` re-derived with bump = stored nonce 253 | 60 / 100 / 0 | **54** (2026-09-17 upper bound, superseded -- see status note above) | 5, 6 | Methodology gap H1 closed 2026-09-18 (`METHODOLOGY.md`). Marinade `State.admin_authority` now decoded in `scorers.py` (`score_marinade`); see status note above. Shares a signer with the SPL Stake Pool committee and with Sanctum (see cross-exposure). |
+| 4 | marginfi | `MFv2hWf31Z9kbCa1snEPYctwafyhdvnV7FZnsebVacA` | mrgnlabs/marginfi-v2 `Anchor.toml` `[programs.mainnet]` | > $25M (`marginfi-lending`) | Squads v4 `7FCPip...` vault 0, 7-of-15, all voters, `time_lock = 0` | 60 / 100 / 0 | **54** (2026-09-17 upper bound, superseded -- see status note above) | 7 | Aggravating: no delay on a lending program. `MarginfiGroup.admin` now decoded in `scorers.py` (`score_marginfi`); see status note above for the current composite. |
 | 5 | Meteora DLMM | `LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo` | MeteoraAg/dlmm-sdk `ts-client/src/dlmm/constants/index.ts` | > $150M (`meteora-dlmm`) | Squads v3 `CoEsyk...` authority index 1 (`JADaUV...`), 4-of-7 | 55 / 83 / 0 | **47** (upper bound) | 8 | Squads v3 has no delay field. Same authority as #6 and #7. Shares a signer with Jupiter. |
 | 6 | Meteora DAMM v1 | `Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB` | MeteoraAg/damm-v1-sdk `ts-client/src/amm/constants.ts` `PROGRAM_ID` | > $30M (`meteora-damm-v1`) | same as #5 | 55 / 83 / 0 | **47** (upper bound) | 8 | Blast radius: one 4-of-7 without delay controls three Meteora DEX programs. |
 | 7 | Meteora DAMM v2 | `cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG` | MeteoraAg/damm-v2 `programs/cp-amm/src/lib.rs` `declare_id!` | > $15M (`meteora-damm-v2`) | same as #5 | 55 / 83 / 0 | **47** (upper bound) | 8 | Last upgrade 2026-09-08 (actively maintained). |
@@ -100,7 +112,7 @@ overlap with EVM signers is impossible by construction; only other SVM groups co
 
 ## Open points for scoring_build
 
-- Decode the protocol config admins marked "not decoded" (Raydium AMM config, Whirlpools config, marginfi group, Marinade state, Pump global config, Save lending market owner, Jupiter Lend and Perps admins, Kamino strategy admin) before promoting an upper bound to a score.
+- Decode the protocol config admins marked "not decoded" (Pump global config, Save lending market owner, Jupiter Lend and Perps admins, Kamino strategy admin) before promoting an upper bound to a score. Raydium AMM config, Whirlpools config, marginfi group and Marinade state are already decoded and live-scored (`score_raydium`, `score_orca_whirlpool`, `score_marginfi`, `score_marinade` in `scorers.py`) since 2026-09-18 -- see the status note near the top of this file; `scorers.py` is the source of truth for their current composites, not the upper bounds in the table above.
 - Methodology gap H1 (legacy serum-style multisig) and a rule for "controlled multisig with an unresolved `config_authority` on a bounded path" should be written into `METHODOLOGY.md`.
 - Jupiter Perps oracle authority ("Doves") and Jupiter Lend oracle program need the 6.3 treatment.
 

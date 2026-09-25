@@ -96,15 +96,55 @@ def _synthetic_account(total_len, discriminator, pubkey_offsets):
 
 
 KAMINO_GLOBAL_CONFIG_DISCRIMINATOR = bytes([149, 8, 156, 202, 160, 252, 176, 217])
-KAMINO_GLOBAL_CONFIG_B64 = _synthetic_account(26832, KAMINO_GLOBAL_CONFIG_DISCRIMINATOR, [(2224, KAMINO_GLOBAL_CONFIG_ADMIN)])
+# ADDED 2026-09-25: actionsAuthority (offset 2192), a distinct pubkey from admin_authority so a
+# transposed pair of offsets would fail the new test below.
+KAMINO_GLOBAL_CONFIG_ACTIONS_AUTHORITY = PUMPSWAP_GLOBAL_CONFIG_ADMIN
+KAMINO_GLOBAL_CONFIG_B64 = _synthetic_account(26832, KAMINO_GLOBAL_CONFIG_DISCRIMINATOR, [
+    (2192, KAMINO_GLOBAL_CONFIG_ACTIONS_AUTHORITY), (2224, KAMINO_GLOBAL_CONFIG_ADMIN),
+])
 
 MARGINFI_GROUP_DISCRIMINATOR = bytes.fromhex("b617adf097ceb643")
 MARGINFI_GROUP_B64 = _synthetic_account(48, MARGINFI_GROUP_DISCRIMINATOR, [(8, MARGINFI_GROUP_ADMIN)])
+
+# FIXED 2026-09-25: six more offsets on the same account, each given a DISTINCT synthetic
+# pubkey (borrowed from other targets' own already-defined constants above -- any valid
+# base58 pubkey works here, only its POSITION is under test) so a transposed pair of offsets
+# would fail this test even though both values individually decode as valid pubkeys.
+MARGINFI_GROUP_EMODE_ADMIN = JUPITER_PERPETUALS_ADMIN
+MARGINFI_GROUP_DELEGATE_CURVE_ADMIN = JUPITER_LEND_LIQUIDITY_AUTHORITY
+MARGINFI_GROUP_DELEGATE_LIMIT_ADMIN = WHIRLPOOLS_CONFIG_FEE_AUTHORITY
+MARGINFI_GROUP_DELEGATE_EMISSIONS_ADMIN = WHIRLPOOLS_CONFIG_COLLECT_FEES_AUTHORITY
+MARGINFI_GROUP_RISK_ADMIN = WHIRLPOOLS_CONFIG_REWARD_SUPER_AUTHORITY
+MARGINFI_GROUP_METADATA_ADMIN = KAMINO_GLOBAL_CONFIG_ADMIN
+MARGINFI_GROUP_FULL_B64 = _synthetic_account(360, MARGINFI_GROUP_DISCRIMINATOR, [
+    (8, MARGINFI_GROUP_ADMIN),
+    (128, MARGINFI_GROUP_EMODE_ADMIN),
+    (160, MARGINFI_GROUP_DELEGATE_CURVE_ADMIN),
+    (192, MARGINFI_GROUP_DELEGATE_LIMIT_ADMIN),
+    (224, MARGINFI_GROUP_DELEGATE_EMISSIONS_ADMIN),
+    (296, MARGINFI_GROUP_RISK_ADMIN),
+    (328, MARGINFI_GROUP_METADATA_ADMIN),
+])
 
 # PumpSwap's GlobalConfig has no useful discriminator check in the
 # decoder (it only reads bytes 8:40) -- an all-zero 8-byte prefix is
 # fine here since read_pumpswap_global_config doesn't validate it.
 PUMPSWAP_GLOBAL_CONFIG_B64 = _synthetic_account(40, b"\x00" * 8, [(8, PUMPSWAP_GLOBAL_CONFIG_ADMIN)])
+
+# ADDED 2026-09-25: Jupiter Lend's AuthorizationList -- ordinary Borsh Vec<Pubkey> fields (4-byte
+# little-endian length prefix + N*32 bytes), NOT the bytemuck/fixed-offset style every other
+# fixture above uses, so built with a small dedicated encoder rather than _synthetic_account.
+JUPITER_LEND_AUTH_USERS = [JUPITER_LEND_LIQUIDITY_AUTHORITY]
+JUPITER_LEND_GUARDIANS = [JUPITER_LEND_LIQUIDITY_AUTHORITY, WHIRLPOOLS_CONFIG_REWARD_SUPER_AUTHORITY]
+
+
+def _borsh_pubkey_vec(pubkeys):
+    return len(pubkeys).to_bytes(4, "little") + b"".join(sol_read.b58dec(pk) for pk in pubkeys)
+
+
+JUPITER_LEND_AUTH_LIST_B64 = base64.b64encode(
+    b"\x00" * 8 + _borsh_pubkey_vec(JUPITER_LEND_AUTH_USERS) + _borsh_pubkey_vec(JUPITER_LEND_GUARDIANS)
+).decode()
 
 
 def _fake_acct(fixtures):
@@ -133,6 +173,21 @@ class TestReadJupiterLendLiquidity(unittest.TestCase):
         try:
             r = sol_read.read_jupiter_lend_liquidity("url", "7s1da8DduuBFqGra5bJBjpnvL5E9mGzCuMk1Qkh4or2Z")
             self.assertEqual(r["authority"], JUPITER_LEND_LIQUIDITY_AUTHORITY)
+        finally:
+            sol_read.acct = orig
+
+
+class TestReadJupiterLendAuthorizationList(unittest.TestCase):
+    def test_auth_users_and_guardians_decode_correctly(self):
+        program_id = "jupeiUmn818Jg1ekPURTpr4mFo29p46vygyykFJ3wZC"
+        pda, _ = sol_read.find_program_address([b"auth_list"], program_id)  # real, pure, offline PDA derivation
+        orig = sol_read.acct
+        sol_read.acct = _fake_acct({pda: JUPITER_LEND_AUTH_LIST_B64})
+        try:
+            r = sol_read.read_jupiter_lend_authorization_list("url", program_id)
+            self.assertEqual(r["auth_list"], pda)
+            self.assertEqual(r["auth_users"], JUPITER_LEND_AUTH_USERS)
+            self.assertEqual(r["guardians"], JUPITER_LEND_GUARDIANS)
         finally:
             sol_read.acct = orig
 
@@ -170,6 +225,20 @@ class TestReadKliquidityGlobalConfig(unittest.TestCase):
         finally:
             sol_read.acct = orig
 
+    def test_actions_authority_at_its_own_distinct_offset(self):
+        # FIXED 2026-09-25: actionsAuthority (offset 2192, immediately before adminAuthority's
+        # own offset 2224) now decoded too. Distinct fixture value from admin_authority, so a
+        # transposed pair of offsets would fail this test even though both individually decode
+        # as valid pubkeys.
+        orig = sol_read.acct
+        sol_read.acct = _fake_acct({"GKnHiWh3RRrE1zsNzWxRkomymHc374TvJPSTv2wPeYdB": KAMINO_GLOBAL_CONFIG_B64})
+        try:
+            r = sol_read.read_kliquidity_global_config("url", "GKnHiWh3RRrE1zsNzWxRkomymHc374TvJPSTv2wPeYdB")
+            self.assertEqual(r["actions_authority"], KAMINO_GLOBAL_CONFIG_ACTIONS_AUTHORITY)
+            self.assertNotEqual(r["actions_authority"], r["admin_authority"])
+        finally:
+            sol_read.acct = orig
+
     def test_offset_2224_is_not_a_coincidence_of_the_fixture(self):
         # Move the SAME pubkey to a different offset and confirm the
         # decoder does NOT find it there -- proves the function reads a
@@ -191,9 +260,37 @@ class TestReadMarginfiGroup(unittest.TestCase):
         try:
             r = sol_read.read_marginfi_group("url", "4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8")
             self.assertEqual(r["admin"], MARGINFI_GROUP_ADMIN)
-            # Only "admin" is decoded -- deliberately, see the function's
-            # own docstring on the 7 other admin-named fields not chased.
-            self.assertEqual(set(r.keys()), {"group", "admin"})
+        finally:
+            sol_read.acct = orig
+
+    def test_six_more_admin_named_fields_decode_at_their_own_distinct_offsets(self):
+        # FIXED 2026-09-25 (was: only "admin" decoded, see this function's own docstring on
+        # the prior state). Each field gets its OWN distinct synthetic value at its OWN
+        # position in MARGINFI_GROUP_FULL_B64 -- a transposed pair of offsets (e.g.
+        # risk_admin/delegate_curve_admin swapped) would make this test fail even though
+        # every individual value still decodes as a syntactically valid pubkey.
+        orig = sol_read.acct
+        sol_read.acct = _fake_acct({"4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8": MARGINFI_GROUP_FULL_B64})
+        try:
+            r = sol_read.read_marginfi_group("url", "4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8")
+            self.assertEqual(r["admin"], MARGINFI_GROUP_ADMIN)
+            self.assertEqual(r["emode_admin"], MARGINFI_GROUP_EMODE_ADMIN)
+            self.assertEqual(r["delegate_curve_admin"], MARGINFI_GROUP_DELEGATE_CURVE_ADMIN)
+            self.assertEqual(r["delegate_limit_admin"], MARGINFI_GROUP_DELEGATE_LIMIT_ADMIN)
+            self.assertEqual(r["delegate_emissions_admin"], MARGINFI_GROUP_DELEGATE_EMISSIONS_ADMIN)
+            self.assertEqual(r["risk_admin"], MARGINFI_GROUP_RISK_ADMIN)
+            self.assertEqual(r["metadata_admin"], MARGINFI_GROUP_METADATA_ADMIN)
+            self.assertEqual(set(r.keys()), {
+                "group", "admin", "emode_admin", "delegate_curve_admin", "delegate_limit_admin",
+                "delegate_emissions_admin", "risk_admin", "metadata_admin",
+            })
+            # Every one of the 7 decoded pubkeys must be pairwise distinct -- a real bug where
+            # two fields accidentally share one offset would still pass an equality check
+            # against the wrong constant if the two constants happened to be equal; they aren't
+            # here (7 different borrowed real-world pubkeys), so this catches that class too.
+            self.assertEqual(len({r["admin"], r["emode_admin"], r["delegate_curve_admin"],
+                                   r["delegate_limit_admin"], r["delegate_emissions_admin"],
+                                   r["risk_admin"], r["metadata_admin"]}), 7)
         finally:
             sol_read.acct = orig
 

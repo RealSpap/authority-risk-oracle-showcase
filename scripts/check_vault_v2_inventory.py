@@ -11,8 +11,8 @@ Exit status 1 if any vault's owner/curator could not be read this run, 0 otherwi
 import argparse
 import json
 import os
+import subprocess
 import sys
-import urllib.request
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "lib"))
 sys.path.insert(0, os.path.dirname(__file__))
@@ -35,13 +35,20 @@ CHAINS = {
 
 
 def fetch_vaults(min_usd):
+    """FIXED 2026-09-26: `urllib.request.urlopen` reliably hit `IncompleteRead(0 bytes read, ...)` on
+    this query's response in this run environment (found while building check_controller_concentration.py's
+    Vault V2 reach extension) -- reproduced 3 times in a row, while the identical query succeeded
+    instantly via `curl` every time. Same class of environment quirk already found and fixed for
+    Blockscout in scripts/check_issuer_power.py (there: a missing User-Agent causing a 403; here: a
+    urllib/http.client chunked-transfer read that curl doesn't hit) -- same fix, shell out to curl."""
     chain_ids = [cid for cid, _ in CHAINS.values()]
     query = (
         "{ vaultV2s(first: 150, where: { chainId_in: %s, totalAssetsUsd_gte: %d }, orderBy: TotalAssetsUsd, orderDirection: Desc) "
         "{ items { address name chain { id } totalAssetsUsd timelocks { functionName duration } } } }"
     ) % (json.dumps(chain_ids), min_usd)
-    req = urllib.request.Request(MORPHO_API, data=json.dumps({"query": query}).encode(), headers={"content-type": "application/json"})
-    data = json.load(urllib.request.urlopen(req, timeout=30))
+    cmd = ["curl", "-s", "-m", "30", "-A", "Mozilla/5.0", "-X", "POST", MORPHO_API, "-H", "content-type: application/json", "--data", json.dumps({"query": query})]
+    out = subprocess.run(cmd, capture_output=True, text=True, timeout=35).stdout
+    data = json.loads(out)
     if data.get("errors"):
         print(f"  [WARN] Morpho API returned errors: {data['errors']} -- results below may be incomplete")
     return data.get("data", {}).get("vaultV2s", {}).get("items", [])

@@ -9,7 +9,8 @@ import unittest
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
 from lib.controller_concentration import (  # noqa: E402
-    build_controller_registry, config_varies_across_chains, rank_controllers, same_signers_across_roles,
+    build_controller_registry, config_varies_across_chains, fold_in_vault_v2_reach, rank_controllers,
+    same_signers_across_roles,
 )
 
 
@@ -129,6 +130,33 @@ class TestRankControllers(unittest.TestCase):
         ranked = rank_controllers(self._registry(), {})
         by_addr = {row[0]: row for row in ranked}
         self.assertEqual(by_addr["0xsmall"][5], 0.0)
+
+
+class TestFoldInVaultV2Reach(unittest.TestCase):
+    def _registry(self):
+        return {"0xsteakhouse": {"roles_by_vault": {}, "safe_by_ecosystem": {}, "vaults": {("ethereum-l1", "v1")}, "ecosystems": {"ethereum-l1"}}}
+
+    def test_adds_v2_reach_to_a_matched_controller(self):
+        registry = self._registry()
+        fold_in_vault_v2_reach(registry, [("0xsteakhouse", 100.0, "Steakhouse Prime EURCV")])
+        self.assertEqual(registry["0xsteakhouse"]["v2_reach"], {"tvl": 100.0, "vaults": ["Steakhouse Prime EURCV"]})
+
+    def test_multiple_v2_vaults_for_same_controller_accumulate(self):
+        registry = self._registry()
+        fold_in_vault_v2_reach(registry, [("0xsteakhouse", 100.0, "vault-a"), ("0xsteakhouse", 50.0, "vault-b")])
+        self.assertEqual(registry["0xsteakhouse"]["v2_reach"]["tvl"], 150.0)
+        self.assertEqual(registry["0xsteakhouse"]["v2_reach"]["vaults"], ["vault-a", "vault-b"])
+
+    def test_controller_not_in_v1_registry_is_ignored(self):
+        registry = self._registry()
+        fold_in_vault_v2_reach(registry, [("0xnotracked", 999.0, "v2-only vault")])
+        self.assertNotIn("0xnotracked", registry)
+        self.assertNotIn("v2_reach", registry["0xsteakhouse"])
+
+    def test_no_v2_rows_leaves_registry_unannotated(self):
+        registry = self._registry()
+        fold_in_vault_v2_reach(registry, [])
+        self.assertNotIn("v2_reach", registry["0xsteakhouse"])
 
 
 if __name__ == "__main__":

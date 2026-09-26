@@ -183,7 +183,7 @@ class TestFixtureProvenance(unittest.TestCase):
         # the order of SIMPLE_SCORERS. Moving these would silently shift every card.
         names = [f.__name__ for f in solana.SIMPLE_SCORERS]
         self.assertEqual(names[12:], ["score_marinade", "score_save", "score_spl_stake_pool_program", "score_jitosol",
-                                      "score_sanctum_infinity", "score_sanctum_validator_lsts"])
+                                      "score_sanctum_infinity", "score_sanctum_validator_lsts", "score_solgov_leads"])
 
 
 class TestScoreSave(_Case):

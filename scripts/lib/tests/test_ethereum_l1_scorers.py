@@ -1191,11 +1191,14 @@ class TestSimpleScorersList(unittest.TestCase):
     # UPDATED 2026-09-25 (later, same day): 18 -> 22 entries (4 Morpho V1 vault targets -- Adpend USDC,
     # 1337 USDC, Steakhouse USDT, Steakhouse USDC -- Morpho vault layer, `data/finding_2026-09-20-
     # competitor-gaps-and-morpho-vault-layer.md` backlog item 1, appended last).
+    # UPDATED 2026-09-26: 22 -> 24 entries (2 Morpho Vault V2 targets -- Steakhouse Prime USDC and
+    # EURCV, on Spap's explicit go-ahead after `data/finding_2026-09-25-vault-v2-scoring-scope.md`
+    # scoped the methodology decisions -- see METHODOLOGY.md's "Morpho Vault V2 scoring" section).
     # This guard is deliberately an exact count AND an exact name set: it is the
     # one shared-file line an ecosystem worker has to touch when it adds a
     # target, which is exactly what makes an accidental addition visible.
-    def test_twentytwo_entries_matching_module_functions(self):
-        self.assertEqual(len(scorers.SIMPLE_SCORERS), 22)
+    def test_twentyfour_entries_matching_module_functions(self):
+        self.assertEqual(len(scorers.SIMPLE_SCORERS), 24)
         names = {fn.__name__ for fn in scorers.SIMPLE_SCORERS}
         self.assertEqual(names, {
             "score_uniswap_v3_factory", "score_aave_v3_pool", "score_makerdao_sky_pause",
@@ -1207,6 +1210,7 @@ class TestSimpleScorersList(unittest.TestCase):
             "score_aave_v3_horizon_pool", "score_convex_finance_booster",
             "score_morpho_adpend_usdc", "score_morpho_1337_usdc",
             "score_morpho_steakhouse_usdt_l1", "score_morpho_steakhouse_usdc_l1",
+            "score_morpho_steakhouse_prime_usdc_v2", "score_morpho_steakhouse_prime_eurcv_v2",
         })
 
 

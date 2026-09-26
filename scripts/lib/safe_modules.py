@@ -34,6 +34,22 @@ _LEGACY_MODULES_ABI = [{"name": "getModules", "type": "function", "stateMutabili
 _PAGE = 10
 _MAX_PAGES = 5
 
+# ADDED 2026-09-26: the same Confirmed Transaction Module 0.1.0 (5,451 bytes, code hash 0x31eca2a56e5118d7...) is enabled on the
+# Chainlink feed-owner Safes of Ethereum, Base, Arbitrum and Monad (the 4-of-9 group with the same 9 signers as Robinhood's), byte-identical
+# to the one analyzed on Robinhood Chain below, so the analysis of its LOGIC carries over. Its STATE was read per chain: manager() is the
+# Safe itself on all five chains; on Ethereum, Base and Arbitrum it is in active use (Ethereum: 280 Confirmed, 90 Executed, 185 Revoked
+# events; Base: 9 ExecutorUpdated; Arbitrum: 8 Confirmed, 8 Executed), unlike Robinhood's unused one. The executor set was replayed from
+# the ExecutorUpdated events (Blockscout, all pages) and matched against live isExecutor() for every address ever touched: 8 allowed
+# executors on Ethereum, 7 on Base and 8 on Arbitrum, almost the same addresses on each (Base lacks 0x480496c0...), 2 of them
+# (0x7052cB84..., 0x480496c0...) also signers of the Safe. An executor runs only what the Safe confirmed (its threshold still decides), it does not lower the threshold.
+# Monad's copy has no explorer and was not replayed (manager() only).
+_CHAINLINK_MODULE_SUMMARY = (
+    "Confirmed Transaction Module 0.1.0 on a Chainlink feed-owner Safe (4-of-9, same 9 signers as Robinhood's). Byte-identical to the "
+    "module analyzed on Robinhood Chain (5,451 bytes), so it does not bypass the threshold: it separates approving from executing. "
+    "manager() is the Safe itself. State differs from Robinhood: see the 2026-09-26 note above this table for the per-chain activity "
+    "and the replayed executor set."
+)
+
 # Every module or guard found on a registered root Safe, with what was established about it and when.
 # Keys are lowercase addresses. A module or guard NOT in here is reported as UNANALYZED.
 KNOWN_ANALYSES = {
@@ -49,6 +65,30 @@ KNOWN_ANALYSES = {
             "Safe confirmed. None of the 9 owners is an executor, the module has emitted no log and the Safe no "
             "ExecutionFromModuleSuccess event. It does not bypass the threshold; it separates approving from executing. Unused today."
         ),
+    },
+    "0x2e1b5a40edc922bce489668b11749b8eabd67f6b": {
+        "analyzed": "2026-09-26",
+        "kind": "module",
+        "name": "Confirmed Transaction Module 0.1.0 (Ethereum)",
+        "summary": _CHAINLINK_MODULE_SUMMARY,
+    },
+    "0xf3c72d97a5dcf0449e89bbce1a0581d8d15c0237": {
+        "analyzed": "2026-09-26",
+        "kind": "module",
+        "name": "Confirmed Transaction Module 0.1.0 (Base)",
+        "summary": _CHAINLINK_MODULE_SUMMARY,
+    },
+    "0x7f9971226aead3013a5db7767e59dac48d01c4f6": {
+        "analyzed": "2026-09-26",
+        "kind": "module",
+        "name": "Confirmed Transaction Module 0.1.0 (Arbitrum)",
+        "summary": _CHAINLINK_MODULE_SUMMARY,
+    },
+    "0x412fc13437e86889b6c4c010236da46642d138fc": {
+        "analyzed": "2026-09-26",
+        "kind": "module",
+        "name": "Confirmed Transaction Module 0.1.0 (Monad)",
+        "summary": _CHAINLINK_MODULE_SUMMARY,
     },
     "0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827": {
         "analyzed": "2026-09-21",
@@ -111,12 +151,18 @@ CANONICAL_SINGLETONS = {
     "0x41675c099f32341bf84bfc5382af534df5c7461a": "v1.4.1 Safe",
     "0x29fcb43b46531bca003ddc8fcb67ffe91900c762": "v1.4.1 SafeL2",
     "0x34cfac646f301356faa8b21e94227e3583fe3f5f": "v1.1.1 GnosisSafe",
+    # ADDED 2026-09-26: v1.5.0 SafeL2, seen on a tracked Robinhood Chain Safe (ramses) after its ChangedMasterCopy of 2026-09-25. Checked
+    # against safe-global/safe-deployments v1.5.0 (canonical address on chains 1 and 4663, code hash 0x180193227186ccb8...), the live code hash
+    # on Robinhood Chain matches it, and Sourcify has an exact match named SafeL2 on Ethereum.
+    "0xedd160febbd92e350d4d398fb636302fccd67c7e": "v1.5.0 SafeL2",
 }
 CANONICAL_FALLBACK_HANDLERS = {
     "0xf48f2b2d2a534e402487b3ee7c18c33aec0fe5e4": "v1.3.0 CompatibilityFallbackHandler",
     "0x017062a1de2fe6b99be3d9d37841fed19f573804": "v1.3.0 CompatibilityFallbackHandler (eip155 deployment)",
     "0xfd0732dc9e303f09fcef3a7388ad10a83459ec99": "v1.4.1 CompatibilityFallbackHandler",
     "0xd5d82b6addc9027b22dca772aa68d5d74cdbdf44": "v1.1.1 DefaultCallbackHandler",
+    # ADDED 2026-09-26: v1.5.0 CompatibilityFallbackHandler, same source and live code-hash check as the v1.5.0 SafeL2 above (0x3c6a85bc...).
+    "0x3efcbb83a4a7afcb4f68d501e2c2203a38be77f4": "v1.5.0 CompatibilityFallbackHandler",
 }
 # A singleton that is not a published build but has been read and understood.
 KNOWN_SINGLETON_ANALYSES = {

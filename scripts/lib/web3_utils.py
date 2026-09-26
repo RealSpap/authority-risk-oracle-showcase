@@ -50,6 +50,10 @@ _ADDRESS_GETTER_ABI = lambda name: [  # noqa: E731
     {"name": name, "type": "function", "stateMutability": "view", "inputs": [], "outputs": [{"type": "address"}]}
 ]
 
+_ADDRESS_ARRAY_GETTER_ABI = lambda name: [  # noqa: E731
+    {"name": name, "type": "function", "stateMutability": "view", "inputs": [], "outputs": [{"type": "address[]"}]}
+]
+
 
 def get_w3(rpc_url: str) -> Web3:
     return Web3(Web3.HTTPProvider(rpc_url, request_kwargs={"timeout": 20}))
@@ -174,6 +178,18 @@ def read_address_getter(w3: Web3, address: str, function_name: str, retries: int
     `is not None` before scoring a dimension must not see the two conflated (see RpcUnavailable)."""
     def _call():
         contract = w3.eth.contract(address=Web3.to_checksum_address(address), abi=_ADDRESS_GETTER_ABI(function_name))
+        return getattr(contract.functions, function_name)().call()
+    return _read(_call, retries, what=f"{function_name}() on {address}")
+
+
+def read_address_array_getter(w3: Web3, address: str, function_name: str, retries: int = 4):
+    """Same contract as read_address_getter(), for a no-arg getter that returns `address[]` instead
+    of a single `address` -- e.g. a bespoke role-registry's getFreezerRoleMembers()-style accessor
+    (Agora's AUSD; see scripts/check_issuer_power.py). Returns None on a confirmed revert, raises
+    RpcUnavailable on a persistent network failure -- never conflate the two (see read_address_getter's
+    own docstring for why)."""
+    def _call():
+        contract = w3.eth.contract(address=Web3.to_checksum_address(address), abi=_ADDRESS_ARRAY_GETTER_ABI(function_name))
         return getattr(contract.functions, function_name)().call()
     return _read(_call, retries, what=f"{function_name}() on {address}")
 

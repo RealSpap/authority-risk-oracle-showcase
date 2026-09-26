@@ -3,9 +3,9 @@
   "chainId": 46630,
   "methodologyVersion": "authority-risk-oracle-v3",
   "methodologyHash": "0xf2606acddcba40931e80d6e2a5a45ff06a0788ef4db7a53b60e19de4133b8975",
-  "generatedAt": 1789934379,
-  "txHash": "3075f58821329f6ac9716006486bd3fef24282e34904c06d81d5a7996904112a",
-  "blockNumber": 122144286,
+  "generatedAt": 1790408560,
+  "txHash": "521076fcda7d834af03240e6bb03ebd771e7789962cf1ecde5f673b9d784fad8",
+  "blockNumber": 124480424,
   "scores": [
     {
       "target": "0xBeEff033F34C046626B8D0A041844C5d1A5409dd",
@@ -25,7 +25,7 @@
       "multisigScore": 100,
       "timelockScore": 75,
       "oracleAuthorityScore": 100,
-      "crossExposureScore": 100,
+      "crossExposureScore": 80,
       "compositeScore": 85,
       "l1CappedComposite": 57
     },
@@ -36,7 +36,7 @@
       "multisigScore": 100,
       "timelockScore": 75,
       "oracleAuthorityScore": 100,
-      "crossExposureScore": 100,
+      "crossExposureScore": 80,
       "compositeScore": 85,
       "l1CappedComposite": 57
     },
@@ -58,7 +58,7 @@
       "multisigScore": 100,
       "timelockScore": 75,
       "oracleAuthorityScore": 100,
-      "crossExposureScore": 100,
+      "crossExposureScore": 80,
       "compositeScore": 85,
       "l1CappedComposite": 57
     },
@@ -124,7 +124,7 @@
       "multisigScore": 100,
       "timelockScore": 75,
       "oracleAuthorityScore": 100,
-      "crossExposureScore": 100,
+      "crossExposureScore": 80,
       "compositeScore": 85,
       "l1CappedComposite": 57
     },
@@ -132,12 +132,12 @@
       "target": "0xEE27D5aE494300902D90454E8630a3f1c68C9c52",
       "label": "Chainlink Price Feed Admin (Robinhood Chain)",
       "adminKeyScore": 65,
-      "multisigScore": 32,
+      "multisigScore": 85,
       "timelockScore": 0,
       "oracleAuthorityScore": 100,
       "crossExposureScore": 100,
-      "compositeScore": 36,
-      "l1CappedComposite": 36
+      "compositeScore": 52,
+      "l1CappedComposite": 52
     },
     {
       "target": "0x02a84c1b3BBD7401a5f7fa98a384EBC70bB5749E",
@@ -369,6 +369,17 @@
       "crossExposureScore": 100,
       "compositeScore": 1,
       "l1CappedComposite": 1
+    },
+    {
+      "target": "0xd42174d3Db28B0fA2BD25381c3521b18AE9dB490",
+      "label": "Flock Credit Vault (Robinhood Chain)",
+      "adminKeyScore": 5,
+      "multisigScore": 0,
+      "timelockScore": 0,
+      "oracleAuthorityScore": 100,
+      "crossExposureScore": 100,
+      "compositeScore": 2,
+      "l1CappedComposite": 2
     },
     {
       "target": "0x9c3663FA9ab976E67B42939486EC4966Cb41a0BB",
@@ -660,34 +671,34 @@
       "target": "0x6F475642a6e85809B1c36Fa62763669b1b48DD5B",
       "label": "LayerZero V2 EndpointV2 (Robinhood Chain)",
       "adminKeyScore": 55,
-      "multisigScore": 40,
+      "multisigScore": 85,
       "timelockScore": 0,
       "oracleAuthorityScore": 100,
       "crossExposureScore": 100,
-      "compositeScore": 34,
-      "l1CappedComposite": 34
+      "compositeScore": 48,
+      "l1CappedComposite": 48
     },
     {
       "target": "0xC39161c743D0307EB9BCc9FEF03eeb9Dc4802de7",
       "label": "LayerZero V2 SendUln302 (Robinhood Chain)",
       "adminKeyScore": 55,
-      "multisigScore": 40,
+      "multisigScore": 85,
       "timelockScore": 0,
       "oracleAuthorityScore": 100,
       "crossExposureScore": 100,
-      "compositeScore": 34,
-      "l1CappedComposite": 34
+      "compositeScore": 48,
+      "l1CappedComposite": 48
     },
     {
       "target": "0xe1844c5D63a9543023008D332Bd3d2e6f1FE1043",
       "label": "LayerZero V2 ReceiveUln302 (Robinhood Chain)",
       "adminKeyScore": 55,
-      "multisigScore": 40,
+      "multisigScore": 85,
       "timelockScore": 0,
       "oracleAuthorityScore": 100,
       "crossExposureScore": 100,
-      "compositeScore": 34,
-      "l1CappedComposite": 34
+      "compositeScore": 48,
+      "l1CappedComposite": 48
     }
   ]
 }

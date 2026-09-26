@@ -300,6 +300,47 @@ ETHEREUM_L1_GROUPS = {
         "known_eoa": ["0xd93826BB299765c87D13AeBa2A7E5d9B27A03956"],
         "safes": [],
     },
+    # ADDED 2026-09-26 (scripts/check_morpho_market_oracles.py): price-feed admin Safes behind listed Morpho markets, read live.
+    # Registry only: no tracked target sits behind them and no score reads them (`targets` is empty on purpose).
+    "chainlink_feed_admin": {
+        # Chainlink feed-proxy owner Safe, 4-of-9, the same 9 signers on Ethereum, Base, Robinhood, Arbitrum and Monad
+        "targets": [],
+        "known_eoa": [],
+        "safes": ["0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA"],
+    },
+    "redstone_feed_admin": {
+        # RedStone-built feed proxies' ProxyAdmin owner Safe, 2-of-3, the same 3 signers on Ethereum, Monad, HyperEVM and Tempo
+        "targets": [],
+        "known_eoa": [],
+        "safes": ["0x6906F3a09BCc1b7cd3b0C8626724299618dF4472"],
+    },
+    "single_signer_feed_admin": {
+        # 1-of-1 Safe (one signer) owning the backup-oracle feed of a Morpho PT-USDat market, same Safe address on Ethereum and Monad
+        "targets": [],
+        "known_eoa": [],
+        "safes": ["0x9BEc4DbAdE98251CC20d3C15C27bfdaA45434d4A"],
+    },
+    # ADDED 2026-09-26 (data/finding_2026-09-26-morpho-admin-posted-price-feeds.md): registry only, no score reads it.
+    "midas_mfone_feed_admin": {
+        # Holder of the mF-ONE price feed's feedAdminRole (Midas): posts the price consumed by the Morpho mF-ONE/USDC market, a single bare EOA (RoleGranted replay + live hasRole, 2026-09-26)
+        "targets": [],
+        "known_eoa": ["0x85A56E098b6159d2560aA2BA4F70e8Ef3aE7E5e9"],
+        "safes": [],
+    },
+    # ADDED 2026-09-26 (data/finding_2026-09-26-morpho-admin-posted-price-feeds.md, scripts/check_posted_price_feeds.py): registry only, no score reads it.
+    "midas_default_admin": {
+        # DEFAULT_ADMIN_ROLE of the shared Midas access-control contract 0x0312A9D1...: a bare EOA plus a 1-of-3 Safe, no delay; can grant the feed-posting role.
+        "targets": [],
+        "known_eoa": ["0xd4195CF4df289a4748C1A7B6dDBE770e27bA1227"],
+        "safes": ["0xB60842E9DaBCd1C52e354ac30E82a97661cB7E89"],
+    },
+    "midas_feed_posters": {
+        # Bare EOAs that hold the posting role (feedAdminRole) of Midas-family feeds priced into listed Morpho markets: mWIN, mM1-USD, mGLOeuro, mHyperBTC, CarryTrade.
+        "targets": [],
+        "known_eoa": ["0x532FEDcF5837f411646c230CF9b743dFdD0692d3", "0x9e104D8Bd58759CF0C8d45f32C846df82916E69e", "0xa301F0eD658f72e0520fc47b42888bc985eF600c",
+                      "0x40468649412585665ad1B756261BB30D768a0956", "0xf2e018680E796e23CAe893da8b982575627343ac"],
+        "safes": [],
+    },
 }
 
 ARBITRUM_GROUPS = {
@@ -403,6 +444,14 @@ ARBITRUM_GROUPS = {
         "known_eoa": [],
         "safes": ["0xCb45E82419baeBCC9bA8b1e5c7858e48A3B26Ea6"],
     },
+    # ADDED 2026-09-26 (scripts/check_morpho_market_oracles.py): price-feed admin Safes behind listed Morpho markets, read live.
+    # Registry only: no tracked target sits behind them and no score reads them (`targets` is empty on purpose).
+    "chainlink_feed_admin": {
+        # Chainlink feed-proxy owner Safe, 4-of-9, the same 9 signers on Ethereum, Base, Robinhood, Arbitrum and Monad
+        "targets": [],
+        "known_eoa": [],
+        "safes": ["0x2F3b388EB017613eb51F06843DFEF12Db1fDD3c5"],
+    },
 }
 
 BASE_GROUPS = {
@@ -479,6 +528,28 @@ BASE_GROUPS = {
         "known_eoa": [],
         "safes": ["0x56C1a4b54921DEA9A344967a8693C7E661D72968"],
     },
+    # ADDED 2026-09-26 (scripts/check_morpho_market_oracles.py): price-feed admin Safes behind listed Morpho markets, read live.
+    # Registry only: no tracked target sits behind them and no score reads them (`targets` is empty on purpose).
+    "chainlink_feed_admin": {
+        # Chainlink feed-proxy owner Safe, 4-of-9, the same 9 signers on Ethereum, Base, Robinhood, Arbitrum and Monad
+        "targets": [],
+        "known_eoa": [],
+        "safes": ["0xf0Db7318A51a21C413CaDd4AbDC1E8a500fE5B1b"],
+    },
+    # ADDED 2026-09-26 (data/finding_2026-09-26-morpho-admin-posted-price-feeds.md): registry only, no score reads it.
+    "midas_mglo_feed_admin": {
+        # Holder of the mGLO price feed's feedAdminRole (Midas), a single bare EOA; the SAME address holds it on Robinhood Chain, whose registry (signer_overlap.GROUPS) is deliberately not touched here
+        "targets": [],
+        "known_eoa": ["0x83b573AA8C4b567c0466c9d5e32D6513676d795b"],
+        "safes": [],
+    },
+    # ADDED 2026-09-26 (data/finding_2026-09-26-morpho-admin-posted-price-feeds.md, scripts/check_posted_price_feeds.py): registry only, no score reads it.
+    "midas_default_admin": {
+        # DEFAULT_ADMIN_ROLE of the shared Midas access-control contract 0x0312A9D1...: a bare EOA plus a 1-of-3 Safe, no delay; can grant the feed-posting role.
+        "targets": [],
+        "known_eoa": ["0xd4195CF4df289a4748C1A7B6dDBE770e27bA1227"],
+        "safes": ["0xB60842E9DaBCd1C52e354ac30E82a97661cB7E89"],
+    },
 }
 
 # ADDED 2026-09-18: Tempo didn't exist as a scored ecosystem when this
@@ -509,6 +580,23 @@ TEMPO_GROUPS = {
         "targets": ["0x20c00000000000000000000014f22ca97301eb73"],  # USDT0
         "known_eoa": [],
         "safes": ["0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8"],  # 3-of-5
+    },
+    # ADDED 2026-09-26 (backlog item "[backlog note]"): Tempo's Morpho Blue core owner Safe was
+    # never in this registry even though chains/tempo/scripts/methodology_test.py already folds its 9-signer
+    # overlap into crossExposureScore. Re-read live 2026-09-26: 5-of-9, the same 9 signers as the
+    # Ethereum L1 / Base / Robinhood Morpho Blue owner Safes. Registry-only, no score reads this.
+    "morpho_blue": {
+        "targets": ["0x10EE9AAC980A180dd4DcFc96C746d60B0EA88f97"],  # Morpho Blue core on Tempo
+        "known_eoa": [],
+        "safes": ["0x645890a0b5632e2cf4cb774994ebeab01230fbbc"],  # 5-of-9
+    },
+    # ADDED 2026-09-26 (scripts/check_morpho_market_oracles.py): price-feed admin Safes behind listed Morpho markets, read live.
+    # Registry only: no tracked target sits behind them and no score reads them (`targets` is empty on purpose).
+    "redstone_feed_admin": {
+        # RedStone-built feed proxies' ProxyAdmin owner Safe, 2-of-3, the same 3 signers on Ethereum, Monad, HyperEVM and Tempo
+        "targets": [],
+        "known_eoa": [],
+        "safes": ["0x32e59eCD77Eb9989D6517AccDd5581E2b4AC0523"],
     },
 }
 
@@ -709,6 +797,26 @@ MONAD_GROUPS = {
         "known_eoa": [],
         "safes": ["0xc887455536CBD4e615B745e70CaCde15B3117e74"],
     },
+    # ADDED 2026-09-26 (scripts/check_morpho_market_oracles.py): price-feed admin Safes behind listed Morpho markets, read live.
+    # Registry only: no tracked target sits behind them and no score reads them (`targets` is empty on purpose).
+    "chainlink_feed_admin": {
+        # Chainlink feed-proxy owner Safe, 4-of-9, the same 9 signers on Ethereum, Base, Robinhood, Arbitrum and Monad
+        "targets": [],
+        "known_eoa": [],
+        "safes": ["0x73877Fe34aA2b162430CeF680FEA268B8Ec1c4F1"],
+    },
+    "redstone_feed_admin": {
+        # RedStone-built feed proxies' ProxyAdmin owner Safe, 2-of-3, the same 3 signers on Ethereum, Monad, HyperEVM and Tempo
+        "targets": [],
+        "known_eoa": [],
+        "safes": ["0x41f01667DE85CDcE7E4e59465d19b834ad231258"],
+    },
+    "single_signer_feed_admin": {
+        # 1-of-1 Safe (one signer) owning the backup-oracle feed of a Morpho PT-USDat market, same Safe address on Ethereum and Monad
+        "targets": [],
+        "known_eoa": [],
+        "safes": ["0x9BEc4DbAdE98251CC20d3C15C27bfdaA45434d4A"],
+    },
 }
 
 # ADDED 2026-09-25 ("voit large" round 2, roadmap item 5): closes this project's own gap against the
@@ -751,6 +859,14 @@ HYPERLIQUID_GROUPS = {
         "targets": [],
         "known_eoa": [],
         "safes": ["0x97Dee0eA4CA10560F260a0f6F45BDC128A1d51F9"],  # DEFAULT_ADMIN_ROLE, 4-of-6
+    },
+    # ADDED 2026-09-26 (scripts/check_morpho_market_oracles.py): price-feed admin Safes behind listed Morpho markets, read live.
+    # Registry only: no tracked target sits behind them and no score reads them (`targets` is empty on purpose).
+    "redstone_feed_admin": {
+        # RedStone-built feed proxies' ProxyAdmin owner Safe, 2-of-3, the same 3 signers on Ethereum, Monad, HyperEVM and Tempo
+        "targets": [],
+        "known_eoa": [],
+        "safes": ["0xCe77235710593aF8C6573a8a4FfB97a1325a30cF"],
     },
 }
 # Checked live 2026-09-25 (all 4 Safes' owner sets resolved and compared against every signer/EOA

@@ -79,8 +79,8 @@ What it doesn't do, concretely:
 4. **Methodology depth is capped by one maintainer's time.** SolGov's "safety
    benchmark" columns (verified builds, nonce detection, hardware wallets, key
    rotation, insurance fund, treasury segmentation) are a real, useful, concrete
-   signal list this project does not fully check yet on Solana (18 targets scored,
-   `chains/solana/scorers.py`) -- a genuinely open gap, not a completed step. See
+   signal list this project does not fully check yet on Solana (26 targets scored,
+   `chains/solana/scorers.py`; 18 of them published on-chain, 8 added 2026-09-26 and not yet pushed) -- a genuinely open gap, not a completed step. See
    `CHANGELOG.md` for how that count got there.
 
 ### The closest thing to a governance precedent for this thesis: Aave x LlamaRisk
@@ -163,15 +163,15 @@ the maintainer funding and setting up the actual program).
 
 ## Status
 
-**Deployed oracles at a glance, 2026-09-20 20:41 CEST** (addresses from each ecosystem's
+**Deployed oracles at a glance, 2026-09-26** (addresses from each ecosystem's
 own deploy record, counts read live with `python3 scripts/live_target_counts.py`):
 
 | Ecosystem | Network | Oracle | Targets |
 |---|---|---|---|
-| Robinhood Chain | Testnet, chain 46630 | [`0x9BF4...7f52`](https://explorer.testnet.chain.robinhood.com/address/0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52) | 58 |
-| Ethereum L1 | Sepolia, chain 11155111 | [`0xB6F8...f906`](https://sepolia.etherscan.io/address/0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906) | 19 |
-| Arbitrum | Sepolia, chain 421614 | [`0x5084...8720`](https://sepolia.arbiscan.io/address/0x50840a7667baEa9D05ad4ae3dCeb384724b58720) | 9 |
-| Base | Sepolia, chain 84532 | [`0x5084...8720`](https://sepolia.basescan.org/address/0x50840a7667baEa9D05ad4ae3dCeb384724b58720) | 9 |
+| Robinhood Chain | Testnet, chain 46630 | [`0x9BF4...7f52`](https://explorer.testnet.chain.robinhood.com/address/0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52) | 63 |
+| Ethereum L1 | Sepolia, chain 11155111 | [`0xB6F8...f906`](https://sepolia.etherscan.io/address/0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906) | 25 |
+| Arbitrum | Sepolia, chain 421614 | [`0x5084...8720`](https://sepolia.arbiscan.io/address/0x50840a7667baEa9D05ad4ae3dCeb384724b58720) | 13 |
+| Base | Sepolia, chain 84532 | [`0x5084...8720`](https://sepolia.basescan.org/address/0x50840a7667baEa9D05ad4ae3dCeb384724b58720) | 13 |
 | Tempo | Moderato, chain 42431 | [`0x5084...8720`](https://explore.testnet.tempo.xyz/address/0x50840a7667baEa9D05ad4ae3dCeb384724b58720) | 14 |
 | Plasma | Testnet, chain 9746 | [`0x5084...8720`](https://testnet.plasmascan.to/address/0x50840a7667baEa9D05ad4ae3dCeb384724b58720) | 9 |
 | Monad | Testnet, chain 10143 | [`0x5084...8720`](https://testnet.monadvision.com/address/0x50840a7667baEa9D05ad4ae3dCeb384724b58720) | 9 |
@@ -181,8 +181,8 @@ own deploy record, counts read live with `python3 scripts/live_target_counts.py`
 
 The seven EVM oracles at `0x5084...8720` are one address by construction: a CREATE address
 is `keccak(deployer, nonce)`, and the same shared deployer key was at nonce 0 on each chain.
-Robinhood Chain and Ethereum L1 have their own addresses. **160 targets on the 9 on-chain
-oracles**, plus Zcash's 6 attested (not counted in the total, different mechanism).
+Robinhood Chain and Ethereum L1 have their own addresses. **179 targets on the 9 on-chain
+oracles** (live read 2026-09-26), plus Zcash's 6 attested (not counted in the total, different mechanism).
 
 **[`dashboard/index.html`](dashboard/index.html)** reads every score directly from each
 deployed oracle in your own browser via raw `eth_call` -- no backend, nothing to trust but
@@ -248,6 +248,24 @@ unset, the run still prints them to the log and nothing else changes -- alerting
 strictly additive, never a dependency of the scoring pipeline itself. No bot token
 is provisioned yet: create one via [@BotFather](https://t.me/BotFather), add it and
 the target chat ID as repo secrets, to actually turn this on.
+
+**Watching beyond the score.** Read-only tools (public RPC, no key, nothing sent) that answer the questions a score alone does not.
+Each states in its own header what it could not read; an unread source is never reported as quiet.
+
+| Question | Command |
+|---|---|
+| One dated report: which oracle turns stale, what changed on the Safes, what is queued in the timelocks, has any tracked code changed | `python3 scripts/daily_digest.py` |
+| What can this one key touch, and who are the most connected signers (EOA / EIP-7702 / contract per signer) | `python3 scripts/who_controls.py 0xADDRESS`, `--top 20`, `--code-scan` |
+| What changed on the tracked Safes (owners, threshold, modules, guard, singleton) in the last N days | `python3 scripts/check_safe_changes.py --days 30` |
+| What is queued behind the watched timelocks right now, and what cleared recently | `python3 scripts/check_pending_ops.py` |
+| Did a Squads v4 multisig behind a Solana target change members, threshold or time lock since the last snapshot | `python3 scripts/check_squads_changes.py` |
+| What share of each ecosystem's DefiLlama TVL do the tracked targets cover, and which are the biggest untracked protocols | `python3 scripts/check_tvl_coverage.py` |
+| Is a competitor's public Solana registry still right (programs and multisigs, live) | `python3 chains/solana/scripts/verify_solgov_leads.py` |
+| How many published targets score at or below the multisig configuration of a documented incident (Bybit, WazirX, Radiant, Humanity) | `python3 scripts/incident_exposure.py` |
+| Who can move the price each Morpho market trusts (proxy admins, MetaOracle backups, committees shared across chains) | `python3 scripts/check_morpho_market_oracles.py` |
+| Which Morpho markets price from a number a role holder posts, and how far they can move it | `python3 scripts/check_posted_price_feeds.py` |
+
+Findings and their dates are in [`data/`](data/) (`finding_*.md`).
 
 ## Business case
 

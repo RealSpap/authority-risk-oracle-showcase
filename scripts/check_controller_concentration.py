@@ -17,10 +17,52 @@ import urllib.request
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "lib"))
 sys.path.insert(0, os.path.dirname(__file__))
 from lib.controller_concentration import (  # noqa: E402
-    MORPHO_API, TRACKED_MORPHO_VAULTS, build_controller_registry, config_varies_across_chains, rank_controllers,
-    read_vault_roles,
+    MORPHO_API, TRACKED_MORPHO_VAULTS, build_controller_registry, config_varies_across_chains,
+    fold_in_vault_v2_reach, rank_controllers, read_vault_roles,
 )
 from lib.web3_utils import get_w3, read_address_getter, safe_owners_and_threshold  # noqa: E402
+import check_vault_v2_inventory as v2inv  # noqa: E402
+
+
+def fetch_vault_v2_reach(registry_keys):
+    """[(controller_addr_lower, tvl_usd, vault_label)] for every $20M+ Vault V2 target (any tracked
+    ecosystem) whose owner -- read directly, or one hop further if the direct owner is itself a
+    non-Safe contract (the same VaultV2Supervisor indirection check_vault_v2_inventory.read_holder()
+    already chases) -- matches an address already in `registry_keys` (a V1 controller). Re-follows
+    the hop here rather than reusing read_holder() directly, since that returns a formatted display
+    string, not the resolved address this needs to match against. Best-effort: an unread owner is
+    skipped, not guessed at, same as the rest of this report's [UNREAD] handling."""
+    try:
+        vaults = v2inv.fetch_vaults(20_000_000)
+    except Exception as e:
+        print(f"  [WARN] Vault V2 reach unreadable this run ({type(e).__name__}: {e}) -- V1-only totals below")
+        return []
+    w3_by_eco = {}
+    rows = []
+    for v in vaults:
+        eco = v2inv.eco_name(v["chain"]["id"])
+        if eco not in v2inv.CHAINS:
+            continue
+        if eco not in w3_by_eco:
+            w3_by_eco[eco] = get_w3(v2inv.CHAINS[eco][1])
+        w3 = w3_by_eco[eco]
+        try:
+            owner_addr = read_address_getter(w3, v["address"], "owner")
+        except Exception:
+            continue
+        if not owner_addr:
+            continue
+        candidate = owner_addr.lower()
+        if candidate not in registry_keys:
+            try:
+                inner = read_address_getter(w3, owner_addr, "owner")
+            except Exception:
+                inner = None
+            if inner and inner.lower() in registry_keys:
+                candidate = inner.lower()
+        if candidate in registry_keys:
+            rows.append((candidate, float(v["totalAssetsUsd"] or 0), v["name"]))
+    return rows
 
 
 def fetch_tvl(vaults):
@@ -63,6 +105,8 @@ def main():
     tvl_by_vault = fetch_tvl(TRACKED_MORPHO_VAULTS)
 
     registry = build_controller_registry(vault_rows, safe_owners_and_threshold, w3_by_ecosystem)
+    v2_rows = fetch_vault_v2_reach(set(registry.keys()))
+    fold_in_vault_v2_reach(registry, v2_rows)
     ranked = rank_controllers(registry, tvl_by_vault)
 
     total_tvl = sum(tvl_by_vault.values())
@@ -79,7 +123,9 @@ def main():
         varies_flag = "  <-- SAME address, DIFFERENT owner set/threshold per chain (no cross-chain sync)" if varies else ""
         multi_hat = [f"{eco}:{label} holds {sorted(roles)}" for (eco, label), roles in info["roles_by_vault"].items() if len(roles) >= 2]
         flag = f"  <-- holds {max_roles} roles on the same vault (no independent check between them)" if max_roles >= 2 else ""
-        print(f"  {addr[:10]}.. [{', '.join(shapes)}] {vault_count} vault(s), {chain_count} chain(s), ${tvl/1e6:.1f}M governed{flag}{varies_flag}")
+        v2 = info.get("v2_reach")
+        v2_flag = f"  <-- PLUS ${v2['tvl']/1e6:.1f}M disclosed-only Vault V2 reach ({len(v2['vaults'])} vault(s), not scored, see data/finding_2026-09-25-vault-v2-inventory.md)" if v2 else ""
+        print(f"  {addr[:10]}.. [{', '.join(shapes)}] {vault_count} vault(s), {chain_count} chain(s), ${tvl/1e6:.1f}M governed{flag}{varies_flag}{v2_flag}")
         for m in multi_hat:
             print(f"      {m}")
 

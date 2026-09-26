@@ -97,6 +97,29 @@ def config_varies_across_chains(safe_by_ecosystem):
     return len(shapes) > 1
 
 
+def fold_in_vault_v2_reach(registry, v2_rows):
+    """ADDED 2026-09-26, closes the gap `data/finding_2026-09-25-vault-v2-inventory.md` flagged as
+    "not yet folded into the controller-concentration tool itself": 6 Steakhouse-family Vault V2
+    targets resolve, via `check_vault_v2_inventory.read_holder()`'s one-hop VaultV2Supervisor chase,
+    to the exact same Steakhouse Safe already tracked here as owner of 4 V1 vaults -- so that
+    controller's TRUE reach ($818.9M) was invisible in a report scoped only to V1.
+
+    `v2_rows`: [(controller_addr_lower, extra_tvl_usd, vault_label)], computed by the caller from
+    Vault V2's own live owner-resolution (this module never re-derives that itself). Adds a purely
+    informational `"v2_reach"` annotation to any controller ALREADY present in the V1 registry --
+    never merged into `vault_count`/`tvl`/`ecosystems`, which stay scoped to the oracle's actually
+    tracked/scored V1 vaults (Vault V2 remains disclosed-only, no score, per
+    `data/finding_2026-09-25-vault-v2-scoring-scope.md`). A controller that reaches ONLY V2 vaults,
+    with no V1 role at all, is out of scope for this report -- that's the V2 inventory's own job."""
+    for addr_lower, extra_tvl, vault_label in v2_rows:
+        if addr_lower not in registry:
+            continue
+        entry = registry[addr_lower].setdefault("v2_reach", {"tvl": 0.0, "vaults": []})
+        entry["tvl"] += extra_tvl
+        entry["vaults"].append(vault_label)
+    return registry
+
+
 def rank_controllers(registry, tvl_by_vault):
     """[(controller_addr, info, vault_count, chain_count, roles_on_any_single_vault, tvl_governed)],
     sorted by vault_count desc then tvl_governed desc. `roles_on_any_single_vault` is the largest

@@ -1,0 +1,3279 @@
+[
+ {
+  "name": "Orca",
+  "tvl": "$240M",
+  "category": "DEX",
+  "version": "Squads V4",
+  "threshold": "5",
+  "members": "13",
+  "timelock_s": "86400",
+  "multisig": "BQsDWkL417U4tVE2sDnPks469pKdm6YzFgKH77doiEjF",
+  "authority": "GwH3Hiv5mACLX3ufTw1pFsrhSPon5tdw252DBs4Rx4PV",
+  "programs": [
+   {
+    "name": "Whirlpools",
+    "id": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
+    "authority": "GwH3Hiv5mACLX3ufTw1pFsrhSPon5tdw252DBs4Rx4PV"
+   },
+   {
+    "name": "Token Swap V2",
+    "id": "9W959DqEETiGZocYWCQPaJ6sBmUzgfxXfqGeTEdp3aQP",
+    "authority": "23zF9Azpe9CN4iPeTsQndD1mQpcb5Gz1qFREL5gPTZvG"
+   },
+   {
+    "name": "Wave (waveQX)",
+    "id": "waveQX2yP3H1pVU8djGvEHmYg8uamQ84AuyGtpsrXTF",
+    "authority": "GwH3Hiv5mACLX3ufTw1pFsrhSPon5tdw252DBs4Rx4PV"
+   },
+   {
+    "name": "Stake (StaKE6)",
+    "id": "StaKE6XNKVVhG8Qu9hDJBqCW3eRe7MDGLz17nJZetLT",
+    "authority": "GwH3Hiv5mACLX3ufTw1pFsrhSPon5tdw252DBs4Rx4PV"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Whirlpools",
+    "id": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
+    "authority": "GwH3Hiv5mACLX3ufTw1pFsrhSPon5tdw252DBs4Rx4PV",
+    "live_authority": "GwH3Hiv5mACLX3ufTw1pFsrhSPon5tdw252DBs4Rx4PV",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Token Swap V2",
+    "id": "9W959DqEETiGZocYWCQPaJ6sBmUzgfxXfqGeTEdp3aQP",
+    "authority": "23zF9Azpe9CN4iPeTsQndD1mQpcb5Gz1qFREL5gPTZvG",
+    "live_authority": "23zF9Azpe9CN4iPeTsQndD1mQpcb5Gz1qFREL5gPTZvG",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Wave (waveQX)",
+    "id": "waveQX2yP3H1pVU8djGvEHmYg8uamQ84AuyGtpsrXTF",
+    "authority": "GwH3Hiv5mACLX3ufTw1pFsrhSPon5tdw252DBs4Rx4PV",
+    "live_authority": "GwH3Hiv5mACLX3ufTw1pFsrhSPon5tdw252DBs4Rx4PV",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Stake (StaKE6)",
+    "id": "StaKE6XNKVVhG8Qu9hDJBqCW3eRe7MDGLz17nJZetLT",
+    "authority": "GwH3Hiv5mACLX3ufTw1pFsrhSPon5tdw252DBs4Rx4PV",
+    "live_authority": "GwH3Hiv5mACLX3ufTw1pFsrhSPon5tdw252DBs4Rx4PV",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 5,
+   "members": 13,
+   "time_lock_s": 86400,
+   "vault0": "GwH3Hiv5mACLX3ufTw1pFsrhSPon5tdw252DBs4Rx4PV",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "Drift",
+  "tvl": "$246M",
+  "category": "Perps",
+  "version": "Squads V4",
+  "threshold": "4",
+  "members": "7",
+  "timelock_s": "3600",
+  "multisig": "7qipzLR9j1JcvdxE1XJEFgvoyFmgBpgw5hMdHBMPcJtM",
+  "authority": "8jj7zJgdr5bDndc7evM74FMGwzLPmd4u4QxNzFi1BMai",
+  "programs": [
+   {
+    "name": "Velocity",
+    "id": "vELoC1audYbSYVRXn1vPaV8Axoa9oU6BYmNGZZBDZ1P",
+    "authority": "8jj7zJgdr5bDndc7evM74FMGwzLPmd4u4QxNzFi1BMai"
+   },
+   {
+    "name": "Protocol V2 (legacy Drift)",
+    "id": "dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH",
+    "authority": "8jj7zJgdr5bDndc7evM74FMGwzLPmd4u4QxNzFi1BMai"
+   },
+   {
+    "name": "JIT Proxy",
+    "id": "J1TPRoXCtGuMcWiWFE6RB9eZU8U35PBMETCwNQLCNPhQ",
+    "authority": "8jj7zJgdr5bDndc7evM74FMGwzLPmd4u4QxNzFi1BMai"
+   },
+   {
+    "name": "Vaults",
+    "id": "vAuLTsyrvSfZRuRB3XgvkPwNGgYSs9YRYymVebLKoxR",
+    "authority": "Ad21qwCb3C98M6UNqjGsZgR48549Spp7W1UWETV29cZ9"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Velocity",
+    "id": "vELoC1audYbSYVRXn1vPaV8Axoa9oU6BYmNGZZBDZ1P",
+    "authority": "8jj7zJgdr5bDndc7evM74FMGwzLPmd4u4QxNzFi1BMai",
+    "live_authority": "8jj7zJgdr5bDndc7evM74FMGwzLPmd4u4QxNzFi1BMai",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Protocol V2 (legacy Drift)",
+    "id": "dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH",
+    "authority": "8jj7zJgdr5bDndc7evM74FMGwzLPmd4u4QxNzFi1BMai",
+    "live_authority": "8jj7zJgdr5bDndc7evM74FMGwzLPmd4u4QxNzFi1BMai",
+    "same_as_solgov": true
+   },
+   {
+    "name": "JIT Proxy",
+    "id": "J1TPRoXCtGuMcWiWFE6RB9eZU8U35PBMETCwNQLCNPhQ",
+    "authority": "8jj7zJgdr5bDndc7evM74FMGwzLPmd4u4QxNzFi1BMai",
+    "live_authority": "8jj7zJgdr5bDndc7evM74FMGwzLPmd4u4QxNzFi1BMai",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Vaults",
+    "id": "vAuLTsyrvSfZRuRB3XgvkPwNGgYSs9YRYymVebLKoxR",
+    "authority": "Ad21qwCb3C98M6UNqjGsZgR48549Spp7W1UWETV29cZ9",
+    "live_authority": "Ad21qwCb3C98M6UNqjGsZgR48549Spp7W1UWETV29cZ9",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 4,
+   "members": 7,
+   "time_lock_s": 3600,
+   "vault0": "8jj7zJgdr5bDndc7evM74FMGwzLPmd4u4QxNzFi1BMai",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "Project 0",
+  "tvl": "$51M",
+  "category": "Lending",
+  "version": "Squads V4",
+  "threshold": "7",
+  "members": "15",
+  "timelock_s": "0",
+  "multisig": "7FCPipJWVbPbdHymVt1gJYwKciakkJz5GahdQySemvHk",
+  "authority": "J3oBkTkDXU3TcAggJEa3YeBZE5om5yNAdTtLVNXFD47",
+  "programs": [
+   {
+    "name": "Lending V2",
+    "id": "MFv2hWf31Z9kbCa1snEPYctwafyhdvnV7FZnsebVacA",
+    "authority": "J3oBkTkDXU3TcAggJEa3YeBZE5om5yNAdTtLVNXFD47"
+   },
+   {
+    "name": "LIP",
+    "id": "LipsxuAkFkwa4RKNzn51wAsW7Dedzt1RNHMkTkDEZUW",
+    "authority": "3HGdGLrnK9DsnHi1mCrUMLGfQHcu6xUrXhMY14GYjqvM"
+   },
+   {
+    "name": "CAW (mrgn legacy admin)",
+    "id": "CAW7771FWrfBFtxAUrSw38fBVtKHns9WW9KCw65vnVsH",
+    "authority": "Gy7pgCryzquDBHkpGkJGBRAyLpdmdqkifjLdKMoS1GEE"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Lending V2",
+    "id": "MFv2hWf31Z9kbCa1snEPYctwafyhdvnV7FZnsebVacA",
+    "authority": "J3oBkTkDXU3TcAggJEa3YeBZE5om5yNAdTtLVNXFD47",
+    "live_authority": "J3oBkTkDXU3TcAggJEa3YeBZE5om5yNAdTtLVNXFD47",
+    "same_as_solgov": true
+   },
+   {
+    "name": "LIP",
+    "id": "LipsxuAkFkwa4RKNzn51wAsW7Dedzt1RNHMkTkDEZUW",
+    "authority": "3HGdGLrnK9DsnHi1mCrUMLGfQHcu6xUrXhMY14GYjqvM",
+    "live_authority": "3HGdGLrnK9DsnHi1mCrUMLGfQHcu6xUrXhMY14GYjqvM",
+    "same_as_solgov": true
+   },
+   {
+    "name": "CAW (mrgn legacy admin)",
+    "id": "CAW7771FWrfBFtxAUrSw38fBVtKHns9WW9KCw65vnVsH",
+    "authority": "Gy7pgCryzquDBHkpGkJGBRAyLpdmdqkifjLdKMoS1GEE",
+    "live_authority": "Gy7pgCryzquDBHkpGkJGBRAyLpdmdqkifjLdKMoS1GEE",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 7,
+   "members": 15,
+   "time_lock_s": 0,
+   "vault0": "J3oBkTkDXU3TcAggJEa3YeBZE5om5yNAdTtLVNXFD47",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "Kamino",
+  "tvl": "$1.6B",
+  "category": "Lending",
+  "version": "Squads V4",
+  "threshold": "5",
+  "members": "10",
+  "timelock_s": "86400",
+  "multisig": "6hhBGCtmg7tPWUSgp3LG6X2rsmYWAc4tNsA6G4CnfQbM",
+  "authority": "GzFgdRJXmawPhGeBsyRCDLx4jAKPsvbUqoqitzppkzkW",
+  "programs": [
+   {
+    "name": "kLend",
+    "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD",
+    "authority": "GzFgdRJXmawPhGeBsyRCDLx4jAKPsvbUqoqitzppkzkW"
+   },
+   {
+    "name": "Liquidity",
+    "id": "6LtLpnUFNByNXLyCoK9wA2MykKAmQNZKBdY8s47dehDc",
+    "authority": "3pAxu6C9ykZvyyzdknZvmz6CbWGZPTjRevjk4PRF5ib7"
+   },
+   {
+    "name": "KFarms",
+    "id": "FarmsPZpWu9i7Kky8tPN37rs2TpmMrAZrC7S7vJa91Hr",
+    "authority": "CivjSDKgTpmkRNL4zYcmv9D9QqPJg6yTxBVxMGcXvMuY"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "kLend",
+    "id": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD",
+    "authority": "GzFgdRJXmawPhGeBsyRCDLx4jAKPsvbUqoqitzppkzkW",
+    "live_authority": "GzFgdRJXmawPhGeBsyRCDLx4jAKPsvbUqoqitzppkzkW",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Liquidity",
+    "id": "6LtLpnUFNByNXLyCoK9wA2MykKAmQNZKBdY8s47dehDc",
+    "authority": "3pAxu6C9ykZvyyzdknZvmz6CbWGZPTjRevjk4PRF5ib7",
+    "live_authority": "3pAxu6C9ykZvyyzdknZvmz6CbWGZPTjRevjk4PRF5ib7",
+    "same_as_solgov": true
+   },
+   {
+    "name": "KFarms",
+    "id": "FarmsPZpWu9i7Kky8tPN37rs2TpmMrAZrC7S7vJa91Hr",
+    "authority": "CivjSDKgTpmkRNL4zYcmv9D9QqPJg6yTxBVxMGcXvMuY",
+    "live_authority": "CivjSDKgTpmkRNL4zYcmv9D9QqPJg6yTxBVxMGcXvMuY",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 5,
+   "members": 10,
+   "time_lock_s": 86400,
+   "vault0": "GzFgdRJXmawPhGeBsyRCDLx4jAKPsvbUqoqitzppkzkW",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "Jupiter Perps",
+  "tvl": "$647M",
+  "category": "Perps",
+  "version": "Squads V4",
+  "threshold": "4",
+  "members": "8",
+  "timelock_s": "86400",
+  "multisig": "AxkJ8oH5aDu4ZRWfsujPtxdb6Vhq4gDehpoReBgrUUSm",
+  "authority": "5myNNmEmPm3UAnJ2ggLEpnTFb9t9Gk8369wKw6n3uAKx",
+  "programs": [
+   {
+    "name": "Perpetuals",
+    "id": "PERPHjGBqRHArX4DySjwM6UJHiR3sWAatqfdBS2qQJu",
+    "authority": "5myNNmEmPm3UAnJ2ggLEpnTFb9t9Gk8369wKw6n3uAKx"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Perpetuals",
+    "id": "PERPHjGBqRHArX4DySjwM6UJHiR3sWAatqfdBS2qQJu",
+    "authority": "5myNNmEmPm3UAnJ2ggLEpnTFb9t9Gk8369wKw6n3uAKx",
+    "live_authority": "5myNNmEmPm3UAnJ2ggLEpnTFb9t9Gk8369wKw6n3uAKx",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 4,
+   "members": 8,
+   "time_lock_s": 86400,
+   "vault0": "5myNNmEmPm3UAnJ2ggLEpnTFb9t9Gk8369wKw6n3uAKx",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "Jupiter Lend",
+  "tvl": "$1.65B",
+  "category": "Lending",
+  "version": "Squads V4",
+  "threshold": "4",
+  "members": "7",
+  "timelock_s": "43200",
+  "multisig": "J3mJ3wz6xkVUk3T8qHnuAYNxsRH3ixHsryYNZAU2vG8P",
+  "authority": "4MsgBB5VPoTrUSp5XnfbViV386C1UnsTdifLBw33ZMSJ",
+  "programs": [
+   {
+    "name": "Liquidity",
+    "id": "jupeiUmn818Jg1ekPURTpr4mFo29p46vygyykFJ3wZC",
+    "authority": "4MsgBB5VPoTrUSp5XnfbViV386C1UnsTdifLBw33ZMSJ"
+   },
+   {
+    "name": "Lending",
+    "id": "jup3YeL8QhtSx1e253b2FDvsMNC87fDrgQZivbrndc9",
+    "authority": "4MsgBB5VPoTrUSp5XnfbViV386C1UnsTdifLBw33ZMSJ"
+   },
+   {
+    "name": "Reward Rate",
+    "id": "jup7TthsMgcR9Y3L277b8Eo9uboVSmu1utkuXHNUKar",
+    "authority": "4MsgBB5VPoTrUSp5XnfbViV386C1UnsTdifLBw33ZMSJ"
+   },
+   {
+    "name": "Vaults",
+    "id": "jupr81YtYssSyPt8jbnGuiWon5f6x9TcDEFxYe3Bdzi",
+    "authority": "4MsgBB5VPoTrUSp5XnfbViV386C1UnsTdifLBw33ZMSJ"
+   },
+   {
+    "name": "Oracle",
+    "id": "jupnw4B6Eqs7ft6rxpzYLJZYSnrpRgPcr589n5Kv4oc",
+    "authority": "4MsgBB5VPoTrUSp5XnfbViV386C1UnsTdifLBw33ZMSJ"
+   },
+   {
+    "name": "Flashloan",
+    "id": "jupgfSgfuAXv4B6R2Uxu85Z1qdzgju79s6MfZekN6XS",
+    "authority": "4MsgBB5VPoTrUSp5XnfbViV386C1UnsTdifLBw33ZMSJ"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Liquidity",
+    "id": "jupeiUmn818Jg1ekPURTpr4mFo29p46vygyykFJ3wZC",
+    "authority": "4MsgBB5VPoTrUSp5XnfbViV386C1UnsTdifLBw33ZMSJ",
+    "live_authority": "4MsgBB5VPoTrUSp5XnfbViV386C1UnsTdifLBw33ZMSJ",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Lending",
+    "id": "jup3YeL8QhtSx1e253b2FDvsMNC87fDrgQZivbrndc9",
+    "authority": "4MsgBB5VPoTrUSp5XnfbViV386C1UnsTdifLBw33ZMSJ",
+    "live_authority": "4MsgBB5VPoTrUSp5XnfbViV386C1UnsTdifLBw33ZMSJ",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Reward Rate",
+    "id": "jup7TthsMgcR9Y3L277b8Eo9uboVSmu1utkuXHNUKar",
+    "authority": "4MsgBB5VPoTrUSp5XnfbViV386C1UnsTdifLBw33ZMSJ",
+    "live_authority": "4MsgBB5VPoTrUSp5XnfbViV386C1UnsTdifLBw33ZMSJ",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Vaults",
+    "id": "jupr81YtYssSyPt8jbnGuiWon5f6x9TcDEFxYe3Bdzi",
+    "authority": "4MsgBB5VPoTrUSp5XnfbViV386C1UnsTdifLBw33ZMSJ",
+    "live_authority": "4MsgBB5VPoTrUSp5XnfbViV386C1UnsTdifLBw33ZMSJ",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Oracle",
+    "id": "jupnw4B6Eqs7ft6rxpzYLJZYSnrpRgPcr589n5Kv4oc",
+    "authority": "4MsgBB5VPoTrUSp5XnfbViV386C1UnsTdifLBw33ZMSJ",
+    "live_authority": "4MsgBB5VPoTrUSp5XnfbViV386C1UnsTdifLBw33ZMSJ",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Flashloan",
+    "id": "jupgfSgfuAXv4B6R2Uxu85Z1qdzgju79s6MfZekN6XS",
+    "authority": "4MsgBB5VPoTrUSp5XnfbViV386C1UnsTdifLBw33ZMSJ",
+    "live_authority": "4MsgBB5VPoTrUSp5XnfbViV386C1UnsTdifLBw33ZMSJ",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 4,
+   "members": 6,
+   "time_lock_s": 43200,
+   "vault0": "4MsgBB5VPoTrUSp5XnfbViV386C1UnsTdifLBw33ZMSJ",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": false
+  }
+ },
+ {
+  "name": "Magic Eden",
+  "tvl": "$29K",
+  "category": "NFT",
+  "version": "Squads V4",
+  "threshold": "2",
+  "members": "6",
+  "timelock_s": "0",
+  "multisig": "J2SasfUti5RffbeohWpBDMiGsYGCN11fgyQKTVeREKYE",
+  "authority": "9GWPeu3cBfkGSEit6HMaAFKswoirxqgMqykMh7RVH2Bb",
+  "programs": [
+   {
+    "name": "Marketplace V2",
+    "id": "M2mx93ekt1fmXSVkTrUL9xVFHkmME8HTUi5Cyc5aF7K",
+    "authority": "9GWPeu3cBfkGSEit6HMaAFKswoirxqgMqykMh7RVH2Bb"
+   },
+   {
+    "name": "AMM",
+    "id": "mmm3XBJg5gk8XJxEKBvdgptZz6SgK4tXvn36sodowMc",
+    "authority": "9GWPeu3cBfkGSEit6HMaAFKswoirxqgMqykMh7RVH2Bb"
+   },
+   {
+    "name": "Luck (LUCK57)",
+    "id": "LUCK57mxzZiRGF2PdHAY79P6tZ8Apsi381tKvBrTdqk",
+    "authority": "9GWPeu3cBfkGSEit6HMaAFKswoirxqgMqykMh7RVH2Bb"
+   },
+   {
+    "name": "WDPK",
+    "id": "WDPKndVQYXANGvAxRgZujP4nT5rDMNqbs6aVeZe9kxX",
+    "authority": "9GWPeu3cBfkGSEit6HMaAFKswoirxqgMqykMh7RVH2Bb"
+   },
+   {
+    "name": "CMZY",
+    "id": "CMZYPASGWeTz7RNGHaRJfCq2XQ5pYK6nDvVQxzkH51zb",
+    "authority": "9GWPeu3cBfkGSEit6HMaAFKswoirxqgMqykMh7RVH2Bb"
+   },
+   {
+    "name": "M3MX",
+    "id": "M3mxk5W2tt27WGT7THox7PmgRDp4m6NEhL5xvxrBfS1",
+    "authority": "9GWPeu3cBfkGSEit6HMaAFKswoirxqgMqykMh7RVH2Bb"
+   },
+   {
+    "name": "PCKj",
+    "id": "PCKjSaQaZb3AcmjTcb2fcLanh9Mky9ZvuaKqTBxsqWE",
+    "authority": "9GWPeu3cBfkGSEit6HMaAFKswoirxqgMqykMh7RVH2Bb"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Marketplace V2",
+    "id": "M2mx93ekt1fmXSVkTrUL9xVFHkmME8HTUi5Cyc5aF7K",
+    "authority": "9GWPeu3cBfkGSEit6HMaAFKswoirxqgMqykMh7RVH2Bb",
+    "live_authority": "9GWPeu3cBfkGSEit6HMaAFKswoirxqgMqykMh7RVH2Bb",
+    "same_as_solgov": true
+   },
+   {
+    "name": "AMM",
+    "id": "mmm3XBJg5gk8XJxEKBvdgptZz6SgK4tXvn36sodowMc",
+    "authority": "9GWPeu3cBfkGSEit6HMaAFKswoirxqgMqykMh7RVH2Bb",
+    "live_authority": "9GWPeu3cBfkGSEit6HMaAFKswoirxqgMqykMh7RVH2Bb",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Luck (LUCK57)",
+    "id": "LUCK57mxzZiRGF2PdHAY79P6tZ8Apsi381tKvBrTdqk",
+    "authority": "9GWPeu3cBfkGSEit6HMaAFKswoirxqgMqykMh7RVH2Bb",
+    "live_authority": "9GWPeu3cBfkGSEit6HMaAFKswoirxqgMqykMh7RVH2Bb",
+    "same_as_solgov": true
+   },
+   {
+    "name": "WDPK",
+    "id": "WDPKndVQYXANGvAxRgZujP4nT5rDMNqbs6aVeZe9kxX",
+    "authority": "9GWPeu3cBfkGSEit6HMaAFKswoirxqgMqykMh7RVH2Bb",
+    "live_authority": "9GWPeu3cBfkGSEit6HMaAFKswoirxqgMqykMh7RVH2Bb",
+    "same_as_solgov": true
+   },
+   {
+    "name": "CMZY",
+    "id": "CMZYPASGWeTz7RNGHaRJfCq2XQ5pYK6nDvVQxzkH51zb",
+    "authority": "9GWPeu3cBfkGSEit6HMaAFKswoirxqgMqykMh7RVH2Bb",
+    "live_authority": "9GWPeu3cBfkGSEit6HMaAFKswoirxqgMqykMh7RVH2Bb",
+    "same_as_solgov": true
+   },
+   {
+    "name": "M3MX",
+    "id": "M3mxk5W2tt27WGT7THox7PmgRDp4m6NEhL5xvxrBfS1",
+    "authority": "9GWPeu3cBfkGSEit6HMaAFKswoirxqgMqykMh7RVH2Bb",
+    "live_authority": "9GWPeu3cBfkGSEit6HMaAFKswoirxqgMqykMh7RVH2Bb",
+    "same_as_solgov": true
+   },
+   {
+    "name": "PCKj",
+    "id": "PCKjSaQaZb3AcmjTcb2fcLanh9Mky9ZvuaKqTBxsqWE",
+    "authority": "9GWPeu3cBfkGSEit6HMaAFKswoirxqgMqykMh7RVH2Bb",
+    "live_authority": "9GWPeu3cBfkGSEit6HMaAFKswoirxqgMqykMh7RVH2Bb",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 2,
+   "members": 6,
+   "time_lock_s": 0,
+   "vault0": "9GWPeu3cBfkGSEit6HMaAFKswoirxqgMqykMh7RVH2Bb",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "Hylo",
+  "tvl": "$39M",
+  "category": "Stablecoin",
+  "version": "Squads V4",
+  "threshold": "3",
+  "members": "10",
+  "timelock_s": "0",
+  "multisig": "2z3t2eBz7VL39Q3vEvaemd5mhT9XLoFofEH2cXvwCJvb",
+  "authority": "DLkcqeNNX8nRQgD87DN7LjHkcLQd9K2wuqaCbhkERJxL",
+  "programs": [],
+  "programs_live": [],
+  "multisig_live": {
+   "threshold": 3,
+   "members": 10,
+   "time_lock_s": 0,
+   "vault0": "DLkcqeNNX8nRQgD87DN7LjHkcLQd9K2wuqaCbhkERJxL",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "Loopscale",
+  "tvl": "$125M",
+  "category": "Lending",
+  "version": "Squads V4",
+  "threshold": "4",
+  "members": "9",
+  "timelock_s": "86400",
+  "multisig": "C4awuufiuL8DNT5wMDP27HneKKqbgynrsbCa4XYGSuPk",
+  "authority": "DwBXwJDZ4Av4miT62sEssWJUinkzwkmPPB4Fg3fKEfft",
+  "programs": [
+   {
+    "name": "Loopscale",
+    "id": "1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78",
+    "authority": "DwBXwJDZ4Av4miT62sEssWJUinkzwkmPPB4Fg3fKEfft"
+   },
+   {
+    "name": "Beam",
+    "id": "beamVVkNmKeXcuZ6zLpC9eM5YgVyAn4Z9xdPrz3gCW2",
+    "authority": "DwBXwJDZ4Av4miT62sEssWJUinkzwkmPPB4Fg3fKEfft"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Loopscale",
+    "id": "1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78",
+    "authority": "DwBXwJDZ4Av4miT62sEssWJUinkzwkmPPB4Fg3fKEfft",
+    "live_authority": "DwBXwJDZ4Av4miT62sEssWJUinkzwkmPPB4Fg3fKEfft",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Beam",
+    "id": "beamVVkNmKeXcuZ6zLpC9eM5YgVyAn4Z9xdPrz3gCW2",
+    "authority": "DwBXwJDZ4Av4miT62sEssWJUinkzwkmPPB4Fg3fKEfft",
+    "live_authority": "DwBXwJDZ4Av4miT62sEssWJUinkzwkmPPB4Fg3fKEfft",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 4,
+   "members": 9,
+   "time_lock_s": 86400,
+   "vault0": "DwBXwJDZ4Av4miT62sEssWJUinkzwkmPPB4Fg3fKEfft",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "Exponent",
+  "tvl": "$76M",
+  "category": "Yield",
+  "version": "Squads V4",
+  "threshold": "3",
+  "members": "5",
+  "timelock_s": "14400",
+  "multisig": "51smH7pBDKJDgmVnVks3gMWaPQFfmQ5s4Fc223yHcjuH",
+  "authority": "2tX7aHkV1r7am6bnTPqQJNBbEkbqDpNWHBYPahSQb9TP",
+  "programs": [
+   {
+    "name": "Core",
+    "id": "ExponentnaRg3CQbW6dqQNZKXp7gtZ9DGMp1cwC4HAS7",
+    "authority": "2tX7aHkV1r7am6bnTPqQJNBbEkbqDpNWHBYPahSQb9TP"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Core",
+    "id": "ExponentnaRg3CQbW6dqQNZKXp7gtZ9DGMp1cwC4HAS7",
+    "authority": "2tX7aHkV1r7am6bnTPqQJNBbEkbqDpNWHBYPahSQb9TP",
+    "live_authority": "2tX7aHkV1r7am6bnTPqQJNBbEkbqDpNWHBYPahSQb9TP",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 3,
+   "members": 5,
+   "time_lock_s": 14400,
+   "vault0": "2tX7aHkV1r7am6bnTPqQJNBbEkbqDpNWHBYPahSQb9TP",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "Huma Finance",
+  "tvl": "$100M+",
+  "category": "PayFi",
+  "version": "Squads V4",
+  "threshold": "5",
+  "members": "9",
+  "timelock_s": "43200",
+  "multisig": "uGLhzjot32i9nNKZKUoCzr7sG8bFAXQRN3uZPTUr7gX",
+  "authority": "D6GEJYVtQGVrLVj1QSZbxWW73NnKJyHEzMBDAtCzraaF",
+  "programs": [
+   {
+    "name": "Permissionless",
+    "id": "HumaXepHnjaRCpjYTokxY4UtaJcmx41prQ8cxGmFC5fn",
+    "authority": "D6GEJYVtQGVrLVj1QSZbxWW73NnKJyHEzMBDAtCzraaF"
+   },
+   {
+    "name": "Institutional",
+    "id": "EVQ4s1b6N1vmWFDv8PRNc77kufBP8HcrSNWXQAhRsJq9",
+    "authority": "D6GEJYVtQGVrLVj1QSZbxWW73NnKJyHEzMBDAtCzraaF"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Permissionless",
+    "id": "HumaXepHnjaRCpjYTokxY4UtaJcmx41prQ8cxGmFC5fn",
+    "authority": "D6GEJYVtQGVrLVj1QSZbxWW73NnKJyHEzMBDAtCzraaF",
+    "live_authority": "D6GEJYVtQGVrLVj1QSZbxWW73NnKJyHEzMBDAtCzraaF",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Institutional",
+    "id": "EVQ4s1b6N1vmWFDv8PRNc77kufBP8HcrSNWXQAhRsJq9",
+    "authority": "D6GEJYVtQGVrLVj1QSZbxWW73NnKJyHEzMBDAtCzraaF",
+    "live_authority": "D6GEJYVtQGVrLVj1QSZbxWW73NnKJyHEzMBDAtCzraaF",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 5,
+   "members": 9,
+   "time_lock_s": 43200,
+   "vault0": "D6GEJYVtQGVrLVj1QSZbxWW73NnKJyHEzMBDAtCzraaF",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "Solstice",
+  "tvl": "$357M",
+  "category": "Yield",
+  "version": "Squads V4",
+  "threshold": "3",
+  "members": "5",
+  "timelock_s": "86400",
+  "multisig": "AEb1u8FK8EuXLcPtprCy8s4NkqBNoP5mfbuEEop2dJGf",
+  "authority": "BzMuMbtah9bqN4HERkPo2PsVoaQKD2xfvYq1xfDCFwEb",
+  "programs": [
+   {
+    "name": "USX",
+    "id": "USXyiSTsPEWz55pSK7sZoUL79ntoVGQbaTDT57tH6bx",
+    "authority": "BzMuMbtah9bqN4HERkPo2PsVoaQKD2xfvYq1xfDCFwEb"
+   },
+   {
+    "name": "YieldVault",
+    "id": "eUSXyKoZ6aGejYVbnp3wtWQ1E8zuokLAJPecPxxtgG3",
+    "authority": "CYr14TrXD5MAertRqcR58KirPz7XoHGZjfBsfn5M2voh"
+   },
+   {
+    "name": "Solstice Aux (7FaMy)",
+    "id": "7FaMyGiTVdjm8dd3PxpjjCX15ibbmuE1zWVFX2PHxYUK",
+    "authority": "HNc9Ws3TEA9Wm1tHrhWubGAX7ryjJUG9jue6dR8ZvjF9"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "USX",
+    "id": "USXyiSTsPEWz55pSK7sZoUL79ntoVGQbaTDT57tH6bx",
+    "authority": "BzMuMbtah9bqN4HERkPo2PsVoaQKD2xfvYq1xfDCFwEb",
+    "live_authority": "BzMuMbtah9bqN4HERkPo2PsVoaQKD2xfvYq1xfDCFwEb",
+    "same_as_solgov": true
+   },
+   {
+    "name": "YieldVault",
+    "id": "eUSXyKoZ6aGejYVbnp3wtWQ1E8zuokLAJPecPxxtgG3",
+    "authority": "CYr14TrXD5MAertRqcR58KirPz7XoHGZjfBsfn5M2voh",
+    "live_authority": "CYr14TrXD5MAertRqcR58KirPz7XoHGZjfBsfn5M2voh",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Solstice Aux (7FaMy)",
+    "id": "7FaMyGiTVdjm8dd3PxpjjCX15ibbmuE1zWVFX2PHxYUK",
+    "authority": "HNc9Ws3TEA9Wm1tHrhWubGAX7ryjJUG9jue6dR8ZvjF9",
+    "live_authority": "HNc9Ws3TEA9Wm1tHrhWubGAX7ryjJUG9jue6dR8ZvjF9",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 3,
+   "members": 5,
+   "time_lock_s": 86400,
+   "vault0": "BzMuMbtah9bqN4HERkPo2PsVoaQKD2xfvYq1xfDCFwEb",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "Pumpfun + PumpSwap",
+  "tvl": "$1.1B",
+  "category": "DEX",
+  "version": "Squads V4",
+  "threshold": "3",
+  "members": "4",
+  "timelock_s": "0",
+  "multisig": "2yMoQqQrtbhq3nQ3wFoQQawWS65qcqUXcwHEYha4rshW",
+  "authority": "7gZufwwAo17y5kg8FMyJy2phgpvv9RSdzWtdXiWHjFr8",
+  "programs": [
+   {
+    "name": "Bonding Curve",
+    "id": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P",
+    "authority": "7gZufwwAo17y5kg8FMyJy2phgpvv9RSdzWtdXiWHjFr8"
+   },
+   {
+    "name": "PumpSwap",
+    "id": "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA",
+    "authority": "7gZufwwAo17y5kg8FMyJy2phgpvv9RSdzWtdXiWHjFr8"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Bonding Curve",
+    "id": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P",
+    "authority": "7gZufwwAo17y5kg8FMyJy2phgpvv9RSdzWtdXiWHjFr8",
+    "live_authority": "UNREAD SolRpcError",
+    "same_as_solgov": null
+   },
+   {
+    "name": "PumpSwap",
+    "id": "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA",
+    "authority": "7gZufwwAo17y5kg8FMyJy2phgpvv9RSdzWtdXiWHjFr8",
+    "live_authority": "7gZufwwAo17y5kg8FMyJy2phgpvv9RSdzWtdXiWHjFr8",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 3,
+   "members": 4,
+   "time_lock_s": 0,
+   "vault0": "7gZufwwAo17y5kg8FMyJy2phgpvv9RSdzWtdXiWHjFr8",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "Lulo",
+  "tvl": "$92M",
+  "category": "Aggregator",
+  "version": "Squads V4",
+  "threshold": "3",
+  "members": "8",
+  "timelock_s": "0",
+  "multisig": "8Sr4rQJL2aQT3EL97mbrk1T9VMw4pCS2mxMPp2QBzHQq",
+  "authority": "FP1AgtaWxArMHtJqDZkxqMSUCCTwGLC3xgt85by9a1zs",
+  "programs": [
+   {
+    "name": "FlexLend",
+    "id": "FL3X2pRsQ9zHENpZSKDRREtccwJuei8yg9fwDu9UN69Q",
+    "authority": "FP1AgtaWxArMHtJqDZkxqMSUCCTwGLC3xgt85by9a1zs"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "FlexLend",
+    "id": "FL3X2pRsQ9zHENpZSKDRREtccwJuei8yg9fwDu9UN69Q",
+    "authority": "FP1AgtaWxArMHtJqDZkxqMSUCCTwGLC3xgt85by9a1zs",
+    "live_authority": "UNREAD SolRpcError",
+    "same_as_solgov": null
+   }
+  ],
+  "multisig_live": {
+   "threshold": 3,
+   "members": 8,
+   "time_lock_s": 0,
+   "vault0": "FP1AgtaWxArMHtJqDZkxqMSUCCTwGLC3xgt85by9a1zs",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "Nosana",
+  "tvl": "$10M",
+  "category": "DePIN",
+  "version": "Squads V4",
+  "threshold": "2",
+  "members": "4",
+  "timelock_s": "0",
+  "multisig": "ktKWwDt5J8NFMi5jQNRRBDKAhimU5tnrGCcXuYJmxqE",
+  "authority": "GXs53JMXbgdMDhtmjE9iNgSmC1gu8f3adZhXuCEq1Bx9",
+  "programs": [
+   {
+    "name": "Jobs",
+    "id": "nosJhNRqr2bc9g1nfGDcXXTXvYUmxD4cVwy2pMWhrYM",
+    "authority": "GXs53JMXbgdMDhtmjE9iNgSmC1gu8f3adZhXuCEq1Bx9"
+   },
+   {
+    "name": "Staking",
+    "id": "nosScmHY2uR24Zh751PmGj9ww9QRNHewh9H59AfrTJE",
+    "authority": "GXs53JMXbgdMDhtmjE9iNgSmC1gu8f3adZhXuCEq1Bx9"
+   },
+   {
+    "name": "Rewards",
+    "id": "nosRB8DUV67oLNrL45bo2pFLrmsWPiewe2Lk2DRNYCp",
+    "authority": "GXs53JMXbgdMDhtmjE9iNgSmC1gu8f3adZhXuCEq1Bx9"
+   },
+   {
+    "name": "Nodes",
+    "id": "nosNeZR64wiEhQc5j251bsP4WqDabT6hmz4PHyoHLGD",
+    "authority": "GXs53JMXbgdMDhtmjE9iNgSmC1gu8f3adZhXuCEq1Bx9"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Jobs",
+    "id": "nosJhNRqr2bc9g1nfGDcXXTXvYUmxD4cVwy2pMWhrYM",
+    "authority": "GXs53JMXbgdMDhtmjE9iNgSmC1gu8f3adZhXuCEq1Bx9",
+    "live_authority": "GXs53JMXbgdMDhtmjE9iNgSmC1gu8f3adZhXuCEq1Bx9",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Staking",
+    "id": "nosScmHY2uR24Zh751PmGj9ww9QRNHewh9H59AfrTJE",
+    "authority": "GXs53JMXbgdMDhtmjE9iNgSmC1gu8f3adZhXuCEq1Bx9",
+    "live_authority": "GXs53JMXbgdMDhtmjE9iNgSmC1gu8f3adZhXuCEq1Bx9",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Rewards",
+    "id": "nosRB8DUV67oLNrL45bo2pFLrmsWPiewe2Lk2DRNYCp",
+    "authority": "GXs53JMXbgdMDhtmjE9iNgSmC1gu8f3adZhXuCEq1Bx9",
+    "live_authority": "GXs53JMXbgdMDhtmjE9iNgSmC1gu8f3adZhXuCEq1Bx9",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Nodes",
+    "id": "nosNeZR64wiEhQc5j251bsP4WqDabT6hmz4PHyoHLGD",
+    "authority": "GXs53JMXbgdMDhtmjE9iNgSmC1gu8f3adZhXuCEq1Bx9",
+    "live_authority": "GXs53JMXbgdMDhtmjE9iNgSmC1gu8f3adZhXuCEq1Bx9",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 2,
+   "members": 4,
+   "time_lock_s": 0,
+   "vault0": "GXs53JMXbgdMDhtmjE9iNgSmC1gu8f3adZhXuCEq1Bx9",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "Switchboard",
+  "tvl": "$5B secured",
+  "category": "Oracle",
+  "version": "Squads V4",
+  "threshold": "3",
+  "members": "8",
+  "timelock_s": "0",
+  "multisig": "93RQfY6VHRkqXBCEhMY5u92bCGp428DTzqZUEA2Hjr9h",
+  "authority": "DREcTwxxuehtUVgnGwDpTcKT9zTK5uDmdLbnRY7cijEx",
+  "programs": [
+   {
+    "name": "Oracle V2",
+    "id": "SW1TCH7qEPTdLsDHRgPuMQjbQxKdH2aBStViMFnt64f",
+    "authority": "2NvGRFswVx3GXxURNSfjbsWY4iP1ufj8LvAKJWGXSm4D"
+   },
+   {
+    "name": "Attestation",
+    "id": "sbattyXrzedoNATfc4L31wC9Mhxsi1BmFhTiN8gDshx",
+    "authority": "31Sof5r1xi7dfcaz4x9Kuwm8J9ueAdDduMcme59sP8gc"
+   },
+   {
+    "name": "On-Demand",
+    "id": "SBondMDrcV3K4kxZR1HNVT7osZxAHVHgYXL5Ze1oMUv",
+    "authority": "DREcTwxxuehtUVgnGwDpTcKT9zTK5uDmdLbnRY7cijEx"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Oracle V2",
+    "id": "SW1TCH7qEPTdLsDHRgPuMQjbQxKdH2aBStViMFnt64f",
+    "authority": "2NvGRFswVx3GXxURNSfjbsWY4iP1ufj8LvAKJWGXSm4D",
+    "live_authority": "2NvGRFswVx3GXxURNSfjbsWY4iP1ufj8LvAKJWGXSm4D",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Attestation",
+    "id": "sbattyXrzedoNATfc4L31wC9Mhxsi1BmFhTiN8gDshx",
+    "authority": "31Sof5r1xi7dfcaz4x9Kuwm8J9ueAdDduMcme59sP8gc",
+    "live_authority": "31Sof5r1xi7dfcaz4x9Kuwm8J9ueAdDduMcme59sP8gc",
+    "same_as_solgov": true
+   },
+   {
+    "name": "On-Demand",
+    "id": "SBondMDrcV3K4kxZR1HNVT7osZxAHVHgYXL5Ze1oMUv",
+    "authority": "DREcTwxxuehtUVgnGwDpTcKT9zTK5uDmdLbnRY7cijEx",
+    "live_authority": "DREcTwxxuehtUVgnGwDpTcKT9zTK5uDmdLbnRY7cijEx",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 3,
+   "members": 8,
+   "time_lock_s": 0,
+   "vault0": "DREcTwxxuehtUVgnGwDpTcKT9zTK5uDmdLbnRY7cijEx",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "Stabble",
+  "tvl": "$2M",
+  "category": "DEX",
+  "version": "Squads V4",
+  "threshold": "2",
+  "members": "3",
+  "timelock_s": "86400",
+  "multisig": "AFRN2ECAY1YTbfkXD7yvoc1iaxYdt5BdyyqyPRsrHaK2",
+  "authority": "9rHUPE2ng7stBuaeAM7heiVHLLGPAqGjYKQ3BBUWxKSP",
+  "programs": [
+   {
+    "name": "Stable Swap",
+    "id": "swapNyd8XiQwJ6ianp9snpu4brUqFxadzvHebnAXjJZ",
+    "authority": "9rHUPE2ng7stBuaeAM7heiVHLLGPAqGjYKQ3BBUWxKSP"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Stable Swap",
+    "id": "swapNyd8XiQwJ6ianp9snpu4brUqFxadzvHebnAXjJZ",
+    "authority": "9rHUPE2ng7stBuaeAM7heiVHLLGPAqGjYKQ3BBUWxKSP",
+    "live_authority": "9rHUPE2ng7stBuaeAM7heiVHLLGPAqGjYKQ3BBUWxKSP",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 2,
+   "members": 3,
+   "time_lock_s": 86400,
+   "vault0": "9rHUPE2ng7stBuaeAM7heiVHLLGPAqGjYKQ3BBUWxKSP",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "Titan",
+  "tvl": "N/A",
+  "category": "Aggregator",
+  "version": "Squads V4",
+  "threshold": "3",
+  "members": "8",
+  "timelock_s": "0",
+  "multisig": "F1WZezmt2J1dSsXrQWrS2Umn9CYzPPR2eP3sunZrMX29",
+  "authority": "H92mY1R6CYDPpHjisrE3C7xqfgp7751f2R13aRoT4SbB",
+  "programs": [],
+  "programs_live": [],
+  "multisig_live": {
+   "threshold": 3,
+   "members": 8,
+   "time_lock_s": 0,
+   "vault0": "H92mY1R6CYDPpHjisrE3C7xqfgp7751f2R13aRoT4SbB",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "Solayer",
+  "tvl": "$200M+",
+  "category": "Liquid Staking",
+  "version": "Squads V4",
+  "threshold": "3",
+  "members": "6",
+  "timelock_s": "0",
+  "multisig": "5AQ3c2nC3Ua5Ms1QP4XpcfaU2Q31C8VhiUJGX3c8zFqp",
+  "authority": "GcYvLKKEWpxQMqFe9HUcDJYMGvXt7kwf8gfBvjnW4wnm",
+  "programs": [],
+  "programs_live": [],
+  "multisig_live": {
+   "threshold": 3,
+   "members": 6,
+   "time_lock_s": 0,
+   "vault0": "GcYvLKKEWpxQMqFe9HUcDJYMGvXt7kwf8gfBvjnW4wnm",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "Flash Trade",
+  "tvl": "$50M+",
+  "category": "Perps",
+  "version": "Squads V4",
+  "threshold": "3",
+  "members": "7",
+  "timelock_s": "0",
+  "multisig": "Gb33UeQNnQ4XDuobtGq9M6PVKRVfoH77p8d6JXsgqyXF",
+  "authority": "dhfZwJfdesv7fNW3nngCSjeGbx9zWUusLtfPaWbVKvo",
+  "programs": [
+   {
+    "name": "Perpetuals",
+    "id": "FLASH6Lo6h3iasJKWDs2F8TkW2UKf3s15C8PMGuVfgBn",
+    "authority": "dhfZwJfdesv7fNW3nngCSjeGbx9zWUusLtfPaWbVKvo"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Perpetuals",
+    "id": "FLASH6Lo6h3iasJKWDs2F8TkW2UKf3s15C8PMGuVfgBn",
+    "authority": "dhfZwJfdesv7fNW3nngCSjeGbx9zWUusLtfPaWbVKvo",
+    "live_authority": "dhfZwJfdesv7fNW3nngCSjeGbx9zWUusLtfPaWbVKvo",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 3,
+   "members": 7,
+   "time_lock_s": 0,
+   "vault0": "dhfZwJfdesv7fNW3nngCSjeGbx9zWUusLtfPaWbVKvo",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "Sanctum",
+  "tvl": "$1.2B",
+  "category": "Liquid Staking",
+  "version": "Squads V3",
+  "threshold": "6",
+  "members": "11",
+  "timelock_s": "-1",
+  "multisig": "AApfiPZgV5MoPU691GwhdDhq5sKEMMH1Uh8S4Z9xvP6b",
+  "authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz",
+  "programs": [
+   {
+    "name": "Infinity (S Controller)",
+    "id": "5ocnV1qiCgaQR8Jb8xWnVbApfaygJ8tNoZfgPwsgx9kx",
+    "authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz"
+   },
+   {
+    "name": "Unstake",
+    "id": "unpXTU2Ndrc7WWNyEhQWe4udTzSibLPi25SXv2xbCHQ",
+    "authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz"
+   },
+   {
+    "name": "Router",
+    "id": "stkitrT1Uoy18Dk1fTrgPw8W6MVzoCfYoAFT4MLsmhq",
+    "authority": "8VE2uJkoheDbJd9rCyKzfXmiMqAS4o1B3XGshEh86BGk"
+   },
+   {
+    "name": "SOL Value Calculator",
+    "id": "sp1V4h2gWorkGhVcazBc22Hfo2f5sd7jcjT4EDPrWFF",
+    "authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz"
+   },
+   {
+    "name": "Marinade SOL Calculator",
+    "id": "mare3SCyfZkAndpBRBeonETmkCCB3TJTTrz8ZN2dnhP",
+    "authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz"
+   },
+   {
+    "name": "SPL Stake Pool Calculator",
+    "id": "sspUE1vrh7xRoXxGsg7vR1zde2WdGtJRbyK9uRumBDy",
+    "authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz"
+   },
+   {
+    "name": "Flat Fee Pricing",
+    "id": "f1tUoNEKrDp1oeGn4zxr7bh41eN6VcfHjfrL3ZqQday",
+    "authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz"
+   },
+   {
+    "name": "LiDo SOL Calculator",
+    "id": "1idUSy4MGGKyKhvjSnGZ6Zc7Q4eKQcibym4BkEEw9KR",
+    "authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz"
+   },
+   {
+    "name": "wSOL Calculator",
+    "id": "wsoGmxQLSvwWpuaidCApxN5kEowLe2HLQLJhCQnj4bE",
+    "authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz"
+   },
+   {
+    "name": "S1B6",
+    "id": "s1b6NRXj6ygNu1QMKXh2H9LUR2aPApAAm1UQ2DjdhNV",
+    "authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz"
+   },
+   {
+    "name": "SP12 (Stake Pool)",
+    "id": "SP12tWFxD9oJsVWNavTTBZvMbA6gkAmxtVgxdqvyvhY",
+    "authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz"
+   },
+   {
+    "name": "SSMBU",
+    "id": "ssmbu3KZxgonUtjEMCKspZzxvUQCxAFnyh1rcHUeEDo",
+    "authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz"
+   },
+   {
+    "name": "SPMB",
+    "id": "SPMBzsVUuoHA4Jm6KunbsotaahvVikZs1JyTW6iJvbn",
+    "authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Infinity (S Controller)",
+    "id": "5ocnV1qiCgaQR8Jb8xWnVbApfaygJ8tNoZfgPwsgx9kx",
+    "authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz",
+    "live_authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Unstake",
+    "id": "unpXTU2Ndrc7WWNyEhQWe4udTzSibLPi25SXv2xbCHQ",
+    "authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz",
+    "live_authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Router",
+    "id": "stkitrT1Uoy18Dk1fTrgPw8W6MVzoCfYoAFT4MLsmhq",
+    "authority": "8VE2uJkoheDbJd9rCyKzfXmiMqAS4o1B3XGshEh86BGk",
+    "live_authority": "8VE2uJkoheDbJd9rCyKzfXmiMqAS4o1B3XGshEh86BGk",
+    "same_as_solgov": true
+   },
+   {
+    "name": "SOL Value Calculator",
+    "id": "sp1V4h2gWorkGhVcazBc22Hfo2f5sd7jcjT4EDPrWFF",
+    "authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz",
+    "live_authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Marinade SOL Calculator",
+    "id": "mare3SCyfZkAndpBRBeonETmkCCB3TJTTrz8ZN2dnhP",
+    "authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz",
+    "live_authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz",
+    "same_as_solgov": true
+   },
+   {
+    "name": "SPL Stake Pool Calculator",
+    "id": "sspUE1vrh7xRoXxGsg7vR1zde2WdGtJRbyK9uRumBDy",
+    "authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz",
+    "live_authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Flat Fee Pricing",
+    "id": "f1tUoNEKrDp1oeGn4zxr7bh41eN6VcfHjfrL3ZqQday",
+    "authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz",
+    "live_authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz",
+    "same_as_solgov": true
+   },
+   {
+    "name": "LiDo SOL Calculator",
+    "id": "1idUSy4MGGKyKhvjSnGZ6Zc7Q4eKQcibym4BkEEw9KR",
+    "authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz",
+    "live_authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz",
+    "same_as_solgov": true
+   },
+   {
+    "name": "wSOL Calculator",
+    "id": "wsoGmxQLSvwWpuaidCApxN5kEowLe2HLQLJhCQnj4bE",
+    "authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz",
+    "live_authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz",
+    "same_as_solgov": true
+   },
+   {
+    "name": "S1B6",
+    "id": "s1b6NRXj6ygNu1QMKXh2H9LUR2aPApAAm1UQ2DjdhNV",
+    "authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz",
+    "live_authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz",
+    "same_as_solgov": true
+   },
+   {
+    "name": "SP12 (Stake Pool)",
+    "id": "SP12tWFxD9oJsVWNavTTBZvMbA6gkAmxtVgxdqvyvhY",
+    "authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz",
+    "live_authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz",
+    "same_as_solgov": true
+   },
+   {
+    "name": "SSMBU",
+    "id": "ssmbu3KZxgonUtjEMCKspZzxvUQCxAFnyh1rcHUeEDo",
+    "authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz",
+    "live_authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz",
+    "same_as_solgov": true
+   },
+   {
+    "name": "SPMB",
+    "id": "SPMBzsVUuoHA4Jm6KunbsotaahvVikZs1JyTW6iJvbn",
+    "authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz",
+    "live_authority": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": null
+ },
+ {
+  "name": "Jupiter Agg",
+  "tvl": "$1.7B",
+  "category": "Aggregator",
+  "version": "Squads V3",
+  "threshold": "4",
+  "members": "7",
+  "timelock_s": "-1",
+  "multisig": "7ZyDFzet6sKgZLN4D89JLfo7chu2n7nYdkFt5RCFk8Sf",
+  "authority": "CvQZZ23qYDWF2RUpxYJ8y9K4skmuvYEEjH7fK58jtipQ",
+  "programs": [
+   {
+    "name": "Aggregator V6",
+    "id": "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+    "authority": "CvQZZ23qYDWF2RUpxYJ8y9K4skmuvYEEjH7fK58jtipQ"
+   },
+   {
+    "name": "DCA",
+    "id": "DCA265Vj8a9CEuX1eb1LWRnDT7uK6q1xMipnNyatn23M",
+    "authority": "CvQZZ23qYDWF2RUpxYJ8y9K4skmuvYEEjH7fK58jtipQ"
+   },
+   {
+    "name": "Limit Orders",
+    "id": "jupoNjAxXgZ4rjzxzPMP4oxduvQsQtZzyknqvzYNrNu",
+    "authority": "CvQZZ23qYDWF2RUpxYJ8y9K4skmuvYEEjH7fK58jtipQ"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Aggregator V6",
+    "id": "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+    "authority": "CvQZZ23qYDWF2RUpxYJ8y9K4skmuvYEEjH7fK58jtipQ",
+    "live_authority": "CvQZZ23qYDWF2RUpxYJ8y9K4skmuvYEEjH7fK58jtipQ",
+    "same_as_solgov": true
+   },
+   {
+    "name": "DCA",
+    "id": "DCA265Vj8a9CEuX1eb1LWRnDT7uK6q1xMipnNyatn23M",
+    "authority": "CvQZZ23qYDWF2RUpxYJ8y9K4skmuvYEEjH7fK58jtipQ",
+    "live_authority": "CvQZZ23qYDWF2RUpxYJ8y9K4skmuvYEEjH7fK58jtipQ",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Limit Orders",
+    "id": "jupoNjAxXgZ4rjzxzPMP4oxduvQsQtZzyknqvzYNrNu",
+    "authority": "CvQZZ23qYDWF2RUpxYJ8y9K4skmuvYEEjH7fK58jtipQ",
+    "live_authority": "CvQZZ23qYDWF2RUpxYJ8y9K4skmuvYEEjH7fK58jtipQ",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": null
+ },
+ {
+  "name": "Raydium",
+  "tvl": "$950M",
+  "category": "DEX",
+  "version": "Squads V4",
+  "threshold": "3",
+  "members": "4",
+  "timelock_s": "0",
+  "multisig": "tr8rgazUrZzgdkfc6Q622nVJHMMzh29trdBE2uBHb4u",
+  "authority": "FytDrVzDybM1TwFQPGb8qaxZR7dBCzNeqT3vtQsceZQK",
+  "programs": [
+   {
+    "name": "AMM V4",
+    "id": "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8",
+    "authority": "FytDrVzDybM1TwFQPGb8qaxZR7dBCzNeqT3vtQsceZQK"
+   },
+   {
+    "name": "CLMM",
+    "id": "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "authority": "FytDrVzDybM1TwFQPGb8qaxZR7dBCzNeqT3vtQsceZQK"
+   },
+   {
+    "name": "CP-Swap",
+    "id": "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C",
+    "authority": "FytDrVzDybM1TwFQPGb8qaxZR7dBCzNeqT3vtQsceZQK"
+   },
+   {
+    "name": "LaunchLab",
+    "id": "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "authority": "FytDrVzDybM1TwFQPGb8qaxZR7dBCzNeqT3vtQsceZQK"
+   },
+   {
+    "name": "Staking",
+    "id": "EhhTKczWMGQt46ynNeRX1WfeagwwJd7ufHvCDjRxjo5Q",
+    "authority": "FytDrVzDybM1TwFQPGb8qaxZR7dBCzNeqT3vtQsceZQK"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "AMM V4",
+    "id": "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8",
+    "authority": "FytDrVzDybM1TwFQPGb8qaxZR7dBCzNeqT3vtQsceZQK",
+    "live_authority": "FytDrVzDybM1TwFQPGb8qaxZR7dBCzNeqT3vtQsceZQK",
+    "same_as_solgov": true
+   },
+   {
+    "name": "CLMM",
+    "id": "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "authority": "FytDrVzDybM1TwFQPGb8qaxZR7dBCzNeqT3vtQsceZQK",
+    "live_authority": "FytDrVzDybM1TwFQPGb8qaxZR7dBCzNeqT3vtQsceZQK",
+    "same_as_solgov": true
+   },
+   {
+    "name": "CP-Swap",
+    "id": "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C",
+    "authority": "FytDrVzDybM1TwFQPGb8qaxZR7dBCzNeqT3vtQsceZQK",
+    "live_authority": "FytDrVzDybM1TwFQPGb8qaxZR7dBCzNeqT3vtQsceZQK",
+    "same_as_solgov": true
+   },
+   {
+    "name": "LaunchLab",
+    "id": "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "authority": "FytDrVzDybM1TwFQPGb8qaxZR7dBCzNeqT3vtQsceZQK",
+    "live_authority": "FytDrVzDybM1TwFQPGb8qaxZR7dBCzNeqT3vtQsceZQK",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Staking",
+    "id": "EhhTKczWMGQt46ynNeRX1WfeagwwJd7ufHvCDjRxjo5Q",
+    "authority": "FytDrVzDybM1TwFQPGb8qaxZR7dBCzNeqT3vtQsceZQK",
+    "live_authority": "FytDrVzDybM1TwFQPGb8qaxZR7dBCzNeqT3vtQsceZQK",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 3,
+   "members": 4,
+   "time_lock_s": 0,
+   "vault0": "FytDrVzDybM1TwFQPGb8qaxZR7dBCzNeqT3vtQsceZQK",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "Tensor",
+  "tvl": "N/A",
+  "category": "NFT",
+  "version": "Squads V3",
+  "threshold": "4",
+  "members": "7",
+  "timelock_s": "-1",
+  "multisig": "3djJ66VVaG7si2wsh9isspeZX13meHDvwBzuPGCowY4Z",
+  "authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv",
+  "programs": [
+   {
+    "name": "Marketplace",
+    "id": "TCMPhJdwDryooaGtiocG1u3xcYbRpiJzb283XfCZsDp",
+    "authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv"
+   },
+   {
+    "name": "AMM",
+    "id": "TAMM6ub33ij1mbetoMyVBLeKY5iP41i4UPUJQGkhfsg",
+    "authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv"
+   },
+   {
+    "name": "TensorSwap",
+    "id": "TSWAPaqyCSx2KABk68Shruf4rp7CxcNi8hAsbdwmHbN",
+    "authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv"
+   },
+   {
+    "name": "Listing (TList)",
+    "id": "TL1ST2iRBzuGTqLn1KXnGdSnEow62BzPnGiqyRXhWtW",
+    "authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv"
+   },
+   {
+    "name": "Lock (TLock)",
+    "id": "TLoCKic2wGJm7VhZKumih4Lc35fUhYqVMgA4j389Buk",
+    "authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv"
+   },
+   {
+    "name": "Fees (VFees)",
+    "id": "VFeesufQJnGunv2kBXDYnThT1CoAYB45U31qGDe5QjU",
+    "authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv"
+   },
+   {
+    "name": "Aux 1",
+    "id": "3vtZSP5wZe8QgX71EjrpGArEwM8LSgzTiEHkw6pSGFLD",
+    "authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv"
+   },
+   {
+    "name": "Bid (TBid)",
+    "id": "TB1Dqt8JeKQh7RLDzfYDJsq8KS4fS2yt87avRjyRxMv",
+    "authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv"
+   },
+   {
+    "name": "Fee distribution (TFee)",
+    "id": "TFEEgwDP6nn1s8mMX2tTNPPz8j2VomkphLUmyxKm17A",
+    "authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv"
+   },
+   {
+    "name": "Aggregator (VAgg)",
+    "id": "VAggLCsx2hpZXF5t5aHfJC4Lt4rBKDuyUfbad1akWvA",
+    "authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv"
+   },
+   {
+    "name": "Order (Vordr)",
+    "id": "VordrNZMkkryqCDFhFRcti4x3j94KY8fog3RhjGDVok",
+    "authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv"
+   },
+   {
+    "name": "Listing v2 (Tlist v2)",
+    "id": "Td1ST8yc9Vt7vsBY7rZzrCjkXeGnr4ECMtso9ueLhyQ",
+    "authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv"
+   },
+   {
+    "name": "Stake (TStake)",
+    "id": "TSTKEiz9sqJRypokAkRhaW29rnDYDSxqWxmdv9brkp2",
+    "authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Marketplace",
+    "id": "TCMPhJdwDryooaGtiocG1u3xcYbRpiJzb283XfCZsDp",
+    "authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv",
+    "live_authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv",
+    "same_as_solgov": true
+   },
+   {
+    "name": "AMM",
+    "id": "TAMM6ub33ij1mbetoMyVBLeKY5iP41i4UPUJQGkhfsg",
+    "authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv",
+    "live_authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv",
+    "same_as_solgov": true
+   },
+   {
+    "name": "TensorSwap",
+    "id": "TSWAPaqyCSx2KABk68Shruf4rp7CxcNi8hAsbdwmHbN",
+    "authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv",
+    "live_authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Listing (TList)",
+    "id": "TL1ST2iRBzuGTqLn1KXnGdSnEow62BzPnGiqyRXhWtW",
+    "authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv",
+    "live_authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Lock (TLock)",
+    "id": "TLoCKic2wGJm7VhZKumih4Lc35fUhYqVMgA4j389Buk",
+    "authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv",
+    "live_authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Fees (VFees)",
+    "id": "VFeesufQJnGunv2kBXDYnThT1CoAYB45U31qGDe5QjU",
+    "authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv",
+    "live_authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Aux 1",
+    "id": "3vtZSP5wZe8QgX71EjrpGArEwM8LSgzTiEHkw6pSGFLD",
+    "authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv",
+    "live_authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Bid (TBid)",
+    "id": "TB1Dqt8JeKQh7RLDzfYDJsq8KS4fS2yt87avRjyRxMv",
+    "authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv",
+    "live_authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Fee distribution (TFee)",
+    "id": "TFEEgwDP6nn1s8mMX2tTNPPz8j2VomkphLUmyxKm17A",
+    "authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv",
+    "live_authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Aggregator (VAgg)",
+    "id": "VAggLCsx2hpZXF5t5aHfJC4Lt4rBKDuyUfbad1akWvA",
+    "authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv",
+    "live_authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Order (Vordr)",
+    "id": "VordrNZMkkryqCDFhFRcti4x3j94KY8fog3RhjGDVok",
+    "authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv",
+    "live_authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Listing v2 (Tlist v2)",
+    "id": "Td1ST8yc9Vt7vsBY7rZzrCjkXeGnr4ECMtso9ueLhyQ",
+    "authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv",
+    "live_authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Stake (TStake)",
+    "id": "TSTKEiz9sqJRypokAkRhaW29rnDYDSxqWxmdv9brkp2",
+    "authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv",
+    "live_authority": "BsumKVhbu2uDUtabgUKPcA9apw2NAyyZuu52Z3aJRHkv",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": null
+ },
+ {
+  "name": "Phoenix DEX",
+  "tvl": "$2M",
+  "category": "DEX",
+  "version": "Squads V3",
+  "threshold": "2",
+  "members": "3",
+  "timelock_s": "-1",
+  "multisig": "6x3BDkL2n7VjBWxRD95EsbQi2R2E4zxrvcz1VA6pihnK",
+  "authority": "8mv7G3fJq5a5ej7E14vgcSGeQKH79emjU9fVfuhyitEq",
+  "programs": [
+   {
+    "name": "CLOB V1",
+    "id": "PhoeNiXZ8ByJGLkxNfZRnkUfjvmuYqLR89jjFHGqdXY",
+    "authority": "8mv7G3fJq5a5ej7E14vgcSGeQKH79emjU9fVfuhyitEq"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "CLOB V1",
+    "id": "PhoeNiXZ8ByJGLkxNfZRnkUfjvmuYqLR89jjFHGqdXY",
+    "authority": "8mv7G3fJq5a5ej7E14vgcSGeQKH79emjU9fVfuhyitEq",
+    "live_authority": "8mv7G3fJq5a5ej7E14vgcSGeQKH79emjU9fVfuhyitEq",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": null
+ },
+ {
+  "name": "Meteora",
+  "tvl": "$297M",
+  "category": "DEX",
+  "version": "Squads V3",
+  "threshold": "4",
+  "members": "7",
+  "timelock_s": "-1",
+  "multisig": "CoEsykatDegLB7pcMJia79JSriDdi71nPnjgeSfw623k",
+  "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+  "programs": [
+   {
+    "name": "DLMM",
+    "id": "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd"
+   },
+   {
+    "name": "Dynamic AMM",
+    "id": "Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd"
+   },
+   {
+    "name": "DAMM V2",
+    "id": "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd"
+   },
+   {
+    "name": "Dynamic Vault",
+    "id": "24Uqj9JCLxUeoC3hGfh5W3s9FM9uCHDS2SG3LYwBpyTi",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd"
+   },
+   {
+    "name": "Aux 1",
+    "id": "GacY9YuN16HNRTy7ZWwULPccwvfFSBeNLuAQP7y38Du3",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd"
+   },
+   {
+    "name": "Zap",
+    "id": "zapvX9M3uf5pvy4wRPAbQgdQsM1xmuiFnkfHKPvwMiz",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd"
+   },
+   {
+    "name": "Distribution (pDis)",
+    "id": "pDisRpxvnFw4osSqDPqMJ62tLsVQGsHL4tMX23ArYrL",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd"
+   },
+   {
+    "name": "Alpha Bonding Curve",
+    "id": "abcSyangMHdGzUGKhBhKoQzSFdJKUdkPGf5cbXVHpEw",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd"
+   },
+   {
+    "name": "CAT",
+    "id": "CAT7rbZD4eJ8zscj89HYWUKNcqhujQ9RB1zYrbrF5rXb",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd"
+   },
+   {
+    "name": "Fees",
+    "id": "FEESngU3neckdwib9X3KWqdL7Mjmqk9XNp3uh5JbP4KP",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd"
+   },
+   {
+    "name": "DFSDO",
+    "id": "dfsdo2UqvwfN8DuUVrMRNfQe11VaiNoKcMqLHVvDPzh",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd"
+   },
+   {
+    "name": "Farm",
+    "id": "FarmuwXPWXvefWUeqFAa5w6rifLkq5X6E8bimYvrhCB1",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd"
+   },
+   {
+    "name": "Vault",
+    "id": "vaU6kP7iNEGkbmPkLmZfGwiGxd4Mob24QQCie5R9kd2",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd"
+   },
+   {
+    "name": "PreS",
+    "id": "presSVxnf9UU8jMxhgSMqaRwNiT36qeBdNeTRKjTdbj",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd"
+   },
+   {
+    "name": "DBC",
+    "id": "dbcij3LWUppWqq96dh6gJWwBifmcGfLSB5D4DuSMaqN",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "DLMM",
+    "id": "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "live_authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Dynamic AMM",
+    "id": "Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "live_authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "same_as_solgov": true
+   },
+   {
+    "name": "DAMM V2",
+    "id": "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "live_authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Dynamic Vault",
+    "id": "24Uqj9JCLxUeoC3hGfh5W3s9FM9uCHDS2SG3LYwBpyTi",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "live_authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Aux 1",
+    "id": "GacY9YuN16HNRTy7ZWwULPccwvfFSBeNLuAQP7y38Du3",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "live_authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Zap",
+    "id": "zapvX9M3uf5pvy4wRPAbQgdQsM1xmuiFnkfHKPvwMiz",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "live_authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Distribution (pDis)",
+    "id": "pDisRpxvnFw4osSqDPqMJ62tLsVQGsHL4tMX23ArYrL",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "live_authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Alpha Bonding Curve",
+    "id": "abcSyangMHdGzUGKhBhKoQzSFdJKUdkPGf5cbXVHpEw",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "live_authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "same_as_solgov": true
+   },
+   {
+    "name": "CAT",
+    "id": "CAT7rbZD4eJ8zscj89HYWUKNcqhujQ9RB1zYrbrF5rXb",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "live_authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Fees",
+    "id": "FEESngU3neckdwib9X3KWqdL7Mjmqk9XNp3uh5JbP4KP",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "live_authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "same_as_solgov": true
+   },
+   {
+    "name": "DFSDO",
+    "id": "dfsdo2UqvwfN8DuUVrMRNfQe11VaiNoKcMqLHVvDPzh",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "live_authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Farm",
+    "id": "FarmuwXPWXvefWUeqFAa5w6rifLkq5X6E8bimYvrhCB1",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "live_authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Vault",
+    "id": "vaU6kP7iNEGkbmPkLmZfGwiGxd4Mob24QQCie5R9kd2",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "live_authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "same_as_solgov": true
+   },
+   {
+    "name": "PreS",
+    "id": "presSVxnf9UU8jMxhgSMqaRwNiT36qeBdNeTRKjTdbj",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "live_authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "same_as_solgov": true
+   },
+   {
+    "name": "DBC",
+    "id": "dbcij3LWUppWqq96dh6gJWwBifmcGfLSB5D4DuSMaqN",
+    "authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "live_authority": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": null
+ },
+ {
+  "name": "Parcl",
+  "tvl": "$20M+",
+  "category": "Perps",
+  "version": "Squads V3",
+  "threshold": "3",
+  "members": "3",
+  "timelock_s": "-1",
+  "multisig": "7qCHZqcbLm9VYUCLtFmFFSyDsvuZ5GHhypv7b4JRAEUE",
+  "authority": "EkTyBhV2evLGhn4fdeuuT7ZyFu8eN4Hqpo8HEJCjEvTo",
+  "programs": [
+   {
+    "name": "Parcl Perps Core (PaRCL)",
+    "id": "PaRCLKPpkfHQfXTruT8yhEUx5oRNH8z8erBnzEerc8a",
+    "authority": "EkTyBhV2evLGhn4fdeuuT7ZyFu8eN4Hqpo8HEJCjEvTo"
+   },
+   {
+    "name": "Parcl Perps Aux (3parc)",
+    "id": "3parcLrT7WnXAcyPfkCz49oofuuf2guUKkjuFkAhZW8Y",
+    "authority": "EkTyBhV2evLGhn4fdeuuT7ZyFu8eN4Hqpo8HEJCjEvTo"
+   },
+   {
+    "name": "Parcl Governance 1 (2GTq)",
+    "id": "2GTq96kiPYg2XbDwvcHha1gMTo2bjfiuCc72Z8bKq4HX",
+    "authority": "GKKZmEPuhowYTQcAXBUZtRMn6tXN74t2c51RAvK3aYTL"
+   },
+   {
+    "name": "Parcl Governance 2 (Di9Z)",
+    "id": "Di9ZVJeJrRZdQEWzAFYmfjukjR5dUQb7KMaDmv34rNJg",
+    "authority": "GKKZmEPuhowYTQcAXBUZtRMn6tXN74t2c51RAvK3aYTL"
+   },
+   {
+    "name": "Parcl Governance 3 (2gWf)",
+    "id": "2gWf5xLAzZaKX9tQj9vuXsaxTWtzTZDFRn21J3zjNVgu",
+    "authority": "GKKZmEPuhowYTQcAXBUZtRMn6tXN74t2c51RAvK3aYTL"
+   },
+   {
+    "name": "Parcl Governance 4 (5tu3)",
+    "id": "5tu3xkmLfud5BAwSuQke4WSjoHcQ52SbrPwX9es8j6Ve",
+    "authority": "GKKZmEPuhowYTQcAXBUZtRMn6tXN74t2c51RAvK3aYTL"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Parcl Perps Core (PaRCL)",
+    "id": "PaRCLKPpkfHQfXTruT8yhEUx5oRNH8z8erBnzEerc8a",
+    "authority": "EkTyBhV2evLGhn4fdeuuT7ZyFu8eN4Hqpo8HEJCjEvTo",
+    "live_authority": "EkTyBhV2evLGhn4fdeuuT7ZyFu8eN4Hqpo8HEJCjEvTo",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Parcl Perps Aux (3parc)",
+    "id": "3parcLrT7WnXAcyPfkCz49oofuuf2guUKkjuFkAhZW8Y",
+    "authority": "EkTyBhV2evLGhn4fdeuuT7ZyFu8eN4Hqpo8HEJCjEvTo",
+    "live_authority": "EkTyBhV2evLGhn4fdeuuT7ZyFu8eN4Hqpo8HEJCjEvTo",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Parcl Governance 1 (2GTq)",
+    "id": "2GTq96kiPYg2XbDwvcHha1gMTo2bjfiuCc72Z8bKq4HX",
+    "authority": "GKKZmEPuhowYTQcAXBUZtRMn6tXN74t2c51RAvK3aYTL",
+    "live_authority": "GKKZmEPuhowYTQcAXBUZtRMn6tXN74t2c51RAvK3aYTL",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Parcl Governance 2 (Di9Z)",
+    "id": "Di9ZVJeJrRZdQEWzAFYmfjukjR5dUQb7KMaDmv34rNJg",
+    "authority": "GKKZmEPuhowYTQcAXBUZtRMn6tXN74t2c51RAvK3aYTL",
+    "live_authority": "GKKZmEPuhowYTQcAXBUZtRMn6tXN74t2c51RAvK3aYTL",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Parcl Governance 3 (2gWf)",
+    "id": "2gWf5xLAzZaKX9tQj9vuXsaxTWtzTZDFRn21J3zjNVgu",
+    "authority": "GKKZmEPuhowYTQcAXBUZtRMn6tXN74t2c51RAvK3aYTL",
+    "live_authority": "GKKZmEPuhowYTQcAXBUZtRMn6tXN74t2c51RAvK3aYTL",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Parcl Governance 4 (5tu3)",
+    "id": "5tu3xkmLfud5BAwSuQke4WSjoHcQ52SbrPwX9es8j6Ve",
+    "authority": "GKKZmEPuhowYTQcAXBUZtRMn6tXN74t2c51RAvK3aYTL",
+    "live_authority": "GKKZmEPuhowYTQcAXBUZtRMn6tXN74t2c51RAvK3aYTL",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": null
+ },
+ {
+  "name": "Marinade",
+  "tvl": "$226M",
+  "category": "Liquid Staking",
+  "version": "Serum Multisig",
+  "threshold": "6",
+  "members": "13",
+  "timelock_s": "-1",
+  "multisig": "magrsHFQxkkioAy45VWnZnFBBdKVdy2ZiRoRGYT9Wed",
+  "authority": "551FBXSXdhcRDDkdcb3ThDRg84Mwe5Zs6YjJ1EEoyzBp",
+  "programs": [
+   {
+    "name": "Liquid Staking",
+    "id": "MarBmsSgKXdrN1egZf5sqe1TMai9K1rChYNDJgjq7aD",
+    "authority": "551FBXSXdhcRDDkdcb3ThDRg84Mwe5Zs6YjJ1EEoyzBp"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Liquid Staking",
+    "id": "MarBmsSgKXdrN1egZf5sqe1TMai9K1rChYNDJgjq7aD",
+    "authority": "551FBXSXdhcRDDkdcb3ThDRg84Mwe5Zs6YjJ1EEoyzBp",
+    "live_authority": "551FBXSXdhcRDDkdcb3ThDRg84Mwe5Zs6YjJ1EEoyzBp",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": null
+ },
+ {
+  "name": "Pyth",
+  "tvl": "$7B secured",
+  "category": "Oracle",
+  "version": "Wormhole",
+  "threshold": "7",
+  "members": "9",
+  "timelock_s": "-1",
+  "multisig": "Pythian Council multisig (cross-chain messages verified by a 5-key Pyth-controlled guardian set since 26 August 2026)",
+  "authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT",
+  "programs": [
+   {
+    "name": "Legacy Oracle",
+    "id": "FsJ3A3u2vn5cTVofAjvy6y5kwABJAqYWpe4975bi2epH",
+    "authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT"
+   },
+   {
+    "name": "Pull Oracle",
+    "id": "rec5EKMGg6MxZYaMdyBfgwp4d5rB9T1VQH5pJv5LtFJ",
+    "authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT"
+   },
+   {
+    "name": "Push Oracle",
+    "id": "pythWSnswVUd12oZpeFP8e9CVaEqJg25g1Vtc2biRsT",
+    "authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT"
+   },
+   {
+    "name": "Pyth Governance",
+    "id": "prfmVhiQTN5Spgoxa8uZJba35V1s7XXReqbBiqPDWeJ",
+    "authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT"
+   },
+   {
+    "name": "Pyth Crosschain",
+    "id": "pytd2yyk641x7ak7mkaasSJVXh6YYZnC7wTmtgAyxPt",
+    "authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT"
+   },
+   {
+    "name": "HDwc",
+    "id": "HDwcJBJXjL9FpJ7UBsYBtaDjsBUhuLCUYoz3zr8SWWaQ",
+    "authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT"
+   },
+   {
+    "name": "Test (tstPAR)",
+    "id": "tstPARXbQ5yxVkRU2UcZRbYphzbUEW6t5ihzpLaafgz",
+    "authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT"
+   },
+   {
+    "name": "Governance (GovFUV)",
+    "id": "GovFUVGZWWwyoLq8rhnoVWknRFkhDSbQiSoREJ5LiZCV",
+    "authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT"
+   },
+   {
+    "name": "Staking (sta99)",
+    "id": "sta99txADjRfwHQQMNckb8vUN4jcAAhN2HBMTR2Ah6d",
+    "authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT"
+   },
+   {
+    "name": "PytER",
+    "id": "PytERJFhAKuNNuaiXkApLfWzwNwSNDACpigT3LwQfou",
+    "authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT"
+   },
+   {
+    "name": "escrow (escMHe)",
+    "id": "escMHe7kSqPcDHx4HU44rAHhgdTLBZkUrU39aN8kMcL",
+    "authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Legacy Oracle",
+    "id": "FsJ3A3u2vn5cTVofAjvy6y5kwABJAqYWpe4975bi2epH",
+    "authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT",
+    "live_authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Pull Oracle",
+    "id": "rec5EKMGg6MxZYaMdyBfgwp4d5rB9T1VQH5pJv5LtFJ",
+    "authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT",
+    "live_authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Push Oracle",
+    "id": "pythWSnswVUd12oZpeFP8e9CVaEqJg25g1Vtc2biRsT",
+    "authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT",
+    "live_authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Pyth Governance",
+    "id": "prfmVhiQTN5Spgoxa8uZJba35V1s7XXReqbBiqPDWeJ",
+    "authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT",
+    "live_authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Pyth Crosschain",
+    "id": "pytd2yyk641x7ak7mkaasSJVXh6YYZnC7wTmtgAyxPt",
+    "authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT",
+    "live_authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT",
+    "same_as_solgov": true
+   },
+   {
+    "name": "HDwc",
+    "id": "HDwcJBJXjL9FpJ7UBsYBtaDjsBUhuLCUYoz3zr8SWWaQ",
+    "authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT",
+    "live_authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Test (tstPAR)",
+    "id": "tstPARXbQ5yxVkRU2UcZRbYphzbUEW6t5ihzpLaafgz",
+    "authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT",
+    "live_authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Governance (GovFUV)",
+    "id": "GovFUVGZWWwyoLq8rhnoVWknRFkhDSbQiSoREJ5LiZCV",
+    "authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT",
+    "live_authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Staking (sta99)",
+    "id": "sta99txADjRfwHQQMNckb8vUN4jcAAhN2HBMTR2Ah6d",
+    "authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT",
+    "live_authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT",
+    "same_as_solgov": true
+   },
+   {
+    "name": "PytER",
+    "id": "PytERJFhAKuNNuaiXkApLfWzwNwSNDACpigT3LwQfou",
+    "authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT",
+    "live_authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT",
+    "same_as_solgov": true
+   },
+   {
+    "name": "escrow (escMHe)",
+    "id": "escMHe7kSqPcDHx4HU44rAHhgdTLBZkUrU39aN8kMcL",
+    "authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT",
+    "live_authority": "6oXTdojyfDS8m5VtTaYB9xRCxpKGSvKJFndLUPV3V3wT",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": null
+ },
+ {
+  "name": "Jito",
+  "tvl": "$911M",
+  "category": "Liquid Staking",
+  "version": "Realms DAO",
+  "threshold": "0",
+  "members": "0",
+  "timelock_s": "-1",
+  "multisig": "DAO-governed",
+  "authority": "5eosrve6LktMZgVNszYzebgmmC7BjLK8NoWyRQtcmGTF",
+  "programs": [
+   {
+    "name": "Vault",
+    "id": "Vau1t6sLNxnzB7ZDsef8TLbPLfyZMYXH8WTNqUdm9g8",
+    "authority": "5eosrve6LktMZgVNszYzebgmmC7BjLK8NoWyRQtcmGTF"
+   },
+   {
+    "name": "Restaking",
+    "id": "RestkWeAVL8fRGgzhfeoqFhsqKRchg6aa1XrcH96z4Q",
+    "authority": "5eosrve6LktMZgVNszYzebgmmC7BjLK8NoWyRQtcmGTF"
+   },
+   {
+    "name": "Steward",
+    "id": "Stewardf95sJbmtcZsyagb2dg4Mo8eVQho8gpECvLx8",
+    "authority": "8EP3VommYzMRSdnSn88GnQpxjRwxg6nroTeUNJoqu9b8"
+   },
+   {
+    "name": "Tip Payment",
+    "id": "T1pyyaTNZsKv2WcRAB8oVnk93mLJw2XzjtVYqCsaHqt",
+    "authority": "4ivLcnNLhe4cKdpV9b4jyEmxgbYWFgktHcTyyBvYavsD"
+   },
+   {
+    "name": "Tip Distribution",
+    "id": "4R3gSG8BpU4t19KYj8CfnbtRpnT8gtk4dvTHxVRwc2r7",
+    "authority": "4ivLcnNLhe4cKdpV9b4jyEmxgbYWFgktHcTyyBvYavsD"
+   },
+   {
+    "name": "Validator History",
+    "id": "HistoryJTGbKQD2mRgLZ3XhqHnN811Qpez8X9kCcGHoa",
+    "authority": "8EP3VommYzMRSdnSn88GnQpxjRwxg6nroTeUNJoqu9b8"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Vault",
+    "id": "Vau1t6sLNxnzB7ZDsef8TLbPLfyZMYXH8WTNqUdm9g8",
+    "authority": "5eosrve6LktMZgVNszYzebgmmC7BjLK8NoWyRQtcmGTF",
+    "live_authority": "5eosrve6LktMZgVNszYzebgmmC7BjLK8NoWyRQtcmGTF",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Restaking",
+    "id": "RestkWeAVL8fRGgzhfeoqFhsqKRchg6aa1XrcH96z4Q",
+    "authority": "5eosrve6LktMZgVNszYzebgmmC7BjLK8NoWyRQtcmGTF",
+    "live_authority": "5eosrve6LktMZgVNszYzebgmmC7BjLK8NoWyRQtcmGTF",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Steward",
+    "id": "Stewardf95sJbmtcZsyagb2dg4Mo8eVQho8gpECvLx8",
+    "authority": "8EP3VommYzMRSdnSn88GnQpxjRwxg6nroTeUNJoqu9b8",
+    "live_authority": "8EP3VommYzMRSdnSn88GnQpxjRwxg6nroTeUNJoqu9b8",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Tip Payment",
+    "id": "T1pyyaTNZsKv2WcRAB8oVnk93mLJw2XzjtVYqCsaHqt",
+    "authority": "4ivLcnNLhe4cKdpV9b4jyEmxgbYWFgktHcTyyBvYavsD",
+    "live_authority": "4ivLcnNLhe4cKdpV9b4jyEmxgbYWFgktHcTyyBvYavsD",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Tip Distribution",
+    "id": "4R3gSG8BpU4t19KYj8CfnbtRpnT8gtk4dvTHxVRwc2r7",
+    "authority": "4ivLcnNLhe4cKdpV9b4jyEmxgbYWFgktHcTyyBvYavsD",
+    "live_authority": "4ivLcnNLhe4cKdpV9b4jyEmxgbYWFgktHcTyyBvYavsD",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Validator History",
+    "id": "HistoryJTGbKQD2mRgLZ3XhqHnN811Qpez8X9kCcGHoa",
+    "authority": "8EP3VommYzMRSdnSn88GnQpxjRwxg6nroTeUNJoqu9b8",
+    "live_authority": "8EP3VommYzMRSdnSn88GnQpxjRwxg6nroTeUNJoqu9b8",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": null
+ },
+ {
+  "name": "Save (Solend)",
+  "tvl": "$100M+",
+  "category": "Lending",
+  "version": "Single Signer",
+  "threshold": "1",
+  "members": "1",
+  "timelock_s": "0",
+  "multisig": "N/A.single EOA wallet",
+  "authority": "RY93CZYe5g6drtG7W9PmHRPzaBLZ1uwihTzayQTmJfh",
+  "programs": [],
+  "programs_live": [],
+  "multisig_live": null
+ },
+ {
+  "name": "Zebec",
+  "tvl": "Unknown",
+  "category": "Infrastructure",
+  "version": "Single Signer",
+  "threshold": "1",
+  "members": "1",
+  "timelock_s": "0",
+  "multisig": "N/A.single EOA wallet",
+  "authority": "5aUDpuNNbAvme6hPi4o2vBbzHMrF7h3xB4kfKNMk6V8h",
+  "programs": [
+   {
+    "name": "Streaming",
+    "id": "zbcKGdAmXfthXY3rEPBzexVByT2cqRqCZb9NwWdGQ2T",
+    "authority": "5aUDpuNNbAvme6hPi4o2vBbzHMrF7h3xB4kfKNMk6V8h"
+   },
+   {
+    "name": "Multisig Helper",
+    "id": "b6ZPysThkApNx2YDiGsPUiYPE7Ub1kTRdCWp7gBkzbr",
+    "authority": "5aUDpuNNbAvme6hPi4o2vBbzHMrF7h3xB4kfKNMk6V8h"
+   },
+   {
+    "name": "SDK/V1",
+    "id": "AknC341xog56SrnoK6j3mUvaD1Y7tYayx1sxUGpeYWdX",
+    "authority": "5aUDpuNNbAvme6hPi4o2vBbzHMrF7h3xB4kfKNMk6V8h"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Streaming",
+    "id": "zbcKGdAmXfthXY3rEPBzexVByT2cqRqCZb9NwWdGQ2T",
+    "authority": "5aUDpuNNbAvme6hPi4o2vBbzHMrF7h3xB4kfKNMk6V8h",
+    "live_authority": "5aUDpuNNbAvme6hPi4o2vBbzHMrF7h3xB4kfKNMk6V8h",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Multisig Helper",
+    "id": "b6ZPysThkApNx2YDiGsPUiYPE7Ub1kTRdCWp7gBkzbr",
+    "authority": "5aUDpuNNbAvme6hPi4o2vBbzHMrF7h3xB4kfKNMk6V8h",
+    "live_authority": "5aUDpuNNbAvme6hPi4o2vBbzHMrF7h3xB4kfKNMk6V8h",
+    "same_as_solgov": true
+   },
+   {
+    "name": "SDK/V1",
+    "id": "AknC341xog56SrnoK6j3mUvaD1Y7tYayx1sxUGpeYWdX",
+    "authority": "5aUDpuNNbAvme6hPi4o2vBbzHMrF7h3xB4kfKNMk6V8h",
+    "live_authority": "5aUDpuNNbAvme6hPi4o2vBbzHMrF7h3xB4kfKNMk6V8h",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": null
+ },
+ {
+  "name": "Wick",
+  "tvl": "N/A",
+  "category": "Yield",
+  "version": "Squads V4",
+  "threshold": "3",
+  "members": "5",
+  "timelock_s": "86400",
+  "multisig": "8YmCRSNu7eCjLkhFB4LgDjjjGzfa37ztMoPhXZymWcCA",
+  "authority": "3bAHFKgJx7mHeyo2VmDCGp4QmKxTbPdtF5MfPF16R19P",
+  "programs": [
+   {
+    "name": "Wick",
+    "id": "wickHYqFr8NayYurE8M4oT8F4ZrYUwzaFoiXctCDSmF",
+    "authority": "3bAHFKgJx7mHeyo2VmDCGp4QmKxTbPdtF5MfPF16R19P"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Wick",
+    "id": "wickHYqFr8NayYurE8M4oT8F4ZrYUwzaFoiXctCDSmF",
+    "authority": "3bAHFKgJx7mHeyo2VmDCGp4QmKxTbPdtF5MfPF16R19P",
+    "live_authority": "3bAHFKgJx7mHeyo2VmDCGp4QmKxTbPdtF5MfPF16R19P",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 3,
+   "members": 5,
+   "time_lock_s": 86400,
+   "vault0": "3bAHFKgJx7mHeyo2VmDCGp4QmKxTbPdtF5MfPF16R19P",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "Onre Finance",
+  "tvl": "N/A",
+  "category": "Other",
+  "version": "Squads V4",
+  "threshold": "4",
+  "members": "7",
+  "timelock_s": "21600",
+  "multisig": "2AD4x72wXvjZVxSQPCt77NYZGXNdMbFvtD5F3mcUAtcN",
+  "authority": "FvmhydbpHGQzMUp51GmhB1fwsrkyfmnRsTg7oPwDe25f",
+  "programs": [
+   {
+    "name": "Core",
+    "id": "onreuGhHHgVzMWSkj2oQDLDtvvGvoepBPkqyaubFcwe",
+    "authority": "FvmhydbpHGQzMUp51GmhB1fwsrkyfmnRsTg7oPwDe25f"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Core",
+    "id": "onreuGhHHgVzMWSkj2oQDLDtvvGvoepBPkqyaubFcwe",
+    "authority": "FvmhydbpHGQzMUp51GmhB1fwsrkyfmnRsTg7oPwDe25f",
+    "live_authority": "FvmhydbpHGQzMUp51GmhB1fwsrkyfmnRsTg7oPwDe25f",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 4,
+   "members": 7,
+   "time_lock_s": 21600,
+   "vault0": "FvmhydbpHGQzMUp51GmhB1fwsrkyfmnRsTg7oPwDe25f",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "MetaDAO",
+  "tvl": "N/A",
+  "category": "Governance",
+  "version": "Squads V4",
+  "threshold": "3",
+  "members": "13",
+  "timelock_s": "0",
+  "multisig": "8N3Tvc6B1wEVKVC6iD4s6eyaCNqX2ovj2xze2q3Q9DWH",
+  "authority": "6awyHMshBGVjJ3ozdSJdyyDE1CTAXUwrpNMaRGMsb4sf",
+  "programs": [
+   {
+    "name": "Futarchy",
+    "id": "FUTARELBfJfQ8RDGhg1wdhddq1odMAJUePHFuBYfUxKq",
+    "authority": "6awyHMshBGVjJ3ozdSJdyyDE1CTAXUwrpNMaRGMsb4sf"
+   },
+   {
+    "name": "Autocrat",
+    "id": "auToUr3CQza3D4qreT6Std2MTomfzvrEeCC5qh7ivW5",
+    "authority": "6awyHMshBGVjJ3ozdSJdyyDE1CTAXUwrpNMaRGMsb4sf"
+   },
+   {
+    "name": "AMM",
+    "id": "AMMJdEiCCa8mdugg6JPF7gFirmmxisTfDJoSNSUi5zDJ",
+    "authority": "6awyHMshBGVjJ3ozdSJdyyDE1CTAXUwrpNMaRGMsb4sf"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Futarchy",
+    "id": "FUTARELBfJfQ8RDGhg1wdhddq1odMAJUePHFuBYfUxKq",
+    "authority": "6awyHMshBGVjJ3ozdSJdyyDE1CTAXUwrpNMaRGMsb4sf",
+    "live_authority": "6awyHMshBGVjJ3ozdSJdyyDE1CTAXUwrpNMaRGMsb4sf",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Autocrat",
+    "id": "auToUr3CQza3D4qreT6Std2MTomfzvrEeCC5qh7ivW5",
+    "authority": "6awyHMshBGVjJ3ozdSJdyyDE1CTAXUwrpNMaRGMsb4sf",
+    "live_authority": "6awyHMshBGVjJ3ozdSJdyyDE1CTAXUwrpNMaRGMsb4sf",
+    "same_as_solgov": true
+   },
+   {
+    "name": "AMM",
+    "id": "AMMJdEiCCa8mdugg6JPF7gFirmmxisTfDJoSNSUi5zDJ",
+    "authority": "6awyHMshBGVjJ3ozdSJdyyDE1CTAXUwrpNMaRGMsb4sf",
+    "live_authority": "6awyHMshBGVjJ3ozdSJdyyDE1CTAXUwrpNMaRGMsb4sf",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 3,
+   "members": 13,
+   "time_lock_s": 0,
+   "vault0": "6awyHMshBGVjJ3ozdSJdyyDE1CTAXUwrpNMaRGMsb4sf",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "Helium",
+  "tvl": "N/A",
+  "category": "DePIN",
+  "version": "Squads V4",
+  "threshold": "3",
+  "members": "6",
+  "timelock_s": "0",
+  "multisig": "FXyzyVsmPRuZjbe97tsCpDqPAPPhBny4dr2hemo8XmL1",
+  "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+  "programs": [
+   {
+    "name": "Entity Manager",
+    "id": "hemjuPXBpNvggtaUnN1MwT3wrdhttKEfosTcc2P9Pg8",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U"
+   },
+   {
+    "name": "Data Credits",
+    "id": "credMBJhYFzfn7NxBMdU4aUqFggAjgztaCcv2Fo6fPT",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U"
+   },
+   {
+    "name": "Sub DAOs",
+    "id": "hdaoVTCqhfHHo75XdAMxBKdUqvq1i5bF23sisBqVgGR",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U"
+   },
+   {
+    "name": "Voter Stake Registry",
+    "id": "hvsrNC3NKbcryqDs2DocYHZ9yPKEVzdSjQG6RVtK1s8",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U"
+   },
+   {
+    "name": "Modular Governance (proposals)",
+    "id": "propFYxqmVcufMhk5esNMrexq2ogHbbC2kP9PU1qxKs",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U"
+   },
+   {
+    "name": "Modular Governance (proposals v2)",
+    "id": "nprx42sXf5rpVnwBWEdRg1d8tuCWsTuVLys1pRWwE6p",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U"
+   },
+   {
+    "name": "Treasury Management",
+    "id": "treaf4wWBBty3fHdyBpo35Mz84M8k3heKXmjmi9vFt5",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U"
+   },
+   {
+    "name": "Mobile Entity",
+    "id": "memMa1HG4odAFmUbGWfPwS1WWfK95k99F2YTkGvyxZr",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U"
+   },
+   {
+    "name": "No-Emit",
+    "id": "noEmmgLmQdk6DLiPV8CSwQv3qQDyGEhz9m5A4zhtByv",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U"
+   },
+   {
+    "name": "IoT Distributor",
+    "id": "1atrmQs3eq1N2FEYWu6tyTXbCjP4uQwExpjtnhXtS8h",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U"
+   },
+   {
+    "name": "Organisations",
+    "id": "orgdXvHVLkWgBYerptASkAwkZAE563CJUu717dMNx5f",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U"
+   },
+   {
+    "name": "Price Oracle",
+    "id": "porcSnvH9pvcYPmQ65Y8qcZSRxQBiBBQX7UV5nmBegy",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U"
+   },
+   {
+    "name": "Hex Boosting",
+    "id": "hexbnKYoA2GercNNhHUCCfrTRWrHjT6ujKPXTa5NPqJ",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U"
+   },
+   {
+    "name": "Circuit Breaker",
+    "id": "circAbx64bbsscPbQzZAUvuXpHqrCe6fLMzc2uKXz9g",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U"
+   },
+   {
+    "name": "Fanout",
+    "id": "fanqeMu3fw8R4LwKNbahPtYXJsyLL6NXyfe2BqzhfB6",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U"
+   },
+   {
+    "name": "Rewards Oracle",
+    "id": "rorcfdX4h9m9swCKgcypaHJ8NGYVANBpmV9EHn3cYrF",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U"
+   },
+   {
+    "name": "Lazy Distributor",
+    "id": "1azyuavdMyvsivtNxPoz6SucD18eDHeXzFCUPq5XU7w",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U"
+   },
+   {
+    "name": "Mobile Fanout (mfan)",
+    "id": "mfanLprNnaiP4RX9Zz1BMcDosYHCqnG24H1fMEbi9Gn",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U"
+   },
+   {
+    "name": "TukTuk",
+    "id": "tuktukUrfhXT6ZT77QTU8RQtvgL967uRuVagWF57zVA",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U"
+   },
+   {
+    "name": "Cron",
+    "id": "cronAjRZnJn3MTP3B9kE62NWDrjSuAPVXf9c4hu4grM",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U"
+   },
+   {
+    "name": "Top (topqq)",
+    "id": "topqqzQZroCyRrgyM5zVq6xkFDVnfF13iixSjajydgU",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U"
+   },
+   {
+    "name": "Stake Controller (stcfi)",
+    "id": "stcfiqW3fwD9QCd8Bqr1NBLrs7dftZHBQe7RiMMA4aM",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U"
+   },
+   {
+    "name": "hcrLP",
+    "id": "hcrLPFgFUY6sCUKzqLWxXx5bntDiDCrAZVcrXfx9AHu",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U"
+   },
+   {
+    "name": "we1cG",
+    "id": "we1cGnTxTkDP9Sk49dw1d3T7ik7V2NfnY4qDGCDHXfC",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U"
+   },
+   {
+    "name": "Omnix Admin",
+    "id": "omnixgS8fnqHfCcTGKWj6JtKjzpJZ1Y5y9pyFkQDkYE",
+    "authority": "4JpPs9Mi11qoj6GthQPiTjUc4gXq8BAoSs3AD6NVjQUZ"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Entity Manager",
+    "id": "hemjuPXBpNvggtaUnN1MwT3wrdhttKEfosTcc2P9Pg8",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "live_authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Data Credits",
+    "id": "credMBJhYFzfn7NxBMdU4aUqFggAjgztaCcv2Fo6fPT",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "live_authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Sub DAOs",
+    "id": "hdaoVTCqhfHHo75XdAMxBKdUqvq1i5bF23sisBqVgGR",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "live_authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Voter Stake Registry",
+    "id": "hvsrNC3NKbcryqDs2DocYHZ9yPKEVzdSjQG6RVtK1s8",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "live_authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Modular Governance (proposals)",
+    "id": "propFYxqmVcufMhk5esNMrexq2ogHbbC2kP9PU1qxKs",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "live_authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Modular Governance (proposals v2)",
+    "id": "nprx42sXf5rpVnwBWEdRg1d8tuCWsTuVLys1pRWwE6p",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "live_authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Treasury Management",
+    "id": "treaf4wWBBty3fHdyBpo35Mz84M8k3heKXmjmi9vFt5",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "live_authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Mobile Entity",
+    "id": "memMa1HG4odAFmUbGWfPwS1WWfK95k99F2YTkGvyxZr",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "live_authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "same_as_solgov": true
+   },
+   {
+    "name": "No-Emit",
+    "id": "noEmmgLmQdk6DLiPV8CSwQv3qQDyGEhz9m5A4zhtByv",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "live_authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "same_as_solgov": true
+   },
+   {
+    "name": "IoT Distributor",
+    "id": "1atrmQs3eq1N2FEYWu6tyTXbCjP4uQwExpjtnhXtS8h",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "live_authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Organisations",
+    "id": "orgdXvHVLkWgBYerptASkAwkZAE563CJUu717dMNx5f",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "live_authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Price Oracle",
+    "id": "porcSnvH9pvcYPmQ65Y8qcZSRxQBiBBQX7UV5nmBegy",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "live_authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Hex Boosting",
+    "id": "hexbnKYoA2GercNNhHUCCfrTRWrHjT6ujKPXTa5NPqJ",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "live_authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Circuit Breaker",
+    "id": "circAbx64bbsscPbQzZAUvuXpHqrCe6fLMzc2uKXz9g",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "live_authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Fanout",
+    "id": "fanqeMu3fw8R4LwKNbahPtYXJsyLL6NXyfe2BqzhfB6",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "live_authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Rewards Oracle",
+    "id": "rorcfdX4h9m9swCKgcypaHJ8NGYVANBpmV9EHn3cYrF",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "live_authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Lazy Distributor",
+    "id": "1azyuavdMyvsivtNxPoz6SucD18eDHeXzFCUPq5XU7w",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "live_authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Mobile Fanout (mfan)",
+    "id": "mfanLprNnaiP4RX9Zz1BMcDosYHCqnG24H1fMEbi9Gn",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "live_authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "same_as_solgov": true
+   },
+   {
+    "name": "TukTuk",
+    "id": "tuktukUrfhXT6ZT77QTU8RQtvgL967uRuVagWF57zVA",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "live_authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Cron",
+    "id": "cronAjRZnJn3MTP3B9kE62NWDrjSuAPVXf9c4hu4grM",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "live_authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Top (topqq)",
+    "id": "topqqzQZroCyRrgyM5zVq6xkFDVnfF13iixSjajydgU",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "live_authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Stake Controller (stcfi)",
+    "id": "stcfiqW3fwD9QCd8Bqr1NBLrs7dftZHBQe7RiMMA4aM",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "live_authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "same_as_solgov": true
+   },
+   {
+    "name": "hcrLP",
+    "id": "hcrLPFgFUY6sCUKzqLWxXx5bntDiDCrAZVcrXfx9AHu",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "live_authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "same_as_solgov": true
+   },
+   {
+    "name": "we1cG",
+    "id": "we1cGnTxTkDP9Sk49dw1d3T7ik7V2NfnY4qDGCDHXfC",
+    "authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "live_authority": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Omnix Admin",
+    "id": "omnixgS8fnqHfCcTGKWj6JtKjzpJZ1Y5y9pyFkQDkYE",
+    "authority": "4JpPs9Mi11qoj6GthQPiTjUc4gXq8BAoSs3AD6NVjQUZ",
+    "live_authority": "4JpPs9Mi11qoj6GthQPiTjUc4gXq8BAoSs3AD6NVjQUZ",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 3,
+   "members": 6,
+   "time_lock_s": 0,
+   "vault0": "pULUgsYtKvT7qhsL8QJ2oJXYQUeCCdjtfawPnBqEr3U",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "Voltr",
+  "tvl": "N/A",
+  "category": "Yield",
+  "version": "Squads V4",
+  "threshold": "3",
+  "members": "7",
+  "timelock_s": "43200",
+  "multisig": "7szuzpoZzah95BsAu2LQm3bpor5ofiAV4HuinyfFEdse",
+  "authority": "G2FCNGgQQ7MYyJvkXw1du86YGR6vXXejuQG9LsjX1kEs",
+  "programs": [
+   {
+    "name": "Vaults",
+    "id": "aVoLTRCRt3NnnchvLYH6rMYehJHwM5m45RmLBZq7PGz",
+    "authority": "G2FCNGgQQ7MYyJvkXw1du86YGR6vXXejuQG9LsjX1kEs"
+   },
+   {
+    "name": "Vault (vVoLTR)",
+    "id": "vVoLTRjQmtFpiYoegx285Ze4gsLJ8ZxgFKVcuvmG1a8",
+    "authority": "G2FCNGgQQ7MYyJvkXw1du86YGR6vXXejuQG9LsjX1kEs"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Vaults",
+    "id": "aVoLTRCRt3NnnchvLYH6rMYehJHwM5m45RmLBZq7PGz",
+    "authority": "G2FCNGgQQ7MYyJvkXw1du86YGR6vXXejuQG9LsjX1kEs",
+    "live_authority": "G2FCNGgQQ7MYyJvkXw1du86YGR6vXXejuQG9LsjX1kEs",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Vault (vVoLTR)",
+    "id": "vVoLTRjQmtFpiYoegx285Ze4gsLJ8ZxgFKVcuvmG1a8",
+    "authority": "G2FCNGgQQ7MYyJvkXw1du86YGR6vXXejuQG9LsjX1kEs",
+    "live_authority": "G2FCNGgQQ7MYyJvkXw1du86YGR6vXXejuQG9LsjX1kEs",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 3,
+   "members": 7,
+   "time_lock_s": 43200,
+   "vault0": "G2FCNGgQQ7MYyJvkXw1du86YGR6vXXejuQG9LsjX1kEs",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "Tessera V",
+  "tvl": "N/A",
+  "category": "Other",
+  "version": "Squads V4",
+  "threshold": "4",
+  "members": "7",
+  "timelock_s": "0",
+  "multisig": "3JW5VWy76TBT5NBbdyrWU6i3fz8XecDko7viGeFSKw7e",
+  "authority": "7bJ9xu9UGVZPtYzH1fMwdaKdvfhqeSJtoFc2eGrXBPhK",
+  "programs": [
+   {
+    "name": "AMM",
+    "id": "TessVdML9pBGgG9yGks7o4HewRaXVAMuoVj4x83GLQH",
+    "authority": "7bJ9xu9UGVZPtYzH1fMwdaKdvfhqeSJtoFc2eGrXBPhK"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "AMM",
+    "id": "TessVdML9pBGgG9yGks7o4HewRaXVAMuoVj4x83GLQH",
+    "authority": "7bJ9xu9UGVZPtYzH1fMwdaKdvfhqeSJtoFc2eGrXBPhK",
+    "live_authority": "7bJ9xu9UGVZPtYzH1fMwdaKdvfhqeSJtoFc2eGrXBPhK",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 4,
+   "members": 7,
+   "time_lock_s": 0,
+   "vault0": "7bJ9xu9UGVZPtYzH1fMwdaKdvfhqeSJtoFc2eGrXBPhK",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "deBridge",
+  "tvl": "N/A",
+  "category": "Infrastructure",
+  "version": "Squads V4",
+  "threshold": "2",
+  "members": "3",
+  "timelock_s": "0",
+  "multisig": "FHebUVvpfPzfcaWdhwYMP5uHLpRG6zbN8LcExJYAt8Ap",
+  "authority": "6EhmrJSgwCwRrF6aBAQ3ZJV3fWcJJbZLwQwyk96azAhj",
+  "programs": [
+   {
+    "name": "Main",
+    "id": "DEbrdGj3HsRsAzx6uH4MKyREKxVAfBydijLUF3ygsFfh",
+    "authority": "BCTmawGzu1pMmaf9fdGaD1Mcfp8XQ6JiZ4jYaFzyeR1x"
+   },
+   {
+    "name": "Settings",
+    "id": "DeSetTwWhjZq6Pz9Kfdo1KoS5NqtsM6G8ERbX4SSCSft",
+    "authority": "BCTmawGzu1pMmaf9fdGaD1Mcfp8XQ6JiZ4jYaFzyeR1x"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Main",
+    "id": "DEbrdGj3HsRsAzx6uH4MKyREKxVAfBydijLUF3ygsFfh",
+    "authority": "BCTmawGzu1pMmaf9fdGaD1Mcfp8XQ6JiZ4jYaFzyeR1x",
+    "live_authority": "BCTmawGzu1pMmaf9fdGaD1Mcfp8XQ6JiZ4jYaFzyeR1x",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Settings",
+    "id": "DeSetTwWhjZq6Pz9Kfdo1KoS5NqtsM6G8ERbX4SSCSft",
+    "authority": "BCTmawGzu1pMmaf9fdGaD1Mcfp8XQ6JiZ4jYaFzyeR1x",
+    "live_authority": "BCTmawGzu1pMmaf9fdGaD1Mcfp8XQ6JiZ4jYaFzyeR1x",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 2,
+   "members": 3,
+   "time_lock_s": 0,
+   "vault0": "6EhmrJSgwCwRrF6aBAQ3ZJV3fWcJJbZLwQwyk96azAhj",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "BisonFi",
+  "tvl": "N/A",
+  "category": "Other",
+  "version": "Single Signer",
+  "threshold": "1",
+  "members": "1",
+  "timelock_s": "0",
+  "multisig": null,
+  "authority": "6dDjBZdpafRKe7WuVHYTF1HphW1BWiKqioMD5eBGYipS",
+  "programs": [
+   {
+    "name": "AMM",
+    "id": "BiSoNHVpsVZW2F7rx2eQ59yQwKxzU5NvBcmKshCSUypi",
+    "authority": "6dDjBZdpafRKe7WuVHYTF1HphW1BWiKqioMD5eBGYipS"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "AMM",
+    "id": "BiSoNHVpsVZW2F7rx2eQ59yQwKxzU5NvBcmKshCSUypi",
+    "authority": "6dDjBZdpafRKe7WuVHYTF1HphW1BWiKqioMD5eBGYipS",
+    "live_authority": "6dDjBZdpafRKe7WuVHYTF1HphW1BWiKqioMD5eBGYipS",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": null
+ },
+ {
+  "name": "HumidiFi",
+  "tvl": "N/A",
+  "category": "Other",
+  "version": "Single Signer",
+  "threshold": "1",
+  "members": "1",
+  "timelock_s": "0",
+  "multisig": null,
+  "authority": "FMP7rvAsrs69YKBsaqgbB5mpnWrimNM8LNDfHLEzngLA",
+  "programs": [
+   {
+    "name": "AMM",
+    "id": "9H6tua7jkLhdm3w8BvgpTn5LZNU7g4ZynDmCiNN3q6Rp",
+    "authority": "FMP7rvAsrs69YKBsaqgbB5mpnWrimNM8LNDfHLEzngLA"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "AMM",
+    "id": "9H6tua7jkLhdm3w8BvgpTn5LZNU7g4ZynDmCiNN3q6Rp",
+    "authority": "FMP7rvAsrs69YKBsaqgbB5mpnWrimNM8LNDfHLEzngLA",
+    "live_authority": "FMP7rvAsrs69YKBsaqgbB5mpnWrimNM8LNDfHLEzngLA",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": null
+ },
+ {
+  "name": "Photon",
+  "tvl": "N/A",
+  "category": "Other",
+  "version": "Single Signer",
+  "threshold": "1",
+  "members": "1",
+  "timelock_s": "0",
+  "multisig": null,
+  "authority": "9Vv9LiU728TNdA9mR1w3xGPgcFaqpGA4Baeo7RGJJew6",
+  "programs": [
+   {
+    "name": "Trading Bot",
+    "id": "BSfD6SHZigAfDWSjzD5Q41jw8LmKwtmjskPH9XW1mrRW",
+    "authority": "9Vv9LiU728TNdA9mR1w3xGPgcFaqpGA4Baeo7RGJJew6"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Trading Bot",
+    "id": "BSfD6SHZigAfDWSjzD5Q41jw8LmKwtmjskPH9XW1mrRW",
+    "authority": "9Vv9LiU728TNdA9mR1w3xGPgcFaqpGA4Baeo7RGJJew6",
+    "live_authority": "9Vv9LiU728TNdA9mR1w3xGPgcFaqpGA4Baeo7RGJJew6",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": null
+ },
+ {
+  "name": "SPL Stake Pool",
+  "tvl": "~$3.5B (aggregated)",
+  "category": "Liquid Staking",
+  "version": "Squads V3",
+  "threshold": "6",
+  "members": "10",
+  "timelock_s": "-1",
+  "multisig": "3yqoHFE4nBGchuVH5rJuZMFvsmnaDTuLLdvGPDUEJcbW",
+  "authority": "dPpFfahSWhm5M2RB3nVaHsXfnh9ooz5bWtR3WeUguDH",
+  "programs": [
+   {
+    "name": "Stake Pool",
+    "id": "SPoo1Ku8WFXoNDMHPsrGSTSG1Y47rzgn41SLUNakuHy",
+    "authority": "dPpFfahSWhm5M2RB3nVaHsXfnh9ooz5bWtR3WeUguDH"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Stake Pool",
+    "id": "SPoo1Ku8WFXoNDMHPsrGSTSG1Y47rzgn41SLUNakuHy",
+    "authority": "dPpFfahSWhm5M2RB3nVaHsXfnh9ooz5bWtR3WeUguDH",
+    "live_authority": "dPpFfahSWhm5M2RB3nVaHsXfnh9ooz5bWtR3WeUguDH",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": null
+ },
+ {
+  "name": "LayerZero OFT",
+  "tvl": "N/A",
+  "category": "Infrastructure",
+  "version": "Squads V4",
+  "threshold": "1",
+  "members": "2",
+  "timelock_s": "0",
+  "multisig": "9XnbnSvCk33J5Daxc9uJ2MxySTKPuM1KKoFJNmaAk7tN",
+  "authority": "6nopWptiA5bw3hDsAzDcwEcLSNcrYfbCErKmM14QZS31",
+  "programs": [
+   {
+    "name": "OFT",
+    "id": "219m42qCuVirVvWs5GnkuX4aWFx5pX6D9RSTE1vsV5WS",
+    "authority": "6nopWptiA5bw3hDsAzDcwEcLSNcrYfbCErKmM14QZS31"
+   },
+   {
+    "name": "Devtools (A8W6A)",
+    "id": "A8W6AL4JhE4EDDcfXZ1Q8vQpwp83AnPj4UZ6y86gVFKN",
+    "authority": "G9jXsKZ2XXfNEks2dmouKiJJFBWcn8SQHmMkcy3TUVf5"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "OFT",
+    "id": "219m42qCuVirVvWs5GnkuX4aWFx5pX6D9RSTE1vsV5WS",
+    "authority": "6nopWptiA5bw3hDsAzDcwEcLSNcrYfbCErKmM14QZS31",
+    "live_authority": "6nopWptiA5bw3hDsAzDcwEcLSNcrYfbCErKmM14QZS31",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Devtools (A8W6A)",
+    "id": "A8W6AL4JhE4EDDcfXZ1Q8vQpwp83AnPj4UZ6y86gVFKN",
+    "authority": "G9jXsKZ2XXfNEks2dmouKiJJFBWcn8SQHmMkcy3TUVf5",
+    "live_authority": "G9jXsKZ2XXfNEks2dmouKiJJFBWcn8SQHmMkcy3TUVf5",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 1,
+   "members": 2,
+   "time_lock_s": 0,
+   "vault0": "6nopWptiA5bw3hDsAzDcwEcLSNcrYfbCErKmM14QZS31",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "SolvBTC",
+  "tvl": "$2.4M",
+  "category": "Infrastructure",
+  "version": "Squads V4",
+  "threshold": "3",
+  "members": "5",
+  "timelock_s": "0",
+  "multisig": "HRr5HqBE7XXMTYD7V6MwojkHxYGttwozEx6atAprp7XE",
+  "authority": "BsF2mR9brTd7u7wGWrejksQzsdrGFNcddRSYeNpHZixM",
+  "programs": [
+   {
+    "name": "Solv Protocol",
+    "id": "soLv1S6GsAEVEnXmVY3oz6GtrNJteQ28iTyRQrHXvkz",
+    "authority": "BsF2mR9brTd7u7wGWrejksQzsdrGFNcddRSYeNpHZixM"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Solv Protocol",
+    "id": "soLv1S6GsAEVEnXmVY3oz6GtrNJteQ28iTyRQrHXvkz",
+    "authority": "BsF2mR9brTd7u7wGWrejksQzsdrGFNcddRSYeNpHZixM",
+    "live_authority": "BsF2mR9brTd7u7wGWrejksQzsdrGFNcddRSYeNpHZixM",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 3,
+   "members": 5,
+   "time_lock_s": 0,
+   "vault0": "BsF2mR9brTd7u7wGWrejksQzsdrGFNcddRSYeNpHZixM",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "GMSOL",
+  "tvl": "$236M",
+  "category": "Perps",
+  "version": "Squads V4",
+  "threshold": "4",
+  "members": "7",
+  "timelock_s": "600",
+  "multisig": "CxnEVpQQcYa628TywzHGXeJ2jdVmbU51rnERat9xunP1",
+  "authority": "6qp7veALWas5rxXJRQXUEbffRtDyhB8koxenBpS51SrA",
+  "programs": [
+   {
+    "name": "Core",
+    "id": "Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
+    "authority": "6qp7veALWas5rxXJRQXUEbffRtDyhB8koxenBpS51SrA"
+   },
+   {
+    "name": "Exchange",
+    "id": "GTuvYD5SxkTq4FLG6JV1FQ5dkczr1AfgDcBHaFsBdtBg",
+    "authority": "6qp7veALWas5rxXJRQXUEbffRtDyhB8koxenBpS51SrA"
+   },
+   {
+    "name": "LP Manager",
+    "id": "LPMWczEVgXyQ3979XaqqEttanCXmYGvtJqPVtw1PvC8",
+    "authority": "6qp7veALWas5rxXJRQXUEbffRtDyhB8koxenBpS51SrA"
+   },
+   {
+    "name": "Router",
+    "id": "2AxuNr6euZPKQbTwNsLBjzFTZFAevA85F4PW9m9Dv8pc",
+    "authority": "6qp7veALWas5rxXJRQXUEbffRtDyhB8koxenBpS51SrA"
+   },
+   {
+    "name": "TimeBQ",
+    "id": "TimeBQ7gQyWyQMD3bTteAdy7hTVDNWSwELdSVZHfSXL",
+    "authority": "6qp7veALWas5rxXJRQXUEbffRtDyhB8koxenBpS51SrA"
+   },
+   {
+    "name": "12cJK",
+    "id": "12cJKgP9r2bcaruqu3XsCS1hxLqsHrmZhqG5Qy2TWRap",
+    "authority": "6qp7veALWas5rxXJRQXUEbffRtDyhB8koxenBpS51SrA"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Core",
+    "id": "Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
+    "authority": "6qp7veALWas5rxXJRQXUEbffRtDyhB8koxenBpS51SrA",
+    "live_authority": "6qp7veALWas5rxXJRQXUEbffRtDyhB8koxenBpS51SrA",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Exchange",
+    "id": "GTuvYD5SxkTq4FLG6JV1FQ5dkczr1AfgDcBHaFsBdtBg",
+    "authority": "6qp7veALWas5rxXJRQXUEbffRtDyhB8koxenBpS51SrA",
+    "live_authority": "6qp7veALWas5rxXJRQXUEbffRtDyhB8koxenBpS51SrA",
+    "same_as_solgov": true
+   },
+   {
+    "name": "LP Manager",
+    "id": "LPMWczEVgXyQ3979XaqqEttanCXmYGvtJqPVtw1PvC8",
+    "authority": "6qp7veALWas5rxXJRQXUEbffRtDyhB8koxenBpS51SrA",
+    "live_authority": "6qp7veALWas5rxXJRQXUEbffRtDyhB8koxenBpS51SrA",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Router",
+    "id": "2AxuNr6euZPKQbTwNsLBjzFTZFAevA85F4PW9m9Dv8pc",
+    "authority": "6qp7veALWas5rxXJRQXUEbffRtDyhB8koxenBpS51SrA",
+    "live_authority": "6qp7veALWas5rxXJRQXUEbffRtDyhB8koxenBpS51SrA",
+    "same_as_solgov": true
+   },
+   {
+    "name": "TimeBQ",
+    "id": "TimeBQ7gQyWyQMD3bTteAdy7hTVDNWSwELdSVZHfSXL",
+    "authority": "6qp7veALWas5rxXJRQXUEbffRtDyhB8koxenBpS51SrA",
+    "live_authority": "6qp7veALWas5rxXJRQXUEbffRtDyhB8koxenBpS51SrA",
+    "same_as_solgov": true
+   },
+   {
+    "name": "12cJK",
+    "id": "12cJKgP9r2bcaruqu3XsCS1hxLqsHrmZhqG5Qy2TWRap",
+    "authority": "6qp7veALWas5rxXJRQXUEbffRtDyhB8koxenBpS51SrA",
+    "live_authority": "6qp7veALWas5rxXJRQXUEbffRtDyhB8koxenBpS51SrA",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 4,
+   "members": 7,
+   "time_lock_s": 600,
+   "vault0": "6qp7veALWas5rxXJRQXUEbffRtDyhB8koxenBpS51SrA",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "Ore",
+  "tvl": "~$22M (market cap)",
+  "category": "Infrastructure",
+  "version": "Squads V4",
+  "threshold": "2",
+  "members": "4",
+  "timelock_s": "0",
+  "multisig": "CHvPhBYPSEdjCrv5xUuzvscqwFYm5wMggWLk2Bvkjgwo",
+  "authority": "J5K5tWj3nKfxuSkAJ25WTMf4u5EsxJRfUoRKKxgrfFGV",
+  "programs": [
+   {
+    "name": "Ore V3",
+    "id": "oreV3EG1i9BEgiAJ8b177Z2S2rMarzak4NMv1kULvWv",
+    "authority": "J5K5tWj3nKfxuSkAJ25WTMf4u5EsxJRfUoRKKxgrfFGV"
+   },
+   {
+    "name": "3jSk",
+    "id": "3jSkUuYBoJzQPMEzTvkDFXCZUBksPamrVhrnHR9igu2X",
+    "authority": "J5K5tWj3nKfxuSkAJ25WTMf4u5EsxJRfUoRKKxgrfFGV"
+   },
+   {
+    "name": "LStw",
+    "id": "LStwN2E5Uw6MCtuxHRLhy8RY9hxqW2XRpLzettb696y",
+    "authority": "IMMUTABLE"
+   },
+   {
+    "name": "Stake (STkE)",
+    "id": "STkEAu2cEyQp5ktgUauRVq8es6mEP2w6ixw4NEd5tDJ",
+    "authority": "IMMUTABLE"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Ore V3",
+    "id": "oreV3EG1i9BEgiAJ8b177Z2S2rMarzak4NMv1kULvWv",
+    "authority": "J5K5tWj3nKfxuSkAJ25WTMf4u5EsxJRfUoRKKxgrfFGV",
+    "live_authority": "J5K5tWj3nKfxuSkAJ25WTMf4u5EsxJRfUoRKKxgrfFGV",
+    "same_as_solgov": true
+   },
+   {
+    "name": "3jSk",
+    "id": "3jSkUuYBoJzQPMEzTvkDFXCZUBksPamrVhrnHR9igu2X",
+    "authority": "J5K5tWj3nKfxuSkAJ25WTMf4u5EsxJRfUoRKKxgrfFGV",
+    "live_authority": "J5K5tWj3nKfxuSkAJ25WTMf4u5EsxJRfUoRKKxgrfFGV",
+    "same_as_solgov": true
+   },
+   {
+    "name": "LStw",
+    "id": "LStwN2E5Uw6MCtuxHRLhy8RY9hxqW2XRpLzettb696y",
+    "authority": "IMMUTABLE",
+    "live_authority": null,
+    "same_as_solgov": false
+   },
+   {
+    "name": "Stake (STkE)",
+    "id": "STkEAu2cEyQp5ktgUauRVq8es6mEP2w6ixw4NEd5tDJ",
+    "authority": "IMMUTABLE",
+    "live_authority": null,
+    "same_as_solgov": false
+   }
+  ],
+  "multisig_live": {
+   "threshold": 2,
+   "members": 4,
+   "time_lock_s": 0,
+   "vault0": "7eyKjpFyTszL1JB1g3BAi7UucCQfKHPThX56ehZ9kxAh",
+   "vault0_is_solgov_authority": false,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "Carrot",
+  "tvl": "$11M",
+  "category": "Yield",
+  "version": "Squads V4",
+  "threshold": "2",
+  "members": "3",
+  "timelock_s": "0",
+  "multisig": "BVQn1waSbAD5fd6rJifaKY8yRrXSUCdd6cA9DZfwVDon",
+  "authority": "3eUEKYy7bPqtZ3KyUvCgpXV55v8TfN4xE85NickX6SUM",
+  "programs": [
+   {
+    "name": "Carrot",
+    "id": "CarrotwivhMpDnm27EHmRLeQ683Z1PufuqEmBZvD282s",
+    "authority": "3eUEKYy7bPqtZ3KyUvCgpXV55v8TfN4xE85NickX6SUM"
+   },
+   {
+    "name": "JAZW",
+    "id": "JAZWcGrpSWNPTBj8QtJ9UyQqhJCDhG9GJkDeMf5NQBiq",
+    "authority": "3bcxfPkGRLbHfkFb5DADLP9k5SCJmGU2H6MhuE2WxVdV"
+   },
+   {
+    "name": "Fk1R",
+    "id": "Fk1RpqsfeWt8KnFCTW9NQVdVxYvxuqjGn6iPB9wrmM8h",
+    "authority": "3bcxfPkGRLbHfkFb5DADLP9k5SCJmGU2H6MhuE2WxVdV"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Carrot",
+    "id": "CarrotwivhMpDnm27EHmRLeQ683Z1PufuqEmBZvD282s",
+    "authority": "3eUEKYy7bPqtZ3KyUvCgpXV55v8TfN4xE85NickX6SUM",
+    "live_authority": "3eUEKYy7bPqtZ3KyUvCgpXV55v8TfN4xE85NickX6SUM",
+    "same_as_solgov": true
+   },
+   {
+    "name": "JAZW",
+    "id": "JAZWcGrpSWNPTBj8QtJ9UyQqhJCDhG9GJkDeMf5NQBiq",
+    "authority": "3bcxfPkGRLbHfkFb5DADLP9k5SCJmGU2H6MhuE2WxVdV",
+    "live_authority": "3bcxfPkGRLbHfkFb5DADLP9k5SCJmGU2H6MhuE2WxVdV",
+    "same_as_solgov": true
+   },
+   {
+    "name": "Fk1R",
+    "id": "Fk1RpqsfeWt8KnFCTW9NQVdVxYvxuqjGn6iPB9wrmM8h",
+    "authority": "3bcxfPkGRLbHfkFb5DADLP9k5SCJmGU2H6MhuE2WxVdV",
+    "live_authority": "3bcxfPkGRLbHfkFb5DADLP9k5SCJmGU2H6MhuE2WxVdV",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 2,
+   "members": 3,
+   "time_lock_s": 0,
+   "vault0": "3eUEKYy7bPqtZ3KyUvCgpXV55v8TfN4xE85NickX6SUM",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "DefiTuna",
+  "tvl": "$3M",
+  "category": "Lending",
+  "version": "Squads V4",
+  "threshold": "2",
+  "members": "5",
+  "timelock_s": "0",
+  "multisig": "7tmQEKTNAwmkepvfo2zKvZ1KDHD4nEtQ39eZGwxQ1fQv",
+  "authority": "FWFrrwQ3kd91FEBD17paLUNmWwCYwpxg9bQCXGAcq7jx",
+  "programs": [
+   {
+    "name": "DefiTuna",
+    "id": "tuna4uSQZncNeeiAMKbstuxA9CUkHH6HmC64wgmnogD",
+    "authority": "FWFrrwQ3kd91FEBD17paLUNmWwCYwpxg9bQCXGAcq7jx"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "DefiTuna",
+    "id": "tuna4uSQZncNeeiAMKbstuxA9CUkHH6HmC64wgmnogD",
+    "authority": "FWFrrwQ3kd91FEBD17paLUNmWwCYwpxg9bQCXGAcq7jx",
+    "live_authority": "FWFrrwQ3kd91FEBD17paLUNmWwCYwpxg9bQCXGAcq7jx",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 2,
+   "members": 5,
+   "time_lock_s": 0,
+   "vault0": "FWFrrwQ3kd91FEBD17paLUNmWwCYwpxg9bQCXGAcq7jx",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "Phoenix Eternal",
+  "tvl": "Pre-launch",
+  "category": "Perps",
+  "version": "Squads V4",
+  "threshold": "3",
+  "members": "8",
+  "timelock_s": "0",
+  "multisig": "Eq2cke33VYoMpunvbMdeCi44PLX7RLzttgFibvvUjvpc",
+  "authority": "GPgADQrhzGoUgLqxsZMKvSpwcLaJFVTq6gEixKhmcwpm",
+  "programs": [
+   {
+    "name": "Phoenix Perpetuals",
+    "id": "EtrnLzgbS7nMMy5fbD42kXiUzGg8XQzJ972Xtk1cjWih",
+    "authority": "GPgADQrhzGoUgLqxsZMKvSpwcLaJFVTq6gEixKhmcwpm"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Phoenix Perpetuals",
+    "id": "EtrnLzgbS7nMMy5fbD42kXiUzGg8XQzJ972Xtk1cjWih",
+    "authority": "GPgADQrhzGoUgLqxsZMKvSpwcLaJFVTq6gEixKhmcwpm",
+    "live_authority": "GPgADQrhzGoUgLqxsZMKvSpwcLaJFVTq6gEixKhmcwpm",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": {
+   "threshold": 3,
+   "members": 8,
+   "time_lock_s": 0,
+   "vault0": "GPgADQrhzGoUgLqxsZMKvSpwcLaJFVTq6gEixKhmcwpm",
+   "vault0_is_solgov_authority": true,
+   "same_shape_as_solgov": true
+  }
+ },
+ {
+  "name": "Adrena",
+  "tvl": "$579k",
+  "category": "Perps",
+  "version": "Realms DAO",
+  "threshold": "0",
+  "members": "0",
+  "timelock_s": "-1",
+  "multisig": "DAO-governed",
+  "authority": "7VzEXYvGmLg3tdVuFuGFQdr7GP5tutTUt8EcTGHvG8Ev",
+  "programs": [
+   {
+    "name": "Perpetuals",
+    "id": "13gDzEXCdocbj8iAiqrScGo47NiSuYENGsRqi3SEAwet",
+    "authority": "7VzEXYvGmLg3tdVuFuGFQdr7GP5tutTUt8EcTGHvG8Ev"
+   }
+  ],
+  "programs_live": [
+   {
+    "name": "Perpetuals",
+    "id": "13gDzEXCdocbj8iAiqrScGo47NiSuYENGsRqi3SEAwet",
+    "authority": "7VzEXYvGmLg3tdVuFuGFQdr7GP5tutTUt8EcTGHvG8Ev",
+    "live_authority": "7VzEXYvGmLg3tdVuFuGFQdr7GP5tutTUt8EcTGHvG8Ev",
+    "same_as_solgov": true
+   }
+  ],
+  "multisig_live": null
+ },
+ {
+  "name": "Bulk",
+  "tvl": "Unknown",
+  "category": "Perps",
+  "version": "Appchain",
+  "threshold": "0",
+  "members": "0",
+  "timelock_s": "0",
+  "multisig": "Unknown. Team confirmed a 4-of-7 multisig with time locks is being set up; address pending disclosure",
+  "authority": "Unknown",
+  "programs": [],
+  "programs_live": [],
+  "multisig_live": null
+ },
+ {
+  "name": "Bullet",
+  "tvl": "Pre-launch",
+  "category": "Perps",
+  "version": "Appchain",
+  "threshold": "0",
+  "members": "0",
+  "timelock_s": "0",
+  "multisig": "Pre-launch. Appchain bridge in audit; no Solana mainnet program deployed yet",
+  "authority": "N/A",
+  "programs": [],
+  "programs_live": [],
+  "multisig_live": null
+ }
+]

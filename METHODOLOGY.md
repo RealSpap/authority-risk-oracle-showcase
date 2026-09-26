@@ -238,6 +238,66 @@ exception.
   fabricated-but-plausible-looking number this project's own discipline exists
   to catch -- see the Limitations section above.
 
+## Morpho Vault V2 scoring
+
+ADDED 2026-09-26, on Spap's explicit go-ahead after `data/finding_2026-09-25-vault-v2-scoring-scope.md`
+scoped this as "a real methodology decision, not a mechanical extension" and deliberately left it
+unbuilt three weeks running rather than answer it unilaterally. V2's architecture differs from every
+V1 vault already scored here: per-function timelocks instead of one vault-wide delay, gates that can
+be permanently abdicated (a power renounced forever, not just delayed), and a curator role that is
+NOT uniformly a Safe the way V1's Steakhouse/Gauntlet templates are. Three decisions, each reasoned
+below, each checked against the vault's own verified source before being finalized -- not assumed
+from the September research that first scoped this.
+
+**1. What `timelockScore` means for a per-function-timelock vault.** Score the MINIMUM delay among
+the functions that can redirect capital or change what the vault can invest in: `addAdapter`,
+`removeAdapter`, `setAdapterRegistry`, `increaseAbsoluteCap`, `increaseRelativeCap`, and the four exit
+gates (`setReceiveSharesGate`/`setSendSharesGate`/`setReceiveAssetsGate`/`setSendAssetsGate`) where
+still live (not yet abdicated -- see decision 2). Excluded, matching this project's own established
+practice for V1 (Compound V3's pauseGuardian gets the same "bounded blast radius, not scored as a
+bypass" treatment): pure fee setters (`setPerformanceFee`/`setManagementFee`/their recipients) and
+`setIsAllocator`/`setForceDeallocatePenalty`, all correctly documented at 0-day delay by the vault's
+own design because an allocator or fee-setter cannot redirect principal or drain funds outright.
+
+**A real bypass was suspected and DISPROVEN by reading the actual source before writing anything
+down.** `decreaseTimelock`'s own listed delay reads 0 days in Morpho's API, which looked at first like
+a way to instantly zero out any OTHER function's 7-day protection (submit `decreaseTimelock(addAdapter,
+0)`, wait 0 days, then call `addAdapter` immediately). Read `VaultV2.sol`'s actual `submit()` function
+before trusting that reading: `_timelock = selector == decreaseTimelock.selector ? timelock[bytes4(data[4:8])]
+: timelock[selector]` -- decreasing a FUNCTION's timelock is itself gated by THAT function's CURRENT
+timelock, not by `decreaseTimelock`'s own. Decreasing `addAdapter`'s 7-day delay to 0 requires waiting
+the full current 7 days first. No bypass exists; the nominal per-function delays are real.
+
+**2. Whether an abdicated gate counts as a protection.** Not folded into `timelockScore` or any other
+existing 0-100 field -- this project's methodology has no dimension for "a power was permanently
+renounced," and inventing a numeric weighting for that would be exactly the unilateral-invention this
+finding was scoped to avoid. Disclosed instead as a plain fact per gate, read live via the vault's own
+public `abdicated(bytes4)` getter -- checked per-function, not assumed uniform: on Steakhouse Prime
+USDC/EURCV specifically, 3 of the 4 exit gates (`setReceiveSharesGate`, `setSendSharesGate`,
+`setReceiveAssetsGate`) are permanently abdicated; `setSendAssetsGate` is NOT -- it remains a live,
+curator-controlled, 7-day-timelocked lever. A vault-wide "gates abdicated: yes/no" would have been
+wrong for this exact vault; always read all four individually.
+
+**3. How to score a non-Safe, non-role-registry curator (a bare EOA) versus a Safe curator.** No new
+formula needed -- V1 already answers this identically: a bare-EOA owner or curator is scored with the
+SAME near-worst-case treatment already used for Adpend USDC and 1337 USDC (`adminKeyScore`/
+`multisigScore` near the floor), and a Safe curator uses the SAME `min(100, threshold*15 + max(0,
+n-threshold)*5)` formula already applied to every V1 Safe curator. The "nested/dispersed signer"
+question this decision cross-references was independently investigated on 2026-09-25
+(`data/finding_2026-09-25-nested-signers-formula-investigation.md`) and found NOT a real gap in 19 of
+20 real cases -- reuse the existing formula verbatim, don't invent a V2-specific one.
+
+**Scope, deliberately incremental, not a single mass rollout.** V2's own scoping finding stressed
+"each candidate vault needs its own individual investigation... not a template that generalizes
+cheaply" -- the same per-target rigor every other scorer in this file already gets. Built first:
+Steakhouse Prime USDC and EURCV on Ethereum L1 (`score_morpho_steakhouse_prime_usdc_v2`/`_eurcv_v2`),
+chosen because their owner/curator resolve (via the already-documented `VaultV2Supervisor` one-hop) to
+the EXACT SAME Steakhouse Safes this file already tracks and scores for 4 V1 vaults -- reusing
+already-verified infrastructure, not introducing two brand-new unverified multisigs on the first pass.
+The remaining Vault V2 targets on Ethereum L1, Robinhood Chain, Monad and Tempo (per
+`data/finding_2026-09-25-vault-v2-inventory.md`'s $2.87B inventory) are the natural continuation of
+this same methodology, one verified vault at a time, not assumed to generalize automatically.
+
 ## Data collection discipline
 
 - **Never trust a name, a docs page, or a block explorer's "verified

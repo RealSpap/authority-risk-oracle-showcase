@@ -2389,6 +2389,136 @@ def score_morpho_steakhouse_usdc_l1(w3) -> dict:
     }
 
 
+# ADDED 2026-09-26 (Morpho Vault V2, on Spap's explicit go-ahead -- see METHODOLOGY.md's "Morpho
+# Vault V2 scoring" section for the 3 methodology decisions this scorer applies, each reasoned there
+# in full, not repeated here). `_FUND_REDIRECTING_FUNCTION_SIGS`: the functions whose CURRENT
+# per-function timelock actually protects depositor principal -- adapters (what the vault invests
+# in), caps (how much), and the exit gates while still live (not yet abdicated). Selectors computed
+# from each function's real signature as it appears in the vault's own verified ABI -- NOT guessed
+# (an earlier draft of this pass guessed increaseAbsoluteCap/increaseRelativeCap's argument types as a
+# struct tuple, got the wrong selector, and silently read back 0 -- caught by reading the real ABI
+# before trusting a live read of a made-up signature).
+_FUND_REDIRECTING_FUNCTION_SIGS = [
+    "addAdapter(address)", "removeAdapter(address)", "setAdapterRegistry(address)",
+    "increaseAbsoluteCap(bytes,uint256)", "increaseRelativeCap(bytes,uint256)",
+]
+_EXIT_GATE_FUNCTION_SIGS = {
+    "receive shares": "setReceiveSharesGate(address)", "send shares": "setSendSharesGate(address)",
+    "receive assets": "setReceiveAssetsGate(address)", "send assets": "setSendAssetsGate(address)",
+}
+_TIMELOCK_GETTER_ABI = [{"name": "timelock", "type": "function", "stateMutability": "view", "inputs": [{"type": "bytes4"}], "outputs": [{"type": "uint256"}]}]
+_ABDICATED_GETTER_ABI = [{"name": "abdicated", "type": "function", "stateMutability": "view", "inputs": [{"type": "bytes4"}], "outputs": [{"type": "bool"}]}]
+
+
+def _vault_v2_timelock_and_gates(w3, vault):
+    """(min_fund_redirecting_delay_seconds, gate_notes: [str]) -- reads every relevant per-function
+    timelock and every exit gate's abdication status directly on-chain (never trusted from Morpho's
+    indexer, which is used elsewhere in this project only for TVL/context, not authority facts)."""
+    delays = []
+    for sig in _FUND_REDIRECTING_FUNCTION_SIGS:
+        selector = Web3.keccak(text=sig)[:4]
+        d = call_raw(w3, vault, _TIMELOCK_GETTER_ABI, "timelock", selector)
+        delays.append((sig, d if d is not None else 0))
+    gate_notes = []
+    live_gate_delays = []
+    for gate_label, sig in _EXIT_GATE_FUNCTION_SIGS.items():
+        selector = Web3.keccak(text=sig)[:4]
+        abdicated = call_raw(w3, vault, _ABDICATED_GETTER_ABI, "abdicated", selector)
+        if abdicated:
+            gate_notes.append(f"{gate_label} gate: permanently abdicated (curator can never set this again)")
+        else:
+            d = call_raw(w3, vault, _TIMELOCK_GETTER_ABI, "timelock", selector)
+            live_gate_delays.append((sig, d if d is not None else 0))
+            gate_notes.append(f"{gate_label} gate: NOT abdicated, still curator-controlled behind a {(d or 0)//86400}-day timelock")
+    all_delays = delays + live_gate_delays
+    min_delay = min((d for _, d in all_delays), default=0)
+    gate_notes.insert(0, "fund-redirecting timelocks (seconds): " + ", ".join(f"{sig}={d}" for sig, d in delays))
+    return min_delay, gate_notes
+
+
+def _score_steakhouse_v2_vault(w3, vault, label):
+    """Shared read+score body for Steakhouse-family Morpho Vault V2 vaults on Ethereum L1 whose
+    owner resolves, one hop through the verified `VaultV2Supervisor` (`0x4D7bd498Bb24098Ca281C05
+    519629c605407f71d`), to the EXACT SAME Steakhouse owner Safe (5-of-10) already tracked for 4 V1
+    vaults on this chain and Base (`_KNOWN_STEAKHOUSE_OWNER_SAFE_2026_09_25`), and whose curator is
+    the SAME Steakhouse curator Safe (2-of-7, `_KNOWN_STEAKHOUSE_CURATOR_SAFE_2026_09_25`) -- both
+    live-confirmed 2026-09-26, matching `data/finding_2026-09-25-vault-v2-inventory.md`'s own
+    VaultV2Supervisor discovery. See METHODOLOGY.md's "Morpho Vault V2 scoring" section for why
+    `adminKeyScore`/`multisigScore` reuse V1's exact formulas (decision 3) and what `timelockScore`
+    means here (decision 1)."""
+    notes = []
+    owner = read_address_getter(w3, vault, "owner")
+    curator = read_address_getter(w3, vault, "curator")
+    notes.append(f"vault.owner() = {owner} (expected: VaultV2Supervisor), vault.curator() = {curator}")
+    owner_is_supervisor = bool(owner)
+    inner_owner = read_address_getter(w3, owner, "owner") if owner_is_supervisor else None
+    owner_matches = bool(inner_owner) and inner_owner.lower() == _KNOWN_STEAKHOUSE_OWNER_SAFE_2026_09_25.lower()
+    curator_matches = bool(curator) and curator.lower() == _KNOWN_STEAKHOUSE_CURATOR_SAFE_2026_09_25.lower()
+    if owner_matches:
+        notes.append(f"owner() -> VaultV2Supervisor ({owner}) -> owner() = {inner_owner}, the SAME Steakhouse owner Safe already tracked for 4 V1 vaults")
+    if owner_matches and curator_matches:
+        owner_safe = safe_owners_and_threshold(w3, inner_owner)
+        curator_safe = safe_owners_and_threshold(w3, curator)
+        if owner_safe and curator_safe:
+            owner_owners, owner_threshold = owner_safe
+            curator_owners, curator_threshold = curator_safe
+            notes.append(f"owner Safe (via VaultV2Supervisor): {owner_threshold}-of-{len(owner_owners)}")
+            notes.append(f"curator Safe: {curator_threshold}-of-{len(curator_owners)}")
+            min_delay, gate_notes = _vault_v2_timelock_and_gates(w3, vault)
+            notes.extend(gate_notes)
+            admin_key = 70 if owner_threshold >= 5 else (60 if owner_threshold >= 3 else 30)
+            multisig = min(100, curator_threshold * 15 + max(0, len(curator_owners) - curator_threshold) * 5)
+            # Same 7-day band V1's own Steakhouse vaults already get for a real 7-day curator-timelocked
+            # cap change (see _score_steakhouse_l1_vault) -- here the SAME real-world delay uniformly
+            # covers every fund-redirecting function and every still-live exit gate, verified live
+            # on-chain, not assumed from the September research or trusted from Morpho's indexer alone.
+            if min_delay >= 7 * 86400:
+                timelock_score = 75
+            elif min_delay >= 3 * 86400:
+                timelock_score = 60
+            elif min_delay > 0:
+                timelock_score = 40
+            else:
+                timelock_score = 0
+            notes.append(f"timelockScore based on the MINIMUM live-read delay across fund-redirecting functions and still-live exit gates: {min_delay // 86400} day(s)")
+            return admin_key, multisig, timelock_score, notes, set(owner_owners) | set(curator_owners)
+        notes.append("owner/curator matched the known Steakhouse Safes by address, but getOwners()/getThreshold() did not resolve this run -- conservative score")
+    else:
+        notes.append("owner/curator did NOT match the known Steakhouse Safes this run -- Steakhouse may have rotated, re-verify before trusting the shared-controller finding above")
+    return 20, 20, 0, notes, set()
+
+
+def score_morpho_steakhouse_prime_usdc_v2(w3) -> dict:
+    """Morpho Vault V2 "Steakhouse Prime USDC" -- $123.0M by Morpho's API 2026-09-26, Ethereum L1.
+    See `_score_steakhouse_v2_vault`'s own docstring and METHODOLOGY.md's "Morpho Vault V2 scoring"
+    section for the full reasoning. Disjoint from `score_morpho_steakhouse_usdc_l1` above (a
+    different vault, V1, same name coincidence -- Steakhouse names several vaults "USDC" across
+    both architectures)."""
+    vault = "0xbeef088055857739C12CD3765F20b7679Def0f51"
+    admin_key, multisig, timelock_score, notes, signers = _score_steakhouse_v2_vault(w3, vault, "Steakhouse Prime USDC")
+    return {
+        "target": vault, "label": "Morpho V2: Steakhouse Prime USDC (Ethereum L1)",
+        "adminKeyScore": admin_key, "multisigScore": multisig, "timelockScore": timelock_score,
+        "oracleAuthorityScore": 100, "compositeScore": _composite(admin_key, multisig, timelock_score),
+        "notes": notes, "_rootGroup": "steakhouse-owner-safe-0x0a0e559b",
+    }
+
+
+def score_morpho_steakhouse_prime_eurcv_v2(w3) -> dict:
+    """Morpho Vault V2 "Steakhouse Prime EURCV" -- $142.0M by Morpho's API 2026-09-26, Ethereum L1.
+    Same owner/curator Safes as `score_morpho_steakhouse_prime_usdc_v2` above (both resolve to the
+    identical Steakhouse Safes via the identical VaultV2Supervisor) -- see that function's docstring
+    and METHODOLOGY.md for the full reasoning, not repeated here."""
+    vault = "0xbeef0C075Da5D01112AE5cF34d257074fB5DDB2f"
+    admin_key, multisig, timelock_score, notes, signers = _score_steakhouse_v2_vault(w3, vault, "Steakhouse Prime EURCV")
+    return {
+        "target": vault, "label": "Morpho V2: Steakhouse Prime EURCV (Ethereum L1)",
+        "adminKeyScore": admin_key, "multisigScore": multisig, "timelockScore": timelock_score,
+        "oracleAuthorityScore": 100, "compositeScore": _composite(admin_key, multisig, timelock_score),
+        "notes": notes, "_rootGroup": "steakhouse-owner-safe-0x0a0e559b",
+    }
+
+
 SIMPLE_SCORERS = [
     score_uniswap_v3_factory,
     score_aave_v3_pool,
@@ -2414,6 +2544,10 @@ SIMPLE_SCORERS = [
     score_morpho_1337_usdc,
     score_morpho_steakhouse_usdt_l1,
     score_morpho_steakhouse_usdc_l1,
+    # ADDED 2026-09-26 (Morpho Vault V2, Spap's go-ahead) -- appended, never reordered, same reasoning
+    # as the batch above.
+    score_morpho_steakhouse_prime_usdc_v2,
+    score_morpho_steakhouse_prime_eurcv_v2,
 ]
 
 

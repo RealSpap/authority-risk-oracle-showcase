@@ -63,22 +63,30 @@ MONAD_RPC = "https://rpc.monad.xyz"
 HYPERLIQUID_RPC = "https://rpc.hyperliquid.xyz/evm"
 
 
-def main():
-    robinhood_w3 = get_w3(ROBINHOOD_RPC)
-    l1_w3 = get_w3(ETHEREUM_L1_RPC)
-    arb_w3 = get_w3(ARBITRUM_RPC)
-    base_w3 = get_w3(BASE_RPC)
-    tempo_w3 = get_w3(TEMPO_RPC)
-    plasma_w3 = get_w3(PLASMA_RPC)
-    monad_w3 = get_w3(MONAD_RPC)
-    hyperliquid_w3 = get_w3(HYPERLIQUID_RPC)
+# {ecosystem: (rpc, registry of groups, owner-resolution function)}, resolved in this order.
+REGISTRIES = {
+    "robinhood": (ROBINHOOD_RPC, ROBINHOOD_GROUPS, _safe_owners),
+    "ethereum-l1": (ETHEREUM_L1_RPC, ETHEREUM_L1_GROUPS, safe_owners_and_threshold),
+    "arbitrum": (ARBITRUM_RPC, ARBITRUM_GROUPS, safe_owners_and_threshold),
+    "base": (BASE_RPC, BASE_GROUPS, safe_owners_and_threshold),
+    "tempo": (TEMPO_RPC, TEMPO_GROUPS, safe_owners_and_threshold),
+    "plasma": (PLASMA_RPC, PLASMA_GROUPS, safe_owners_and_threshold),
+    "monad": (MONAD_RPC, MONAD_GROUPS, safe_owners_and_threshold),
+    "hyperliquid": (HYPERLIQUID_RPC, HYPERLIQUID_GROUPS, safe_owners_and_threshold),
+}
 
+
+def resolve_all():
+    """Resolve every registry group's root signer set live. Also used by scripts/who_controls.py.
+    Returns (ecosystem_groups, ecosystem_safes, ecosystem_eoas, incomplete_groups, w3_by_ecosystem)."""
     ecosystem_groups = {}
     ecosystem_safes = {}
     ecosystem_eoas = {}
     incomplete_groups = []  # (ecosystem, key, safe_addr, exception) -- see group_root_signers()
+    w3s = {}
 
-    def _collect(ecosystem, w3, groups, safe_fn):
+    for ecosystem, (rpc, groups, safe_fn) in REGISTRIES.items():
+        w3 = w3s[ecosystem] = get_w3(rpc)
         for key, g in groups.items():
             incomplete_here = []
             ecosystem_groups[(ecosystem, key)] = group_root_signers(w3, g, safe_fn, incomplete_out=incomplete_here)
@@ -88,15 +96,11 @@ def main():
                 ecosystem_safes[(ecosystem, f"{key}:{safe_addr[:10]}")] = safe_addr
             for eoa_addr in g.get("known_eoa", []):
                 ecosystem_eoas[(ecosystem, f"{key}:{eoa_addr[:10]}")] = eoa_addr
+    return ecosystem_groups, ecosystem_safes, ecosystem_eoas, incomplete_groups, w3s
 
-    _collect("robinhood", robinhood_w3, ROBINHOOD_GROUPS, _safe_owners)
-    _collect("ethereum-l1", l1_w3, ETHEREUM_L1_GROUPS, safe_owners_and_threshold)
-    _collect("arbitrum", arb_w3, ARBITRUM_GROUPS, safe_owners_and_threshold)
-    _collect("base", base_w3, BASE_GROUPS, safe_owners_and_threshold)
-    _collect("tempo", tempo_w3, TEMPO_GROUPS, safe_owners_and_threshold)
-    _collect("plasma", plasma_w3, PLASMA_GROUPS, safe_owners_and_threshold)
-    _collect("monad", monad_w3, MONAD_GROUPS, safe_owners_and_threshold)
-    _collect("hyperliquid", hyperliquid_w3, HYPERLIQUID_GROUPS, safe_owners_and_threshold)
+
+def main():
+    ecosystem_groups, ecosystem_safes, ecosystem_eoas, incomplete_groups, _ = resolve_all()
 
     print(f"Resolved {len(ecosystem_groups)} groups across "
           f"{len({eco for eco, _ in ecosystem_groups})} ecosystems "

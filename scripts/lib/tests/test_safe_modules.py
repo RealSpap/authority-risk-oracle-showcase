@@ -338,5 +338,23 @@ class TestSweepScript(unittest.TestCase):
             self.assertIn(pair, out)
 
 
+class TestSafeV150AndChainlinkModulesRecognized(unittest.TestCase):
+    """ADDED 2026-09-26: the Safe v1.5.0 SafeL2 and CompatibilityFallbackHandler (a tracked Robinhood Safe migrated to them on
+    2026-09-25) are published builds, and the four Chainlink feed-owner Safe modules are the analyzed Confirmed Transaction Module."""
+
+    def test_v150_singleton_and_handler_are_canonical(self):
+        self.assertEqual(safe_modules.classify_singleton("0xEdd160fEBBD92E350D4D398fb636302fccd67C7e"), "canonical")
+        self.assertEqual(safe_modules.classify_fallback_handler("0x3EfCBb83A4A7AfcB4F68D501E2c2203a38be77f4"), "canonical")
+
+    def test_an_unknown_singleton_is_still_unanalyzed(self):
+        self.assertEqual(safe_modules.classify_singleton("0x" + "12" * 20), "unanalyzed")
+
+    def test_chainlink_modules_on_four_chains_are_analyzed(self):
+        for addr in ("0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b", "0xf3c72D97A5Dcf0449e89BBCE1A0581d8d15c0237",
+                     "0x7F9971226aEAD3013A5dB7767E59dAc48D01C4f6", "0x412fc13437e86889b6C4c010236da46642D138Fc"):
+            self.assertIn(addr.lower(), safe_modules.KNOWN_ANALYSES)
+            self.assertEqual(safe_modules.KNOWN_ANALYSES[addr.lower()]["kind"], "module")
+
+
 if __name__ == "__main__":
     unittest.main()

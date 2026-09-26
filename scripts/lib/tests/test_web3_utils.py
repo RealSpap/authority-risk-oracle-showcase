@@ -332,6 +332,20 @@ class TestHelperRevertVsNetwork(unittest.TestCase):
         with self.assertRaises(RpcUnavailable):
             web3_utils.call_raw(w3, "0x" + "1" * 40, [], "delay")
 
+    def test_read_address_array_getter_returns_value(self):
+        addr = "0x" + "2" * 40
+        w3 = _FakeHelperW3([([addr], None)])
+        self.assertEqual(web3_utils.read_address_array_getter(w3, "0x" + "1" * 40, "getFreezerRoleMembers"), [addr])
+
+    def test_read_address_array_getter_returns_none_on_revert(self):
+        w3 = _FakeHelperW3([(None, ContractLogicError("execution reverted"))])
+        self.assertIsNone(web3_utils.read_address_array_getter(w3, "0x" + "1" * 40, "getFreezerRoleMembers"))
+
+    def test_read_address_array_getter_raises_on_persistent_network_failure(self):
+        w3 = _FakeHelperW3([(None, ConnectionError("boom"))] * 4)
+        with self.assertRaises(RpcUnavailable):
+            web3_utils.read_address_array_getter(w3, "0x" + "1" * 40, "getFreezerRoleMembers")
+
     def test_custom_multisig_owners_and_threshold_returns_none_on_revert(self):
         w3 = _FakeHelperW3([(None, ContractLogicError("execution reverted"))])
         self.assertIsNone(web3_utils.custom_multisig_owners_and_threshold(w3, "0x" + "1" * 40))

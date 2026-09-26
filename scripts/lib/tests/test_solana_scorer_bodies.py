@@ -1405,7 +1405,8 @@ class TestScoreAll(_ChainCase):
     def test_registry_lists_the_thirteen_published_scorers_then_the_five_added_on_2026_09_20(self):
         # chains/solana/deploy/README.md: the oracle holds 13 targets (the first 13 scorers, in push order); five more
         # were added on 2026-09-20 (test_solana_staking_and_save_scorers.py pins their order) and are not on-chain yet.
-        self.assertEqual(len(solana.SIMPLE_SCORERS), 18)
+        # 2026-09-26: `score_solgov_leads` is one entry that returns eight targets (test_solana_solgov_leads_scorer.py).
+        self.assertEqual(len(solana.SIMPLE_SCORERS), 19)
         self.assertEqual(solana.SIMPLE_SCORERS[12], solana.score_marinade)  # the 13th published scorer is unchanged
         for fn in (solana.score_solend_dao_governance, solana.score_meteora_damm_v2, solana.score_marinade):
             self.assertIn(fn, solana.SIMPLE_SCORERS)

@@ -196,8 +196,8 @@ def _voters_with_vote_permission(squads_v4_read):
 RENOUNCED = "RENOUNCED"  # sentinel distinct from both None (unresolved) and a resolved Squads dict
 
 
-def _resolve_squads_v4(url, label, authority, ms_candidate, notes, none_means_renounced=False):
-    """Offline-re-derive vault index 0 of `ms_candidate` and require an exact
+def _resolve_squads_v4(url, label, authority, ms_candidate, notes, none_means_renounced=False, vault_index=0):
+    """Offline-re-derive vault index `vault_index` (default 0) of `ms_candidate` and require an exact
     match with the live-read `authority`. Returns the live `read_squads()`
     dict on match, None if unresolved/mismatched (caller must degrade, not
     guess), or the RENOUNCED sentinel if `authority` is None AND the caller
@@ -211,10 +211,10 @@ def _resolve_squads_v4(url, label, authority, ms_candidate, notes, none_means_re
     if authority is None and none_means_renounced:
         notes.append(f"{label}: upgrade authority is None -- renounced/immutable, the safest band per METHODOLOGY.md 6.1, not a failed read")
         return RENOUNCED
-    derived = sol_read.read_squads_vault(ms_candidate, 0)["vault"]
+    derived = sol_read.read_squads_vault(ms_candidate, vault_index)["vault"]
     matched = authority is not None and derived == authority
     notes.append(
-        f"{label}: offline vault-0 PDA of candidate multisig {ms_candidate} = {derived} "
+        f"{label}: offline vault-{vault_index} PDA of candidate multisig {ms_candidate} = {derived} "
         f"(expected live authority {authority}) -- {'MATCH' if matched else 'MISMATCH, degrading'}"
     )
     if not matched:
@@ -2110,6 +2110,83 @@ def score_sanctum_validator_lsts(url) -> dict:
     return _staking_result(SANCTUM_LST_PROGRAMS[0], "Sanctum validator LSTs (SanctumSpl, SanctumSplMulti)", admin, multisig, timelock, notes, signers)
 
 
+# ---------------------------------------------------------------------------
+# Eight SolGov-registry leads promoted on 2026-09-26 (`data/scored_targets_2026-09-26-solgov-leads.md`). Their programs, upgrade
+# authorities and Squads v4 multisigs were verified live the same day (`scripts/verify_solgov_leads.py`, 99% exact match to the
+# registry). Each hardcoded multisig must reproduce the live authority PDA offline (vault index given per program) or that program
+# degrades to 20 / 20 / 0, same discipline as every scorer above. Only the PROGRAM UPGRADE path is scored: the in-state admin, mint
+# and config authorities of these protocols were not traced, so each score is an UPPER BOUND (a weaker in-state path could only lower
+# it). Rule: every program the registry lists for the protocol is scored, and the target takes the componentwise minimum over the
+# distinct programs. Solayer is the one exception to "the registry lists them": it lists none, so its two programs are the ones a
+# reverse lookup finds under the registry's own authority vault (`read_programs_by_authority`: exactly `sSo1iU21...` and `endoLNCKT...`).
+# Not scored, on purpose: Switchboard (winding down, one of its three programs is upgraded by a bare key) and Hylo (no program
+# upgraded by its registry vault, so there is no authority to re-derive).
+# ---------------------------------------------------------------------------
+# (registry name, target = first program id, label, ((program label, program id, multisig candidate, vault index), ...))
+SOLGOV_LEADS = (
+    ("Solstice", "USXyiSTsPEWz55pSK7sZoUL79ntoVGQbaTDT57tH6bx", "Solstice (USX, YieldVault, Aux)", (
+        ("USX", "USXyiSTsPEWz55pSK7sZoUL79ntoVGQbaTDT57tH6bx", "AEb1u8FK8EuXLcPtprCy8s4NkqBNoP5mfbuEEop2dJGf", 0),
+        ("YieldVault", "eUSXyKoZ6aGejYVbnp3wtWQ1E8zuokLAJPecPxxtgG3", "AEb1u8FK8EuXLcPtprCy8s4NkqBNoP5mfbuEEop2dJGf", 1),
+        ("Aux 7FaMy", "7FaMyGiTVdjm8dd3PxpjjCX15ibbmuE1zWVFX2PHxYUK", "BPdkMGWnttz4izo6RD6pXpcbVgGiqD2GR3Jds7HvaXEE", 0))),
+    ("GMSOL", "Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo", "GMSOL (GMTrade, six programs)", tuple(
+        (n, pid, "CxnEVpQQcYa628TywzHGXeJ2jdVmbU51rnERat9xunP1", 0) for n, pid in (
+            ("Core", "Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo"), ("Exchange", "GTuvYD5SxkTq4FLG6JV1FQ5dkczr1AfgDcBHaFsBdtBg"),
+            ("LP Manager", "LPMWczEVgXyQ3979XaqqEttanCXmYGvtJqPVtw1PvC8"), ("Router", "2AxuNr6euZPKQbTwNsLBjzFTZFAevA85F4PW9m9Dv8pc"),
+            ("TimeBQ", "TimeBQ7gQyWyQMD3bTteAdy7hTVDNWSwELdSVZHfSXL"), ("12cJK", "12cJKgP9r2bcaruqu3XsCS1hxLqsHrmZhqG5Qy2TWRap")))),
+    ("Loopscale", "1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78", "Loopscale (Loopscale, Beam)", tuple(
+        (n, pid, "C4awuufiuL8DNT5wMDP27HneKKqbgynrsbCa4XYGSuPk", 0) for n, pid in (
+            ("Loopscale", "1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78"), ("Beam", "beamVVkNmKeXcuZ6zLpC9eM5YgVyAn4Z9xdPrz3gCW2")))),
+    ("Huma Finance", "HumaXepHnjaRCpjYTokxY4UtaJcmx41prQ8cxGmFC5fn", "Huma Finance (Permissionless, Institutional)", tuple(
+        (n, pid, "uGLhzjot32i9nNKZKUoCzr7sG8bFAXQRN3uZPTUr7gX", 0) for n, pid in (
+            ("Permissionless", "HumaXepHnjaRCpjYTokxY4UtaJcmx41prQ8cxGmFC5fn"), ("Institutional", "EVQ4s1b6N1vmWFDv8PRNc77kufBP8HcrSNWXQAhRsJq9")))),
+    ("Lulo", "FL3X2pRsQ9zHENpZSKDRREtccwJuei8yg9fwDu9UN69Q", "Lulo (FlexLend)", (
+        ("FlexLend", "FL3X2pRsQ9zHENpZSKDRREtccwJuei8yg9fwDu9UN69Q", "8Sr4rQJL2aQT3EL97mbrk1T9VMw4pCS2mxMPp2QBzHQq", 0),)),
+    ("Exponent", "ExponentnaRg3CQbW6dqQNZKXp7gtZ9DGMp1cwC4HAS7", "Exponent (Core)", (
+        ("Core", "ExponentnaRg3CQbW6dqQNZKXp7gtZ9DGMp1cwC4HAS7", "51smH7pBDKJDgmVnVks3gMWaPQFfmQ5s4Fc223yHcjuH", 0),)),
+    ("Flash Trade", "FLASH6Lo6h3iasJKWDs2F8TkW2UKf3s15C8PMGuVfgBn", "Flash Trade (Perpetuals)", (
+        ("Perpetuals", "FLASH6Lo6h3iasJKWDs2F8TkW2UKf3s15C8PMGuVfgBn", "Gb33UeQNnQ4XDuobtGq9M6PVKRVfoH77p8d6JXsgqyXF", 0),)),
+    ("Solayer", "sSo1iU21jBrU9VaJ8PJib1MtorefUV4fzC9GURa2KNn", "Solayer (sSOL staking, Endo)", tuple(
+        (n, pid, "5AQ3c2nC3Ua5Ms1QP4XpcfaU2Q31C8VhiUJGX3c8zFqp", 0) for n, pid in (
+            ("sSOL staking", "sSo1iU21jBrU9VaJ8PJib1MtorefUV4fzC9GURa2KNn"), ("Endo", "endoLNCKTqDn8gSVnN2hDdpgACUPWHZTwoYnnMybpAT")))),
+)
+
+
+def _squads_v4_upgrade_path(url, label, program, ms_candidate, vault_index, notes):
+    """One program whose upgrade authority is a Squads v4 vault -> (adminKey, multisig, timelock, signers). Same offline
+    re-derivation as `_squads_v3_upgrade_path`; a renounced authority is the safest band, a mismatch degrades to 20/20/0."""
+    authority = sol_read.read_program(url, program).get("upgrade_authority")
+    notes.append(f"{label}: program.upgrade_authority = {authority}")
+    sq = _resolve_squads_v4(url, label, authority, ms_candidate, notes, none_means_renounced=True, vault_index=vault_index)
+    if sq is RENOUNCED:
+        return (*_score_full_power_path("none"), set())
+    if sq is None:
+        return 20, 20, 0, set()
+    voters = _voters_with_vote_permission(sq)
+    admin, multisig, timelock = _score_full_power_path("squads_v4", threshold=sq["threshold"], voters=voters, delay_s=sq["time_lock_s"])
+    notes.append(f"{label}: Squads v4 {sq['threshold']}-of-{voters} voters ({sq['members']} members), time lock {sq['time_lock_s']}s")
+    return admin, multisig, timelock, {m["key"] for m in sq["member_list"]}
+
+
+def _score_solgov_lead(url, target, label, paths):
+    notes = []
+    results = [_squads_v4_upgrade_path(url, f"{name} upgrade", program, ms, vi, notes) for name, program, ms, vi in paths]
+    notes.append("upper bound: only the program upgrade path is scored, the in-state admin/mint/config authorities are not traced; "
+                 f"componentwise minimum over {len(results)} program(s), the registry's own program list")
+    return _staking_result(target, label, min(r[0] for r in results), min(r[1] for r in results), min(r[2] for r in results),
+                           notes, set().union(*(r[3] for r in results)))
+
+
+def score_solgov_leads(url) -> list:
+    """The leads above, one result each; a failing lead is skipped on its own (same message format as `score_all`)."""
+    out = []
+    for _, target, label, paths in SOLGOV_LEADS:
+        try:
+            out.append(_score_solgov_lead(url, target, label, paths))
+        except Exception as e:
+            print(f"score_all(): SKIPPED score_solgov_leads[{label}] this run -- {type(e).__name__}: {e}")
+    return out
+
+
 SIMPLE_SCORERS = [
     score_jupiter_aggregator_v6,
     score_kamino_lend,
@@ -2129,6 +2206,7 @@ SIMPLE_SCORERS = [
     score_jitosol,
     score_sanctum_infinity,
     score_sanctum_validator_lsts,
+    score_solgov_leads,
 ]
 
 

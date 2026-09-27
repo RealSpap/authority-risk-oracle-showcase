@@ -25,7 +25,7 @@ the registry lists under Solstice, `7FaMy...`, is upgraded by a different, weake
 - **Rule**: score every program the registry lists for the protocol; each program's upgrade authority is read live (loader v3), the hardcoded multisig
   must reproduce it as a Squads v4 vault PDA (vault index 0, or 1 for YieldVault), and the target takes the componentwise minimum over its distinct programs. A mismatch degrades that program to 20 / 20 / 0.
 - **Solayer is the one exception to "listed by the registry"**: the registry lists no program for it, so its programs are the ones a reverse lookup finds under the registry's own authority vault (`read_programs_by_authority`: exactly two ProgramData accounts, `sSo1iU21...` and `endoLNCKT...`). Vault 0 of the registry's multisig `5AQ3c2...` reproduces that authority offline.
-- **Upper bound**: only the program-upgrade path is scored. The in-state admin, mint and config authorities of these seven were not traced (for
+- **Upper bound**: only the program-upgrade path is scored. The in-state admin, mint and config authorities of these eight were not traced (for
   Sanctum's validator LSTs the same limit is disclosed). A weaker in-state path could only lower a score; no one has shown one exists.
 - Voters are members with the Vote permission (Loopscale and Huma have 2 non-voting members each, matching the registry's own voter counts).
 - The existing formulas and constants are untouched (`_score_full_power_path`, `_composite`); the only change to shared code is a `vault_index=0` parameter on `_resolve_squads_v4`.

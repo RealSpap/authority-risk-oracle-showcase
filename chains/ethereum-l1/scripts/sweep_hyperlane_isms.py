@@ -9,7 +9,10 @@ for every other chain of the same route, the ISM tree the router would apply to 
 synthetic message. The weakest origin is the one where the fewest parties must be compromised: a multisig contributes its threshold, an aggregation
 its k cheapest modules, a trusted-relayer ISM one party. It also reads the router's owner (the account that can replace the ISM) and classifies it.
 Registry files are an indexer of deployments, addresses are re-read on chain; chains without a usable public RPC or price are counted as unread or
-unpriced. Weighted multisig, CCIP-read, rollup-bridge ISMs and non-EVM routers are reported as unresolved, not guessed. It measures one instant and
+unpriced. Weighted multisig, CCIP-read, rollup-bridge ISMs and non-EVM routers are reported as unresolved, not guessed. A REVERT (a real view-call
+failure on chain, e.g. no module set for an origin) and an RPC read that failed after retries on every listed URL for that chain are two different
+things and are never folded together: the second is flagged `unread` on the path/router and counted separately in the summary, so a quorum-tier
+count can never silently absorb a network miss as if it were a genuine on-chain answer. It measures one instant and
 says nothing about the validators' own security. Nothing is sent, no key."""
 import argparse, collections, json, subprocess, sys, time
 from concurrent.futures import ThreadPoolExecutor
@@ -64,10 +67,11 @@ def rpc(ch, m, p):
         r = curl(url, {"jsonrpc": "2.0", "id": 1, "method": m, "params": p}, tries=2)
         if r and r.get("result") is not None: return r["result"]
         if r and r.get("error") and "revert" in json.dumps(r["error"]).lower(): return "REVERT"   # a reverted view call is an answer, not a network failure
+    return "RPC_FAIL"  # every URL (or no URL at all) failed to answer after retries -- distinct from "REVERT": we could not read, the chain did not refuse
 sel = lambda s: "0x" + bytes(Web3.keccak(text=s))[:4].hex()[0:8]
 def call(ch, to, sig, args=b""):
     return rpc(ch, "eth_call", [{"to": to, "data": sel(sig) + args.hex()}, "latest"])
-def num(h): return int(h, 16) if h and h not in ("0x", "REVERT") else None
+def num(h): return int(h, 16) if h and h not in ("0x", "REVERT", "RPC_FAIL") else None
 def value(r):
     ch = r["chain"]
     if ch not in CH or not CH[ch] or not CH[ch]["rpcs"]: return dict(r, usd=None, why="no rpc")
@@ -111,44 +115,64 @@ MT = {1: "routing", 2: "aggregation", 3: "legacy multisig", 4: "merkle multisig"
 def msg(origin, dest, recipient): return bytes([3]) + (0).to_bytes(4, "big") + origin.to_bytes(4, "big") + b"\0" * 32 + dest.to_bytes(4, "big") + bytes.fromhex("00" * 12 + recipient[2:])
 cache = {}
 def resolve(ch, ism, m, depth=0):
+    # "unread" marks a hop whose OWN outcome depends on at least one RPC_FAIL (a read we could not get, on any of the
+    # registry's RPC URLs, after retries) rather than a genuine on-chain answer -- kept separate from "blocked" (a
+    # real REVERT/threshold refusal) precisely so the summary can tell "the chain refused" from "we could not read"
+    # (see the RPC_FAIL sentinel above; found 2026-09-25/reported again 2026-09-27: a read failure here used to
+    # silently read as an unrelated "type None"/"unresolved" bucket, or worse, as a real signal -- t==6 below).
     key = (ch, ism, m[5:9], depth)
     if key in cache: return cache[key]
-    out = dict(need=None, desc="unresolved", vals=set(), types=set(), blocked=False)
+    out = dict(need=None, desc="unresolved", vals=set(), types=set(), blocked=False, unread=False)
     if depth > 8 or not ism or int(ism, 16) == 0: cache[key] = out; return out
-    t = num(call(ch, ism, "moduleType()")); name = MT.get(t, f"type {t}"); out["types"].add(name)
+    raw_t = call(ch, ism, "moduleType()")
+    if raw_t == "RPC_FAIL":
+        out = dict(need=None, desc="RPC read failed (moduleType), not a genuine on-chain answer", vals=set(), types=set(), blocked=False, unread=True)
+        cache[key] = out; return out
+    t = num(raw_t); name = MT.get(t, f"type {t}"); out["types"].add(name)
     try:
         if t == 1:
             r = call(ch, ism, "route(bytes)", encode(["bytes"], [m]))
-            if r == "REVERT": out = dict(need=None, desc="no module set for this origin, messages refused", vals=set(), types={name}, blocked=True)
+            if r == "REVERT": out = dict(need=None, desc="no module set for this origin, messages refused", vals=set(), types={name}, blocked=True, unread=False)
+            elif r == "RPC_FAIL": out = dict(need=None, desc="RPC read failed (route), not a genuine on-chain answer", vals=set(), types={name}, blocked=False, unread=True)
             elif r: k = resolve(ch, Web3.to_checksum_address("0x" + r[-40:]), m, depth + 1); out = dict(k, types=k["types"] | {name})
         elif t == 2:
             r = call(ch, ism, "modulesAndThreshold(bytes)", encode(["bytes"], [m]))
+            if r == "RPC_FAIL": raise LookupError("RPC_FAIL")
             mods, thr = decode(["address[]", "uint8"], bytes.fromhex(r[2:]))
             kids = [resolve(ch, Web3.to_checksum_address(x), m, depth + 1) for x in mods]
             open_kids = [k for k in kids if not k["blocked"]]; ns = sorted(k["need"] for k in open_kids if k["need"] is not None)
             desc = f"{thr} of {len(mods)} modules [" + "; ".join(k["desc"] for k in kids) + "]"
             vals = set().union(*[k["vals"] for k in kids]) if kids else set(); types = set().union(*[k["types"] for k in kids]) | {name}
-            if len(open_kids) < thr: out = dict(need=None, desc="blocked: " + desc, vals=vals, types=types, blocked=True)
-            else: out = dict(need=sum(ns[:thr]) if len(ns) >= thr else None, desc=desc, vals=vals, types=types, blocked=False)
+            unread = any(k["unread"] for k in kids)
+            if len(open_kids) < thr: out = dict(need=None, desc="blocked: " + desc, vals=vals, types=types, blocked=True, unread=unread)
+            else: out = dict(need=sum(ns[:thr]) if len(ns) >= thr else None, desc=desc, vals=vals, types=types, blocked=False, unread=unread)
         elif t in (3, 4, 5):
             r = call(ch, ism, "validatorsAndThreshold(bytes)", encode(["bytes"], [m]))
+            if r == "RPC_FAIL": raise LookupError("RPC_FAIL")
             vals, thr = decode(["address[]", "uint8"], bytes.fromhex(r[2:]))
-            out = dict(need=thr, desc=f"{thr}-of-{len(vals)} validators", vals={v.lower() for v in vals}, types={name}, blocked=False)
+            out = dict(need=thr, desc=f"{thr}-of-{len(vals)} validators", vals={v.lower() for v in vals}, types={name}, blocked=False, unread=False)
         elif t == 6:
             tr = call(ch, ism, "trustedRelayer()")
-            if tr and tr != "REVERT": out = dict(need=1, desc="trusted relayer (1 party)", vals=set(), types={"trusted relayer"}, blocked=False)
-            else: out = dict(need=0, desc="null or pausable ISM (no verification)", vals=set(), types={name}, blocked=False)
+            if tr == "RPC_FAIL": out = dict(need=None, desc="RPC read failed (trustedRelayer), not a genuine on-chain answer", vals=set(), types={name}, blocked=False, unread=True)
+            elif tr and tr != "REVERT": out = dict(need=1, desc="trusted relayer (1 party)", vals=set(), types={"trusted relayer"}, blocked=False, unread=False)
+            else: out = dict(need=0, desc="null or pausable ISM (no verification)", vals=set(), types={name}, blocked=False, unread=False)
         else:
-            out = dict(need=None, desc=name, vals=set(), types={name}, blocked=False)
-    except Exception:
-        out = dict(need=None, desc="unresolved", vals=set(), types=out["types"], blocked=False)
+            out = dict(need=None, desc=name, vals=set(), types={name}, blocked=False, unread=False)
+    except Exception as e:
+        # a decode/ABI exception here is ambiguous (RPC_FAIL string fed to bytes.fromhex(), or a genuinely
+        # unexpected shape) -- treated as unread rather than a silent "unresolved", so it never masquerades as
+        # a real on-chain finding either way.
+        out = dict(need=None, desc="unresolved" if not isinstance(e, LookupError) else "RPC read failed, not a genuine on-chain answer", vals=set(), types=out["types"], blocked=False, unread=True)
     cache[key] = out; return out
 def kind(ch, a):
     if not a or int(a, 16) == 0: return "none"
-    code = rpc(ch, "eth_getCode", [a, "latest"]) or "0x"
+    code = rpc(ch, "eth_getCode", [a, "latest"])
+    if code == "RPC_FAIL": return "unread"  # NOT "0x": that used to silently mislabel a read failure as "no code, so EOA"
+    code = code or "0x"
     if code == "0x": return "EOA"
     if code.startswith("0xef0100"): return "EOA-7702"
     t, o = call(ch, a, "getThreshold()"), call(ch, a, "getOwners()")
+    if t == "RPC_FAIL" or o == "RPC_FAIL": return "unread"
     if t and t != "0x" and o and len(o) > 130: return f"Safe {int(t, 16)}-of-{int(o[2 + 64:2 + 128], 16)}"
     return f"contract({(len(code) - 2) // 2}B)"
 def read(r):
@@ -169,7 +193,12 @@ def weakest(r):
     ns = [p["need"] for p in r["paths"].values() if p["need"] is not None and not p["blocked"]]
     return min(ns) if ns else None
 tot = sum(r["usd"] for r in res) or 1
+def touched_unread(r): return any(p["unread"] for p in r["paths"].values())
 print(f"origins whose messages are refused (no module set, or fewer open modules than the threshold): {sum(1 for r in res for p in r['paths'].values() if p['blocked'])} of {sum(len(r['paths']) for r in res)} paths read")
+n_unread_paths = sum(1 for r in res for p in r["paths"].values() if p["unread"])
+print(f"paths where at least one hop's own RPC read failed (not a genuine on-chain answer, distinct from a real REVERT/refusal): {n_unread_paths} of {sum(len(r['paths']) for r in res)}")
+n_unread_routers = sum(1 for r in res if touched_unread(r))
+print(f"routers with at least one such unread path: {n_unread_routers} (${sum(r['usd'] for r in res if touched_unread(r))/1e6:.0f}M) -- their tier below may be an artifact of the read, not a real change; re-run to confirm")
 print(f"\nthe {len(res)} largest routers, ${tot/1e9:.2f}B; paths read {sum(len(r['paths']) for r in res)}; routers whose ISM could not be resolved for any origin: {sum(1 for r in res if weakest(r) is None)} (${sum(r['usd'] for r in res if weakest(r) is None)/1e6:.0f}M)")
 b = collections.defaultdict(lambda: [0, 0.0])
 for r in res:
@@ -200,5 +229,6 @@ print("owner of the router (can replace the ISM):", {k: f"{n} (${u/1e6:.0f}M)" f
 print("\nlargest routers whose weakest origin needs 2 parties or fewer:")
 for r in sorted([r for r in res if weakest(r) is not None and weakest(r) <= 2], key=lambda r: -r["usd"])[:12]:
     w = min((p for p in r["paths"].values() if p["need"] is not None and not p["blocked"]), key=lambda p: p["need"])
-    print(f"  {r['chain']:>10} ${r['usd']/1e6:7.0f}M {r['route'][:34]:34s} {'default' if r['default_ism'] else 'own':7s} weakest: {w['desc'][:70]}; owner {kinds.get((r['chain'], r['owner']), '-')}")
+    flag = " [UNREAD HOP ELSEWHERE IN THIS ROUTER'S PATHS -- confirm before trusting the tier]" if touched_unread(r) else ""
+    print(f"  {r['chain']:>10} ${r['usd']/1e6:7.0f}M {r['route'][:34]:34s} {'default' if r['default_ism'] else 'own':7s} weakest: {w['desc'][:70]}; owner {kinds.get((r['chain'], r['owner']), '-')}{flag}")
 if ARGS.dump: json.dump(res, open(ARGS.dump, "w"), default=lambda o: sorted(o) if isinstance(o, set) else str(o)); print(f"\nwrote {len(res)} rows to {ARGS.dump}")

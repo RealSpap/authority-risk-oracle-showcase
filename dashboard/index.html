@@ -201,6 +201,25 @@
   .incident-card .match { display: inline-block; margin-top: 8px; font-size: 10px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase;
     padding: 2.5px 7px; border-radius: 5px; background: var(--incident-bg); color: var(--incident); border: 1px solid var(--incident); }
 
+  .whatif { margin-bottom: 26px; border: 1px solid var(--border); background: var(--surface); border-radius: 12px; padding: 18px 20px; }
+  .whatif h2 { margin: 0 0 4px; font-size: 14px; font-weight: 700; letter-spacing: -0.005em; }
+  .whatif > p.lede { margin: 0 0 14px; font-size: 12.5px; color: var(--text-dim); line-height: 1.55; max-width: 70ch; }
+  .wi-form { display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: flex-end; margin-bottom: 12px; }
+  .wi-form label { font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-faint); display: flex; flex-direction: column; gap: 5px; }
+  .wi-form input { width: 96px; font-family: var(--mono); font-size: 16px; padding: 7px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface-2); color: var(--text); }
+  .wi-form input:focus { outline: none; border-color: var(--accent); }
+  .wi-out { font-size: 13px; line-height: 1.55; margin-bottom: 14px; padding: 10px 12px; border-radius: 8px; background: var(--surface-2); }
+  .wi-out b { font-family: var(--mono); }
+  .wi-out.bad { background: var(--band-critical-bg); color: var(--band-critical); }
+  .wi-table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 12px; }
+  .wi-table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 520px; }
+  .wi-table th { text-align: left; font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-faint); padding: 8px 10px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  .wi-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); }
+  .wi-table tr:last-child td { border-bottom: none; }
+  .wi-table td.num { font-family: var(--mono); font-weight: 600; }
+  .wi-table td:nth-child(2) { white-space: nowrap; }
+  .wi-note { margin: 0; font-size: 11.5px; color: var(--text-faint); line-height: 1.6; max-width: 76ch; }
+
   footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border); }
   footer p { font-size: 12px; color: var(--text-faint); line-height: 1.7; margin: 0 0 8px; max-width: 72ch; }
   footer a { color: var(--text-dim); }
@@ -247,6 +266,21 @@
         <span class="match">multisigScore / verification threshold - exactly this axis</span>
       </div>
     </div>
+  </div>
+
+  <div class="whatif" id="whatif">
+    <h2>What would a Safe multisig score?</h2>
+    <p class="lede">Enter a Safe's threshold and owner count. This applies the convention the scorers use for a target whose whole authority chain ends in one plain Safe with no timelock, then places the result among the published scores and the documented incidents.</p>
+    <div class="wi-form">
+      <label>Threshold (signatures required)<input id="wiT" type="number" min="1" max="50" step="1" value="3"></label>
+      <label>Owners<input id="wiN" type="number" min="1" max="50" step="1" value="6"></label>
+    </div>
+    <div class="wi-out" id="wiOut" aria-live="polite"></div>
+    <div class="wi-table-wrap"><table class="wi-table">
+      <thead><tr><th>Documented incident</th><th>Safe</th><th>Composite</th><th>Published targets at or below</th></tr></thead>
+      <tbody id="wiRows"></tbody>
+    </table></div>
+    <p class="wi-note" id="wiNote"></p>
   </div>
 
   <div class="chain-tabs" id="chainTabs" role="tablist"></div>
@@ -2142,6 +2176,77 @@
   renderChainTabs();
   load();
   setTimeout(prefetchCounts, 1200);
+})();
+</script>
+<script id="whatif-script">
+/* "What would a Safe multisig score?": pure client-side, no network. The formula mirrors scripts/lib/scorers.py::_safe_rooted_scores and the standard
+   composite (0.4 admin + 0.3 multisig + 0.3 timelock, integer arithmetic). SNAPSHOT.composites is the composite of every published target on the 9 oracles,
+   read by scripts/incident_exposure.py on the date below; refresh it by rerunning that script with --out and copying the compositeScore of each row. */
+(function () {
+  'use strict';
+  var SNAPSHOT = { date: '2026-09-26', composites: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4, 5, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 14, 19, 19, 22, 22, 26, 27, 29, 30, 31, 31, 31, 31, 31, 31, 31, 32, 32, 32, 32, 33, 33, 33, 33, 35, 37, 37, 39, 39, 40, 42, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 44, 44, 44, 45, 46, 46, 46, 46, 46, 46, 46, 47, 47, 48, 48, 48, 48, 48, 49, 50, 52, 52, 52, 52, 54, 54, 54, 54, 54, 55, 55, 55, 55, 55, 55, 55, 56, 56, 57, 57, 57, 57, 57, 57, 57, 57, 57, 57, 59, 59, 60, 60, 60, 61, 61, 61, 63, 64, 64, 66, 66, 67, 67, 68, 71, 71, 71, 71, 72, 73, 73, 78, 78, 78, 78, 79, 80, 80, 81, 81, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 100] };
+  var INCIDENTS = [
+    { name: 'Radiant Capital, Oct 2024 ($53M)', t: 3, n: 11 },
+    { name: 'WazirX, Jul 2024 ($235M)', t: 4, n: 6 },
+    { name: 'Bybit, Feb 2025 ($1.46B)', t: 3, n: 6 },
+    { name: 'Humanity Protocol, Ethereum, Jun 2026 ($32M to $36M)', t: 3, n: 6 },
+    { name: 'Humanity Protocol, BNB Chain, Jun 2026', t: 3, n: 5 }
+  ];
+
+  function replay(t, n) {
+    var admin = t >= 3 ? 65 : (t === 2 ? 50 : 10);
+    var multisig = Math.min(100, t * 15 + Math.max(0, n - t) * 5);
+    var timelock = 0;
+    return { admin: admin, multisig: multisig, timelock: timelock, composite: Math.floor((4 * admin + 3 * multisig + 3 * timelock + 5) / 10) };
+  }
+  function atOrBelow(c) {
+    var k = 0;
+    for (var i = 0; i < SNAPSHOT.composites.length; i++) { if (SNAPSHOT.composites[i] <= c) k++; }
+    return k;
+  }
+  function bandLabel(score) {
+    return score < 20 ? 'CRITICAL' : score < 40 ? 'WEAK' : score < 60 ? 'MODERATE' : score < 80 ? 'DECENT' : 'STRONG';
+  }
+
+  var api = { replay: replay, atOrBelow: atOrBelow, bandLabel: bandLabel, SNAPSHOT: SNAPSHOT, INCIDENTS: INCIDENTS };
+  if (typeof module !== 'undefined' && module.exports) { module.exports = api; }
+  if (typeof document === 'undefined') { return; }
+
+  var total = SNAPSHOT.composites.length;
+  function pct(k) { return Math.round(100 * k / total) + '%'; }
+  function render() {
+    var out = document.getElementById('wiOut');
+    var t = Number(document.getElementById('wiT').value);
+    var n = Number(document.getElementById('wiN').value);
+    if (!(t >= 1 && n >= 1 && t <= n && n <= 50 && t === Math.floor(t) && n === Math.floor(n))) {
+      out.className = 'wi-out bad';
+      out.textContent = 'The threshold must be a whole number between 1 and the number of owners (at most 50).';
+      return;
+    }
+    var r = replay(t, n);
+    var k = atOrBelow(r.composite);
+    out.className = 'wi-out';
+    out.innerHTML = 'A ' + t + '-of-' + n + ' Safe with no timelock: admin key <b>' + r.admin + '</b>, multisig <b>' + r.multisig + '</b>, timelock <b>' + r.timelock +
+      '</b>, composite <b>' + r.composite + '</b> (' + bandLabel(r.composite) + '). <b>' + k + '</b> of ' + total + ' published targets (' + pct(k) + ') score at or below it.';
+  }
+  var rows = document.getElementById('wiRows');
+  INCIDENTS.forEach(function (inc) {
+    var r = replay(inc.t, inc.n), k = atOrBelow(r.composite);
+    var tr = document.createElement('tr');
+    [inc.name, inc.t + '-of-' + inc.n, String(r.composite), k + ' of ' + total + ' (' + pct(k) + ')'].forEach(function (text, i) {
+      var td = document.createElement('td');
+      if (i >= 2) { td.className = 'num'; }
+      td.textContent = text;
+      tr.appendChild(td);
+    });
+    rows.appendChild(tr);
+  });
+  document.getElementById('wiNote').textContent = 'Exposure, not prediction: in these incidents the threshold gave no protection (blind signing, a falsified interface, keys on one device), so a higher score on paper is not immunity. ' +
+    'The count is over ' + total + ' targets published on the 9 oracles as of ' + SNAPSHOT.date + ', a set this project chose, heavy on small new protocols. ' +
+    'The timelock score of 0 is this project\'s reading of a plain Safe (a Safe has no built-in delay; the sources do not state one). Solana, Tempo and Hyperliquid score multisigs with their own formulas, so the same multisig can land a few points either way there, and the Safe convention ignores modules, guards and signer independence (see METHODOLOGY).';
+  document.getElementById('wiT').addEventListener('input', render);
+  document.getElementById('wiN').addEventListener('input', render);
+  render();
 })();
 </script>
 </body>

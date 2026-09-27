@@ -32,6 +32,18 @@ class Alias(unittest.TestCase):
         self.assertTrue(is_tracked("EigenCloud", label_tokens(["EigenLayer StrategyManager (Ethereum L1)"])))
         self.assertFalse(is_tracked("EigenCloud", label_tokens(["Aave V3 Pool"])))
 
+    def test_a_rename_keyed_by_full_name_does_not_leak_to_a_namesake(self):
+        lt = label_tokens(["GMSOL (GMTrade, six programs)"])
+        self.assertTrue(is_tracked("GMX Solana", lt))
+        self.assertFalse(is_tracked("GMX V2", lt))  # a different protocol that shares the first token
+
+    def test_a_name_with_no_significant_token_can_still_be_aliased(self):
+        # "USD AI" -> tokens ["usd","ai"]: "usd" is a stopword, "ai" is under the 3-char floor -- significant() is empty,
+        # so without the alias this name could never match any label, however it is tracked.
+        self.assertEqual(significant("USD AI"), [])
+        self.assertTrue(is_tracked("USD AI", label_tokens(["USD AI mint/burn authority (LayerZero OAdapter, Arbitrum)"])))
+        self.assertFalse(is_tracked("USD AI", label_tokens(["Aave V3 Pool"])))
+
 
 class Coverage(unittest.TestCase):
     def test_cex_excluded_and_share_and_unmatched_order(self):

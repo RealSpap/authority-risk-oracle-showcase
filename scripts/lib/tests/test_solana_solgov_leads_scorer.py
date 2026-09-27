@@ -26,9 +26,9 @@ def _load_module(unique_name, relative_path):
 solana = _load_module("aro_test_solana_scorers_solgov", "chains/solana/scorers.py")
 
 
-def _squads(threshold, n, delay_s):
+def _squads(threshold, n, delay_s, prefix="member"):
     return {"threshold": threshold, "members": n, "time_lock_s": delay_s, "config_authority": solana.SYSTEM_PROGRAM_DEFAULT,
-            "member_list": [{"key": f"member{i}", "mask": 7} for i in range(n)]}
+            "member_list": [{"key": f"{prefix}{i}", "mask": 7} for i in range(n)]}
 
 
 @contextlib.contextmanager
@@ -99,17 +99,19 @@ class TestResolverVaultIndex(unittest.TestCase):
 
 class TestScoreLead(unittest.TestCase):
     def test_componentwise_minimum_over_paths_and_signer_union(self):
-        squads = {"STRONG": _squads(5, 9, 43200), "WEAK": _squads(2, 3, 0)}
+        # The two paths are each better on a different component, so the componentwise minimum is a triple that neither path has on its own: a "take the weakest whole path" rule fails here.
+        squads = {"X": _squads(3, 5, 86400, "x"), "Y": _squads(5, 9, 0, "y")}
         with patched(_resolve_squads_v4=lambda url, label, auth, ms, notes, **k: squads[ms]), read_program_returns("Auth"):
-            r = solana._score_solgov_lead("u", "T", "Lead", (("a", "P1", "STRONG", 0), ("b", "P2", "WEAK", 0)))
-        strong = solana._score_full_power_path("squads_v4", threshold=5, voters=9, delay_s=43200)
-        weak = solana._score_full_power_path("squads_v4", threshold=2, voters=3, delay_s=0)
-        want = tuple(min(a, b) for a, b in zip(strong, weak))
+            r = solana._score_solgov_lead("u", "T", "Lead", (("a", "P1", "X", 0), ("b", "P2", "Y", 0)))
+        x = solana._score_full_power_path("squads_v4", threshold=3, voters=5, delay_s=86400)
+        y = solana._score_full_power_path("squads_v4", threshold=5, voters=9, delay_s=0)
+        want = tuple(min(a, b) for a, b in zip(x, y))
+        self.assertNotIn(want, (x, y))
         self.assertEqual((r["adminKeyScore"], r["multisigScore"], r["timelockScore"]), want)
         self.assertEqual(r["compositeScore"], solana._composite(*want))
         self.assertEqual(r["target"], "T")
         self.assertEqual(r["oracleAuthorityScore"], 100)
-        self.assertEqual(r["_signers"], {f"member{i}" for i in range(9)})
+        self.assertEqual(r["_signers"], {f"x{i}" for i in range(5)} | {f"y{i}" for i in range(9)})  # the union, not one path's signers
         self.assertTrue(any("upper bound" in n for n in r["notes"]))
 
 
@@ -131,13 +133,29 @@ class TestScoreLeads(unittest.TestCase):
     def test_lead_table_is_well_formed(self):
         targets = [t for _, t, _, _ in solana.SOLGOV_LEADS]
         self.assertEqual(len(set(targets)), len(targets), "target ids must be unique: they key the on-chain entry")
-        existing = {getattr(solana, n) for n in dir(solana) if n.endswith("_PROGRAM")}
+        # no lead target may equal a program id or multisig the module already names (the 18 existing scorers keep theirs in module-level or local constants)
+        existing = {v for n, v in vars(solana).items() if isinstance(v, str) and 32 <= len(v) <= 44 and n.isupper()}
         for name, target, label, paths in solana.SOLGOV_LEADS:
+            self.assertNotIn(target, existing, f"{name}: target collides with an existing constant")
             self.assertEqual(target, paths[0][1], f"{name}: the target is the first program id")
             for pname, program, ms, vault in paths:
                 self.assertTrue(32 <= len(program) <= 44 and 32 <= len(ms) <= 44, f"{name}/{pname}: not a base58 address")
                 self.assertIn(vault, range(4))
-        self.assertNotIn(targets[0], existing)
+
+    def test_vault_indexes_are_pinned(self):
+        # YieldVault's authority is vault 1 of the shared Solstice multisig; every other path is vault 0. Live data, so an offline test can only pin what was verified on 2026-09-26.
+        idx = {(name, p[0]): p[3] for name, _, _, paths in solana.SOLGOV_LEADS for p in paths}
+        self.assertEqual(idx[("Solstice", "YieldVault")], 1)
+        self.assertEqual(sorted(k for k, v in idx.items() if v != 0), [("Solstice", "YieldVault")])
+
+    def test_every_lead_multisig_is_a_watched_constant(self):
+        # scripts/check_squads_changes.py watches every *_MS constant of scorers.py: a lead multisig kept inline would escape it.
+        import re
+        src = open(os.path.join(REPO_ROOT, "chains", "solana", "scorers.py")).read()
+        watched = set(re.findall(r'\b[A-Z][A-Z0-9_]*MS\s*=\s*"([1-9A-HJ-NP-Za-km-z]{32,44})"', src))
+        for name, _, _, paths in solana.SOLGOV_LEADS:
+            for p in paths:
+                self.assertIn(p[2], watched, f"{name}/{p[0]}: multisig not in a *_MS constant")
 
     def test_registered_once_in_the_simple_scorer_list(self):
         self.assertEqual(solana.SIMPLE_SCORERS.count(solana.score_solgov_leads), 1)

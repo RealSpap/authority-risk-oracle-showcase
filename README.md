@@ -17,6 +17,9 @@ Built for [Colosseum's Crypto World's Fair](https://colosseum.com/worldsfair) ha
 
 - **Dashboard**: [`dashboard/index.html`](dashboard/index.html) -- open it in a browser,
   reads every deployed oracle live via raw `eth_call`, nothing to trust but the RPC.
+  It also has a small calculator, "What would a Safe multisig score?": type a threshold and an owner count
+  and see the score, and how many of the published targets score at or below the multisig of Bybit,
+  WazirX, Radiant or Humanity before they were hit (exposure, not prediction; no network needed).
 - **Read a score yourself**, no install beyond `cast` (Foundry):
   ```bash
   cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 \
@@ -256,9 +259,11 @@ Each states in its own header what it could not read; an unread source is never 
 |---|---|
 | One dated report: which oracle turns stale, what changed on the Safes, what is queued in the timelocks, has any tracked code changed | `python3 scripts/daily_digest.py` |
 | What can this one key touch, and who are the most connected signers (EOA / EIP-7702 / contract per signer) | `python3 scripts/who_controls.py 0xADDRESS`, `--top 20`, `--code-scan` |
+| Which protocol families (Aave guardian, Chainlink feed admin, Morpho Blue owner, ...) reuse the exact same committee across ecosystems | `python3 scripts/who_controls.py --families` |
 | What changed on the tracked Safes (owners, threshold, modules, guard, singleton) in the last N days | `python3 scripts/check_safe_changes.py --days 30` |
 | What is queued behind the watched timelocks right now, and what cleared recently | `python3 scripts/check_pending_ops.py` |
 | Did a Squads v4 multisig behind a Solana target change members, threshold or time lock since the last snapshot | `python3 scripts/check_squads_changes.py` |
+| Did a root signer of a tracked group turn from a plain EOA into an EIP-7702 delegated account (or change delegate) since the last snapshot | `python3 scripts/check_signer_kinds.py` |
 | What share of each ecosystem's DefiLlama TVL do the tracked targets cover, and which are the biggest untracked protocols | `python3 scripts/check_tvl_coverage.py` |
 | Is a competitor's public Solana registry still right (programs and multisigs, live) | `python3 chains/solana/scripts/verify_solgov_leads.py` |
 | How many published targets score at or below the multisig configuration of a documented incident (Bybit, WazirX, Radiant, Humanity) | `python3 scripts/incident_exposure.py` |

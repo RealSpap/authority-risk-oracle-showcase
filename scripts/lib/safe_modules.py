@@ -141,6 +141,51 @@ KNOWN_ANALYSES = {
 }
 
 
+# ADDED 2026-09-27 (backlog item "known-vulnerable module code registry", data/finding_2026-09-20-
+# competitor-gaps-and-morpho-vault-layer.md, eighth pass): a module found on a tracked Safe is often a
+# minimal-proxy CLONE of one shared implementation (EIP-1167, see clone_impl() below), so a disclosed
+# flaw is a property of the IMPLEMENTATION address, not of each clone individually -- one entry here
+# covers every Safe that clones it, present or future. Keys are lowercase IMPLEMENTATION addresses (the
+# clone's own address is never a key here). Re-derived from verified source on 2026-09-27, not copied
+# from the 21/09 finding's prose: both addresses' SignatureChecker.sol were fetched from Blockscout and
+# diffed directly. The June 2026 Zodiac Roles/Delay ERC-1271 flaw: `SignatureChecker.isValidSignature`
+# read `(, bytes memory returnData) = signer.staticcall(...)` and returned `bytes4(returnData) ==
+# EIP1271_MAGIC_VALUE` without checking the staticcall's own success flag, so a signer whose call
+# reverts with return data happening to start with the right 4 bytes still passes. It needs the role
+# MEMBER to be a CONTRACT (extcodesize > 0) whose isValidSignature reverts that way -- the checker
+# already returns false before the call for a plain EOA member (extcodesize == 0), never reaching the
+# vulnerable line, so an all-EOA membership is unaffected regardless of which implementation it clones.
+KNOWN_MODULE_IMPLEMENTATION_ADVISORIES = {
+    "0x9646fdad06d3e24444381f44362a3b0eb343d337": {
+        "name": "Zodiac Roles v2, pre-fix",
+        "verified_source_as_of": "2026-03-19",
+        "status": "vulnerable",
+        "advisory": (
+            "ERC-1271 signature check (SignatureChecker.sol) does not verify the staticcall itself "
+            "succeeded before reading its return data -- disclosed by the Zodiac team June 2026, "
+            "exploited against Gnosis Pay accounts 1 June 2026, fixed 5 June 2026."
+        ),
+        "condition": "exploitable only if a role MEMBER is a contract (not a plain EOA) whose isValidSignature can revert with crafted return data",
+    },
+    "0xf2964ce6161ce0e75964fe7927ce114cb0b283d5": {
+        "name": "Zodiac Roles v2, patched",
+        "verified_source_as_of": "2026-06-27",
+        "status": "patched",
+        "advisory": "SignatureChecker.sol checks the staticcall's success flag before reading return data -- not affected by the June 2026 disclosure.",
+        "condition": None,
+    },
+}
+
+
+def module_implementation_advisory(implementation_address):
+    """The KNOWN_MODULE_IMPLEMENTATION_ADVISORIES entry for a module's clone-of implementation address
+    (case-insensitive), or None if `implementation_address` is None or matches nothing here -- absence
+    is not a clean bill, it means no advisory is on file for that implementation, not that none exists."""
+    if not implementation_address:
+        return None
+    return KNOWN_MODULE_IMPLEMENTATION_ADVISORIES.get(implementation_address.lower())
+
+
 # Published Safe singleton and fallback-handler builds, each checked against Sourcify on Ethereum mainnet on
 # 2026-09-21 (exact match, contract name as labelled; the v1.1.1 singleton is a partial match). Lowercase keys.
 CANONICAL_SINGLETONS = {

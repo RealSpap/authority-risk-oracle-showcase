@@ -77,14 +77,47 @@ def blast_radius(index: dict, address: str) -> dict:
 
 def top_signers(index: dict, n: int = 15) -> list:
     """Signers ranked by how many distinct ecosystems then groups they sit in. Tracked Safes and
-    hand-listed EOAs that are not resolved owners of anything are not signers of a group."""
+    hand-listed EOAs that are not resolved owners of anything are not signers of a group.
+
+    Also reports `families`: the group KEY alone, ignoring which ecosystem it is in (registry family
+    names are already shared across ecosystems for the same protocol -- "morpho_blue" is the exact
+    same string in the ethereum-l1, base, robinhood and tempo registries, see
+    scripts/check_cross_ecosystem_overlap.py::REGISTRIES). A signer on 4 groups that are all the SAME
+    family (one committee, four deployments of one protocol) is a different, usually more concentrated
+    finding than 4 unrelated groups with the same raw count -- `family_count` surfaces that without
+    changing the ecosystem-first ranking already established. This is the family-grouping half of the
+    "[backlog note]" backlog item; the TVL-weighting half needs a
+    group-to-dollar-value mapping that does not exist yet and is not attempted here."""
     rows = []
     for a, entries in index.items():
         groups = {(e, k) for e, k, role in entries if role in ("signer", "known_eoa")}
         if groups:
-            rows.append((len({e for e, _ in groups}), len(groups), a, sorted(groups)))
+            families = sorted({k for _, k in groups})
+            rows.append((len({e for e, _ in groups}), len(groups), a, sorted(groups), families))
     rows.sort(key=lambda r: (-r[0], -r[1], r[2]))
-    return [{"address": a, "ecosystems": e, "groups": g, "where": w} for e, g, a, w in rows[:n]]
+    return [{"address": a, "ecosystems": e, "groups": g, "where": w, "families": f, "family_count": len(f)} for e, g, a, w, f in rows[:n]]
+
+
+def family_reach(index: dict) -> dict:
+    """{group_key: {"ecosystems": sorted[str], "signers": sorted[address]}} for every group KEY that the
+    registries reuse across two or more ecosystems (see top_signers' docstring) -- a family whose
+    signer set turns out identical across chains is exactly the shape of the Morpho Blue owner Safe
+    finding (the same 9-of-9-ish committee on ethereum-l1/base/robinhood), surfaced generically here
+    rather than re-discovered by hand for each new family. A family present in only one ecosystem is
+    left out: there is nothing cross-chain to report."""
+    by_key = {}
+    for a, entries in index.items():
+        for e, k, role in entries:
+            if role in ("signer", "known_eoa"):
+                by_key.setdefault(k, {}).setdefault(e, set()).add(a)
+    out = {}
+    for k, by_eco in by_key.items():
+        if len(by_eco) < 2:
+            continue
+        signers = sorted(set().union(*by_eco.values()))
+        out[k] = {"ecosystems": sorted(by_eco), "signers": signers,
+                   "identical_across_ecosystems": len({frozenset(v) for v in by_eco.values()}) == 1}
+    return out
 
 
 def hygiene_summary(classified: dict) -> dict:

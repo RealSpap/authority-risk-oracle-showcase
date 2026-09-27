@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """One dated report for whoever watches this oracle: deadlines, authority changes, queued operations, code changes, and what could not be read.
 
-It assembles five existing read-only checks, adding no reading logic of its own:
+It assembles six existing read-only checks, adding no reading logic of its own:
   1. oracle_freshness.py         -> which deployed oracle turns stale, and when (act-now list)
   2. check_safe_changes.py       -> Safe signer / threshold / module / guard / singleton changes over --days (default 7)
   3. check_pending_ops.py        -> what is queued behind the watched timelocks, and what cleared recently
   4. check_implementation_changes.py -> has the code behind a tracked target changed since the reviewed snapshot
   5. check_squads_changes.py     -> did a Squads v4 multisig behind a Solana target change members, threshold or time lock since its snapshot
+  6. check_signer_kinds.py       -> did a root signer of a tracked group turn from a plain EOA into an EIP-7702 delegated account (or change delegate) since its snapshot
 
     python3 scripts/daily_digest.py                        # Markdown to stdout, about 10 to 25 minutes
     python3 scripts/daily_digest.py --days 7 --out data/digest_2026-09-26.md
@@ -15,9 +16,11 @@ A source that could not be read is listed under "Not read" and is never reported
 was read and none had a finding; otherwise it says which sources are missing. Ecosystems whose public RPC cannot serve the Safe-events query
 (Tempo, Monad, Hyperliquid; see data/finding_2026-09-26-safe-changes-30d-and-v150-singleton.md) are listed as not attempted, not skipped silently.
 Posture drift (published score vs live scorer, check_posture_drift.py) takes up to 50 minutes and is not included: run it separately.
+A Safe change a human already reviewed can be listed in data/digest_acknowledged.json (by transaction-hash prefix): it is then shown as "already reviewed" and not counted, and a new transaction on the same Safe is still reported.
 Disclosed only. Nothing is sent anywhere; alerting is a separate, opt-in step (scripts/lib/alerts.py).
 """
 import argparse
+import json
 import os
 import re
 import subprocess
@@ -36,13 +39,32 @@ from lib.safe_changes import rank  # noqa: E402
 SAFE_ECOSYSTEMS = ["ethereum-l1", "arbitrum", "base", "plasma", "robinhood"]
 NOT_ATTEMPTED = {"tempo": "public RPC returned no control events", "monad": "public RPC caps eth_getLogs near 100 blocks",
                  "hyperliquid": "public RPC rate-limits the query"}
+ACK_FILE = os.path.join(HERE, "..", "data", "digest_acknowledged.json")
 FRESH_LINE = re.compile(r"^\s+(?P<name>.+?)\s+(?P<n>\d+) targets, oldest update (?P<oldest>.+?), first entry turns stale in (?P<hours>[\d.]+) h \((?P<when>.+?)\)")
 ACT_NOW_HOURS = 96
 
 
 def run(script, *args, timeout=3000):
-    r = subprocess.run([sys.executable, os.path.join(HERE, script), *args], capture_output=True, text=True, timeout=timeout)
+    try:
+        r = subprocess.run([sys.executable, os.path.join(HERE, script), *args], capture_output=True, text=True, timeout=timeout)
+    except subprocess.TimeoutExpired:  # this source goes to "Not read"; the other sections are kept
+        return 124, [f"[UNREAD] {script} timed out after {timeout}s"]
     return r.returncode, [l for l in (r.stdout + r.stderr).splitlines() if "warn" not in l.lower()]
+
+
+def load_ack():
+    """{tx-hash prefix: note} of Safe changes a human already reviewed (data/digest_acknowledged.json); an unreadable file acknowledges nothing."""
+    try:
+        with open(ACK_FILE) as f:
+            return json.load(f).get("safe_changes", {})
+    except (OSError, ValueError):
+        return {}
+
+
+def acknowledged(tx, ack):
+    """The note for a transaction that was already reviewed, else None. Keys are hash prefixes of 16+ hex characters, so a different transaction on the same Safe is never hidden."""
+    t = str(tx).lower().removeprefix("0x")
+    return next((note for k, note in ack.items() if len(k) >= 16 and t.startswith(k.lower())), None)
 
 
 def freshness():
@@ -93,6 +115,14 @@ def squads_changes():
     return code, bad, head
 
 
+def signer_kinds():
+    """(exit code, CHANGED/UNREAD lines, headline)"""
+    code, lines = run("check_signer_kinds.py", timeout=1800)
+    bad = [l.strip() for l in lines if re.search(r"\[(CHANGED|UNREAD|GONE|INFO)\]", l)]
+    head = next((l.strip() for l in lines if "(chain, signer) pairs" in l), "")
+    return code, bad, head
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--days", type=int, default=7)
@@ -119,8 +149,12 @@ def main():
     sc, u = safe_changes(args.days)
     unread += u
     out += ["", f"## Safe authority changes, last {args.days} days"]
-    findings += len(sc)
-    out += [f"- {eco}: {e['name']} {e['value']} on {e['safe']} ({', '.join(e['groups'])}), tx {e['tx']}" for eco, e in sc] or ["- none in the ecosystems read"]
+    ack = load_ack()
+    new_sc = [(eco, e) for eco, e in sc if not acknowledged(e["tx"], ack)]
+    known_sc = [(eco, e, acknowledged(e["tx"], ack)) for eco, e in sc if acknowledged(e["tx"], ack)]
+    findings += len(new_sc)
+    out += [f"- {eco}: {e['name']} {e['value']} on {e['safe']} ({', '.join(e['groups'])}), tx {e['tx']}" for eco, e in new_sc] or ["- none new in the ecosystems read"]
+    out += [f"- (already reviewed) {eco}: {e['name']} {e['value']} on {e['safe']} ({', '.join(e['groups'])}): {note}" for eco, e, note in known_sc]
     out.append("- not attempted: " + "; ".join(f"{k} ({v})" for k, v in NOT_ATTEMPTED.items()))
 
     act, recent, u = pending(args.days)
@@ -156,6 +190,19 @@ def main():
         out += [f"- {h}" for h in bad] or ["- check_squads_changes.py failed without a recognizable line: read it directly"]
         if any("[UNREAD]" in h for h in bad) or not head:
             unread.append("Squads watch: a multisig could not be read, or the script failed")
+
+    code, bad, head = signer_kinds()
+    out += ["", "## Signer accounts (plain EOA, EIP-7702 delegation, contract)"]
+    if code == 0 and head and not bad:
+        out.append(f"- no signer changed kind or delegate since the snapshot ({head})")
+    elif code == 0 and head:  # only INFO lines: a delegation was removed, or a new signer is a contract: something changed, so the closing line must not say "nothing moved"
+        findings += 1
+        out += [f"- {h}" for h in bad] + [f"- no HIGH change ({head})"]
+    else:
+        findings += 1
+        out += [f"- {h}" for h in bad] or ["- check_signer_kinds.py failed without a recognizable line: read it directly"]
+        if any("[UNREAD]" in h for h in bad) or not head:
+            unread.append("Signer kinds: a signer could not be read, or the script failed")
 
     out += ["", "## Not read (no conclusion drawn for these)"]
     out += [f"- {u}" for u in unread] or ["- every attempted source was read"]

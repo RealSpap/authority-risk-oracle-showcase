@@ -1,0 +1,7 @@
+{
+  "_doc": "Safe changes a human has already reviewed, so the daily digest stops counting them as new. Keys are transaction-hash PREFIXES (16 hex characters or more, no 0x): a different transaction on the same Safe is never hidden. Add an entry only after reading the change, with where it was reviewed.",
+  "safe_changes": {
+    "d7aae02089e6fe87": "Morpho Blue owner Safe 5-of-9 -> 6-of-10 on 2026-09-22 (10th signer added); reviewed 2026-09-26, data/finding_2026-09-26-safe-changes-30d-and-v150-singleton.md",
+    "13a58270a3580878": "ramses Safe on Robinhood Chain: singleton changed to the canonical v1.5.0 SafeL2 on 2026-09-25; analyzed and added to scripts/lib/safe_modules.py on 2026-09-26"
+  }
+}

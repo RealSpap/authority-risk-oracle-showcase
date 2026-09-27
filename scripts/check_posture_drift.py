@@ -53,6 +53,9 @@ REPO_ROOT = os.path.abspath(os.path.join(HERE, ".."))
 PYTHON = sys.executable
 
 from validate_all_scorers import ECOSYSTEMS, _RUNNER_TAIL, _ECOSYSTEM_TIMEOUT_DEFAULTS, _FALLBACK_TIMEOUT  # noqa: E402
+
+sys.path.insert(0, os.path.join(REPO_ROOT, "chains", "hyperliquid", "deploy"))
+import push_scores as _hyperliquid_push  # noqa: E402  -- reused only for its already-published derived-key rule (see below)
 from live_target_counts import ORACLES  # noqa: E402
 
 # EVM ecosystems only -- name here must match both ORACLES' first field and an ECOSYSTEMS key.
@@ -131,12 +134,30 @@ def live_scores(ecosystem_name, timeout):
         return None, f"malformed subprocess output: {type(e).__name__}: {e}"
     if not data.get("ok"):
         return None, data.get("error", "unknown error")
+    entries = [e for e in data["results"] if isinstance(e, dict) and e.get("target")]
+    keys = oracle_keys_for(ecosystem_name, entries)
     out_map = {}
-    for entry in data["results"]:
-        if not isinstance(entry, dict) or not entry.get("target"):
-            continue
-        out_map[entry["target"].lower()] = {"label": entry.get("label", "<no label>"), **{d: entry.get(d) for d in _DIMENSIONS}}
+    for key, entry in zip(keys, entries):
+        out_map[key.lower()] = {"label": entry.get("label", "<no label>"), **{d: entry.get(d) for d in _DIMENSIONS}}
     return out_map, None
+
+
+def oracle_keys_for(ecosystem_name, entries):
+    """The address each `score_all()` entry is actually keyed under once pushed -- usually just `entry["target"]`, per entry.
+
+    Two HIP-3 dexes on Hyperliquid (mkts, para) share their raw target address with a separately-scored HyperEVM contract
+    (Kinetiq's HIP3StakingManager, para's StakingVault); chains/hyperliquid/deploy/push_scores.py already solves this for the
+    real push by moving the dex to a derived key (METHODOLOGY.md 4.7). Reused here so this comparison keys by the SAME
+    address the oracle actually stores the dex under, instead of two entries silently colliding on one Python dict key and
+    looking like a missing/dropped target (what FIRST surfaced this: a full sweep on 2026-09-27 reported both dexes as
+    "not in the live scorer" while the oracle itself, and read_scores_hyperliquid.py, had always had them right)."""
+    keys = [e["target"] for e in entries]
+    if ecosystem_name == "hyperliquid":
+        try:
+            keys = _hyperliquid_push.resolve_oracle_keys([dict(e) for e in entries])
+        except SystemExit:
+            pass  # an unresolved collision here is a real problem for push_scores.py itself, not this tool's job
+    return keys
 
 
 def compare(ecosystem_name, oracle_name, timeout, verbose=True):

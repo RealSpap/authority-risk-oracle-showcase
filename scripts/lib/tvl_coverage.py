@@ -11,6 +11,15 @@ STOP = {"v1", "v2", "v3", "v4", "v5", "v6", "protocol", "finance", "network", "l
         "lend", "lending", "vault", "vaults", "pool", "pools", "chain", "bridge", "and", "of", "usd", "app", "x", "liquid", "staking"}
 # DefiLlama renames that the name match cannot see: DefiLlama token -> the token this project's label uses (each verified against the live label list).
 ALIASES = {"eigencloud": "eigenlayer"}
+# Renames keyed by the FULL DefiLlama name, where the first token is shared with another protocol ("GMX Solana" was GMTrade; "GMX V2" on Arbitrum is a different, tracked target).
+NAME_ALIASES = {
+    "gmx solana": "gmtrade",
+    # "USD AI" tokenizes to ["usd", "ai"]: "usd" is a stopword and "ai" is under the 3-character floor `significant()`
+    # uses everywhere else, so this DefiLlama name has NO significant token at all and could never match by name --
+    # not a rename, a real tracked target (chains/arbitrum-ecosystem/scorers.py::score_usd_ai_mintburn, DefiLlama slug
+    # usd-ai) whose own label contains "ai" as a plain (unfiltered) token.
+    "usd ai": "ai",
+}
 EXCLUDED_CATEGORIES = {"CEX"}  # proof-of-reserves figures: no contract whose authority this oracle would score
 
 
@@ -31,7 +40,8 @@ def label_tokens(labels: list) -> set:
 
 def is_tracked(protocol_name: str, labels_tokens: set) -> bool:
     sig = significant(protocol_name)
-    return bool(sig) and ALIASES.get(sig[0], sig[0]) in labels_tokens
+    first = NAME_ALIASES.get(protocol_name.strip().lower()) or (ALIASES.get(sig[0], sig[0]) if sig else None)
+    return bool(first) and first in labels_tokens
 
 
 def chain_rows(protocols: list, chain: str) -> list:

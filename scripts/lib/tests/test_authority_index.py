@@ -4,7 +4,7 @@ import sys
 import unittest
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
-from lib.authority_index import blast_radius, build_index, classify_code, hygiene_summary, top_signers  # noqa: E402
+from lib.authority_index import blast_radius, build_index, classify_code, family_reach, hygiene_summary, top_signers  # noqa: E402
 
 A = "0x" + "11" * 20
 B = "0x" + "22" * 20
@@ -68,6 +68,40 @@ class Alias(unittest.TestCase):
 
     def test_no_alias_hit_for_unrelated_address(self):
         self.assertEqual(blast_radius({A: [("base", "g", "signer")]}, A)["via_alias"], [])
+
+
+class Family(unittest.TestCase):
+    def setUp(self):
+        # A sits on the SAME family ("morpho_blue") on two ecosystems, plus one unrelated group; B sits on
+        # two DIFFERENT families. Both have ecosystem-count 2, so family_count is what tells them apart.
+        self.index = {
+            A: [("ethereum-l1", "morpho_blue", "signer"), ("base", "morpho_blue", "signer"), ("base", "other_group", "signer")],
+            B: [("ethereum-l1", "morpho_blue", "signer"), ("base", "aave_guardian", "signer")],
+            C: [("base", "solo_group", "signer")],  # single ecosystem: not part of any cross-ecosystem family
+        }
+
+    def test_top_signers_reports_family_count_alongside_group_count(self):
+        top = top_signers(self.index)
+        by_addr = {t["address"].lower(): t for t in top}
+        self.assertEqual(by_addr[A.lower()]["families"], ["morpho_blue", "other_group"])
+        self.assertEqual(by_addr[A.lower()]["family_count"], 2)
+        self.assertEqual(by_addr[B.lower()]["families"], ["aave_guardian", "morpho_blue"])
+        self.assertEqual(by_addr[A.lower()]["ecosystems"], by_addr[B.lower()]["ecosystems"], "same ecosystem count: family_count is the distinguishing field")
+
+    def test_family_reach_finds_the_morpho_blue_style_shared_committee(self):
+        fr = family_reach(self.index)
+        self.assertEqual(set(fr), {"morpho_blue"})  # aave_guardian/other_group/solo_group each live in only one ecosystem here
+        self.assertEqual(fr["morpho_blue"]["ecosystems"], ["base", "ethereum-l1"])
+        self.assertEqual(set(a.lower() for a in fr["morpho_blue"]["signers"]), {A.lower(), B.lower()})
+
+    def test_family_reach_flags_when_the_signer_set_is_identical_across_chains(self):
+        same = {A: [("l1", "fam", "signer"), ("base", "fam", "signer")], B: [("l1", "fam", "signer"), ("base", "fam", "signer")]}
+        self.assertTrue(family_reach(same)["fam"]["identical_across_ecosystems"])
+        different = {A: [("l1", "fam", "signer"), ("base", "fam", "signer")], B: [("l1", "fam", "signer")]}
+        self.assertFalse(family_reach(different)["fam"]["identical_across_ecosystems"])
+
+    def test_family_reach_skips_single_ecosystem_groups(self):
+        self.assertNotIn("solo_group", family_reach(self.index))
 
 
 class Hygiene(unittest.TestCase):

@@ -72,9 +72,10 @@ def main():
         except Exception as e:
             print(f"SKIPPED {name} -- {type(e).__name__}: {e}")
             continue
-        sig = r.get("_signers") or set()
-        per_target.append((r["label"], r["target"], sig))
-        print(f"{r['label']:45s} {len(sig):3d} signers  compositeScore={r.get('compositeScore')}")
+        for r in (r if isinstance(r, list) else [r]):  # score_solgov_leads returns one result per lead
+            sig = r.get("_signers") or set()
+            per_target.append((r["label"], r["target"], sig))
+            print(f"{r['label']:45s} {len(sig):3d} signers  compositeScore={r.get('compositeScore')}")
 
     print(f"\n{len(per_target)} targets read, {sum(1 for _, _, s in per_target if s)} with a resolved signer set")
 

@@ -8,6 +8,7 @@ tracked protocols are affected?" and see the most-connected keys in the whole se
 
     python3 scripts/who_controls.py 0xADDRESS [0xADDRESS ...]   # blast radius of each address
     python3 scripts/who_controls.py --top 15                    # most-connected signers
+    python3 scripts/who_controls.py --families                  # protocol families whose signer set repeats across ecosystems
     python3 scripts/who_controls.py --code-scan                 # EOA / EIP-7702-delegated / contract, per signer per chain
     python3 scripts/who_controls.py --write-index PATH          # dump the full index as JSON
 
@@ -24,7 +25,7 @@ from concurrent.futures import ThreadPoolExecutor
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 from check_cross_ecosystem_overlap import REGISTRIES, resolve_all  # noqa: E402
-from lib.authority_index import blast_radius, build_index, classify_code, hygiene_summary, top_signers  # noqa: E402
+from lib.authority_index import blast_radius, build_index, classify_code, family_reach, hygiene_summary, top_signers  # noqa: E402
 from web3 import Web3  # noqa: E402
 
 
@@ -47,11 +48,12 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("addresses", nargs="*")
     ap.add_argument("--top", type=int)
+    ap.add_argument("--families", action="store_true")
     ap.add_argument("--code-scan", action="store_true")
     ap.add_argument("--write-index")
     args = ap.parse_args()
-    if not (args.addresses or args.top or args.code_scan or args.write_index):
-        ap.error("give an address, --top N, --code-scan or --write-index PATH")
+    if not (args.addresses or args.top or args.families or args.code_scan or args.write_index):
+        ap.error("give an address, --top N, --families, --code-scan or --write-index PATH")
 
     ecosystem_groups, _, _, incomplete, w3s = resolve_all()
     registries = {eco: groups for eco, (_, groups, _) in REGISTRIES.items()}
@@ -71,7 +73,15 @@ def main():
     if args.top:
         print(f"=== Top {args.top} most-connected signers ===")
         for t in top_signers(index, args.top):
-            print(f"  {t['address']}  {t['ecosystems']} ecosystem(s), {t['groups']} group(s): " + ", ".join(f"{e}:{k}" for e, k in t["where"][:6]))
+            fam = f", {t['family_count']} distinct famil{'y' if t['family_count'] == 1 else 'ies'}" if t["family_count"] != t["groups"] else ""
+            print(f"  {t['address']}  {t['ecosystems']} ecosystem(s), {t['groups']} group(s){fam}: " + ", ".join(f"{e}:{k}" for e, k in t["where"][:6]))
+
+    if args.families:
+        fr = family_reach(index)
+        print(f"=== {len(fr)} protocol famil{'y' if len(fr) == 1 else 'ies'} whose registry group key repeats across ecosystems ===")
+        for key, r in sorted(fr.items(), key=lambda kv: (-len(kv[1]["ecosystems"]), kv[0])):
+            same = " -- IDENTICAL signer set on every ecosystem below (one committee, one point of failure)" if r["identical_across_ecosystems"] else ""
+            print(f"  {key}: {len(r['ecosystems'])} ecosystems ({', '.join(r['ecosystems'])}), {len(r['signers'])} distinct signer(s) across them{same}")
 
     if args.code_scan:
         classified = code_scan(ecosystem_groups, w3s)

@@ -306,6 +306,34 @@ class TestKnownAnalysesShape(unittest.TestCase):
             self.assertNotIn(chr(0x2014), info["summary"])
 
 
+class TestModuleImplementationAdvisory(unittest.TestCase):
+    def test_known_vulnerable_implementation_is_flagged(self):
+        info = safe_modules.module_implementation_advisory("0x9646fDAD06d3e24444381f44362a3B0eB343D337")
+        self.assertEqual(info["status"], "vulnerable")
+
+    def test_lookup_is_case_insensitive(self):
+        info = safe_modules.module_implementation_advisory("0x9646FDAD06D3E24444381F44362A3B0EB343D337")
+        self.assertEqual(info["status"], "vulnerable")
+
+    def test_known_patched_implementation_is_not_flagged_vulnerable(self):
+        info = safe_modules.module_implementation_advisory("0xF2964CE6161ce0e75964Fe7927cE114cb0B283D5")
+        self.assertEqual(info["status"], "patched")
+
+    def test_unknown_implementation_returns_none_not_a_clean_bill(self):
+        self.assertIsNone(safe_modules.module_implementation_advisory("0x" + "11" * 20))
+
+    def test_none_input_returns_none(self):
+        self.assertIsNone(safe_modules.module_implementation_advisory(None))
+
+    def test_every_entry_is_dated_lowercase_and_complete(self):
+        for addr, info in safe_modules.KNOWN_MODULE_IMPLEMENTATION_ADVISORIES.items():
+            self.assertEqual(addr, addr.lower())
+            self.assertTrue(RealWeb3.is_address(addr))
+            self.assertIn(info["status"], ("vulnerable", "patched"))
+            self.assertTrue(info["name"] and info["advisory"])
+            self.assertNotIn(chr(0x2014), info["advisory"])
+
+
 class TestSweepScript(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

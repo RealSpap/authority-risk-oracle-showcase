@@ -2122,31 +2122,41 @@ def score_sanctum_validator_lsts(url) -> dict:
 # Not scored, on purpose: Switchboard (winding down, one of its three programs is upgraded by a bare key) and Hylo (no program
 # upgraded by its registry vault, so there is no authority to re-derive).
 # ---------------------------------------------------------------------------
+# The Squads v4 multisigs behind the leads below, one named `*_MS` constant each so that scripts/check_squads_changes.py (which watches every such constant) follows them.
+SOLSTICE_MS = "AEb1u8FK8EuXLcPtprCy8s4NkqBNoP5mfbuEEop2dJGf"
+SOLSTICE_AUX_MS = "BPdkMGWnttz4izo6RD6pXpcbVgGiqD2GR3Jds7HvaXEE"
+GMSOL_MS = "CxnEVpQQcYa628TywzHGXeJ2jdVmbU51rnERat9xunP1"
+LOOPSCALE_MS = "C4awuufiuL8DNT5wMDP27HneKKqbgynrsbCa4XYGSuPk"
+HUMA_MS = "uGLhzjot32i9nNKZKUoCzr7sG8bFAXQRN3uZPTUr7gX"
+LULO_MS = "8Sr4rQJL2aQT3EL97mbrk1T9VMw4pCS2mxMPp2QBzHQq"
+EXPONENT_MS = "51smH7pBDKJDgmVnVks3gMWaPQFfmQ5s4Fc223yHcjuH"
+FLASH_TRADE_MS = "Gb33UeQNnQ4XDuobtGq9M6PVKRVfoH77p8d6JXsgqyXF"
+SOLAYER_MS = "5AQ3c2nC3Ua5Ms1QP4XpcfaU2Q31C8VhiUJGX3c8zFqp"
 # (registry name, target = first program id, label, ((program label, program id, multisig candidate, vault index), ...))
 SOLGOV_LEADS = (
     ("Solstice", "USXyiSTsPEWz55pSK7sZoUL79ntoVGQbaTDT57tH6bx", "Solstice (USX, YieldVault, Aux)", (
-        ("USX", "USXyiSTsPEWz55pSK7sZoUL79ntoVGQbaTDT57tH6bx", "AEb1u8FK8EuXLcPtprCy8s4NkqBNoP5mfbuEEop2dJGf", 0),
-        ("YieldVault", "eUSXyKoZ6aGejYVbnp3wtWQ1E8zuokLAJPecPxxtgG3", "AEb1u8FK8EuXLcPtprCy8s4NkqBNoP5mfbuEEop2dJGf", 1),
-        ("Aux 7FaMy", "7FaMyGiTVdjm8dd3PxpjjCX15ibbmuE1zWVFX2PHxYUK", "BPdkMGWnttz4izo6RD6pXpcbVgGiqD2GR3Jds7HvaXEE", 0))),
+        ("USX", "USXyiSTsPEWz55pSK7sZoUL79ntoVGQbaTDT57tH6bx", SOLSTICE_MS, 0),
+        ("YieldVault", "eUSXyKoZ6aGejYVbnp3wtWQ1E8zuokLAJPecPxxtgG3", SOLSTICE_MS, 1),
+        ("Aux 7FaMy", "7FaMyGiTVdjm8dd3PxpjjCX15ibbmuE1zWVFX2PHxYUK", SOLSTICE_AUX_MS, 0))),
     ("GMSOL", "Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo", "GMSOL (GMTrade, six programs)", tuple(
-        (n, pid, "CxnEVpQQcYa628TywzHGXeJ2jdVmbU51rnERat9xunP1", 0) for n, pid in (
+        (n, pid, GMSOL_MS, 0) for n, pid in (
             ("Core", "Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo"), ("Exchange", "GTuvYD5SxkTq4FLG6JV1FQ5dkczr1AfgDcBHaFsBdtBg"),
             ("LP Manager", "LPMWczEVgXyQ3979XaqqEttanCXmYGvtJqPVtw1PvC8"), ("Router", "2AxuNr6euZPKQbTwNsLBjzFTZFAevA85F4PW9m9Dv8pc"),
             ("TimeBQ", "TimeBQ7gQyWyQMD3bTteAdy7hTVDNWSwELdSVZHfSXL"), ("12cJK", "12cJKgP9r2bcaruqu3XsCS1hxLqsHrmZhqG5Qy2TWRap")))),
     ("Loopscale", "1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78", "Loopscale (Loopscale, Beam)", tuple(
-        (n, pid, "C4awuufiuL8DNT5wMDP27HneKKqbgynrsbCa4XYGSuPk", 0) for n, pid in (
+        (n, pid, LOOPSCALE_MS, 0) for n, pid in (
             ("Loopscale", "1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78"), ("Beam", "beamVVkNmKeXcuZ6zLpC9eM5YgVyAn4Z9xdPrz3gCW2")))),
     ("Huma Finance", "HumaXepHnjaRCpjYTokxY4UtaJcmx41prQ8cxGmFC5fn", "Huma Finance (Permissionless, Institutional)", tuple(
-        (n, pid, "uGLhzjot32i9nNKZKUoCzr7sG8bFAXQRN3uZPTUr7gX", 0) for n, pid in (
+        (n, pid, HUMA_MS, 0) for n, pid in (
             ("Permissionless", "HumaXepHnjaRCpjYTokxY4UtaJcmx41prQ8cxGmFC5fn"), ("Institutional", "EVQ4s1b6N1vmWFDv8PRNc77kufBP8HcrSNWXQAhRsJq9")))),
     ("Lulo", "FL3X2pRsQ9zHENpZSKDRREtccwJuei8yg9fwDu9UN69Q", "Lulo (FlexLend)", (
-        ("FlexLend", "FL3X2pRsQ9zHENpZSKDRREtccwJuei8yg9fwDu9UN69Q", "8Sr4rQJL2aQT3EL97mbrk1T9VMw4pCS2mxMPp2QBzHQq", 0),)),
+        ("FlexLend", "FL3X2pRsQ9zHENpZSKDRREtccwJuei8yg9fwDu9UN69Q", LULO_MS, 0),)),
     ("Exponent", "ExponentnaRg3CQbW6dqQNZKXp7gtZ9DGMp1cwC4HAS7", "Exponent (Core)", (
-        ("Core", "ExponentnaRg3CQbW6dqQNZKXp7gtZ9DGMp1cwC4HAS7", "51smH7pBDKJDgmVnVks3gMWaPQFfmQ5s4Fc223yHcjuH", 0),)),
+        ("Core", "ExponentnaRg3CQbW6dqQNZKXp7gtZ9DGMp1cwC4HAS7", EXPONENT_MS, 0),)),
     ("Flash Trade", "FLASH6Lo6h3iasJKWDs2F8TkW2UKf3s15C8PMGuVfgBn", "Flash Trade (Perpetuals)", (
-        ("Perpetuals", "FLASH6Lo6h3iasJKWDs2F8TkW2UKf3s15C8PMGuVfgBn", "Gb33UeQNnQ4XDuobtGq9M6PVKRVfoH77p8d6JXsgqyXF", 0),)),
+        ("Perpetuals", "FLASH6Lo6h3iasJKWDs2F8TkW2UKf3s15C8PMGuVfgBn", FLASH_TRADE_MS, 0),)),
     ("Solayer", "sSo1iU21jBrU9VaJ8PJib1MtorefUV4fzC9GURa2KNn", "Solayer (sSOL staking, Endo)", tuple(
-        (n, pid, "5AQ3c2nC3Ua5Ms1QP4XpcfaU2Q31C8VhiUJGX3c8zFqp", 0) for n, pid in (
+        (n, pid, SOLAYER_MS, 0) for n, pid in (
             ("sSOL staking", "sSo1iU21jBrU9VaJ8PJib1MtorefUV4fzC9GURa2KNn"), ("Endo", "endoLNCKTqDn8gSVnN2hDdpgACUPWHZTwoYnnMybpAT")))),
 )
 

@@ -47,7 +47,7 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 API_SNAPSHOT_PATH = os.path.join(REPO_ROOT, "api", "scores.json")
 # Not a live Pages URL (none is set up) -- the repo path is what's actually
 # reachable by anyone with access today, dashboard included.
-DASHBOARD_URL = "https://github.com/RealSpap/authority-risk-oracle/tree/main/dashboard"
+DASHBOARD_URL = "https://github.com/RealSpap/authority-risk-oracle/tree/main/dashboard"  # moved from RealSpap 2026-09-29
 
 ORACLE_ABI = [
     {

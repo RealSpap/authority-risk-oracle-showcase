@@ -39,6 +39,7 @@ from web3 import Web3
 
 sys.path.insert(0, os.path.dirname(__file__))
 from lib.alerts import diff_alerts, format_summary, send_telegram_alert  # noqa: E402
+from lib import methodology  # noqa: E402
 from lib.oracle_keys import assert_unique_oracle_keys  # noqa: E402
 from lib.scorers import score_all  # noqa: E402
 from lib.web3_utils import get_w3  # noqa: E402
@@ -98,10 +99,10 @@ def check_completeness(scored: list, previous_snapshot) -> None:
 
 
 def methodology_hash() -> bytes:
-    # keccak256, matching Solidity's `keccak256(bytes)` and the `cast keccak`
-    # calls used to compute methodologyHash by hand for the first two pushes --
-    # NOT sha256, which would silently produce a value nothing else agrees with.
-    return Web3.keccak(text=METHODOLOGY_VERSION)
+    # keccak256("<METHODOLOGY_VERSION>:<digest of every scoring file>") since 2026-09-30, see scripts/lib/methodology.py
+    # (still keccak256, matching Solidity's keccak256(bytes), never sha256): a fix of the scorer now changes the
+    # published hash, a change of the target's posture does not.
+    return methodology.evm_hash("robinhood-chain", METHODOLOGY_VERSION)
 
 
 def main():
@@ -147,6 +148,9 @@ def main():
 
 
 def _run(dry_run: bool, skip_slow: bool = False):
+    methodology.code_digest("robinhood-chain")  # pin the code that runs now, before scoring
+    if not dry_run:  # the published hash must match a commit
+        methodology.require_committed("robinhood-chain")
     read_rpc_url = os.environ["READ_RPC_URL"]
     oracle_rpc_url = os.environ["ORACLE_RPC_URL"]
     oracle_address = os.environ["ORACLE_ADDRESS"]
@@ -163,6 +167,9 @@ def _run(dry_run: bool, skip_slow: bool = False):
     scored = score_all(read_w3, skip_slow=skip_slow)
     now = int(time.time())
     meth_hash = methodology_hash()
+    print(methodology.describe("robinhood-chain", METHODOLOGY_VERSION))
+    if not dry_run:  # right before sending: the files must still be the ones pinned before scoring
+        methodology.assert_unchanged("robinhood-chain")
 
     # Load the previous published snapshot (if any) BEFORE anything downstream can overwrite it --
     # this is the only source both the completeness guard below and diff_alerts() (further down)
@@ -283,6 +290,7 @@ def _run(dry_run: bool, skip_slow: bool = False):
         "chainId": oracle_w3.eth.chain_id,
         "methodologyVersion": METHODOLOGY_VERSION,
         "methodologyHash": "0x" + meth_hash.hex(),
+        "methodologyCommit": methodology.head_commit(),  # the commit whose scoring files the hash covers
         "generatedAt": now,
         "txHash": tx_hash.hex(),
         "blockNumber": receipt.blockNumber,

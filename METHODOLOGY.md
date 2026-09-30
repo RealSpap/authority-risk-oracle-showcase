@@ -320,10 +320,26 @@ this same methodology, one verified vault at a time, not assumed to generalize a
   runs a read against every RPC in a list and raises on disagreement; used
   where a single-source read would otherwise be the sole basis for a score
   that materially changes a target's risk band.
-- **Methodology changes are hashed and versioned on-chain**
-  (`methodologyHash`/`methodologyVersion` fields on every pushed score) so a
-  consumer can tell whether two scores were computed under the same rules
-  before comparing them.
+- **`methodologyHash` is tied to the code that produces the push** (from the first
+  push after 2026-09-30). It is `keccak256("<label>:<code digest>")` on EVM and
+  `sha256("<label>:<code digest>")` on Solana; the code digest is a sha256 over every
+  repository file reached by import from the ecosystem's scorer and from its push
+  script (which decides which score goes to which key), plus
+  [`scripts/lib/methodology.py`](scripts/lib/methodology.py) itself. **Same hash, same
+  code. A different hash means one of those files changed**: a fix of our method, but
+  also an added target or a refreshed snapshot kept in a scorer file. A change of the
+  target's own keys never moves it. Library versions (web3, eth_abi, Python) are not
+  covered. A real push pins the digest before scoring, refuses to run unless the files
+  equal the HEAD commit, and refuses again if they change during the run, so every
+  published hash matches a commit (reproducible by others once that commit is on
+  GitHub). **Before that date the hash was a hand-typed label that was never bumped**:
+  of the 22 composite changes published under an unchanged hash up to 2026-09-30, 17
+  were fixes of our own scorer, 4 real posture changes, and 1 mixed (Morpho Blue: a real
+  Safe change that also flipped an exact-committee comparison of ours). Each is
+  classified with its commit or on-chain source in
+  [`data/score_change_causes.json`](data/score_change_causes.json), which also lists the
+  6 Robinhood Chain changes published with the v2 to v3 label change;
+  `python3 scripts/score_history.py` lists them from the chain.
 - **A "has code" check alone doesn't mean "independently controlled."** An
   EIP-7702-delegated EOA has code (23 bytes: the `0xef0100` designator plus a
   delegate address) but is still controlled by one signing key, not the
@@ -394,6 +410,15 @@ Publishing this list is deliberate: a number nobody can falsify isn't worth
 much, and a DAO deciding whether to rely on this oracle needs to know its
 edges, not just its claims.
 
+- **The score measures exposure, it does not predict who gets hit.** A
+  pre-registered backtest (2026-10-01,
+  [`data/finding_2026-10-01-backtest-victims-vs-controls.md`](data/finding_2026-10-01-backtest-victims-vs-controls.md))
+  read 5 incident victims on Ethereum and 18 untouched peers of similar
+  size one month before each incident: the composite did not separate them
+  (victims at 43 to 49, several peers rooted in a single bare key). The
+  attacks went around the configuration (spoofed signing interface,
+  compromised devices, a service key), so watching changes matters as much
+  as the static score. Five sets can only rule out a large, regular gap.
 - **Off-chain and social-layer control is invisible by construction.** A
   Safe's 3 owners could be 3 employees of the same entity, or the same
   person's 3 wallets - this oracle has no way to see that from chain state
@@ -516,3 +541,18 @@ Every number printed is re-derived from live chain state in that run - never
 replayed from a cached value. See `scripts/update_scores.py --dry-run` for
 the same re-derivation against the exact code path the weekly production
 cron actually runs.
+
+To check which code produced a published score, check out the commit recorded with the
+push (`methodologyCommit` in `api/scores.json` for Robinhood Chain, in the push record
+for Solana, in the push log otherwise) and recompute the hash; it must equal the
+`methodologyHash` returned by `getScore()`:
+
+```bash
+python3 scripts/lib/methodology.py arbitrum-ecosystem --label authority-risk-oracle-arbitrum-ecosystem-v1
+```
+
+The label of each ecosystem is `METHODOLOGY_VERSION` in its push script:
+`authority-risk-oracle-v3` (Robinhood Chain, `scripts/update_scores.py`) and
+`authority-risk-oracle-<ecosystem>-v1` for `ethereum-l1`, `arbitrum-ecosystem`,
+`base-ecosystem`, `tempo`, `plasma-ecosystem`, `monad`, `hyperliquid` and `solana`
+(`chains/<ecosystem>/deploy/`).

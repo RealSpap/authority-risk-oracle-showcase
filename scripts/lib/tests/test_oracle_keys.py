@@ -183,6 +183,11 @@ from web3 import Web3
 spec = importlib.util.spec_from_file_location("push_under_test", {path!r})
 m = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(m)
+# The working copy's git state is not what these tests check (scripts/lib/tests/test_methodology.py does): without this,
+# the suite turns red whenever a scorer is being edited, because a real push refuses uncommitted scoring files.
+if hasattr(m, "methodology"):
+    m.methodology.require_committed = lambda *a, **k: None
+    m.methodology.assert_unchanged = lambda *a, **k: None
 scored = json.loads({scored!r})
 try:
     if {name!r} == "build_calldata":
@@ -233,6 +238,11 @@ os.environ.pop("PRIVATE_KEY", None)
 spec = importlib.util.spec_from_file_location("inline_under_test", {path!r})
 m = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(m)
+# The working copy's git state is not what these tests check (scripts/lib/tests/test_methodology.py does): without this,
+# the suite turns red whenever a scorer is being edited, because a real push refuses uncommitted scoring files.
+if hasattr(m, "methodology"):
+    m.methodology.require_committed = lambda *a, **k: None
+    m.methodology.assert_unchanged = lambda *a, **k: None
 scored = json.loads({scored!r})
 calls = []
 {setup}

@@ -81,8 +81,10 @@ for entry, key, tup in zip(scored, targets, tuples):
     flag = "OK " if ok and not stale else "DIFF"
     print(f"{flag} {entry['label'][:40]:40s} key={key[:10]}… composite chain={on[5]:3d} scorer={exp[5]:3d}"
           + ("" if ok else f"  chain={got} scorer={tuple(exp)} methOK={on[7] == meth}") + ("  STALE" if stale else ""))
-    if not ok:
+    if got != tuple(exp):
         problems.append(f"{entry['label']}: chain {got} != scorer {tuple(exp)}")
+    elif on[7] != meth:  # same scores, other code: pushed from another commit (see scripts/lib/methodology.py)
+        problems.append(f"{entry['label']}: same scores, methodologyHash differs (pushed from other scoring code)")
     if stale:
         problems.append(f"{entry['label']}: stale")
 

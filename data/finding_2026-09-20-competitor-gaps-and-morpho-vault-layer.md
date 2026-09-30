@@ -480,6 +480,16 @@ For each of the 200 largest it reads, for every remote chain the token also live
   HAI ($1M) and KERNEL. In every case the only verifier is LayerZero Labs' DVN. rsETH's L2 deployments are on **LayerZero's default configuration** for 8 to 9 inbound paths, while the
   Ethereum rsETH adapter ($84M locked) requires four DVNs (Horizen, LayerZero Labs, Canary, Nethermind or Google) on all 16 of its paths with its own configuration. Five of the others
   (CYC twice, IMO, BONSAICOIN, HAI) are the applications' own 1-of-1 choices, and KERNEL is on the default.
+- **Correction (30 Sep): the single-verifier count above is overstated.** The script did not read `peers(uint32)`, and an OApp with no peer
+  set for a chain rejects every inbound message from it (`OAppReceiver._getPeerOrRevert`): such a path is closed, not weak,
+  until its owner sets a peer with one call (the 1-of-1 verifier configuration stays in place, so it is closed, not fixed). rsETH on Arbitrum
+  has need=1 on 13 paths (mode, blast, base, optimism, scroll, zksync, zircuit, xlayer, swell, hemi, sonic, unichain, tac) and **all 13 have peer
+  0x0**; its only open path (from Ethereum) needs 4 verifiers. Rerun with the fix on Ethereum and Arbitrum, top 60 ($11.33B): 103 of 316 paths
+  have no peer, and one verifier suffices on **1 deployment, CYC on Ethereum ($35M, open path from BNB Chain, owner and delegate Safe 2-of-3)**.
+  **Full rerun, same scope as 21 Sep (7 chains, 200 largest, $12.79B, 30 Sep):** 298 of 897 paths have no peer; one verifier suffices on
+  **5 deployments, $93M** (CYC on Ethereum and BNB Chain, $35M each; BONSAICOIN and IMO on Base, owner and delegate a bare EOA; HAI), against
+  8 and $151M on 21 Sep: rsETH on Arbitrum and Base and KERNEL were peerless paths. 8 deployments ($25M) have every read path closed. The
+  delegate is a plain EOA while the owner is a Safe or contract in 24 deployments ($93M), against 29 ($91M).
 - **What this on-chain reading cannot see.** LayerZero's incident report says its DVN "will refuse to sign as the sole required attestor on any channel" (read through a page
   summarizer). If that holds, a channel whose only verifier is that DVN cannot pass messages, so these paths are 1-of-1 on chain but probably fail closed, and the
   real state depends on an off-chain policy that no configuration reader shows. Kelp's counter-claim (CoinDesk, summarizer) is that the 1-of-1 was LayerZero's documented default,

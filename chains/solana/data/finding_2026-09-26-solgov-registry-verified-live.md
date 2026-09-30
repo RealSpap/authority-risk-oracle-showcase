@@ -47,3 +47,21 @@ upgrading the programs) was not traced.
 
 `python3 chains/solana/scripts/verify_solgov_leads.py --out ...` (Solana mainnet public RPC through `sol_read`, `getAccountInfo` on program, ProgramData and multisig accounts; SolGov's file fetched
 from raw.githubusercontent.com). No key, nothing sent.
+
+## Update, 2026-09-30: Hylo's programs found -- reasonably healthy, closing the gap this file left open
+
+SolGov's own data had `programs: []` for Hylo -- it couldn't find Hylo's program ids either, so this stayed unchecked. Found via
+Hylo's own official docs ([docs.hylo.so/security/onchain-addresses](https://docs.hylo.so/security/onchain-addresses)), not guessed:
+**Exchange v0.1** (`HYEXCHtHkBagdStcJCp3xbbb9B7sdMdWXFNj6mdsG4hn`) and **Stability Pool v0.1**
+(`HysTabVUfmQBFcmzu1ctRd1Y1fxd66RBpboy1bmtDSQQ`). Both live, executable, both point to the exact same upgrade authority
+(`GzyhwK4y7EKPEevAMc2TEpgi1Y3znwj14FUzkHmCMiNP`), confirmed on 2 RPCs, and that authority is vault 0 of Squads v4 multisig
+`14Ajz35nKp4KUkHaLxucKfwCEKUeXaRCCuDYXqzK5NJm` -- independently PDA-re-derived, exact match, not taken from the transaction alone.
+
+**Read as raw numbers this looks like 3-of-8 with a 6 h delay (`time_lock_s` 21600) -- reasonably healthy.** But per
+METHODOLOGY 3.4/`_voters_with_vote_permission`, threshold counts only members whose permission mask includes the Vote bit (`& 2`):
+of the 8 listed members, 4 carry mask 7 (Initiate+Vote+Execute) and 4 carry mask 0 or 1 (no vote right) -- so the **real quorum is
+3-of-4 voters**, not 3-of-8. Still a real quorum with a meaningful delay, not a red flag like Solstice's auxiliary multisig or
+Switchboard's EOA above -- just smaller than the headline number suggests. A genuinely "checked, came back reasonably safe" result,
+which is a valid outcome, not a gap.
+
+Not added as a scorer (same standing rule as everything else in this file: that decision is Spap's).

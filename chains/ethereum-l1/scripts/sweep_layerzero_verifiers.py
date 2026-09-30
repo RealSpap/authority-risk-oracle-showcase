@@ -106,7 +106,11 @@ def cfg(r, dst_ck, eid):
     nreq = 0 if req_n == 255 else req_n
     # a path whose verifier set contains a dead DVN (LayerZero's LZDeadDVN or the 0x...dEaD address) can never be verified: it is blocked, not weak
     dead = any(x.lower() == DEAD_ADDR or dvn_name.get((ch, x.lower())) in ("LZDeadDVN", "lz-dead-dvn") for x in list(req) + list(opt))
-    return dict(eid=eid, lib=libaddr, default=isdef, blocked=dead, confirmations=conf_, required=[a.lower() for a in req], optional=[a.lower() for a in opt], threshold=thr, need=nreq + thr if nreq or thr else len(req) + thr)
+    # no peer set for this eid: the OApp rejects every inbound message from it (OAppReceiver._getPeerOrRevert), so the path is
+    # closed, not weak. Found 2026-09-30: rsETH Arbitrum's four 1-of-1 paths all have peer 0x0 (2 RPCs). An unread peer stays open.
+    peer = call(ch, r["addr"], "peers(uint32)", w(eid))
+    nopeer = bool(peer) and peer != "0x" and int(peer, 16) == 0
+    return dict(eid=eid, lib=libaddr, default=isdef, blocked=dead or nopeer, no_peer=nopeer, confirmations=conf_, required=[a.lower() for a in req], optional=[a.lower() for a in opt], threshold=thr, need=nreq + thr if nreq or thr else len(req) + thr)
 def read(r):
     paths = {}
     for k, eid in r["remote"].items():
@@ -117,20 +121,25 @@ def read(r):
     return dict(r, paths=paths, owner=Web3.to_checksum_address("0x" + own[-40:]) if own and len(own) >= 42 else None, delegate=Web3.to_checksum_address("0x" + dlg[-40:]) if dlg and len(dlg) >= 42 else None)
 with ThreadPoolExecutor(6) as ex: res = list(ex.map(read, top))
 def weakest(r):
-    ns = [p["need"] for p in r["paths"].values() if "need" in p and not p.get("blocked")]
-    return min(ns) if ns else None
+    """Fewest verifiers that suffice on an open path; "closed" if every read path is closed (no peer or dead DVN), which
+    is a reading, not a failure; None only if no path could be read."""
+    read = [p for p in r["paths"].values() if "need" in p]
+    ns = [p["need"] for p in read if not p.get("blocked")]
+    return min(ns) if ns else ("closed" if read else None)
+one_verifier = lambda r: isinstance(weakest(r), int) and weakest(r) <= 1
 tot = sum(r["usd"] for r in res) or 1
 print(f"\nthe {len(res)} largest deployments, ${tot/1e9:.2f}B; paths read: {sum(len(r['paths']) for r in res)}; deployments with no readable path: {sum(1 for r in res if weakest(r) is None)}")
 by = collections.defaultdict(lambda: [0, 0.0])
 for r in res:
-    k = weakest(r); k = "unread" if k is None else "1 verifier" if k <= 1 else "2 verifiers" if k == 2 else "3 or more"
+    k = weakest(r); k = "unread" if k is None else "all closed" if k == "closed" else "1 verifier" if k <= 1 else "2 verifiers" if k == 2 else "3 or more"
     by[k][0] += 1; by[k][1] += r["usd"]
-blocked = sum(1 for r in res for p in r["paths"].values() if p.get("blocked")); print(f"paths through a dead DVN (blocked, left out of the weakest-path reading): {blocked}")
+blocked = sum(1 for r in res for p in r["paths"].values() if p.get("blocked")); nopeer = sum(1 for r in res for p in r["paths"].values() if p.get("no_peer"))
+print(f"paths blocked, left out of the weakest-path reading: {blocked} ({nopeer} with no peer set, {blocked - nopeer} through a dead DVN)")
 print("weakest OPEN inbound path, verifiers that suffice:")
-for k in ("1 verifier", "2 verifiers", "3 or more", "unread"): print(f"  {k:12s} {by[k][0]:4d} deployments ${by[k][1]/1e6:8.0f}M {100*by[k][1]/tot:5.1f}%")
+for k in ("1 verifier", "2 verifiers", "3 or more", "all closed", "unread"): print(f"  {k:12s} {by[k][0]:4d} deployments ${by[k][1]/1e6:8.0f}M {100*by[k][1]/tot:5.1f}%")
 for typ in ("OFT_ADAPTER", "OFT"):
     s = [r for r in res if r["type"] == typ]; t = sum(r["usd"] for r in s) or 1
-    one = [r for r in s if weakest(r) is not None and weakest(r) <= 1]
+    one = [r for r in s if one_verifier(r)]
     print(f"  {typ}: {len(s)} deployments ${t/1e6:.0f}M, with a 1-verifier path {len(one)} (${sum(r['usd'] for r in one)/1e6:.0f}M, {100*sum(r['usd'] for r in one)/t:.0f}%)")
 dflt = sum(1 for r in res for p in r["paths"].values() if p.get("default")); allp = sum(len(r["paths"]) for r in res)
 print(f"configuration is the LayerZero default on {dflt} of {allp} paths ({100*dflt/max(allp,1):.0f}%); the application's own on the rest")
@@ -164,7 +173,7 @@ weaker = [r for r in res if r["owner"] and r["delegate"] and r["owner"] != r["de
 print(f"the delegate (who can change the verifier set) is a weaker account than the owner in {len(weaker)} deployments, ${sum(r['usd'] for r in weaker)/1e6:.0f}M; delegate is a plain EOA while the owner is a Safe or contract in {sum(1 for r in weaker if rank(kinds[(r['chain'], r['delegate'])]) == 0)} of them")
 for r in sorted(weaker, key=lambda r: -r["usd"])[:5]: print(f"  {r['chain']:>9} {r['type'][:7]:7s} ${r['usd']/1e6:7.0f}M {r['name'][:12]:12s} owner {kinds[(r['chain'], r['owner'])]} delegate {kinds[(r['chain'], r['delegate'])]}")
 print("\nlargest deployments with a 1-verifier inbound path:")
-for r in sorted([r for r in res if weakest(r) is not None and weakest(r) <= 1], key=lambda r: -r["usd"])[:10]:
+for r in sorted([r for r in res if one_verifier(r)], key=lambda r: -r["usd"])[:10]:
     ones = [k for k, p in r["paths"].items() if p.get("need") is not None and p["need"] <= 1 and not p.get("blocked")]
     print(f"  {r['chain']:>9} {r['type']:11s} ${r['usd']/1e6:7.0f}M {r['name'][:14]:14s} weak paths from {ones[:4]} owner {kinds.get((r['chain'], r['owner']), '-')} delegate {kinds.get((r['chain'], r['delegate']), '-')}")
 if ARGS.dump: json.dump(res, open(ARGS.dump, "w"), default=str); print(f"\nwrote {len(res)} rows to {ARGS.dump}")

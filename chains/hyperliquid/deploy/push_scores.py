@@ -131,11 +131,18 @@ ORACLE_ABI = [
 
 METHODOLOGY_VERSION = "authority-risk-oracle-hyperliquid-v1"
 
+# methodologyHash tied to the scoring code since 2026-09-30 (scripts/lib/methodology.py). Loaded by path, not by
+# putting scripts/lib on sys.path, so no chain-local module (e.g. a chain's own `scorers`) can be shadowed.
+import importlib.util as _ilu  # noqa: E402
+_spec = _ilu.spec_from_file_location("aro_methodology", os.path.join(REPO_ROOT, "scripts", "lib", "methodology.py"))
+methodology = _ilu.module_from_spec(_spec)
+_spec.loader.exec_module(methodology)
+
 
 def methodology_hash() -> bytes:
-    # keccak256, matching Solidity's keccak256(bytes) -- same convention as
-    # every other ecosystem's push_scores.py, not sha256.
-    return Web3.keccak(text=METHODOLOGY_VERSION)
+    # keccak256("<METHODOLOGY_VERSION>:<digest of every scoring file>") since 2026-09-30, see scripts/lib/methodology.py:
+    # a fix of the scorer now changes the published hash, a change of the target's posture does not.
+    return methodology.evm_hash("hyperliquid", METHODOLOGY_VERSION)
 
 
 HIP3_DEX_LABEL_PREFIX = "HIP-3 dex "
@@ -309,6 +316,9 @@ def validate_oracle_override(raw):
 def main(argv=None):
     args = parse_args(argv)
     dry_run = args.dry_run
+    methodology.code_digest("hyperliquid")  # pin the code that runs now, before scoring
+    if not dry_run:  # the published hash must match a commit
+        methodology.require_committed("hyperliquid")
     # Both --oracle and --targets are syntax-validated HERE, immediately after argument parsing and
     # before any live network/scoring work -- an empty/malformed value refuses in well under a
     # second, not after paying for a ~100s live re-derivation across 4 external APIs first (review
@@ -332,6 +342,9 @@ def main(argv=None):
     scored = score_all()  # no RPC argument -- see this module's own docstring
     now = int(time.time())
     meth_hash = methodology_hash()
+    print(methodology.describe("hyperliquid", METHODOLOGY_VERSION))
+    if not dry_run:  # right before sending: the files must still be the ones pinned before scoring
+        methodology.assert_unchanged("hyperliquid")
 
     targets, tuples = build_targets_and_tuples(scored, now, meth_hash)
     # --targets is applied AFTER the full resolve_oracle_keys()/dupe-check above, on purpose: a real

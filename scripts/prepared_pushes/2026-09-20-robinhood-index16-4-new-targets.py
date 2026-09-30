@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """
+ARCHIVED, DO NOT RERUN OR COPY AS A TEMPLATE (2026-09-30): it publishes the old hand-typed methodologyHash
+(keccak of a label) without the commit check. Pushes since 2026-09-30 tie the hash to the code: see scripts/lib/methodology.py.
+
 PREPARED PUSH -- Robinhood Chain rotation audit, index 16 (2026-09-20).
 Four NEW targets. Run by SPAP, never by an agent (rule of 2026-09-20: the
 agent prepares the exact command, the user broadcasts it, the agent re-reads

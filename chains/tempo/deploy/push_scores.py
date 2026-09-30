@@ -104,11 +104,18 @@ ORACLE_ABI = [
 
 METHODOLOGY_VERSION = "authority-risk-oracle-tempo-v1"
 
+# methodologyHash tied to the scoring code since 2026-09-30 (scripts/lib/methodology.py). Loaded by path, not by
+# putting scripts/lib on sys.path, so no chain-local module (e.g. a chain's own `scorers`) can be shadowed.
+import importlib.util as _ilu  # noqa: E402
+_spec = _ilu.spec_from_file_location("aro_methodology", os.path.join(REPO_ROOT, "scripts", "lib", "methodology.py"))
+methodology = _ilu.module_from_spec(_spec)
+_spec.loader.exec_module(methodology)
+
 
 def methodology_hash() -> bytes:
-    # keccak256, matching Solidity's keccak256(bytes) -- same convention as
-    # every other ecosystem's push_scores.py, not sha256.
-    return Web3.keccak(text=METHODOLOGY_VERSION)
+    # keccak256("<METHODOLOGY_VERSION>:<digest of every scoring file>") since 2026-09-30, see scripts/lib/methodology.py:
+    # a fix of the scorer now changes the published hash, a change of the target's posture does not.
+    return methodology.evm_hash("tempo", METHODOLOGY_VERSION)
 
 
 def build_targets_and_tuples(scored, now, meth_hash):
@@ -135,6 +142,9 @@ def build_targets_and_tuples(scored, now, meth_hash):
 
 def main():
     dry_run = "--dry-run" in sys.argv
+    methodology.code_digest("tempo")  # pin the code that runs now, before scoring
+    if not dry_run:  # the published hash must match a commit
+        methodology.require_committed("tempo")
 
     print("Re-deriving every tracked Tempo target's score from live Tempo Mainnet state "
           "(fixed RPCS inside scripts/methodology_test.py, dual-RPC cross-checked per read)...\n")
@@ -144,6 +154,9 @@ def main():
         raise SystemExit("score_all() returned no results (see its own printed SKIPPED reason above) -- refusing to encode an empty push.")
     now = int(time.time())
     meth_hash = methodology_hash()
+    print(methodology.describe("tempo", METHODOLOGY_VERSION))
+    if not dry_run:  # right before sending: the files must still be the ones pinned before scoring
+        methodology.assert_unchanged("tempo")
 
     for entry in scored:
         print(f"{entry['label']} ({entry['target']}): composite={entry['compositeScore']}/100, "

@@ -47,6 +47,12 @@ guardian-Safe-only owners (`0x31430A3C...`, `0x46Cba1e9...`).
 Re-read by me: Safe `0x8a25A24E...` is **1-of-2** (two EOAs with nonces 92,066 and 769) and `hasRole(ALLOCATOR_ROLE)` on the proxy is true; the proxy holds 0 ETH. Verifier: it holds no USDC, USDS or USDT either; `doCall` lets an
 allocator act on any target with no delay; a second allocator is a 2-of-5 Safe; the only brake is a 2-of-4 freezer Safe that reacts, it cannot prevent; the contract is immutable (no proxy admin) and the admin role sits behind a 48 h pause. Scope: this is the freezable proxy the tracer named, **not** Spark's main ALM proxy, which was not read.
 
+**Incomplete, 30 Sep** (found through the DeFiScan v2 diff, `finding_2026-09-30-defiscan-diff-triage.md`): "holds nothing" is true of balances, not of
+privileges. Replaying `RoleGranted` shows the proxy holds `SETTER_ROLE` on four Spark Savings V2 vaults this repository does not track (spUSDC about
+$300.6M, spUSDT about $447.0M, a staking-derivative token about 21,169 WETH, spPYUSD) and the only `UPDATE_ROLE` on the CapAutomator. So the 1-of-2 and 2-of-5 allocator
+Safes can, with no delay, set those vaults' savings rate anywhere inside bounds set by SparkProxy ([0%, 10%] APR, [0%, 5%] for a staking-derivative token) and move caps
+deterministically. A yield and liability risk, not a principal one: no `TAKER_ROLE`.
+
 ## Maple
 
 **Closed 2026-09-27**: found the exact contract via `maple-labs/address-registry` (Maple's own canonical GitHub registry) and re-read everything live, both RPCs identical. GovernorTimelock `0x2eFFf88747EB5a3FF00d4d8d0f0800E306C0426b`:

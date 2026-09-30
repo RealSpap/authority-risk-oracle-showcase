@@ -40,6 +40,7 @@ Built for [Colosseum's Crypto World's Fair](https://colosseum.com/worldsfair) ha
 | Gauntlet, Chaos Labs, LlamaRisk | No (LlamaGuard PT is on-chain, but covers *collateral* risk) | **No** -- paid by the protocol rated | No |
 | DeFiSafety | No -- static periodic report | Yes | Partial |
 | [SolGov](https://solgov.xyz) | No -- website, not a contract | Yes | Yes, Solana only |
+| [Forta Risk Graph](https://github.com/forta-network/forta-risk-skills) | No, an OAuth-gated MCP server, per-account views | Yes | Yes (admin keys down to terminal keys, shared Safe signers), Ethereum mainnet only, and deliberately no scores |
 | **This project** | **Yes** -- `getScore()`/`isStale()`, any contract can call it | **Yes** -- independently computed, no protocol pays for its own score | **Yes**, across 10 ecosystems |
 
 The conflict of interest in row 2 isn't theoretical: this project's own prior research

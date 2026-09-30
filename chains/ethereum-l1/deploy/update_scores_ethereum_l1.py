@@ -62,6 +62,13 @@ DEFAULT_READ_CHAIN_ID = 1
 DEFAULT_ORACLE_CHAIN_ID = 11155111
 METHODOLOGY_VERSION = "authority-risk-oracle-ethereum-l1-v1"
 
+# methodologyHash tied to the scoring code since 2026-09-30 (scripts/lib/methodology.py). Loaded by path, not by
+# putting scripts/lib on sys.path, so no chain-local module (e.g. a chain's own `scorers`) can be shadowed.
+import importlib.util as _ilu  # noqa: E402
+_spec = _ilu.spec_from_file_location("aro_methodology", os.path.join(REPO_ROOT, "scripts", "lib", "methodology.py"))
+methodology = _ilu.module_from_spec(_spec)
+_spec.loader.exec_module(methodology)
+
 ORACLE_ABI = [
     {
         "name": "updateScores",
@@ -89,7 +96,9 @@ ORACLE_ABI = [
 ]
 
 def methodology_hash() -> bytes:
-    return Web3.keccak(text=METHODOLOGY_VERSION)
+    # keccak256("<METHODOLOGY_VERSION>:<digest of every scoring file>") since 2026-09-30, see scripts/lib/methodology.py:
+    # a fix of the scorer now changes the published hash, a change of the target's posture does not.
+    return methodology.evm_hash("ethereum-l1", METHODOLOGY_VERSION)
 
 
 def build_calldata(w3_for_encoding, scored, now, meth_hash):
@@ -131,6 +140,9 @@ def main():
     parser.add_argument("--oracle-rpc-url", default=os.environ.get("ORACLE_RPC_URL", DEFAULT_ORACLE_RPC_URL))
     parser.add_argument("--oracle-address", default=os.environ.get("ORACLE_ADDRESS"))
     args = parser.parse_args()
+    methodology.code_digest("ethereum-l1")  # pin the code that runs now, before scoring
+    if not args.dry_run:  # the published hash must match a commit
+        methodology.require_committed("ethereum-l1")
 
     read_w3 = get_w3(args.read_rpc_url)
     if not read_w3.is_connected():
@@ -143,6 +155,9 @@ def main():
     scored = score_all(read_w3)
     now = int(time.time())
     meth_hash = methodology_hash()
+    print(methodology.describe("ethereum-l1", METHODOLOGY_VERSION))
+    if not args.dry_run:  # right before sending: the files must still be the ones pinned before scoring
+        methodology.assert_unchanged("ethereum-l1")
 
     calldata, targets, tuples = build_calldata(read_w3, scored, now, meth_hash)
 

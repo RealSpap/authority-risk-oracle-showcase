@@ -73,6 +73,13 @@ DEFAULT_READ_RPC_URL = "https://api.mainnet-beta.solana.com"  # Solana Mainnet B
 DEFAULT_ORACLE_RPC_URL = "https://api.devnet.solana.com"  # Solana Devnet, the only network this pipeline may write to
 METHODOLOGY_VERSION = "authority-risk-oracle-solana-v1"
 
+# methodologyHash tied to the scoring code since 2026-09-30 (scripts/lib/methodology.py). Loaded by path, not by
+# putting scripts/lib on sys.path, so no chain-local module (e.g. a chain's own `scorers`) can be shadowed.
+import importlib.util as _ilu  # noqa: E402
+_spec = _ilu.spec_from_file_location("aro_methodology", os.path.join(REPO_ROOT, "scripts", "lib", "methodology.py"))
+methodology = _ilu.module_from_spec(_spec)
+_spec.loader.exec_module(methodology)
+
 B58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
 
 
@@ -91,12 +98,10 @@ def b58decode_pubkey(s: str) -> bytes:
 
 
 def methodology_hash() -> bytes:
-    # Same role as the EVM script's Web3.keccak(text=METHODOLOGY_VERSION):
-    # a fixed 32-byte fingerprint identifying the scoring script/version,
-    # not a cryptographic commitment to any specific run's output. sha256
-    # (not keccak) since that is what this project's Solana-side tooling
-    # already standardizes on (sol_read.py imports hashlib, no keccak dep).
-    return hashlib.sha256(METHODOLOGY_VERSION.encode()).digest()
+    # sha256("<METHODOLOGY_VERSION>:<digest of every scoring file>") since 2026-09-30, see scripts/lib/methodology.py.
+    # sha256, not keccak, as this project's Solana-side tooling already standardizes on. A fix of the scorer now
+    # changes the published hash, a change of the target's posture does not.
+    return methodology.solana_hash(METHODOLOGY_VERSION)
 
 
 def anchor_discriminator(ix_name: str) -> bytes:
@@ -136,6 +141,9 @@ def push_live(args):
     check, not a URL string match). Never prints the secret key."""
     import solana_tx as stx
 
+    methodology.code_digest("solana")  # pin the code that runs now, before scoring
+    methodology.require_committed("solana")  # the published hash must match a commit
+    print(methodology.describe("solana", METHODOLOGY_VERSION))
     if not args.program_id or not args.keypair_file:
         print("Non-dry-run needs --program-id/ORACLE_PROGRAM_ID and --keypair-file/KEYPAIR_FILE.", file=sys.stderr)
         sys.exit(1)
@@ -150,6 +158,7 @@ def push_live(args):
     print(f"[push] {len(scored)} targets scored live")
     # The oracle keeps one score per address: refuse the whole push if two entries share one (scripts/lib/oracle_keys.py).
     assert_unique_oracle_keys(scored, exact=True, where="(solana push)")
+    methodology.assert_unchanged("solana")  # the files must still be the ones pinned before scoring
 
     sk, payer = stx.load_keypair(args.keypair_file)
     program_id = stx.b58decode(args.program_id, 32)
@@ -164,7 +173,8 @@ def push_live(args):
 
     registry, _ = stx.find_program_address([b"registry"], program_id)
     record = {"oracle_rpc_url": args.oracle_rpc_url, "genesis": genesis, "program_id": args.program_id,
-              "payer": stx.b58encode(payer), "registry_pda": stx.b58encode(registry), "initialize_tx": None, "scores": []}
+              "payer": stx.b58encode(payer), "registry_pda": stx.b58encode(registry), "initialize_tx": None, "scores": [],
+              "methodologyHash": methodology_hash().hex(), "methodologyCommit": methodology.head_commit()}
 
     data, owner = stx.get_account_data(args.oracle_rpc_url, stx.b58encode(registry))
     if data is None:
@@ -223,7 +233,8 @@ def main():
     assert_unique_oracle_keys(scored, exact=True, where="(solana dry-run)")
 
     meth_hash = methodology_hash()
-    print(f"methodology_hash = {meth_hash.hex()} (sha256(\"{METHODOLOGY_VERSION}\"))\n")
+    print(f"methodology_hash = {meth_hash.hex()} (sha256(\"{METHODOLOGY_VERSION}:<code digest>\"))")
+    print(methodology.describe("solana", METHODOLOGY_VERSION) + "\n")
 
     for entry in scored:
         data = encode_update_score_ix_data(entry["target"], entry)

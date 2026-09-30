@@ -33,6 +33,12 @@ import solana_tx as stx  # noqa: E402
 from scorers import score_all  # noqa: E402
 
 METHODOLOGY_VERSION = "authority-risk-oracle-solana-v1"
+
+# Same methodologyHash rule as the push (scripts/lib/methodology.py), loaded by path so nothing on sys.path is shadowed.
+import importlib.util as _ilu  # noqa: E402
+_spec = _ilu.spec_from_file_location("aro_methodology", os.path.join(REPO_ROOT, "scripts", "lib", "methodology.py"))
+methodology = _ilu.module_from_spec(_spec)
+_spec.loader.exec_module(methodology)
 FIELDS = ("adminKeyScore", "multisigScore", "timelockScore", "oracleAuthorityScore",
           "crossExposureScore", "compositeScore")
 
@@ -88,7 +94,7 @@ def main():
     print(f"registry PDA {stx.b58encode(registry)} admin={reg['admin']} updater={reg['updater']} "
           f"maxStaleness={reg['maxStalenessSeconds']}s tracked={len(reg['tracked'])}")
 
-    expected_hash = hashlib.sha256(METHODOLOGY_VERSION.encode()).hexdigest()
+    expected_hash = methodology.solana_hash(METHODOLOGY_VERSION).hex()  # same rule as the push, scripts/lib/methodology.py
     live = score_all(args.read_rpc_url)
     print(f"{len(live)} targets re-derived live from {args.read_rpc_url} (read-only)")
     mismatches = 0

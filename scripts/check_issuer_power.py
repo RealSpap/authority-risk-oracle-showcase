@@ -18,7 +18,8 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "lib"))
 sys.path.insert(0, os.path.dirname(__file__))
 from lib.issuer_power import KNOWN_CONTROLLER_GETTERS, KNOWN_ROLE_MEMBER_GETTERS, classify_controller, classify_functions, has_any_restrictive_power  # noqa: E402
-from lib.web3_utils import get_w3, read_address_array_getter, read_address_getter, safe_owners_and_threshold  # noqa: E402
+from lib.web3_utils import _read, call_raw, get_w3, read_address_array_getter, read_address_getter, safe_owners_and_threshold  # noqa: E402
+from web3 import Web3  # noqa: E402
 
 # ADDED 2026-09-26 (chain 42161, Arbitrum): extended for scripts/check_compound_v3_comet_issuer_power.py,
 # which reuses read_abi()/read_controllers()/read_role_members() across all 3 tracked Comet markets'
@@ -127,9 +128,97 @@ def read_role_members(w3, address, array_getter_names):
     return out
 
 
+# ADDED 2026-10-01 (roadmap R10): how much can be minted RIGHT NOW without a further admin act. Disclosed, never scored.
+# Full-range eth_getLogs verified that day on Tenderly's mainnet gateway (3,811 USDC MinterConfigured/MinterRemoved logs in
+# one call). Base has no such source: Tenderly's Base gateway caps at 1,000 blocks and Blockscout stops at 10,000 results,
+# so the Base USDC minter set is printed UNREAD rather than built from a partial history.
+LOGS_RPC = {1: "https://gateway.tenderly.co/public/mainnet"}
+MINTER_CONFIGURED = bytes(Web3.keccak(text="MinterConfigured(address,uint256)"))
+MINTER_REMOVED = bytes(Web3.keccak(text="MinterRemoved(address)"))
+
+
+def _fn(name, inputs=("address",), out="uint256"):
+    outs = [{"type": t} for t in out] if isinstance(out, tuple) else [{"type": out}]
+    return [{"name": name, "type": "function", "stateMutability": "view", "inputs": [{"type": t} for t in inputs], "outputs": outs}]
+
+
+# Agora AUSD: getAmountCanBeMinted(minter) returns (currentAmountInFlight, amountCanBeMinted) (verified ABI, read 2026-10-01).
+AGORA_CAN_MINT = _fn("getAmountCanBeMinted", out=("uint256", "uint256"))
+
+
+def replay_minters(logs):
+    """Current FiatToken minter set from MinterConfigured / MinterRemoved logs, replayed in chain order (block, logIndex)."""
+    cur = set()
+    for lg in sorted(logs, key=lambda x: (x["blockNumber"], x["logIndex"])):
+        who = Web3.to_checksum_address(bytes(lg["topics"][1])[-20:])
+        if bytes(lg["topics"][0]) == MINTER_CONFIGURED:
+            cur.add(who)
+        elif bytes(lg["topics"][0]) == MINTER_REMOVED:
+            cur.discard(who)
+    return cur
+
+
+def read_mint_bound(w3, chain_id, address, fns):
+    """One printable line: what can be minted without a further admin act, or why it is UNREAD. A revert means "not this
+    interface"; a network failure raises RpcUnavailable out of call_raw and is reported UNREAD, never as zero."""
+    try:
+        dec = call_raw(w3, address, _fn("decimals", (), "uint8"), "decimals")
+        if dec is None:
+            return "UNREAD (decimals() reverted)"
+        unit = 10 ** dec
+        if call_raw(w3, address, _fn("minterAllowance"), "minterAllowance", "0x" + "00" * 20) is not None:
+            if chain_id not in LOGS_RPC:
+                return f"per-minter allowances (FiatToken); minter set UNREAD: no full-range log source for chain {chain_id}"
+            # Logs and reads pinned to ONE block both sources have reached: a minter configured in a block the log source had
+            # not seen yet would otherwise be missing from the total without a trace.
+            logs_w3 = get_w3(LOGS_RPC[chain_id])
+            head = min(w3.eth.block_number, logs_w3.eth.block_number)
+            logs = logs_w3.eth.get_logs({"address": Web3.to_checksum_address(address), "fromBlock": 0, "toBlock": head,
+                                         "topics": [["0x" + MINTER_CONFIGURED.hex(), "0x" + MINTER_REMOVED.hex()]]})
+            if not logs:
+                return "per-minter allowances (FiatToken); minter replay came back EMPTY: an anomaly, UNREAD, not 'no minter'"
+            token = w3.eth.contract(address=Web3.to_checksum_address(address), abi=_fn("isMinter", out="bool") + _fn("minterAllowance"))
+
+            def at_head(name, m):
+                return _read(lambda: getattr(token.functions, name)(m).call(block_identifier=head), what=f"{name}({m}) at block {head}")
+            rows = []
+            for m in sorted(replay_minters(logs)):
+                if at_head("isMinter", m) is not True:
+                    return f"per-minter allowances (FiatToken); replay says {m} is a minter at block {head}, isMinter() disagrees: UNREAD"
+                rows.append((m, at_head("minterAllowance", m)))
+            if any(a is None for _, a in rows):
+                return "per-minter allowances (FiatToken); a minterAllowance() reverted: UNREAD"
+            total = sum(a for _, a in rows) / unit
+            detail = ", ".join(f"{m} {a / unit:,.0f}" for m, a in sorted(rows, key=lambda r: -r[1]))
+            return f"{len(rows)} minters (FiatToken, replayed from {len(logs)} logs to block {head}, each confirmed by isMinter there): {total:,.0f} mintable [{detail}]"
+        if call_raw(w3, address, AGORA_CAN_MINT, "getAmountCanBeMinted", "0x" + "00" * 20) is not None:
+            paused = call_raw(w3, address, _fn("isMintPaused", (), "bool"), "isMintPaused")
+            roles = {}
+            for getter in ("getMinterRoleMembers", "getBridgeMinterRoleMembers"):
+                members = read_address_array_getter(w3, address, getter)
+                if members is None:
+                    return f"rate-limited minters (Agora); {getter}() reverted: UNREAD"
+                for m in members:
+                    roles.setdefault(Web3.to_checksum_address(m), []).append(getter[3:-11])
+            parts, total = [], 0
+            for m, held in sorted(roles.items()):  # one member holding both roles is counted once
+                res = call_raw(w3, address, AGORA_CAN_MINT, "getAmountCanBeMinted", m)
+                if res is None:
+                    return f"rate-limited minters (Agora); getAmountCanBeMinted({m}) reverted: UNREAD"
+                total += res[1]
+                parts.append(f"{'+'.join(held)} {m} {res[1] / unit:,.0f}")
+            return (f"rate-limited minters (Agora), minting paused={paused}: {total / unit:,.0f} mintable now in the current windows "
+                    f"[{'; '.join(parts) or 'no member'}]")
+        if "issue" in fns:
+            return "no on-chain bound: issue(uint256) mints any amount, there is no allowance or rate limit to read"
+        return "no known mint-bound interface: UNREAD"
+    except Exception as e:  # noqa: BLE001 -- RpcUnavailable or a log-source failure: reported, never a zero
+        return f"UNREAD ({type(e).__name__}: {str(e)[:100]})"
+
+
 def main():
     w3_by_chain = {}
-    unread = 0
+    unread = mint_unread = 0
     for chain_id, addr, symbol, vaults in TRACKED_ASSETS:
         if chain_id not in w3_by_chain:
             w3_by_chain[chain_id] = get_w3(RPC[chain_id])
@@ -157,8 +246,11 @@ def main():
 
         if not controllers and not role_members:
             print("    no controller getter from the known list resolved on this token")
+        bound = read_mint_bound(w3, chain_id, addr, fns)
+        mint_unread += "UNREAD" in bound
+        print(f"  mint bound: {bound}")
 
-    print(f"\n{len(TRACKED_ASSETS)} distinct assets checked, {unread} unread.")
+    print(f"\n{len(TRACKED_ASSETS)} distinct assets checked, {unread} unread; {mint_unread} mint bound(s) UNREAD (reported, not in the exit code).")
     return 1 if unread else 0
 
 

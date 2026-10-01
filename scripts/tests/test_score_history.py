@@ -43,5 +43,19 @@ class TestClassify(unittest.TestCase):
         self.assertTrue(all(r["cause"] in ("correction", "posture", "mixed") for r in causes.values()))
 
 
+
+class TestApiSnapshot(unittest.TestCase):
+    def test_keeps_changes_and_causes_drops_raw_events(self):
+        report = [{"oracle": "Plasma", "address": "0xO", "methodologyHashes": [H1], "unread": [],
+                   "events": [ev(1, "0xA", 55), ev(2, "0xA", 43)],
+                   "changes": [{"date": "2026-09-20", "block": 2, "tx": "0xt", "target": "0xA", "label": "Yuzu", "from": 55, "to": 43,
+                                "sameHash": True, "cause": "correction", "ref": "b464fbe"}]}]
+        snap = sh.api_snapshot(report, ["Monad"], [])
+        o = snap["oracles"][0]
+        self.assertEqual((o["events"], o["targets"], o["changes"][0]["cause"]), (2, 1, "correction"))
+        self.assertNotIn("lastUpdated", o["changes"][0])
+        self.assertEqual(snap["notRead"], ["Monad"])
+
+
 if __name__ == "__main__":
     unittest.main()

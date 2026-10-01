@@ -333,12 +333,16 @@ this same methodology, one verified vault at a time, not assumed to generalize a
   equal the HEAD commit, and refuses again if they change during the run, so every
   published hash matches a commit (reproducible by others once that commit is on
   GitHub). **Before that date the hash was a hand-typed label that was never bumped**:
-  of the 22 composite changes published under an unchanged hash up to 2026-09-30, 17
-  were fixes of our own scorer, 4 real posture changes, and 1 mixed (Morpho Blue: a real
-  Safe change that also flipped an exact-committee comparison of ours). Each is
-  classified with its commit or on-chain source in
+  of the 22 composite changes published under an unchanged hash up to 2026-09-30 on the
+  6 oracles with a fast log source, 21 were fixes of our own scorer and 1 was mixed
+  (Morpho Blue: a real Safe change that also flipped an exact-committee comparison of
+  ours); none was a pure change of a target's keys. Monad, read in full on 2026-10-01,
+  adds 2: one fix of ours (Aave V3) and the first pure change of a target's keys (a
+  Morpho vault's curator Safe went from 2-of-6 to 2-of-7, 60 to 61). HyperEVM is still
+  unread (its public RPC refuses archive reads past a daily quota). Each is classified
+  with its commit or on-chain source in
   [`data/score_change_causes.json`](data/score_change_causes.json), which also lists the
-  6 Robinhood Chain changes published with the v2 to v3 label change;
+  6 Robinhood Chain changes published with the v2 to v3 label change (mixed);
   `python3 scripts/score_history.py` lists them from the chain.
 - **A "has code" check alone doesn't mean "independently controlled."** An
   EIP-7702-delegated EOA has code (23 bytes: the `0xef0100` designator plus a

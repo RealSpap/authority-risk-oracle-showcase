@@ -3,7 +3,7 @@
 2026-10-01. The test this repository said it lacked (`data/research_2026-09-21-authority-incidents-evidence-table.md:48-51`): read the
 authority configuration of incident victims 30 days before the incident, and of comparable untouched protocols at the same blocks, and see
 whether the oracle's composite separates them. Protocol written, criticised by two independent lenses and **committed before any
-measurement** (`e05c634`, `data/backtest_2026-10-01_preregistration/PROTOCOLE.md`, in French). Measured blind (subjects read in address
+measurement** (`30e8ae4`, cited as `e05c634` before the commits were rebuilt, see `COMMITS.md` in that folder; `data/backtest_2026-10-01_preregistration/PROTOCOLE.md`, in French). Measured blind (subjects read in address
 order, labels only attached after `p_min` was computed), with the formula as of `fa97b69`. Full execution report, independent re-read and
 conformity audit in `data/backtest_2026-10-01_preregistration/resultats/`.
 

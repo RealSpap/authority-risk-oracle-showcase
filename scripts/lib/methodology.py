@@ -2,7 +2,7 @@
 """methodologyHash tied to the code that produces a push, not to a hand-typed label (Spap's go, 2026-09-30).
 
 Why: until 2026-09-30 every push script published keccak(METHODOLOGY_VERSION), a label frozen at "-v1" on every
-chain but Robinhood. `scripts/score_history.py` found 22 composite changes published under an unchanged hash, 17 of
+chain but Robinhood. `scripts/score_history.py` found 22 composite changes published under an unchanged hash, 21 of
 them fixes of our own scorer: a consumer reading the chain could not tell a scorer fix from a real change of the
 target's keys. Now:
 

@@ -1,0 +1,453 @@
+{
+ "about": "Every composite change published by the testnet oracles listed below, with its cause: correction = a fix of our own scorer, posture = a real change of the target's authority, mixed = both in one push. Oracles in notRead were not read: their changes are unknown, not zero. Every methodologyHash below is a hand-typed label from before 2026-09-30, which is why corrections went out under an unchanged hash; pushes after that date carry a hash tied to the code (scripts/lib/methodology.py).",
+ "generatedAt": 1790850685,
+ "oracles": [
+  {
+   "oracle": "Robinhood Chain",
+   "address": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
+   "events": 329,
+   "targets": 63,
+   "methodologyHashes": [
+    "0xc68de93c6cdfb927296ad0e266a649c6410dcbf9916fc6b0f36a72cff37bcd86",
+    "0xf2606acddcba40931e80d6e2a5a45ff06a0788ef4db7a53b60e19de4133b8975"
+   ],
+   "changes": [
+    {
+     "date": "2026-09-16",
+     "block": 120232957,
+     "tx": "e72f6fa7d0a35548519fdaf7534271abb39b6ded3c453552f7d75130959dd4f5",
+     "target": "0x23A19d23e89166adedbDcB432518AB01e4272D94",
+     "label": "Robinhood Chain L1 Rollup",
+     "from": 57,
+     "to": 60,
+     "sameHash": false,
+     "cause": "mixed",
+     "ref": "58c8409 (methodology v2 -> v3: PROPOSER_ROLE re-derived live, a holder now existed; real state change plus a scorer fix)"
+    },
+    {
+     "date": "2026-09-16",
+     "block": 120232957,
+     "tx": "e72f6fa7d0a35548519fdaf7534271abb39b6ded3c453552f7d75130959dd4f5",
+     "target": "0xBd0D173EEb87D57A09521c24388a12789F33ba96",
+     "label": "Robinhood Chain L1 SequencerInbox",
+     "from": 57,
+     "to": 60,
+     "sameHash": false,
+     "cause": "mixed",
+     "ref": "58c8409 (methodology v2 -> v3: PROPOSER_ROLE re-derived live, a holder now existed; real state change plus a scorer fix)"
+    },
+    {
+     "date": "2026-09-16",
+     "block": 120232957,
+     "tx": "e72f6fa7d0a35548519fdaf7534271abb39b6ded3c453552f7d75130959dd4f5",
+     "target": "0x1232813BDd40aa9d53066A880dE78a4Be70B90FD",
+     "label": "Robinhood Chain L1 CoreProxyAdmin",
+     "from": 57,
+     "to": 60,
+     "sameHash": false,
+     "cause": "mixed",
+     "ref": "58c8409 (methodology v2 -> v3: PROPOSER_ROLE re-derived live, a holder now existed; real state change plus a scorer fix)"
+    },
+    {
+     "date": "2026-09-16",
+     "block": 120232957,
+     "tx": "e72f6fa7d0a35548519fdaf7534271abb39b6ded3c453552f7d75130959dd4f5",
+     "target": "0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D",
+     "label": "Robinhood Chain L1 DelayedInbox",
+     "from": 57,
+     "to": 60,
+     "sameHash": false,
+     "cause": "mixed",
+     "ref": "58c8409 (methodology v2 -> v3: PROPOSER_ROLE re-derived live, a holder now existed; real state change plus a scorer fix)"
+    },
+    {
+     "date": "2026-09-16",
+     "block": 120232957,
+     "tx": "e72f6fa7d0a35548519fdaf7534271abb39b6ded3c453552f7d75130959dd4f5",
+     "target": "0xDf8755334ce7A73cCF6b581C02eA649AE3E864b3",
+     "label": "Robinhood Chain L1 Bridge",
+     "from": 57,
+     "to": 60,
+     "sameHash": false,
+     "cause": "mixed",
+     "ref": "58c8409 (methodology v2 -> v3: PROPOSER_ROLE re-derived live, a holder now existed; real state change plus a scorer fix)"
+    },
+    {
+     "date": "2026-09-16",
+     "block": 120232957,
+     "tx": "e72f6fa7d0a35548519fdaf7534271abb39b6ded3c453552f7d75130959dd4f5",
+     "target": "0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9",
+     "label": "Robinhood Chain L1 Outbox",
+     "from": 57,
+     "to": 60,
+     "sameHash": false,
+     "cause": "mixed",
+     "ref": "58c8409 (methodology v2 -> v3: PROPOSER_ROLE re-derived live, a holder now existed; real state change plus a scorer fix)"
+    },
+    {
+     "date": "2026-09-17",
+     "block": 120739543,
+     "tx": "52ccd2e50a663dc04e38da498f251f1dfb9149368748e2145e703daa7949746e",
+     "target": "0x8366a39CC670B4001A1121B8F6A443A643e40951",
+     "label": "Uniswap v4 PoolManager",
+     "from": 2,
+     "to": 85,
+     "sameHash": true,
+     "cause": "correction",
+     "ref": "d7df4e5 (bridge alias of the L1 Uniswap Timelock, was scored as a bare EOA)"
+    },
+    {
+     "date": "2026-09-17",
+     "block": 120784821,
+     "tx": "ee1ae9863868566f6c16567f9256c5deadf437b8c95d2a1c5e7bcc2a2c40f78f",
+     "target": "0x1f7d7550B1b028f7571E69A784071F0205FD2EfA",
+     "label": "Uniswap v3 Factory",
+     "from": 2,
+     "to": 85,
+     "sameHash": true,
+     "cause": "correction",
+     "ref": "d7df4e5"
+    },
+    {
+     "date": "2026-09-17",
+     "block": 120784821,
+     "tx": "ee1ae9863868566f6c16567f9256c5deadf437b8c95d2a1c5e7bcc2a2c40f78f",
+     "target": "0x000000007A1C8e570011EeDF86A2A35593013cBA",
+     "label": "UniswapX V3DutchOrderReactor",
+     "from": 2,
+     "to": 85,
+     "sameHash": true,
+     "cause": "correction",
+     "ref": "d7df4e5"
+    },
+    {
+     "date": "2026-09-17",
+     "block": 120784821,
+     "tx": "ee1ae9863868566f6c16567f9256c5deadf437b8c95d2a1c5e7bcc2a2c40f78f",
+     "target": "0x8bcEaA40B9AcdfAedF85AdF4FF01F5Ad6517937f",
+     "label": "Uniswap V2 Factory feeToSetter",
+     "from": 2,
+     "to": 85,
+     "sameHash": true,
+     "cause": "correction",
+     "ref": "d7df4e5"
+    },
+    {
+     "date": "2026-09-17",
+     "block": 120879100,
+     "tx": "173db78bd97b89f94e7f6af6e9cf56055491412d612f3713883bffa8cf54f27c",
+     "target": "0x23A19d23e89166adedbDcB432518AB01e4272D94",
+     "label": "Robinhood Chain L1 Rollup",
+     "from": 60,
+     "to": 57,
+     "sameHash": true,
+     "cause": "correction",
+     "ref": "064a30d (fix L1 rollup authority score)"
+    },
+    {
+     "date": "2026-09-17",
+     "block": 120879100,
+     "tx": "173db78bd97b89f94e7f6af6e9cf56055491412d612f3713883bffa8cf54f27c",
+     "target": "0xBd0D173EEb87D57A09521c24388a12789F33ba96",
+     "label": "Robinhood Chain L1 SequencerInbox",
+     "from": 60,
+     "to": 57,
+     "sameHash": true,
+     "cause": "correction",
+     "ref": "064a30d"
+    },
+    {
+     "date": "2026-09-17",
+     "block": 120879100,
+     "tx": "173db78bd97b89f94e7f6af6e9cf56055491412d612f3713883bffa8cf54f27c",
+     "target": "0x1232813BDd40aa9d53066A880dE78a4Be70B90FD",
+     "label": "Robinhood Chain L1 CoreProxyAdmin",
+     "from": 60,
+     "to": 57,
+     "sameHash": true,
+     "cause": "correction",
+     "ref": "064a30d"
+    },
+    {
+     "date": "2026-09-17",
+     "block": 120879100,
+     "tx": "173db78bd97b89f94e7f6af6e9cf56055491412d612f3713883bffa8cf54f27c",
+     "target": "0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D",
+     "label": "Robinhood Chain L1 DelayedInbox",
+     "from": 60,
+     "to": 57,
+     "sameHash": true,
+     "cause": "correction",
+     "ref": "064a30d"
+    },
+    {
+     "date": "2026-09-17",
+     "block": 120879100,
+     "tx": "173db78bd97b89f94e7f6af6e9cf56055491412d612f3713883bffa8cf54f27c",
+     "target": "0xDf8755334ce7A73cCF6b581C02eA649AE3E864b3",
+     "label": "Robinhood Chain L1 Bridge",
+     "from": 60,
+     "to": 57,
+     "sameHash": true,
+     "cause": "correction",
+     "ref": "064a30d"
+    },
+    {
+     "date": "2026-09-17",
+     "block": 120879100,
+     "tx": "173db78bd97b89f94e7f6af6e9cf56055491412d612f3713883bffa8cf54f27c",
+     "target": "0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9",
+     "label": "Robinhood Chain L1 Outbox",
+     "from": 60,
+     "to": 57,
+     "sameHash": true,
+     "cause": "correction",
+     "ref": "064a30d"
+    },
+    {
+     "date": "2026-09-26",
+     "block": 124480424,
+     "tx": "521076fcda7d834af03240e6bb03ebd771e7789962cf1ecde5f673b9d784fad8",
+     "target": "0xeE27D5Ae494300902D90454e8630A3F1C68c9C52",
+     "label": "Chainlink Price Feed Admin (Robinhood Chain)",
+     "from": 36,
+     "to": 52,
+     "sameHash": true,
+     "cause": "correction",
+     "ref": "cee78d8 (multisigScore was a leftover threshold*8 heuristic: 32/40 -> 85; signers unchanged, Chainlink Safe 4-of-9, LayerZero OneSig 5-of-7)"
+    },
+    {
+     "date": "2026-09-26",
+     "block": 124480424,
+     "tx": "521076fcda7d834af03240e6bb03ebd771e7789962cf1ecde5f673b9d784fad8",
+     "target": "0x6F475642a6e85809B1c36Fa62763669b1b48DD5B",
+     "label": "LayerZero V2 EndpointV2 (Robinhood Chain)",
+     "from": 34,
+     "to": 48,
+     "sameHash": true,
+     "cause": "correction",
+     "ref": "cee78d8 (multisigScore was a leftover threshold*8 heuristic: 32/40 -> 85; signers unchanged, Chainlink Safe 4-of-9, LayerZero OneSig 5-of-7)"
+    },
+    {
+     "date": "2026-09-26",
+     "block": 124480424,
+     "tx": "521076fcda7d834af03240e6bb03ebd771e7789962cf1ecde5f673b9d784fad8",
+     "target": "0xC39161c743D0307EB9BCc9FEF03eeb9Dc4802de7",
+     "label": "LayerZero V2 SendUln302 (Robinhood Chain)",
+     "from": 34,
+     "to": 48,
+     "sameHash": true,
+     "cause": "correction",
+     "ref": "cee78d8 (multisigScore was a leftover threshold*8 heuristic: 32/40 -> 85; signers unchanged, Chainlink Safe 4-of-9, LayerZero OneSig 5-of-7)"
+    },
+    {
+     "date": "2026-09-26",
+     "block": 124480424,
+     "tx": "521076fcda7d834af03240e6bb03ebd771e7789962cf1ecde5f673b9d784fad8",
+     "target": "0xe1844c5D63a9543023008D332Bd3d2e6f1FE1043",
+     "label": "LayerZero V2 ReceiveUln302 (Robinhood Chain)",
+     "from": 34,
+     "to": 48,
+     "sameHash": true,
+     "cause": "correction",
+     "ref": "cee78d8 (multisigScore was a leftover threshold*8 heuristic: 32/40 -> 85; signers unchanged, Chainlink Safe 4-of-9, LayerZero OneSig 5-of-7)"
+    }
+   ],
+   "unreadRanges": 0
+  },
+  {
+   "oracle": "Ethereum L1 (Sepolia)",
+   "address": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
+   "events": 107,
+   "targets": 25,
+   "methodologyHashes": [
+    "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167"
+   ],
+   "changes": [
+    {
+     "date": "2026-09-26",
+     "block": 11784717,
+     "tx": "88e3b6b34f09ccc91c3726eac40bf7014dfb4ce74e1e9705a520092b4f16b2d6",
+     "target": "0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+     "label": "Morpho Blue",
+     "from": 55,
+     "to": 56,
+     "sameHash": true,
+     "cause": "mixed",
+     "ref": "owner Safe 5-of-9 -> 6-of-10 on 2026-09-22 (tx d7aae020, scripts/check_safe_changes.py); the cross-exposure flag 80 -> 100 is a method artifact of exact committee equality, under review"
+    }
+   ],
+   "unreadRanges": 0
+  },
+  {
+   "oracle": "Arbitrum (Sepolia)",
+   "address": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
+   "events": 55,
+   "targets": 13,
+   "methodologyHashes": [
+    "0x6acfe9c5f210a6d1e4cd50a30ea19b8436bcee1b948e633d2de153bd4dd78915"
+   ],
+   "changes": [
+    {
+     "date": "2026-09-19",
+     "block": 310589900,
+     "tx": "a934822b3ed2959761641e312b4646890243ede3f82648e433fecfea1d57d85b",
+     "target": "0x3c3d99FD298f679DBC2CEcd132b4eC4d0F5e6e72",
+     "label": "GMX V2 RoleStore",
+     "from": 71,
+     "to": 22,
+     "sameHash": true,
+     "cause": "correction",
+     "ref": "f2b1958 (CORRECT GMX V2 RoleStore 71 -> 22)"
+    },
+    {
+     "date": "2026-09-20",
+     "block": 310697409,
+     "tx": "308ad2c8fa527a0e5c30139b6b154ff48462cd046df9840a17f25775c21fbd23",
+     "target": "0xE23B4AE3624fB6f7cDEF29bC8EAD912f1Ede6886",
+     "label": "Radiant lending pool",
+     "from": 69,
+     "to": 55,
+     "sameHash": true,
+     "cause": "correction",
+     "ref": "042f805 (Radiant pool-admin bypass)"
+    },
+    {
+     "date": "2026-09-20",
+     "block": 310866307,
+     "tx": "d0437c358c6eb0a6e1b21ad13c433172ec4ccf9acd08d9e106bbb1ca66ecfafe",
+     "target": "0x3c3d99FD298f679DBC2CEcd132b4eC4d0F5e6e72",
+     "label": "GMX V2 RoleStore",
+     "from": 22,
+     "to": 19,
+     "sameHash": true,
+     "cause": "correction",
+     "ref": "0d016b0 (DAO timelock's bare-EOA proposer, already in place)"
+    },
+    {
+     "date": "2026-09-26",
+     "block": 312847846,
+     "tx": "0b67051edf7bd783bf9ba8c4479231a644bcd723f272a3e49158b4848abc7254",
+     "target": "0x9c4ec768c28520B50860ea7a15bd7213a9fF58bf",
+     "label": "Compound V3 Comet USDC",
+     "from": 80,
+     "to": 78,
+     "sameHash": true,
+     "cause": "correction",
+     "ref": "d6dca5e (pauseGuardian bypass cap, matching L1)"
+    }
+   ],
+   "unreadRanges": 0
+  },
+  {
+   "oracle": "Base (Sepolia)",
+   "address": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
+   "events": 50,
+   "targets": 13,
+   "methodologyHashes": [
+    "0x758072e35c77f0ad21afcf9baa2a5508bfbdbd2d0391c5704b6302cb74e7cb34"
+   ],
+   "changes": [
+    {
+     "date": "2026-09-26",
+     "block": 47319454,
+     "tx": "cb2d686392b1d6c831d5f8f7b7ab5b6b2c8e7ad26fafb3341fd1e1f35232a96a",
+     "target": "0xb125E6687d4313864e53df431d5425969c15Eb2F",
+     "label": "Compound V3 Comet USDC",
+     "from": 80,
+     "to": 78,
+     "sameHash": true,
+     "cause": "correction",
+     "ref": "d6dca5e"
+    }
+   ],
+   "unreadRanges": 0
+  },
+  {
+   "oracle": "Tempo (Moderato)",
+   "address": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
+   "events": 55,
+   "targets": 14,
+   "methodologyHashes": [
+    "0xe653d28506a2817ef2eca397d999966bd56a35d9024e25cdfccbb618d1a3909a"
+   ],
+   "changes": [],
+   "unreadRanges": 0
+  },
+  {
+   "oracle": "Plasma",
+   "address": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
+   "events": 52,
+   "targets": 9,
+   "methodologyHashes": [
+    "0x929c84827d35d9d79906aeab3d4731d1129a3df97d4a6cfc7df1748b62a722cd"
+   ],
+   "changes": [
+    {
+     "date": "2026-09-20",
+     "block": 34083939,
+     "tx": "490f5bb8ec6c6a436bfde4aee358928e24b8ac5597e74b72cd2f0c5f01adbb1a",
+     "target": "0x6695c0f8706C5ACe3Bdf8995073179cCA47926dc",
+     "label": "Yuzu Money yzUSD",
+     "from": 55,
+     "to": 43,
+     "sameHash": true,
+     "cause": "correction",
+     "ref": "b464fbe (placeholder adminKey 20 replaced by the traced authority chain)"
+    },
+    {
+     "date": "2026-09-20",
+     "block": 34100595,
+     "tx": "3c709f07756416a72c5fce1bd96ffa482b52df3c8bd2a9d283f88aa263e0f645",
+     "target": "0x52Aa899454998Be5b000Ad077a46Bbe360F4e497",
+     "label": "Fluid",
+     "from": 67,
+     "to": 59,
+     "sameHash": true,
+     "cause": "correction",
+     "ref": "6cb45d2 (floors and admin classification per METHODOLOGY)"
+    }
+   ],
+   "unreadRanges": 0
+  },
+  {
+   "oracle": "Monad",
+   "address": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
+   "events": 43,
+   "targets": 9,
+   "methodologyHashes": [
+    "0x8e05d88ce076e117dd169362399b9f417b8e7f33cc6c73d844139b9b1a7604c7"
+   ],
+   "changes": [
+    {
+     "date": "2026-09-20",
+     "block": 64022942,
+     "tx": "a93596300b689383572880cd4de76ee2fc7bce68ac5791db38501b07b987a019",
+     "target": "0x34793Fb9935F7bB5E5aE920fb963F39063E7A615",
+     "label": "Aave V3 (Monad)",
+     "from": 71,
+     "to": 49,
+     "sameHash": true,
+     "cause": "correction",
+     "ref": "042f805 (Monad Aave pool-admin bypass: the PROTOCOL_GUARDIAN Safe's POOL_ADMIN seat newly scored, same change as Radiant)"
+    },
+    {
+     "date": "2026-09-24",
+     "block": 65351763,
+     "tx": "8e756a8b505e00f6c8e2366ae7281f78be084ed20195ddfdbca69b13557489bc",
+     "target": "0x32841A8511D5c2c5b253f45668780B99139e476D",
+     "label": "Morpho Vault Grove x Steakhouse High Yield AUSD (Monad)",
+     "from": 60,
+     "to": 61,
+     "sameHash": true,
+     "cause": "posture",
+     "ref": "curator Safe 0x827e8607 went 2-of-6 (scorer docstring, read 2026-09-19) to 2-of-7 (read live 2026-10-01); published multisigScore 50 -> 55 matches; formula unchanged since ecd0945; AddedOwner block unread (public Monad RPCs: no archive, 100-block log cap)"
+    }
+   ],
+   "unreadRanges": 0
+  }
+ ],
+ "notRead": [
+  "Hyperliquid (HyperEVM)"
+ ]
+}

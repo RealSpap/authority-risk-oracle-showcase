@@ -104,6 +104,12 @@ def _patch_helpers(test_case, fake):
     for n in names:
         setattr(scorers, n, getattr(fake, n))
     test_case.addCleanup(lambda: [setattr(scorers, n, originals[n]) for n in names])
+    # The 2026-10-01 disclosure helpers read the chain through real web3_utils getters that retry with sleeps on this
+    # file's FakeW3; they have their own offline test (chains/ethereum-l1/tests/test_disclosures_2026_10_01.py), so stub them.
+    for n, stub in (("_upgrade_path", lambda contract: "upgrade path stubbed"), ("_holder_kind", lambda address: "kind stubbed")):
+        original = getattr(scorers, n)
+        setattr(scorers, n, stub)
+        test_case.addCleanup(setattr, scorers, n, original)
 
 
 class FakeW3:

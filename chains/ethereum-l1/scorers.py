@@ -26,6 +26,7 @@ full reasoning and the open threads each target still carries.
 """
 import os
 import sys
+import time
 
 from web3 import Web3  # noqa: E402
 
@@ -263,6 +264,9 @@ _MAIN_POOL_KNOWN_RISK_ADMIN = {
     "0x5513224daaeabca31af5280727878d52097afa05": "Gho Core Direct Minter",
     "0x98217a06721ebf727f2c8d9ad7718ec28b7aae34": "Core GHO Aave Steward",
     "0xbe2840440d4f77cd98cec2de09913e6851907744": "EModeCategoryAgent",
+    # ADDED 2026-10-01: RISK_ADMIN granted 2026-09-30 10:01 UTC, hasRole confirmed on two RPCs; named "Manual AGRS" (a second one)
+    # in aave-dao/aave-permissions-book out/ETHEREUM-V3.md. Carries updateLstPriceCaps/updateStablePriceCaps/updatePendleDiscountRates.
+    "0x6f48d9cdb8ee6e17c96b2d8aec128af426a295c1": "Manual AGRS (second)",
 }
 
 
@@ -472,6 +476,12 @@ def score_aave_v3_pool(w3) -> dict:
         notes.append("PROTOCOL_GUARDIAN emergency-admin identification did not verify cleanly this run -- adminKeyScore degraded to the pre-correction level, treat as unverified")
     multisig = 100  # not applicable: PayloadsController/Executor pair is not a Safe
 
+    # ADDED 2026-10-01 (DeFiScan diff): Umbrella, the stakers' slashing module, has its own admin besides the Executor.
+    notes.append(_disclose_role_holders(
+        "0xD400fc38ED4732893174325693a63C30ee3881a8", "Umbrella", bytes(32), "DEFAULT_ADMIN_ROLE", 22481753,
+        "a holder can grant itself every Umbrella role, set slashing and cooldowns and pause stakers; slashed funds go to the "
+        "fixed Collector, and Umbrella's ProxyAdmin stays with the Executor (no upgrade)"))
+
     return {
         "target": provider, "label": "Aave V3 Ethereum Pool (PoolAddressesProvider)",
         "adminKeyScore": admin_key, "multisigScore": multisig, "timelockScore": timelock_score,
@@ -587,6 +597,92 @@ def _selector_role(role_name: str) -> bytes:
 
 def _addr_eq(a, b) -> bool:
     return bool(a) and bool(b) and str(a).lower() == str(b).lower()
+
+
+_PUBLIC_RPCS = ["https://ethereum-rpc.publicnode.com", "https://eth.drpc.org"]
+_GET_PAUSER_ABI = [{"name": "getPauser", "type": "function", "stateMutability": "view", "inputs": [{"type": "address"}], "outputs": [{"type": "address"}]}]
+_IS_PAUSER_LIVE_ABI = [{"name": "isPauserLive", "type": "function", "stateMutability": "view", "inputs": [{"type": "address"}], "outputs": [{"type": "bool"}]}]
+_PAUSE_DURATION_ABI = [{"name": "pauseDuration", "type": "function", "stateMutability": "view", "inputs": [], "outputs": [{"type": "uint256"}]}]
+_ROLE_REPLAY_CHUNK = 250_000  # the Tenderly gateway can answer [] instead of an error above its cap: never one full-range call
+
+
+def _holder_kind(address):
+    """bare EOA / EOA with an EIP-7702 delegation / Safe t-of-n (and its modules) / contract, code read on two RPCs. Never raises:
+    an unread kind is said so, never guessed."""
+    try:
+        code = cross_checked(_PUBLIC_RPCS, lambda w3_, a: bytes(w3_.eth.get_code(Web3.to_checksum_address(a))), address)
+        if not code:
+            return "bare EOA"
+        if code[:3] == b"\xef\x01\x00":
+            return f"EOA with an EIP-7702 delegation to 0x{code[3:23].hex()}"
+        w3_ = get_w3(_PUBLIC_RPCS[0])
+        safe = safe_owners_and_threshold(w3_, address, check_modules=False)
+        if not safe:
+            return "contract"
+        mods = call_raw(w3_, address, _SAFE_MODULES_ABI, "getModulesPaginated", "0x0000000000000000000000000000000000000001", 10)
+        n = len(mods[0]) if mods else None
+        return f"Safe {safe[1]}-of-{len(safe[0])}" + ("" if n == 0 else f" with {n} module(s), unanalyzed" if n else ", modules unread")
+    except Exception as e:  # noqa: BLE001
+        return f"kind unread ({type(e).__name__})"
+
+
+def _disclose_role_holders(contract, contract_label, role_hash, role_label, start_block, power):
+    """Disclosure only, never scored (added 2026-10-01 from the DeFiScan v2 diff, data/finding_2026-09-30-defiscan-diff-triage.md;
+    hardened the same day after an independent review). The live holders of one AccessControl role: RoleGranted/RoleRevoked
+    replayed from the contract's deployment block on the Tenderly gateway in chunks (it can answer [] above its cap, so a
+    replay with no event at all is an anomaly, never "nobody"), each candidate confirmed by hasRole on two RPCs (no answer =
+    unread, only False = no) and classified. Works for DEFAULT_ADMIN_ROLE (bytes32 zero), which `_replay_role_holders` cannot
+    name. Returns one note line and never raises, so a disclosure can never stop a score from being published."""
+    head = f"{role_label} on {contract_label} (disclosed, not scored)"
+    try:
+        granted = "0x" + Web3.keccak(text="RoleGranted(bytes32,address,address)").hex()
+        revoked = "0x" + Web3.keccak(text="RoleRevoked(bytes32,address,address)").hex()
+        w3t = get_w3(_TENDERLY_MAINNET)
+        latest, logs = w3t.eth.block_number, []
+        for start in range(start_block, latest + 1, _ROLE_REPLAY_CHUNK):
+            flt = {"address": Web3.to_checksum_address(contract), "fromBlock": start, "toBlock": min(start + _ROLE_REPLAY_CHUNK - 1, latest),
+                   "topics": [[granted, revoked], "0x" + role_hash.hex()]}
+            for attempt in range(3):
+                try:
+                    logs += w3t.eth.get_logs(flt)
+                    break
+                except (AttributeError, TypeError):
+                    raise  # a programming or stub error, not the network: no point waiting to retry
+                except Exception:  # noqa: BLE001
+                    if attempt == 2:
+                        raise
+                    time.sleep(1.5 * (attempt + 1))
+        if not logs:
+            return f"{head}: role replay returned no event at all (a role always has a first grant: anomaly), holders not read -- {power}"
+        candidates = {Web3.to_checksum_address("0x" + bytes(lg["topics"][2])[-20:].hex()) for lg in logs}
+        holders, unread = [], []
+        for who in sorted(candidates):
+            try:
+                live = cross_checked(_PUBLIC_RPCS, lambda w3_, a: call_raw(w3_, contract, _HAS_ROLE_ABI, "hasRole", role_hash, a), who)
+            except Exception:  # noqa: BLE001 -- RPC disagreement or failure
+                live = None
+            if live is None:
+                unread.append(who)
+            elif live is True:
+                holders.append(who)
+        found = "; ".join(f"{h} ({_holder_kind(h)})" for h in holders) or "no holder confirmed live"
+        return f"{head}: {found}" + (f"; hasRole UNREAD for {unread}" if unread else "") + f" -- {power}"
+    except Exception as e:  # noqa: BLE001
+        return f"{head}: role replay FAILED this run ({type(e).__name__}), holders not read -- {power}"
+
+
+def _upgrade_path(contract):
+    """One phrase on who can replace a contract's code (EIP-1967 admin, then ProxyAdmin.owner()), read on two RPCs. Never raises."""
+    try:
+        admin = cross_checked(_PUBLIC_RPCS, lambda w3_, a: read_slot_as_address(w3_, a, _EIP1967_ADMIN_SLOT), contract)
+        if not admin or int(admin, 16) == 0:
+            return "not an EIP-1967 proxy (no admin slot)"
+        owner = cross_checked(_PUBLIC_RPCS, lambda w3_, a: read_address_getter(w3_, a, "owner"), admin)
+        if not owner:
+            return f"upgradeable through proxy admin {admin} ({_holder_kind(admin)})"
+        return f"upgradeable through ProxyAdmin {admin} owned by {owner} ({_holder_kind(owner)}), no timelock read on that path"
+    except Exception as e:  # noqa: BLE001
+        return f"upgrade path unread ({type(e).__name__})"
 
 
 def score_ethena_minting(w3) -> dict:
@@ -733,6 +829,17 @@ def score_ethena_minting(w3) -> dict:
     else:
         admin_key, multisig, timelock_score = 20, 20, 0
         notes.append("One or more live guards were unread or inconsistent this run (USDe.minter/owner, DEFAULT_ADMIN holder, timelock delay/proposer, Safe, whitelist reads) -- scores degraded, treat as unverified")
+
+    # ADDED 2026-10-01 (DeFiScan diff): the staking vaults' freeze power, outside this target's scored path.
+    # Reviewed the same day: sENA is an upgradeable proxy, so "seizing needs the timelock" is only true where the vault cannot be
+    # upgraded; the upgrade path is read live and stated per vault instead of assumed.
+    for vault, label, deployed in (("0x9D39A5DE30e57443BfF2A8307A4256c8797A3497", "sUSDe (StakedUSDeV2)", 18571359),
+                                   ("0x8bE3460A480c80728a8C4D7a5D5303c85ba7B3b9", "sENA (StakedENA)", 20713442)):
+        notes.append(_disclose_role_holders(
+            vault, label, bytes(Web3.keccak(text="BLACKLIST_MANAGER_ROLE")), "BLACKLIST_MANAGER_ROLE", deployed,
+            "can freeze any holder's shares at once, a full blacklist blocking transfers and withdrawals, including a lending market "
+            "holding them as collateral; seizing through redistributeLockedAmount needs DEFAULT_ADMIN; the vault itself is "
+            + _upgrade_path(vault)))
 
     return {
         "target": minting, "label": "Ethena EthenaMinting (USDe live minter)",
@@ -1580,6 +1687,28 @@ def score_lido_steth(w3) -> dict:
     else:
         oracle_authority = 20
         notes.append("AccountingOracle/HashConsensus quorum did not read this run -- oracleAuthorityScore 20 (unknown, not waved through as 100)")
+
+    # ADDED 2026-10-01 (DeFiScan diff): who can pause stETH withdrawals today, with no delay. Disclosed, not scored.
+    circuit_breaker, withdrawal_queue = "0x6019CB557978296BA3C08a7B73225C0975DFB2F7", "0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1"
+    # Reviewed the same day: a registered pauser can only pause while its heartbeat is live and while the CircuitBreaker still
+    # holds PAUSE_ROLE on the queue, and the duration is a setting, not a constant: all three are read.
+    try:
+        pauser = cross_checked(_PUBLIC_RPCS, lambda w3_, q: call_raw(w3_, circuit_breaker, _GET_PAUSER_ABI, "getPauser", q), withdrawal_queue)
+        if pauser is None or int(pauser, 16) == 0:
+            notes.append(f"WithdrawalQueue pauser via CircuitBreaker {circuit_breaker[:10]}.. (disclosed, not scored): none registered")
+        else:
+            live = cross_checked(_PUBLIC_RPCS, lambda w3_, a: call_raw(w3_, circuit_breaker, _IS_PAUSER_LIVE_ABI, "isPauserLive", a), pauser)
+            role = cross_checked(_PUBLIC_RPCS, lambda w3_, a: call_raw(w3_, withdrawal_queue, _HAS_ROLE_ABI, "hasRole",
+                                                                       bytes(Web3.keccak(text="PAUSE_ROLE")), a), circuit_breaker)
+            duration = cross_checked(_PUBLIC_RPCS, lambda w3_, a: call_raw(w3_, a, _PAUSE_DURATION_ABI, "pauseDuration"), circuit_breaker)
+            can = ("can pause stETH-to-ETH withdrawals now" if live is True and role is True
+                   else f"registered but cannot pause now (heartbeat live: {live}, CircuitBreaker holds PAUSE_ROLE: {role})")
+            notes.append(f"WithdrawalQueue pauser via CircuitBreaker {circuit_breaker[:10]}.. (disclosed, not scored): {pauser} "
+                         f"({_holder_kind(pauser)}) -- {can}, with no delay, once (the pauser is then cleared), for "
+                         + (f"{duration / 86400:g} days" if duration is not None else "an unread duration")
+                         + "; extendable by the Reseal Committee outside Dual Governance's Normal state; cannot move funds")
+    except Exception as e:  # noqa: BLE001
+        notes.append(f"WithdrawalQueue pauser (disclosed, not scored): CircuitBreaker reads UNREAD this run ({type(e).__name__})")
 
     return {
         "target": token, "label": "Lido stETH (Ethereum L1)",

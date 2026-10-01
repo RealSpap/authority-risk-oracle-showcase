@@ -135,3 +135,19 @@ before trusting the rest). AgoraProxyAdmin's `owner()` chase done live with this
 pure classification logic
 (`scripts/lib/tests/test_issuer_power.py`) + 3 for the new `read_address_array_getter()` helper
 (`scripts/lib/tests/test_web3_utils.py`). Full suite (6 directories) green.
+
+## Addendum 2026-10-01: how much can be minted right now (disclosed, not scored)
+
+`python3 scripts/check_issuer_power.py` now prints a `mint bound` line per asset: what can be minted without a further
+admin act. Read that day:
+
+| Asset | Mint bound |
+|---|---|
+| USDC (Ethereum) | 32 minters (FiatToken), replayed from 3,811 MinterConfigured/MinterRemoved logs up to one block both the log source and the reading RPC had reached, each confirmed by `isMinter()` at that block: about 2.24 billion USDC mintable, 1.79 billion of it by one minter (`0x5B6122C1...`) |
+| USDC (Base) | UNREAD: no public source serves the full log history (Tenderly's Base gateway caps at 1,000 blocks, Blockscout at 10,000 results) |
+| USDT (Ethereum) | no on-chain bound: `issue(uint256)` mints any amount, there is no allowance or rate limit to read |
+| AUSD (Ethereum) | rate-limited, minting not paused: 25 million mintable in the current windows (minter `0x65e28662...` 15 M, bridge minter `0x9CaB7Ede...` 10 M) |
+
+What it adds: the freeze/seize/pause table above says what an issuer can do to balances; this says how far an issuer's
+minting keys reach before someone must raise an allowance. Limits: a FiatToken allowance is raised by its masterMinter
+in one transaction, so the bound is a speed bump, not a ceiling; the minter names are not resolved here.

@@ -47,7 +47,7 @@ STEWARD_ENTRIES = ["updateLstPriceCaps((address,(uint104,uint48,uint16))[])", "u
                    "updatePendleDiscountRates((address,uint256)[])"]
 IMPL_SLOT = 0x360894A13BA1A3210667C828492DB98DCA3E2076CC3735A920A3CA505D382BBC
 ADMIN_SLOT = 0xB53127684A568B3173AE13B9F8A6016E243E63B6E8EE1178D6A717850B5D6103
-BEACON_SLOT = 0xA3F0AD74E5423AEBFD80D3EF4346578335A9A72AEAEE59FF6CB3582CFB8BC3D0
+BEACON_SLOT = 0xA3F0AD74E5423AEBFD80D3EF4346578335A9A72AEAEE59FF6CB3582B35133D50  # keccak("eip1967.proxy.beacon") - 1
 LST, STABLE, PENDLE, RATIO = "LST CAPO", "stable CAPO", "Pendle PT discount", "ratio-capped adapter"
 
 
@@ -462,10 +462,24 @@ def main():
                 if cst != "ok" or not paths:
                     continue
                 print(f"      bounds {steward_bounds(w3, h)}")
+                # Every adapter of each kind behind this gate, not only the largest (changed 2026-10-04 after a review: a bound
+                # proven on one adapter says nothing about another adapter's own parameters).
                 for k, (entry, sim) in SIMULATIONS.items():
-                    target = next((r for r in gated if r["kind"] == k), None)
-                    if target and entry in paths:
-                        print(f"      {target['symbol']}: {sim(w3, h, council, target['source'])}")
+                    by_src = {}  # one simulation per adapter; a source shared by two reserves (USDG, PT-USDG) keeps both rows
+                    for r in gated:
+                        if r["kind"] == k:
+                            by_src.setdefault(r["source"], []).append(r)
+                    if not by_src or entry not in paths:
+                        continue
+                    verdicts = {src: sim(w3, h, council, src) for src in by_src}
+                    refused = [src for src, v in verdicts.items() if v.startswith("REFUSES")]
+
+                    def usd(srcs):
+                        return sum(r["supplyUsd"] or 0 for src in srcs for r in by_src[src]) / 1e9
+                    print(f"      {k}: refused on {len(refused)}/{len(verdicts)} adapters (${usd(refused):.3f}B of ${usd(by_src):.3f}B)")
+                    for src, v in verdicts.items():
+                        if src not in refused:
+                            print(f"         {'/'.join(r['symbol'] for r in by_src[src])} {src}: {v}")
     print("\nDisclosed only: no score reads this. The simulations are eth_call from the council's address: nothing is sent.")
 
 

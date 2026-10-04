@@ -38,6 +38,22 @@ def _load_module(unique_name, relative_path):
 sys.path.insert(0, os.path.join(REPO_ROOT, "scripts", "lib"))
 scorers = _load_module("aro_test_plasma_ecosystem_scorers", "chains/plasma-ecosystem/scorers.py")
 
+# The price-authority walk (2026-10-04) reads many feeds on a real chain; it has its own offline test
+# (scripts/lib/tests/test_price_authority.py), so the scorer bodies here see a fixed 100.
+_PA_NAMES = ("for_aave", "for_comet", "for_morpho_v1")
+_PA_ORIG = {}
+
+
+def setUpModule():
+    for n in _PA_NAMES:
+        _PA_ORIG[n] = getattr(scorers.price_authority, n)
+        setattr(scorers.price_authority, n, lambda *a, **k: 100)
+
+
+def tearDownModule():
+    for n, f in _PA_ORIG.items():
+        setattr(scorers.price_authority, n, f)
+
 
 def _addr(n):
     return RealWeb3.to_checksum_address("0x" + hex(n)[2:].zfill(40))
@@ -361,6 +377,43 @@ class TestScoreEthenaUsdeOftPlasma(unittest.TestCase):
 
         result = scorers.score_ethena_usde_oft_plasma(self.w3)
         self.assertEqual((result["adminKeyScore"], result["multisigScore"], result["timelockScore"]), (20, 20, 0))
+
+    # ADDED 2026-10-04: ownership moved to a TimelockController on 2026-09-29 (Plasma block 33749732). Documented live reads
+    # of that day: getMinDelay 86400; the old owner Safe holds PROPOSER/EXECUTOR/CANCELLER/WHITELISTED_EXECUTOR;
+    # isWhitelisted(OFT, setPeer) True, isWhitelisted(OFT, setDelegate) False; the Safe is 5-of-10 with the L1 owner set.
+    # Expected values are Ethereum L1's convention for the same shape (score_ethena_layerzero_oft: 55/100/15), composite by
+    # hand: (4*55 + 3*100 + 3*15 + 5) // 10 = 57.
+    def _timelock_owner(self, peer=True, delegate=False, proposer=True):
+        tl, safe = _addr(700), scorers._ETHENA_PLASMA_SAFE
+        cs = RealWeb3.to_checksum_address
+        self.fake.code_sizes[OFT.lower()] = 13639
+        self.fake.address_getters[(OFT, "owner")] = tl
+        self.fake.call_raw_results[(OFT, "pendingOwner", ())] = "0x" + "0" * 40
+        self.fake.call_raw_results[(tl, "getMinDelay", ())] = 86400
+        for role, held in (("PROPOSER_ROLE", proposer), ("EXECUTOR_ROLE", True), ("CANCELLER_ROLE", True), ("WHITELISTED_EXECUTOR_ROLE", True)):
+            self.fake.call_raw_results[(tl, "hasRole", (RealWeb3.keccak(text=role), cs(safe)))] = held
+        self.fake.call_raw_results[(tl, "isWhitelisted", (cs(OFT), bytes.fromhex("3400288b")))] = peer
+        self.fake.call_raw_results[(tl, "isWhitelisted", (cs(OFT), bytes.fromhex("ca5eb5e1")))] = delegate
+        self.fake.safe_results[safe] = (KNOWN_ETHENA_L1, 5)
+        return scorers.score_ethena_usde_oft_plasma(self.w3)
+
+    def test_owner_is_timelock_scores_like_the_l1_adapter(self):
+        r = self._timelock_owner()
+        self.assertEqual((r["adminKeyScore"], r["multisigScore"], r["timelockScore"], r["compositeScore"]), (55, 100, 15, 57))
+        self.assertEqual(r["crossExposureScore"], 80)
+        self.assertTrue(any(n == "USDeOFT.pendingOwner() = none" for n in r["notes"]))
+
+    def test_resolved_but_different_whitelist_shape_follows_l1(self):
+        r = self._timelock_owner(delegate=True)  # setDelegate whitelisted too: resolved, so L1's rule gives timelock 0, not the floor
+        self.assertEqual((r["adminKeyScore"], r["multisigScore"], r["timelockScore"]), (55, 100, 0))
+
+    def test_timelock_shape_not_confirmed_degrades(self):
+        for kw in ({"peer": None}, {"delegate": None}, {"proposer": False}):
+            self.fake = FakeHelpers()
+            _patch_helpers(self, self.fake)
+            self.w3 = FakeW3(self.fake)
+            r = self._timelock_owner(**kw)
+            self.assertEqual((r["adminKeyScore"], r["multisigScore"], r["timelockScore"]), (20, 20, 0), kw)
 
 
 EULER_FACTORY = "0x42388213C6F56D7E1477632b58Ae6Bba9adeEeA3"

@@ -214,6 +214,14 @@ class TestParseArgs(unittest.TestCase):
     def test_dry_run_flag(self):
         self.assertTrue(push.parse_args(["--dry-run"]).dry_run)
 
+    def test_push_guard_escape_flags_both_forms(self):
+        # ADDED 2026-10-04: argparse rejected these flags, so a held entry blocked the Hyperliquid push for good.
+        a = push.parse_args(["--dry-run", "--accept-held", f"{MKTS},{PARA}", "--skip-published-check"])
+        self.assertEqual(a.accept_held, f"{MKTS},{PARA}")
+        self.assertTrue(a.skip_published_check)
+        self.assertEqual(push.parse_args([f"--accept-held={MKTS}"]).accept_held, MKTS)
+        self.assertFalse(push.parse_args([]).skip_published_check)
+
     def test_targets_and_oracle_flags(self):
         args = push.parse_args(["--targets", f"{MKTS},{PARA}", "--oracle", XYZ])
         self.assertEqual(args.targets, f"{MKTS},{PARA}")

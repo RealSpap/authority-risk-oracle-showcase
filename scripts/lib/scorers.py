@@ -23,6 +23,7 @@ from .web3_utils import (
     safe_score as _safe_score,
     EIP1967_ADMIN_SLOT,
 )
+from . import morpho_v2  # noqa: E402  (Morpho Vault V2 per-function timelocks, shared with Ethereum L1, 2026-10-04)
 from .signer_overlap import compute_cross_exposure_with_notes
 from .safe_modules import (
     note_for as _safe_modules_note, read_guard as _read_safe_guard_addr, read_modules as _read_safe_modules,
@@ -64,6 +65,24 @@ def _composite(admin_key, multisig, timelock, oracle_authority=100):
     return (4 * admin_key + 3 * multisig + 3 * timelock + 5) // 10
 
 
+def _v2_owner_admin_key(owner_is_eoa, owner_safe, owner, notes) -> int:
+    """METHODOLOGY.md "Morpho Vault V2 scoring", decision 3 (aligned 2026-10-04 on Spap's go): the SAME owner bands as
+    Ethereum L1's V2 scorer (owner Safe threshold >= 5 -> 70, >= 3 -> 60, else 30), and a bare-EOA owner near the floor as
+    for Adpend/1337 (5). A 1-of-1 Safe is one key: scored as a bare EOA (the convention the manual analysis of these
+    vaults used). An owner that resolves to neither is unresolved: 20, with a degraded note."""
+    if owner_is_eoa:
+        notes.append("owner root is a bare EOA: adminKeyScore 5 (decision 3, as Adpend/1337)")
+        return 5
+    if owner_safe:
+        t = owner_safe[1]
+        if t == 1:
+            notes.append("owner root is a 1-of-1 Safe, one key: adminKeyScore 5, as a bare EOA")
+            return 5
+        return 70 if t >= 5 else (60 if t >= 3 else 30)
+    notes.append(f"owner {owner} resolves to neither a bare EOA nor a Safe: unresolved authority, conservative score 20")
+    return 20
+
+
 def score_morpho_steakhouse_usdg(w3: Web3) -> dict:
     vault = "0xBeEff033F34C046626B8D0A041844C5d1A5409dd"
     notes = []
@@ -89,30 +108,23 @@ def score_morpho_steakhouse_usdg(w3: Web3) -> dict:
     sentinel_safe = safe_owners_and_threshold(w3, guardian_candidate) if is_sentinel else None
     notes.append(f"isSentinel({guardian_candidate}) = {is_sentinel}, Safe {sentinel_safe[1]}-of-{len(sentinel_safe[0])}" if sentinel_safe else f"isSentinel(...) = {is_sentinel}")
 
-    authority_selectors = {
-        "setOwner(address)": "0x13af4035",
-        "setCurator(address)": "0xe90956cf",
-        "setIsSentinel(address,bool)": "0x920ed706",
-    }
-    authority_timelocks = {}
-    for sig, sel in authority_selectors.items():
-        tl = call_raw(w3, vault, _UINT256_GETTER("timelock", "bytes4"), "timelock", bytes.fromhex(sel[2:]))
-        authority_timelocks[sig] = tl
-        notes.append(f"timelock({sig}) = {tl}")
+    # FIXED 2026-10-04 (depth review): timelockScore read setOwner/setCurator/setIsSentinel, which a Vault V2 never
+    # timelocks, so it was a constant 15 whatever the real delays. It now applies METHODOLOGY.md's V2 decision 1 with
+    # Ethereum L1's reader and bands (scripts/lib/morpho_v2.py): the minimum delay over the fund-redirecting functions and
+    # exit gates still callable. multisigScore applies decision 3 (curator Safe: min(100, t*15 + (n-t)*5)) instead of a
+    # flat 35. adminKeyScore is unchanged (its formula still differs from Ethereum L1's owner bands: open, see REPRISE).
+    min_delay, tl_notes = morpho_v2.timelock_and_gates(w3, vault, call=call_raw)
+    notes.extend(tl_notes)
 
-    admin_key = 10 if root_is_eoa else 40
-    multisig = 35 if curator_safe else 5
-    # None of the authority-changing selectors are delayed -> real risk is undelayed.
-    # FIXED 2026-09-17 (closed a bug hunt finding): min() on an empty
-    # generator raises ValueError if all three timelock(...) reads returned
-    # None (revert or persistent RPC failure) -- this used to crash the
-    # whole target instead of degrading, unlike the identical case already
-    # guarded in score_morpho_vault_generic() (same `if delays and ...`
-    # pattern, line 423).
-    known_delays = [v for v in authority_timelocks.values() if v is not None]
-    if not known_delays:
-        notes.append("all three timelock(...) reads returned None this run -- timelockScore degraded, treat as unverified")
-    timelock_score = 15 if known_delays and min(known_delays) == 0 else (60 if known_delays else 0)
+    root_safe = None if root_is_eoa else safe_owners_and_threshold(w3, root_authority)
+    admin_key = _v2_owner_admin_key(root_is_eoa, root_safe, root_authority, notes)
+    if curator_safe:
+        multisig = min(100, curator_safe[1] * 15 + max(0, len(curator_safe[0]) - curator_safe[1]) * 5)
+    else:
+        multisig = 0 if (curator and is_eoa(w3, curator)) else 5
+    timelock_score = morpho_v2.timelock_band(min_delay)
+    notes.append("minimum delay UNREAD this run -- timelockScore degraded to 0, treat as unverified" if min_delay is None
+                 else f"timelockScore on the minimum delay over fund-redirecting functions and live exit gates: {min_delay / 86400:g} day(s)")
 
     return {
         "target": vault,
@@ -452,22 +464,21 @@ def score_morpho_vault_generic(w3: Web3, vault: str, label: str) -> dict:
             owner_safe = safe_owners_and_threshold(w3, nested)
             owner_is_eoa = is_eoa(w3, nested)
 
-    authority_selectors = ["0x13af4035", "0xe90956cf", "0x920ed706"]  # setOwner/setCurator/setIsSentinel
-    delays = [call_raw(w3, vault, _UINT256_GETTER("timelock", "bytes4"), "timelock", bytes.fromhex(s[2:])) for s in authority_selectors]
-    delays = [d for d in delays if d is not None]
-    notes.append(f"timelock(setOwner/setCurator/setIsSentinel) = {delays}")
+    # FIXED 2026-10-04: same change as score_morpho_steakhouse_usdg (V2 decisions 1 and 3, scripts/lib/morpho_v2.py).
+    min_delay, tl_notes = morpho_v2.timelock_and_gates(w3, vault, call=call_raw)
+    notes.extend(tl_notes)
 
-    if owner_is_eoa:
-        admin_key = 10
-    elif owner_safe:
-        admin_key = 30 + owner_safe[1] * 6  # more signers/threshold -> higher, capped informally
+    admin_key = _v2_owner_admin_key(owner_is_eoa, owner_safe, owner, notes)  # decision 3, aligned 2026-10-04
+
+    if curator_safe:
+        multisig = min(100, curator_safe[1] * 15 + max(0, len(curator_safe[0]) - curator_safe[1]) * 5)
     else:
-        admin_key = 20  # contract, unresolved -- matches the Spark Savings caveat convention
+        multisig = 0
+        notes.append(f"curator {curator} is not a resolvable Safe: multisigScore 0 (decision 3, as for a bare-EOA curator)")
 
-    multisig = (curator_safe[1] * 8 if curator_safe else 0) + (owner_safe[1] * 8 if owner_safe else 0)
-    multisig = min(multisig, 100)
-
-    timelock_score = 10 if delays and min(delays) == 0 else (60 if delays else 0)
+    timelock_score = morpho_v2.timelock_band(min_delay)
+    notes.append("minimum delay UNREAD this run -- timelockScore degraded to 0, treat as unverified" if min_delay is None
+                 else f"timelockScore on the minimum delay over fund-redirecting functions and live exit gates: {min_delay / 86400:g} day(s)")
 
     return {
         "target": vault,
@@ -1712,7 +1723,9 @@ def score_chainlink_admin_safe(w3: Web3) -> dict:
     return {
         "target": target, "label": "Chainlink Price Feed Admin (Robinhood Chain)",
         "adminKeyScore": admin_key, "multisigScore": min(multisig, 100), "timelockScore": timelock,
-        "oracleAuthorityScore": 100, "compositeScore": composite,
+        # CHANGED 2026-10-04 (Spap's go): this target IS a price provider (METHODOLOGY's own first example): who controls what
+        # it reports is this Safe, so oracleAuthorityScore is its own path composite, no longer 100.
+        "oracleAuthorityScore": composite, "compositeScore": composite,
         "notes": notes,
     }
 

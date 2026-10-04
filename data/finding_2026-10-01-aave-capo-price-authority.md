@@ -153,3 +153,30 @@ today.
 - External feeds (23 reserves, $10.62B) are out of scope here: whoever controls a Chainlink feed is a separate authority.
 - One pool. Aave Prime, EtherFi and Horizon instances, other chains, and other lenders (Spark, Compound, Fluid) were not
   measured.
+
+## Addendum 2026-10-04: every adapter simulated, and where the dominant price authority really sits
+
+**Every adapter, not one per kind.** The three council-driven stewards were simulated on every adapter they reach (the tool
+now does this by default). The council is the same Safe 2-of-2, and each steward was re-confirmed by `hasRole` on two RPCs;
+the holder list is that day's replay. The harmful update was refused, and the harmless control accepted, on:
+
+| Kind | Core stewards `0x13a9CC64...` and `0x6f48d9Cd...` | Prime steward `0x5BA8d98f...` |
+|---|---|---|
+| LST CAPO | 12 of 13 adapters, $8.705B of $8.705B | 2 of 2 |
+| Stable CAPO | 10 of 10 (11 reserves: USDG and PT-USDG share one), $5.429B of $5.429B | none behind Prime |
+| Pendle PT | 1 of 15: the only PT with supply, $3.5M | none behind Prime |
+
+The cases left INCONCLUSIVE are eUSDe and 14 matured PTs. For each, the control update was refused too, and none of them
+carries supply. So on every adapter that prices supply, the bound holds where a harmful update is attempted.
+
+**The dominant authority is upstream.** 45 of the 67 reserves, about 99.4% of supply, are priced through a Chainlink feed
+owned by the Safe 4-of-9 `0x21f73D42...`, either directly or as the base of an Aave adapter. The weETH CAPO adapter, for
+example, reads ETH/USD `0x5424384B...` as `BASE_TO_USD_AGGREGATOR`. That Safe can swap a proxy's aggregator with no delay,
+and the aggregators' `minAnswer` is 1. This comes from an independent depth pass of the same day, verified by a second
+agent. Under the existing composite rule, the path scores 52. It is the number that would set Aave Core's
+oracleAuthorityScore if the project scored price paths of consumers; whether it does is a methodology decision, not taken
+here. Today the published value is 100.
+
+**Decided later on 2026-10-04.** The project now scores price paths of consumers: oracleAuthorityScore is the minimum
+over the material paths one hop upstream (METHODOLOGY, "oracleAuthorityScore for price consumers"). Aave Core comes out
+at 52, set by this Safe; the inputs further upstream are listed in `data/finding_2026-10-04-price-paths-beyond-one-hop.md`.

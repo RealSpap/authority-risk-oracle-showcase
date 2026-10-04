@@ -11,7 +11,11 @@ but kept a copy-pasted EXPECTED_ARBITRUM_GUARDIAN_OWNERS constant, used
 
 Non-circularity rules this file holds itself to:
   * it never imports, execs or reads chains/base-ecosystem/scorers.py, nor
-    scripts/lib/*;
+    scripts/lib/*, for any compared dimension. Since 2026-10-04 section [6]
+    imports scripts/lib/price_authority to PRINT the oracle dimension, which
+    is left out of the exit code; it runs after every compared read of
+    sections [1] to [5], and the abi_returndata_guard that import installs
+    only refuses wrongly sized answers, it never changes a value;
   * it hardcodes NO owner set, NO score and NO expected component: every
     number below is either read from a chain in this run or computed from a
     rule quoted from METHODOLOGY.md;
@@ -52,10 +56,13 @@ Rules applied, quoted from METHODOLOGY.md (repo root):
       RPC, so the score is capped below the bounded-bypass cap of 55: 50 when
       a real positive delay is read, 0 when none is.
 
-  oracleAuthorityScore  "100 (not applicable) for every target that neither
-      provides nor depends on an oracle role this project tracks." Derived:
-      the target must not answer any oracle-feed getter, and the price oracle
-      it points at must not itself be a tracked target.
+  oracleAuthorityScore  SUPERSEDED on 2026-10-04 by the price-consumer rule
+      (METHODOLOGY, "oracleAuthorityScore for price consumers"): the market is
+      scored by the price paths one hop upstream of it. Printed for
+      information with the scorer's own engine (scripts/lib/price_authority.py),
+      which is not an independent derivation, so it is left out of the exit
+      code; the 2026-09-21 derivation (no feed getter, untracked price oracle)
+      is printed next to it.
 
   crossExposureScore    "each OTHER tracked target on the SAME ecosystem
       sharing at least one resolved root signer with this one costs 20
@@ -70,6 +77,7 @@ Exit 0 = no divergence between the re-derived score and the live published
 one. Exit 2 = divergence. Exit 1 = a read failed.
 """
 
+import os
 import sys
 import time
 import urllib.request
@@ -310,8 +318,12 @@ def main():
                                "getPriceOracle") for _, w3, _ in base], "getPriceOracle()")
     oracle_is_tracked = price_oracle is not None and price_oracle.lower() in {t.lower() for t in tracked}
     print(f"  provider.getPriceOracle() = {price_oracle}  tracked by this oracle: {oracle_is_tracked}")
-    oracle_auth = 100 if not any(r is not None for _, r in answers) and not oracle_is_tracked else 20
-    print(f"  -> oracleAuthorityScore={oracle_auth} (not applicable)")
+    legacy = 100 if not any(r is not None for _, r in answers) and not oracle_is_tracked else 20
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "scripts", "lib"))
+    import price_authority
+    oracle_auth = [price_authority.for_aave(w3, BASE_POOL_ADDRESSES_PROVIDER) for _, w3, _ in base]
+    print(f"  -> oracleAuthorityScore per RPC {oracle_auth} (price paths upstream, rule of 2026-10-04, the scorer's own engine: "
+          f"information only, not compared; the 2026-09-21 rule gave {legacy})")
 
     print("\n[7] crossExposureScore -- within Base")
     within = 0
@@ -362,9 +374,12 @@ def main():
                  for _, w3, _ in sep], "getScore(index 1)")
     fields = ["adminKeyScore", "multisigScore", "timelockScore", "oracleAuthorityScore",
               "crossExposureScore", "compositeScore"]
-    derived = [admin_key, multisig, timelock, oracle_auth, cross, comp]
+    derived = [admin_key, multisig, timelock, None, cross, comp]
     diverged = False
     for i, f in enumerate(fields):
+        if derived[i] is None:
+            print(f"  {f:22s} published={pub[i]:3d}  (not compared: see [6])")
+            continue
         same = pub[i] == derived[i]
         diverged = diverged or not same
         print(f"  {f:22s} derived={derived[i]:3d}  published={pub[i]:3d}  {'OK' if same else 'DIVERGENCE'}")

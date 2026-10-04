@@ -41,6 +41,8 @@ from web3_utils import (  # noqa: E402
     safe_owners_and_threshold,
     safe_score,
 )
+import price_authority  # noqa: E402  (oracleAuthorityScore for price consumers, rule of 2026-10-04)
+import morpho_v2  # noqa: E402  (Morpho Vault V2 per-function timelocks, shared with Robinhood Chain)
 
 # ADDED 2026-09-22: `scripts/lib/scorers.py`'s `_replay_role_holders()` (Robinhood Chain's own
 # full-history RoleGranted/RoleRevoked replay, already proven live against Ethereum mainnet by
@@ -482,10 +484,13 @@ def score_aave_v3_pool(w3) -> dict:
         "a holder can grant itself every Umbrella role, set slashing and cooldowns and pause stakers; slashed funds go to the "
         "fixed Collector, and Umbrella's ProxyAdmin stays with the Executor (no upgrade)"))
 
+    # ADDED 2026-10-04 (Spap's go): a price consumer's oracleAuthorityScore is the min over its material price paths
+    # one hop upstream (scripts/lib/price_authority.py, METHODOLOGY 'oracleAuthorityScore for price consumers').
+    oracle_authority = price_authority.for_aave(w3, provider, price_authority.ETHEREUM_SPECS, notes)
     return {
         "target": provider, "label": "Aave V3 Ethereum Pool (PoolAddressesProvider)",
         "adminKeyScore": admin_key, "multisigScore": multisig, "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100, "compositeScore": _composite(admin_key, multisig, timelock_score),
+        "oracleAuthorityScore": oracle_authority, "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes, "_rootGroup": "aave-l1-governance", "_crossEcosystem": cross_ecosystem,
     }
 
@@ -1291,10 +1296,13 @@ def score_compound_v3_cusdc(w3) -> dict:
         timelock_score = 0
         notes.append("Timelock.delay() unread or below 2 days this run -- timelockScore degraded")
 
+    # ADDED 2026-10-04 (Spap's go): a price consumer's oracleAuthorityScore is the min over its material price paths
+    # one hop upstream (scripts/lib/price_authority.py, METHODOLOGY 'oracleAuthorityScore for price consumers').
+    oracle_authority = price_authority.for_comet(w3, comet, price_authority.ETHEREUM_SPECS, notes)
     return {
         "target": comet, "label": "Compound V3 cUSDCv3 (Comet USDC)",
         "adminKeyScore": admin_key, "multisigScore": multisig, "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100, "compositeScore": _composite(admin_key, multisig, timelock_score),
+        "oracleAuthorityScore": oracle_authority, "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes, "_rootGroup": "compound-l1-governance", "_crossEcosystem": cross_ecosystem,
     }
 
@@ -2401,10 +2409,13 @@ def score_morpho_adpend_usdc(w3) -> dict:
     else:
         admin_key, multisig, timelock_score = 20, 0, 0
         notes.append("owner()/curator() did not confirm the expected single-key shape this run -- degraded, treat as unverified")
+    # ADDED 2026-10-04 (Spap's go): a price consumer's oracleAuthorityScore is the min over its material price paths
+    # one hop upstream (scripts/lib/price_authority.py, METHODOLOGY 'oracleAuthorityScore for price consumers').
+    oracle_authority = price_authority.for_morpho_v1(w3, vault, price_authority.ETHEREUM_SPECS, notes)
     return {
         "target": vault, "label": "Morpho V1: Adpend USDC",
         "adminKeyScore": admin_key, "multisigScore": multisig, "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100, "compositeScore": _composite(admin_key, multisig, timelock_score),
+        "oracleAuthorityScore": oracle_authority, "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes, "_rootGroup": f"morpho-adpend-usdc-bare-eoa7702-{(owner or 'unread').lower()[:10]}",
     }
 
@@ -2432,10 +2443,13 @@ def score_morpho_1337_usdc(w3) -> dict:
     else:
         admin_key, multisig, timelock_score = 20, 0, 0
         notes.append("owner() did not confirm a bare EOA this run -- degraded, treat as unverified")
+    # ADDED 2026-10-04 (Spap's go): a price consumer's oracleAuthorityScore is the min over its material price paths
+    # one hop upstream (scripts/lib/price_authority.py, METHODOLOGY 'oracleAuthorityScore for price consumers').
+    oracle_authority = price_authority.for_morpho_v1(w3, vault, price_authority.ETHEREUM_SPECS, notes)
     return {
         "target": vault, "label": "Morpho V1: 1337 USDC",
         "adminKeyScore": admin_key, "multisigScore": multisig, "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100, "compositeScore": _composite(admin_key, multisig, timelock_score),
+        "oracleAuthorityScore": oracle_authority, "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes, "_rootGroup": f"morpho-1337-usdc-bare-eoa-{(owner or 'unread').lower()[:10]}",
     }
 
@@ -2527,42 +2541,14 @@ def score_morpho_steakhouse_usdc_l1(w3) -> dict:
 # (an earlier draft of this pass guessed increaseAbsoluteCap/increaseRelativeCap's argument types as a
 # struct tuple, got the wrong selector, and silently read back 0 -- caught by reading the real ABI
 # before trusting a live read of a made-up signature).
-_FUND_REDIRECTING_FUNCTION_SIGS = [
-    "addAdapter(address)", "removeAdapter(address)", "setAdapterRegistry(address)",
-    "increaseAbsoluteCap(bytes,uint256)", "increaseRelativeCap(bytes,uint256)",
-]
-_EXIT_GATE_FUNCTION_SIGS = {
-    "receive shares": "setReceiveSharesGate(address)", "send shares": "setSendSharesGate(address)",
-    "receive assets": "setReceiveAssetsGate(address)", "send assets": "setSendAssetsGate(address)",
-}
-_TIMELOCK_GETTER_ABI = [{"name": "timelock", "type": "function", "stateMutability": "view", "inputs": [{"type": "bytes4"}], "outputs": [{"type": "uint256"}]}]
-_ABDICATED_GETTER_ABI = [{"name": "abdicated", "type": "function", "stateMutability": "view", "inputs": [{"type": "bytes4"}], "outputs": [{"type": "bool"}]}]
+# MOVED 2026-10-04 to scripts/lib/morpho_v2.py (shared with Robinhood Chain's V2 vaults). The names stay here as aliases.
+_FUND_REDIRECTING_FUNCTION_SIGS = morpho_v2.FUND_REDIRECTING_FUNCTION_SIGS
+_EXIT_GATE_FUNCTION_SIGS = morpho_v2.EXIT_GATE_FUNCTION_SIGS
 
 
 def _vault_v2_timelock_and_gates(w3, vault):
-    """(min_fund_redirecting_delay_seconds, gate_notes: [str]) -- reads every relevant per-function
-    timelock and every exit gate's abdication status directly on-chain (never trusted from Morpho's
-    indexer, which is used elsewhere in this project only for TVL/context, not authority facts)."""
-    delays = []
-    for sig in _FUND_REDIRECTING_FUNCTION_SIGS:
-        selector = Web3.keccak(text=sig)[:4]
-        d = call_raw(w3, vault, _TIMELOCK_GETTER_ABI, "timelock", selector)
-        delays.append((sig, d if d is not None else 0))
-    gate_notes = []
-    live_gate_delays = []
-    for gate_label, sig in _EXIT_GATE_FUNCTION_SIGS.items():
-        selector = Web3.keccak(text=sig)[:4]
-        abdicated = call_raw(w3, vault, _ABDICATED_GETTER_ABI, "abdicated", selector)
-        if abdicated:
-            gate_notes.append(f"{gate_label} gate: permanently abdicated (curator can never set this again)")
-        else:
-            d = call_raw(w3, vault, _TIMELOCK_GETTER_ABI, "timelock", selector)
-            live_gate_delays.append((sig, d if d is not None else 0))
-            gate_notes.append(f"{gate_label} gate: NOT abdicated, still curator-controlled behind a {(d or 0)//86400}-day timelock")
-    all_delays = delays + live_gate_delays
-    min_delay = min((d for _, d in all_delays), default=0)
-    gate_notes.insert(0, "fund-redirecting timelocks (seconds): " + ", ".join(f"{sig}={d}" for sig, d in delays))
-    return min_delay, gate_notes
+    """See scripts/lib/morpho_v2.py::timelock_and_gates. Uses this module's call_raw (patched by its tests)."""
+    return morpho_v2.timelock_and_gates(w3, vault, call=call_raw)
 
 
 def _score_steakhouse_v2_vault(w3, vault, label):
@@ -2601,15 +2587,11 @@ def _score_steakhouse_v2_vault(w3, vault, label):
             # cap change (see _score_steakhouse_l1_vault) -- here the SAME real-world delay uniformly
             # covers every fund-redirecting function and every still-live exit gate, verified live
             # on-chain, not assumed from the September research or trusted from Morpho's indexer alone.
-            if min_delay >= 7 * 86400:
-                timelock_score = 75
-            elif min_delay >= 3 * 86400:
-                timelock_score = 60
-            elif min_delay > 0:
-                timelock_score = 40
+            timelock_score = morpho_v2.timelock_band(min_delay)
+            if min_delay is None:
+                notes.append("minimum delay UNREAD this run -- timelockScore degraded to 0, treat as unverified")
             else:
-                timelock_score = 0
-            notes.append(f"timelockScore based on the MINIMUM live-read delay across fund-redirecting functions and still-live exit gates: {min_delay // 86400} day(s)")
+                notes.append(f"timelockScore based on the MINIMUM live-read delay across fund-redirecting functions and still-live exit gates: {min_delay / 86400:g} day(s)")
             return admin_key, multisig, timelock_score, notes, set(owner_owners) | set(curator_owners)
         notes.append("owner/curator matched the known Steakhouse Safes by address, but getOwners()/getThreshold() did not resolve this run -- conservative score")
     else:

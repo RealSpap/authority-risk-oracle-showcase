@@ -144,6 +144,13 @@ class TestMainStructure(unittest.TestCase):
     (divergences reset between runs, return code reflects divergences), not about re-deriving the
     real Aave authority chain, which is already exercised by running the script live."""
 
+    def setUp(self):
+        # The oracle dimension is re-derived live by price_authority since 2026-10-04 (its own offline tests live in
+        # scripts/lib/tests/test_price_authority.py); here it answers the fixture's published 100, with no network.
+        p = patch.object(a, "oracle_authority_live", return_value=[100, 100])
+        p.start()
+        self.addCleanup(p.stop)
+
     def _mock_call_returning(self, table):
         def fake_call(rpc, addr, sig, *args, tries=4):
             key = (addr, sig, args)

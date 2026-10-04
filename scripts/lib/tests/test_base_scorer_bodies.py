@@ -100,6 +100,22 @@ def _load_module(unique_name, relative_path):
 sys.path.insert(0, os.path.join(REPO_ROOT, "scripts", "lib"))
 scorers = _load_module("aro_test_base_scorer_bodies_scorers", "chains/base-ecosystem/scorers.py")
 
+# The price-authority walk (2026-10-04) reads many feeds on a real chain; it has its own offline test
+# (scripts/lib/tests/test_price_authority.py), so the scorer bodies here see a fixed 100.
+_PA_NAMES = ("for_aave", "for_comet", "for_morpho_v1")
+_PA_ORIG = {}
+
+
+def setUpModule():
+    for n in _PA_NAMES:
+        _PA_ORIG[n] = getattr(scorers.price_authority, n)
+        setattr(scorers.price_authority, n, lambda *a, **k: 100)
+
+
+def tearDownModule():
+    for n, f in _PA_ORIG.items():
+        setattr(scorers.price_authority, n, f)
+
 
 # ---------------------------------------------------------------------------
 # Fakes: one dispatch table per read primitive, STRICT -- a read that a test did

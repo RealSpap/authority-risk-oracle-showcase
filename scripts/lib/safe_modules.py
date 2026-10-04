@@ -43,6 +43,9 @@ _MAX_PAGES = 5
 # executors on Ethereum, 7 on Base and 8 on Arbitrum, almost the same addresses on each (Base lacks 0x480496c0...), 2 of them
 # (0x7052cB84..., 0x480496c0...) also signers of the Safe. An executor runs only what the Safe confirmed (its threshold still decides), it does not lower the threshold.
 # Monad's copy has no explorer and was not replayed (manager() only).
+# ADDED 2026-10-04: Plasma's Chainlink feed-owner Safe 0x73877Fe3... (4-of-9, same 9 signers) carries a sixth copy, 0xd73014ee...:
+# 5,451 bytes, byte-identical to Ethereum's (same code hash 0x31eca2a56e5118d7...), manager() = that Safe. Not replayed (manager() only),
+# like Monad's. Without this entry the Safe read as UNRESOLVED, which would floor any Plasma price path through it.
 _CHAINLINK_MODULE_SUMMARY = (
     "Confirmed Transaction Module 0.1.0 on a Chainlink feed-owner Safe (4-of-9, same 9 signers as Robinhood's). Byte-identical to the "
     "module analyzed on Robinhood Chain (5,451 bytes), so it does not bypass the threshold: it separates approving from executing. "
@@ -88,6 +91,12 @@ KNOWN_ANALYSES = {
         "analyzed": "2026-09-26",
         "kind": "module",
         "name": "Confirmed Transaction Module 0.1.0 (Monad)",
+        "summary": _CHAINLINK_MODULE_SUMMARY,
+    },
+    "0xd73014ee51fb33915578b24a70133b0ba734f35f": {
+        "analyzed": "2026-10-04",
+        "kind": "module",
+        "name": "Confirmed Transaction Module 0.1.0 (Plasma)",
         "summary": _CHAINLINK_MODULE_SUMMARY,
     },
     "0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827": {

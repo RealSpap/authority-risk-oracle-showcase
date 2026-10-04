@@ -93,6 +93,10 @@ import importlib.util as _ilu  # noqa: E402
 _spec = _ilu.spec_from_file_location("aro_methodology", os.path.join(REPO_ROOT, "scripts", "lib", "methodology.py"))
 methodology = _ilu.module_from_spec(_spec)
 _spec.loader.exec_module(methodology)
+# ADDED 2026-10-04: hold degraded or sharply dropping scores before a push (scripts/lib/push_guard.py), loaded the same way.
+_spec_pg = _ilu.spec_from_file_location("aro_push_guard", os.path.join(REPO_ROOT, "scripts", "lib", "push_guard.py"))
+push_guard = _ilu.module_from_spec(_spec_pg)
+_spec_pg.loader.exec_module(push_guard)
 
 
 def methodology_hash() -> bytes:
@@ -166,6 +170,7 @@ def main():
     print(f"Target chain for this calldata: Arbitrum Sepolia, chain ID {ARBITRUM_SEPOLIA_CHAIN_ID}")
 
     if dry_run:
+        push_guard.enforce(scored)
         print("\n--dry-run set: calldata encoded above, but NOT sending a transaction, NOT reading ORACLE_RPC_URL/ORACLE_ADDRESS/PRIVATE_KEY.")
         return
 
@@ -184,6 +189,7 @@ def main():
     private_key = os.environ["PRIVATE_KEY"]
     account = oracle_w3.eth.account.from_key(private_key)
     oracle = oracle_w3.eth.contract(address=Web3.to_checksum_address(oracle_address), abi=ORACLE_ABI)
+    push_guard.enforce(scored, oracle_w3, oracle_address)
 
     # Arbitrum Sepolia's base fee moves faster than a single eth_gasPrice
     # sample can track (observed swinging ~192M-208M wei across calls a

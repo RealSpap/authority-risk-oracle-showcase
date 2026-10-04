@@ -115,6 +115,7 @@ from web3_utils import (  # noqa: E402
     safe_owners_and_threshold,
     safe_score,
 )
+import price_authority  # noqa: E402  (oracleAuthorityScore for price consumers, rule of 2026-10-04)
 from nested_signers import signer_note  # noqa: E402
 
 MONAD_CHAIN_ID = 143
@@ -143,9 +144,9 @@ _CROSS_EXPOSURE_NOTE = (
 
 def _composite(admin_key, multisig, timelock):
     """Standard project weighting: 0.4*adminKey + 0.3*multisig + 0.3*timelock,
-    oracleAuthorityScore excluded (not applicable to any of these 7 targets
-    -- none is itself a price-oracle/feed authority). Uses standard
-    round-half-up via floor(x + 0.5), not Python's builtin round() (banker's
+    oracleAuthorityScore excluded by convention: price consumers carry it as a
+    separate field (METHODOLOGY, "oracleAuthorityScore for price consumers").
+    Uses standard round-half-up via floor(x + 0.5), not Python's builtin round() (banker's
     rounding), same fix already applied project-wide."""
     import math
 
@@ -1114,13 +1115,16 @@ def score_aave_v3_monad(w3) -> dict:
         )
     cross_exposure = 80 if shares_known_committee else 100
 
+    # ADDED 2026-10-04 (Spap's go): a price consumer's oracleAuthorityScore is the min over its material price paths
+    # one hop upstream (scripts/lib/price_authority.py, METHODOLOGY 'oracleAuthorityScore for price consumers').
+    oracle_authority = price_authority.for_aave(w3, provider, price_authority.MONAD_SPECS, notes)
     return {
         "target": provider,
         "label": "Aave V3 Pool (Monad, PoolAddressesProvider)",
         "adminKeyScore": admin_key,
         "multisigScore": multisig,
         "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100,
+        "oracleAuthorityScore": oracle_authority,
         "crossExposureScore": cross_exposure,
         "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes,

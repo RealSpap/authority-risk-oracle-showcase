@@ -30,7 +30,7 @@ not a per-target choice.
 | `adminKeyScore` | Who can act as this contract's ultimate authority, and how hard is that authority to compromise or coerce? |
 | `multisigScore` | If that authority is a multisig (Gnosis Safe or a bespoke equivalent), how strong is it - threshold, signer count? |
 | `timelockScore` | Is there a real, enforced delay between an authority action being queued and taking effect? |
-| `oracleAuthorityScore` | For a target that itself provides price/state data to others, who controls what it reports? (100 = not applicable) |
+| `oracleAuthorityScore` | Who can change the prices this target reports (a provider) or relies on (a lending market that reads feeds)? (100 = not applicable, or not yet computed for a price consumer outside the rule's current scope; see "oracleAuthorityScore for price consumers") |
 | `crossExposureScore` | Does this target's root authority also control another *tracked* target? A shared compromised key becomes a systemic risk, not an isolated one. (100 = no overlap found, or not computed for that target; for Solana, Hyperliquid and Zcash that means within the ecosystem only, not yet checked across ecosystems; see Convention below and Limitations) |
 
 ### Aggregation
@@ -120,11 +120,16 @@ that is that multisig, act without the 24h delay). Fluid on Plasma has the same 
 enumerated on chain, and takes the same cap; that its handler contracts' powers are
 bounded is inherited from the Arbitrum analysis, not re-derived for them.
 
-**`oracleAuthorityScore`** - only meaningful for a target that is itself a
-price/state oracle (a Chainlink feed admin, an AMM's TWAP-adjacent config) or
-whose own numbers are consumed as an oracle elsewhere. Scores who can change
-what it reports. 100 (not applicable) for every target that neither provides
-nor depends on an oracle role this project tracks.
+**`oracleAuthorityScore`**: who can change the prices a target reports or
+relies on. Each derivation in use: the Robinhood Chainlink admin Safe scores its
+own composite (since 2026-10-04); Lido stETH scores its HashConsensus quorum;
+Solana's Drift and Kamino Lend score the minimum over their oracles' composites;
+Hyperliquid's targets follow `chains/hyperliquid/METHODOLOGY.md` section 4.4 (the
+HIP-3 dexes' oracle key, the L1 validator set, Kinetiq's operator push); ten EVM lending markets score
+the price paths upstream of them (see "oracleAuthorityScore for price consumers"
+below). Every other target publishes 100: not applicable for a target that
+neither reports nor reads a price, and not yet computed for a price consumer
+outside that rule's current scope (listed there).
 
 **`crossExposureScore`** - computed once per `score_all()` run, after every
 individual target is scored (`scripts/lib/signer_overlap.py`): re-derives
@@ -238,6 +243,87 @@ exception.
   fabricated-but-plausible-looking number this project's own discipline exists
   to catch -- see the Limitations section above.
 
+## oracleAuthorityScore for price consumers
+
+DECIDED by Spap on 2026-10-04, after `data/finding_2026-10-01-aave-capo-price-authority.md` and its
+2026-10-04 addendum showed that a lending market's riskiest lever often sits outside its own governance:
+whoever can swap a Chainlink aggregator, re-point a rate provider or lift a price limit moves every
+borrower's health factor at once. Until that date the score was 100 for every EVM lending market and the
+paths were only described in a finding. Code: [`scripts/lib/price_authority.py`](scripts/lib/price_authority.py),
+called by the Aave V3 (Ethereum Core, Base, Arbitrum, Plasma, Monad), Compound V3 (Ethereum, Base,
+Arbitrum) and Morpho V1 (Adpend, 1337) scorers.
+
+```
+oracleAuthorityScore = min, over the MATERIAL price paths ONE HOP upstream, of each path's own composite
+```
+
+- **Material**: a path that reaches at least 1% of the target's priced supply (Aave: every reserve's
+  aToken supply at the oracle price; Compound: the base supply plus every collateral total at
+  `getPrice`; Morpho V1: the vault's current allocation per market). A row whose value cannot be read
+  counts as material (fail-closed).
+- **One hop**: the walk goes through the target's own price contracts (an Aave adapter whose
+  `ACL_MANAGER()` is the market's own ACLManager; a wrapper whose `manager()` is the target's governor)
+  and through provably immutable wrappers (no proxy slot, no storage write, no `DELEGATECALL`). It stops
+  at the first contract someone else controls: a Chainlink proxy, a rate provider, an upgradeable feed.
+  That contract is scored by who can change what it reports. A wrapper that is neither the target's own
+  nor provably immutable, and has no readable `owner()`, proxy admin slot or `manager()`, is UNREAD; so
+  is an adapter that answers to another ACLManager, and an own adapter whose input the walk cannot see,
+  unless a spec names it as own configuration (Aave Monad's fixed mUSD adapter, set by the market's own
+  POOL_ADMIN holders). The walk follows the getters it knows; an input read through any other getter is
+  not seen. Its own inputs (the
+  Stader manager behind rsETH, the L1 cbETH owner behind a Base exchange-rate feed) are disclosed in a
+  finding, not scored. Going deeper would score each protocol by the weakest link of every token it
+  lists, which no reader could check by hand.
+- **A Chainlink proxy** scores the owner of the proxy (`proposeAggregator` and `confirmAggregator` are
+  `onlyOwner` with no delay) and, when different, the owner of the current aggregator (`setConfig`). An
+  aggregator whose `owner()` cannot be read is UNREAD unless its code is a provable constant, and a
+  contract answering `aggregator()` that also has a proxy admin slot scores that admin too.
+- **The controller** of a path: a bare EOA or an EIP-7702 EOA scores (5, 0, 0) = 2, and so does a price
+  source that is itself such an account; a Safe with no timelock above it scores
+  `_safe_rooted_scores(threshold, n)` (a 4-of-9 Safe gives 52), and a Safe the module gate cannot clear
+  is UNREAD; a contract with `owner()` or `admin()` is followed for two hops; anything else is UNREAD. A
+  controlled contract is scored through its `owner()`, its proxy admin slot (EIP-1967 or the older
+  Zeppelin slot), its `manager()` and, for a beacon proxy, its beacon's owner.
+- **Disclosed, not scored**, when the path is (a) provably bounded, by a spec that re-reads its facts
+  live every run (osETH: non-upgradeable code pinned by hash, rate can only rise); (b) governance-grade,
+  behind a timelock at least as long as the target's own governance delay (Aave: the PayloadsController
+  delay for the ACL admin executor; Compound: `governor().delay()`; Morpho V1: `vault.timelock()`), such
+  as the EtherFi weETH and Lido stETH rate paths; a target with no delay of its own, such as a Morpho V1
+  vault whose `timelock()` is 0, has no governance-grade bar, so its timelocked paths are UNREAD; or (c)
+  a provable constant
+  (no storage write, no call of any kind, no read of balances, of other accounts' code or of transient
+  storage, no gas or block-builder value, no proxy slot). A provably immutable wrapper is held to the same
+  test, except that it may call the contracts it reads and read `EXTCODESIZE`, `ORIGIN`, `CALLER` and
+  `GAS` (Solidity before 0.8.10 checks `EXTCODESIZE` before every external call).
+- **The target's own config path** (its own `ACL_MANAGER`, its own governor) is already in
+  `compositeScore` and is not scored again.
+- **Unknown is not safe**: a material path that cannot be read (a rate provider without a verified
+  spec, a timelock shorter than the target's delay whose proposers are not resolved, a failed RPC read)
+  caps the score at 20 (the minimum of 20 and the scored paths), never 100. No material path: 100.
+
+Every classification is re-read live each run; a spec names what to check and which answer keeps the
+classification, and any other answer is UNREAD. One fact cannot be re-read directly: the rsETH
+LRTConfig is not enumerable, so its admin set was replayed from the logs on 2026-10-04, and each run
+re-reads that holder with `hasRole` and checks that no admin grant or revoke happened since. The push
+guard (`scripts/lib/push_guard.py`) holds, before a real send, an entry whose published
+`oracleAuthorityScore` drops by more than 15 points, moves while a material path is UNREAD or after a
+failed walk, or rises to 100 from a lower value (a path that stopped counting), so the first push under
+this rule (several markets from 100 to 52) is accepted by a person, once.
+
+**Scope.** Decided for the ten markets above and the Robinhood Chainlink admin. Every other tracked
+target that reads prices still publishes 100 for this field, which for it means not yet computed, not
+"not applicable": the other Aave V3 instances and forks (Horizon, SparkLend), the Morpho V1 and V2 vaults
+outside Adpend and 1337, Radiant, Moonwell, Euler V2, Fluid, Dolomite, GMX and Jupiter Lend. A read-only
+measurement of 2026-10-04 with the same engine gave 52 for Horizon and the four Morpho V1 vaults on Base,
+and 20 (material paths the engine cannot read yet) for the Steakhouse USDT and USDC vaults on Ethereum
+and the Monad vault.
+
+Results on 2026-10-04 (live dry runs): Aave Core, Base, Arbitrum, Plasma and Monad 52; Compound Ethereum,
+Base and Arbitrum 52; Morpho Adpend and 1337 31 (a RedStone deUSD feed behind a 2-of-3 Safe ProxyAdmin); the
+Robinhood Chainlink admin 52 (its own composite). The 52s are the Chainlink proxy owners, a 4-of-9 Safe
+with no delay. The deeper inputs left out by the one-hop rule are listed in
+`data/finding_2026-10-04-price-paths-beyond-one-hop.md`.
+
 ## Morpho Vault V2 scoring
 
 ADDED 2026-09-26, on Spap's explicit go-ahead after `data/finding_2026-09-25-vault-v2-scoring-scope.md`
@@ -258,6 +344,15 @@ practice for V1 (Compound V3's pauseGuardian gets the same "bounded blast radius
 bypass" treatment): pure fee setters (`setPerformanceFee`/`setManagementFee`/their recipients) and
 `setIsAllocator`/`setForceDeallocatePenalty`, all correctly documented at 0-day delay by the vault's
 own design because an allocator or fee-setter cannot redirect principal or drain funds outright.
+
+**Clarification of 2026-10-04, confirmed by Spap the same day.** A fund-redirecting function that is permanently
+abdicated (`abdicated(selector)` true) can never be called again, so its own timelock protects nothing
+and is left out of the minimum, exactly as an abdicated exit gate already is. Live case: 5 of the 6
+Robinhood Chain V2 vaults and both Ethereum L1 V2 vaults abdicated `setAdapterRegistry`; its own timelock
+reads 0 only on Purinta USDG (7 or 3 days elsewhere), where counting it gave a false 0-day minimum. If every listed function and gate is
+abdicated, the vault takes the top band (75). A failed `timelock()` or `abdicated()` read makes the
+minimum UNREAD, scored 0 with a note, never read as "0 days". Shared reader:
+[`scripts/lib/morpho_v2.py`](scripts/lib/morpho_v2.py), used on Ethereum L1 and Robinhood Chain.
 
 **A real bypass was suspected and DISPROVEN by reading the actual source before writing anything
 down.** `decreaseTimelock`'s own listed delay reads 0 days in Morpho's API, which looked at first like
@@ -297,6 +392,11 @@ already-verified infrastructure, not introducing two brand-new unverified multis
 The remaining Vault V2 targets on Ethereum L1, Robinhood Chain, Monad and Tempo (per
 `data/finding_2026-09-25-vault-v2-inventory.md`'s $2.87B inventory) are the natural continuation of
 this same methodology, one verified vault at a time, not assumed to generalize automatically.
+**Robinhood Chain, 2026-10-04 (Spap's go).** Its 6 V2 vaults now follow decisions 1 to 3 with the same reader
+and owner bands as Ethereum L1 (`scripts/lib/morpho_v2.py`, `scripts/lib/scorers.py::_v2_owner_admin_key`),
+each owner shape read live that day. A 1-of-1 Safe owner (NetNet) is one key and scores as a bare EOA (5), the
+convention the earlier manual analysis of these vaults used. Grove x Steakhouse's owner became, on 2026-10-02,
+an executor contract with a 1-day `delay()` whose roles are not read yet: it stays unresolved (20) until they are.
 
 ## Data collection discipline
 

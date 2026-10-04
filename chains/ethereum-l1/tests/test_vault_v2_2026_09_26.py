@@ -93,6 +93,7 @@ def _base_fake(owner_threshold=5, owner_n=10, curator_threshold=2, curator_n=7,
     f.safes[CURATOR_SAFE] = (_owners(curator_n, start=100), curator_threshold)
     for sig in scorers._FUND_REDIRECTING_FUNCTION_SIGS:
         f.calls[(VAULT, "timelock", (_selector(sig),))] = fund_delay_days * DAY
+        f.calls[(VAULT, "abdicated", (_selector(sig),))] = False  # since 2026-10-04 an unanswered abdicated() is UNREAD
     gate_sigs = list(scorers._EXIT_GATE_FUNCTION_SIGS.values())
     for sig, is_abdicated in zip(gate_sigs, abdicated):
         f.calls[(VAULT, "abdicated", (_selector(sig),))] = is_abdicated
@@ -162,6 +163,30 @@ class TestScoreSteakhousePrimeUsdcV2(unittest.TestCase):
         self.assertEqual((r["adminKeyScore"], r["multisigScore"], r["timelockScore"]), (20, 20, 0))
 
 
+class TestV2ReaderFixes20261004(unittest.TestCase):
+    """The two reader fixes of 2026-10-04 (scripts/lib/morpho_v2.py)."""
+
+    def test_abdicated_fund_function_is_not_counted(self):
+        # Purinta's shape: setAdapterRegistry abdicated with a 0 timelock; the rest at 7 days -> minimum 7 days, not 0.
+        f = _base_fake()
+        sel = _selector("setAdapterRegistry(address)")
+        f.calls[(VAULT, "abdicated", (sel,))] = True
+        f.calls[(VAULT, "timelock", (sel,))] = 0
+        _patch(self, f)
+        r = scorers.score_morpho_steakhouse_prime_usdc_v2(FakeW3())
+        self.assertEqual(r["timelockScore"], 75)
+        self.assertIn("setAdapterRegistry(address): permanently abdicated", " ".join(r["notes"]))
+
+    def test_unread_timelock_is_unread_not_zero_delay(self):
+        f = _base_fake()
+        del f.calls[(VAULT, "timelock", (_selector("addAdapter(address)"),))]
+        _patch(self, f)
+        r = scorers.score_morpho_steakhouse_prime_usdc_v2(FakeW3())
+        self.assertEqual(r["timelockScore"], 0)
+        self.assertIn("UNREAD", " ".join(r["notes"]))
+        self.assertNotIn("0 day(s)", " ".join(r["notes"]))
+
+
 class TestScoreSteakhousePrimeEurcvV2(unittest.TestCase):
     def test_different_vault_address_same_shared_safes(self):
         vault2 = cs("0xbeef0C075Da5D01112AE5cF34d257074fB5DDB2f")
@@ -173,6 +198,7 @@ class TestScoreSteakhousePrimeEurcvV2(unittest.TestCase):
         f.safes[CURATOR_SAFE] = (_owners(7, start=100), 2)
         for sig in scorers._FUND_REDIRECTING_FUNCTION_SIGS:
             f.calls[(vault2, "timelock", (_selector(sig),))] = 7 * DAY
+            f.calls[(vault2, "abdicated", (_selector(sig),))] = False
         for sig in scorers._EXIT_GATE_FUNCTION_SIGS.values():
             f.calls[(vault2, "abdicated", (_selector(sig),))] = True
         _patch(self, f)

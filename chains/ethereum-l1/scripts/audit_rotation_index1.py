@@ -39,6 +39,29 @@ MAINNET_RPCS = [
     "https://eth.drpc.org",
 ]
 PROTOCOL_GUARDIAN = "0x2CFe3ec4d5a6811f4B8067F0DE7e47DfA938Aa30"
+AAVE_CORE_PROVIDER = "0x2f39d218133AFaB8F2B819B1066c7E434Ad94E9e"
+# The rsETH spec replays logs: these two serve eth_getLogs over 10,000 blocks (eth.drpc.org refuses it on its free plan).
+ORACLE_RPCS = ["https://ethereum-rpc.publicnode.com", "https://mainnet.gateway.tenderly.co"]
+
+
+def oracle_authority_live():
+    """oracleAuthorityScore de la cible selon la regle des consommateurs de prix (METHODOLOGY, decidee le 04/10/2026),
+    sur chaque RPC de ORACLE_RPCS. C'est le MEME moteur que le scorer (scripts/lib/price_authority.py) : pas une derivation
+    independante, donc affiche a titre d'information et hors du code de sortie. None si le parcours a echoue."""
+    lib = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "scripts", "lib")
+    if lib not in sys.path:
+        sys.path.insert(0, lib)
+    import price_authority
+    from web3_utils import get_w3
+    out = []
+    for rpc in ORACLE_RPCS:
+        notes = []
+        v = price_authority.for_aave(get_w3(rpc), AAVE_CORE_PROVIDER, price_authority.ETHEREUM_SPECS, notes)
+        why = [n for n in notes if price_authority.FAILED_MARK in n or price_authority.UNREAD_MARK in n]
+        out.append(v if not why else None)
+        if why:
+            print(f"  oracle sur {rpc} : {why[0][:200]}")
+    return out
 
 divergences = []
 
@@ -188,7 +211,8 @@ def main():
     # msig 100 = racine DAO reelle sans couche Safe au-dessus (pas de Safe a la racine).
     # timelock 55 = delai reel de 86400 s (24 h) confirme, plafonne sous 100 parce qu'un chemin
     #   de contournement d'urgence EXISTE (ACLManager.isEmergencyAdmin(PROTOCOL_GUARDIAN)=true).
-    # oracle 100 = non applicable. cross 80 = plafond de chevauchement inter-ecosysteme.
+    # oracle : hors controle (meme moteur que le scorer, voir oracle_authority_live). cross 80 = plafond de chevauchement
+    #   inter-ecosysteme.
     faits_attendus = [
         ("delai de 24 h (86400 s) sur l'executor niveau 1", delay_s == 86400),
         ("racine = PayloadsController, pas une EOA nue (bytecode present)", root.lower() != owner.lower()),
@@ -203,7 +227,7 @@ def main():
             divergences.append(f"fait attendu FAUX: {label}")
         print(f"  [{'OK' if ok else 'ECART'}] {label}")
 
-    derive = {"admin": 78, "msig": 100, "timelock": 55, "oracle": 100, "cross": 80}
+    derive = {"admin": 78, "msig": 100, "timelock": 55, "cross": 80}
     # Controle negatif: AUDIT_FAULT_INJECT=1 fausse volontairement une dimension, le script
     # DOIT alors sortir 1. Cela prouve que le code de sortie 0 n'est pas vide de sens.
     if os.environ.get("AUDIT_FAULT_INJECT") == "1":
@@ -211,9 +235,12 @@ def main():
         print("!! AUDIT_FAULT_INJECT=1 : admin force a 79, une divergence est attendue")
     derive["composite"] = composite(derive["admin"], derive["msig"], derive["timelock"])
 
-    for k in ("admin", "msig", "timelock", "oracle", "cross", "composite"):
+    for k in ("admin", "msig", "timelock", "cross", "composite"):
         if derive[k] != onchain[k]:
             divergences.append(f"{k}: derive={derive[k]} != on-chain={onchain[k]}")
+    oracle = oracle_authority_live()
+    print(f"oracle (information, meme moteur que le scorer, pas une derivation independante) : par RPC {oracle}, "
+          f"on-chain {onchain['oracle']}" + ("" if len(set(oracle)) == 1 and None not in oracle else " -- RPC en desaccord ou parcours NON LU"))
 
     # le composite on-chain doit aussi etre coherent avec SES PROPRES dimensions on-chain
     recompute = composite(onchain["admin"], onchain["msig"], onchain["timelock"])

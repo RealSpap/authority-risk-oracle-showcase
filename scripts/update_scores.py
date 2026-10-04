@@ -40,6 +40,7 @@ from web3 import Web3
 sys.path.insert(0, os.path.dirname(__file__))
 from lib.alerts import diff_alerts, format_summary, send_telegram_alert  # noqa: E402
 from lib import methodology  # noqa: E402
+from lib import push_guard  # noqa: E402
 from lib.oracle_keys import assert_unique_oracle_keys  # noqa: E402
 from lib.scorers import score_all  # noqa: E402
 from lib.web3_utils import get_w3  # noqa: E402
@@ -228,6 +229,7 @@ def _run(dry_run: bool, skip_slow: bool = False):
         print()
 
     if dry_run:
+        push_guard.enforce(scored)
         print("--dry-run set: not sending a transaction, not writing api/scores.json, not alerting.")
         return
 
@@ -243,6 +245,7 @@ def _run(dry_run: bool, skip_slow: bool = False):
     private_key = os.environ["PRIVATE_KEY"]
     account = oracle_w3.eth.account.from_key(private_key)
     oracle = oracle_w3.eth.contract(address=Web3.to_checksum_address(oracle_address), abi=ORACLE_ABI)
+    push_guard.enforce(scored, oracle_w3, oracle_address)
 
     tx = oracle.functions.updateScores(targets, tuples).build_transaction(
         {

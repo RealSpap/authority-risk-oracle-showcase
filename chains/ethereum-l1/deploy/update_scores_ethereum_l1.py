@@ -68,6 +68,10 @@ import importlib.util as _ilu  # noqa: E402
 _spec = _ilu.spec_from_file_location("aro_methodology", os.path.join(REPO_ROOT, "scripts", "lib", "methodology.py"))
 methodology = _ilu.module_from_spec(_spec)
 _spec.loader.exec_module(methodology)
+# ADDED 2026-10-04: hold degraded or sharply dropping scores before a push (scripts/lib/push_guard.py), loaded the same way.
+_spec_pg = _ilu.spec_from_file_location("aro_push_guard", os.path.join(REPO_ROOT, "scripts", "lib", "push_guard.py"))
+push_guard = _ilu.module_from_spec(_spec_pg)
+_spec_pg.loader.exec_module(push_guard)
 
 ORACLE_ABI = [
     {
@@ -139,7 +143,10 @@ def main():
     parser.add_argument("--read-rpc-url", default=os.environ.get("READ_RPC_URL", DEFAULT_READ_RPC_URL))
     parser.add_argument("--oracle-rpc-url", default=os.environ.get("ORACLE_RPC_URL", DEFAULT_ORACLE_RPC_URL))
     parser.add_argument("--oracle-address", default=os.environ.get("ORACLE_ADDRESS"))
+    parser.add_argument("--accept-held", default="", help="comma-separated addresses the push guard held and a person checked")
+    parser.add_argument("--skip-published-check", action="store_true", help="push even if the published scores could not be read")
     args = parser.parse_args()
+    guard_flags = {"accepted": args.accept_held.split(","), "skip_published_check": args.skip_published_check}
     methodology.code_digest("ethereum-l1")  # pin the code that runs now, before scoring
     if not args.dry_run:  # the published hash must match a commit
         methodology.require_committed("ethereum-l1")
@@ -167,6 +174,8 @@ def main():
     print(f"\ncalldata ({len(calldata)} bytes incl. 0x, selector {calldata[:10]}):")
     print(calldata)
 
+    if args.dry_run:
+        push_guard.enforce(scored, **guard_flags)
     if not args.dry_run:
         print("\n--dry-run not set: this phase (scoring_build) does not send. "
               "The non-dry-run path (build_transaction/sign/send below) is wired for "
@@ -183,6 +192,7 @@ def main():
         private_key = os.environ["PRIVATE_KEY"]
         account = oracle_w3.eth.account.from_key(private_key)
         oracle = oracle_w3.eth.contract(address=Web3.to_checksum_address(args.oracle_address), abi=ORACLE_ABI)
+        push_guard.enforce(scored, oracle_w3, args.oracle_address, **guard_flags)
         tx = oracle.functions.updateScores(targets, tuples).build_transaction(
             {
                 "from": account.address,

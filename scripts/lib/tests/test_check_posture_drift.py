@@ -34,9 +34,14 @@ class OracleKeysFor(unittest.TestCase):
         keys = cpd.oracle_keys_for("ethereum-l1", [PARA_DEX, PARA_VAULT])
         self.assertEqual([k.lower() for k in keys], [PARA_DEX["target"], PARA_VAULT["target"]])
 
-    def test_no_collision_on_hyperliquid_leaves_every_key_as_is(self):
-        keys = cpd.oracle_keys_for("hyperliquid", [MKTS_DEX, OTHER])
-        self.assertEqual([k.lower() for k in keys], [MKTS_DEX["target"], OTHER["target"]])
+    def test_known_colliding_dex_keeps_its_derived_key_even_without_its_partner(self):
+        # CHANGED 2026-10-04: the mkts dex lives on-chain under its derived key; when Kinetiq's scorer is skipped it used
+        # to fall back to the raw address and would have overwritten Kinetiq's slot. A non-colliding entry is untouched.
+        alone = cpd.oracle_keys_for("hyperliquid", [MKTS_DEX, OTHER])
+        paired = cpd.oracle_keys_for("hyperliquid", [MKTS_DEX, KINETIQ, OTHER])
+        self.assertEqual(alone[0].lower(), paired[0].lower())
+        self.assertNotEqual(alone[0].lower(), MKTS_DEX["target"])
+        self.assertEqual(alone[1].lower(), OTHER["target"])
 
 
 if __name__ == "__main__":

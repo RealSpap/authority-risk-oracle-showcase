@@ -137,6 +137,10 @@ import importlib.util as _ilu  # noqa: E402
 _spec = _ilu.spec_from_file_location("aro_methodology", os.path.join(REPO_ROOT, "scripts", "lib", "methodology.py"))
 methodology = _ilu.module_from_spec(_spec)
 _spec.loader.exec_module(methodology)
+# ADDED 2026-10-04: hold degraded or sharply dropping scores before a push (scripts/lib/push_guard.py), loaded the same way.
+_spec_pg = _ilu.spec_from_file_location("aro_push_guard", os.path.join(REPO_ROOT, "scripts", "lib", "push_guard.py"))
+push_guard = _ilu.module_from_spec(_spec_pg)
+_spec_pg.loader.exec_module(push_guard)
 
 
 def methodology_hash() -> bytes:
@@ -146,6 +150,9 @@ def methodology_hash() -> bytes:
 
 
 HIP3_DEX_LABEL_PREFIX = "HIP-3 dex "
+# Deployers that are also the address of a separately scored HyperEVM contract (resolve_oracle_keys docstring):
+# mkts / Kinetiq HIP3StakingManager, and para / para's StakingVault.
+KNOWN_COLLIDING_DEPLOYERS = {"0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec", "0x8888888c43cbb7e1c4132542e46831bffd866ed3"}
 
 
 def hip3_dex_derived_key(dex_name: str) -> str:
@@ -174,8 +181,12 @@ def resolve_oracle_keys(scored):
     by_addr = {}
     for entry in scored:
         by_addr.setdefault(entry["target"].lower(), []).append(entry)
-    for group in by_addr.values():
-        if len(group) < 2:
+    for addr, group in by_addr.items():
+        # FIXED 2026-10-04: a dex used to get its derived key only when its colliding partner was ALSO scored this run. With
+        # the partner's scorer SKIPPED (seen live that day for para's StakingVault), the dex was pushed under the raw address
+        # and overwrote the partner's on-chain slot (4 -> 5, too small for any drop check). A deployer known to collide
+        # always moves the dex to its derived key, whoever else was scored.
+        if len(group) < 2 and addr not in KNOWN_COLLIDING_DEPLOYERS:
             continue
         for entry in group:
             label = entry.get("label", "")
@@ -292,6 +303,8 @@ def parse_args(argv=None):
     p.add_argument("--oracle", default=None,
                     help="override ORACLE_ADDRESS from the CLI instead of the environment "
                          "(ORACLE_RPC_URL/PRIVATE_KEY are still read from the environment)")
+    p.add_argument("--accept-held", default="", help="comma-separated oracle keys the push guard held and a person checked")
+    p.add_argument("--skip-published-check", action="store_true", help="push even if the published scores could not be read")
     return p.parse_args(argv)
 
 
@@ -368,6 +381,7 @@ def main(argv=None):
     print(f"Target chain for this calldata: HyperEVM Testnet, chain ID {HYPEREVM_TESTNET_CHAIN_ID}")
 
     if dry_run:
+        push_guard.enforce(scored, accepted=args.accept_held.split(","), skip_published_check=args.skip_published_check)
         print("\n--dry-run set: calldata encoded above, but NOT sending a transaction, NOT reading ORACLE_RPC_URL/ORACLE_ADDRESS/PRIVATE_KEY.")
         return
 
@@ -389,6 +403,7 @@ def main(argv=None):
     private_key = os.environ["PRIVATE_KEY"]
     account = oracle_w3.eth.account.from_key(private_key)
     oracle = oracle_w3.eth.contract(address=Web3.to_checksum_address(oracle_address), abi=ORACLE_ABI)
+    push_guard.enforce(scored, oracle_w3, oracle_address, accepted=args.accept_held.split(","), skip_published_check=args.skip_published_check)
 
     tx = oracle.functions.updateScores(targets, tuples).build_transaction(
         {

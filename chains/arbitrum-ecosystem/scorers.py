@@ -43,6 +43,7 @@ from web3_utils import (  # noqa: E402
     safe_owners_and_threshold,
     safe_score,
 )
+import price_authority  # noqa: E402  (oracleAuthorityScore for price consumers, rule of 2026-10-04)
 from safe_modules import note_for, read_guard, read_modules  # noqa: E402
 
 # crossExposureScore is a property of the SET of tracked targets (does the same
@@ -81,9 +82,9 @@ _CROSS_EXPOSURE_NOTE = (
 
 def _composite(admin_key, multisig, timelock):
     """Standard project weighting: 0.4*adminKey + 0.3*multisig + 0.3*timelock,
-    oracleAuthorityScore excluded (not applicable to any of these 5 targets --
-    none of them is itself an oracle/price-feed authority). Uses standard
-    round-half-up via floor(x + 0.5), not Python's builtin round() (banker's
+    oracleAuthorityScore excluded by convention: price consumers carry it as a
+    separate field (METHODOLOGY, "oracleAuthorityScore for price consumers").
+    Uses standard round-half-up via floor(x + 0.5), not Python's builtin round() (banker's
     rounding) -- same fix already applied in the root scorers.py,
     chains/ethereum-l1/scorers.py and chains/base-ecosystem/scorers.py, kept
     consistent here rather than reintroducing the bug this project already
@@ -768,13 +769,16 @@ def score_aave_v3_pool_arbitrum(w3) -> dict:
     # applicable" default -- see the dated-snapshot comparison above.
     cross_exposure = 80 if shares_committee_with_base else 100
 
+    # ADDED 2026-10-04 (Spap's go): a price consumer's oracleAuthorityScore is the min over its material price paths
+    # one hop upstream (scripts/lib/price_authority.py, METHODOLOGY 'oracleAuthorityScore for price consumers').
+    oracle_authority = price_authority.for_aave(w3, provider, None, notes)
     return {
         "target": provider,
         "label": "Aave V3 Pool (Arbitrum, PoolAddressesProvider)",
         "adminKeyScore": admin_key,
         "multisigScore": multisig,
         "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100,
+        "oracleAuthorityScore": oracle_authority,
         "crossExposureScore": cross_exposure,
         "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes,
@@ -897,13 +901,16 @@ def score_compound_v3_comet_arbitrum_usdc(w3) -> dict:
     cross_ecosystem = bool(pg) and {o.lower() for o in pg[0]} == _KNOWN_COMPOUND_PAUSE_GUARDIAN_OWNERS_2026_09_20
     cross_exposure = 80 if cross_ecosystem else 100
     notes.append("Real cross-chain finding, independently re-confirmed 2026-09-20: this pauseGuardian Safe's 9 owners are IDENTICAL, as an exact set, to the pauseGuardian Safes of Compound V3 on Ethereum L1 (0xbbf3f142...) and Base (0x3cb4653F...) at the same 5-of-9 (three different Safe addresses), so one committee can freeze three Comets. Folded into crossExposureScore as a flat 80 (dated snapshot _KNOWN_COMPOUND_PAUSE_GUARDIAN_OWNERS_2026_09_20 compared with the owners read this run, no second-chain RPC)." if cross_ecosystem else _CROSS_EXPOSURE_NOTE)
+    # ADDED 2026-10-04 (Spap's go): a price consumer's oracleAuthorityScore is the min over its material price paths
+    # one hop upstream (scripts/lib/price_authority.py, METHODOLOGY 'oracleAuthorityScore for price consumers').
+    oracle_authority = price_authority.for_comet(w3, target, None, notes)
     return {
         "target": target,
         "label": "Compound V3 (Comet, USDC market, Arbitrum)",
         "adminKeyScore": admin_key,
         "multisigScore": multisig,
         "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100,
+        "oracleAuthorityScore": oracle_authority,
         "crossExposureScore": cross_exposure,
         "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes,

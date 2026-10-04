@@ -105,6 +105,30 @@ def _owners(n, start=1):
 ADDR_A = RealWeb3.to_checksum_address("0x" + "aa" * 20)
 ADDR_B = RealWeb3.to_checksum_address("0x" + "bb" * 20)
 
+
+# ADDED 2026-10-04: a Vault V2's live per-function timelocks, as scripts/lib/morpho_v2.py reads them (abdicated() then
+# timelock() for the 5 fund-redirecting functions and the 4 exit gates). Synthetic values, named where used.
+_V2_FUND = ["addAdapter(address)", "removeAdapter(address)", "setAdapterRegistry(address)",
+            "increaseAbsoluteCap(bytes,uint256)", "increaseRelativeCap(bytes,uint256)"]
+_V2_GATES = ["setReceiveSharesGate(address)", "setSendSharesGate(address)", "setReceiveAssetsGate(address)", "setSendAssetsGate(address)"]
+DAY = 86400
+
+
+def _v2_delays(fake, vault, fund=7 * DAY, gate_abdicated=(True, True, True, False), gate_delay=7 * DAY, overrides=None):
+    for sig in _V2_FUND:
+        sel = RealWeb3.keccak(text=sig)[:4]
+        fake.call_raw_results[(vault, "abdicated", (sel,))] = False
+        fake.call_raw_results[(vault, "timelock", (sel,))] = fund
+    for sig, ab in zip(_V2_GATES, gate_abdicated):
+        sel = RealWeb3.keccak(text=sig)[:4]
+        fake.call_raw_results[(vault, "abdicated", (sel,))] = ab
+        if not ab:
+            fake.call_raw_results[(vault, "timelock", (sel,))] = gate_delay
+    for sig, (ab, d) in (overrides or {}).items():
+        sel = RealWeb3.keccak(text=sig)[:4]
+        fake.call_raw_results[(vault, "abdicated", (sel,))] = ab
+        fake.call_raw_results[(vault, "timelock", (sel,))] = d
+
 UNI_L1_TIMELOCK = scorers._UNISWAP_L1_GOVERNANCE_TIMELOCK
 UNI_L1_TIMELOCK_CHECKSUM = RealWeb3.to_checksum_address(UNI_L1_TIMELOCK)
 # Computed live via the module's own real (unfaked) deterministic formula --
@@ -317,7 +341,8 @@ class TestScoreMorphoSteakhouseUsdg(unittest.TestCase):
     def _sel_key(self, sel):
         return (self.VAULT, "timelock", (bytes.fromhex(sel[2:]),))
 
-    def test_all_resolve_root_eoa_curator_and_sentinel_safes_min_delay_zero(self):
+    # CHANGED 2026-10-04: V2 decisions 1 and 3 (METHODOLOGY.md, "Morpho Vault V2 scoring"); expected values by hand.
+    def test_all_resolve_root_eoa_curator_safe_one_fund_function_at_zero_delay(self):
         fake = FakeHelpers()
         fake.address_getters[(self.VAULT, "owner")] = ADDR_A
         fake.eoa_results[ADDR_A] = True
@@ -326,14 +351,21 @@ class TestScoreMorphoSteakhouseUsdg(unittest.TestCase):
         candidate_checksum = RealWeb3.to_checksum_address(self.GUARDIAN_CANDIDATE)
         fake.call_raw_results[(self.VAULT, "isSentinel", (candidate_checksum,))] = True
         fake.safe_results[self.GUARDIAN_CANDIDATE] = (_owners(5, start=10), 3)
-        for i, sel in enumerate(self.SELECTORS):
-            fake.call_raw_results[self._sel_key(sel)] = 0 if i == 0 else 86400
+        _v2_delays(fake, self.VAULT, overrides={"addAdapter(address)": (False, 0)})
         _patch_helpers(self, fake)
 
         result = scorers.score_morpho_steakhouse_usdg(FakeW3())
-        self.assertEqual(result["adminKeyScore"], 10)     # root_is_eoa
-        self.assertEqual(result["multisigScore"], 35)     # curator_safe found
-        self.assertEqual(result["timelockScore"], 15)     # min(delays) == 0
+        self.assertEqual(result["adminKeyScore"], 5)      # root is a bare EOA: decision 3 floor (aligned 2026-10-04, was 10)
+        self.assertEqual(result["multisigScore"], 35)     # curator Safe 2-of-3: 2*15 + 1*5
+        self.assertEqual(result["timelockScore"], 0)      # addAdapter at 0 days -> minimum 0
+
+    def test_abdicated_zero_delay_function_does_not_count(self):
+        fake = FakeHelpers()
+        fake.address_getters[(self.VAULT, "owner")] = ADDR_A
+        fake.eoa_results[ADDR_A] = True
+        _v2_delays(fake, self.VAULT, overrides={"setAdapterRegistry(address)": (True, 0)})  # the live shape on 5 of 6 vaults
+        _patch_helpers(self, fake)
+        self.assertEqual(scorers.score_morpho_steakhouse_usdg(FakeW3())["timelockScore"], 75)  # minimum 7 days
 
     def test_root_not_eoa_traces_one_more_hop(self):
         fake = FakeHelpers()
@@ -341,29 +373,24 @@ class TestScoreMorphoSteakhouseUsdg(unittest.TestCase):
         fake.eoa_results[ADDR_A] = False
         fake.address_getters[(ADDR_A, "owner")] = ADDR_B
         fake.eoa_results[ADDR_B] = True
-        for sel in self.SELECTORS:
-            fake.call_raw_results[self._sel_key(sel)] = 86400
+        _v2_delays(fake, self.VAULT, fund=DAY, gate_delay=DAY)
         _patch_helpers(self, fake)
 
         result = scorers.score_morpho_steakhouse_usdg(FakeW3())
-        self.assertEqual(result["adminKeyScore"], 10)  # second-hop root IS a bare EOA
+        self.assertEqual(result["adminKeyScore"], 5)   # second-hop root IS a bare EOA: decision 3 floor
         self.assertEqual(result["multisigScore"], 5)   # no curator resolved
-        self.assertEqual(result["timelockScore"], 60)  # known delays, min > 0
+        self.assertEqual(result["timelockScore"], 40)  # 1-day minimum: band "any delay"
 
     def test_all_timelock_reads_none_degrades_without_crashing_regression(self):
-        # Regression test for the FIXED 2026-09-17 bug documented in this
-        # scorer's own comment: min() on an empty generator used to raise
-        # ValueError when all three timelock(...) reads returned None,
-        # crashing the whole target instead of degrading gracefully.
         fake = FakeHelpers()
         fake.address_getters[(self.VAULT, "owner")] = ADDR_A
         fake.eoa_results[ADDR_A] = True
-        # none of the 3 SELECTORS keys are registered -> all None
+        # no abdicated()/timelock() answer registered -> every read None -> UNREAD, never 0 days
         _patch_helpers(self, fake)
 
         result = scorers.score_morpho_steakhouse_usdg(FakeW3())  # must not raise
         self.assertEqual(result["timelockScore"], 0)
-        self.assertTrue(any("all three timelock(...) reads returned None" in n for n in result["notes"]))
+        self.assertTrue(any("minimum delay UNREAD" in n for n in result["notes"]))
 
 
 # --------------------------------------------------------------------- Lighter (zkLighter) Escrow proxy (Robinhood Chain)

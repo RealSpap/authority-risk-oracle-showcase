@@ -25,6 +25,14 @@ class FakeW3:
         self.eth = FakeEth(ret)
 
 
+class TestSlotConstants(unittest.TestCase):
+    def test_each_slot_is_its_eip1967_derivation(self):  # BEACON_SLOT was wrong until 2026-10-04 (no holder had one set)
+        from web3 import Web3
+        k = lambda t: int.from_bytes(Web3.keccak(text=t), "big") - 1  # noqa: E731
+        self.assertEqual((c.IMPL_SLOT, c.ADMIN_SLOT, c.BEACON_SLOT),
+                         (k("eip1967.proxy.implementation"), k("eip1967.proxy.admin"), k("eip1967.proxy.beacon")))
+
+
 class TestCodePaths(unittest.TestCase):
     def test_push_only(self):
         sel = c.selector("updateLstPriceCaps((address,(uint104,uint48,uint16))[])")

@@ -129,6 +129,30 @@ def _patch_helpers(test_case, fake):
 def _owners(n, start=1):
     return [RealWeb3.to_checksum_address("0x" + hex(i)[2:].zfill(40)) for i in range(start, start + n)]
 
+# ADDED 2026-10-04: a Vault V2's live per-function timelocks, as scripts/lib/morpho_v2.py reads them (abdicated() then
+# timelock() for the 5 fund-redirecting functions and the 4 exit gates). Synthetic values, named where used.
+_V2_FUND = ["addAdapter(address)", "removeAdapter(address)", "setAdapterRegistry(address)",
+            "increaseAbsoluteCap(bytes,uint256)", "increaseRelativeCap(bytes,uint256)"]
+_V2_GATES = ["setReceiveSharesGate(address)", "setSendSharesGate(address)", "setReceiveAssetsGate(address)", "setSendAssetsGate(address)"]
+DAY = 86400
+
+
+def _v2_delays(fake, vault, fund=7 * DAY, gate_abdicated=(True, True, True, False), gate_delay=7 * DAY, overrides=None):
+    for sig in _V2_FUND:
+        sel = RealWeb3.keccak(text=sig)[:4]
+        fake.call_raw_results[(vault, "abdicated", (sel,))] = False
+        fake.call_raw_results[(vault, "timelock", (sel,))] = fund
+    for sig, ab in zip(_V2_GATES, gate_abdicated):
+        sel = RealWeb3.keccak(text=sig)[:4]
+        fake.call_raw_results[(vault, "abdicated", (sel,))] = ab
+        if not ab:
+            fake.call_raw_results[(vault, "timelock", (sel,))] = gate_delay
+    for sig, (ab, d) in (overrides or {}).items():
+        sel = RealWeb3.keccak(text=sig)[:4]
+        fake.call_raw_results[(vault, "abdicated", (sel,))] = ab
+        fake.call_raw_results[(vault, "timelock", (sel,))] = d
+
+
 
 ADDR_A = RealWeb3.to_checksum_address("0x" + "aa" * 20)
 ADDR_B = RealWeb3.to_checksum_address("0x" + "bb" * 20)
@@ -252,16 +276,15 @@ class TestScoreMorphoVaultGeneric(unittest.TestCase):
                 fake.eoa_results[ADDR_A] = True
                 fake.address_getters[(vault, "curator")] = ADDR_B
                 fake.safe_results[ADDR_B] = (_owners(3), 2)
-                for i, sel in enumerate(self.SELECTORS):
-                    fake.call_raw_results[self._delay_key(vault, sel)] = 86400 if i < 2 else 172800
+                _v2_delays(fake, vault, fund=DAY, gate_delay=2 * DAY)
                 _patch_helpers(self, fake)
 
                 result = scorers.score_morpho_vault_generic(FakeW3(), vault, label)
                 self.assertEqual(result["target"], vault)
                 self.assertEqual(result["label"], label)
-                self.assertEqual(result["adminKeyScore"], 10)      # owner_is_eoa
-                self.assertEqual(result["multisigScore"], 16)      # curator Safe 2-of-3 -> 2*8
-                self.assertEqual(result["timelockScore"], 60)      # known delays, min > 0
+                self.assertEqual(result["adminKeyScore"], 5)       # bare-EOA owner: decision 3 floor (aligned 2026-10-04, was 10)
+                self.assertEqual(result["multisigScore"], 35)      # decision 3: curator Safe 2-of-3 -> 2*15 + 1*5 (was 2*8)
+                self.assertEqual(result["timelockScore"], 40)      # minimum 1 day: band "any delay" (changed 2026-10-04)
 
     def test_owner_resolves_directly_to_a_real_safe_no_two_hop_trace(self):
         vault, label = scorers.MORE_MORPHO_VAULTS[0]
@@ -273,9 +296,9 @@ class TestScoreMorphoVaultGeneric(unittest.TestCase):
         _patch_helpers(self, fake)
 
         result = scorers.score_morpho_vault_generic(FakeW3(), vault, label)
-        self.assertEqual(result["adminKeyScore"], 48)   # 30 + 3*6
-        self.assertEqual(result["multisigScore"], 24)   # owner Safe only: 3*8
-        self.assertEqual(result["timelockScore"], 0)    # no delay reads resolved at all
+        self.assertEqual(result["adminKeyScore"], 60)   # owner Safe 3-of-5: Ethereum L1 band >= 3 (was 30 + 3*6)
+        self.assertEqual(result["multisigScore"], 0)    # decision 3 scores the curator only; none resolved (was 3*8 on the owner)
+        self.assertEqual(result["timelockScore"], 0)    # no delay reads resolved at all -> UNREAD -> 0
 
     def test_owner_two_hop_trace_resolves_a_bare_eoa(self):
         vault, label = scorers.MORE_MORPHO_VAULTS[1]
@@ -287,7 +310,7 @@ class TestScoreMorphoVaultGeneric(unittest.TestCase):
         _patch_helpers(self, fake)
 
         result = scorers.score_morpho_vault_generic(FakeW3(), vault, label)
-        self.assertEqual(result["adminKeyScore"], 10)   # second-hop root IS a bare EOA
+        self.assertEqual(result["adminKeyScore"], 5)    # second-hop root IS a bare EOA: decision 3 floor
         self.assertEqual(result["multisigScore"], 0)
         self.assertTrue(any("owner().owner()" in n and "traced one hop further" in n for n in result["notes"]))
 
@@ -302,8 +325,24 @@ class TestScoreMorphoVaultGeneric(unittest.TestCase):
         _patch_helpers(self, fake)
 
         result = scorers.score_morpho_vault_generic(FakeW3(), vault, label)
-        self.assertEqual(result["adminKeyScore"], 42)   # 30 + 2*6
-        self.assertEqual(result["multisigScore"], 16)   # owner Safe only: 2*8
+        self.assertEqual(result["adminKeyScore"], 30)   # owner Safe 2-of-3: Ethereum L1 band < 3 (was 30 + 2*6)
+        self.assertEqual(result["multisigScore"], 0)    # decision 3: no curator resolved (was 2*8 on the owner)
+
+    def test_owner_bands_and_one_of_one_safe(self):
+        # ADDED 2026-10-04 (decision 3 aligned): live shapes of that day -- Ethena x Steakhouse / Turbo owner 5-of-10 -> 70,
+        # NetNet owner 1-of-1 Safe -> one key -> 5.
+        vault, label = scorers.MORE_MORPHO_VAULTS[0]
+        for shape, expected in (((_owners(10), 5), 70), ((_owners(1), 1), 5)):
+            with self.subTest(shape=shape[1]):
+                fake = FakeHelpers()
+                fake.address_getters[(vault, "owner")] = ADDR_A
+                fake.eoa_results[ADDR_A] = False
+                fake.safe_results[ADDR_A] = shape
+                _patch_helpers(self, fake)
+                result = scorers.score_morpho_vault_generic(FakeW3(), vault, label)
+                self.assertEqual(result["adminKeyScore"], expected)
+                if expected == 5:
+                    self.assertTrue(any("1-of-1 Safe, one key" in n for n in result["notes"]))
 
     def test_owner_two_hop_trace_fails_to_resolve_falls_back_to_20(self):
         vault, label = scorers.MORE_MORPHO_VAULTS[0]
@@ -318,21 +357,19 @@ class TestScoreMorphoVaultGeneric(unittest.TestCase):
         self.assertEqual(result["multisigScore"], 0)
         self.assertEqual(result["timelockScore"], 0)
 
-    def test_owner_entirely_unresolved_curator_safe_and_one_zero_delay_scores_10_timelock(self):
+    def test_owner_entirely_unresolved_curator_safe_and_one_zero_delay_scores_0_timelock(self):
         vault, label = scorers.MORE_MORPHO_VAULTS[1]
         fake = FakeHelpers()
         # (vault, "owner") deliberately absent -> owner is None entirely
         fake.address_getters[(vault, "curator")] = ADDR_B
         fake.safe_results[ADDR_B] = (_owners(3), 2)
-        fake.call_raw_results[self._delay_key(vault, self.SELECTORS[0])] = 0
-        fake.call_raw_results[self._delay_key(vault, self.SELECTORS[1])] = 86400
-        # third selector's delay unresolved -> filtered out of `delays`
+        _v2_delays(fake, vault, fund=DAY, overrides={"addAdapter(address)": (False, 0)})
         _patch_helpers(self, fake)
 
         result = scorers.score_morpho_vault_generic(FakeW3(), vault, label)
         self.assertEqual(result["adminKeyScore"], 20)   # owner unresolved -> neither eoa nor safe branch
-        self.assertEqual(result["multisigScore"], 16)   # curator Safe only: 2*8
-        self.assertEqual(result["timelockScore"], 10)   # min(delays) == 0
+        self.assertEqual(result["multisigScore"], 35)   # decision 3: curator Safe 2-of-3 -> 2*15 + 1*5
+        self.assertEqual(result["timelockScore"], 0)    # addAdapter at 0 days -> minimum 0 (was 10 for any zero)
 
 
 # --------------------------------------------------------------------- Longbow vault template

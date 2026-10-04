@@ -126,6 +126,7 @@ from web3_utils import (  # noqa: E402
     safe_owners_and_threshold,
     safe_score,
 )
+import price_authority  # noqa: E402  (oracleAuthorityScore for price consumers, rule of 2026-10-04)
 from safe_modules import note_for, read_guard, read_modules  # noqa: E402
 
 PLASMA_CHAIN_ID = 9745
@@ -183,10 +184,9 @@ def _snapshot_cross_exposure(owners, snapshot, snapshot_name, match_note):
 
 def _composite(admin_key, multisig, timelock):
     """Standard project weighting: 0.4*adminKey + 0.3*multisig + 0.3*timelock,
-    oracleAuthorityScore excluded (not applicable to either target below --
-    neither is itself an oracle/price-feed authority; Euler's own oracle
-    routers are a separate, per-vault-configurable component not scored
-    here). Uses standard round-half-up via floor(x + 0.5), not Python's
+    oracleAuthorityScore excluded by convention: price consumers carry it as a
+    separate field (METHODOLOGY, "oracleAuthorityScore for price consumers").
+    Uses standard round-half-up via floor(x + 0.5), not Python's
     builtin round() (banker's rounding) -- same fix already applied
     project-wide, kept consistent here."""
     import math
@@ -423,13 +423,16 @@ def score_aave_v3_pool_plasma(w3) -> dict:
     timelock_score = 50 if delay and delay > 0 else 0  # confirmed real 1-day delay, capped for the unverified L1 root + guardian cancel-path outside the timelock
     cross_exposure = 80 if shares_known_committee else 100
 
+    # ADDED 2026-10-04 (Spap's go): a price consumer's oracleAuthorityScore is the min over its material price paths
+    # one hop upstream (scripts/lib/price_authority.py, METHODOLOGY 'oracleAuthorityScore for price consumers').
+    oracle_authority = price_authority.for_aave(w3, provider, None, notes)
     return {
         "target": provider,
         "label": "Aave V3 Pool (Plasma, PoolAddressesProvider)",
         "adminKeyScore": admin_key,
         "multisigScore": multisig,
         "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100,
+        "oracleAuthorityScore": oracle_authority,
         "crossExposureScore": cross_exposure,
         "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes,
@@ -617,7 +620,18 @@ def score_ethena_usde_oft_plasma(w3) -> dict:
 
     pending_owner_abi = [{"name": "pendingOwner", "type": "function", "stateMutability": "view", "inputs": [], "outputs": [{"type": "address"}]}]
     pending = call_raw(w3, oft, pending_owner_abi, "pendingOwner", retries=1)
-    notes.append(f"USDeOFT.pendingOwner() = {pending} (Ownable2Step transfer in progress, NOT yet accepted -- owner() above remains the live authority)")
+    pending = pending if pending and int(pending, 16) else None  # 0x0 = no transfer pending (the 2026-09-29 one was accepted)
+    notes.append(f"USDeOFT.pendingOwner() = {pending or 'none'}" + (" (Ownable2Step transfer in progress, NOT yet accepted -- owner() above remains the live authority)" if pending else ""))
+
+    # FIXED 2026-10-04: the Ownable2Step transfer above was accepted on 2026-09-29 (Plasma block 33749732, OwnershipTransferred
+    # Safe -> TimelockController 0xabD3645b). Read as a Safe, the Timelock fell into the unresolved branch (20/20/0, composite 14
+    # against 52 published): a posture that improved would have been published as a 38-point drop. It is now scored like the
+    # identical Ethereum L1 OFTAdapter shape (score_ethena_layerzero_oft): the 5-of-10 Safe proposes through a 1-day
+    # TimelockController, setPeer is whitelisted (instant), setDelegate is delayed -> 55/100/15. Every fact is read live; any
+    # missing one degrades to 20/20/0 as before.
+    tl_delay = call_raw(w3, owner, _GET_MIN_DELAY, "getMinDelay", retries=1) if owner else None
+    if tl_delay is not None:
+        return _score_ethena_oft_plasma_behind_timelock(w3, oft, owner, tl_delay, notes)
 
     safe = safe_owners_and_threshold(w3, owner) if owner else None
     shares_known_committee = False
@@ -659,6 +673,52 @@ def score_ethena_usde_oft_plasma(w3) -> dict:
         "crossExposureScore": 80 if shares_known_committee else 100,
         "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes,
+    }
+
+
+_GET_MIN_DELAY = [{"name": "getMinDelay", "type": "function", "stateMutability": "view", "inputs": [], "outputs": [{"type": "uint256"}]}]
+_HAS_ROLE = [{"name": "hasRole", "type": "function", "stateMutability": "view", "inputs": [{"type": "bytes32"}, {"type": "address"}], "outputs": [{"type": "bool"}]}]
+_IS_WHITELISTED = [{"name": "isWhitelisted", "type": "function", "stateMutability": "view", "inputs": [{"type": "address"}, {"type": "bytes4"}], "outputs": [{"type": "bool"}]}]
+# The Safe that owned the OFT until 2026-09-29; read live on 2026-10-04 as holder of PROPOSER, EXECUTOR, CANCELLER and
+# WHITELISTED_EXECUTOR on the Timelock. Each role is re-read every run: a constant here names whom to check, never a result.
+_ETHENA_PLASMA_SAFE = "0x2C57434603F21f580c91A3Bdc0CC5F3F20278632"
+
+
+def _score_ethena_oft_plasma_behind_timelock(w3, oft, timelock, delay, notes) -> dict:
+    notes.append(f"USDeOFT.owner() {timelock} is a TimelockController, getMinDelay() = {delay}s (ownership accepted 2026-09-29)")
+    roles = {name: call_raw(w3, timelock, _HAS_ROLE, "hasRole", Web3.keccak(text=name), w3.to_checksum_address(_ETHENA_PLASMA_SAFE))
+             for name in ("PROPOSER_ROLE", "EXECUTOR_ROLE", "CANCELLER_ROLE", "WHITELISTED_EXECUTOR_ROLE")}
+    notes.append(f"Safe {_ETHENA_PLASMA_SAFE} roles on the Timelock: {roles}")
+    peer = call_raw(w3, timelock, _IS_WHITELISTED, "isWhitelisted", w3.to_checksum_address(oft), bytes.fromhex("3400288b"))
+    delegate = call_raw(w3, timelock, _IS_WHITELISTED, "isWhitelisted", w3.to_checksum_address(oft), bytes.fromhex("ca5eb5e1"))
+    notes.append(f"isWhitelisted(OFT, setPeer) = {peer} (True = instant bypass of the delay); isWhitelisted(OFT, setDelegate) = {delegate}")
+    safe = safe_owners_and_threshold(w3, _ETHENA_PLASMA_SAFE)
+    shares_known_committee = False
+    # Same rule as Ethereum L1's score_ethena_layerzero_oft(): degrade only when a fact did not read (or the Safe is not the
+    # proposer, so the authority is someone not identified here); a resolved but different whitelist shape keeps 55/100 and
+    # moves only timelockScore (15 for the setPeer-whitelisted shape, 0 otherwise, as on L1).
+    resolved = None not in (peer, delegate) and safe is not None
+    if resolved and roles["PROPOSER_ROLE"] is True:
+        owners, threshold = safe
+        notes.append(f"proposer Safe is a real Gnosis Safe: {threshold}-of-{len(owners)}")
+        notes.append(note_for(_ETHENA_PLASMA_SAFE, read_modules(w3, _ETHENA_PLASMA_SAFE), read_guard(w3, _ETHENA_PLASMA_SAFE)))
+        shares_known_committee = {w3.to_checksum_address(o) for o in owners} == {w3.to_checksum_address(o) for o in _KNOWN_ETHENA_L1_SAFE_OWNERS_2026_09_18}
+        if shares_known_committee:
+            notes.append("proposer Safe's 10 signers are IDENTICAL, as an exact set, to Ethereum L1's tracked Ethena Safe -- crossExposureScore 80")
+        # Same convention as Ethereum L1's score_ethena_layerzero_oft(): 55 (Safe-governed, no DAO layer), 100 (5-of-10), and
+        # timelockScore 15 because the most consequential function, setPeer, is instantly whitelisted past the 1-day delay.
+        timelock_score = 15 if (peer is True and delegate is False and delay > 0) else 0  # a 0-second delay is no delay
+        admin_key, multisig = 55, min(threshold * 15 + max(0, len(owners) - threshold) * 5, 100)
+    else:
+        notes.append("Timelock roles / whitelist / proposer Safe did not all resolve to the expected shape this run -- degraded, treat as unresolved")
+        admin_key, multisig, timelock_score = 20, 20, 0
+    if not shares_known_committee:
+        notes.append(_CROSS_EXPOSURE_NOTE)
+    return {
+        "target": oft, "label": "Ethena USDe OFT (Plasma)",
+        "adminKeyScore": admin_key, "multisigScore": multisig, "timelockScore": timelock_score,
+        "oracleAuthorityScore": 100, "crossExposureScore": 80 if shares_known_committee else 100,
+        "compositeScore": _composite(admin_key, multisig, timelock_score), "notes": notes,
     }
 
 

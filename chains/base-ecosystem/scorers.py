@@ -35,6 +35,7 @@ from web3_utils import (  # noqa: E402
     safe_score,
     EIP1967_ADMIN_SLOT,
 )
+import price_authority  # noqa: E402  (oracleAuthorityScore for price consumers, rule of 2026-10-04)
 
 # RESOLVED 2026-09-17 (closed a follow-up audit finding): this file used to
 # keep its own local `_retrying()` plus thin wrappers around it (Base's public
@@ -73,9 +74,9 @@ _CROSS_EXPOSURE_NOTE = (
 
 def _composite(admin_key, multisig, timelock):
     """Standard project weighting: 0.4*adminKey + 0.3*multisig + 0.3*timelock,
-    oracleAuthorityScore excluded (not applicable to any of these 5 targets --
-    none of them is itself an oracle/price-feed authority). Uses standard
-    round-half-up via floor(x + 0.5), not Python's builtin round() (banker's
+    oracleAuthorityScore excluded by convention: price consumers carry it as a
+    separate field (METHODOLOGY, "oracleAuthorityScore for price consumers").
+    Uses standard round-half-up via floor(x + 0.5), not Python's builtin round() (banker's
     rounding) -- same fix already applied in the root scorers.py and
     chains/ethereum-l1/scorers.py, kept consistent here rather than
     reintroducing the bug this project already caught once."""
@@ -274,13 +275,16 @@ def score_aave_v3_base(w3) -> dict:
     timelock_score = 50 if delay and delay > 0 else 0  # confirmed real 1-day delay, capped for the unverified L1 root + guardian cancel-path outside the timelock
     cross_exposure = 80 if shares_committee_with_arbitrum else 100
 
+    # ADDED 2026-10-04 (Spap's go): a price consumer's oracleAuthorityScore is the min over its material price paths
+    # one hop upstream (scripts/lib/price_authority.py, METHODOLOGY 'oracleAuthorityScore for price consumers').
+    oracle_authority = price_authority.for_aave(w3, provider, None, notes)
     return {
         "target": provider,
         "label": "Aave V3 Base (PoolAddressesProvider)",
         "adminKeyScore": admin_key,
         "multisigScore": multisig,
         "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100,
+        "oracleAuthorityScore": oracle_authority,
         "crossExposureScore": cross_exposure,
         "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes,
@@ -584,13 +588,16 @@ def score_compound_v3_comet_base_usdc(w3) -> dict:
     else:
         timelock_score = 0  # confirmed real 1-day LOCAL delay live; the L1 Compound Timelock's own delay is not queried by this Base-RPC scorer
 
+    # ADDED 2026-10-04 (Spap's go): a price consumer's oracleAuthorityScore is the min over its material price paths
+    # one hop upstream (scripts/lib/price_authority.py, METHODOLOGY 'oracleAuthorityScore for price consumers').
+    oracle_authority = price_authority.for_comet(w3, target, None, notes)
     return {
         "target": target,
         "label": "Compound V3 (Comet, USDC market, Base)",
         "adminKeyScore": admin_key,
         "multisigScore": multisig,
         "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100,
+        "oracleAuthorityScore": oracle_authority,
         "crossExposureScore": cross_exposure,
         "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes,

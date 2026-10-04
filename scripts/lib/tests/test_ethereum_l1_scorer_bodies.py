@@ -129,6 +129,22 @@ sys.path.insert(0, os.path.join(REPO_ROOT, "scripts", "lib"))
 scorers = _load_module("aro_test_eth_l1_scorer_bodies_scorers", "chains/ethereum-l1/scorers.py")
 
 
+# ADDED 2026-10-04: the price-path engine is stubbed for these composite-logic tests (see test_price_authority_wiring.py).
+_PA_NAMES = ("for_aave", "for_comet", "for_morpho_v1")
+_PA_ORIG = {}
+
+
+def setUpModule():
+    for n in _PA_NAMES:
+        _PA_ORIG[n] = getattr(scorers.price_authority, n)
+        setattr(scorers.price_authority, n, lambda *a, **k: 100)
+
+
+def tearDownModule():
+    for n, f in _PA_ORIG.items():
+        setattr(scorers.price_authority, n, f)
+
+
 # --------------------------------------------------------------------------- fakes
 _ADDRESS_RE = re.compile(r"^0x[0-9a-fA-F]{40}$")
 # encode_abi is pure: nothing is ever sent, and the provider points at the discard port on this machine anyway.

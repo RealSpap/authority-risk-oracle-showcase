@@ -58,7 +58,8 @@ scorers = _load_module("aro_test_ethereum_l1_scorers", "chains/ethereum-l1/score
 
 # The price-authority walk (2026-10-04) reads many feeds on a real chain; it has its own offline test
 # (scripts/lib/tests/test_price_authority.py), so the scorer bodies here see a fixed 100.
-_PA_NAMES = ("for_aave", "for_comet", "for_morpho_v1")
+_PA_NAMES = ("for_aave", "for_aave_v2", "for_comet", "for_morpho_v1", "for_morpho_v2", "for_gmx_v2", "for_gmx_v1", "for_euler_factory", "for_euler_earn",
+            "for_sparklend")
 _PA_ORIG = {}
 
 

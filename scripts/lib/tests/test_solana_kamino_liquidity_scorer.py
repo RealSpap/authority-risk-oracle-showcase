@@ -41,6 +41,13 @@ REPO_ROOT = os.path.join(os.path.dirname(__file__), "..", "..", "..")
 UPGRADE_MS = "E7994UpSGhSpbpnuSepPXHBuMy3eRvHJL36DjTs1kb2b"
 ADMIN_MS = "HvYoRSJdVcj6WRWV57yLu2Vmwh1ccqJRdkCwhNsSfRu4"
 GLOBAL_CONFIG = "GKnHiWh3RRrE1zsNzWxRkomymHc374TvJPSTv2wPeYdB"
+KLIQUIDITY_PROGRAM = "6LtLpnUFNByNXLyCoK9wA2MykKAmQNZKBdY8s47dehDc"
+# oracleAuthorityScore (2026-10-05): the Scope feed the strategies price from, its Configuration and the two Scope multisigs.
+SCOPE_PROGRAM = "HFn8GnPADiny6XqUoWE8uRPPxb29ikn4yTuPa9MF2fWJ"
+SCOPE_ADMIN_MS = "EFZxQRB58g7nTYw6bag8sJYXn7wUWHoKt3AcCNzHbe24"
+SCOPE_UPGRADE_MS = "DDJGaWjVREXffoMe9nyvb1c7wpajLdh7fTnAb2giD9RM"
+TOKEN_INFOS = "3v6ootgJJZbSWEDfZMA1scfh7wcsVVfeocExRxPqCyWH"
+FEED, FEED2 = "3NJYftD5sjVfxSnUdZ1wVML8f3aC6mp1CXCL6L7TnU8C", "Feed2222222222222222222222222222222222222222"
 
 
 def _load_module(unique_name, relative_path):
@@ -64,6 +71,8 @@ solana = _load_module("aro_test_solana_scorers_kliquidity", "chains/solana/score
 # MATCH rather than a fabricated one.
 DERIVED_UPGRADE_VAULT = solana.sol_read.read_squads_vault(UPGRADE_MS, 0)["vault"]
 DERIVED_ADMIN_VAULT = solana.sol_read.read_squads_vault(ADMIN_MS, 0)["vault"]
+DERIVED_SCOPE_ADMIN_VAULT = solana.sol_read.read_squads_vault(SCOPE_ADMIN_MS, 0)["vault"]
+DERIVED_SCOPE_UPGRADE_VAULT = solana.sol_read.read_squads_vault(SCOPE_UPGRADE_MS, 0)["vault"]
 
 
 def _squads(threshold, voters, delay_s, prefix="signer", config_authority=None):
@@ -89,16 +98,26 @@ class _KaminoLiquidityScorerTestCase(unittest.TestCase):
         self._orig_read_program = solana.sol_read.read_program
         self._orig_read_gc = solana.sol_read.read_kliquidity_global_config
         self._orig_read_squads = solana.sol_read.read_squads
+        self._orig_read_feeds = solana.sol_read.read_kliquidity_collateral_feeds
+        self._orig_read_scope = solana.sol_read.read_scope_configs
 
     def tearDown(self):
         solana.sol_read.read_program = self._orig_read_program
         solana.sol_read.read_kliquidity_global_config = self._orig_read_gc
         solana.sol_read.read_squads = self._orig_read_squads
+        solana.sol_read.read_kliquidity_collateral_feeds = self._orig_read_feeds
+        solana.sol_read.read_scope_configs = self._orig_read_scope
 
-    def _patch(self, upgrade_authority, admin_authority, squads_by_ms, actions_authority="ActionsAuthorityEOA111111111111111111111X"):
-        solana.sol_read.read_program = lambda url, pk: {"upgrade_authority": upgrade_authority}
+    def _patch(self, upgrade_authority, admin_authority, squads_by_ms, actions_authority="ActionsAuthorityEOA111111111111111111111X",
+               entries=(), configs=(), scope_upgrade=None, scope_program=SCOPE_PROGRAM):
+        """Every reader the scorer calls is replaced: the Scope ones default to an empty tokenInfos (oracle field 20)."""
+        programs = {KLIQUIDITY_PROGRAM: upgrade_authority, SCOPE_PROGRAM: scope_upgrade}
+        solana.sol_read.read_program = lambda url, pk: {"upgrade_authority": programs[pk]}
         solana.sol_read.read_kliquidity_global_config = lambda url, pk: {
-            "global_config": pk, "admin_authority": admin_authority, "actions_authority": actions_authority}
+            "global_config": pk, "admin_authority": admin_authority, "actions_authority": actions_authority,
+            "scope_program": scope_program, "token_infos": TOKEN_INFOS}
+        solana.sol_read.read_kliquidity_collateral_feeds = lambda url, pk: list(entries) if pk == TOKEN_INFOS else None
+        solana.sol_read.read_scope_configs = lambda url, pk: list(configs) if pk == SCOPE_PROGRAM else None
 
         def fake_read_squads(url, pk):
             return squads_by_ms[pk]
@@ -338,11 +357,99 @@ class TestReturnedDictShapeAndCompositeAndNotes(_KaminoLiquidityScorerTestCase):
         result = solana.score_kamino_liquidity("unused-url")
         self.assertEqual(result["target"], GLOBAL_CONFIG)
         self.assertEqual(result["label"], "Kamino Liquidity (yvaults)")
-        self.assertEqual(result["oracleAuthorityScore"], 100)
+        self.assertEqual(result["oracleAuthorityScore"], 20)  # no used CollateralInfo in this fixture: unknown, never 100
         expected_composite = solana._composite(
             result["adminKeyScore"], result["multisigScore"], result["timelockScore"])
         self.assertEqual(result["compositeScore"], expected_composite)
         self.assertTrue(any(n.startswith("combined (min over both full-power paths") for n in result["notes"]))
+
+
+class TestOracleAuthorityScope(_KaminoLiquidityScorerTestCase):
+    """oracleAuthorityScore (2026-10-05): min over the Scope paths of every feed the CollateralInfos name, Solana formula,
+    governance-grade at the GlobalConfig admin's own delay, UNREAD -> 20 never 100. Each test fails when its branch goes."""
+    ENTRY = {"mint": "Mint1111111111111111111111111111111111111111", "scope_feed": FEED, "disabled": 0}
+    CONFIG = {"configuration": "Config111111111111111111111111111111111111111", "oracle_prices": FEED, "admin": DERIVED_SCOPE_ADMIN_VAULT}
+
+    def score(self, admin_delay=0, scope_admin=(4, 10, 0), scope_upgrade=(5, 10, 86400), entries=None, configs=None,
+              upgrade_authority=DERIVED_SCOPE_UPGRADE_VAULT, **kw):
+        squads = {UPGRADE_MS: _squads(5, 7, 86400, prefix="upgrade"), ADMIN_MS: _squads(5, 7, admin_delay, prefix="admin"),
+                  SCOPE_ADMIN_MS: _squads(*scope_admin, prefix="scope-admin"), SCOPE_UPGRADE_MS: _squads(*scope_upgrade, prefix="scope-upgrade")}
+        self._patch(DERIVED_UPGRADE_VAULT, DERIVED_ADMIN_VAULT, squads, entries=[self.ENTRY] if entries is None else entries,
+                    configs=[self.CONFIG] if configs is None else configs, scope_upgrade=upgrade_authority, **kw)
+        return solana.score_kamino_liquidity("unused-url")
+
+    def composite(self, t, n, d):
+        return solana._composite(*solana._score_full_power_path("squads_v4", threshold=t, voters=n, delay_s=d))
+
+    def test_scope_admin_sets_the_min_as_on_kamino_lend(self):
+        r = self.score()
+        self.assertEqual(r["oracleAuthorityScore"], min(self.composite(4, 10, 0), self.composite(5, 10, 86400)))
+        self.assertEqual(r["oracleAuthorityScore"], 45)
+        self.assertEqual(self.score(scope_admin=(9, 10, 86400 * 9), scope_upgrade=(3, 10, 3600))["oracleAuthorityScore"], self.composite(3, 10, 3600))
+
+    def test_a_delay_at_least_the_targets_own_is_governance_grade(self):
+        r = self.score(admin_delay=3600, scope_admin=(4, 10, 7200))  # Scope admin 2 h, upgrade 24 h, own 1 h: both disclosed
+        self.assertEqual(r["oracleAuthorityScore"], 100)
+        self.assertEqual(self.score(admin_delay=3600, scope_admin=(4, 10, 600))["oracleAuthorityScore"], self.composite(4, 10, 600))
+
+    def test_renounced_scope_upgrade_is_disclosed(self):
+        r = self.score(upgrade_authority=None, scope_upgrade=(1, 1, 0))
+        self.assertEqual(r["oracleAuthorityScore"], 45)
+        self.assertTrue(any("Scope program upgrade: renounced" in n for n in r["notes"]))
+
+    def test_every_unknown_is_20_never_100(self):
+        cases = {"feed without a Configuration": {"configs": []},
+                 "Scope admin not the pinned multisig's vault": {"configs": [dict(self.CONFIG, admin=DERIVED_ADMIN_VAULT)]},
+                 "Scope upgrade not the pinned multisig's vault": {"upgrade_authority": DERIVED_ADMIN_VAULT},
+                 "no used CollateralInfo": {"entries": []},
+                 "another Scope program": {"scope_program": KLIQUIDITY_PROGRAM}}
+        for name, kw in cases.items():
+            with self.subTest(name):
+                r = self.score(scope_admin=(9, 10, 86400 * 9), scope_upgrade=(9, 10, 86400 * 9), **kw)
+                self.assertEqual(r["oracleAuthorityScore"], 20)
+                self.assertTrue(any(solana.PRICE_UNREAD_MARK in n for n in r["notes"]))
+
+    def test_each_distinct_feed_is_walked(self):
+        second = dict(self.CONFIG, configuration="Config222222222222222222222222222222222222222", oracle_prices=FEED2, admin=DERIVED_ADMIN_VAULT)
+        r = self.score(entries=[self.ENTRY, dict(self.ENTRY, scope_feed=FEED2)], configs=[self.CONFIG, second])
+        self.assertEqual(r["oracleAuthorityScore"], 20)  # the second feed's admin does not match: UNREAD, min(20, 45)
+
+    def test_a_failed_multisig_read_is_20_not_a_crash(self):
+        self.score()
+        real = solana.sol_read.read_squads
+
+        def flaky(url, pk):
+            if pk == SCOPE_ADMIN_MS:
+                raise solana.sol_read.SolRpcError("rpc down")
+            return real(url, pk)
+        solana.sol_read.read_squads = flaky
+        r = solana.score_kamino_liquidity("unused-url")
+        self.assertEqual(r["oracleAuthorityScore"], 20)
+        self.assertTrue(any("price walk failed" in n for n in r["notes"]))
+
+    def test_a_failed_read_after_a_lower_scored_path_keeps_it(self):
+        self.score(scope_admin=(1, 10, 0))  # the Scope admin path scores below 20
+        low = self.composite(1, 10, 0)
+        real = solana.sol_read.read_squads
+
+        def flaky(url, pk):
+            if pk == SCOPE_UPGRADE_MS:
+                raise solana.sol_read.SolRpcError("rpc down")
+            return real(url, pk)
+        solana.sol_read.read_squads = flaky
+        r = solana.score_kamino_liquidity("unused-url")
+        self.assertLess(low, 20)
+        self.assertEqual(r["oracleAuthorityScore"], low)
+        self.assertTrue(any("price walk failed" in n for n in r["notes"]))
+
+    def test_a_failed_read_is_20(self):
+        def boom(url, pk):
+            raise solana.sol_read.SolRpcError("rpc down")
+        self.score()
+        solana.sol_read.read_kliquidity_collateral_feeds = boom
+        r = solana.score_kamino_liquidity("unused-url")
+        self.assertEqual(r["oracleAuthorityScore"], 20)
+        self.assertTrue(any("price walk failed" in n for n in r["notes"]))
 
 
 if __name__ == "__main__":

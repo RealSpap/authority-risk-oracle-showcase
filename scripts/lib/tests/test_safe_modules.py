@@ -3,6 +3,7 @@ import importlib.util
 import os
 import sys
 import unittest
+import unittest.mock
 
 from web3 import Web3 as RealWeb3
 
@@ -267,6 +268,43 @@ class TestGateFindings(unittest.TestCase):
     def test_unread_modules_or_singleton_are_info_never_blocking(self):
         self.assertEqual(self._run(None, CANON_S), ([], ["modules that could not be read"]))
         self.assertEqual(self._run([], None), ([], ["a singleton that could not be read"]))
+
+    def test_a_safe_without_proxy_passes_only_on_its_pinned_code_hash(self):
+        # ADDED 2026-10-05: a zero singleton is a Safe deployed without a proxy; its own code is the logic.
+        known = next(iter(safe_modules.KNOWN_PROXYLESS_SAFES))
+        original = safe_modules.read_code_hash
+        self.addCleanup(lambda: setattr(safe_modules, "read_code_hash", original))
+        for code_hash, singleton, blocks in ((known, ZERO, False), ("ab" * 32, ZERO, True), (None, ZERO, True), (known, NEW_S, True)):
+            with self.subTest(code_hash=code_hash, singleton=singleton):
+                safe_modules.read_code_hash = lambda w3, safe, retries=4, h=code_hash: h
+                blocking, info = self._run([], singleton)
+                self.assertEqual(bool(blocking), blocks)  # an unread code, another code or a non-zero singleton keep it blocked
+                self.assertEqual(info, [])
+        safe_modules.read_code_hash = lambda w3, safe, retries=4: known
+        self.assertEqual(len(self._run([NEW_S], ZERO)[0]), 1)  # an unanalyzed module still blocks a proxyless Safe
+
+    def test_read_code_hash_is_keccak_of_the_code_and_none_when_unread(self):
+        class W3:
+            class eth:
+                @staticmethod
+                def get_code(a):
+                    return b"\x60\x00"
+        self.assertEqual(safe_modules.read_code_hash(W3, SAFE), RealWeb3.keccak(b"\x60\x00").hex().removeprefix("0x"))
+
+        class Down:
+            class eth:
+                @staticmethod
+                def get_code(a):
+                    raise ConnectionError("429")
+        with unittest.mock.patch("time.sleep", lambda s: None):
+            self.assertIsNone(safe_modules.read_code_hash(Down, SAFE))
+
+    def test_proxyless_table_is_keyed_by_code_hash_dated_and_free_of_long_dashes(self):
+        for code_hash, info in safe_modules.KNOWN_PROXYLESS_SAFES.items():
+            self.assertRegex(code_hash, r"^[0-9a-f]{64}$")
+            self.assertRegex(info["analyzed"], r"^\d{4}-\d{2}-\d{2}$")
+            self.assertNotIn(chr(0x2014), info["summary"])
+            self.assertIn("byte-identical", info["summary"])
 
     def test_a_guard_is_not_part_of_the_gate(self):
         # gate_findings never reads the guard: a guard can block, not act as the Safe.

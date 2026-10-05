@@ -111,12 +111,18 @@ class ScoreJupiterLendTestCase(unittest.TestCase):
         self._orig_read_jupiter_lend_liquidity = solana.sol_read.read_jupiter_lend_liquidity
         self._orig_read_jupiter_lend_authorization_list = solana.sol_read.read_jupiter_lend_authorization_list
         self._orig_read_squads = solana.sol_read.read_squads
+        self._orig_rpc = solana.sol_read.rpc
+
+        def no_network(*a, **k):  # the oracle field's raw reads (2026-10-05): offline here, so unknown
+            raise solana.sol_read.SolRpcError("offline test")
+        solana.sol_read.rpc = no_network
 
     def tearDown(self):
         solana.sol_read.read_program = self._orig_read_program
         solana.sol_read.read_jupiter_lend_liquidity = self._orig_read_jupiter_lend_liquidity
         solana.sol_read.read_jupiter_lend_authorization_list = self._orig_read_jupiter_lend_authorization_list
         solana.sol_read.read_squads = self._orig_read_squads
+        solana.sol_read.rpc = self._orig_rpc
 
     def _patch(self, upgrade_authority, liquidity_authority, squads_by_pk, auth_users=None, guardians=None):
         # auth_users/guardians default to [liquidity_authority] each -- the real, live-observed
@@ -178,7 +184,7 @@ class TestBothPathsResolveAndCombineViaMin(ScoreJupiterLendTestCase):
 
         self.assertEqual(result["target"], LIQUIDITY_ACCOUNT)
         self.assertEqual(result["label"], "Jupiter Lend")
-        self.assertEqual(result["oracleAuthorityScore"], 100)
+        self.assertEqual(result["oracleAuthorityScore"], 20)  # its price walk reads nothing offline: unknown, never 100 (test_price_authority_jupiter.py)
         self.assertEqual(result["compositeScore"], solana._composite(*expected))
         self.assertTrue(any("combined (min over both full-power paths" in n for n in result["notes"]))
 

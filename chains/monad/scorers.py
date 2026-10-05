@@ -681,6 +681,9 @@ def score_morpho_vault_monad(w3) -> dict:
                 f"shared 'Steakhouse' branding."
             )
 
+    # ADDED 2026-10-05: oracleAuthorityScore from the price paths one hop upstream (scripts/lib/price_authority.py,
+    # METHODOLOGY 'oracleAuthorityScore for price consumers').
+    oracle_authority = price_authority.for_morpho_v1(w3, vault, price_authority.MONAD_SPECS, notes)
     if cross_exposure == 100:
         notes.append(_CROSS_EXPOSURE_NOTE)
     return {
@@ -689,7 +692,7 @@ def score_morpho_vault_monad(w3) -> dict:
         "adminKeyScore": admin_key,
         "multisigScore": multisig,
         "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100,
+        "oracleAuthorityScore": oracle_authority,
         "crossExposureScore": cross_exposure,
         "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes,
@@ -1332,13 +1335,17 @@ def score_euler_v2_monad(w3) -> dict:
     if cross_exposure == 100:
         notes.append(_CROSS_EXPOSURE_NOTE)
 
+    # ADDED 2026-10-05: oracleAuthorityScore from the price paths one hop upstream of every lending vault of this factory
+    # (scripts/lib/price_authority.py, METHODOLOGY 'oracleAuthorityScore for price consumers'). A vault priced in BTC that
+    # no USD-priced vault oracle quotes keeps an unknown value, so it counts as material (fail-closed).
+    oracle_authority = price_authority.for_euler_factory(w3, factory, price_authority.MONAD_SPECS, notes)
     return {
         "target": factory,
         "label": "Euler V2 eVaultFactory (Monad)",
         "adminKeyScore": admin_key,
         "multisigScore": multisig,
         "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100,
+        "oracleAuthorityScore": oracle_authority,
         "crossExposureScore": cross_exposure,
         "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes,

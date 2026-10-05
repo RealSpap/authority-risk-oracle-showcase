@@ -1380,10 +1380,13 @@ def score_sparklend_pool(w3) -> dict:
         elif mom_ward is None:
             notes.append("FreezerMom ward unread this run -- timelockScore degraded")
 
+    # ADDED 2026-10-05 (Spap's go): the Aave V3 rows behind the Sky pause delay; a Chronicle Aggor median scores its
+    # weakest feed (scripts/lib/price_authority.py, METHODOLOGY 'oracleAuthorityScore for price consumers').
+    oracle_authority = price_authority.for_sparklend(w3, provider, price_authority.ETHEREUM_SPECS, notes)
     return {
         "target": provider, "label": "SparkLend (PoolAddressesProvider)",
         "adminKeyScore": admin_key, "multisigScore": multisig, "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100, "compositeScore": _composite(admin_key, multisig, timelock_score),
+        "oracleAuthorityScore": oracle_authority, "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes, "_rootGroup": "makerdao-sky-governance",
     }
 
@@ -2256,7 +2259,7 @@ def score_aave_v3_horizon_pool(w3) -> dict:
         notes.append(f"admin Safe has {len(modules[0])} module(s) enabled ({list(modules[0])}); whether one is a delay is not resolved here, timelockScore stays 0")
     else:
         notes.append("admin Safe modules unread this run; timelockScore stays 0")
-    notes.append(f"Not scored, disclosed: contract {_HORIZON_RWA_ATOKEN_MANAGER} (Blockscout-labeled 'Executor', not independently re-verified) holds RISK_ADMIN + ASSET_LISTING_ADMIN; the GHO direct minter proxy {_HORIZON_GHO_DIRECT_MINTER} holds RISK_ADMIN -- both identified by the 2026-09-22 live replay + Blockscout, previously disclosed only as unaddressed contracts; oracle authority is flat 100")
+    notes.append(f"Not scored, disclosed: contract {_HORIZON_RWA_ATOKEN_MANAGER} (Blockscout-labeled 'Executor', not independently re-verified) holds RISK_ADMIN + ASSET_LISTING_ADMIN; the GHO direct minter proxy {_HORIZON_GHO_DIRECT_MINTER} holds RISK_ADMIN -- both identified by the 2026-09-22 live replay + Blockscout, previously disclosed only as unaddressed contracts")
 
     if root_resolved and pool_admin is True and default_admin is True and safe:
         owners, threshold = safe
@@ -2268,10 +2271,11 @@ def score_aave_v3_horizon_pool(w3) -> dict:
         admin_key, multisig, timelock_score = 20, 0, 0
         notes.append("root, DEFAULT_ADMIN_ROLE, POOL_ADMIN holder or admin Safe unresolved this run -- conservative score, treat as unverified")
 
+    oracle_authority = price_authority.for_aave(w3, provider, price_authority.ETHEREUM_SPECS, notes)
     return {
         "target": provider, "label": "Aave V3 Horizon Pool (PoolAddressesProvider)",
         "adminKeyScore": admin_key, "multisigScore": multisig, "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100, "compositeScore": _composite(admin_key, multisig, timelock_score),
+        "oracleAuthorityScore": oracle_authority, "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes, "_rootGroup": "aave-l1-governance",
     }
 
@@ -2504,10 +2508,13 @@ def score_morpho_steakhouse_usdt_l1(w3) -> dict:
     admin_key, multisig, timelock_score, notes, signers = _score_steakhouse_l1_vault(
         w3, vault, "Steakhouse USDT", guardian,
         f"guardian() = {guardian}, a small contract (833 bytes per this run's own eth_getCode) -- not independently resolved to a Safe or opened, disclosed as an open point")
+    # ADDED 2026-10-05: oracleAuthorityScore from the price paths one hop upstream (scripts/lib/price_authority.py,
+    # METHODOLOGY 'oracleAuthorityScore for price consumers').
+    oracle_authority = price_authority.for_morpho_v1(w3, vault, price_authority.ETHEREUM_SPECS, notes)
     return {
         "target": vault, "label": "Morpho V1: Steakhouse USDT (Ethereum L1)",
         "adminKeyScore": admin_key, "multisigScore": multisig, "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100, "compositeScore": _composite(admin_key, multisig, timelock_score),
+        "oracleAuthorityScore": oracle_authority, "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes, "_rootGroup": "steakhouse-owner-safe-0x0a0e559b", "_crossEcosystem": True,
     }
 
@@ -2524,10 +2531,13 @@ def score_morpho_steakhouse_usdc_l1(w3) -> dict:
     admin_key, multisig, timelock_score, notes, signers = _score_steakhouse_l1_vault(
         w3, vault, "Steakhouse USDC", guardian,
         f"guardian() = {guardian}, a small contract (833 bytes per this run's own eth_getCode, a different address from the USDT vault's own guardian contract) -- not independently resolved to a Safe or opened, disclosed as an open point")
+    # ADDED 2026-10-05: oracleAuthorityScore from the price paths one hop upstream (scripts/lib/price_authority.py,
+    # METHODOLOGY 'oracleAuthorityScore for price consumers').
+    oracle_authority = price_authority.for_morpho_v1(w3, vault, price_authority.ETHEREUM_SPECS, notes)
     return {
         "target": vault, "label": "Morpho V1: Steakhouse USDC (Ethereum L1)",
         "adminKeyScore": admin_key, "multisigScore": multisig, "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100, "compositeScore": _composite(admin_key, multisig, timelock_score),
+        "oracleAuthorityScore": oracle_authority, "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes, "_rootGroup": "steakhouse-owner-safe-0x0a0e559b", "_crossEcosystem": True,
     }
 
@@ -2607,10 +2617,13 @@ def score_morpho_steakhouse_prime_usdc_v2(w3) -> dict:
     both architectures)."""
     vault = "0xbeef088055857739C12CD3765F20b7679Def0f51"
     admin_key, multisig, timelock_score, notes, signers = _score_steakhouse_v2_vault(w3, vault, "Steakhouse Prime USDC")
+    # ADDED 2026-10-05: oracleAuthorityScore from the price paths one hop upstream (scripts/lib/price_authority.py,
+    # METHODOLOGY 'oracleAuthorityScore for price consumers').
+    oracle_authority = price_authority.for_morpho_v2(w3, vault, price_authority.ETHEREUM_SPECS, notes)
     return {
         "target": vault, "label": "Morpho V2: Steakhouse Prime USDC (Ethereum L1)",
         "adminKeyScore": admin_key, "multisigScore": multisig, "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100, "compositeScore": _composite(admin_key, multisig, timelock_score),
+        "oracleAuthorityScore": oracle_authority, "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes, "_rootGroup": "steakhouse-owner-safe-0x0a0e559b",
     }
 
@@ -2622,10 +2635,13 @@ def score_morpho_steakhouse_prime_eurcv_v2(w3) -> dict:
     and METHODOLOGY.md for the full reasoning, not repeated here."""
     vault = "0xbeef0C075Da5D01112AE5cF34d257074fB5DDB2f"
     admin_key, multisig, timelock_score, notes, signers = _score_steakhouse_v2_vault(w3, vault, "Steakhouse Prime EURCV")
+    # ADDED 2026-10-05: oracleAuthorityScore from the price paths one hop upstream (scripts/lib/price_authority.py,
+    # METHODOLOGY 'oracleAuthorityScore for price consumers').
+    oracle_authority = price_authority.for_morpho_v2(w3, vault, price_authority.ETHEREUM_SPECS, notes)
     return {
         "target": vault, "label": "Morpho V2: Steakhouse Prime EURCV (Ethereum L1)",
         "adminKeyScore": admin_key, "multisigScore": multisig, "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100, "compositeScore": _composite(admin_key, multisig, timelock_score),
+        "oracleAuthorityScore": oracle_authority, "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes, "_rootGroup": "steakhouse-owner-safe-0x0a0e559b",
     }
 

@@ -131,6 +131,7 @@ from safe_modules import note_for, read_guard, read_modules  # noqa: E402
 
 PLASMA_CHAIN_ID = 9745
 DEFAULT_RPC = "https://rpc.plasma.to"
+EULER_EVAULT_FACTORY_PLASMA = "0x42388213C6F56D7E1477632b58Ae6Bba9adeEeA3"  # euler-interfaces addresses/9745/CoreAddresses.json
 
 # crossExposureScore is a property of the SET of tracked targets (does the same
 # root signer also control ANOTHER tracked target?), computed project-wide in
@@ -425,7 +426,7 @@ def score_aave_v3_pool_plasma(w3) -> dict:
 
     # ADDED 2026-10-04 (Spap's go): a price consumer's oracleAuthorityScore is the min over its material price paths
     # one hop upstream (scripts/lib/price_authority.py, METHODOLOGY 'oracleAuthorityScore for price consumers').
-    oracle_authority = price_authority.for_aave(w3, provider, None, notes)
+    oracle_authority = price_authority.for_aave(w3, provider, price_authority.PLASMA_SPECS, notes)
     return {
         "target": provider,
         "label": "Aave V3 Pool (Plasma, PoolAddressesProvider)",
@@ -990,13 +991,16 @@ def score_euler_v2_evault_factory_plasma(w3) -> dict:
         _EULER_DAO_MONAD_MATCH_NOTE,
     )
     notes.append(cross_note)
+    # ADDED 2026-10-05: oracleAuthorityScore from the price paths one hop upstream of every lending vault of this factory
+    # (scripts/lib/price_authority.py, METHODOLOGY 'oracleAuthorityScore for price consumers').
+    oracle_authority = price_authority.for_euler_factory(w3, factory, price_authority.PLASMA_SPECS, notes)
     return {
         "target": factory,
         "label": "Euler V2 eVaultFactory (Plasma)",
         "adminKeyScore": admin_key,
         "multisigScore": multisig,
         "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100,
+        "oracleAuthorityScore": oracle_authority,
         "crossExposureScore": cross_exposure,
         "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes,
@@ -1127,6 +1131,9 @@ def score_euler_v2_access_control_emergency_governor_plasma(w3) -> dict:
         "adminKeyScore": admin_key,
         "multisigScore": multisig,
         "timelockScore": timelock_score,
+        # 100 = not applicable (study of 2026-10-05, confirmed by a second reader): a governance relay that holds no funds
+        # and reads no price; the vaults it governs are rows of the eVaultFactory scorer, scoring them here would count
+        # them twice. A role replay of that day found no holder of govSetConfig faster than its 2-day admin timelock.
         "oracleAuthorityScore": 100,
         "crossExposureScore": cross_exposure,
         "compositeScore": _composite(admin_key, multisig, timelock_score),
@@ -1449,13 +1456,17 @@ def score_fluid_liquidity_plasma(w3) -> dict:
         multisig = 0
         timelock_score = 0
 
+    # oracleAuthorityScore: the vaults' price paths one hop upstream, weighted by each vault's debt (scripts/lib/price_authority.py,
+    # METHODOLOGY 'oracleAuthorityScore for price consumers'; recipe of the 2026-10-05 study).
+    oracle_authority = price_authority.for_fluid(w3, liquidity, price_authority.PLASMA_SPECS, notes)
+
     return {
         "target": liquidity,
         "label": "Fluid (Instadapp) Liquidity (Plasma)",
         "adminKeyScore": admin_key,
         "multisigScore": multisig,
         "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100,
+        "oracleAuthorityScore": oracle_authority,
         "crossExposureScore": cross_exposure,
         "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes,
@@ -1588,13 +1599,16 @@ def score_telos_consilium_euler_earn_plasma(w3) -> dict:
         timelock_score = 0
 
     notes.append(_CROSS_EXPOSURE_NOTE)
+    # ADDED 2026-10-05: oracleAuthorityScore from the price paths one hop upstream of its strategies (EVK vaults of the
+    # Plasma eVaultFactory), weighted by its allocation (scripts/lib/price_authority.py, as a Morpho V1 vault).
+    oracle_authority = price_authority.for_euler_earn(w3, surge, price_authority.PLASMA_SPECS, notes, factory=EULER_EVAULT_FACTORY_PLASMA)
     return {
         "target": surge,
         "label": "Telos Consilium TelosC Surge (Euler Earn, Plasma)",
         "adminKeyScore": admin_key,
         "multisigScore": multisig,
         "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100,
+        "oracleAuthorityScore": oracle_authority,
         "crossExposureScore": 100,
         "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes,

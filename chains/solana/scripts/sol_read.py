@@ -258,8 +258,26 @@ def read_kliquidity_global_config(url, pk):
     # BOTH at once and confirming `admin_authority` still lands on its own
     # already-published value proves this second offset in the same
     # sequential read is sound too, not a fluke.
+    #
+    # ADDED 2026-10-05 (oracleAuthorityScore of Kamino Liquidity), from the kliquidity program's on-chain Anchor IDL:
+    # `scopeProgramId` at 80 (discriminator(8) + 7×u64(56) + 2×u32(8) + u64(8)) and `tokenInfos` at 10448 (adminAuthority
+    # 2224 + Address(32) + treasuryFeeVaults Address[256](8192)), the CollateralInfos account every strategy prices from.
     d = base64.b64decode(acct(url, pk)["data"][0])
-    return {"global_config": pk, "actions_authority": b58(d[2192:2224]), "admin_authority": b58(d[2224:2256])}
+    return {"global_config": pk, "actions_authority": b58(d[2192:2224]), "admin_authority": b58(d[2224:2256]),
+            "scope_program": b58(d[80:112]), "token_infos": b58(d[10448:10480])}
+
+
+def read_kliquidity_collateral_feeds(url, pk):
+    # ADDED 2026-10-05: Kamino Liquidity CollateralInfos (GlobalConfig.tokenInfos): discriminator(8) + CollateralInfo[303],
+    # 216 bytes each, field by field from the kliquidity on-chain Anchor IDL: mint(32) + 4×u64(32) + scopeTwapPriceChain
+    # [u16;4](8) + scopePriceChain [u16;4](8) + name [u8;32](32) + 3×u64(24) + disabled u8 (offset 136) + padding0 [u8;7] +
+    # scopeStakingRateChain [u16;4](8) = 152: scopeFeed (the Scope OraclePrices account its price chains index), then
+    # padding [u64;4]. An entry whose mint is zero is unused and skipped. Any other account size raises: never a short list.
+    d = base64.b64decode(acct(url, pk)["data"][0])
+    if len(d) != 8 + 216 * 303:
+        raise ValueError(f"CollateralInfos {pk}: {len(d)} bytes, expected {8 + 216 * 303}")
+    entries = (d[8 + 216 * i:8 + 216 * (i + 1)] for i in range(303))
+    return [{"mint": b58(e[:32]), "scope_feed": b58(e[152:184]), "disabled": e[136]} for e in entries if any(e[:32])]
 
 
 def read_jupiter_perpetuals(url, pk):

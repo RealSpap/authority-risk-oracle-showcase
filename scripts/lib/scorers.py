@@ -24,6 +24,7 @@ from .web3_utils import (
     EIP1967_ADMIN_SLOT,
 )
 from . import morpho_v2  # noqa: E402  (Morpho Vault V2 per-function timelocks, shared with Ethereum L1, 2026-10-04)
+from . import price_authority  # noqa: E402  (oracleAuthorityScore for price consumers, rule of 2026-10-04)
 from .signer_overlap import compute_cross_exposure_with_notes
 from .safe_modules import (
     note_for as _safe_modules_note, read_guard as _read_safe_guard_addr, read_modules as _read_safe_modules,
@@ -126,13 +127,17 @@ def score_morpho_steakhouse_usdg(w3: Web3) -> dict:
     notes.append("minimum delay UNREAD this run -- timelockScore degraded to 0, treat as unverified" if min_delay is None
                  else f"timelockScore on the minimum delay over fund-redirecting functions and live exit gates: {min_delay / 86400:g} day(s)")
 
+    # ADDED 2026-10-05: oracleAuthorityScore from the price paths one hop upstream (scripts/lib/price_authority.py,
+    # METHODOLOGY 'oracleAuthorityScore for price consumers').
+    oracle_authority = price_authority.for_morpho_v2(w3, vault, price_authority.ROBINHOOD_SPECS, notes)
+
     return {
         "target": vault,
         "label": "Morpho Steakhouse USDG vault",
         "adminKeyScore": admin_key,
         "multisigScore": multisig,
         "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100,
+        "oracleAuthorityScore": oracle_authority,
         "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes,
     }
@@ -480,13 +485,17 @@ def score_morpho_vault_generic(w3: Web3, vault: str, label: str) -> dict:
     notes.append("minimum delay UNREAD this run -- timelockScore degraded to 0, treat as unverified" if min_delay is None
                  else f"timelockScore on the minimum delay over fund-redirecting functions and live exit gates: {min_delay / 86400:g} day(s)")
 
+    # ADDED 2026-10-05: oracleAuthorityScore from the price paths one hop upstream (scripts/lib/price_authority.py,
+    # METHODOLOGY 'oracleAuthorityScore for price consumers').
+    oracle_authority = price_authority.for_morpho_v2(w3, vault, price_authority.ROBINHOOD_SPECS, notes)
+
     return {
         "target": vault,
         "label": label,
         "adminKeyScore": min(admin_key, 100),
         "multisigScore": multisig,
         "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100,
+        "oracleAuthorityScore": oracle_authority,
         "compositeScore": _composite(min(admin_key, 100), multisig, timelock_score),
         "notes": notes,
     }

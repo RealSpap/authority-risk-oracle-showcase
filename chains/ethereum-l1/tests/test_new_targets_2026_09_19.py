@@ -38,7 +38,8 @@ scorers = _load("aro_eth_l1_new_targets_scorers", "chains/ethereum-l1/scorers.py
 # ADDED 2026-10-04: these tests pin the composite logic on a fake chain the price-path engine cannot walk. The engine is
 # replaced here by a stub returning 100; scripts/lib/tests/test_price_authority_wiring.py checks that each consumer scorer
 # really puts the engine's value into oracleAuthorityScore.
-_PA_NAMES = ("for_aave", "for_comet", "for_morpho_v1")
+_PA_NAMES = ("for_aave", "for_aave_v2", "for_comet", "for_morpho_v1", "for_morpho_v2", "for_gmx_v2", "for_gmx_v1", "for_euler_factory", "for_euler_earn",
+            "for_sparklend")
 _PA_ORIG = {}
 
 

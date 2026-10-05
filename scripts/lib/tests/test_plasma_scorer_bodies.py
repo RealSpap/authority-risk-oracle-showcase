@@ -106,6 +106,19 @@ sys.path.insert(0, os.path.join(REPO_ROOT, "scripts", "lib"))
 scorers = _load_module("aro_test_plasma_scorer_bodies", "chains/plasma-ecosystem/scorers.py")
 import web3_utils  # noqa: E402  (on sys.path just above; used to check one selector and to silence retry sleeps)
 
+# The Fluid price walk (for_fluid, 2026-10-05) reads every vault oracle on a real chain; it has its own offline test
+# (scripts/lib/tests/test_price_authority_fluid.py), so the scorer body here sees a fixed 100.
+_PA_ORIG = {}
+
+
+def setUpModule():
+    _PA_ORIG["for_fluid"] = scorers.price_authority.for_fluid
+    scorers.price_authority.for_fluid = lambda *a, **k: 100
+
+
+def tearDownModule():
+    scorers.price_authority.for_fluid = _PA_ORIG["for_fluid"]
+
 
 # --- Documented real observations (FLUID NOTE = data/fluid_liquidity_plasma_2026-09-18.md) ---
 

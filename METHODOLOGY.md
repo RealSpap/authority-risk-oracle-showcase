@@ -129,7 +129,10 @@ HIP-3 dexes' oracle key, the L1 validator set, Kinetiq's operator push); ten EVM
 the price paths upstream of them (see "oracleAuthorityScore for price consumers"
 below). Every other target publishes 100: not applicable for a target that
 neither reports nor reads a price, and not yet computed for a price consumer
-outside that rule's current scope (listed there).
+outside that rule's current scope (listed there). Not applicable includes a target that reads prices
+only through oracles nobody holding a key on it can change: each Morpho Blue market's oracle is fixed by
+its creator when the market is created, and its bad debt stays in that market, so the singletons publish
+100 and the exposure is scored at the vaults that choose the markets.
 
 **`crossExposureScore`** - computed once per `score_all()` run, after every
 individual target is scored (`scripts/lib/signer_overlap.py`): re-derives
@@ -250,8 +253,13 @@ DECIDED by Spap on 2026-10-04, after `data/finding_2026-10-01-aave-capo-price-au
 whoever can swap a Chainlink aggregator, re-point a rate provider or lift a price limit moves every
 borrower's health factor at once. Until that date the score was 100 for every EVM lending market and the
 paths were only described in a finding. Code: [`scripts/lib/price_authority.py`](scripts/lib/price_authority.py),
-called by the Aave V3 (Ethereum Core, Base, Arbitrum, Plasma, Monad), Compound V3 (Ethereum, Base,
-Arbitrum) and Morpho V1 (Adpend, 1337) scorers.
+called by the Aave V3 (Ethereum Core and Horizon, Base, Arbitrum, Plasma, Monad), SparkLend (Ethereum, an Aave V3
+fork), Aave V2 (Radiant on Arbitrum), GMX (V2 Synthetics and the V1 Vault, Arbitrum), Compound V3 (Ethereum, Base,
+Arbitrum), Moonwell (Base, a Compound V2 fork), Morpho V1 (Adpend, 1337, Steakhouse USDT and USDC on Ethereum, four
+vaults on Base, one on Monad), Morpho Vault V2 (Steakhouse Prime USDC and EURCV on Ethereum, six vaults on Robinhood
+Chain), Euler V2 (the eVaultFactory on Plasma and on Monad, the TelosC Surge EulerEarn vault on Plasma), Fluid Liquidity
+(Arbitrum, Plasma) and Dolomite (Arbitrum) scorers. Kamino Liquidity and Jupiter Lend on Solana follow the same rule in
+`chains/solana/scorers.py`, with the Solana formula.
 
 ```
 oracleAuthorityScore = min, over the MATERIAL price paths ONE HOP upstream, of each path's own composite
@@ -259,20 +267,52 @@ oracleAuthorityScore = min, over the MATERIAL price paths ONE HOP upstream, of e
 
 - **Material**: a path that reaches at least 1% of the target's priced supply (Aave: every reserve's
   aToken supply at the oracle price; Compound: the base supply plus every collateral total at
-  `getPrice`; Morpho V1: the vault's current allocation per market). A row whose value cannot be read
-  counts as material (fail-closed).
+  `getPrice`; Aave V2 (Radiant): every reserve's aToken supply at the oracle price, plus one row for the
+  AaveOracle's fallback oracle when one is set (it prices any reserve whose source answers zero or less);
+  GMX V2: per token, its pool amounts and the open interest it indexes, read from the DataStore, with
+  the provider the Oracle accepts for it, plus, while atomic withdrawals are on, one row per token of each
+  market for the Chainlink feed an atomic action reads (these rows overlap the provider rows, so the
+  priced supply is the provider rows' sum); GMX V1: every whitelisted token's pool at the Vault's price,
+  plus one row for its VaultPriceFeed over the whole pool; Morpho V1: the vault's current allocation per market, on the singleton its `MORPHO()`
+  names; Euler V2 eVaultFactory: one row per vault that lends against at least one collateral with a
+  borrow or liquidation LTV (one still ramping down counts), its `totalAssets()` in USD (a vault in another unit of account is valued by
+  the first USD-priced vault oracle that quotes its asset, and is unknown when none does), the row reaching
+  its oracle and, through a pinned EulerRouter build, the adapter the router resolves for its asset and
+  for each such collateral and every ERC4626 vault it converts through on the way (a collateral the router
+  rejects with `PriceOracle_NotSupported` secures nothing and is noted; any other revert, a stale rate for
+  instance, or a conversion chain that cannot be read, is an UNREAD part of the row, its other parts still
+  walked); EulerEarn: the same per strategy, weighted by the Earn
+  vault's allocation; Kamino Liquidity: every Scope feed its CollateralInfos name, each counted as material; Morpho Vault V2: per adapter, a market adapter's own positions, a V1-vault adapter's share of that
+  vault's markets, and one row with no source for any other adapter holding assets, each market
+  adapter's rows (its idle markets included) checked against its `realAssets()` (a gap above 1% is a row
+  with no source); idle assets are unpriced and left out). A row whose value cannot be read counts as
+  material (fail-closed). A Vault V2 adapter with no priced allocation today (idle-market supply aside)
+  but live absolute and relative caps gets a note: allocators can fill it without a timelock, subject to
+  its market caps, so the field follows today's allocation.
 - **One hop**: the walk goes through the target's own price contracts (an Aave adapter whose
-  `ACL_MANAGER()` is the market's own ACLManager; a wrapper whose `manager()` is the target's governor)
-  and through provably immutable wrappers (no proxy slot, no storage write, no `DELEGATECALL`). It stops
+  `ACL_MANAGER()` is the market's own ACLManager; a wrapper whose `manager()` is the target's governor,
+  or, since 2026-10-05, whose `owner()` is, or whose `DOLOMITE_MARGIN()` is the target, provided no beacon
+  and no proxy admin outside the target's own governance can swap its code; the target's own governance means
+  accounts whose power over the wrapper is no greater than what the composite already scores, so a Morpho V1 or
+  Vault V2 vault and an EulerEarn pass none of their roles: their owner and curator act at once on a contract they
+  control, while the vault's composite credits its timelocks)
+  and through provably immutable wrappers (no proxy slot, no storage write, no `DELEGATECALL`); an
+  EulerRouter is the target's own when its `governor()` is the target's own governance, else its governor
+  is scored (it re-points any price at once), and a zero governor freezes it. It stops
   at the first contract someone else controls: a Chainlink proxy, a rate provider, an upgradeable feed.
   That contract is scored by who can change what it reports. A wrapper that is neither the target's own
   nor provably immutable, and has no readable `owner()`, proxy admin slot or `manager()`, is UNREAD; so
   is an adapter that answers to another ACLManager, and an own adapter whose input the walk cannot see,
   unless a spec names it as own configuration (Aave Monad's fixed mUSD adapter, set by the market's own
   POOL_ADMIN holders). The walk follows the getters it knows; an input read through any other getter is
-  not seen. Its own inputs (the
-  Stader manager behind rsETH, the L1 cbETH owner behind a Base exchange-rate feed) are disclosed in a
-  finding, not scored. Going deeper would score each protocol by the weakest link of every token it
+  not seen. Two narrow extensions, each pinned: an EIP-1167 clone of a listed implementation (code hash
+  pinned, no proxy slot) is walked through the getters listed for it (Steakhouse's
+  MetaOracleDeviationTimelock: `primaryOracle`, `backupOracle`); and a build recognized by its masked
+  template (its code with every 32-byte operand zeroed) may declare one more input getter (the Robinhood
+  Chain stock-token oracle's `token()`), only while its 32-byte operands match a pinned layout site by
+  site (each the exact value a named getter returns, or a pinned constant), so no held address can be
+  moved to another use. The inputs of a scored contract (the Stader manager behind rsETH, the L1
+  cbETH owner behind a Base exchange-rate feed) are disclosed in a finding, not scored. Going deeper would score each protocol by the weakest link of every token it
   lists, which no reader could check by hand.
 - **A Chainlink proxy** scores the owner of the proxy (`proposeAggregator` and `confirmAggregator` are
   `onlyOwner` with no delay) and, when different, the owner of the current aggregator (`setConfig`). An
@@ -284,21 +324,82 @@ oracleAuthorityScore = min, over the MATERIAL price paths ONE HOP upstream, of e
   is UNREAD; a contract with `owner()` or `admin()` is followed for two hops; anything else is UNREAD. A
   controlled contract is scored through its `owner()`, its proxy admin slot (EIP-1967 or the older
   Zeppelin slot), its `manager()` and, for a beacon proxy, its beacon's owner.
+- **Behind a shorter timelock** (decided 2026-10-05): a timelock shorter than the target's own delay is
+  no longer UNREAD by itself. The accounts that can schedule on it are scored, each behind that delay,
+  with timelockScore `delay_points(seconds)` (the notice-period curve of section 6.1, 50 x hours / 24
+  below a day then +10 a day, capped at 60, the EVM level of a real delay whose bypass paths were not
+  ruled out), and the weakest one counts. For an OpenZeppelin TimelockController these are the
+  PROPOSER_ROLE holders and the holders of its admin role other than itself; the roles are not
+  enumerable, so each set is replayed from block 0, pinned with its proof block in `TIMELOCK_HOLDERS`,
+  and re-checked every run (its runtime code hash, `hasRole`, and no grant or revoke of those roles
+  since; a change is UNREAD until re-pinned). Only a timelock whose code is verified as a plain
+  TimelockController, or byte-identical to one that is, is pinned: an unverified build could let
+  another role schedule. A Compound Timelock (it answers `GRACE_PERIOD`, `MINIMUM_DELAY`, `MAXIMUM_DELAY`) is
+  scheduled by its `admin()`, and by its `pendingAdmin()` when one is set. Delays add up through nested
+  timelocks, and an account behind enough delay is governance-grade. Pinned on 2026-10-05: EtherFi's
+  OPERATION (2 days, a 4-of-7 Safe) and UPGRADE (10 days, a 6-of-10 Safe) timelocks and one 7-day
+  Chronicle timelocks on Monad (one byte-identical to Chronicle's verified CouncilTimelock on Ethereum, the
+  other matching the verified ChronicleTimelockController on Ethereum Sepolia apart from its metadata); four Euler
+  timelocks on Monad and two on Plasma are unverified, so not pinned.
+- **A DAO's delay** is the whole window its code imposes from the first public on-chain step to execution
+  (decided 2026-10-05). Lido: the Aragon vote's `voteTime()` (the pinned Voting implementation cannot
+  execute before the vote is closed) plus Dual Governance's afterSubmit and afterSchedule delays, with
+  Voting the only Dual Governance proposer: 5 + 3 + 1 = 9 days on 2026-10-05. While Dual Governance's emergency
+  protection is on (until 2027-06-19 on 2026-10-05), the emergency committees can execute a scheduled proposal
+  without the afterSchedule wait, so the window counted is 5 + 3 = 8 days, still governance-grade for the 7-day
+  Morpho vaults. A DAO with no minimum vote duration counts its timelock only: Sky's 2-day pause is
+  below a 7-day bar, so Sky governance is scored with the convention of `score_makerdao_sky_pause`
+  (adminKeyScore 75 while the DSChief hat reads, multisigScore 100, timelockScore 70): 81. sUSDS, a Morpho
+  vault input, is read by a spec: its rate can only rise (`ssr >= RAY`) and SP-BEAM's buds move it inside
+  a code-bounded range (bounded); its upgrade and SP-BEAM's configuration belong to Sky governance (wards
+  of both replayed from block 0 and re-checked every run; SPBEAMMom can only halt).
+- **Several feeds behind one price** (decided 2026-10-05): a median, or any other combination, scores its
+  weakest feed, each one walked. Chronicle's OracleAggregator drops a feed older than 25 hours and then
+  averages the other two, so one controller can move the price alone. **A lever bounded by code** (a band
+  around another feed that only the target's own governance can widen) is disclosed as bounded; **a
+  downward-only lever** (one that can mark a price down at once and force liquidations) is scored.
+- **A Morpho Vault V2 read for its share price** (a BASE_VAULT of the pinned build): its curator, and its owner
+  (who installs a curator at once: `setCurator` has no timelock), behind the vault's minimum live timelock over
+  fund-redirecting functions and exit gates, governance-grade at or above the target's delay; its own markets' oracles are one hop further, disclosed. Allocators
+  and fees are not behind that delay: `setIsAllocator` and the fee setters carry a 0-second timelock on the live vaults,
+  and an allocator can call `setMaxRate` at once. Those levers are bounded by code constants (the fee and the maximum
+  rate are capped, the share price can stop rising but not fall at once) and are disclosed, not scored; if the owner
+  rules a frozen share price a lever to score, the two Steakhouse Prime V2 vaults would follow their curator Safe
+  instead (about 31).
 - **Disclosed, not scored**, when the path is (a) provably bounded, by a spec that re-reads its facts
   live every run (osETH: non-upgradeable code pinned by hash, rate can only rise); (b) governance-grade,
   behind a timelock at least as long as the target's own governance delay (Aave: the PayloadsController
-  delay for the ACL admin executor; Compound: `governor().delay()`; Morpho V1: `vault.timelock()`), such
-  as the EtherFi weETH and Lido stETH rate paths; a target with no delay of its own, such as a Morpho V1
-  vault whose `timelock()` is 0, has no governance-grade bar, so its timelocked paths are UNREAD; or (c)
+  delay for the ACL admin executor; Compound: `governor().delay()`; Morpho V1: `vault.timelock()`; Morpho
+  Vault V2: the minimum live timelock over its fund-redirecting functions and exit gates, none when all are
+  abdicated; Aave V2: its AaveOracle owner's `getMinDelay()`, 0 when that owner is not a timelock, and an
+  owner the market's composite does not score, or an owner that cannot be read, is a row with no source; GMX V2: the live
+  ConfigTimelockController's `getMinDelay()`; GMX V1: the Vault governor's `buffer()`; Euler V2
+  eVaultFactory: the `getMinDelay()` of the sole DEFAULT_ADMIN timelock of its `upgradeAdmin()`; EulerEarn:
+  its `timelock()`; Kamino Liquidity: its GlobalConfig admin's Squads `time_lock`), such
+  as the EtherFi UPGRADE timelock and the Lido stETH rate path; a target with no delay of its own, such
+  as a Morpho V1 vault whose `timelock()` is 0, has no governance-grade bar, so its timelocked paths are
+  scored through who can schedule on them. Since 2026-10-05 a timelock's delay counts only when its runtime code is
+  a verified build (`VERIFIED_TIMELOCKS`: plain OpenZeppelin TimelockControllers and Chronicle's, each matched to
+  verified source, or a `TIMELOCK_HOLDERS` pin): another contract answering `getMinDelay()` or `delay()` may let some
+  role act at once (GMX's ConfigTimelockController adds functions, Dolomite's owner has a bypass role), so it is
+  UNREAD; or (c)
   a provable constant
   (no storage write, no call of any kind, no read of balances, of other accounts' code or of transient
-  storage, no gas or block-builder value, no proxy slot). A provably immutable wrapper is held to the same
+  storage, no gas or block-builder value, no proxy slot; the compiler's metadata trailer, and constant data
+  such as a revert string that solc places between the last INVALID and that trailer, are not read as code:
+  the scan stops at the first INVALID past which no valid JUMPDEST is a jump target pushed before it, the
+  EVM's own JUMPDEST analysis reproduced). A provably immutable wrapper is held to the same
   test, except that it may call the contracts it reads and read `EXTCODESIZE`, `ORIGIN`, `CALLER` and
-  `GAS` (Solidity before 0.8.10 checks `EXTCODESIZE` before every external call).
+  `GAS` (Solidity before 0.8.10 checks `EXTCODESIZE` before every external call); or (d) an input-less
+  MorphoChainlinkOracleV2: its template pinned, its six feed and vault getters reading zero, `price()`
+  equal to `SCALE_FACTOR()`, and its 32-byte operands matching a pinned layout site by site (zero at
+  every feed and vault site, `SCALE_FACTOR` only where the build multiplies by it), so its price is that
+  immutable (it is not a provable constant: it makes calls).
 - **The target's own config path** (its own `ACL_MANAGER`, its own governor) is already in
   `compositeScore` and is not scored again.
 - **Unknown is not safe**: a material path that cannot be read (a rate provider without a verified
-  spec, a timelock shorter than the target's delay whose proposers are not resolved, a failed RPC read)
+  spec, a timelock shorter than the target's delay whose schedulers are not pinned or changed since their
+  pin, a failed RPC read)
   caps the score at 20 (the minimum of 20 and the scored paths), never 100. No material path: 100.
 
 Every classification is re-read live each run; a spec names what to check and which answer keeps the
@@ -310,19 +411,111 @@ guard (`scripts/lib/push_guard.py`) holds, before a real send, an entry whose pu
 failed walk, or rises to 100 from a lower value (a path that stopped counting), so the first push under
 this rule (several markets from 100 to 52) is accepted by a person, once.
 
-**Scope.** Decided for the ten markets above and the Robinhood Chainlink admin. Every other tracked
-target that reads prices still publishes 100 for this field, which for it means not yet computed, not
-"not applicable": the other Aave V3 instances and forks (Horizon, SparkLend), the Morpho V1 and V2 vaults
-outside Adpend and 1337, Radiant, Moonwell, Euler V2, Fluid, Dolomite, GMX and Jupiter Lend. A read-only
-measurement of 2026-10-04 with the same engine gave 52 for Horizon and the four Morpho V1 vaults on Base,
-and 20 (material paths the engine cannot read yet) for the Steakhouse USDT and USDC vaults on Ethereum
-and the Monad vault.
+**Families added on 2026-10-05**, each from the read-only study of that day and the decisions above:
+
+- **SparkLend** (Ethereum): the Aave V3 rows. Its delay is MCD_PAUSE's (172800 s), used only while every link above
+  it reads as verified: provider owner and ACL admin = SparkProxy (a SubProxy, sole DEFAULT_ADMIN and POOL_ADMIN of the
+  ACLManager, ASSET_LISTING_ADMIN never granted), SparkProxy's wards MCD_PAUSE_PROXY, the ESM and StarGuard (whose
+  only ward is MCD_PAUSE_PROXY), code hashes pinned, role and ward sets replayed from block 0 and re-checked for
+  changes. Chronicle's OracleAggregator (Aggor: a median of Chronicle, Chainlink and RedStone, immutable) is walked
+  feed by feed and the weakest binds. A **Chronicle Scribe** is scored through its wards, enumerable with `authed()`
+  and required to equal the verified set exactly, code pinned: a Kisser or kiss operator can only add readers
+  (bounded); a governance accessor acts only for its immutable spell executor, whose immutable owner is a timelock; a
+  timelock ward goes through `controller_path`. Validator keys (`bar` signatures) and ScribeOptimistic's challenge
+  period are disclosed, like a Chainlink DON. The Monad Scribes are unverified on Monad; each contract was matched to a
+  verified build on another chain, 32-byte operand by operand, and its code is pinned.
+- **Spec scope.** A verdict that is only true for one target's own governance (Moonwell's bounded LBTC band and
+  price override, Dolomite's own-configuration oracles) is added by that target's entry point alone, never by a
+  registry every consumer of the chain passes: a Morpho vault reaching Moonwell's LBTC oracle sees the
+  TemporalGovernor as a foreign controller. Moonwell's own set is the Unitroller's admin only while it is the pinned
+  TemporalGovernor. Sky's pause is Sky governance only while `MCD_PAUSE.owner()` is zero: DSPause also lets its owner
+  plot spells without DSChief.
+- **Moonwell** (Base): every market of `getAllMarkets()`, worth (cash + borrows - reserves) x `getUnderlyingPrice`;
+  the source is what the pinned ChainlinkOracle reads (`getFeed` of the underlying's symbol, or the oracle's own price
+  override, own while the oracle's admin is the TemporalGovernor). Delay: the TemporalGovernor's `proposalDelay()`
+  (its guardian fast-track stays in the composite). The 14 ChainlinkOEVWrappers are own (owner the TemporalGovernor,
+  feed fixed at construction). The LBTC/BTC ChainlinkBoundedCompositeOracle uses its RedStone primary only inside
+  [0.98, 1.02] BTC, set by the TemporalGovernor alone: the primary is bounded (decision 4), the Chainlink fallback is
+  a path. Disclosed: the primary's controller (a 2-of-3 Safe through its ProxyAdmin) can make every LBTC read revert,
+  which freezes that market, and can hold LBTC anywhere in the band while the real price leaves it.
+- **Fluid Liquidity** (Arbitrum, Plasma): Liquidity reads no price; one row per vault of the VaultResolver, its debt
+  in USD (token amounts read on chain, USD prices from Fluid's API for weights only; an unpriced vault is material).
+  Each vault's oracle is walked by build: 24 Fluid oracle and CappedRate builds are pinned by masked template, a
+  build's inputs are the contracts its immutables name, an unknown build is UNREAD. A CappedRate is judged on its own
+  caps, never as a class. The VaultFactory auths, which can re-point any vault's oracle at once, were replayed from
+  block 0 and are own while the factory's owner is the pinned VaultFactoryOwner (its auth setters are behind the
+  Liquidity timelock); the fee auths only set rates, and the team multisig, an Instadapp Avocado (6-of-12 on
+  both chains), re-points any vault's oracle and configures any DEX with no delay: it is scored from
+  `requiredSigners()` and `signers()` with the Safe-rooted formula (56). The Liquidity composite still calls those
+  instant powers a bounded bypass of its 24-hour timelock, which this reading contradicts. Delay: the Liquidity admin
+  TimelockController's `getMinDelay()`, counted only because that contract is a verified build. An oracle input that
+  is an account with no code is a bare key (2), and a build that names no input is UNREAD. The reUSD NAV feed (Arbitrum) is a spec: its aggregator swap and markdowns are
+  governance-grade, its reports bounded, its ADMIN (a 3-of-5 Safe, replayed from block 0) scored.
+- **Dolomite** (Arbitrum): one row per market with supply, at supply x `getMarketPrice`; an OracleAggregatorV2 market
+  reaches every entry of `getOraclesByToken` at the whole market value (the aggregator sums with no cap); a market
+  whose price reverts (a frozen market) is a row of unknown value. Own: DolomiteMargin and the oracles whose
+  `DOLOMITE_MARGIN()` it is. Delay: 0, because accounts holding both EXECUTOR and BYPASS_TIMELOCK roles on
+  DolomiteOwnerV2 (replayed from block 0, re-checked with `hasRole`) execute any queued call at once. The GM markets
+  read GMX's Reader and DataStore: decision 7's key-by-key proof found keys a GMX config keeper sets at once with no
+  tight bound (OPEN_INTEREST_RESERVE_FACTOR, OPTIMAL_USAGE_FACTOR with BORROWING_EXPONENT_FACTOR, MAX_PNL_FACTOR and
+  others), so that path stays UNREAD. Disclosed: DolomiteOwnerV2's DEFAULT_ADMIN Safe (2-of-3) can swap any market's
+  oracle at once through AdminPauseMarket (pause, then unpause with a new oracle, both through the bypass), which the
+  composite's 300-second credit does not reflect; and one of three bare keys or a 2-of-5 Safe can pause any market,
+  which freezes it (price 0 reverts) without moving its price.
+- **Jupiter Lend** (Solana): one row per VaultConfig, worth its collateral (on-chain amounts, USD prices from
+  Jupiter's API for weights only), reaching every source of its Oracle account (which has no update instruction).
+  Delay: the `time_lock` of the VaultAdmin authority's Squads multisig. A Chainlink Store feed scores its single
+  serum-multisig committee (feed owner, OCR2 config owner and the three program upgrades must all be that multisig's
+  signer); a Pyth push feed scores the wormhole guardian quorum it is verified against (n / 2 + 1 per Pyth's published
+  core-bridge source), the receiver's governance multisig and the Pyth DAO that upgrades it (Realms convention); a stake
+  pool scores its program's upgrade multisig; the Huma PST pool scores its loss authority (a downward-only lever,
+  decision 4), its pool owner and its programs' upgrades.
+- **Proxyless Safe** (Purinta USDG, Robinhood Chain): a Safe whose slot-0 singleton is zero passes the Safe gate
+  only when keccak of its runtime code is listed in `scripts/lib/safe_modules.py` KNOWN_PROXYLESS_SAFES, after its
+  verified sources were compared with the official Safe release it vendors (decision 6). API3's
+  GnosisSafeWithoutProxy: 15 vendored safe-contracts 1.3.0 files byte-identical to tag v1.3.0; only a constructor is
+  added. The dAPI name setter behind API3's Api3ServerV1 (a 4-of-4 signer set) is one hop deeper: disclosed.
+- **spUSDG** (Spark Savings USDG, Robinhood Chain, read by Steakhouse Turbo): its share rate only rises at `vsr`,
+  which its setters move inside [minVsr, maxVsr] <= MAX_VSR, a code constant: bounded. Its upgrade and roles belong to
+  the Spark Executor, reached only through the bridge alias of Spark's SubProxy on Ethereum, so to Sky governance
+  (`sky_governance_path`); both chains' role and ward sets are replayed and re-checked.
+
+**Scope.** Decided for the ten markets above and the Robinhood Chainlink admin, and extended on
+2026-10-05 to Aave V3 Horizon, the Morpho V1 vaults (Steakhouse USDT and USDC on Ethereum, four on Base,
+one on Monad), the Morpho Vault V2 vaults (two on Ethereum, six on Robinhood Chain), Radiant and GMX
+(V2 and V1) on Arbitrum, and later that day, after the decisions above, to SparkLend, Moonwell, Fluid Liquidity
+(Arbitrum, Plasma), Dolomite and Jupiter Lend: every tracked target that reads prices is now computed. Euler V2 and
+Kamino Liquidity were added on 2026-10-05 from the same study; the Euler
+AccessControlEmergencyGovernor on Plasma stays at 100, not applicable: a governance relay that holds no
+funds and reads no price, whose vaults are rows of the eVaultFactory. The Morpho Blue singletons are not price consumers in this sense: each
+market's oracle is fixed at creation, and bad debt stays in that market. A read-only study of 2026-10-05 (each recipe re-checked live by
+a second reader) found how to read each of them; the choices it raised were decided the same day (see the bullets above
+and `data/finding_2026-10-05-price-consumer-scope-study.md`).
 
 Results on 2026-10-04 (live dry runs): Aave Core, Base, Arbitrum, Plasma and Monad 52; Compound Ethereum,
 Base and Arbitrum 52; Morpho Adpend and 1337 31 (a RedStone deUSD feed behind a 2-of-3 Safe ProxyAdmin); the
 Robinhood Chainlink admin 52 (its own composite). The 52s are the Chainlink proxy owners, a 4-of-9 Safe
-with no delay. The deeper inputs left out by the one-hop rule are listed in
-`data/finding_2026-10-04-price-paths-beyond-one-hop.md`.
+with no delay. On 2026-10-05: Aave Horizon and the four Morpho V1 vaults on Base 52; Robinhood Chain
+Steakhouse USDG 2 (its mGLO market is priced by `setRoundData` from a single bare EOA) and NetNet Credit 2
+(the stock tokens' admin role sits with a bare EOA); Ethena x Steakhouse and Grove x Steakhouse 100 (no
+allocation today, live caps noted); Steakhouse Turbo, Purinta, the two Ethereum Vault V2 vaults, the
+Steakhouse USDT and USDC V1 vaults and the Monad vault 20 (material paths UNREAD, listed in
+`data/finding_2026-10-05-price-consumer-scope-study.md`); Radiant 52 and GMX V2 52 (Chainlink and the
+Chainlink Data Streams verifier, each behind a 4-of-9 Safe), GMX V1 2 (the `admin()` of its
+PriceFeedTimelock, a bare EOA, can switch every token to keeper prices at once). Later on 2026-10-05: the
+Euler eVaultFactory on Plasma 2 (the sdeUSD that one router converts through is upgradeable by a bare EOA)
+and on Monad 2 (the vUSD strategy's investmentManager is a bare EOA), the TelosC Surge EulerEarn vault 43 (a
+Pendle SY upgrade behind a 3-of-5 Safe; 34 after the review below, when the Earn's curator stopped counting as the
+target's own and the EulerRouters it governs, a 2-of-5 Safe acting at once, were scored), Kamino Liquidity 45 (the Scope admin, a 4-of-10 Squads with no
+delay, the same path score_kamino_lend publishes). After the decisions of 2026-10-05 (every wired target re-run live
+on the final code): the Steakhouse USDT and USDC V1 and Prime USDC and EURCV V2 vaults 52 (Chainlink binds; EtherFi's
+OPERATION proposer 67, Sky 81, Lido governance-grade); SparkLend 31 (RedStone inside each Chronicle Aggor median, a 2-of-3
+Safe ProxyAdmin); the Monad Morpho vault 49 (Chronicle's 7-day timelocks, each scheduled by a 2-of-3 Safe, against 14
+days); Moonwell 52; Fluid Plasma 52 and Fluid Arbitrum 20 (its sUSDai rate, 75% of debt, has no spec, and 23 dust vaults
+the API does not price count as material); Dolomite 20 (the GMX keeper keys, the three GMX ROLE_ADMIN timelock paths
+and two frozen markets of unknown value are all UNREAD); Jupiter Lend 35 (the Huma PST loss authority, a 2-of-3 Squads with no delay); Purinta 50 (a proxyless 4-of-8
+Safe); Steakhouse Turbo 52. Every other target is unchanged. Open points are listed at the end of the finding. The deeper
+inputs left out by the one-hop rule are listed in `data/finding_2026-10-04-price-paths-beyond-one-hop.md`.
 
 ## Morpho Vault V2 scoring
 

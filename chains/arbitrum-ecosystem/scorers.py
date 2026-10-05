@@ -317,13 +317,16 @@ def score_gmx_v2_rolestore(w3) -> dict:
             notes.append(_CROSS_EXPOSURE_NOTE)
     else:
         notes.append(_CROSS_EXPOSURE_NOTE)
+    # ADDED 2026-10-05: a price consumer's oracleAuthorityScore is the min over its material price paths one hop upstream
+    # (scripts/lib/price_authority.py, METHODOLOGY 'oracleAuthorityScore for price consumers'; recipe of the 2026-10-05 study).
+    oracle_authority = price_authority.for_gmx_v2(w3, target, price_authority.ARBITRUM_SPECS, notes)
     return {
         "target": target,
         "label": "GMX V2 (Synthetics) RoleStore (Arbitrum)",
         "adminKeyScore": admin_key,
         "multisigScore": multisig,
         "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100,
+        "oracleAuthorityScore": oracle_authority,
         "crossExposureScore": cross_exposure,
         "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes,
@@ -575,13 +578,16 @@ def score_radiant_lendingpool(w3) -> dict:
         notes.append("PoolAddressesProvider.getEmergencyAdmin() unread this run -- pause-only path, not scored")
 
     notes.append(cross_note)
+    # ADDED 2026-10-05: a price consumer's oracleAuthorityScore is the min over its material price paths one hop upstream
+    # (scripts/lib/price_authority.py, METHODOLOGY 'oracleAuthorityScore for price consumers'; recipe of the 2026-10-05 study).
+    oracle_authority = price_authority.for_aave_v2(w3, provider, price_authority.ARBITRUM_SPECS, notes)
     return {
         "target": live_pool or lending_pool,
         "label": "Radiant Capital LendingPool (V2 Core, Arbitrum)",
         "adminKeyScore": admin_key,
         "multisigScore": multisig,
         "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100,
+        "oracleAuthorityScore": oracle_authority,
         "crossExposureScore": 100,
         "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes,
@@ -771,7 +777,7 @@ def score_aave_v3_pool_arbitrum(w3) -> dict:
 
     # ADDED 2026-10-04 (Spap's go): a price consumer's oracleAuthorityScore is the min over its material price paths
     # one hop upstream (scripts/lib/price_authority.py, METHODOLOGY 'oracleAuthorityScore for price consumers').
-    oracle_authority = price_authority.for_aave(w3, provider, None, notes)
+    oracle_authority = price_authority.for_aave(w3, provider, price_authority.ARBITRUM_SPECS, notes)
     return {
         "target": provider,
         "label": "Aave V3 Pool (Arbitrum, PoolAddressesProvider)",
@@ -903,7 +909,7 @@ def score_compound_v3_comet_arbitrum_usdc(w3) -> dict:
     notes.append("Real cross-chain finding, independently re-confirmed 2026-09-20: this pauseGuardian Safe's 9 owners are IDENTICAL, as an exact set, to the pauseGuardian Safes of Compound V3 on Ethereum L1 (0xbbf3f142...) and Base (0x3cb4653F...) at the same 5-of-9 (three different Safe addresses), so one committee can freeze three Comets. Folded into crossExposureScore as a flat 80 (dated snapshot _KNOWN_COMPOUND_PAUSE_GUARDIAN_OWNERS_2026_09_20 compared with the owners read this run, no second-chain RPC)." if cross_ecosystem else _CROSS_EXPOSURE_NOTE)
     # ADDED 2026-10-04 (Spap's go): a price consumer's oracleAuthorityScore is the min over its material price paths
     # one hop upstream (scripts/lib/price_authority.py, METHODOLOGY 'oracleAuthorityScore for price consumers').
-    oracle_authority = price_authority.for_comet(w3, target, None, notes)
+    oracle_authority = price_authority.for_comet(w3, target, price_authority.ARBITRUM_SPECS, notes)
     return {
         "target": target,
         "label": "Compound V3 (Comet, USDC market, Arbitrum)",
@@ -1081,13 +1087,17 @@ def score_fluid_liquidity_arbitrum(w3) -> dict:
         timelock_score = 55  # confirmed real 24h delay, self-administered -- capped for the bounded auths/guardian path outside it (see docstring)
         cross = _cross_exposure_from_snapshots({s.lower() for s in signers}, {"Plasma Fluid Liquidity proposer (score_fluid_liquidity_plasma)": _FLUID_TEAM_SIGNERS_2026_09_19}, notes, "Fluid team Avocado multisig")
 
+    # oracleAuthorityScore: the vaults' price paths one hop upstream, weighted by each vault's debt (scripts/lib/price_authority.py,
+    # METHODOLOGY 'oracleAuthorityScore for price consumers'; recipe of the 2026-10-05 study).
+    oracle_authority = price_authority.for_fluid(w3, liquidity, price_authority.ARBITRUM_SPECS, notes)
+
     return {
         "target": liquidity,
         "label": "Fluid Liquidity (Arbitrum)",
         "adminKeyScore": admin_key,
         "multisigScore": multisig,
         "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100,
+        "oracleAuthorityScore": oracle_authority,
         "crossExposureScore": cross,
         "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes,
@@ -1217,10 +1227,29 @@ def score_gmx_v1_vault(w3) -> dict:
     has never been emitted either: the delayed gov-change path has never been
     used.
     """
-    from web3 import Web3
-
     target = _GMX_V1_VAULT
     notes = []
+    admin_key, multisig, timelock_score, cross = _gmx_v1_authority(w3, target, notes)
+    # ADDED 2026-10-05: a price consumer's oracleAuthorityScore is the min over its material price paths one hop upstream
+    # (scripts/lib/price_authority.py, METHODOLOGY 'oracleAuthorityScore for price consumers'; recipe of the 2026-10-05 study).
+    oracle_authority = price_authority.for_gmx_v1(w3, target, price_authority.ARBITRUM_SPECS, notes)
+    return {
+        "target": target,
+        "label": "GMX V1 Vault (Arbitrum One)",
+        "adminKeyScore": admin_key,
+        "multisigScore": multisig,
+        "timelockScore": timelock_score,
+        "oracleAuthorityScore": oracle_authority,
+        "crossExposureScore": cross,
+        "compositeScore": _composite(admin_key, multisig, timelock_score),
+        "notes": notes,
+    }
+
+
+def _gmx_v1_authority(w3, target, notes):
+    """The Vault's own (adminKey, multisig, timelock, crossExposure) scores, with their notes appended to `notes`: the
+    authority chain score_gmx_v1_vault documents."""
+    from web3 import Web3
 
     gov = read_address_getter(w3, target, "gov")
     notes.append(f"Vault.gov() = {gov} (expected GMX Timelock)")
@@ -1236,7 +1265,7 @@ def score_gmx_v1_vault(w3) -> dict:
     if not gov:
         notes.append("Vault.gov() unreadable this run -- unresolved authority, conservative score, nothing assumed")
         notes.append(_CROSS_EXPOSURE_NOTE)
-        return _gmx_v1_result(20, 0, 0, 100, notes)
+        return 20, 0, 0, 100
 
     buffer_s = call_raw(w3, gov, _BUFFER_ABI, "buffer")
     admin = read_address_getter(w3, gov, "admin")
@@ -1248,7 +1277,7 @@ def score_gmx_v1_vault(w3) -> dict:
     if not admin_safe:
         notes.append(f"{admin}: NOT resolvable as a Gnosis Safe this run -- unresolved root, conservative score")
         notes.append(_CROSS_EXPOSURE_NOTE)
-        return _gmx_v1_result(20, 0, 0, 100, notes)
+        return 20, 0, 0, 100
 
     admin_owners, admin_threshold = admin_safe
     notes.append(f"Timelock.admin() is a real Gnosis Safe: {admin_threshold}-of-{len(admin_owners)}")
@@ -1331,21 +1360,7 @@ def score_gmx_v1_vault(w3) -> dict:
         "the timelock has emitted zero SignalSetGovRequester events since deployment, so no requester was ever "
         "registered. Zero SignalSetGov events either -- the delayed gov-change path has never been exercised."
     )
-    return _gmx_v1_result(admin_key, multisig, timelock_score, cross, notes)
-
-
-def _gmx_v1_result(admin_key, multisig, timelock_score, cross, notes):
-    return {
-        "target": _GMX_V1_VAULT,
-        "label": "GMX V1 Vault (Arbitrum One)",
-        "adminKeyScore": admin_key,
-        "multisigScore": multisig,
-        "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100,
-        "crossExposureScore": cross,
-        "compositeScore": _composite(admin_key, multisig, timelock_score),
-        "notes": notes,
-    }
+    return admin_key, multisig, timelock_score, cross
 
 
 # --------------------------------------------------------------------- ADDED 2026-09-25
@@ -1417,13 +1432,16 @@ def score_dolomite_margin_arbitrum(w3) -> dict:
         )
 
     notes.append(_CROSS_EXPOSURE_NOTE)
+    # ADDED 2026-10-05: a price consumer's oracleAuthorityScore is the min over its material price paths one hop upstream
+    # (scripts/lib/price_authority.py, METHODOLOGY 'oracleAuthorityScore for price consumers'; recipe of the 2026-10-05 study).
+    oracle_authority = price_authority.for_dolomite(w3, target, price_authority.ARBITRUM_SPECS, notes)
     return {
         "target": target,
         "label": "Dolomite Margin (Arbitrum)",
         "adminKeyScore": admin_key,
         "multisigScore": multisig,
         "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100,
+        "oracleAuthorityScore": oracle_authority,
         "crossExposureScore": 100,
         "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes,

@@ -277,7 +277,7 @@ def score_aave_v3_base(w3) -> dict:
 
     # ADDED 2026-10-04 (Spap's go): a price consumer's oracleAuthorityScore is the min over its material price paths
     # one hop upstream (scripts/lib/price_authority.py, METHODOLOGY 'oracleAuthorityScore for price consumers').
-    oracle_authority = price_authority.for_aave(w3, provider, None, notes)
+    oracle_authority = price_authority.for_aave(w3, provider, price_authority.BASE_SPECS, notes)
     return {
         "target": provider,
         "label": "Aave V3 Base (PoolAddressesProvider)",
@@ -590,7 +590,7 @@ def score_compound_v3_comet_base_usdc(w3) -> dict:
 
     # ADDED 2026-10-04 (Spap's go): a price consumer's oracleAuthorityScore is the min over its material price paths
     # one hop upstream (scripts/lib/price_authority.py, METHODOLOGY 'oracleAuthorityScore for price consumers').
-    oracle_authority = price_authority.for_comet(w3, target, None, notes)
+    oracle_authority = price_authority.for_comet(w3, target, price_authority.BASE_SPECS, notes)
     return {
         "target": target,
         "label": "Compound V3 (Comet, USDC market, Base)",
@@ -804,13 +804,16 @@ def score_moonwell_comptroller_base(w3) -> dict:
     admin_key = 65 if chain_ok else 30
     multisig = 100  # not applicable: root is a cross-chain DAO executor, not a Safe
     timelock_score = 50 if (chain_ok and delay and delay > 0) else 0  # real 1-day delay, capped: guardian fast-track path outside the delay
+    # oracleAuthorityScore (decided 2026-10-04, extended to Moonwell 2026-10-05): min over the material price paths one hop
+    # upstream (scripts/lib/price_authority.py, METHODOLOGY 'oracleAuthorityScore for price consumers').
+    oracle_authority = price_authority.for_moonwell(w3, target, price_authority.BASE_SPECS, notes)
     return {
         "target": target,
         "label": "Moonwell Comptroller (Unitroller, Base)",
         "adminKeyScore": admin_key,
         "multisigScore": multisig,
         "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100,
+        "oracleAuthorityScore": oracle_authority,
         "crossExposureScore": 100,
         "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes,
@@ -835,7 +838,8 @@ def score_morpho_gauntlet_usdc_prime_base(w3) -> dict:
     signers on all three, independently re-confirmed live this pass (matching `data/
     finding_2026-09-20-...`'s own citation for this exact vault: "the three Safes have
     exactly the same 7 signers... a guardian veto held by the same signers as the owner
-    and curator is not an independent check"). The 14-day curator timelock is real, but its
+    and curator is not an independent check"). The curator timelock is real (7 days read live on 2026-10-05;
+    this docstring said 14), but its
     only independent check (the guardian) is nominal."""
     vault = "0xeE8F4eC5672F09119b96Ab6fB59C27E1b7e44b61"
     notes = []
@@ -866,6 +870,7 @@ def score_morpho_gauntlet_usdc_prime_base(w3) -> dict:
         admin_key, multisig, timelock_score = 20, 20, 0
         signers = set()
     notes.append(_CROSS_EXPOSURE_NOTE)
+    oracle_authority = price_authority.for_morpho_v1(w3, vault, price_authority.BASE_SPECS, notes)
     return {
         "rootSafeOwners": list(owner_safe[0]) if owner_safe else [],
         "target": vault,
@@ -873,7 +878,7 @@ def score_morpho_gauntlet_usdc_prime_base(w3) -> dict:
         "adminKeyScore": admin_key,
         "multisigScore": multisig,
         "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100,
+        "oracleAuthorityScore": oracle_authority,
         "crossExposureScore": 100,
         "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes,
@@ -918,6 +923,7 @@ def score_morpho_spark_usdc_vault_base(w3) -> dict:
         admin_key, multisig, timelock_score = 20, 20, 0
         signers = set()
     notes.append(_CROSS_EXPOSURE_NOTE)
+    oracle_authority = price_authority.for_morpho_v1(w3, vault, price_authority.BASE_SPECS, notes)
     return {
         "rootSafeOwners": list(curator_safe[0]) if curator_safe else [],
         "target": vault,
@@ -925,7 +931,7 @@ def score_morpho_spark_usdc_vault_base(w3) -> dict:
         "adminKeyScore": admin_key,
         "multisigScore": multisig,
         "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100,
+        "oracleAuthorityScore": oracle_authority,
         "crossExposureScore": 100,
         "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes,
@@ -976,12 +982,13 @@ def score_morpho_steakhouse_usdc_base(w3) -> dict:
     See `_score_steakhouse_base_vault`'s own docstring for the shared cross-chain owner/curator
     Safe finding. `guardian()` resolves to a bare on-curve EOA, `0x9e0FdDDa790651E6a05CD2dE69e
     624B94C04eAf5` -- a single key, not a Safe, holds the independent-veto seat for this vault's
-    14-day curator timelock (disclosed, not folded in: this project's own convention scores the
+    curator timelock (7 days read live on 2026-10-05; this docstring said 14) (disclosed, not folded in: this project's own convention scores the
     curator/guardian RELATIONSHIP -- shared signers or not -- not a bare-key guardian's own
     strength, which no existing formula in this file covers)."""
     vault = "0xbeeF010f9cb27031ad51e3333f9aF9C6B1228183"
     admin_key, multisig, timelock_score, notes, owner_signers, cross_exposure = _score_steakhouse_base_vault(
         w3, vault, "A bare on-curve EOA (not a Safe) holds this vault's guardian seat --")
+    oracle_authority = price_authority.for_morpho_v1(w3, vault, price_authority.BASE_SPECS, notes)
     return {
         "rootSafeOwners": list(owner_signers) if owner_signers else [],
         "target": vault,
@@ -989,7 +996,7 @@ def score_morpho_steakhouse_usdc_base(w3) -> dict:
         "adminKeyScore": admin_key,
         "multisigScore": multisig,
         "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100,
+        "oracleAuthorityScore": oracle_authority,
         "crossExposureScore": cross_exposure,
         "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes,
@@ -1007,6 +1014,7 @@ def score_morpho_grove_steakhouse_usdc_high_yield_base(w3) -> dict:
     admin_key, multisig, timelock_score, notes, owner_signers, cross_exposure = _score_steakhouse_base_vault(
         w3, vault, "A separate 8,113-byte contract (not independently resolved to a Safe or opened this pass) holds this vault's guardian seat --")
     notes.append("Morpho API: NOT listed on Morpho's own app, no red warnings recorded -- disclosed context, not scored")
+    oracle_authority = price_authority.for_morpho_v1(w3, vault, price_authority.BASE_SPECS, notes)
     return {
         "rootSafeOwners": list(owner_signers) if owner_signers else [],
         "target": vault,
@@ -1014,7 +1022,7 @@ def score_morpho_grove_steakhouse_usdc_high_yield_base(w3) -> dict:
         "adminKeyScore": admin_key,
         "multisigScore": multisig,
         "timelockScore": timelock_score,
-        "oracleAuthorityScore": 100,
+        "oracleAuthorityScore": oracle_authority,
         "crossExposureScore": cross_exposure,
         "compositeScore": _composite(admin_key, multisig, timelock_score),
         "notes": notes,

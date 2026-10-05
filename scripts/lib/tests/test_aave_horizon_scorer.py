@@ -33,6 +33,21 @@ from web3 import Web3 as RealWeb3
 sys.path.insert(0, os.path.dirname(__file__))
 from test_ethereum_l1_scorers import FakeHelpers, FakeW3, _patch_helpers, scorers  # noqa: E402
 
+# The price-authority walk (2026-10-05 for Horizon) has its own offline tests (test_price_authority.py); a module fixture
+# does not reach across modules, so the stub of test_ethereum_l1_scorers is repeated here.
+_PA_ORIG = {}
+
+
+def setUpModule():
+    for n in ("for_aave", "for_aave_v2", "for_comet", "for_morpho_v1", "for_morpho_v2", "for_gmx_v2", "for_gmx_v1"):
+        _PA_ORIG[n] = getattr(scorers.price_authority, n)
+        setattr(scorers.price_authority, n, lambda *a, **k: 100)
+
+
+def tearDownModule():
+    for n, f in _PA_ORIG.items():
+        setattr(scorers.price_authority, n, f)
+
 cs = RealWeb3.to_checksum_address
 PROVIDER = cs("0x5D39E06b825C1F2B80bf2756a73e28eFAA128ba0")
 ACL = cs("0xEFD5df7b87d2dCe6DD454b4240b3e0A4db562321")

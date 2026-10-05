@@ -21,7 +21,7 @@ import sys
 from web3 import Web3
 
 sys.path.insert(0, os.path.dirname(__file__))
-from web3_utils import RpcUnavailable, call_raw, read_slot_as_address  # noqa: E402
+from web3_utils import RpcUnavailable, _read, call_raw, read_slot_as_address  # noqa: E402
 
 SENTINEL = "0x0000000000000000000000000000000000000001"
 ZERO_ADDRESS = "0x0000000000000000000000000000000000000000"
@@ -235,6 +235,39 @@ KNOWN_SINGLETON_ANALYSES = {
         ),
     },
 }
+# A Safe deployed WITHOUT a proxy runs its own code: its slot 0 (the singleton) is zero and the code itself is the logic, so
+# it is keyed by keccak of its runtime code (lowercase hex, no 0x), accepted only after that code's verified sources were
+# compared line by line with the official Safe release it vendors (decided by Spap on 2026-10-05).
+KNOWN_PROXYLESS_SAFES = {
+    "8d0ac2ac4115860f948942d0a29e00aac085b33547ec5850d03189aaff5bbd2f": {
+        "analyzed": "2026-10-05",
+        "name": "API3 GnosisSafeWithoutProxy (safe-contracts 1.3.0, no proxy), Robinhood Chain 0xbAC8d514",
+        "summary": (
+            "The 8-owner, threshold-4 Safe that owns API3's OwnableCallForwarder 0x0F52eE9C on Robinhood Chain, 12,330 bytes of "
+            "runtime code, no immutables. Sourcify exact match on chain 4663 (creation and runtime) for "
+            "contracts/access/GnosisSafeWithoutProxy.sol, solc 0.8.12, optimizer 200 runs, EVM london. Its 15 vendored files "
+            "under contracts/vendor/@gnosis.pm/safe-contracts@1.3.0 (GnosisSafe, Executor, FallbackManager, GuardManager, "
+            "ModuleManager, OwnerManager, Enum, EtherPaymentFallback, SecuredTokenTransfer, SelfAuthorized, SignatureDecoder, "
+            "Singleton, StorageAccessible, GnosisSafeMath, ISignatureValidator) are byte-identical to tag v1.3.0 of "
+            "safe-global/safe-smart-account (formerly safe-contracts): no difference at all. The only added code is the "
+            "wrapper's constructor (threshold reset to 0, setupOwners, setupModules(0, empty), no fallback handler, no payment, "
+            "a SafeSetup event), which is not in the runtime code; setup() cannot run again since setupOwners requires a zero "
+            "threshold. Compiled with solc 0.8 instead of 0.7.6: checked arithmetic only adds reverts, it cannot widen who can "
+            "act. Owners, threshold, modules, guard, fallback handler, execTransaction and the signature checks are those of "
+            "Safe 1.3.0. Read live: no module, guard 0, fallback handler 0, VERSION 1.3.0. Contracts/test/MockSafeTarget.sol "
+            "is in the same compilation but not inherited."
+        ),
+    },
+}
+
+
+def read_code_hash(w3, safe, retries=4):
+    """keccak of the account's runtime code (lowercase hex, no 0x), or None if the read failed."""
+    try:
+        code = _read(lambda: w3.eth.get_code(Web3.to_checksum_address(safe)), retries, what=f"code of {safe}", classify=lambda _: False)
+    except RpcUnavailable:
+        return None
+    return Web3.keccak(bytes(code)).hex().removeprefix("0x")
 
 
 def _slot_or_none(w3, safe, slot, retries):
@@ -322,7 +355,8 @@ def gate_findings(w3, safe, retries=4):
     """(blocking, info) text lists for the authority gate in web3_utils.safe_owners_and_threshold.
 
     blocking: an unanalyzed module (it can execute as the Safe without the owners) or a singleton that is neither a published
-    Safe build nor analyzed (the Safe's logic is unknown). Either one means the owner set and threshold are not the authority.
+    Safe build nor analyzed (the Safe's logic is unknown); a zero singleton passes only when the Safe's own code hash is in
+    KNOWN_PROXYLESS_SAFES (a Safe deployed without a proxy). Either one means the owner set and threshold are not the authority.
     info: a read that failed. Never blocking, so a flaky RPC cannot collapse a score. Guards and fallback handlers are not
     checked here: they can block or answer calls, not act as the Safe."""
     blocking, info = [], []
@@ -335,6 +369,8 @@ def gate_findings(w3, safe, retries=4):
             blocking.append("module(s) not analyzed: " + ", ".join(unknown))
     singleton = read_singleton(w3, safe, retries)
     status = classify_singleton(singleton)
+    if status == "unanalyzed" and singleton.lower() == ZERO_ADDRESS and read_code_hash(w3, safe, retries) in KNOWN_PROXYLESS_SAFES:
+        status = "analyzed"  # no proxy: its own code is the logic, pinned by hash (an unread code stays blocking)
     if status == "unread":
         info.append("a singleton that could not be read")
     elif status == "unanalyzed":

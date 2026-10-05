@@ -30,9 +30,13 @@ see `data/methodology_test_2026-09-16.md` (hand-derived) and
 `scripts/sol_read.py` this file imports still reads byte-identical values).
 """
 import base64
+import hashlib
+import json
 import math
 import os
+import subprocess
 import sys
+import time
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "scripts"))
 import sol_read  # noqa: E402
@@ -1139,6 +1143,77 @@ def score_marginfi(url) -> dict:
     }
 
 
+KLIQUIDITY_SCOPE_PROGRAM = "HFn8GnPADiny6XqUoWE8uRPPxb29ikn4yTuPa9MF2fWJ"
+KLIQUIDITY_SCOPE_ADMIN_MS = "EFZxQRB58g7nTYw6bag8sJYXn7wUWHoKt3AcCNzHbe24"  # the Scope admin multisig score_kamino_lend also reads
+KLIQUIDITY_SCOPE_UPGRADE_MS = "DDJGaWjVREXffoMe9nyvb1c7wpajLdh7fTnAb2giD9RM"
+PRICE_UNREAD_MARK = "material price path(s) UNREAD"  # the wording of scripts/lib/price_authority.py's UNREAD_MARK
+
+
+def _kliquidity_oracle_authority(url, gc, own_delay_s, notes):
+    """oracleAuthorityScore of Kamino Liquidity (METHODOLOGY 'oracleAuthorityScore for price consumers'; recipe of the
+    2026-10-05 study, re-run by a second reader). Deposits (PriceBased minting), single-token deposits, invest and
+    rebalancing guards and flashSwapUnevenVaults read Scope prices (kliquidity IDL: they take scopePrices + tokenInfos).
+    Every used CollateralInfo of GlobalConfig.tokenInfos names a Scope OraclePrices (scopeFeed); each distinct feed is a
+    material path (no per-strategy weights: all count, fail-closed). One hop stops at Scope, scored as score_kamino_lend
+    scores it: the admin of the Scope Configuration that owns the feed (an instant re-map of every price) and the Scope
+    program upgrade authority, each a Squads v4 vault re-derived offline from its pinned multisig, with the Solana
+    formula; a time_lock at least the target's own (GlobalConfig admin) delay is governance-grade. The providers behind
+    Scope's mappings (Pyth, Chainlink, ...) are deeper, disclosed. A feed no Configuration names, a Scope program other
+    than the pinned one, an unmatched multisig or a failed read is UNREAD: 20, never 100. The GlobalConfig admin's own
+    re-pointing of tokenInfos is the target's own configuration, already in its composite."""
+    try:
+        entries = sol_read.read_kliquidity_collateral_feeds(url, gc["token_infos"])
+        configs = {c["oracle_prices"]: c for c in sol_read.read_scope_configs(url, KLIQUIDITY_SCOPE_PROGRAM)}
+        upgrade_authority = sol_read.read_program(url, KLIQUIDITY_SCOPE_PROGRAM).get("upgrade_authority")
+    except Exception as e:  # noqa: BLE001 -- a failed read is unknown, never 100
+        notes.append(f"oracleAuthorityScore 20: price walk failed ({type(e).__name__}: {e}) -- unknown, not 100")
+        return 20
+    unread, scored = [], {}
+    if gc.get("scope_program") != KLIQUIDITY_SCOPE_PROGRAM:
+        unread.append(f"GlobalConfig.scopeProgramId {gc.get('scope_program')}, expected {KLIQUIDITY_SCOPE_PROGRAM}")
+    if not entries:
+        unread.append(f"tokenInfos {gc['token_infos']}: no used CollateralInfo")
+    feeds = sorted({e["scope_feed"] for e in entries})
+    notes.append(f"tokenInfos {gc['token_infos']}: {len(entries)} used CollateralInfo entries ({sum(1 for e in entries if e['disabled'])} disabled) "
+                 f"naming Scope feed(s) {feeds}")
+
+    def walk(label, sq):
+        if sq is None:
+            unread.append(label)
+        elif sq == RENOUNCED:
+            notes.append(f"price path {label}: renounced, disclosed")
+        elif own_delay_s and sq["time_lock_s"] >= own_delay_s:
+            notes.append(f"price path {label}: governance-grade (time_lock {sq['time_lock_s']}s >= the target's {own_delay_s}s)")
+        else:
+            c = _composite(*_score_full_power_path("squads_v4", threshold=sq["threshold"], voters=_voters_with_vote_permission(sq), delay_s=sq["time_lock_s"]))
+            scored[label] = c
+            notes.append(f"price path {label}: scored, composite {c} (Squads v4 {sq['threshold']}-of-{sq['members']}, time_lock {sq['time_lock_s']}s)")
+
+    try:  # a failed multisig read is unknown, never a crashed scorer
+        for f in feeds:
+            c = configs.get(f)
+            if c is None:
+                unread.append(f"Scope feed {f}: no Scope Configuration names it")
+                continue
+            label = f"Scope Configuration {c['configuration']} admin (instant re-map of feed {f})"
+            walk(label, _resolve_squads_v4(url, label, c["admin"], KLIQUIDITY_SCOPE_ADMIN_MS, notes))
+        walk("Scope program upgrade", _resolve_squads_v4(url, "Scope program upgrade", upgrade_authority, KLIQUIDITY_SCOPE_UPGRADE_MS, notes, none_means_renounced=True))
+    except Exception as e:  # noqa: BLE001 -- paths already scored still count: unknown caps at 20, never lifts a lower one
+        result = min([20] + list(scored.values()))
+        notes.append(f"oracleAuthorityScore {result}: price walk failed ({type(e).__name__}: {e}) -- unknown, not 100")
+        return result
+    if unread:
+        result = min([20] + list(scored.values()))
+        notes.append(f"oracleAuthorityScore {result}: {PRICE_UNREAD_MARK} {unread} -- unknown, not 100")
+        return result
+    if not scored:
+        notes.append("oracleAuthorityScore 100: no material price path one hop upstream that can move a price without a proven bound")
+        return 100
+    result = min(scored.values())
+    notes.append(f"oracleAuthorityScore {result} = min over material price paths one hop upstream (METHODOLOGY, rule of 2026-10-04): {scored}")
+    return result
+
+
 def score_kamino_liquidity(url) -> dict:
     """Kamino Liquidity (yvaults), the automated-strategy vault product --
     a SEPARATE Kamino program from `score_kamino_lend`'s own klend market,
@@ -1242,10 +1317,12 @@ def score_kamino_liquidity(url) -> dict:
     timelock = min(timelock_a, timelock_b)
     notes.append(f"combined (min over both full-power paths, METHODOLOGY.md 6.2): adminKey={admin} multisig={multisig} timelock={timelock}")
 
+    # ADDED 2026-10-05: the Scope paths its strategies price through (an unresolved GlobalConfig admin gives no delay bar).
+    oracle_authority = _kliquidity_oracle_authority(url, gc, admin_sq["time_lock_s"] if admin_sq else None, notes)
     return {
         "target": GLOBAL_CONFIG, "label": "Kamino Liquidity (yvaults)",
         "adminKeyScore": admin, "multisigScore": multisig, "timelockScore": timelock,
-        "oracleAuthorityScore": 100, "compositeScore": _composite(admin, multisig, timelock),
+        "oracleAuthorityScore": oracle_authority, "compositeScore": _composite(admin, multisig, timelock),
         "notes": notes, "_signers": signers,
     }
 
@@ -1330,6 +1407,458 @@ def score_jupiter_perps(url) -> dict:
         "oracleAuthorityScore": 100, "compositeScore": _composite(admin, multisig, timelock),
         "notes": notes, "_signers": signers,
     }
+
+
+JL_VAULTS_PROGRAM = "jupr81YtYssSyPt8jbnGuiWon5f6x9TcDEFxYe3Bdzi"
+JL_ORACLE_PROGRAM = "jupnw4B6Eqs7ft6rxpzYLJZYSnrpRgPcr589n5Kv4oc"
+JL_LENDING_PROGRAM = "jup3YeL8QhtSx1e253b2FDvsMNC87fDrgQZivbrndc9"
+JL_DEX_PROGRAM = "jupZ4m2GqUCJ5iueMfzQf8khFfH31d4XAQt3RzCT9Vd"
+JL_OWN_PROGRAMS = ("jupeiUmn818Jg1ekPURTpr4mFo29p46vygyykFJ3wZC", JL_LENDING_PROGRAM, JL_VAULTS_PROGRAM, JL_ORACLE_PROGRAM, JL_DEX_PROGRAM,
+                   "jup7TthsMgcR9Y3L277b8Eo9uboVSmu1utkuXHNUKar")  # liquidity, lending, vaults, oracle, DEX, lending rewards
+JL_UPGRADE_MS = "J3mJ3wz6xkVUk3T8qHnuAYNxsRH3ixHsryYNZAU2vG8P"  # vault 0 upgrades the six programs above (2026-10-05)
+JL_ADMIN_MS = "5Y93cxqp8rGtjDhxGkehewfhFdxLkrCfPDWookCGeASF"  # vault 0 = VaultAdmin authority and its only auth: update_oracle
+JL_SOURCE_TYPES = ("Pyth", "StakePool", "MsolPool", "Redstone", "Chainlink", "SinglePool", "JupLend", "ChainlinkDataStreams",
+                   "PstPool", "DexSmartColPegOracle", "DexSmartDebtPegOracle", "InfPool")  # oracle IDL enum SourceType
+TOKEN_PROGRAMS = ("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA", "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb")
+STAKE_PROGRAM = "Stake11111111111111111111111111111111111111"
+WSOL_MINT = "So11111111111111111111111111111111111111112"
+JUP_PRICE_API = "https://lite-api.jup.ag/price/v3?ids="  # USD weights only (decision of 2026-10-05), never a classification
+CHAINLINK_STORE_PROGRAM = "HEvSKofvBgfaexv23kMabbYqxasxU3mQ4ibBMEmJWHny"
+CHAINLINK_OCR2_PROGRAM = "cjg3oHmg9uuPsP8D6g29NWvhySJkdYdAo9D25PRbKXJ"
+CHAINLINK_MULTISIG_PROGRAM = "7zr352snXaLm2uwgP8kJcckh5nBij2m2oLiGjuXGVKWg"  # serum-style multisig (chainlink-solana docs)
+CHAINLINK_MULTISIG = "91siFsusTxEjN5FV3dBoVh83YWDBYPAm1UX3Dy7qDjLb"  # 4-of-9 on 2026-10-05, signer PDA BMKk78WE...
+PYTH_RECEIVER = "rec5EKMGg6MxZYaMdyBfgwp4d5rB9T1VQH5pJv5LtFJ"
+PYTH_PUSH_ORACLE = "pythWSnswVUd12oZpeFP8e9CVaEqJg25g1Vtc2biRsT"
+PYTH_WORMHOLE = "HDwcJBJXjL9FpJ7UBsYBtaDjsBUhuLCUYoz3zr8SWWaQ"
+PYTH_WORMHOLE_DEPLOY_SLOT = 441901675  # the build read on 2026-10-05; quorum(n) = n / 2 + 1 in its published source
+PYTH_DATA_SOURCES = [{"chain": 26, "emitter": "6R92oFT6UiP2xWZBjTbwAkHzFCLy5BhWnNh6m83ndhZR"}]  # Pythnet
+PYTH_GUARDIANS = ("41534bb176e461a3fb30479400f210549ecce638", "6502987b62f21cab7eb5ccd8f0173084b60d5b41",
+                  "44a3e8f6a382412cf6bb90a3f8106e68977476c9", "13edc776d3063549fdb0702af182edc905a539d4",
+                  "3af088854bb768065f4929e5bbdfa4cbb04c9af9")  # guardian set 1 of PYTH_WORMHOLE (Ethereum-style addresses)
+PYTH_SQUADS_PROGRAM = "SMPLVC8MxZ5Bf5EfF7PaMiTCxoBAcmkbM2vkrvMK8ho"  # a squads-mpl deployment of Pyth's, upgradeable (official v3 is not)
+PYTH_GOVERNANCE_MULTISIG = "FVQyHcooAtThJ83XFrNnv74BcinbRH3bRmfFamAHBfuj"  # authority_1 = 6oXTdojy, the receiver's governance authority
+PYTH_DAO_PROGRAM = "pytGY6tWRgGinSCvRLnSv4fHfBTMoiDGiCsesmHWM6U"  # spl-governance deployment of the Pyth DAO
+PYTH_DAO_GOVERNANCE = "HVx4oW785bu8QDQ8AwSVfD7H4iuH51ttakc2G5f9XTX8"  # upgrades PYTH_SQUADS_PROGRAM, PYTH_DAO_PROGRAM, staking
+PYTH_DAO_REALM = "4ct8XU5tKbMNRphWy4rePsS9kBqPhDdvZoGpmprPaug4"
+PYTH_STAKING_PROGRAM = "pytS9TjG1qyAZypk7n8rw8gfW9sUaqqYyMhJQ4E7JCQ"
+HUMA_PROGRAMS = ("HumaXepHnjaRCpjYTokxY4UtaJcmx41prQ8cxGmFC5fn",  # permissionless: the pool (a tuple: the SolGov Huma lead keys on this id)
+                 "EVQ4s1b6N1vmWFDv8PRNc77kufBP8HcrSNWXQAhRsJq9")  # huma: owns HumaConfig (the Huma owner)
+HUMA_POOL_CONFIG = "28hFhD21Nka3stL27a8zZ4nRLgaDVxRYwJgeEVgeakzS"  # "Huma 2.0 Genesis"
+HUMA_PST_MINT = "59obFNBzyTBGowrkif5uK7ojS58vsuWz3ZCvg6tfZAGw"
+HUMA_POOL_OWNER_MS = "DBwkwhWLFvjxzRFpZ4tj4mUQZVFbd8ctYbPqd8TpGDnQ"  # vault 0 = pool_owner
+HUMA_LOSS_MS = "8zUxsFmyhKpUdpyzBaASbCXg3y5r41MhFiivFsdJWpLw"  # vault 0 = loss_authority (declare_loss)
+
+
+def _source_type(b):
+    return JL_SOURCE_TYPES[b] if b < len(JL_SOURCE_TYPES) else b
+
+
+def _disc(name):
+    return hashlib.sha256(f"account:{name}".encode()).digest()[:8]
+
+
+def _pa_path(label, status, composite=None, note=""):
+    return {"label": label, "status": status, "composite": composite, "note": note}
+
+
+def _accounts(url, keys):
+    """getMultipleAccounts, 100 per call: {key: (owner, data, lamports)}, None for an account that does not exist."""
+    keys, out = list(dict.fromkeys(keys)), {}
+    for i in range(0, len(keys), 100):
+        vals = sol_read.rpc(url, "getMultipleAccounts", [keys[i:i + 100], {"encoding": "base64"}])["value"]
+        out.update({k: (v["owner"], base64.b64decode(v["data"][0]), v["lamports"]) if v else None for k, v in zip(keys[i:i + 100], vals)})
+    return out
+
+
+def _program_accounts(url, program, name, length=None):
+    """Every account of Anchor type `name` owned by `program`: {pubkey: data} (the first `length` bytes when given)."""
+    cfg = {"encoding": "base64", "filters": [{"memcmp": {"offset": 0, "bytes": sol_read.b58(_disc(name))}}]}
+    if length:
+        cfg["dataSlice"] = {"offset": 0, "length": length}
+    return {a["pubkey"]: base64.b64decode(a["account"]["data"][0]) for a in sol_read.rpc(url, "getProgramAccounts", [program, cfg])}
+
+
+def _usd_prices(mints):
+    """USD price per mint from Jupiter's price API (None when it gives none). Weights only: which rows are material."""
+    out = {}
+    for i in range(0, len(mints), 50):
+        r = subprocess.run(["curl", "-s", "-m", "30", JUP_PRICE_API + ",".join(mints[i:i + 50])], capture_output=True, text=True).stdout
+        out.update({k: (v or {}).get("usdPrice") for k, v in json.loads(r).items()})
+    return out
+
+
+def _squads_v4_price_path(url, label, authority, ms, gov):
+    sub = []
+    sq = _resolve_squads_v4(url, label, authority, ms, sub)
+    if sq is None:
+        return _pa_path(label, "UNREAD", note="; ".join(sub))
+    shape = f"Squads v4 {ms} {sq['threshold']}-of-{sq['members']}, time_lock {sq['time_lock_s']}s"
+    if sq["time_lock_s"] >= gov:
+        return _pa_path(label, "governance-grade", note=f"{shape} >= the target's {gov}s")
+    p = _score_full_power_path("squads_v4", threshold=sq["threshold"], voters=_voters_with_vote_permission(sq), delay_s=sq["time_lock_s"])
+    return _pa_path(label, "scored", _composite(*p), f"{shape} -> {p}")
+
+
+def _key_quorum_path(label, threshold, n, note):
+    """t-of-n keys with no delay (a serum multisig, a Squads v3 fork, a guardian quorum): the squads_v3 shape, as
+    score_marinade scores its serum multisig."""
+    p = _score_full_power_path("squads_v3", threshold=threshold, voters=n)
+    return _pa_path(label, "scored", _composite(*p), f"{note}, {threshold}-of-{n}, no delay -> {p}")
+
+
+def _upgrade_authorities(url, programs):
+    return {p: sol_read.read_program(url, p).get("upgrade_authority") for p in programs}
+
+
+def _own_spec(url, gov, memo):
+    """The target's own programs (jlToken rate, DEX peg configs): each of JL_OWN_PROGRAMS upgraded by vault 0 of
+    JL_UPGRADE_MS, the path its composite already scores. Any other answer is UNREAD."""
+    vault = sol_read.read_squads_vault(JL_UPGRADE_MS, 0)["vault"]
+    bad = {p: a for p, a in _upgrade_authorities(url, JL_OWN_PROGRAMS).items() if a != vault}
+    label = "Jupiter Lend own programs (jlToken rate, DEX peg configs)"
+    return [_pa_path(label, "UNREAD", note=f"upgrade authorities not vault 0 of {JL_UPGRADE_MS}: {bad}") if bad else
+            _pa_path(label, "own", note="the target's own programs and governance: in compositeScore")]
+
+
+def _chainlink_committee(url, gov, memo):
+    """The Chainlink Solana committee (re-read 2026-10-05): serum-style multisig CHAINLINK_MULTISIG, owned by
+    CHAINLINK_MULTISIG_PROGRAM, signer PDA find_program_address([multisig]) with bump = its nonce, no time lock
+    (execute_transaction checks only the signature count). The same PDA upgrades the Store, OCR2 and multisig programs and
+    is not a Store `State` account (whose owner would sign in its place, store owner())."""
+    if "chainlink" not in memo:
+        ms = sol_read.read_legacy_serum_multisig(url, CHAINLINK_MULTISIG)
+        signer, bump = sol_read.find_program_address([sol_read.b58dec(CHAINLINK_MULTISIG)], CHAINLINK_MULTISIG_PROGRAM)
+        acc = _accounts(url, [CHAINLINK_MULTISIG, signer])
+        ups = _upgrade_authorities(url, (CHAINLINK_STORE_PROGRAM, CHAINLINK_OCR2_PROGRAM, CHAINLINK_MULTISIG_PROGRAM))
+        facts = {"multisig owner": (acc[CHAINLINK_MULTISIG] or ("",))[0] == CHAINLINK_MULTISIG_PROGRAM, "bump = nonce": bump == ms["nonce"],
+                 "signer PDA is no Store State": (acc[signer] or ("",))[0] != CHAINLINK_STORE_PROGRAM, "program upgrades": set(ups.values()) == {signer}}
+        states = {}
+        for state, d in _program_accounts(url, CHAINLINK_OCR2_PROGRAM, "State", 112).items():  # State: version, nonce, pad, feed, config.owner, proposed
+            states.setdefault(sol_read.b58(d[16:48]), []).append((state, sol_read.b58(d[48:80]), sol_read.b58(d[80:112])))
+        memo["chainlink"] = (signer, [k for k, ok in facts.items() if not ok], ms, states)
+    return memo["chainlink"]
+
+
+def _chainlink_spec(feed):
+    """A Chainlink Store feed (chainlink-solana store/src/lib.rs, re-read 2026-10-05): its `owner` sets the writer at once
+    (set_writer, owner-only, no delay); its writer is the store PDA ["store", state] of one OCR2 State whose config owner sets
+    the oracle set (accept_proposal); the Store, OCR2 and multisig programs are upgradeable. Each must be the committee's
+    signer PDA, with no pending owner transfer. Scored as that t-of-n with no delay."""
+    def spec(url, gov, memo):
+        label = f"Chainlink feed {feed} (Store owner, OCR2 config owner, Store/OCR2/multisig upgrades)"
+        signer, bad, ms, states = _chainlink_committee(url, gov, memo)
+        bad = list(bad)
+        acc = _accounts(url, [feed])[feed]
+        d = acc[1] if acc and acc[0] == CHAINLINK_STORE_PROGRAM and acc[1][:8] == _disc("Transmissions") else None
+        st = states.get(feed, [])
+        writer = sol_read.find_program_address([b"store", sol_read.b58dec(st[0][0])], CHAINLINK_OCR2_PROGRAM)[0] if len(st) == 1 else None
+        if d is None:
+            bad.append("not a Store Transmissions account")
+        elif (sol_read.b58(d[10:42]), sol_read.b58(d[42:74]), sol_read.b58(d[74:106])) != (signer, SYSTEM_PROGRAM_DEFAULT, writer):
+            bad.append(f"owner/proposed owner/writer {sol_read.b58(d[10:42])}/{sol_read.b58(d[42:74])}/{sol_read.b58(d[74:106])}, expected {signer}/none/{writer}")
+        if len(st) != 1 or st[0][1:] != (signer, SYSTEM_PROGRAM_DEFAULT):
+            bad.append(f"OCR2 states naming the feed {st}, expected one owned by {signer} with no proposed owner")
+        if bad:
+            return [_pa_path(label, "UNREAD", note=f"{bad}")]
+        return [_key_quorum_path(label, ms["threshold"], len(ms["owners"]), f"serum multisig {CHAINLINK_MULTISIG} (signer PDA {signer})")]
+    return spec
+
+
+def _pyth_committee(url, gov, memo):
+    """Who can change what a Pyth push feed reports (Pyth published source, re-read 2026-10-05): (1) the guardian set of
+    PYTH_WORMHOLE: post_update takes an encoded VAA verified by it, quorum(n) = n / 2 + 1 (core-bridge src/utils/mod.rs),
+    pinned to the build of PYTH_WORMHOLE_DEPLOY_SLOT; the Bridge's current set must be 1 with the five pinned keys and no
+    expiry, set 0 expired; (2) the receiver Config's governance authority, which also upgrades the receiver, the push oracle and
+    the wormhole: authority_1 of the squads-mpl Ms PYTH_GOVERNANCE_MULTISIG on PYTH_SQUADS_PROGRAM; (3) whoever upgrades that
+    squads-mpl program: the Pyth DAO ProgramGovernance (spl-governance, community vote only, realm authority none, the DAO
+    and staking programs upgraded by itself), scored with the Solana Realms convention; its delay is the whole window when
+    tipping is Disabled, else only the hold-up (a vote can tip early)."""
+    if "pyth" in memo:
+        return memo["pyth"]
+    bad, paths = [], []
+    gov_auth = sol_read.find_program_address([b"squad", sol_read.b58dec(PYTH_GOVERNANCE_MULTISIG), (1).to_bytes(4, "little"), b"authority"], PYTH_SQUADS_PROGRAM)[0]
+    cfg = sol_read.read_pyth_config(url, PYTH_RECEIVER)
+    if (cfg["governance_authority"], cfg["target_governance_authority"], cfg["wormhole"], cfg["valid_data_sources"]) != (gov_auth, None, PYTH_WORMHOLE, PYTH_DATA_SOURCES):
+        bad.append(f"receiver Config {cfg}")
+    progs = {p: sol_read.read_program(url, p) for p in (PYTH_RECEIVER, PYTH_PUSH_ORACLE, PYTH_WORMHOLE, PYTH_SQUADS_PROGRAM, PYTH_DAO_PROGRAM, PYTH_STAKING_PROGRAM)}
+    want = {PYTH_RECEIVER: gov_auth, PYTH_PUSH_ORACLE: gov_auth, PYTH_WORMHOLE: gov_auth, PYTH_SQUADS_PROGRAM: PYTH_DAO_GOVERNANCE,
+            PYTH_DAO_PROGRAM: PYTH_DAO_GOVERNANCE, PYTH_STAKING_PROGRAM: PYTH_DAO_GOVERNANCE}
+    bad += [f"{p} upgrade authority {progs[p].get('upgrade_authority')}" for p in want if progs[p].get("upgrade_authority") != want[p]]
+    if progs[PYTH_WORMHOLE].get("last_deploy_slot") != PYTH_WORMHOLE_DEPLOY_SLOT:
+        bad.append(f"wormhole redeployed at slot {progs[PYTH_WORMHOLE].get('last_deploy_slot')}: quorum not re-read")
+    bridge = sol_read.find_program_address([b"Bridge"], PYTH_WORMHOLE)[0]
+    sets = [sol_read.find_program_address([b"GuardianSet", i.to_bytes(4, "big")], PYTH_WORMHOLE)[0] for i in (0, 1)]
+    acc = _accounts(url, [bridge, PYTH_GOVERNANCE_MULTISIG, PYTH_DAO_GOVERNANCE] + sets)  # one call: getAccountInfo on a GuardianSet hung twice
+    guardian = []
+    for i, k in enumerate(sets):
+        a = acc[k]
+        if not a or a[0] != PYTH_WORMHOLE:
+            guardian.append(None)
+            continue
+        d = a[1][8:] if a[1][:8] == _disc("GuardianSet") else a[1]  # an Anchor discriminator since the Pyth rewrite, none before
+        n = int.from_bytes(d[4:8], "little")
+        e = 8 + 20 * n
+        guardian.append((int.from_bytes(d[:4], "little"), tuple(d[8 + 20 * j:28 + 20 * j].hex() for j in range(n)), int.from_bytes(d[e + 4:e + 8], "little")))
+    if not acc[bridge] or acc[bridge][0] != PYTH_WORMHOLE or int.from_bytes(acc[bridge][1][:4], "little") != 1:
+        bad.append("Bridge guardian_set_index is not 1")
+    if guardian[1] != (1, PYTH_GUARDIANS, 0):
+        bad.append(f"guardian set 1 {guardian[1]}")
+    if not guardian[0] or guardian[0][0] != 0 or not 0 < guardian[0][2] < time.time():
+        bad.append(f"guardian set 0 not expired: {guardian[0]}")
+    ms = sol_read.read_squadsv3(url, PYTH_GOVERNANCE_MULTISIG)
+    if (acc[PYTH_GOVERNANCE_MULTISIG] or ("",))[0] != PYTH_SQUADS_PROGRAM:
+        bad.append(f"{PYTH_GOVERNANCE_MULTISIG} not owned by {PYTH_SQUADS_PROGRAM}")
+    g, realm = sol_read.read_governance_v2(url, PYTH_DAO_GOVERNANCE), sol_read.read_realm(url, PYTH_DAO_REALM)
+    if ((acc[PYTH_DAO_GOVERNANCE] or ("",))[0], g["account_type"], g["realm"], g["council_vote_threshold"]["kind"], g["community_vote_threshold"]["kind"],
+            realm["authority"], realm["council_mint"]) != (PYTH_DAO_PROGRAM, 19, PYTH_DAO_REALM, "Disabled", "YesVotePercentage", None, None):
+        bad.append(f"Pyth DAO governance {g} realm {realm}")
+    if bad:
+        memo["pyth"] = [_pa_path("Pyth receiver governance and guardian set", "UNREAD", note=f"{bad}")]
+        return memo["pyth"]
+    n = len(PYTH_GUARDIANS)
+    paths.append(_key_quorum_path("Pyth guardian set 1 (signs any price, rotates the set)", n // 2 + 1, n, f"wormhole {PYTH_WORMHOLE} quorum n/2+1"))
+    paths.append(_key_quorum_path(f"Pyth governance authority {gov_auth} (receiver config, upgrades)", ms["threshold"], ms["n_keys"],
+                                  f"squads-mpl Ms {PYTH_GOVERNANCE_MULTISIG} on {PYTH_SQUADS_PROGRAM}"))
+    window = g["transactions_hold_up_time_s"] + (g["voting_base_time_s"] + g["voting_cool_off_time_s"] if g["community_vote_tipping"] == 2 else 0)
+    label = f"Pyth DAO {PYTH_DAO_GOVERNANCE} (upgrades {PYTH_SQUADS_PROGRAM})"
+    shape = f"community vote {g['community_vote_threshold']['pct']}%, voting {g['voting_base_time_s']}s, tipping {g['community_vote_tipping']}, hold-up {g['transactions_hold_up_time_s']}s"
+    if window >= gov:
+        paths.append(_pa_path(label, "governance-grade", note=f"{shape}: window {window}s >= the target's {gov}s"))
+    else:
+        p = _score_full_power_path("realms_governance", holdup_s=g["transactions_hold_up_time_s"])
+        paths.append(_pa_path(label, "scored", _composite(*p), f"{shape}: window {window}s -> {p}"))
+    memo["pyth"] = paths
+    return paths
+
+
+def _pyth_spec(account):
+    """A Pyth PriceUpdateV2: owned by the receiver, written only by itself as a push-oracle feed (write_authority = the
+    account = PDA [shard 0, feed_id] of PYTH_PUSH_ORACLE, which posts through post_update), verification level Full."""
+    def spec(url, gov, memo):
+        a = _accounts(url, [account])[account]
+        ok = a and a[0] == PYTH_RECEIVER and a[1][:8] == _disc("PriceUpdateV2") and a[1][40] == 1
+        ok = ok and sol_read.b58(a[1][8:40]) == account == sol_read.find_program_address([(0).to_bytes(2, "little"), a[1][41:73]], PYTH_PUSH_ORACLE)[0]
+        if not ok:
+            return [_pa_path(f"Pyth price account {account}", "UNREAD", note="not a Full push-oracle PriceUpdateV2 written by itself")]
+        return [dict(p, label=f"Pyth {account}: {p['label']}") for p in _pyth_committee(url, gov, memo)]
+    return spec
+
+
+def _stake_pool_spec(pool, program):
+    """An SPL / Sanctum stake pool (AccountType::StakePool = 1): its rate (total_lamports / pool_token_supply) is updated
+    permissionlessly and moved only by new code; manager and staker are the bounded class of score_jitosol (fees delayed or
+    capped). Scored: the program's upgrade authority, a Squads v3 authority_1 re-derived from its pinned Ms."""
+    ms = {SPL_STAKE_POOL_PROGRAM: SPL_STAKE_POOL_MS, **{p: SANCTUM_MS for p in SANCTUM_LST_PROGRAMS}}.get(program)
+
+    def spec(url, gov, memo):
+        label = f"stake pool {pool} (program {program} upgrade)"
+        a = _accounts(url, [pool])[pool]
+        if ms is None or not a or a[0] != program or a[1][:1] != b"\x01":
+            return [_pa_path(label, "UNREAD", note=f"owner {a and a[0]}: not a stake pool of an analyzed program")]
+        if program not in memo:
+            sub = []
+            memo[program] = _resolve_squads_v3(url, label, sol_read.read_program(url, program).get("upgrade_authority"), ms, sub), sub
+        sq, sub = memo[program]
+        if sq is None or sq == RENOUNCED:
+            return [_pa_path(label, "UNREAD", note="; ".join(sub))]
+        return [_key_quorum_path(label, sq["threshold"], sq["n_keys"], f"Squads v3 {ms}")]
+    return spec
+
+
+def _huma_spec(url, gov, memo):
+    """The Huma PST pool (permissionless program 4.1.0, its on-chain Anchor IDL read 2026-10-05). Its NAV moves by
+    declare_loss (loss authority alone, at once: marks the PST down, forcing liquidations, scored by the owner's decision of
+    2026-10-05), update_mode_apy and set_loss_authority (pool owner or Huma owner), and new code. The pool state is
+    PDA ["pool_state", PoolConfig]; the PST mint's authority is PDA ["pool_authority", PoolConfig]; HumaConfig is PDA
+    ["huma_config", id] of the huma program (HUMA_PROGRAMS[1]). Manual strategy managers move liquidity under daily limits without changing
+    the reported NAV: disclosed, not scored."""
+    acc = _accounts(url, [HUMA_POOL_CONFIG, HUMA_PST_MINT])
+    pc, mint = acc[HUMA_POOL_CONFIG], acc[HUMA_PST_MINT]
+    if not pc or pc[0] != HUMA_PROGRAMS[0] or pc[1][:8] != _disc("PoolConfig") or not mint or mint[0] not in TOKEN_PROGRAMS:
+        return [_pa_path("Huma PST pool", "UNREAD", note="PoolConfig or PST mint not as pinned")]
+    d = pc[1]
+    huma_config, pool_owner = sol_read.b58(d[9:41]), sol_read.b58(d[41:73])
+    o = 170 + 4 + int.from_bytes(d[170:174], "little") + 208 + 8  # pool_name, LPConfig, instant_withdrawal_reserve_limit
+    o += 4 + 164 * int.from_bytes(d[o:o + 4], "little")  # InstantWithdrawalFeeConfig vec
+    o += (33 if d[o] == 1 else 1) + 127  # liquidity_source Option<Pubkey>, reserved
+    loss = sol_read.b58(d[o:o + 32])
+    hc = _accounts(url, [huma_config])[huma_config]
+    hc_ok = hc and hc[0] == HUMA_PROGRAMS[1] and hc[1][:8] == _disc("HumaConfig") and \
+        huma_config == sol_read.find_program_address([b"huma_config", hc[1][8:40]], HUMA_PROGRAMS[1])[0]
+    authority = sol_read.find_program_address([b"pool_authority", sol_read.b58dec(HUMA_POOL_CONFIG)], HUMA_PROGRAMS[0])[0]
+    if not hc_ok or mint[1][:4] != b"\x01\x00\x00\x00" or sol_read.b58(mint[1][4:36]) != authority:
+        return [_pa_path("Huma PST pool", "UNREAD", note=f"HumaConfig {huma_config} or PST mint authority not as pinned")]
+    ups = _upgrade_authorities(url, HUMA_PROGRAMS)
+    return [_squads_v4_price_path(url, "Huma pool owner (update_mode_apy, set_loss_authority)", pool_owner, HUMA_POOL_OWNER_MS, gov),
+            _squads_v4_price_path(url, "Huma owner (the same, and new HumaConfig)", sol_read.b58(hc[1][41:73]), HUMA_MS, gov),
+            _squads_v4_price_path(url, "Huma loss authority (declare_loss, instant mark-down)", loss, HUMA_LOSS_MS, gov),
+            *[_squads_v4_price_path(url, f"{p} program upgrade", a, HUMA_MS, gov) for p, a in ups.items()]]
+
+
+def _stake_program_spec(url, gov, memo):
+    up = sol_read.read_program(url, STAKE_PROGRAM).get("upgrade_authority")
+    return [_pa_path("native Stake program", "constant" if up is None else "UNREAD", note=f"upgrade authority {up}")]
+
+
+def _no_spec(label):
+    return lambda url, gov, memo: [_pa_path(label, "UNREAD", note="no spec yet: who sets it is not established")]
+
+
+def _jl_leaves(url, sources, accounts):
+    """[(leaf key, spec)] one hop upstream of one Jupiter Oracle's sources. Own wrappers (DEX peg configs, the jlToken rate)
+    are walked through; the first account someone else controls is the leaf."""
+    out = []
+    for s in sources:
+        src, kind = s["source"], s["type"]
+        a = accounts.get(src)
+        owner, d = (a[0], a[1]) if a else (None, b"")
+        if src == STAKE_PROGRAM:
+            out.append(("stake-program", _stake_program_spec))
+        elif owner in TOKEN_PROGRAMS and kind in ("SinglePool", "PstPool", "JupLend"):  # the mint that goes with the pool or lending account
+            if kind == "PstPool" and src != HUMA_PST_MINT:
+                out.append((f"pst:{src}", _no_spec(f"PST mint {src}")))
+            elif kind == "JupLend" and (d[:4] != b"\x01\x00\x00\x00" or sol_read.b58(d[4:36]) != sol_read.find_program_address([b"lending_admin"], JL_LENDING_PROGRAM)[0]):
+                out.append((f"juplend-mint:{src}", _no_spec(f"jlToken mint {src} (mint authority not the lending_admin PDA)")))
+        elif kind == "Chainlink" and owner == CHAINLINK_STORE_PROGRAM:
+            out.append((f"chainlink:{src}", _chainlink_spec(src)))
+        elif kind == "Pyth" and owner == PYTH_RECEIVER:
+            out.append((f"pyth:{src}", _pyth_spec(src)))
+        elif kind == "StakePool" and owner in (SPL_STAKE_POOL_PROGRAM,) + SANCTUM_LST_PROGRAMS:
+            out.append((f"stakepool:{src}", _stake_pool_spec(src, owner)))
+        elif kind == "PstPool" and src == sol_read.find_program_address([b"pool_state", sol_read.b58dec(HUMA_POOL_CONFIG)], HUMA_PROGRAMS[0])[0] and owner == HUMA_PROGRAMS[0]:
+            out.append(("huma-pst", _huma_spec))
+        elif kind == "JupLend" and owner in JL_OWN_PROGRAMS:
+            out.append(("own", _own_spec))
+        elif kind in ("DexSmartColPegOracle", "DexSmartDebtPegOracle") and owner == JL_ORACLE_PROGRAM and d[:8] == _disc("DexPegOracleConfig") and len(d) == 287:
+            dex = sol_read.b58(d[10:42])  # DexPegOracleConfig: nonce, dex, 4 pubkeys, quote_in_token0, conversion_source Sources [171:237]
+            dex_acc = accounts.get(dex) or _accounts(url, [dex])[dex]
+            if not dex_acc or dex_acc[0] != JL_DEX_PROGRAM:
+                out.append((f"dex:{dex}", _no_spec(f"DEX {dex} not owned by {JL_DEX_PROGRAM}")))
+                continue
+            out.append(("own", _own_spec))
+            conv = sol_read.b58(d[171:203])
+            if conv != SYSTEM_PROGRAM_DEFAULT:  # default: a hard 1:1 peg, no extra account (oracle IDL)
+                accounts.update(_accounts(url, [conv]) if conv not in accounts else {})
+                out += _jl_leaves(url, [{"source": conv, "type": _source_type(d[236])}], accounts)
+        else:
+            out.append((f"{kind}:{src}", _no_spec(f"{kind} source {src} (owner {owner})")))
+    return out
+
+
+def _jl_rows(url):
+    """[(vault label, [(leaf key, spec)], usd or None)] over every VaultConfig of the vaults program. Value: the vault's
+    collateral, VaultState.total_supply [23:31] x vault_supply_exchange_price [99:107] / 1e12 (Jupiter Lend amounts are
+    9-decimal normalized, so / 1e9 gives tokens) x its USD price; a single-validator pool token unpriced by the API is
+    valued on chain (the pool's stake lamports / mint supply, in SOL); anything else unpriced is None (material, fail-closed);
+    an empty vault is 0."""
+    cfgs = {int.from_bytes(d[8:10], "little"): d for d in _program_accounts(url, JL_VAULTS_PROGRAM, "VaultConfig").values()}
+    states = {int.from_bytes(d[8:10], "little"): d for d in _program_accounts(url, JL_VAULTS_PROGRAM, "VaultState").values()}
+    oracles = sorted({sol_read.b58(c[26:58]) for c in cfgs.values()})
+    accounts = _accounts(url, oracles)
+    srcs = {}
+    for o in oracles:
+        a = accounts[o]
+        n = int.from_bytes(a[1][10:14], "little") if a else 0  # Oracle: disc, nonce u16, Vec<Sources> (66 bytes each), bump
+        if not a or a[0] != JL_ORACLE_PROGRAM or a[1][:8] != _disc("Oracle") or 14 + 66 * n > len(a[1]) - 1:
+            srcs[o] = None
+            continue
+        srcs[o] = [{"source": sol_read.b58(a[1][14 + 66 * i:46 + 66 * i]), "type": _source_type(a[1][79 + 66 * i])} for i in range(n)]
+    accounts.update(_accounts(url, sorted({s["source"] for L in srcs.values() if L for s in L})))
+    price = _usd_prices(sorted({sol_read.b58(c[154:186]) for c in cfgs.values()} | {WSOL_MINT}))
+    rows = []
+    for vid in sorted(cfgs):
+        c, st = cfgs[vid], states.get(vid)
+        oracle, mint = sol_read.b58(c[26:58]), sol_read.b58(c[154:186])
+        if sol_read.b58(c[122:154]) != JL_ORACLE_PROGRAM or srcs[oracle] is None:
+            rows.append((f"vault {vid}", [(f"unread:{oracle}", _no_spec(f"vault {vid} oracle {oracle} (not a Jupiter Oracle)"))], None))
+            continue
+        usd = None
+        if st:
+            col = int.from_bytes(st[23:31], "little") * int.from_bytes(st[99:107], "little") / 1e12 / 1e9
+            pool = [s["source"] for s in srcs[oracle] if s["type"] == "SinglePool"]
+            stake = next((accounts[k] for k in pool if accounts.get(k) and accounts[k][0] == STAKE_PROGRAM), None)
+            pool_mint = accounts.get(mint)
+            if col == 0:
+                usd = 0.0
+            elif price.get(mint):
+                usd = col * price[mint]
+            elif stake and mint in pool and pool_mint and pool_mint[0] in TOKEN_PROGRAMS and price.get(WSOL_MINT) and int.from_bytes(pool_mint[1][36:44], "little"):
+                usd = col * stake[2] / int.from_bytes(pool_mint[1][36:44], "little") * price[WSOL_MINT]
+        rows.append((f"vault {vid}", _jl_leaves(url, srcs[oracle], accounts), usd))
+    return rows
+
+
+def _jupiter_lend_governance_delay(url):
+    """The vaults' VaultAdmin (the only one, PDA ["vault_admin"]): its authority and every auth must be vault 0 of
+    JL_ADMIN_MS, the only signer of update_oracle (re-point a vault's price); oracle accounts have no update instruction
+    (oracle IDL). The delay is that multisig's time_lock. None when anything differs."""
+    admins = _program_accounts(url, JL_VAULTS_PROGRAM, "VaultAdmin")
+    vault = sol_read.read_squads_vault(JL_ADMIN_MS, 0)["vault"]
+    pda = sol_read.find_program_address([b"vault_admin"], JL_VAULTS_PROGRAM)[0]
+    if list(admins) != [pda]:
+        return None
+    d = admins[pda]
+    n = int.from_bytes(d[74:78], "little")  # VaultAdmin: authority, liquidity_program, next_vault_id u16, auths Vec<Pubkey>, bump
+    if {sol_read.b58(d[8:40])} | {sol_read.b58(d[78 + 32 * i:110 + 32 * i]) for i in range(n)} != {vault}:
+        return None
+    sq = _resolve_squads_v4(url, "VaultAdmin authority", vault, JL_ADMIN_MS, [])
+    return sq["time_lock_s"] if sq else None
+
+
+def _jupiter_lend_oracle_authority(url, notes):
+    """oracleAuthorityScore of Jupiter Lend (METHODOLOGY 'oracleAuthorityScore for price consumers', recipe of the
+    2026-10-05 study, every fact re-read live 2026-10-05). Each VaultConfig of the vaults program names an Oracle
+    (owner JL_ORACLE_PROGRAM, PDA ["oracle", nonce], no update instruction) whose sources the vault prices collateral and
+    liquidations with. A row per vault, valued at its collateral; a source is material when it reaches 1% of the priced
+    collateral or any row of unknown value. Own wrappers are walked through; the leaves are scored with the Solana
+    formula: Chainlink Store feeds (one 4-of-9 committee), Pyth push feeds (guardian quorum, governance, the DAO behind
+    its multisig program), SPL and Sanctum stake pools (program upgrade), the Huma PST pool (its loss authority, decided
+    2026-10-05). A path is governance-grade at a delay at least the target's own (the VaultAdmin multisig time_lock).
+    Single-validator pools, Marinade, Chainlink Data Streams caches, RedStone and Infinity sources have no spec: UNREAD,
+    which caps at 20 only when material. A failed read is 20, never 100."""
+    try:
+        gov = _jupiter_lend_governance_delay(url)
+        rows = _jl_rows(url) if gov else []
+    except Exception as e:  # noqa: BLE001 -- a failed read is unknown, never 100
+        notes.append(f"oracleAuthorityScore 20: price walk failed ({type(e).__name__}: {e}) -- unknown, not 100")
+        return 20
+    if not gov:
+        notes.append(f"oracleAuthorityScore 20: {PRICE_UNREAD_MARK} ['VaultAdmin not vault 0 of {JL_ADMIN_MS} alone: no delay bar'] -- unknown, not 100")
+        return 20
+    notes.append(f"governance delay (VaultAdmin authority = vault 0 of {JL_ADMIN_MS}, time_lock) = {gov}s; {len(rows)} vaults")
+    total = sum(v for _, _, v in rows if v)
+    specs, reach, unknown = {}, {}, set()
+    for _, leaves, value in rows:
+        for key, spec in dict(leaves).items():
+            specs.setdefault(key, spec)
+            reach[key] = reach.get(key, 0) + (value or 0)
+            if value is None:
+                unknown.add(key)
+    scored, unread, memo = {}, [], {}
+    for key, spec in specs.items():
+        try:
+            paths = spec(url, gov, memo)
+        except Exception as e:  # noqa: BLE001 -- unknown, and counts only where material
+            paths = [_pa_path(key, "UNREAD", note=f"read failed ({type(e).__name__}: {e})")]
+        share = reach[key] / total if total else 0
+        material = share >= 0.01 or key in unknown
+        for p in paths:
+            notes.append(f"price path {p['label']}: {p['status']}" + (f", composite {p['composite']}" if p["composite"] is not None else "")
+                         + f", reach {share:.2%}{'' if material else ' (immaterial)'}" + (f" -- {p['note']}" if p["note"] else ""))
+            if material and p["status"] == "scored":
+                scored[p["label"]] = p["composite"]
+            elif material and p["status"] == "UNREAD":
+                unread.append(p["label"])
+    if unread:
+        result = min([20] + list(scored.values()))
+        notes.append(f"oracleAuthorityScore {result}: {PRICE_UNREAD_MARK} {unread} -- unknown, not 100")
+        return result
+    if not scored:
+        notes.append("oracleAuthorityScore 100: no material price path one hop upstream that can move a price without a proven bound")
+        return 100
+    result = min(scored.values())
+    notes.append(f"oracleAuthorityScore {result} = min over material price paths one hop upstream (METHODOLOGY, rule of 2026-10-04): {scored}")
+    return result
 
 
 def score_jupiter_lend(url) -> dict:
@@ -1445,10 +1974,12 @@ def score_jupiter_lend(url) -> dict:
     timelock = min(timelock_a, timelock_b)
     notes.append(f"combined (min over both full-power paths, METHODOLOGY.md 6.2): adminKey={admin} multisig={multisig} timelock={timelock}")
 
+    # ADDED 2026-10-05: the price paths its borrow vaults read (rule of 2026-10-04, Solana formula).
+    oracle_authority = _jupiter_lend_oracle_authority(url, notes)
     return {
         "target": LIQUIDITY_ACCOUNT, "label": "Jupiter Lend",
         "adminKeyScore": admin, "multisigScore": multisig, "timelockScore": timelock,
-        "oracleAuthorityScore": 100, "compositeScore": _composite(admin, multisig, timelock),
+        "oracleAuthorityScore": oracle_authority, "compositeScore": _composite(admin, multisig, timelock),
         "notes": notes, "_signers": signers,
     }
 

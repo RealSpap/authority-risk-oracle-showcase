@@ -59,6 +59,20 @@ REPO_ROOT = os.path.join(os.path.dirname(__file__), "..", "..", "..")
 sys.path.insert(0, os.path.join(REPO_ROOT, "scripts"))
 from lib import scorers  # noqa: E402
 
+# The price-authority walk (2026-10-05 for the Morpho Vault V2 scorers) has its own offline tests (test_price_authority.py),
+# so the scorer bodies here see a fixed 100 and never reach the network.
+_PA_ORIG = {}
+
+
+def setUpModule():
+    _PA_ORIG["for_morpho_v2"] = scorers.price_authority.for_morpho_v2
+    scorers.price_authority.for_morpho_v2 = lambda *a, **k: 100
+
+
+def tearDownModule():
+    for n, f in _PA_ORIG.items():
+        setattr(scorers.price_authority, n, f)
+
 
 class FakeEth:
     """`codes` (address -> raw bytes) takes priority when present, so a test

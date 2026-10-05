@@ -130,7 +130,8 @@ scorers = _load_module("aro_test_eth_l1_scorer_bodies_scorers", "chains/ethereum
 
 
 # ADDED 2026-10-04: the price-path engine is stubbed for these composite-logic tests (see test_price_authority_wiring.py).
-_PA_NAMES = ("for_aave", "for_comet", "for_morpho_v1")
+_PA_NAMES = ("for_aave", "for_aave_v2", "for_comet", "for_morpho_v1", "for_morpho_v2", "for_gmx_v2", "for_gmx_v1", "for_euler_factory", "for_euler_earn",
+            "for_sparklend")
 _PA_ORIG = {}
 
 

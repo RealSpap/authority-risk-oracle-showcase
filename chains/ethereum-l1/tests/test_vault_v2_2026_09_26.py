@@ -33,6 +33,21 @@ def _load(name, rel):
 
 
 scorers = _load("aro_eth_l1_vault_v2_2026_09_26", "chains/ethereum-l1/scorers.py")
+
+# ADDED 2026-10-05: the V2 scorers now call the price-path engine; it has its own offline tests
+# (scripts/lib/tests/test_price_authority.py), so the scorer bodies here see a fixed 100 and never reach the network.
+_PA_ORIG = {}
+
+
+def setUpModule():
+    _PA_ORIG["for_morpho_v2"] = scorers.price_authority.for_morpho_v2
+    scorers.price_authority.for_morpho_v2 = lambda *a, **k: 100
+
+
+def tearDownModule():
+    for n, f in _PA_ORIG.items():
+        setattr(scorers.price_authority, n, f)
+
 cs = RealWeb3.to_checksum_address
 
 VAULT = cs("0xbeef088055857739C12CD3765F20b7679Def0f51")

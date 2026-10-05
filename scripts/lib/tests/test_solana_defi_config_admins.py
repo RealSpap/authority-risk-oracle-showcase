@@ -253,6 +253,38 @@ class TestReadKliquidityGlobalConfig(unittest.TestCase):
             sol_read.acct = orig
 
 
+class TestReadKliquidityScopeFields(unittest.TestCase):
+    """ADDED 2026-10-05: GlobalConfig.scopeProgramId (80) and tokenInfos (10448), and the CollateralInfos entries."""
+    SCOPE, INFOS = "HFn8GnPADiny6XqUoWE8uRPPxb29ikn4yTuPa9MF2fWJ", "3v6ootgJJZbSWEDfZMA1scfh7wcsVVfeocExRxPqCyWH"
+    FEED, MINT = "3NJYftD5sjVfxSnUdZ1wVML8f3aC6mp1CXCL6L7TnU8C", "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+
+    def read(self, fn, pk, b64):
+        orig = sol_read.acct
+        sol_read.acct = _fake_acct({pk: b64})
+        try:
+            return fn("url", pk)
+        finally:
+            sol_read.acct = orig
+
+    def test_global_config_scope_fields(self):
+        b64 = _synthetic_account(26832, KAMINO_GLOBAL_CONFIG_DISCRIMINATOR, [(80, self.SCOPE), (10448, self.INFOS), (2224, KAMINO_GLOBAL_CONFIG_ADMIN)])
+        r = self.read(sol_read.read_kliquidity_global_config, "GKnHiWh3RRrE1zsNzWxRkomymHc374TvJPSTv2wPeYdB", b64)
+        self.assertEqual((r["scope_program"], r["token_infos"], r["admin_authority"]), (self.SCOPE, self.INFOS, KAMINO_GLOBAL_CONFIG_ADMIN))
+
+    def test_collateral_infos_used_entries_and_feed_offset(self):
+        e = lambda i: 8 + 216 * i  # noqa: E731
+        d = base64.b64decode(_synthetic_account(8 + 216 * 303, b"\x01" * 8, [(e(0), self.MINT), (e(0) + 152, self.FEED), (e(5), self.MINT), (e(6) + 152, self.SCOPE)]))
+        d = bytearray(d)
+        d[e(5) + 136] = 1  # entry 5 disabled, its feed left zero; entry 6 unused (no mint) though it names a feed
+        d[e(302):e(302) + 32] = sol_read.b58dec(self.MINT)  # the last of the 303 entries is read too
+        d[e(302) + 152:e(302) + 184] = sol_read.b58dec(self.FEED)
+        r = self.read(sol_read.read_kliquidity_collateral_feeds, self.INFOS, base64.b64encode(bytes(d)).decode())
+        self.assertEqual(r, [{"mint": self.MINT, "scope_feed": self.FEED, "disabled": 0}, {"mint": self.MINT, "scope_feed": "11111111111111111111111111111111", "disabled": 1},
+                             {"mint": self.MINT, "scope_feed": self.FEED, "disabled": 0}])
+        with self.assertRaises(ValueError):  # another size is never a short list
+            self.read(sol_read.read_kliquidity_collateral_feeds, self.INFOS, base64.b64encode(bytes(d[:-216])).decode())
+
+
 class TestReadMarginfiGroup(unittest.TestCase):
     def test_admin_field_decodes_correctly(self):
         orig = sol_read.acct

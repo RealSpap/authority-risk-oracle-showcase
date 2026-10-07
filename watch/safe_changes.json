@@ -4,11 +4,23 @@
   {
    "ecosystem": "robinhood",
    "safes": 25,
-   "events": [],
-   "control": null,
-   "status": "UNREAD (Web3RPCError: {'code': -32602, 'message': 'query spans 186127 blocks (79556835 to 79742961), but only 100000 are a)",
-   "fromBlock": 76578817,
-   "toBlock": 82534851
+   "events": [
+    {
+     "name": "AddedOwner",
+     "value": "0xB3bfB32977cFd6200AB9537E3703e501d8381c9B",
+     "block": 81173405,
+     "tx": "6d4610f18f429737dbc1c8714b52a7adccc2494f344ca067afe4c9095f5714de",
+     "safe": "0x20D630cF1f5628285BfB91DfaC8C89eB9087BE1A",
+     "groups": [
+      "ramses"
+     ],
+     "timestamp": 1791242831
+    }
+   ],
+   "control": 95,
+   "status": "ok",
+   "fromBlock": 76735753,
+   "toBlock": 82689187
   },
   {
    "ecosystem": "ethereum-l1",
@@ -16,8 +28,8 @@
    "events": [],
    "control": 15,
    "status": "ok",
-   "fromBlock": 26090827,
-   "toBlock": 26141037
+   "fromBlock": 26092134,
+   "toBlock": 26142347
   },
   {
    "ecosystem": "arbitrum",
@@ -25,26 +37,26 @@
    "events": [],
    "control": 18,
    "status": "ok",
-   "fromBlock": 510370294,
-   "toBlock": 512588375
+   "fromBlock": 510428034,
+   "toBlock": 512647896
   },
   {
    "ecosystem": "base",
    "safes": 8,
    "events": [],
-   "control": 24,
+   "control": 18,
    "status": "ok",
-   "fromBlock": 51994176,
-   "toBlock": 52296576
+   "fromBlock": 52002052,
+   "toBlock": 52304452
   },
   {
    "ecosystem": "tempo",
    "safes": 4,
    "events": [],
-   "control": 3,
-   "status": "ok",
-   "fromBlock": 41958961,
-   "toBlock": 43037512
+   "control": 0,
+   "status": "UNREAD (control returned 0 ExecutionSuccess events: the RPC may be truncating, not the Safes being idle)",
+   "fromBlock": 41987244,
+   "toBlock": 43065784
   },
   {
    "ecosystem": "plasma",
@@ -52,8 +64,8 @@
    "events": [],
    "control": 10,
    "status": "ok",
-   "fromBlock": 33836783,
-   "toBlock": 34441289
+   "fromBlock": 33852533,
+   "toBlock": 34457039
   },
   {
    "ecosystem": "monad",
@@ -61,8 +73,8 @@
    "events": [],
    "control": null,
    "status": "UNREAD (HTTPError: 413 Client Error: Request Entity Too Large for url: https://rpc.monad.xyz/)",
-   "fromBlock": 109343831,
-   "toBlock": 111345722
+   "fromBlock": 109395940,
+   "toBlock": 111397875
   },
   {
    "ecosystem": "hyperliquid",
@@ -70,8 +82,8 @@
    "events": [],
    "control": null,
    "status": "UNREAD (Web3RPCError: {'code': -32005, 'message': 'rate limited'})",
-   "fromBlock": 47296753,
-   "toBlock": 47911549
+   "fromBlock": 47312760,
+   "toBlock": 47927556
   }
  ]
 }

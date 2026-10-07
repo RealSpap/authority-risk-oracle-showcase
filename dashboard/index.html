@@ -348,6 +348,9 @@
       label: 'Robinhood Chain', network: 'Testnet · chain 46630',
       oracle: '0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52',
       rpc: 'https://rpc.testnet.chain.robinhood.com/rpc',
+      // a 63-call batch is 12.7 KB and this RPC edge answers bodies above about 10 KB with a duplicated
+      // Access-Control-Allow-Origin header that browsers refuse: 20-call chunks stay under it
+      rateLimit: 40,
       explorer: 'https://explorer.testnet.chain.robinhood.com/address/',
       flagship: true,
     },
@@ -457,8 +460,8 @@
       v2r: {
         txid: 'eeaa894c3c46814f7228a7ecf2be84c0006c1154b5101688dd413d9a419689c0',
         attestationFile: '../chains/zcash/data/testnet_attestation_v2_reanchor_2026-09-20.json',
-        docFile: '../chains/zcash/data/publisher_key_exposure_2026-09-19.md',
-        docLabel: 'publisher_key_exposure_2026-09-19.md',
+        docFile: '../chains/zcash/data/testnet_oracle_batch_2026-09-19.md',
+        docLabel: 'testnet_oracle_batch_2026-09-19.md',
         headline: 'ARO2 · all {n} targets tracked at the time, re-anchored from a rotated publisher key',
         keyTag: 'publisher key never committed',
         visibleNote: 'Provenance: this address was funded only by a sweep from the exposed address of the two earlier publications below, so the chain alone cannot show who made that sweep. What differs is that this key was never in the repository.',
@@ -1772,11 +1775,22 @@
     slot.appendChild(card);
   }
 
+  // The ARO1 attestation file is not published in this copy: it embeds a legacy account name and is hashed byte for byte, so it
+  // cannot be cleaned without breaking its commitment. The transaction itself stays on chain.
+  function aro1Note(chain) {
+    var slot = document.getElementById('zcSlotV1');
+    if (!slot) return;
+    slot.innerHTML = '<div class="card open"><div class="card-row" style="cursor:default"><div class="card-main"><h3>ARO1 · Zcash L1, first proof of concept</h3>' +
+      '<p class="summary">One score, committed as "ARO1" + BLAKE2b-256 of its attestation. The attestation file is not part of this public copy, ' +
+      'so it is not re-verified here; the three ARO2 anchors above are. The transaction is on Zcash Testnet: <a href="' + chain.explorer + chain.v1.txid +
+      '" target="_blank" rel="noopener">' + chain.v1.txid.slice(0, 12) + '…</a>.</p></div></div></div>';
+  }
+
   function loadZcash(chain) {
     var container = document.getElementById('cards');
     container.innerHTML = '<div id="zcSlotV3" style="margin-bottom:10px"></div><div id="zcSlotV2r" style="margin-bottom:10px"></div><div id="zcSlotV2" style="margin-bottom:10px"></div><div id="zcSlotV1"></div>';
     document.getElementById('filterEmpty').style.display = 'none';
-    setStatus('Fetching the four real Testnet transactions (ARO2 six live targets, ARO2 re-anchor, first ARO2, ARO1) and recomputing every commitment…', false, true);
+    setStatus('Fetching the three real Testnet ARO2 transactions (six live targets, re-anchor, first anchor) and recomputing every commitment…', false, true);
 
     function run(slotId, title, verify, render) {
       return verify(chain).then(function (d) {
@@ -1797,20 +1811,20 @@
           function (slot, ch, d) { renderZcashV2Card(slot, ch, d, ch.v2r); }),
       run('zcSlotV2', 'ARO2 · first anchor', function (ch) { return verifyZcashV2(ch, ch.v2); },
           function (slot, ch, d) { renderZcashV2Card(slot, ch, d, ch.v2); }),
-      run('zcSlotV1', 'ARO1 · Zcash L1 (first proof of concept)', verifyZcashV1, renderZcashV1Card)
+      aro1Note(chain)
     ]).then(function (res) {
       if (activeKey !== 'zcash') return;  // the visitor switched tabs while this was loading
-      var v3 = res[0], v2r = res[1], v2 = res[2], v1 = res[3];
-      var failed = !v3.d || !v2r.d || !v2.d || !v1.d;
-      var allMatched = v3.ok && v2r.ok && v2.ok && v1.ok;
-      aggregateCounts[activeKey] = v3.d ? v3.d.re.items.length : (v2r.d ? v2r.d.re.items.length : (v2.d ? v2.d.re.items.length : (v1.d ? 1 : 0)));
+      var v3 = res[0], v2r = res[1], v2 = res[2];
+      var failed = !v3.d || !v2r.d || !v2.d;
+      var allMatched = v3.ok && v2r.ok && v2.ok;
+      aggregateCounts[activeKey] = v3.d ? v3.d.re.items.length : (v2r.d ? v2r.d.re.items.length : (v2.d ? v2.d.re.items.length : 0));
       updateAggregateLine();
       if (allMatched) {
-        setLive(true, 'live · ' + v3.d.re.items.length + ' live targets, all 4 commitments verified' + (function (n) { return n ? ' (' + n + ' of 4 against the raw transaction only: explorer not caught up, block inclusion not confirmed here)' : ''; })([v3, v2r, v2, v1].filter(function (x) { return !x.d.t.txMeta; }).length));
+        setLive(true, 'live · ' + v3.d.re.items.length + ' live targets, all 3 commitments verified' + (function (n) { return n ? ' (' + n + ' of 3 against the raw transaction only: explorer not caught up, block inclusion not confirmed here)' : ''; })([v3, v2r, v2].filter(function (x) { return !x.d.t.txMeta; }).length));
         document.getElementById('statusBanner').style.display = 'none';
       } else if (failed) {
         setLive(false, 'zcash verification failed');
-        var firstErr = (v3.err || v2r.err || v2.err || v1.err);
+        var firstErr = (v3.err || v2r.err || v2.err);
         setStatus('Could not verify every Zcash publication: ' + firstErr.message, true, false);
         var banner = document.getElementById('statusBanner');
         if (!retryBtn) { retryBtn = document.createElement('button'); retryBtn.textContent = 'Retry'; }

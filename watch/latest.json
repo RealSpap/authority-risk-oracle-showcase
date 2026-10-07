@@ -1,0 +1,100 @@
+{
+ "run_utc": "2026-10-07T14:10:58Z",
+ "previous_run_utc": null,
+ "oracles": [
+  {
+   "name": "Robinhood Chain",
+   "slug": "robinhood-chain",
+   "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
+   "read_ok": true,
+   "block": 130541371,
+   "targets": 63,
+   "stale": 63,
+   "lastUpdated": 1790408560,
+   "maxStaleness": 777600
+  },
+  {
+   "name": "Ethereum L1 (Sepolia)",
+   "slug": "ethereum-l1-sepolia",
+   "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
+   "read_ok": true,
+   "block": 11863497,
+   "targets": 25,
+   "stale": 25,
+   "lastUpdated": 1790407330,
+   "maxStaleness": 777600
+  },
+  {
+   "name": "Arbitrum (Sepolia)",
+   "slug": "arbitrum-sepolia",
+   "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
+   "read_ok": true,
+   "block": 316734025,
+   "targets": 13,
+   "stale": 13,
+   "lastUpdated": 1790407252,
+   "maxStaleness": 777600
+  },
+  {
+   "name": "Base (Sepolia)",
+   "slug": "base-sepolia",
+   "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
+   "read_ok": true,
+   "block": 47806988,
+   "targets": 13,
+   "stale": 13,
+   "lastUpdated": 1790407192,
+   "maxStaleness": 777600
+  },
+  {
+   "name": "Tempo (Moderato)",
+   "slug": "tempo-moderato",
+   "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
+   "read_ok": true,
+   "block": 38573864,
+   "targets": 14,
+   "stale": 14,
+   "lastUpdated": 1789933789,
+   "maxStaleness": 777600
+  },
+  {
+   "name": "Plasma",
+   "slug": "plasma",
+   "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
+   "read_ok": true,
+   "block": 35553072,
+   "targets": 9,
+   "stale": 9,
+   "lastUpdated": 1789933100,
+   "maxStaleness": 777600
+  },
+  {
+   "name": "Monad",
+   "slug": "monad",
+   "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
+   "read_ok": true,
+   "block": 68990705,
+   "targets": 9,
+   "stale": 9,
+   "lastUpdated": 1790270419,
+   "maxStaleness": 777600
+  },
+  {
+   "name": "Hyperliquid (HyperEVM)",
+   "slug": "hyperliquid-hyperevm",
+   "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
+   "read_ok": true,
+   "block": 66273674,
+   "targets": 15,
+   "stale": 15,
+   "lastUpdated": 1790279036,
+   "maxStaleness": 777600
+  }
+ ],
+ "total_targets": 161,
+ "stale_total": 161,
+ "movers": [],
+ "alerts": [],
+ "unread": [],
+ "note": "EVM oracles only; the Solana program and the Zcash commitments are read by scripts/oracle_freshness.py. An oracle in `unread` has unknown targets, not zero."
+}

@@ -1,0 +1,68 @@
+name: Watch
+
+# Reads every deployed oracle four times a day, records what moved under watch/, and opens an issue labelled
+# "alarm" when a score drops, a target turns stale or an oracle stops answering. Read-only: no key, no transaction.
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - run: pip install -r scripts/requirements.txt
+
+      - name: Read every EVM oracle and diff against the previous run
+        id: run
+        run: |
+          set +e
+          python3 scripts/watch_run.py | tee watch/run.log
+          echo "code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+
+      - name: Which oracle turns stale, and when (EVM, Solana)
+        run: |
+          set +e
+          python3 scripts/oracle_freshness.py --warn-hours 48 > watch/freshness.txt 2>&1
+          echo "exit code $?" >> watch/freshness.txt
+
+      - name: Safe signer, threshold, module and guard changes over the last 7 days
+        run: timeout 20m python3 scripts/check_safe_changes.py --days 7 --out watch/safe_changes.json > watch/safe_changes.log 2>&1 || echo "exit code $?" >> watch/safe_changes.log
+
+      - name: Record the run
+        run: |
+          git add watch
+          git -c user.name=Spap -c user.email=335248717+RealSpap@users.noreply.github.com \
+            commit -qm "Watch $(date -u +%Y-%m-%dT%H:%MZ): $(head -c 160 watch/run.log | tr -d '\n')" || exit 0
+          git push
+
+      - name: Alarm
+        if: steps.run.outputs.code == '2'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh label create alarm --color B60205 --description "A score dropped, a target turned stale or an oracle stopped answering" 2>/dev/null || true
+          gh issue create --title "Alarm $(date -u +%Y-%m-%d %H:%M) UTC: $(grep -c ALARM watch/run.log) finding(s) on the deployed oracles" \
+            --label alarm --body-file watch/alarm.md
+
+      - name: Telegram (only if the secrets are set)
+        if: steps.run.outputs.code == '2'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python3 -c "import sys; sys.path.insert(0, 'scripts/lib'); import alerts; alerts.send_telegram_alert(open('watch/alarm.md').read())"

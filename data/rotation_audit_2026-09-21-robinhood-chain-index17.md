@@ -84,7 +84,7 @@ storage slot below is derived from its signature text rather than quoted**.
 
    ```
    block     7662  granted 0x074377a78a9710a1d47244f89797718b4f491279  (self-bootstrap)
-   block     7802  granted 0xd6f8378f8e440c65f8382f5f2728c78dfd55b66d
+   block     7802  granted 0xd6f8…b66d
    block     8695  revoked 0x074377a78a9710a1d47244f89797718b4f491279
    ```
 

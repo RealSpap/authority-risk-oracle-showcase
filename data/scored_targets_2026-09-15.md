@@ -18,13 +18,13 @@ it pointed at another contract rather than an EOA. Morpho Vault V2's real interf
 differs from what secondhand research assumed.
 
 **Authority chain, as it actually resolves on-chain:**
-- `curator()` → `0x9023FBD6A08C666491A2d1648737E400cF42D2Fb`, a Safe with 7 owners,
+- `curator()` → `0x9023…D2Fb`, a Safe with 7 owners,
   threshold **3**.
 - `isSentinel(0x5642BCd50fC751fF2d04f155423e4D0E25C2a744)` → `true`. That Safe has
   the *same 7 owners* as the curator Safe, threshold **1** - any single one of those
   seven people alone can act as sentinel.
 - `owner()` → `0xCa50D23F1c18C1Dfaff5d3cae3aa4B9dC5C8db73` (a contract, 8,609 bytes
-  of code) → that contract's own `owner()` → `0x337feFE49514fb901eB455A501b8Be76CDeF7660`,
+  of code) → that contract's own `owner()` → `0x337f…7660`,
   confirmed a **bare EOA** (`eth_getCode` returns empty). Two hops down from the vault,
   a single private key sits at the root.
 

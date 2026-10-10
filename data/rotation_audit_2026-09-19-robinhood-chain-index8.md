@@ -77,7 +77,7 @@ scratch (176 protocols, already exhaustively worked through across batches
 8-13 and index 7's own pass), this run started from re-checking whether
 batch 10's own "already covered" claims actually held up under this
 project's "never trust a hand-typed claim without independently re-deriving
-it" rule (`AGENTS.md`) -- the same discipline this project's `correction_*.md`
+it" rule (the project's review rules) -- the same discipline this project's `correction_*.md`
 files exist to enforce.
 
 ### Morpho Blue (singleton) -- RESOLVED, batch 10's "covered" claim corrected, new target added
@@ -111,9 +111,9 @@ Perps, index 7). Confirmed live on 2 independent RPCs, all real deployed code:
 | Address | Role | Bytecode size (both RPCs) |
 |---|---|---|
 | `0x9D53d5E3bd5E8d4Cbfa6DB1ca238AEA02E651010` | Morpho Blue singleton | 15,582 bytes |
-| `0x060595638692de6CCd47ca04094F1772D3D39728` | `owner()` | 171 bytes (Gnosis Safe proxy) |
+| `0x0605…9728` | `owner()` | 171 bytes (Gnosis Safe proxy) |
 
-`owner()` resolves identically on both RPCs to `0x060595638692de6CCd47ca04094F1772D3D39728`.
+`owner()` resolves identically on both RPCs to `0x0605…9728`.
 `feeRecipient()` = zero address on both (no fee currently set -- the same
 "fee recipient currently zero" state independently found for Tempo's own
 not-yet-coded Morpho Blue scouting entry, `chains/tempo/data/
@@ -136,7 +136,7 @@ min(100, threshold*15 + extra*5) = min(100, 75+20) = 95`, `timelockScore = 0`
 
 `crossExposureScore` independently re-derived live via `compute_cross_exposure()`
 after wiring a new `morpho_blue` group into `scripts/lib/signer_overlap.py`
-(`safes: ["0x060595638692de6CCd47ca04094F1772D3D39728"]`): **100** -- none of
+(`safes: ["0x0605…9728"]`): **100** -- none of
 the 9 Safe owners appear in any other tracked signer-overlap group. Re-checked
 that this is the ONLY effect of wiring the new group in: spot-checked 7
 pre-existing groups (`ekubo`, `steakhouse`, `spark_savings`, `curve`,
@@ -156,7 +156,7 @@ and a multisig-score-cap regression test). Full suite: 461 tests pass
 `python3 scripts/validate_all_scorers.py --ecosystem robinhood-chain` was run
 but hit its own 300-second per-ecosystem timeout (a pre-existing tooling
 limitation for this specific slow ecosystem -- the same "two slow ones" gap
-`AGENTS.md` already documents for the `--skip robinhood-chain,tempo` flag,
+the project's review rules already documents for the `--skip robinhood-chain,tempo` flag,
 not something this pass introduced). Not treated as a passing result and not
 substituted with a fabricated one -- the live 2-RPC re-derivation, the
 hand-verified expected tuple match immediately before sending (below), and

@@ -22,8 +22,7 @@ refuted.**
 
 ## A meta-note on the 4 refuted findings
 
-All 4 refutations trace to the same root cause: several verifier agents
-had Bash/`gh` access and, in the course of "independently re-verifying,"
+All 4 refutations trace to the same root cause: several verifiers had shell and GitHub access and, in the course of "independently re-verifying,"
 cloned or fetched the LIVE PUBLIC `RealSpap/authority-risk-oracle` repo --
 which, at review time, did not yet contain this pre-commit code (`score_
 para_staking_vault`, `read_role_registry_role_holders`, and
@@ -32,8 +31,7 @@ correctly found the named functions/exception types absent from the real
 repo and refuted the findings as "describing code that doesn't exist,"
 even though the underlying claims were about the actual pasted code under
 review, not a hallucination. This is a limitation of running an
-adversarial review on WORK-IN-PROGRESS code via agents with live repo
-access, not a defect in this addition -- and it usefully confirms the 14
+adversarial review on WORK-IN-PROGRESS code via reviewers with live repo access, not a defect in this addition -- and it usefully confirms the 14
 CONFIRMED findings survived independent scrutiny that was, if anything,
 harder to satisfy (verifiers who did stick to the pasted code and live
 on-chain re-derivation, rather than the git history, confirmed the real

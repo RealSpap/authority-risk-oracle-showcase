@@ -50,7 +50,7 @@ noted as a cross-check, not claimed as independent confirmation of causation.
 **1. A real bug in the tool's first version, caught before publishing any number.** The first
 implementation resolved a controller's Safe config (owners, threshold) ONCE per address and applied
 it to every chain that address appeared on. Live-checked before trusting the output: the Steakhouse
-owner Safe (`0x0A0e559bc3b0950a7e448F0d4894db195b9cf8DD`) reads 5-of-10 on Ethereum L1, 5-of-9 on
+owner Safe (`0x0A0e…f8DD`) reads 5-of-10 on Ethereum L1, 5-of-9 on
 Base, 5-of-8 on Monad -- three DIFFERENT owner sets behind the same CREATE2 address, independently
 reconfigured per chain, no cross-chain sync. The naive version would have silently reported the
 wrong signer count and threshold for two of the three chains. Fixed by resolving per (ecosystem,

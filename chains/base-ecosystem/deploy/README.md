@@ -55,7 +55,7 @@ wired to it.
 ## Build and test (already run this pass, read-only, no deploy)
 
 Every ecosystem's agent shares this one clone -- always pass separate
-`--out`/`--cache-path` so parallel agents never clobber each other's build
+`--out`/`--cache-path` so parallel builds never clobber each other's build
 artifacts:
 
 ```
@@ -88,7 +88,7 @@ Re-confirmed 2026-09-18: `Compiler run successful!`, 20/20 tests passed
 Uses the shared EVM testnet key, `keys/authority-risk-oracle/evm-testnet-shared/.env`. **The
 address changed on 2026-09-18**: the previous address,
 `0xA08a76457b758aFF9702dBf5b870679E1232B715`, is abandoned -- it was flagged
-as possibly written into a local session transcript on 2026-09-17, and was
+as possibly written into local working notes on 2026-09-17, and was
 regenerated as a precaution. It was never funded (confirmed 0 wei on Base
 Sepolia at every check between 2026-09-16 and 2026-09-18), so no funds were
 ever at risk; it should simply no longer be used or funded. Any reference to

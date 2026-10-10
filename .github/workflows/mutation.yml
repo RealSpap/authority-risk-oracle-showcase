@@ -1,0 +1,34 @@
+name: Mutation
+
+# Replays scripts/tests/mutations.json: breaks the code one way at a time and checks that the test suite notices.
+# Weekly and by hand. Read-only: no key, no write. Red when a mutant survives (a gap in the tests), when a mutation no longer applies
+# (the code it targets moved) or when a mutant does not run (it is never counted as caught). The report is the job summary.
+on:
+  schedule:
+    - cron: "41 4 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mutation
+  cancel-in-progress: true
+
+jobs:
+  mutation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262   # v4.4.0, pinned to its commit: a moved tag cannot change what runs here
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065   # v5.6.0, pinned to its commit
+        with:
+          python-version: "3.11"
+
+      - run: pip install -r scripts/requirements.txt
+
+      - name: The suite passes on the untouched tree, then every mutation is replayed on a copy
+        run: python3 scripts/mutate.py --markdown "$GITHUB_STEP_SUMMARY"

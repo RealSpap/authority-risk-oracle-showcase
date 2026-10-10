@@ -10,7 +10,7 @@ during the review (about 20:07 to 20:10 UTC), and will drift.
 
 Everything in this file is a **proposal**: a new controller shape, a new sizing
 method and a promote/hold decision. It has now been through the adversarial
-review that `AGENTS.md` ("Before committing") requires before committing a new
+review that the project's review rules ("Before committing") requires before committing a new
 controller shape: three independent review lenses, every finding re-verified by a
 separate agent told to try to refute it. 15 objections were confirmed, 2 were
 refuted; every confirmed one was applied (section 10 lists what changed). That
@@ -554,8 +554,7 @@ read via `llms-full.txt` on 2026-09-19.
 ## 10. Adversarial review (2026-09-19): what was confirmed and what changed
 
 Three independent lenses (formula and code, authority and evidence, significance
-of the decision), each finding re-checked by a separate agent instructed to try to
-refute it. 15 objections confirmed, 2 refuted; nothing was rubber-stamped, and the
+of the decision), each finding re-checked by a separate reviewer instructed to try to refute it. 15 objections confirmed, 2 refuted; nothing was rubber-stamped, and the
 two on-chain claims (settle timing, key cadence) were re-derived from the explorer
 rather than copied, which is why `history` now exists as a subcommand. No venue
 had to be removed from the scorer: none was published, and none of the confirmed

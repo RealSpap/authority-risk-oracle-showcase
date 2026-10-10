@@ -31,14 +31,14 @@ factory, the beacon, and the two live pTokens -- not through
 |---|---|---|
 | `eth_getCode` length (factory) | 109 bytes | identical |
 | `eth_getCode` length (beacon, `0x33846348...73A76`) | 590 bytes | identical |
-| `beacon.owner()` | `0x81B80499C396a9931b9e44953425a82C1b2541bd` | identical |
+| `beacon.owner()` | `0x81B8…41bd` | identical |
 | `eth_getCode` length (beacon owner) | 171 bytes (real contract, not an EOA) | identical |
 | `getOwners()` on beacon owner | `['0x4f1d777b...05ebe2', '0x57D32496...4f5b78', '0xEAb7F386...f989d7']` | identical |
 | `getThreshold()` on beacon owner | 2 | identical |
 | Safe `getModulesPaginated()` | `[]` (no modules) | identical |
 | Safe guard storage slot | `0x0` (no guard) | identical |
 | factory `getRoleMemberCount(DEFAULT_ADMIN_ROLE)` | 1 | identical |
-| factory `getRoleMember(DEFAULT_ADMIN_ROLE, 0)` | `0x81B80499C396a9931b9e44953425a82C1b2541bd` (same Safe) | identical |
+| factory `getRoleMember(DEFAULT_ADMIN_ROLE, 0)` | `0x81B8…41bd` (same Safe) | identical |
 | pBTC EIP-1967 beacon slot | `0x33846348...73A76` (matches the beacon above) | identical |
 | pBTC3x EIP-1967 beacon slot | `0x33846348...73A76` (matches the beacon above) | identical |
 
@@ -76,7 +76,7 @@ re-running the full DefiLlama sweep from scratch again.
 Index 9's audit (`data/rotation_audit_2026-09-19-robinhood-chain-index9.md`)
 had already confirmed, live on 2 RPCs, that both of UNCX's Robinhood Chain
 lockers (`unicrypt-v3`/`unicrypt-v4` DefiLlama adapters) are owned by the
-same real 2-of-3 Gnosis Safe (`0x31c44A17aa2E639B40f33DA805CB1DB55d969693`,
+same real 2-of-3 Gnosis Safe (`0x31c4…9693`,
 owners `['0x85BD8EBF...199579', '0xcF936235...d477E58', '0xB3FAbECA...825385']`)
 but left it unscored: Sourcify returned 404 for chain 4663, no public GitHub
 repo was found for "UNCX_LiquidityLocker" at the time, and the chain's own
@@ -193,7 +193,7 @@ the root authority mechanism is scored as-is.
 `crossExposureScore` independently re-derived live via
 `compute_cross_exposure()` after wiring a new `uncx_v3_locker` group into
 `scripts/lib/signer_overlap.py` (`safes:
-["0x31c44A17aa2E639B40f33DA805CB1DB55d969693"]`): **100** on both RPCs.
+["0x31c4…9693"]`): **100** on both RPCs.
 Confirmed this Safe and its 3 owners do not already appear anywhere else in
 `signer_overlap.py` before wiring the group in (grepped the file for all 4
 addresses -- no prior match).
@@ -208,7 +208,7 @@ scaling, unresolved-owner degraded case). Full suite: 467 tests pass
 
 `python3 scripts/validate_all_scorers.py --ecosystem robinhood-chain` was
 not run this pass (same pre-existing 300-second per-ecosystem timeout gap
-for this specific slow ecosystem already documented in `AGENTS.md`). Not
+for this specific slow ecosystem already documented in the project's review rules). Not
 treated as a passing result and not substituted with a fabricated one -- the
 live 2-RPC re-derivation, the hand-verified expected tuple match immediately
 before sending (below), and the full unit-test suite are what this push's

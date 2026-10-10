@@ -4,8 +4,7 @@ Unit tests for the 4 Base targets added in the 2026-09-19 maintenance run
 Moonwell Comptroller) and for score_all()'s new intra-Base crossExposure
 post-pass (_apply_intra_base_overlap).
 
-Lives under chains/base-ecosystem/ (not scripts/lib/tests/) on purpose: the
-pipeline's per-ecosystem agents must not edit the repo-root scripts/ tree.
+Lives under chains/base-ecosystem/ (not scripts/lib/tests/) on purpose: per-ecosystem work must not edit the repo-root scripts/ tree.
 Reuses the fakes (FakeHelpers, FakeW3, _patch_helpers) of the existing
 scripts/lib/tests/test_base_ecosystem_scorers.py by importing that module,
 so both files patch the SAME loaded scorers module.

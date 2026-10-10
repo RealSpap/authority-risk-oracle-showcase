@@ -69,7 +69,7 @@ owner Safe `0x645890a0...0fbbc` was missing from `TEMPO_GROUPS`, although the Te
 folds its overlap into crossExposureScore. Re-read live 2026-09-26: 5-of-9 with exactly the 9 signers
 of the L1/Base/Robinhood Morpho Blue owner Safes (set equality against the dated snapshot). Added as
 group `morpho_blue` (registry only, no score reads the registry). The card's other items (GMX,
-Pendle/Fluid Arbitrum, Slipstream Base) were already in the registry; its SUBMISSION.md/README
+Pendle/Fluid Arbitrum, Slipstream Base) were already in the registry; its the hackathon submission text/README
 per-ecosystem totals are a separate doc refresh, not done here.
 
 ## Feed-admin groups added later the same day

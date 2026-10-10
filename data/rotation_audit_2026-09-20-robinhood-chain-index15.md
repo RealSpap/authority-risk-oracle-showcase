@@ -169,7 +169,7 @@ single-sided range, and only ~$260k is USDG plus the tokenized stocks/ETF.**
 Nothing here is inflated by a bad price like the USAR case at index 14.
 
 **Authority.** Not a proxy (all three EIP-1967 slots zero on A). `Ownable2Step`,
-`owner()` = `feeReceiver()` = `0x58CA1eaED80896400122164Abe16d77B2b4ff7c9`,
+`owner()` = `feeReceiver()` = `0x58CA…f7c9`,
 `pendingOwner()` = 0. `feeBps()` = 1250. `eth_call` simulation: `createVault`,
 `createAdapter` and `setFeeBps` revert "Ownable: caller is not the owner"
 for an arbitrary caller, so this is the restricted variant (only the owner
@@ -187,7 +187,7 @@ traced as if a contract's logic controlled it; the key can always replace the
 delegation with a native transaction. The key is active (nonce 414, ~0.038
 ETH). `METHODOLOGY.md` recorded no 7702 root among tracked targets as of
 2026-09-17, but that was stale: Fables PoolRegistry's sole admin
-(`0x359856655934338D798f9CCE1f181486301D36a5`, tracked since batch 10, nonce 575,
+(`0x3598…36a5`, tracked since batch 10, nonce 575,
 confirmed 7702-delegated on A and B by the independent verifier) is one too, so
 Saffron's owner is at least the second. This pass did not re-scan all 57
 targets.
@@ -241,7 +241,7 @@ address in exactly one group).
 
 ### Limits of this pass, stated
 
-- The AGENTS.md "adversarial review before committing" step was done as a
+- The the project's review rules "adversarial review before committing" step was done as a
   self-refutation pass by the same agent (TVL, duplicate claim, owner type,
   score branch, blast-radius wording, each checked against a second source
   where one existed), **not** by a separate refuting agent: this run had no way

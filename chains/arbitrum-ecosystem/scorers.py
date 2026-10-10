@@ -420,7 +420,7 @@ def score_radiant_lendingpool(w3) -> dict:
     `setReserveInterestRateStrategyAddress`, `batchInitReserve`). Those are
     gated by `provider.getPoolAdmin()`, a DIFFERENT address on the live chain:
     a 4-of-11 Gnosis Safe, with no delay in front of it. Verified 2026-09-20
-    by two independent agents plus `eth_call` simulation (passes when called
+    by two independent reviewers plus `eth_call` simulation (passes when called
     from that Safe, reverts `Error('33')` CALLER_NOT_POOL_ADMIN from the
     timelock and from a random address); this scorer only READS state, it does
     not re-simulate. The same Safe also holds PROPOSER and CANCELLER on the

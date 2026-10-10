@@ -1,0 +1,97 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "watch/impl_sources.json v1",
+ "type": "object",
+ "required": [
+  "run_utc",
+  "checked",
+  "verified",
+  "unverified",
+  "by_target"
+ ],
+ "properties": {
+  "run_utc": {
+   "type": "string"
+  },
+  "checked": {
+   "type": "integer"
+  },
+  "verified": {
+   "type": "integer"
+  },
+  "unverified": {
+   "type": "integer"
+  },
+  "not_answered": {
+   "type": "integer"
+  },
+  "chains_not_on_sourcify": {
+   "type": "array"
+  },
+  "by_target": {
+   "type": "object",
+   "additionalProperties": {
+    "type": "object",
+    "required": [
+     "impl"
+    ],
+    "properties": {
+     "impl": {
+      "type": "string"
+     },
+     "verified": {
+      "type": [
+       "boolean",
+       "null"
+      ]
+     },
+     "match": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "name": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "compiler": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "verified_at": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "repo_url": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "source": {
+      "type": "string"
+     },
+     "note": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "via": {
+      "type": [
+       "string",
+       "null"
+      ]
+     }
+    }
+   }
+  }
+ }
+}

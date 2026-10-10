@@ -175,8 +175,7 @@ from the scouting pass.
 
 3-dimension review before commit (legacy-multisig/Path-A/Path-B facts;
 council census and threshold derivation; the full-power judgment call and
-cross-exposure), each finding independently re-verified by a separate
-agent instructed to try to refute it. 14 agents, 11 findings, 9 confirmed
+cross-exposure), each finding independently re-verified by a separate reviewer instructed to try to refute it. 14 reviewers, 11 findings, 9 confirmed
 (mostly "matches exactly"), 2 flagged for disposition and applied above:
 the council-threshold denominator fix (deposit sum -> live mint supply,
 with an abort-on-divergence guard) and the `max_stake_moved_per_epoch`

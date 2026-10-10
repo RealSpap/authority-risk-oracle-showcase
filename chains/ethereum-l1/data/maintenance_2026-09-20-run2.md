@@ -123,7 +123,7 @@ A previous worker summary presented it as "1 new USDe minter" without
 marking it as preexisting; that framing is corrected here, explicitly, per
 the project's rule that a correction is labelled as one.
 
-## Prepared push command -- for Spap to run, not for an agent
+## Prepared push command -- for Spap to run by hand
 
 The scorer now produces **18 targets**. Nothing below was executed by this
 session; the dry run was, and it exits 0 and encodes 10634 bytes of
@@ -142,7 +142,7 @@ agent:
     PRIVATE_KEY=<la cle du pipeline, jamais lue par un agent> \
     python3 chains/ethereum-l1/deploy/update_scores_ethereum_l1.py
 
-Step 3, read-back verification (read-only, an agent may run this):
+Step 3, read-back verification (read-only, can run unattended):
 
     cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 "trackedTargetsCount()(uint256)" \
       --rpc-url https://ethereum-sepolia-rpc.publicnode.com   # expect 19 after the push
@@ -155,7 +155,7 @@ minter) is still deliberately unscored and will keep its 2026-09-19 reading.
 
 Spap ran the push through a wrapper pinned to commit `1481133` (dry run first, then the real run). The wrapper refuses to
 send unless the oracle still tracks 15 targets, the dry run lists 18 targets with selector `0x5fb3feaf`, and the key
-belongs to the updater `0x20630C6A...` and holds `UPDATER_ROLE`. The agent never read the key.
+belongs to the updater `0x20630C6A...` and holds `UPDATER_ROLE`. The tooling never read the key.
 
 | Field | Value |
 |---|---|

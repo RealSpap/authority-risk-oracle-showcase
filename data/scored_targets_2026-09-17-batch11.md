@@ -34,7 +34,7 @@ Cross-checked on Sourcify (runtime and creation bytecode `match` for proxy and i
 | Step | Live result |
 |---|---|
 | Proxy EIP-1967 admin slot | ProxyAdmin `0x413Ca90D38D964546c2fE03cB103df57372630F6` |
-| `ProxyAdmin.owner()` | `0x6aC51A706539D4F5A326dA2892520180858e25FF` |
+| `ProxyAdmin.owner()` | `0x6aC5…25FF` |
 | `vault.owner()` | same `0x6aC51A70...25FF` |
 | That address | no bytecode (not a Safe, no EIP-7702 designator), 759 transactions on Robinhood Chain: a live private key |
 | `vault.adminSatellite()` | `0xf1F413aB4eF210f2AeE5CDb998362b743a9e4fa2` (`SnuggleVaultAdminSatellite`, Sourcify bytecode match), `TIMELOCK_DELAY()` = 86,400s |

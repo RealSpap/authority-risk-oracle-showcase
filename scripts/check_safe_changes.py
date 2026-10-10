@@ -31,18 +31,21 @@ from lib.web3_utils import get_w3  # noqa: E402
 
 # Full-history-capable free gateways (memory: reference-free-getlogs-sources); every other ecosystem uses its own public RPC.
 LOG_RPC = {"ethereum-l1": "https://gateway.tenderly.co/public/mainnet", "base": "https://gateway.tenderly.co/public/base",
-           "arbitrum": "https://gateway.tenderly.co/public/arbitrum"}
+           "arbitrum": "https://gateway.tenderly.co/public/arbitrum",
+           "hyperliquid": "https://rpc.hypurrscan.io"}   # 2026-10-10: rpc.hyperliquid.xyz rate-limits a 7-day scan; hypurrscan serves 1,000 blocks per call at about one call per second without limiting
 # Largest getLogs span a public endpoint accepts, measured 2026-09-26 (Base on Tenderly: 1,000 blocks; publicnode serves Base logs
 # only near the head, 403 beyond). Pre-chunking to it avoids ~2x wasted calls from halving down; an ecosystem not listed is
 # tried whole, then halved.
-WINDOW = {"base": 1000, "hyperliquid": 1000}  # HyperEVM: "query exceeds max block range 1000"
+WINDOW = {"base": 1000, "hyperliquid": 1000, "robinhood": 100000, "monad": 100}  # HyperEVM: "query exceeds max block range 1000"; Robinhood: 100,000 with an address filter (30,000 without), measured 2026-10-10; Monad: every public RPC (rpc, rpc1, drpc) answers 413 or "block range too large" above 100 blocks, measured 2026-10-10
+# Where 100 blocks per call is all a chain gives, 7 days would take 20,000 calls: the window is capped and the record says how many days were read.
+DAYS_CAP = {"monad": 0.3, "hyperliquid": 3.0}   # Monad: about 86,000 blocks in 100-block calls, under the 1,200-call budget; read every 6 hours, so the 7-hour window overlaps the schedule
 # Monad's RPC answers 413 to a long address list; a smaller batch is accepted.
-BATCH_BY_ECOSYSTEM = {"monad": 3}
+BATCH_BY_ECOSYSTEM = {}   # Monad's 413 was about the block range (100 blocks max), not the address list: 13 addresses with 9 topics pass in one call (measured 2026-10-10); one batch keeps the call count within the budget
 # Seconds between calls where the public RPC rate-limits a long scan (HyperEVM answered 'rate limited' after a few hundred calls).
 DELAY = {"hyperliquid": 0.25}
 EXECUTION_SUCCESS = "0x" + Web3.keccak(text="ExecutionSuccess(bytes32,uint256)").hex().removeprefix("0x")
 BATCH = 20
-MIN_WINDOW = 1000
+MIN_WINDOW = 100
 
 
 class LogsUnavailable(Exception):
@@ -64,7 +67,7 @@ def fetch_logs(w3, addresses, topics, start, end, budget, delay=0.0):
         if delay:
             time.sleep(delay)
         try:
-            return list(w3.eth.get_logs({"address": addresses, "topics": [topics], "fromBlock": start, "toBlock": end}))
+            return list(w3.eth.get_logs({**({"address": addresses} if addresses else {}), "topics": [topics], "fromBlock": start, "toBlock": end}))   # addresses=None: the chain-level witness, no address filter
         except Exception as e:  # noqa: BLE001 -- any refusal (range, rate, size) is handled below
             limited = "rate limit" in str(e).lower() or "429" in str(e) or "too many" in str(e).lower()
             if limited and attempt < 3:
@@ -111,13 +114,14 @@ def check_ecosystem(eco, groups, days, calls):
         return {"ecosystem": eco, "safes": 0, "status": "no Safes in registry"}
     w3 = get_w3(LOG_RPC.get(eco, REGISTRIES[eco][0]))
     out = {"ecosystem": eco, "safes": len(safes), "events": [], "control": None, "status": "ok"}
+    days = min(days, DAYS_CAP.get(eco, days))   # a chain that serves only short ranges gets a shorter, stated window rather than an UNREAD
     try:
         head = w3.eth.block_number
-        start = block_at_or_after(w3, int(time.time()) - days * 86400, head)
+        start = block_at_or_after(w3, int(time.time()) - int(days * 86400), head)
     except Exception as e:  # noqa: BLE001 -- a pruned or unreachable RPC is UNREAD, not quiet
         out["status"] = f"UNREAD (cannot locate the window start: {type(e).__name__}: {str(e)[:100]})"
         return out
-    out.update(fromBlock=start, toBlock=head)
+    out.update(fromBlock=start, toBlock=head, days_read=days)
     budget = Budget(calls)
     try:
         addrs = list(safes)
@@ -135,13 +139,26 @@ def check_ecosystem(eco, groups, days, calls):
                 ev["safe"] = Web3.to_checksum_address(lg["address"])
                 ev["groups"] = safes[ev["safe"]]
                 ev["timestamp"] = w3.eth.get_block(ev["block"])["timestamp"]
+                if ev.get("name") in ("AddedOwner", "RemovedOwner") and isinstance(ev.get("value"), str) and len(ev["value"]) == 42:   # since 2026-10-10 (public watch): a signer is a key, it leaves shortened; a new signer is not in the redaction index yet
+                    ev["value"] = ev["value"][:6] + "\u2026" + ev["value"][-4:]
                 out["events"].append(ev)
         out["control"] = control
     except LogsUnavailable as e:
         out["status"] = f"UNREAD ({e})"
         return out
     if not out["control"]:
-        out["status"] = "UNREAD (control returned 0 ExecutionSuccess events: the RPC may be truncating, not the Safes being idle)"
+        # since 2026-10-10: a second control at the chain level. The tracked Safes may simply be idle over a short window (13 Safes on Monad
+        # over 7 hours, 5 on HyperEVM over 3 days); ExecutionSuccess from ANY Safe on the tail of the same window, through the same
+        # endpoint, proves the endpoint serves logs. Then "no change" is a conclusion (quiet), not an unread.
+        witness = 0
+        try:
+            n_tail = max(5, (10000 + step - 1) // step)   # at least 10,000 blocks of witness: 500 blocks of Monad are two minutes, too short to prove anything
+            tail = spans[-n_tail:] if len(spans) > n_tail else spans
+            for a, z in tail: witness += len(fetch_logs(w3, None, [EXECUTION_SUCCESS], a, z, budget, DELAY.get(eco, 0.0)))
+        except LogsUnavailable: witness = 0
+        out["control_witness"] = witness
+        if witness: out["status"] = "ok (quiet: no execution on the tracked Safes in the window; the endpoint served %d execution(s) from other Safes on the window's tail)" % witness
+        else: out["status"] = "UNREAD (control returned 0 ExecutionSuccess events on the tracked Safes and none from any Safe on the window's tail: the RPC may be truncating, not the Safes being idle)"
     return out
 
 

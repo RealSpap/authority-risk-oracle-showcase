@@ -99,7 +99,7 @@ HyperCore-native deployer address.
    `Ownable` selectors (`owner()`, `transferOwnership(address)`,
    `renounceOwnership()`).
 5. **Traced one level further**: calling `owner()` on that admin contract
-   returns `0x18a82c968b992d28d4d812920eb7b4305306f8f1` -- confirmed via
+   returns `0x18a8…f8f1` -- confirmed via
    its own bytecode signature (the classic Gnosis Safe proxy pattern,
    `masterCopy()` selector `0xa619486e`) and a live `getThreshold()` /
    `getOwners()` call to be a real **4-of-8 Gnosis Safe** with 8 named
@@ -224,8 +224,8 @@ ADMIN = '0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103'
 for addr in ['0x8888888c43cbb7e1c4132542e46831bffd866ed3', '0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec']:
     print(addr, 'impl=', evm('eth_getStorageAt',[addr,IMPL,'latest'])[-40:], 'admin=', evm('eth_getStorageAt',[addr,ADMIN,'latest'])[-40:])
 print(evm('eth_call', [{'to':'0x6181cb542015490dd2985043f9ff119896ca92d0','data':'0x8da5cb5b'},'latest']))  # owner()
-print(evm('eth_call', [{'to':'0x18a82c968b992d28d4d812920eb7b4305306f8f1','data':'0xe75235b8'},'latest']))  # getThreshold()
-print(evm('eth_call', [{'to':'0x18a82c968b992d28d4d812920eb7b4305306f8f1','data':'0xa0e67e2b'},'latest']))  # getOwners()
+print(evm('eth_call', [{'to':'0x18a8…f8f1','data':'0xe75235b8'},'latest']))  # getThreshold()
+print(evm('eth_call', [{'to':'0x18a8…f8f1','data':'0xa0e67e2b'},'latest']))  # getOwners()
 # Confirm the implementation contract's own bytecode references CoreWriter
 code = evm('eth_getCode', ['0x26264514cd6018d6f944eb30b782aee2794b70b8', 'latest'])
 print('references CoreWriter:', '3333333333333333333333333333333333333333' in code.lower())

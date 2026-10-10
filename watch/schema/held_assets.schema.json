@@ -1,0 +1,141 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "watch/held_assets.json v1",
+ "type": "object",
+ "required": [
+  "generated_utc",
+  "asked",
+  "count",
+  "unpriced",
+  "by_target"
+ ],
+ "properties": {
+  "generated_utc": {
+   "type": "string"
+  },
+  "asked": {
+   "type": "integer"
+  },
+  "count": {
+   "type": "integer"
+  },
+  "unpriced": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  },
+  "by_target": {
+   "type": "object",
+   "additionalProperties": {
+    "type": "object",
+    "required": [
+     "asset",
+     "total_assets",
+     "held_usd"
+    ],
+    "properties": {
+     "asset": {
+      "type": "string"
+     },
+     "symbol": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "decimals": {
+      "type": [
+       "integer",
+       "null"
+      ]
+     },
+     "total_assets": {
+      "type": "string"
+     },
+     "amount": {
+      "type": [
+       "number",
+       "null"
+      ]
+     },
+     "price_usd": {
+      "type": [
+       "number",
+       "null"
+      ]
+     },
+     "price_at": {
+      "type": [
+       "integer",
+       "null"
+      ]
+     },
+     "held_usd": {
+      "type": [
+       "number",
+       "null"
+      ]
+     },
+     "stale": {
+      "type": "boolean"
+     },
+     "stale_since": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "price_stale": {
+      "type": "boolean"
+     },
+     "prev_amount": {
+      "type": "number"
+     },
+     "prev_at": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "amount_change_pct": {
+      "type": "number"
+     },
+     "vanished": {
+      "type": "boolean"
+     },
+     "vanished_since": {
+      "type": [
+       "string",
+       "null"
+      ]
+     }
+    }
+   }
+  },
+  "what": {
+   "type": "string"
+  },
+  "unread_chains": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  },
+  "stale": {
+   "type": "integer"
+  },
+  "drops": {
+   "type": "array",
+   "items": {
+    "type": "object"
+   }
+  },
+  "vanished": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  }
+ }
+}

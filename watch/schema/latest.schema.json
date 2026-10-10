@@ -1,0 +1,102 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "watch/latest.json v1",
+ "type": "object",
+ "required": [
+  "run_utc",
+  "oracles",
+  "total_targets",
+  "stale_total",
+  "movers",
+  "alerts",
+  "unread"
+ ],
+ "properties": {
+  "run_utc": {
+   "type": "string",
+   "format": "date-time"
+  },
+  "previous_run_utc": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "total_targets": {
+   "type": "integer"
+  },
+  "stale_total": {
+   "type": "integer"
+  },
+  "oracles": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "name",
+     "slug",
+     "read_ok"
+    ],
+    "properties": {
+     "name": {
+      "type": "string"
+     },
+     "slug": {
+      "type": "string"
+     },
+     "oracle": {
+      "type": "string"
+     },
+     "read_ok": {
+      "type": "boolean"
+     },
+     "block": {
+      "type": [
+       "integer",
+       "null"
+      ]
+     },
+     "targets": {
+      "type": "integer"
+     },
+     "stale": {
+      "type": "integer"
+     },
+     "lastUpdated": {
+      "type": [
+       "integer",
+       "null"
+      ]
+     },
+     "maxStaleness": {
+      "type": [
+       "integer",
+       "null"
+      ]
+     },
+     "kind": {
+      "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "self_watch": {
+      "description": "(observed as object on 2026-10-10; not enforced: a documentation entry)"
+     }
+    }
+   }
+  },
+  "movers": {
+   "type": "array"
+  },
+  "alerts": {
+   "type": "array"
+  },
+  "unread": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  },
+  "note": {
+   "type": "string"
+  }
+ }
+}

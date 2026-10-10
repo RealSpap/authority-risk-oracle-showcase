@@ -254,8 +254,7 @@ run.
 the MCMS quorum-flattening algorithm -- the highest-stakes, most novel
 code in this whole change; `classify()`'s branch ordering and the
 `TypeError` bug fix; end-to-end scoring and `timelockScore` wiring), each
-finding independently re-verified by a separate agent instructed to try
-to refute it. 17 agents, 13 findings, 11 confirmed, 2 refuted. Real fixes
+finding independently re-verified by a separate reviewer instructed to try to refute it. 17 reviewers, 13 findings, 11 confirmed, 2 refuted. Real fixes
 applied, described in their own sections above: `_classify_timelock` now
 also resolves `ADMIN_ROLE`/`DEFAULT_ADMIN_ROLE` (found 3 independent
 times across dimensions, MEDIUM, no scoring impact today); PRIME's

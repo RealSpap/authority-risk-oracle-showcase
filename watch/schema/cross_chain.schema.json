@@ -1,0 +1,79 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "watch/cross_chain.json v1",
+ "type": "object",
+ "required": [
+  "generated_utc",
+  "protocols",
+  "differing",
+  "items"
+ ],
+ "properties": {
+  "generated_utc": {
+   "type": "string"
+  },
+  "protocols": {
+   "type": "integer"
+  },
+  "differing": {
+   "type": "integer"
+  },
+  "items": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "slug",
+     "protocol",
+     "chains",
+     "weakest_chain",
+     "postures_differ",
+     "text"
+    ],
+    "properties": {
+     "chains": {
+      "type": "object",
+      "additionalProperties": {
+       "type": "object",
+       "required": [
+        "chain",
+        "contracts",
+        "composite_min",
+        "composite_max",
+        "admin_kinds",
+        "postures"
+       ]
+      }
+     },
+     "postures_differ": {
+      "type": "boolean"
+     },
+     "spread": {
+      "type": "integer"
+     },
+     "protocol": {
+      "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "slug": {
+      "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "strongest_chain": {
+      "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "strongest_composite": {
+      "description": "(observed as number on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "text": {
+      "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "weakest_chain": {
+      "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "weakest_composite": {
+      "description": "(observed as number on 2026-10-10; not enforced: a documentation entry)"
+     }
+    }
+   }
+  }
+ }
+}

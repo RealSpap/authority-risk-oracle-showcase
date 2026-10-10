@@ -60,7 +60,7 @@ individual dApp on top of it is.
 
 ## Uniswap V2 Factory `feeToSetter` (`0x8bcEaA40B9AcdfAedF85AdF4FF01F5Ad6517937f`) - 2/100
 
-Confirmed live: `feeToSetter()` returns `0x2BAD8182C09F50c8318d769245beA52C32Be46CD` --
+Confirmed live: `feeToSetter()` returns `0x2BAD…46CD` --
 byte-for-byte the same vanity-lookalike bare EOA already found controlling Uniswap
 v3 Factory, v4 PoolManager, and the UniswapX reactor. **This is a fourth surface on
 the exact same private key**: v2 + v3 + v4 + UniswapX order settlement, one key,

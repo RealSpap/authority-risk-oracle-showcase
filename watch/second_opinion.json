@@ -1,0 +1,6745 @@
+{
+ "generated_utc": "2026-10-10T06:54:09Z",
+ "blocks": {
+  "arbitrum": {
+   "start": 513439582,
+   "end": 513439609
+  },
+  "base": {
+   "start": 52412956,
+   "end": 52412963
+  },
+  "ethereum-l1": {
+   "start": 26160368,
+   "end": 26160369
+  },
+  "hyperliquid": {
+   "start": 48148010,
+   "end": 48148034
+  },
+  "monad": {
+   "start": 112116269,
+   "end": 112116285
+  },
+  "plasma": {
+   "start": 34674025,
+   "end": 34674035
+  },
+  "robinhood": {
+   "start": 84804360,
+   "end": 84804717
+  },
+  "tempo": {
+   "start": 43452396,
+   "end": 43452409
+  }
+ },
+ "signer_composition": {
+  "safes": 51,
+  "signers": 305,
+  "by_kind": {
+   "eoa": 299,
+   "safe": 3,
+   "timelock": 1,
+   "unread": 2,
+   "pda": 0
+  },
+  "safes_of_plain_keys_only": 47,
+  "safes_frozen_by_one_lost_key": 3
+ },
+ "exposure": [
+  {
+   "chain": "base",
+   "target": "0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",
+   "keys_to_move": 5,
+   "react_hours": 0,
+   "tvl_usd": 4399416600,
+   "money_per_key_usd": 879883320,
+   "money_source": "protocol_tvl"
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",
+   "keys_to_move": 6,
+   "react_hours": 0,
+   "tvl_usd": 5123191694,
+   "money_per_key_usd": 853865282,
+   "money_source": "protocol_tvl"
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0x858646372cc42e1a627fce94aa7a7033e7cf075a",
+   "keys_to_move": 9,
+   "react_hours": 0,
+   "tvl_usd": 6598251299,
+   "money_per_key_usd": 733139033,
+   "money_source": "protocol_tvl"
+  },
+  {
+   "chain": "robinhood",
+   "target": "0xbeeff033f34c046626b8d0a041844c5d1a5409dd",
+   "keys_to_move": 1,
+   "react_hours": 0,
+   "tvl_usd": 540275108,
+   "money_per_key_usd": 540275108,
+   "money_source": "contract"
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0x55555815a5595991c3a0ff119b59aef6c8b55555",
+   "keys_to_move": 1,
+   "react_hours": 336,
+   "tvl_usd": 493429538,
+   "money_per_key_usd": 493429538,
+   "money_source": "contract"
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0xc139190f447e929f090edeb554d95abb8b18ac1c",
+   "keys_to_move": 1,
+   "react_hours": 0,
+   "tvl_usd": 454291777,
+   "money_per_key_usd": 454291777,
+   "money_source": "protocol_tvl"
+  },
+  {
+   "chain": "solana",
+   "target": "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+   "keys_to_move": 3,
+   "react_hours": 0,
+   "tvl_usd": 1264770884,
+   "money_per_key_usd": 421590295,
+   "money_source": "protocol_tvl"
+  },
+  {
+   "chain": "solana",
+   "target": "7s1da8DduuBFqGra5bJBjpnvL5E9mGzCuMk1Qkh4or2Z",
+   "keys_to_move": 4,
+   "react_hours": 12,
+   "tvl_usd": 1190831615,
+   "money_per_key_usd": 297707904,
+   "money_source": "protocol_tvl"
+  },
+  {
+   "chain": "solana",
+   "target": "7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF",
+   "keys_to_move": 5,
+   "react_hours": 24,
+   "tvl_usd": 1344037417,
+   "money_per_key_usd": 268807483,
+   "money_source": "protocol_tvl"
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0x94643e86aa5e38ddac6c7791c1297f4e40cd96c1",
+   "keys_to_move": 1,
+   "react_hours": 0,
+   "tvl_usd": 263051847,
+   "money_per_key_usd": 263051847,
+   "money_source": "contract"
+  },
+  {
+   "chain": "solana",
+   "target": "H4ND9aYttUVLFmNypZqLjZ52FYiGvdEB45GmwNoKEjTj",
+   "keys_to_move": 4,
+   "react_hours": 24,
+   "tvl_usd": 777682947,
+   "money_per_key_usd": 194420737,
+   "money_source": "protocol_tvl"
+  },
+  {
+   "chain": "plasma",
+   "target": "0x6c50b8ca8eeaa1c75dee5b5ea79772acabc92f48",
+   "keys_to_move": 3,
+   "react_hours": 0,
+   "tvl_usd": 489058298,
+   "money_per_key_usd": 163019433,
+   "money_source": "protocol_tvl"
+  },
+  {
+   "chain": "solana",
+   "target": "ADyA8hdefvWN2dbGGWFotbzWxrAvLW83WG6QCVXvJKqw",
+   "keys_to_move": 3,
+   "react_hours": 0,
+   "tvl_usd": 375584373,
+   "money_per_key_usd": 125194791,
+   "money_source": "protocol_tvl"
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x9d53d5e3bd5e8d4cbfa6db1ca238aea02e651010",
+   "keys_to_move": 5,
+   "react_hours": 0,
+   "tvl_usd": 610409006,
+   "money_per_key_usd": 122081801,
+   "money_source": "protocol_tvl"
+  },
+  {
+   "chain": "base",
+   "target": "0xee8f4ec5672f09119b96ab6fb59c27e1b7e44b61",
+   "keys_to_move": 4,
+   "react_hours": 168,
+   "tvl_usd": 414406759,
+   "money_per_key_usd": 103601690,
+   "money_source": "contract"
+  },
+  {
+   "chain": "solana",
+   "target": "7sf3tcWm58vhtkJMwuw2P3T6UBX7UE5VKxPMnXJUZ1Hn",
+   "keys_to_move": 1,
+   "react_hours": 0,
+   "tvl_usd": 90996770,
+   "money_per_key_usd": 90996770,
+   "money_source": "protocol_tvl"
+  },
+  {
+   "chain": "solana",
+   "target": "So1endDq2YkqhipRh3WViPa8hdiSpxWy6z3Z6tMCpAo",
+   "keys_to_move": 1,
+   "react_hours": 0,
+   "tvl_usd": 90996770,
+   "money_per_key_usd": 90996770,
+   "money_source": "protocol_tvl"
+  },
+  {
+   "chain": "base",
+   "target": "0x5e7bb104d84c7cb9b682aac2f3d509f5f406809a",
+   "keys_to_move": 3,
+   "react_hours": 0,
+   "tvl_usd": 208640869,
+   "money_per_key_usd": 69546956,
+   "money_source": "protocol_tvl"
+  },
+  {
+   "chain": "solana",
+   "target": "2LecshUwdy9xi7meFgHtFJQNSKk4KdTrcpvaB56dP2NQ",
+   "keys_to_move": 5,
+   "react_hours": 24,
+   "tvl_usd": 316737656,
+   "money_per_key_usd": 63347531,
+   "money_source": "protocol_tvl"
+  },
+  {
+   "chain": "arbitrum",
+   "target": "0x888888888889758f76e7103c6cbf23abbf58f946",
+   "keys_to_move": 3,
+   "react_hours": 0,
+   "tvl_usd": 172305158,
+   "money_per_key_usd": 57435053,
+   "money_source": "protocol_tvl"
+  },
+  {
+   "chain": "plasma",
+   "target": "0xa9c251f8304b1b3fc2b9e8fcae78d94eff82ac66",
+   "keys_to_move": 2,
+   "react_hours": 24,
+   "tvl_usd": 99921190,
+   "money_per_key_usd": 49960595,
+   "money_source": "contract"
+  },
+  {
+   "chain": "tempo",
+   "target": "0xcccccccc00000000000000000000000000000001",
+   "keys_to_move": 2,
+   "react_hours": 0,
+   "tvl_usd": 81170721,
+   "money_per_key_usd": 40585361,
+   "money_source": "protocol_tvl"
+  },
+  {
+   "chain": "tempo",
+   "target": "0x9a044ae05e5e6290dcf56afd69548565e957a626",
+   "keys_to_move": 1,
+   "react_hours": 0,
+   "tvl_usd": 39724044,
+   "money_per_key_usd": 39724044,
+   "money_source": "contract"
+  },
+  {
+   "chain": "base",
+   "target": "0xbeef010f9cb27031ad51e3333f9af9c6b1228183",
+   "keys_to_move": 5,
+   "react_hours": 168,
+   "tvl_usd": 121565480,
+   "money_per_key_usd": 24313096,
+   "money_source": "contract"
+  },
+  {
+   "chain": "base",
+   "target": "0xbeef2d50b428675a1921bc6bbf4bfb9d8cf1461a",
+   "keys_to_move": 5,
+   "react_hours": 336,
+   "tvl_usd": 103405014,
+   "money_per_key_usd": 20681003,
+   "money_source": "contract"
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0xbeef047a543e45807105e51a8bbefcc5950fcfba",
+   "keys_to_move": 5,
+   "react_hours": 168,
+   "tvl_usd": 81847597,
+   "money_per_key_usd": 16369519,
+   "money_source": "contract"
+  },
+  {
+   "chain": "solana",
+   "target": "GKnHiWh3RRrE1zsNzWxRkomymHc374TvJPSTv2wPeYdB",
+   "keys_to_move": 5,
+   "react_hours": 24,
+   "tvl_usd": 74254591,
+   "money_per_key_usd": 14850918,
+   "money_source": "protocol_tvl"
+  },
+  {
+   "chain": "plasma",
+   "target": "0x888888888889758f76e7103c6cbf23abbf58f946",
+   "keys_to_move": 3,
+   "react_hours": 0,
+   "tvl_usd": 43281002,
+   "money_per_key_usd": 14427001,
+   "money_source": "protocol_tvl"
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+   "keys_to_move": 5,
+   "react_hours": 168,
+   "tvl_usd": 65078101,
+   "money_per_key_usd": 13015620,
+   "money_source": "contract"
+  },
+  {
+   "chain": "hyperliquid",
+   "target": "0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec",
+   "keys_to_move": 4,
+   "react_hours": 0,
+   "tvl_usd": 44662550,
+   "money_per_key_usd": 11165637,
+   "money_source": "protocol_tvl"
+  },
+  {
+   "chain": "monad",
+   "target": "0x8271e06e5887fe5ba05234f5315c19f3ec90e8ad",
+   "keys_to_move": 1,
+   "react_hours": 0,
+   "tvl_usd": 8960906,
+   "money_per_key_usd": 8960906,
+   "money_source": "protocol_tvl"
+  },
+  {
+   "chain": "tempo",
+   "target": "0x10ee9aac980a180dd4dcfc96c746d60b0ea88f97",
+   "keys_to_move": 5,
+   "react_hours": 0,
+   "tvl_usd": 40200147,
+   "money_per_key_usd": 8040029,
+   "money_source": "protocol_tvl"
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x0dc846db6a4ec7b5a3e542f7db88049e9add2541",
+   "keys_to_move": 2,
+   "react_hours": 0,
+   "tvl_usd": 15933048,
+   "money_per_key_usd": 7966524,
+   "money_source": "protocol_tvl"
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x83341f891f898cb5e0cacc8a70501bba83d9cecf",
+   "keys_to_move": 1,
+   "react_hours": 0,
+   "tvl_usd": 6595182,
+   "money_per_key_usd": 6595182,
+   "money_source": "protocol_tvl"
+  },
+  {
+   "chain": "robinhood",
+   "target": "0xa203a21dccb461e415daa342e8e635b6cee0ccb3",
+   "keys_to_move": 1,
+   "react_hours": 0,
+   "tvl_usd": 6595182,
+   "money_per_key_usd": 6595182,
+   "money_source": "protocol_tvl"
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x1195c074f898b7644ba732407619c9804dfe6dce",
+   "keys_to_move": 1,
+   "react_hours": 0,
+   "tvl_usd": 6587791,
+   "money_per_key_usd": 6587791,
+   "money_source": "protocol_tvl"
+  },
+  {
+   "chain": "solana",
+   "target": "4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8",
+   "keys_to_move": 7,
+   "react_hours": 0,
+   "tvl_usd": 40656370,
+   "money_per_key_usd": 5808053,
+   "money_source": "protocol_tvl"
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x7f03effbd7ceb22a3f80dd468f67ef27826acd85",
+   "keys_to_move": 1,
+   "react_hours": 0,
+   "tvl_usd": 4038749,
+   "money_per_key_usd": 4038749,
+   "money_source": "protocol_tvl"
+  },
+  {
+   "chain": "base",
+   "target": "0xfbb21d0380bee3312b33c4353c8936a0f13ef26c",
+   "keys_to_move": 3,
+   "react_hours": 0,
+   "tvl_usd": 10920544,
+   "money_per_key_usd": 3640181,
+   "money_source": "protocol_tvl"
+  },
+  {
+   "chain": "robinhood",
+   "target": "0xf28704c691290547924e2129d407da36bda8ce0f",
+   "keys_to_move": 2,
+   "react_hours": 0,
+   "tvl_usd": 6116108,
+   "money_per_key_usd": 3058054,
+   "money_source": "protocol_tvl"
+  }
+ ],
+ "checked": 179,
+ "clusters": [
+  {
+   "holder": "0x5300a1a15135ea4dc7ad5a167152c01efc9b192a",
+   "kind": "contract",
+   "targets": 2,
+   "chains": [
+    "ethereum-l1"
+   ],
+   "members": [
+    {
+     "chain": "ethereum-l1",
+     "target": "0x2f39d218133afab8f2b819b1066c7e434ad94e9e"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0x5d39e06b825c1f2b80bf2756a73e28efaa128ba0"
+    }
+   ],
+   "tvl_usd": 14527493326.489475
+  },
+  {
+   "holder": "0xcba2…9afa",
+   "kind": "safe",
+   "targets": 2,
+   "chains": [
+    "base",
+    "ethereum-l1"
+   ],
+   "members": [
+    {
+     "chain": "base",
+     "target": "0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb"
+    }
+   ],
+   "tvl_usd": 9522608293.473885
+  },
+  {
+   "holder": "0xe8dc0fab349ea169283c48ccfd09d797e6db7c94",
+   "kind": "timelock",
+   "targets": 5,
+   "chains": [
+    "ethereum-l1"
+   ],
+   "members": [
+    {
+     "chain": "ethereum-l1",
+     "target": "0x73e35c5c35a274e34ade6eb13cc7f62aee323728"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0x211cc4dd073734da055fbf44a2b4667d5e5fe5d2"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0x58538e6a46e07434d7e7375bc268d3cb839c0133"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0xe3490297a08d6fc8da46edb7b6142e4f461b62d3"
+    }
+   ],
+   "tvl_usd": 5315321780.169261
+  },
+  {
+   "holder": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz",
+   "kind": "pda",
+   "targets": 2,
+   "chains": [
+    "solana"
+   ],
+   "members": [
+    {
+     "chain": "solana",
+     "target": "5ocnV1qiCgaQR8Jb8xWnVbApfaygJ8tNoZfgPwsgx9kx"
+    },
+    {
+     "chain": "solana",
+     "target": "SP12tWFxD9oJsVWNavTTBZvMbA6gkAmxtVgxdqvyvhY"
+    }
+   ],
+   "tvl_usd": 2067237152.8451707
+  },
+  {
+   "holder": "dPpFfahSWhm5M2RB3nVaHsXfnh9ooz5bWtR3WeUguDH",
+   "kind": "pda",
+   "targets": 2,
+   "chains": [
+    "solana"
+   ],
+   "members": [
+    {
+     "chain": "solana",
+     "target": "SPoo1Ku8WFXoNDMHPsrGSTSG1Y47rzgn41SLUNakuHy"
+    },
+    {
+     "chain": "solana",
+     "target": "Jito4APyf642JPZPx3hGc6WWJ8zPKtRbRs4P815Awbb"
+    }
+   ],
+   "tvl_usd": 1171815631.4876125
+  },
+  {
+   "holder": "0x1a9c…35bc",
+   "kind": "timelock",
+   "targets": 3,
+   "chains": [
+    "ethereum-l1",
+    "robinhood"
+   ],
+   "members": [
+    {
+     "chain": "ethereum-l1",
+     "target": "0x000000000004444c5dc75cb358380d2e3de08a90"
+    },
+    {
+     "chain": "robinhood",
+     "target": "0x8366a39cc670b4001a1121b8f6a443a643e40951"
+    },
+    {
+     "chain": "robinhood",
+     "target": "0x000000007a1c8e570011eedf86a2a35593013cba"
+    }
+   ],
+   "tvl_usd": 801346683.2752833
+  },
+  {
+   "holder": "0x261a3b7a37904b45e57ae14206314ccf4bbcf2b1",
+   "kind": "contract",
+   "targets": 2,
+   "chains": [
+    "robinhood"
+   ],
+   "members": [
+    {
+     "chain": "robinhood",
+     "target": "0xbeeff0fb1dc19344a87b8479dab60a2e16160737"
+    },
+    {
+     "chain": "robinhood",
+     "target": "0xbeefff136e3684273e6aa75a1669b784b373a4fd"
+    }
+   ],
+   "tvl_usd": 538890901.5285404
+  },
+  {
+   "holder": "0x7877…75ac",
+   "kind": "safe",
+   "targets": 3,
+   "chains": [
+    "arbitrum",
+    "plasma",
+    "robinhood"
+   ],
+   "members": [
+    {
+     "chain": "arbitrum",
+     "target": "0x888888888889758f76e7103c6cbf23abbf58f946"
+    },
+    {
+     "chain": "plasma",
+     "target": "0x888888888889758f76e7103c6cbf23abbf58f946"
+    },
+    {
+     "chain": "robinhood",
+     "target": "0x544bf81c855ae84c1e8b65d5e38770898d01eee2"
+    }
+   ],
+   "tvl_usd": 216361384.71584174
+  },
+  {
+   "holder": "0x4d6ce4f4498d59eed397bcbc687805a07f9b2346",
+   "kind": "timelock",
+   "targets": 2,
+   "chains": [
+    "arbitrum",
+    "plasma"
+   ],
+   "members": [
+    {
+     "chain": "arbitrum",
+     "target": "0x52aa899454998be5b000ad077a46bbe360f4e497"
+    },
+    {
+     "chain": "plasma",
+     "target": "0x52aa899454998be5b000ad077a46bbe360f4e497"
+    }
+   ],
+   "tvl_usd": 180421689.6662953
+  },
+  {
+   "holder": "0x0a0e…f8dd",
+   "kind": "safe",
+   "targets": 5,
+   "chains": [
+    "base",
+    "ethereum-l1",
+    "monad"
+   ],
+   "members": [
+    {
+     "chain": "base",
+     "target": "0xbeef010f9cb27031ad51e3333f9af9c6b1228183"
+    },
+    {
+     "chain": "base",
+     "target": "0xbeef2d50b428675a1921bc6bbf4bfb9d8cf1461a"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0xbeef047a543e45807105e51a8bbefcc5950fcfba"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0xbeef01735c132ada46aa9aa4c54623caa92a64cb"
+    },
+    {
+     "chain": "monad",
+     "target": "0x32841a8511d5c2c5b253f45668780b99139e476d"
+    }
+   ],
+   "tvl_usd": 31786538.348157506
+  },
+  {
+   "holder": "0xabc3\u20261cbf",
+   "kind": "eoa",
+   "targets": 2,
+   "chains": [
+    "monad",
+    "robinhood"
+   ],
+   "members": [
+    {
+     "chain": "monad",
+     "target": "0x8271e06e5887fe5ba05234f5315c19f3ec90e8ad"
+    },
+    {
+     "chain": "robinhood",
+     "target": "0x8271e06e5887fe5ba05234f5315c19f3ec90e8ad"
+    }
+   ],
+   "tvl_usd": 9581461.829283785
+  },
+  {
+   "holder": "0x20d630cf1f5628285bfb91dfac8c89eb9087be1a",
+   "kind": "safe",
+   "targets": 2,
+   "chains": [
+    "robinhood"
+   ],
+   "members": [
+    {
+     "chain": "robinhood",
+     "target": "0x83341f891f898cb5e0cacc8a70501bba83d9cecf"
+    },
+    {
+     "chain": "robinhood",
+     "target": "0xa203a21dccb461e415daa342e8e635b6cee0ccb3"
+    }
+   ],
+   "tvl_usd": 6595182.217916069
+  },
+  {
+   "holder": "0x31c4…9693",
+   "kind": "safe",
+   "targets": 2,
+   "chains": [
+    "robinhood"
+   ],
+   "members": [
+    {
+     "chain": "robinhood",
+     "target": "0xf28704c691290547924e2129d407da36bda8ce0f"
+    },
+    {
+     "chain": "robinhood",
+     "target": "0x128a800cbc615cc110bff16e475865c67631603a"
+    }
+   ],
+   "tvl_usd": 6116108.43016215
+  },
+  {
+   "holder": "0x396a…3ed4",
+   "kind": "safe",
+   "targets": 3,
+   "chains": [
+    "robinhood"
+   ],
+   "members": [
+    {
+     "chain": "robinhood",
+     "target": "0x026df18fbd2a7639089d0a16293383ec687a5ca1"
+    },
+    {
+     "chain": "robinhood",
+     "target": "0x65dc90cd3a0bcde967c8ae6019d6790b616e78f7"
+    },
+    {
+     "chain": "robinhood",
+     "target": "0xe129d4cb2d454c4acfac909d1576453a9b835f61"
+    }
+   ],
+   "tvl_usd": 3966603.00383271
+  },
+  {
+   "holder": "0xe590…3942",
+   "kind": "contract",
+   "targets": 3,
+   "chains": [
+    "robinhood"
+   ],
+   "members": [
+    {
+     "chain": "robinhood",
+     "target": "0x6f475642a6e85809b1c36fa62763669b1b48dd5b"
+    },
+    {
+     "chain": "robinhood",
+     "target": "0xc39161c743d0307eb9bcc9fef03eeb9dc4802de7"
+    },
+    {
+     "chain": "robinhood",
+     "target": "0xe1844c5d63a9543023008d332bd3d2e6f1fe1043"
+    }
+   ],
+   "tvl_usd": 958491.8237152854
+  },
+  {
+   "holder": "0x5a4e19842e09000a582c20a4f524c26fb48dd4d0",
+   "kind": "safe",
+   "targets": 2,
+   "chains": [
+    "base",
+    "tempo"
+   ],
+   "members": [
+    {
+     "chain": "base",
+     "target": "0xee8f4ec5672f09119b96ab6fb59c27e1b7e44b61"
+    },
+    {
+     "chain": "tempo",
+     "target": "0xc609656ed9ef219c98c8e549bf729144f211f06e"
+    }
+   ],
+   "tvl_usd": 283453.02741217864
+  },
+  {
+   "holder": "0x9db4…1a53",
+   "kind": "safe",
+   "targets": 2,
+   "chains": [
+    "robinhood"
+   ],
+   "members": [
+    {
+     "chain": "robinhood",
+     "target": "0x5c98b2d892b37c9a1d3b69472bddc172a64cdc09"
+    },
+    {
+     "chain": "robinhood",
+     "target": "0xd01c774d4a66408326bc65728ac5ae5aaf004032"
+    }
+   ],
+   "tvl_usd": 0.0
+  }
+ ],
+ "concentration": {
+  "tracked_tvl_usd": 120519249624.0743,
+  "top5_holders_tvl_usd": 32604476184.465405,
+  "top5_share": 0.2705333487070808,
+  "holders_with_2_plus": 17
+ },
+ "cluster_changes": [],
+ "agree": 112,
+ "disagree": 11,
+ "unreadable": 39,
+ "native": 16,
+ "acknowledged": 1,
+ "rpc_calls_unanswered": 33,
+ "disagreements": [
+  {
+   "chain": "arbitrum",
+   "target": "0xffa10065ce1d1c42fabc46e06b84ed8ffeb4bae5",
+   "adminKeyScore": 20,
+   "path": "owner()",
+   "holder": "0x5f0bc72fb5952b2f3f2e11404398ed507b25841f",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 513439582,
+   "block_end": 513439609,
+   "self_delay_seconds": null,
+   "threshold": 3,
+   "owners": 3,
+   "keys_to_act": 3,
+   "keys_lost_to_freeze": 1,
+   "modules": [
+    "0x02878d80732759531bcf8b9ce8197eaec58ef1ce"
+   ],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 0,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 3
+   },
+   "timelockScore": 0,
+   "disagree": "the multisig score says no real multisig (0), the live read finds a Safe 3-of-3 via owner()",
+   "modules_detail": [
+    {
+     "address": "0x02878d80732759531bcf8b9ce8197eaec58ef1ce",
+     "kind": "zodiac-delay",
+     "owner": "0x5f0bc72fb5952b2f3f2e11404398ed507b25841f",
+     "owner_kind": "contract",
+     "owner_is_the_safe": true,
+     "cooldown_seconds": 604800
+    }
+   ],
+   "posture": "admin: Safe 3-of-3 of 3 plain keys (+1 module); delay: 168 h Zodiac delay (for module-routed calls)",
+   "exposure": {
+    "keys_to_move": 3,
+    "react_hours": 0,
+    "tvl_usd": null,
+    "money_per_key_usd": null,
+    "money_source": null,
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "arbitrum",
+   "target": "0xff162c694eaa571f685030649814282ea457f169",
+   "adminKeyScore": 10,
+   "path": "EIP-1967 admin -> ProxyAdmin owner()",
+   "holder": "0x5f5e4892bab94d94dc57a3edea3c138167c4df0f",
+   "impl": "0xff84c4a0d639d598af2088e2ffb76cdbdf1de0ed",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 513439582,
+   "block_end": 513439609,
+   "self_delay_seconds": null,
+   "delay_seconds": 1209600,
+   "kind": "timelock",
+   "multisigScore": 0,
+   "since": "2026-10-10T06:54:09Z",
+   "disagree": "the score says one key does everything (10), the live read finds a timelock (1209600s) via EIP-1967 admin -> ProxyAdmin owner(); the timelock score says no delay (0), the live read finds a timelock of 336 h in the admin path via EIP-1967 admin -> ProxyAdmin owner()",
+   "timelockScore": 0,
+   "posture": "admin: a timelock; delay: 336 h on the timelock",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 336,
+    "tvl_usd": null,
+    "money_per_key_usd": null,
+    "money_source": null,
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0x55555815a5595991c3a0ff119b59aef6c8b55555",
+   "adminKeyScore": 5,
+   "path": "owner()",
+   "holder": "0xf630\u2026a997",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 26160368,
+   "block_end": 26160369,
+   "self_delay_seconds": 1209600,
+   "delegated_to": "0x63c0c19a282a1b52b07dd5a65b58948a07dae32b",
+   "holder_tx_count": 67,
+   "kind": "eoa",
+   "multisigScore": 0,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 0,
+   "disagree": "the timelock score says no delay (0), the contract enforces its own timelock of 336 h (timelock())",
+   "posture": "admin: a plain key (EIP-7702: its account runs the code of 0x63c0\u2026e32b), 67 transactions sent; delay: 336 h the contract enforces itself",
+   "exposure": {
+    "keys_to_move": 1,
+    "react_hours": 336,
+    "tvl_usd": 493429538.31719345,
+    "money_per_key_usd": 493429538.31719345,
+    "money_source": "contract",
+    "held_symbol": "USDC",
+    "held_amount": 493580924.995143
+   }
+  },
+  {
+   "chain": "hyperliquid",
+   "target": "0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec",
+   "adminKeyScore": 10,
+   "path": "EIP-1967 admin -> ProxyAdmin owner()",
+   "holder": "0x18a8…f8f1",
+   "impl": "0x26264514cd6018d6f944eb30b782aee2794b70b8",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 48148010,
+   "block_end": 48148034,
+   "self_delay_seconds": null,
+   "threshold": 4,
+   "owners": 8,
+   "keys_to_act": 4,
+   "keys_lost_to_freeze": 5,
+   "modules": null,
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 0,
+   "since": "2026-10-10T06:54:09Z",
+   "disagree": "the score says one key does everything (10), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisig (0), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner()",
+   "owners_kinds": {
+    "unread": 2,
+    "eoa": 6
+   },
+   "timelockScore": 0,
+   "posture": "admin: Safe 4-of-8 of 6 plain keys, 2 not read; delay: none",
+   "exposure": {
+    "keys_to_move": 4,
+    "react_hours": 0,
+    "tvl_usd": 44662549.54908916,
+    "money_per_key_usd": 11165637.38727229,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "plasma",
+   "target": "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34",
+   "adminKeyScore": 55,
+   "path": "owner()",
+   "holder": "0xabd3645ba0bb60c238bede64378826e1206f5072",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 34674025,
+   "block_end": 34674035,
+   "self_delay_seconds": null,
+   "delay_seconds": 86400,
+   "kind": "timelock",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 0,
+   "disagree": "the timelock score says no delay (0), the live read finds a timelock of 24 h in the admin path via owner()",
+   "posture": "admin: a timelock; delay: 24 h on the timelock",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 24,
+    "tvl_usd": 4861030002.784874,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "plasma",
+   "target": "0xa9c251f8304b1b3fc2b9e8fcae78d94eff82ac66",
+   "adminKeyScore": 40,
+   "path": "owner()",
+   "holder": "0x7d07…dcd8",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 34674025,
+   "block_end": 34674035,
+   "self_delay_seconds": 86400,
+   "threshold": 2,
+   "owners": 5,
+   "keys_to_act": 2,
+   "keys_lost_to_freeze": 4,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 45,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 5
+   },
+   "timelockScore": 0,
+   "disagree": "the timelock score says no delay (0), the contract enforces its own timelock of 24 h (timelock())",
+   "posture": "admin: Safe 2-of-5 of 5 plain keys; delay: 24 h the contract enforces itself",
+   "exposure": {
+    "keys_to_move": 2,
+    "react_hours": 24,
+    "tvl_usd": 99921189.82746753,
+    "money_per_key_usd": 49960594.913733765,
+    "money_source": "contract",
+    "held_symbol": "USDT0",
+    "held_amount": 100003407.267344
+   }
+  },
+  {
+   "chain": "plasma",
+   "target": "0x6695c0f8706c5ace3bdf8995073179cca47926dc",
+   "adminKeyScore": 65,
+   "path": "EIP-1967 admin -> ProxyAdmin owner()",
+   "holder": "0x2130457539612ae9838e0314cda1a8abbdb7cfbc",
+   "impl": "0x8e02392855a51d9d5d18d71a7cfc731f56c68ea5",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 34674025,
+   "block_end": 34674035,
+   "self_delay_seconds": null,
+   "delay_seconds": 172800,
+   "kind": "timelock",
+   "multisigScore": 55,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 0,
+   "disagree": "the timelock score says no delay (0), the live read finds a timelock of 48 h in the admin path via EIP-1967 admin -> ProxyAdmin owner()",
+   "posture": "admin: a timelock; delay: 48 h on the timelock",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 48,
+    "tvl_usd": 59253706.62985022,
+    "money_per_key_usd": null,
+    "money_source": "contract",
+    "held_symbol": "USDT0",
+    "held_amount": 59302461.934613
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x14b107cf534239c59571b066cb6497a321da897c",
+   "adminKeyScore": 50,
+   "path": "DEFAULT_ADMIN_ROLE member 1 of 3 (AccessControl)",
+   "holder": "0x0da180b14721ce46a83669b4816cb652caa1001d",
+   "impl": "0x44c6c2a96e7e51eb0dd81cef58940faa39babf78",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "delay_seconds": 86400,
+   "kind": "timelock",
+   "multisigScore": 35,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 0,
+   "disagree": "the timelock score says no delay (0), the live read finds a timelock of 24 h in the admin path via DEFAULT_ADMIN_ROLE member 1 of 3 (AccessControl)",
+   "posture": "admin: a timelock; delay: 24 h on the timelock",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 24,
+    "tvl_usd": 46156694.15019073,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "solana",
+   "target": "GKnHiWh3RRrE1zsNzWxRkomymHc374TvJPSTv2wPeYdB",
+   "adminKeyScore": 60,
+   "path": "account owned by program 6LtLpnUF\u2026 -> program -> ProgramData 8n11WG\u2026 -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly) -> Squads v4 vault 0 of multisig E7994UpSGhSpbpnuSepPXHBuMy3eRvHJL36DjTs1kb2b",
+   "holder": "3pAxu6C9ykZvyyzdknZvmz6CbWGZPTjRevjk4PRF5ib7",
+   "programdata": "8n11WGJCXqRe5pB4gBTo71YxyiZxEYm47r3LfdQiHYAj",
+   "deployed_slot": 445049632,
+   "via_program": "6LtLpnUFNByNXLyCoK9wA2MykKAmQNZKBdY8s47dehDc",
+   "threshold": 5,
+   "owners": 7,
+   "delay_seconds": 86400,
+   "config_authority": null,
+   "owners_kinds": {
+    "eoa": 7,
+    "pda": 0
+   },
+   "voters": 7,
+   "initiators": 7,
+   "executors": 7,
+   "former_members_in_account": 0,
+   "multisig": "E7994UpSGhSpbpnuSepPXHBuMy3eRvHJL36DjTs1kb2b",
+   "multisig_program": "Squads v4",
+   "keys_to_act": 5,
+   "keys_lost_to_freeze": 3,
+   "kind": "squads",
+   "deployed_at": "2026-09-07T11:05:29Z",
+   "since": "2026-10-10T06:54:09Z",
+   "multisigScore": 100,
+   "timelockScore": 0,
+   "disagree": "the timelock score says no delay (0), the Squads multisig enforces a native time lock of 24 h",
+   "posture": "admin: Squads 5-of-7 of 7 plain keys; delay: 24 h Squads time lock",
+   "exposure": {
+    "keys_to_move": 5,
+    "react_hours": 24,
+    "tvl_usd": 74254591.02949221,
+    "money_per_key_usd": 14850918.205898443,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "solana",
+   "target": "H4ND9aYttUVLFmNypZqLjZ52FYiGvdEB45GmwNoKEjTj",
+   "adminKeyScore": 55,
+   "path": "account owned by program PERPHjGB\u2026 -> program -> ProgramData C258Lj\u2026 -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly) -> Squads v4 vault 0 of multisig AxkJ8oH5aDu4ZRWfsujPtxdb6Vhq4gDehpoReBgrUUSm",
+   "holder": "5myNNmEmPm3UAnJ2ggLEpnTFb9t9Gk8369wKw6n3uAKx",
+   "programdata": "C258LjtN8Q928yz2nJe5kwQycckGfWBSrhZBP2mTpLQt",
+   "deployed_slot": 413092478,
+   "via_program": "PERPHjGBqRHArX4DySjwM6UJHiR3sWAatqfdBS2qQJu",
+   "threshold": 4,
+   "owners": 8,
+   "delay_seconds": 86400,
+   "config_authority": null,
+   "owners_kinds": {
+    "eoa": 8,
+    "pda": 0
+   },
+   "voters": 8,
+   "initiators": 8,
+   "executors": 8,
+   "former_members_in_account": 0,
+   "multisig": "AxkJ8oH5aDu4ZRWfsujPtxdb6Vhq4gDehpoReBgrUUSm",
+   "multisig_program": "Squads v4",
+   "keys_to_act": 4,
+   "keys_lost_to_freeze": 5,
+   "kind": "squads",
+   "deployed_at": "2026-04-14T04:40:41Z",
+   "since": "2026-10-10T06:54:09Z",
+   "multisigScore": 80,
+   "timelockScore": 0,
+   "disagree": "the timelock score says no delay (0), the Squads multisig enforces a native time lock of 24 h",
+   "posture": "admin: Squads 4-of-8 of 8 plain keys; delay: 24 h Squads time lock",
+   "exposure": {
+    "keys_to_move": 4,
+    "react_hours": 24,
+    "tvl_usd": 777682947.4504604,
+    "money_per_key_usd": 194420736.8626151,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "solana",
+   "target": "2LecshUwdy9xi7meFgHtFJQNSKk4KdTrcpvaB56dP2NQ",
+   "adminKeyScore": 5,
+   "path": "account owned by program whirLbMi\u2026 -> program -> ProgramData CtXfPz\u2026 -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly) -> Squads v4 vault 0 of multisig BQsDWkL417U4tVE2sDnPks469pKdm6YzFgKH77doiEjF",
+   "holder": "GwH3Hiv5mACLX3ufTw1pFsrhSPon5tdw252DBs4Rx4PV",
+   "programdata": "CtXfPzz36dH5Ws4UYKZvrQ1Xqzn42ecDW6y8NKuiN8nD",
+   "deployed_slot": 440170207,
+   "via_program": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
+   "threshold": 5,
+   "owners": 13,
+   "delay_seconds": 86400,
+   "config_authority": null,
+   "owners_kinds": {
+    "eoa": 13,
+    "pda": 0
+   },
+   "voters": 9,
+   "initiators": 4,
+   "executors": 3,
+   "former_members_in_account": 9,
+   "multisig": "BQsDWkL417U4tVE2sDnPks469pKdm6YzFgKH77doiEjF",
+   "multisig_program": "Squads v4",
+   "keys_to_act": 5,
+   "keys_lost_to_freeze": 5,
+   "effective": "5-of-13 members, 9 can vote: effectively 5-of-9",
+   "kind": "squads",
+   "deployed_at": "2026-08-19T01:28:54Z",
+   "since": "2026-10-10T06:54:09Z",
+   "multisigScore": 0,
+   "timelockScore": 0,
+   "disagree": "the score says one key does everything (5), the upgrade authority is a Squads v4 via account owned by program whirLbMi\u2026 -> program -> ProgramData CtXfPz\u2026 -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly) -> Squads v4 vault 0 of multisig BQsDWkL417U4tVE2sDnPks469pKdm6YzFgKH77doiEjF; the multisig score says no real multisig (0), the Squads multisig is a 5-of-13; the timelock score says no delay (0), the Squads multisig enforces a native time lock of 24 h",
+   "posture": "admin: Squads 5-of-13, 9 can vote of 13 plain keys; delay: 24 h Squads time lock",
+   "exposure": {
+    "keys_to_move": 5,
+    "react_hours": 24,
+    "tvl_usd": 316737656.13934636,
+    "money_per_key_usd": 63347531.22786927,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  }
+ ],
+ "acknowledged_disagreements": [
+  {
+   "chain": "robinhood",
+   "target": "0x5c98b2d892b37c9a1d3b69472bddc172a64cdc09",
+   "adminKeyScore": 5,
+   "path": "EIP-1967 admin -> ProxyAdmin owner()",
+   "holder": "0x9db4…1a53",
+   "impl": "0x950f3bae94ff783f044f64dca9b2a1b2d781ea72",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "threshold": 3,
+   "owners": 7,
+   "keys_to_act": 3,
+   "keys_lost_to_freeze": 5,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 0,
+   "since": "2026-10-10T06:54:09Z",
+   "disagree": "the score says one key does everything (5), the live read finds a Safe 3-of-7 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisig (0), the live read finds a Safe 3-of-7 via EIP-1967 admin -> ProxyAdmin owner()",
+   "owners_kinds": {
+    "eoa": 7
+   },
+   "timelockScore": 0,
+   "acknowledged": "test: the scorer weighs the protocol admin role, not the ProxyAdmin; reviewed 2026-10-10 (scratch test only)",
+   "posture": "admin: Safe 3-of-7 of 7 plain keys; delay: none",
+   "shares_admin_with": [
+    {
+     "chain": "robinhood",
+     "target": "0xd01c774d4a66408326bc65728ac5ae5aaf004032"
+    }
+   ],
+   "cluster_tvl_usd": 0.0,
+   "exposure": {
+    "keys_to_move": 3,
+    "react_hours": 0,
+    "tvl_usd": null,
+    "money_per_key_usd": null,
+    "money_source": null,
+    "held_symbol": null,
+    "held_amount": null
+   }
+  }
+ ],
+ "changed": [],
+ "upgrades": [],
+ "previous_utc": null,
+ "results": [
+  {
+   "chain": "arbitrum",
+   "target": "0x3c3d99fd298f679dbc2cecd132b4ec4d0f5e6e72",
+   "adminKeyScore": 10,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 513439582,
+   "block_end": 513439609,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "arbitrum",
+   "target": "0x1a3c9b1d2f0529d97f2afc5136cc23e58f1fd35b",
+   "adminKeyScore": 50,
+   "path": "owner()",
+   "holder": "0xba6a…155d",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 513439582,
+   "block_end": 513439609,
+   "self_delay_seconds": null,
+   "threshold": 2,
+   "owners": 3,
+   "keys_to_act": 2,
+   "keys_lost_to_freeze": 2,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 35,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 3
+   },
+   "timelockScore": 0,
+   "posture": "admin: Safe 2-of-3 of 3 plain keys; delay: none",
+   "exposure": {
+    "keys_to_move": 2,
+    "react_hours": 0,
+    "tvl_usd": 4626105.862942336,
+    "money_per_key_usd": 2313052.931471168,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "arbitrum",
+   "target": "0xe23b4ae3624fb6f7cdef29bc8ead912f1ede6886",
+   "adminKeyScore": 65,
+   "path": null,
+   "holder": null,
+   "impl": "0x36fd2506dd9666a2a659c9061952e548cd8a8e75",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 513439582,
+   "block_end": 513439609,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "arbitrum",
+   "target": "0x423552c0f05baccac5bfa91c6dcf1dc53a0a1641",
+   "adminKeyScore": 55,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 513439582,
+   "block_end": 513439609,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "arbitrum",
+   "target": "0xa97684ead0e402dc232d5a977953df7ecbab3cdb",
+   "adminKeyScore": 65,
+   "path": "owner() -> owner() of the holder (contract)",
+   "holder": "0xff1137243698caa18ee364cc966cf0e02a4e6327",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 513439582,
+   "block_end": 513439609,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 50,
+   "behind": {
+    "address": "0x89644ca1bb8064760312ae4f03ea41b05da3637c",
+    "kind": "contract",
+    "via": "owner() of the holder"
+   },
+   "posture": "admin: a contract the reader cannot classify; delay: unknown",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 0,
+    "tvl_usd": 508274602.97333163,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "arbitrum",
+   "target": "0x9c4ec768c28520b50860ea7a15bd7213a9ff58bf",
+   "adminKeyScore": 75,
+   "path": "EIP-1967 admin -> ProxyAdmin owner()",
+   "holder": "0x3fb4d38ea7ec20d91917c09591490eeda38cf88a",
+   "impl": "0x5d3dfd6b0c855dcfe2cb768bb0800d16553c758b",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 513439582,
+   "block_end": 513439609,
+   "self_delay_seconds": null,
+   "delay_seconds": 86400,
+   "timelock_family": "compound",
+   "kind": "timelock",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 60,
+   "posture": "admin: a timelock; delay: 24 h on the timelock",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 24,
+    "tvl_usd": 69659175.1567238,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "arbitrum",
+   "target": "0x888888888889758f76e7103c6cbf23abbf58f946",
+   "adminKeyScore": 65,
+   "path": "owner()",
+   "holder": "0x7877…75ac",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 513439582,
+   "block_end": 513439609,
+   "self_delay_seconds": null,
+   "threshold": 3,
+   "owners": 5,
+   "keys_to_act": 3,
+   "keys_lost_to_freeze": 3,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 55,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 5
+   },
+   "timelockScore": 0,
+   "posture": "admin: Safe 3-of-5 of 5 plain keys; delay: none",
+   "shares_admin_with": [
+    {
+     "chain": "plasma",
+     "target": "0x888888888889758f76e7103c6cbf23abbf58f946"
+    },
+    {
+     "chain": "robinhood",
+     "target": "0x544bf81c855ae84c1e8b65d5e38770898d01eee2"
+    }
+   ],
+   "cluster_tvl_usd": 216361384.71584174,
+   "exposure": {
+    "keys_to_move": 3,
+    "react_hours": 0,
+    "tvl_usd": 172305158.02689683,
+    "money_per_key_usd": 57435052.675632276,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "arbitrum",
+   "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
+   "adminKeyScore": 65,
+   "path": "EIP-1967 admin",
+   "holder": "0x4d6ce4f4498d59eed397bcbc687805a07f9b2346",
+   "impl": "0xa57d7cef617271f4cea4f665d33ebcfcba4929f6",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 513439582,
+   "block_end": 513439609,
+   "self_delay_seconds": null,
+   "delay_seconds": 86400,
+   "kind": "timelock",
+   "multisigScore": 55,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 55,
+   "posture": "admin: a timelock; delay: 24 h on the timelock",
+   "shares_admin_with": [
+    {
+     "chain": "plasma",
+     "target": "0x52aa899454998be5b000ad077a46bbe360f4e497"
+    }
+   ],
+   "cluster_tvl_usd": 180421689.6662953,
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 24,
+    "tvl_usd": 140045697.4872506,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "arbitrum",
+   "target": "0x1f98431c8ad98523631ae4a59f267346ea31f984",
+   "adminKeyScore": 80,
+   "path": "owner() -> owner() of the holder (timelock 172800s)",
+   "holder": "0xff7ad5da31fecdc678796c88b05926db896b0699",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 513439582,
+   "block_end": 513439609,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 75,
+   "behind": {
+    "address": "0x1a9c…35bc",
+    "kind": "timelock",
+    "via": "owner() of the holder, an Arbitrum L1 alias read on Ethereum L1",
+    "alias_of": "0x1a9c…35bc",
+    "delay_seconds": 172800,
+    "timelock_family": "compound"
+   },
+   "posture": "admin: a timelock behind a bare contract; delay: 48 h on the timelock",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 48,
+    "tvl_usd": 136916157.5526805,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "arbitrum",
+   "target": "0x489ee077994b6658eafa855c308275ead8097c4a",
+   "adminKeyScore": 55,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 513439582,
+   "block_end": 513439609,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "arbitrum",
+   "target": "0x6bd780e7fdf01d77e4d475c821f1e7ae05409072",
+   "adminKeyScore": 50,
+   "path": "owner()",
+   "holder": "0xc2b66e247dae5ee749ae1d827190115f3653de06",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 513439582,
+   "block_end": 513439609,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 35,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 30,
+   "posture": "admin: a contract the reader cannot classify; delay: unknown",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 0,
+    "tvl_usd": null,
+    "money_per_key_usd": null,
+    "money_source": null,
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "arbitrum",
+   "target": "0xffa10065ce1d1c42fabc46e06b84ed8ffeb4bae5",
+   "adminKeyScore": 20,
+   "path": "owner()",
+   "holder": "0x5f0bc72fb5952b2f3f2e11404398ed507b25841f",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 513439582,
+   "block_end": 513439609,
+   "self_delay_seconds": null,
+   "threshold": 3,
+   "owners": 3,
+   "keys_to_act": 3,
+   "keys_lost_to_freeze": 1,
+   "modules": [
+    "0x02878d80732759531bcf8b9ce8197eaec58ef1ce"
+   ],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 0,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 3
+   },
+   "timelockScore": 0,
+   "disagree": "the multisig score says no real multisig (0), the live read finds a Safe 3-of-3 via owner()",
+   "modules_detail": [
+    {
+     "address": "0x02878d80732759531bcf8b9ce8197eaec58ef1ce",
+     "kind": "zodiac-delay",
+     "owner": "0x5f0bc72fb5952b2f3f2e11404398ed507b25841f",
+     "owner_kind": "contract",
+     "owner_is_the_safe": true,
+     "cooldown_seconds": 604800
+    }
+   ],
+   "posture": "admin: Safe 3-of-3 of 3 plain keys (+1 module); delay: 168 h Zodiac delay (for module-routed calls)",
+   "exposure": {
+    "keys_to_move": 3,
+    "react_hours": 0,
+    "tvl_usd": null,
+    "money_per_key_usd": null,
+    "money_source": null,
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "arbitrum",
+   "target": "0xff162c694eaa571f685030649814282ea457f169",
+   "adminKeyScore": 10,
+   "path": "EIP-1967 admin -> ProxyAdmin owner()",
+   "holder": "0x5f5e4892bab94d94dc57a3edea3c138167c4df0f",
+   "impl": "0xff84c4a0d639d598af2088e2ffb76cdbdf1de0ed",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 513439582,
+   "block_end": 513439609,
+   "self_delay_seconds": null,
+   "delay_seconds": 1209600,
+   "kind": "timelock",
+   "multisigScore": 0,
+   "since": "2026-10-10T06:54:09Z",
+   "disagree": "the score says one key does everything (10), the live read finds a timelock (1209600s) via EIP-1967 admin -> ProxyAdmin owner(); the timelock score says no delay (0), the live read finds a timelock of 336 h in the admin path via EIP-1967 admin -> ProxyAdmin owner()",
+   "timelockScore": 0,
+   "posture": "admin: a timelock; delay: 336 h on the timelock",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 336,
+    "tvl_usd": null,
+    "money_per_key_usd": null,
+    "money_source": null,
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "base",
+   "target": "0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",
+   "adminKeyScore": 65,
+   "path": "owner()",
+   "holder": "0xcba2…9afa",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 52412956,
+   "block_end": 52412963,
+   "self_delay_seconds": null,
+   "threshold": 5,
+   "owners": 9,
+   "keys_to_act": 5,
+   "keys_lost_to_freeze": 5,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 95,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 9
+   },
+   "timelockScore": 0,
+   "posture": "admin: Safe 5-of-9 of 9 plain keys; delay: none",
+   "shares_admin_with": [
+    {
+     "chain": "ethereum-l1",
+     "target": "0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb"
+    }
+   ],
+   "cluster_tvl_usd": 9522608293.473885,
+   "exposure": {
+    "keys_to_move": 5,
+    "react_hours": 0,
+    "tvl_usd": 4399416599.553589,
+    "money_per_key_usd": 879883319.9107177,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "base",
+   "target": "0xe20fcbdbffc4dd138ce8b2e6fbb6cb49777ad64d",
+   "adminKeyScore": 65,
+   "path": "owner() -> owner() of the holder (contract)",
+   "holder": "0x9390b1735def18560c509e2d0bc090e9d6ba257a",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 52412956,
+   "block_end": 52412963,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 50,
+   "behind": {
+    "address": "0x2dc219e716793fb4b21548c0f009ba3af753ab01",
+    "kind": "contract",
+    "via": "owner() of the holder"
+   },
+   "posture": "admin: a contract the reader cannot classify; delay: unknown",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 0,
+    "tvl_usd": 543913883.2362092,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "base",
+   "target": "0x420dd381b31aef6683db6b902084cb0ffece40da",
+   "adminKeyScore": 65,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 52412956,
+   "block_end": 52412963,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "base",
+   "target": "0x33128a8fc17869897dce68ed026d694621f6fdfd",
+   "adminKeyScore": 80,
+   "path": "owner() -> owner() of the holder (contract)",
+   "holder": "0xabea76658b205696d49b5f91b2a03536cb8a3be1",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 52412956,
+   "block_end": 52412963,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 75,
+   "behind": {
+    "address": "0x31fafd4889fa1269f7a13a66ee0fb458f27d72a9",
+    "kind": "contract",
+    "via": "owner() of the holder"
+   },
+   "posture": "admin: a contract the reader cannot classify; delay: unknown",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 0,
+    "tvl_usd": 314988861.8990017,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "base",
+   "target": "0xb125e6687d4313864e53df431d5425969c15eb2f",
+   "adminKeyScore": 75,
+   "path": "EIP-1967 admin -> ProxyAdmin owner()",
+   "holder": "0xcc3e7c85bb0ee4f09380e041fee95a0caedd4a02",
+   "impl": "0xc1455ae6df6cd808ed677f048e434e22892682a7",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 52412956,
+   "block_end": 52412963,
+   "self_delay_seconds": null,
+   "delay_seconds": 86400,
+   "timelock_family": "compound",
+   "kind": "timelock",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 60,
+   "posture": "admin: a timelock; delay: 24 h on the timelock",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 24,
+    "tvl_usd": 26623012.34650224,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "base",
+   "target": "0x5e7bb104d84c7cb9b682aac2f3d509f5f406809a",
+   "adminKeyScore": 65,
+   "path": "owner()",
+   "holder": "0xe6a4…2075",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 52412956,
+   "block_end": 52412963,
+   "self_delay_seconds": null,
+   "threshold": 3,
+   "owners": 7,
+   "keys_to_act": 3,
+   "keys_lost_to_freeze": 5,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 65,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 7
+   },
+   "timelockScore": 0,
+   "posture": "admin: Safe 3-of-7 of 7 plain keys; delay: none",
+   "exposure": {
+    "keys_to_move": 3,
+    "react_hours": 0,
+    "tvl_usd": 208640868.6766242,
+    "money_per_key_usd": 69546956.2255414,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "base",
+   "target": "0x8909dc15e40173ff4699343b6eb8132c65e18ec6",
+   "adminKeyScore": 80,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 52412956,
+   "block_end": 52412963,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "base",
+   "target": "0x498581ff718922c3f8e6a244956af099b2652b2b",
+   "adminKeyScore": 80,
+   "path": "owner()",
+   "holder": "0x31fafd4889fa1269f7a13a66ee0fb458f27d72a9",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 52412956,
+   "block_end": 52412963,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 75,
+   "posture": "admin: a contract the reader cannot classify; delay: unknown",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 0,
+    "tvl_usd": 68135150.95580825,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "base",
+   "target": "0xfbb21d0380bee3312b33c4353c8936a0f13ef26c",
+   "adminKeyScore": 65,
+   "path": "admin() -> owner() of the holder (safe 3-of-5)",
+   "holder": "0x8b621804a7637b781e2bbd58e256a591f2df7d51",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 52412956,
+   "block_end": 52412963,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 50,
+   "behind": {
+    "address": "0x446342af4f3bcd374276891c6bb3411bf2f8779e",
+    "kind": "safe",
+    "via": "owner() of the holder",
+    "threshold": 3,
+    "owners": 5
+   },
+   "posture": "admin: Safe 3-of-5 behind a bare contract; delay: none",
+   "exposure": {
+    "keys_to_move": 3,
+    "react_hours": 0,
+    "tvl_usd": 10920543.567218622,
+    "money_per_key_usd": 3640181.189072874,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "base",
+   "target": "0xee8f4ec5672f09119b96ab6fb59c27e1b7e44b61",
+   "adminKeyScore": 60,
+   "path": "owner()",
+   "holder": "0x5a4e19842e09000a582c20a4f524c26fb48dd4d0",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 52412956,
+   "block_end": 52412963,
+   "self_delay_seconds": 604800,
+   "threshold": 4,
+   "owners": 6,
+   "keys_to_act": 4,
+   "keys_lost_to_freeze": 3,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 65,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 6
+   },
+   "timelockScore": 55,
+   "posture": "admin: Safe 4-of-6 of 6 plain keys; delay: 168 h the contract enforces itself",
+   "shares_admin_with": [
+    {
+     "chain": "tempo",
+     "target": "0xc609656ed9ef219c98c8e549bf729144f211f06e"
+    }
+   ],
+   "cluster_tvl_usd": 283453.02741217864,
+   "exposure": {
+    "keys_to_move": 4,
+    "react_hours": 168,
+    "tvl_usd": 414406759.0768239,
+    "money_per_key_usd": 103601689.76920597,
+    "money_source": "contract",
+    "held_symbol": "USDC",
+    "held_amount": 414534105.32378
+   }
+  },
+  {
+   "chain": "base",
+   "target": "0x7bfa7c4f149e7415b73bdedfe609237e29cbf34a",
+   "adminKeyScore": 60,
+   "path": "owner()",
+   "holder": "0xf93b7122450a50af3e5a76e1d546e95ac1d0f579",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 52412956,
+   "block_end": 52412963,
+   "self_delay_seconds": 864000,
+   "delay_seconds": 0,
+   "timelock_family": "compound",
+   "kind": "timelock",
+   "multisigScore": 55,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 75,
+   "posture": "admin: a timelock; delay: 240 h the contract enforces itself",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 240,
+    "tvl_usd": 387256311.09064734,
+    "money_per_key_usd": null,
+    "money_source": "contract",
+    "held_symbol": "USDC",
+    "held_amount": 387375314.067185
+   }
+  },
+  {
+   "chain": "base",
+   "target": "0xbeef010f9cb27031ad51e3333f9af9c6b1228183",
+   "adminKeyScore": 70,
+   "path": "owner()",
+   "holder": "0x0a0e…f8dd",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 52412956,
+   "block_end": 52412963,
+   "self_delay_seconds": 604800,
+   "threshold": 5,
+   "owners": 10,
+   "keys_to_act": 5,
+   "keys_lost_to_freeze": 6,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 50,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 10
+   },
+   "timelockScore": 75,
+   "posture": "admin: Safe 5-of-10 of 10 plain keys; delay: 168 h the contract enforces itself",
+   "shares_admin_with": [
+    {
+     "chain": "base",
+     "target": "0xbeef2d50b428675a1921bc6bbf4bfb9d8cf1461a"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0xbeef047a543e45807105e51a8bbefcc5950fcfba"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0xbeef01735c132ada46aa9aa4c54623caa92a64cb"
+    },
+    {
+     "chain": "monad",
+     "target": "0x32841a8511d5c2c5b253f45668780b99139e476d"
+    }
+   ],
+   "cluster_tvl_usd": 31786538.348157506,
+   "exposure": {
+    "keys_to_move": 5,
+    "react_hours": 168,
+    "tvl_usd": 121565480.46271636,
+    "money_per_key_usd": 24313096.09254327,
+    "money_source": "contract",
+    "held_symbol": "USDC",
+    "held_amount": 121602837.25615
+   }
+  },
+  {
+   "chain": "base",
+   "target": "0xbeef2d50b428675a1921bc6bbf4bfb9d8cf1461a",
+   "adminKeyScore": 70,
+   "path": "owner()",
+   "holder": "0x0a0e…f8dd",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 52412956,
+   "block_end": 52412963,
+   "self_delay_seconds": 1209600,
+   "threshold": 5,
+   "owners": 10,
+   "keys_to_act": 5,
+   "keys_lost_to_freeze": 6,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 50,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 10
+   },
+   "timelockScore": 75,
+   "posture": "admin: Safe 5-of-10 of 10 plain keys; delay: 336 h the contract enforces itself",
+   "shares_admin_with": [
+    {
+     "chain": "base",
+     "target": "0xbeef010f9cb27031ad51e3333f9af9c6b1228183"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0xbeef047a543e45807105e51a8bbefcc5950fcfba"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0xbeef01735c132ada46aa9aa4c54623caa92a64cb"
+    },
+    {
+     "chain": "monad",
+     "target": "0x32841a8511d5c2c5b253f45668780b99139e476d"
+    }
+   ],
+   "cluster_tvl_usd": 31786538.348157506,
+   "exposure": {
+    "keys_to_move": 5,
+    "react_hours": 336,
+    "tvl_usd": 103405013.65634353,
+    "money_per_key_usd": 20681002.731268708,
+    "money_source": "contract",
+    "held_symbol": "USDC",
+    "held_amount": 103436789.779964
+   }
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0x1f98431c8ad98523631ae4a59f267346ea31f984",
+   "adminKeyScore": 80,
+   "path": "owner() -> owner() of the holder (timelock 172800s)",
+   "holder": "0xf2371551fe3937db7c750f4dfabe5c2fffdcbf5a",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 26160368,
+   "block_end": 26160369,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 75,
+   "behind": {
+    "address": "0x1a9c…35bc",
+    "kind": "timelock",
+    "via": "owner() of the holder",
+    "delay_seconds": 172800,
+    "timelock_family": "compound"
+   },
+   "posture": "admin: a timelock behind a bare contract; delay: 48 h on the timelock",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 48,
+    "tvl_usd": 901693885.9952646,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0x2f39d218133afab8f2b819b1066c7e434ad94e9e",
+   "adminKeyScore": 78,
+   "path": "owner() -> owner() of the holder (contract)",
+   "holder": "0x5300a1a15135ea4dc7ad5a167152c01efc9b192a",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 26160368,
+   "block_end": 26160369,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 55,
+   "behind": {
+    "address": "0xdabad81af85554e9ae636395611c58f7ec1aaec5",
+    "kind": "contract",
+    "via": "owner() of the holder"
+   },
+   "posture": "admin: a contract the reader cannot classify; delay: unknown",
+   "shares_admin_with": [
+    {
+     "chain": "ethereum-l1",
+     "target": "0x5d39e06b825c1f2b80bf2756a73e28efaa128ba0"
+    }
+   ],
+   "cluster_tvl_usd": 14527493326.489475,
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 0,
+    "tvl_usd": 14527493326.489475,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0xbe286431454714f511008713973d3b053a2d38f3",
+   "adminKeyScore": 75,
+   "path": "authority() (AccessManaged: the AccessManager holds every role)",
+   "holder": "0x929d9a1435662357f54adcf64dcee4d6b867a6f9",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 26160368,
+   "block_end": 26160369,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 70,
+   "posture": "admin: a contract the reader cannot classify; delay: unknown",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 0,
+    "tvl_usd": 5905627762.173788,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0x2cc440b721d2cafd6d64908d6d8c4acc57f8afc3",
+   "adminKeyScore": 55,
+   "path": "owner()",
+   "holder": "0x3b0a…1862",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 26160368,
+   "block_end": 26160369,
+   "self_delay_seconds": null,
+   "threshold": 5,
+   "owners": 10,
+   "keys_to_act": 5,
+   "keys_lost_to_freeze": 6,
+   "modules": [],
+   "guard": "0x74abe7805541c28f31953b3cda9711dc96278d29",
+   "kind": "safe",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 10
+   },
+   "timelockScore": 0,
+   "guard_detail": {
+    "address": "0x74abe7805541c28f31953b3cda9711dc96278d29",
+    "kind": "contract",
+    "owner": "0xa07591b02fbd07d03df21ed9a574f058bf45c344",
+    "owner_kind": "contract",
+    "owner_is_the_safe": false
+   },
+   "posture": "admin: Safe 5-of-10 of 10 plain keys; delay: none",
+   "tvl_scope": "retired",
+   "exposure": {
+    "keys_to_move": 5,
+    "react_hours": 0,
+    "tvl_usd": null,
+    "money_per_key_usd": null,
+    "money_source": null,
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0xc139190f447e929f090edeb554d95abb8b18ac1c",
+   "adminKeyScore": 5,
+   "path": "EIP-1967 admin -> ProxyAdmin owner()",
+   "holder": "0xd938\u20263956",
+   "impl": "0x9d6d77a21702b9afcf924983fbfb84aaaae79589",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 26160368,
+   "block_end": 26160369,
+   "self_delay_seconds": null,
+   "holder_tx_count": 13,
+   "kind": "eoa",
+   "multisigScore": 0,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 0,
+   "posture": "admin: a plain key, 13 transactions sent; delay: none",
+   "exposure": {
+    "keys_to_move": 1,
+    "react_hours": 0,
+    "tvl_usd": 454291777.3843866,
+    "money_per_key_usd": 454291777.3843866,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0x73e35c5c35a274e34ade6eb13cc7f62aee323728",
+   "adminKeyScore": 65,
+   "path": "owner()",
+   "holder": "0xe8dc0fab349ea169283c48ccfd09d797e6db7c94",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 26160368,
+   "block_end": 26160369,
+   "self_delay_seconds": null,
+   "delay_seconds": 86400,
+   "kind": "timelock",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 55,
+   "posture": "admin: a timelock; delay: 24 h on the timelock",
+   "shares_admin_with": [
+    {
+     "chain": "ethereum-l1",
+     "target": "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0x211cc4dd073734da055fbf44a2b4667d5e5fe5d2"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0x58538e6a46e07434d7e7375bc268d3cb839c0133"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0xe3490297a08d6fc8da46edb7b6142e4f461b62d3"
+    }
+   ],
+   "cluster_tvl_usd": 5315321780.169261,
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 24,
+    "tvl_usd": 454291777.3843866,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34",
+   "adminKeyScore": 55,
+   "path": "owner()",
+   "holder": "0xe8dc0fab349ea169283c48ccfd09d797e6db7c94",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 26160368,
+   "block_end": 26160369,
+   "self_delay_seconds": null,
+   "delay_seconds": 86400,
+   "kind": "timelock",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 15,
+   "posture": "admin: a timelock; delay: 24 h on the timelock",
+   "shares_admin_with": [
+    {
+     "chain": "ethereum-l1",
+     "target": "0x73e35c5c35a274e34ade6eb13cc7f62aee323728"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0x211cc4dd073734da055fbf44a2b4667d5e5fe5d2"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0x58538e6a46e07434d7e7375bc268d3cb839c0133"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0xe3490297a08d6fc8da46edb7b6142e4f461b62d3"
+    }
+   ],
+   "cluster_tvl_usd": 5315321780.169261,
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 24,
+    "tvl_usd": 4861030002.784874,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0x211cc4dd073734da055fbf44a2b4667d5e5fe5d2",
+   "adminKeyScore": 55,
+   "path": "owner()",
+   "holder": "0xe8dc0fab349ea169283c48ccfd09d797e6db7c94",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 26160368,
+   "block_end": 26160369,
+   "self_delay_seconds": null,
+   "delay_seconds": 86400,
+   "kind": "timelock",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 15,
+   "posture": "admin: a timelock; delay: 24 h on the timelock",
+   "shares_admin_with": [
+    {
+     "chain": "ethereum-l1",
+     "target": "0x73e35c5c35a274e34ade6eb13cc7f62aee323728"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0x58538e6a46e07434d7e7375bc268d3cb839c0133"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0xe3490297a08d6fc8da46edb7b6142e4f461b62d3"
+    }
+   ],
+   "cluster_tvl_usd": 5315321780.169261,
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 24,
+    "tvl_usd": 4861030002.784874,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0x58538e6a46e07434d7e7375bc268d3cb839c0133",
+   "adminKeyScore": 55,
+   "path": "owner()",
+   "holder": "0xe8dc0fab349ea169283c48ccfd09d797e6db7c94",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 26160368,
+   "block_end": 26160369,
+   "self_delay_seconds": null,
+   "delay_seconds": 86400,
+   "kind": "timelock",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 15,
+   "posture": "admin: a timelock; delay: 24 h on the timelock",
+   "shares_admin_with": [
+    {
+     "chain": "ethereum-l1",
+     "target": "0x73e35c5c35a274e34ade6eb13cc7f62aee323728"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0x211cc4dd073734da055fbf44a2b4667d5e5fe5d2"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0xe3490297a08d6fc8da46edb7b6142e4f461b62d3"
+    }
+   ],
+   "cluster_tvl_usd": 5315321780.169261,
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 24,
+    "tvl_usd": 4861030002.784874,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0xc3d688b66703497daa19211eedff47f25384cdc3",
+   "adminKeyScore": 78,
+   "path": "EIP-1967 admin -> ProxyAdmin owner()",
+   "holder": "0x6d90…3925",
+   "impl": "0x63e749153baf1838f63ca22c275370bd2b1ceb15",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 26160368,
+   "block_end": 26160369,
+   "self_delay_seconds": null,
+   "delay_seconds": 172800,
+   "timelock_family": "compound",
+   "kind": "timelock",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 60,
+   "posture": "admin: a timelock; delay: 48 h on the timelock",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 48,
+    "tvl_usd": 1330883818.6065557,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0x02c3ea4e34c0cbd694d2adfa2c690eecbc1793ee",
+   "adminKeyScore": 75,
+   "path": "owner()",
+   "holder": "0x3300f198988e4c9c63f75df86de36421f06af8c4",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 26160368,
+   "block_end": 26160369,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 60,
+   "posture": "admin: a contract the reader cannot classify; delay: unknown",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 0,
+    "tvl_usd": 5325886738.411645,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0x000000000004444c5dc75cb358380d2e3de08a90",
+   "adminKeyScore": 80,
+   "path": "owner()",
+   "holder": "0x1a9c…35bc",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 26160368,
+   "block_end": 26160369,
+   "self_delay_seconds": null,
+   "delay_seconds": 172800,
+   "timelock_family": "compound",
+   "kind": "timelock",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 75,
+   "posture": "admin: a timelock; delay: 48 h on the timelock",
+   "shares_admin_with": [
+    {
+     "chain": "robinhood",
+     "target": "0x8366a39cc670b4001a1121b8f6a443a643e40951"
+    },
+    {
+     "chain": "robinhood",
+     "target": "0x000000007a1c8e570011eedf86a2a35593013cba"
+    }
+   ],
+   "cluster_tvl_usd": 801346683.2752833,
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 48,
+    "tvl_usd": 745714321.7780795,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",
+   "adminKeyScore": 65,
+   "path": "owner()",
+   "holder": "0xcba2…9afa",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 26160368,
+   "block_end": 26160369,
+   "self_delay_seconds": null,
+   "threshold": 6,
+   "owners": 10,
+   "keys_to_act": 6,
+   "keys_lost_to_freeze": 5,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "safe": 1,
+    "eoa": 9
+   },
+   "timelockScore": 0,
+   "posture": "admin: Safe 6-of-10 of 9 plain keys, 1 Safe; delay: none",
+   "shares_admin_with": [
+    {
+     "chain": "base",
+     "target": "0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb"
+    }
+   ],
+   "cluster_tvl_usd": 9522608293.473885,
+   "exposure": {
+    "keys_to_move": 6,
+    "react_hours": 0,
+    "tvl_usd": 5123191693.920297,
+    "money_per_key_usd": 853865282.3200494,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+   "adminKeyScore": 55,
+   "path": "owner() -> owner() of the holder (contract)",
+   "holder": "0xca06411bd7a7296d7dbdd0050dfc846e95febeb7",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 26160368,
+   "block_end": 26160369,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 0,
+   "behind": {
+    "address": "0x972eed35781f09987a5c40f761f6a24623c570de",
+    "kind": "contract",
+    "via": "owner() of the holder"
+   },
+   "posture": "admin: a contract the reader cannot classify; delay: unknown",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 0,
+    "tvl_usd": 9628410725.873941,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0xe3490297a08d6fc8da46edb7b6142e4f461b62d3",
+   "adminKeyScore": 65,
+   "path": "owner()",
+   "holder": "0xe8dc0fab349ea169283c48ccfd09d797e6db7c94",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 26160368,
+   "block_end": 26160369,
+   "self_delay_seconds": null,
+   "delay_seconds": 86400,
+   "kind": "timelock",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 55,
+   "posture": "admin: a timelock; delay: 24 h on the timelock",
+   "shares_admin_with": [
+    {
+     "chain": "ethereum-l1",
+     "target": "0x73e35c5c35a274e34ade6eb13cc7f62aee323728"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0x211cc4dd073734da055fbf44a2b4667d5e5fe5d2"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0x58538e6a46e07434d7e7375bc268d3cb839c0133"
+    }
+   ],
+   "cluster_tvl_usd": 5315321780.169261,
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 24,
+    "tvl_usd": 4861030002.784874,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0xae7ab96520de3a18e5e111b5eaab095312d7fe84",
+   "adminKeyScore": 80,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 26160368,
+   "block_end": 26160369,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0x858646372cc42e1a627fce94aa7a7033e7cf075a",
+   "adminKeyScore": 60,
+   "path": "EIP-1967 admin -> ProxyAdmin owner()",
+   "holder": "0x369e…9111",
+   "impl": "0xa7536c85898dc424c6bfe8592f983661f830656a",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 26160368,
+   "block_end": 26160369,
+   "self_delay_seconds": null,
+   "threshold": 1,
+   "owners": 2,
+   "keys_to_act": 1,
+   "keys_lost_to_freeze": 2,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "timelock": 1,
+    "safe": 1
+   },
+   "owners_detail": [
+    {
+     "owner": "0xc06f\u2026aa2d",
+     "kind": "timelock"
+    },
+    {
+     "owner": "0xfea4\u2026c598",
+     "kind": "safe 9-of-13"
+    }
+   ],
+   "nested": true,
+   "timelockScore": 20,
+   "posture": "admin: Safe 1-of-2 of 1 timelock, 1 Safe; delay: a timelock among the signers",
+   "exposure": {
+    "keys_to_move": 9,
+    "react_hours": 0,
+    "tvl_usd": 6598251298.687186,
+    "money_per_key_usd": 733139033.1874652,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0x6a8cbed756804b16e05e741edabd5cb544ae21bf",
+   "adminKeyScore": 78,
+   "path": "admin()",
+   "holder": "0x40907540d8a6c65c637785e8f8b742ae6b0b9968",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 26160368,
+   "block_end": 26160369,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 65,
+   "posture": "admin: a contract the reader cannot classify; delay: unknown",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 0,
+    "tvl_usd": 1184637501.302352,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0x1d8f8f00cfa6758d7be78336684788fb0ee0fa46",
+   "adminKeyScore": 55,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 26160368,
+   "block_end": 26160369,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0x5d39e06b825c1f2b80bf2756a73e28efaa128ba0",
+   "adminKeyScore": 65,
+   "path": "owner() -> owner() of the holder (contract)",
+   "holder": "0x5300a1a15135ea4dc7ad5a167152c01efc9b192a",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 26160368,
+   "block_end": 26160369,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 70,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 0,
+   "behind": {
+    "address": "0xdabad81af85554e9ae636395611c58f7ec1aaec5",
+    "kind": "contract",
+    "via": "owner() of the holder"
+   },
+   "posture": "admin: a contract the reader cannot classify; delay: unknown",
+   "shares_admin_with": [
+    {
+     "chain": "ethereum-l1",
+     "target": "0x2f39d218133afab8f2b819b1066c7e434ad94e9e"
+    }
+   ],
+   "cluster_tvl_usd": 14527493326.489475,
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 0,
+    "tvl_usd": null,
+    "money_per_key_usd": null,
+    "money_source": null,
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0xf403c135812408bfbe8713b5a23a04b3d48aae31",
+   "adminKeyScore": 65,
+   "path": "owner() -> owner() of the holder (contract)",
+   "holder": "0x3ce6408f923326f81a7d7929952947748180f1e6",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 26160368,
+   "block_end": 26160369,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 55,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 0,
+   "behind": {
+    "address": "0x256e1bba846611c37cf89844a02435e6c098b86d",
+    "kind": "contract",
+    "via": "owner() of the holder"
+   },
+   "posture": "admin: a contract the reader cannot classify; delay: unknown",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 0,
+    "tvl_usd": 583011818.6076348,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0x55555815a5595991c3a0ff119b59aef6c8b55555",
+   "adminKeyScore": 5,
+   "path": "owner()",
+   "holder": "0xf630\u2026a997",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 26160368,
+   "block_end": 26160369,
+   "self_delay_seconds": 1209600,
+   "delegated_to": "0x63c0c19a282a1b52b07dd5a65b58948a07dae32b",
+   "holder_tx_count": 67,
+   "kind": "eoa",
+   "multisigScore": 0,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 0,
+   "disagree": "the timelock score says no delay (0), the contract enforces its own timelock of 336 h (timelock())",
+   "posture": "admin: a plain key (EIP-7702: its account runs the code of 0x63c0\u2026e32b), 67 transactions sent; delay: 336 h the contract enforces itself",
+   "exposure": {
+    "keys_to_move": 1,
+    "react_hours": 336,
+    "tvl_usd": 493429538.31719345,
+    "money_per_key_usd": 493429538.31719345,
+    "money_source": "contract",
+    "held_symbol": "USDC",
+    "held_amount": 493580924.995143
+   }
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0x94643e86aa5e38ddac6c7791c1297f4e40cd96c1",
+   "adminKeyScore": 5,
+   "path": "owner()",
+   "holder": "0x1467\u20265250",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 26160368,
+   "block_end": 26160369,
+   "self_delay_seconds": 0,
+   "holder_tx_count": 422,
+   "kind": "eoa",
+   "multisigScore": 0,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 0,
+   "posture": "admin: a plain key, 422 transactions sent; delay: none",
+   "exposure": {
+    "keys_to_move": 1,
+    "react_hours": 0,
+    "tvl_usd": 263051847.09091836,
+    "money_per_key_usd": 263051847.09091836,
+    "money_source": "contract",
+    "held_symbol": "USDC",
+    "held_amount": 263132552.72803
+   }
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0xbeef047a543e45807105e51a8bbefcc5950fcfba",
+   "adminKeyScore": 70,
+   "path": "owner()",
+   "holder": "0x0a0e…f8dd",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 26160368,
+   "block_end": 26160369,
+   "self_delay_seconds": 604800,
+   "threshold": 5,
+   "owners": 10,
+   "keys_to_act": 5,
+   "keys_lost_to_freeze": 6,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 55,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 10
+   },
+   "timelockScore": 75,
+   "posture": "admin: Safe 5-of-10 of 10 plain keys; delay: 168 h the contract enforces itself",
+   "shares_admin_with": [
+    {
+     "chain": "base",
+     "target": "0xbeef010f9cb27031ad51e3333f9af9c6b1228183"
+    },
+    {
+     "chain": "base",
+     "target": "0xbeef2d50b428675a1921bc6bbf4bfb9d8cf1461a"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0xbeef01735c132ada46aa9aa4c54623caa92a64cb"
+    },
+    {
+     "chain": "monad",
+     "target": "0x32841a8511d5c2c5b253f45668780b99139e476d"
+    }
+   ],
+   "cluster_tvl_usd": 31786538.348157506,
+   "exposure": {
+    "keys_to_move": 5,
+    "react_hours": 168,
+    "tvl_usd": 81847596.65679477,
+    "money_per_key_usd": 16369519.331358954,
+    "money_source": "contract",
+    "held_symbol": "USDT",
+    "held_amount": 81910884.700587
+   }
+  },
+  {
+   "chain": "ethereum-l1",
+   "target": "0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+   "adminKeyScore": 70,
+   "path": "owner()",
+   "holder": "0x0a0e…f8dd",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 26160368,
+   "block_end": 26160369,
+   "self_delay_seconds": 604800,
+   "threshold": 5,
+   "owners": 10,
+   "keys_to_act": 5,
+   "keys_lost_to_freeze": 6,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 55,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 10
+   },
+   "timelockScore": 75,
+   "posture": "admin: Safe 5-of-10 of 10 plain keys; delay: 168 h the contract enforces itself",
+   "shares_admin_with": [
+    {
+     "chain": "base",
+     "target": "0xbeef010f9cb27031ad51e3333f9af9c6b1228183"
+    },
+    {
+     "chain": "base",
+     "target": "0xbeef2d50b428675a1921bc6bbf4bfb9d8cf1461a"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0xbeef047a543e45807105e51a8bbefcc5950fcfba"
+    },
+    {
+     "chain": "monad",
+     "target": "0x32841a8511d5c2c5b253f45668780b99139e476d"
+    }
+   ],
+   "cluster_tvl_usd": 31786538.348157506,
+   "exposure": {
+    "keys_to_move": 5,
+    "react_hours": 168,
+    "tvl_usd": 65078101.15555223,
+    "money_per_key_usd": 13015620.231110446,
+    "money_source": "contract",
+    "held_symbol": "USDC",
+    "held_amount": 65098067.446129
+   }
+  },
+  {
+   "chain": "hyperliquid",
+   "target": "0xea394cd63ca3a5c8a130bb2b955cc71c22e5ea6c",
+   "adminKeyScore": 15,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 48148010,
+   "block_end": 48148034,
+   "self_delay_seconds": null,
+   "kind": "native",
+   "why": "no code at this address on the chain's mainnet: a derived identifier for a native (non-EVM) entity such as HyperCore, or a contract that lives on another chain (a rollup's own L1 contracts); nothing for this reader to compare here"
+  },
+  {
+   "chain": "hyperliquid",
+   "target": "0x88806a71d74ad0a510b350545c9ae490912f0888",
+   "adminKeyScore": 10,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 48148010,
+   "block_end": 48148034,
+   "self_delay_seconds": null,
+   "kind": "native",
+   "why": "no code at this address on the chain's mainnet: a derived identifier for a native (non-EVM) entity such as HyperCore, or a contract that lives on another chain (a rollup's own L1 contracts); nothing for this reader to compare here"
+  },
+  {
+   "chain": "hyperliquid",
+   "target": "0x320c8988e3d1b5198f335802d7bfd2728a8fcac6",
+   "adminKeyScore": 50,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 48148010,
+   "block_end": 48148034,
+   "self_delay_seconds": null,
+   "kind": "native",
+   "why": "no code at this address on the chain's mainnet: a derived identifier for a native (non-EVM) entity such as HyperCore, or a contract that lives on another chain (a rollup's own L1 contracts); nothing for this reader to compare here"
+  },
+  {
+   "chain": "hyperliquid",
+   "target": "0x30e96fbd515243d47703e78581b88cba60f51360",
+   "adminKeyScore": 5,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 48148010,
+   "block_end": 48148034,
+   "self_delay_seconds": null,
+   "kind": "native",
+   "why": "no code at this address on the chain's mainnet: a derived identifier for a native (non-EVM) entity such as HyperCore, or a contract that lives on another chain (a rollup's own L1 contracts); nothing for this reader to compare here"
+  },
+  {
+   "chain": "hyperliquid",
+   "target": "0xbf6d3bbce71dbce6f4121bfe2e2cad8c77bbc1fc",
+   "adminKeyScore": 10,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 48148010,
+   "block_end": 48148034,
+   "self_delay_seconds": null,
+   "kind": "native",
+   "why": "no code at this address on the chain's mainnet: a derived identifier for a native (non-EVM) entity such as HyperCore, or a contract that lives on another chain (a rollup's own L1 contracts); nothing for this reader to compare here"
+  },
+  {
+   "chain": "hyperliquid",
+   "target": "0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec",
+   "adminKeyScore": 10,
+   "path": "EIP-1967 admin -> ProxyAdmin owner()",
+   "holder": "0x18a8…f8f1",
+   "impl": "0x26264514cd6018d6f944eb30b782aee2794b70b8",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 48148010,
+   "block_end": 48148034,
+   "self_delay_seconds": null,
+   "threshold": 4,
+   "owners": 8,
+   "keys_to_act": 4,
+   "keys_lost_to_freeze": 5,
+   "modules": null,
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 0,
+   "since": "2026-10-10T06:54:09Z",
+   "disagree": "the score says one key does everything (10), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisig (0), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner()",
+   "owners_kinds": {
+    "unread": 2,
+    "eoa": 6
+   },
+   "timelockScore": 0,
+   "posture": "admin: Safe 4-of-8 of 6 plain keys, 2 not read; delay: none",
+   "exposure": {
+    "keys_to_move": 4,
+    "react_hours": 0,
+    "tvl_usd": 44662549.54908916,
+    "money_per_key_usd": 11165637.38727229,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "hyperliquid",
+   "target": "0x8888888c43cbb7e1c4132542e46831bffd866ed3",
+   "adminKeyScore": 10,
+   "path": null,
+   "holder": null,
+   "impl": "0x00000006711dce34e37ec3e1b18f21a3d5399fbe",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 48148010,
+   "block_end": 48148034,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "hyperliquid",
+   "target": "0x8888888192a4a0593c13532ba48449fc24c3beda",
+   "adminKeyScore": 50,
+   "path": null,
+   "holder": null,
+   "impl": "0x000000046a8b917b5a62b446ac208f78412192d1",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 48148010,
+   "block_end": 48148034,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "hyperliquid",
+   "target": "0x393d0b87ed38fc779fd9611144ae649ba6082109",
+   "adminKeyScore": 10,
+   "path": "EIP-1967 admin -> ProxyAdmin owner()",
+   "holder": "0x18a8…f8f1",
+   "impl": "0x23fda3b9f944dbeaf2dcd5e7b9f8207b102c933f",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 48148010,
+   "block_end": 48148034,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "holder probes not all answered (RPC)"
+  },
+  {
+   "chain": "hyperliquid",
+   "target": "0xdfc24b077bc1425ad1dea75bcb6f8158e10df303",
+   "adminKeyScore": 10,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 48148010,
+   "block_end": 48148034,
+   "self_delay_seconds": null,
+   "kind": "native",
+   "why": "no code at this address on the chain's mainnet: a derived identifier for a native (non-EVM) entity such as HyperCore, or a contract that lives on another chain (a rollup's own L1 contracts); nothing for this reader to compare here"
+  },
+  {
+   "chain": "hyperliquid",
+   "target": "0x574bafce69d9411f662a433896e74e4f153096fa",
+   "adminKeyScore": 10,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 48148010,
+   "block_end": 48148034,
+   "self_delay_seconds": null,
+   "kind": "native",
+   "why": "no code at this address on the chain's mainnet: a derived identifier for a native (non-EVM) entity such as HyperCore, or a contract that lives on another chain (a rollup's own L1 contracts); nothing for this reader to compare here"
+  },
+  {
+   "chain": "hyperliquid",
+   "target": "0x8dafbe89302656a7df43c470e9ebcb4c540835c0",
+   "adminKeyScore": 10,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 48148010,
+   "block_end": 48148034,
+   "self_delay_seconds": null,
+   "kind": "native",
+   "why": "no code at this address on the chain's mainnet: a derived identifier for a native (non-EVM) entity such as HyperCore, or a contract that lives on another chain (a rollup's own L1 contracts); nothing for this reader to compare here"
+  },
+  {
+   "chain": "hyperliquid",
+   "target": "0xa822a9ceb6d6cb5b565bd10098abcfa9cf18d748",
+   "adminKeyScore": 10,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 48148010,
+   "block_end": 48148034,
+   "self_delay_seconds": null,
+   "kind": "native",
+   "why": "no code at this address on the chain's mainnet: a derived identifier for a native (non-EVM) entity such as HyperCore, or a contract that lives on another chain (a rollup's own L1 contracts); nothing for this reader to compare here"
+  },
+  {
+   "chain": "hyperliquid",
+   "target": "0x2df1c51e09aecf9cacb7bc98cb1742757f163df7",
+   "adminKeyScore": 65,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 48148010,
+   "block_end": 48148034,
+   "self_delay_seconds": null,
+   "kind": "native",
+   "why": "no code at this address on the chain's mainnet: a derived identifier for a native (non-EVM) entity such as HyperCore, or a contract that lives on another chain (a rollup's own L1 contracts); nothing for this reader to compare here"
+  },
+  {
+   "chain": "hyperliquid",
+   "target": "0x72c98246a98bfe64022a3190e7710e157497170c",
+   "adminKeyScore": 65,
+   "path": "owner() -> owner() of the holder (timelock 604800s)",
+   "holder": "0x0a0d1d19107d2658b127c872fbeb97f5f9bd5d42",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 48148010,
+   "block_end": 48148034,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 80,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 35,
+   "behind": {
+    "address": "0xaaaaaaaaa810bed1eda93a18fec940857ed17879",
+    "kind": "timelock",
+    "via": "owner() of the holder",
+    "delay_seconds": 604800
+   },
+   "posture": "admin: a timelock behind a bare contract; delay: 168 h on the timelock",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 168,
+    "tvl_usd": 368633329.47877383,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "monad",
+   "target": "0xd691b0afed67f96cec28ab6308cbe5b2c103b7e9",
+   "adminKeyScore": 55,
+   "path": null,
+   "holder": null,
+   "impl": "0x7d9a6b4c454ee07561f75fac019c026c7c4db55e",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 112116269,
+   "block_end": 112116285,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "AccessControl (ERC-165) whose admin-role holders are not enumerable on-chain: read them from RoleGranted events; nothing for this reader to compare",
+   "access_control": true
+  },
+  {
+   "chain": "monad",
+   "target": "0x188d586ddcf52439676ca21a244753fa19f9ea8e",
+   "adminKeyScore": 80,
+   "path": "owner()",
+   "holder": "0xe783de89a7f0408687f051e3e6d0beb62719ebad",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 112116269,
+   "block_end": 112116285,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 60,
+   "posture": "admin: a contract the reader cannot classify; delay: unknown",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 0,
+    "tvl_usd": 30794475.12113799,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "monad",
+   "target": "0x36878c6fca7e0e8a88f90dc410cfbbca5b695c95",
+   "adminKeyScore": 75,
+   "path": "owner()",
+   "holder": "0x574b7864119c9223a9870ea614dc91a8ee09e512",
+   "impl": "0xe9eddb05ccb50c3d7935e82709623d2209350221",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 112116269,
+   "block_end": 112116285,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 0,
+   "posture": "admin: a contract the reader cannot classify; delay: unknown",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 0,
+    "tvl_usd": 1006283144.3064514,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "monad",
+   "target": "0xd651346d7c789536ebf06dc72ae3c8502cd695cc",
+   "adminKeyScore": 65,
+   "path": "owner()",
+   "holder": "0x8b73…788b",
+   "impl": "0xf1635175914acf4db170395d524323225e1f1a04",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 112116269,
+   "block_end": 112116285,
+   "self_delay_seconds": null,
+   "threshold": 3,
+   "owners": 5,
+   "keys_to_act": 3,
+   "keys_lost_to_freeze": 3,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 55,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 5
+   },
+   "timelockScore": 0,
+   "posture": "admin: Safe 3-of-5 of 5 plain keys; delay: none",
+   "exposure": {
+    "keys_to_move": 3,
+    "react_hours": 0,
+    "tvl_usd": 1011046.4315350172,
+    "money_per_key_usd": 337015.4771783391,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "monad",
+   "target": "0x32841a8511d5c2c5b253f45668780b99139e476d",
+   "adminKeyScore": 70,
+   "path": "owner()",
+   "holder": "0x0a0e…f8dd",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 112116269,
+   "block_end": 112116285,
+   "self_delay_seconds": 1209600,
+   "threshold": 5,
+   "owners": 10,
+   "keys_to_act": 5,
+   "keys_lost_to_freeze": 6,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 55,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 10
+   },
+   "timelockScore": 55,
+   "posture": "admin: Safe 5-of-10 of 10 plain keys; delay: 336 h the contract enforces itself",
+   "shares_admin_with": [
+    {
+     "chain": "base",
+     "target": "0xbeef010f9cb27031ad51e3333f9af9c6b1228183"
+    },
+    {
+     "chain": "base",
+     "target": "0xbeef2d50b428675a1921bc6bbf4bfb9d8cf1461a"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0xbeef047a543e45807105e51a8bbefcc5950fcfba"
+    },
+    {
+     "chain": "ethereum-l1",
+     "target": "0xbeef01735c132ada46aa9aa4c54623caa92a64cb"
+    }
+   ],
+   "cluster_tvl_usd": 31786538.348157506,
+   "exposure": {
+    "keys_to_move": 5,
+    "react_hours": 336,
+    "tvl_usd": 106073.96474862937,
+    "money_per_key_usd": 21214.792949725874,
+    "money_source": "contract",
+    "held_symbol": "AUSD",
+    "held_amount": 106173.492816
+   }
+  },
+  {
+   "chain": "monad",
+   "target": "0x8271e06e5887fe5ba05234f5315c19f3ec90e8ad",
+   "adminKeyScore": 10,
+   "path": "admin()",
+   "holder": "0xabc3\u20261cbf",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 112116269,
+   "block_end": 112116285,
+   "self_delay_seconds": null,
+   "holder_tx_count": 2,
+   "kind": "eoa",
+   "multisigScore": 0,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 0,
+   "posture": "admin: a plain key, 2 transactions sent; delay: none",
+   "shares_admin_with": [
+    {
+     "chain": "robinhood",
+     "target": "0x8271e06e5887fe5ba05234f5315c19f3ec90e8ad"
+    }
+   ],
+   "cluster_tvl_usd": 9581461.829283785,
+   "exposure": {
+    "keys_to_move": 1,
+    "react_hours": 0,
+    "tvl_usd": 8960906.013602952,
+    "money_per_key_usd": 8960906.013602952,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "monad",
+   "target": "0xad663ac84052b52be4ed1b27ba416505e84a00bf",
+   "adminKeyScore": 60,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 112116269,
+   "block_end": 112116285,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "monad",
+   "target": "0x34793fb9935f7bb5e5ae920fb963f39063e7a615",
+   "adminKeyScore": 65,
+   "path": "owner() -> owner() of the holder (contract)",
+   "holder": "0xa9d0eaff48ce1df468f9eaeb7e628c413343f6a2",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 112116269,
+   "block_end": 112116285,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 75,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 0,
+   "behind": {
+    "address": "0x442ca936e5e6db875357d0a16481145c96dd9a82",
+    "kind": "contract",
+    "via": "owner() of the holder"
+   },
+   "posture": "admin: a contract the reader cannot classify; delay: unknown",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 0,
+    "tvl_usd": 348198608.8489564,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "monad",
+   "target": "0xba4dd672062de8feedb665dd4410658864483f1e",
+   "adminKeyScore": 55,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 112116269,
+   "block_end": 112116285,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "plasma",
+   "target": "0x6c50b8ca8eeaa1c75dee5b5ea79772acabc92f48",
+   "adminKeyScore": 50,
+   "path": "owner()",
+   "holder": "0xca6f…8f53",
+   "impl": "0xf70191daf77f1072a90466d7539d8c63f8b2bfcc",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 34674025,
+   "block_end": 34674035,
+   "self_delay_seconds": null,
+   "threshold": 3,
+   "owners": 4,
+   "keys_to_act": 3,
+   "keys_lost_to_freeze": 2,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 50,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 4
+   },
+   "timelockScore": 0,
+   "posture": "admin: Safe 3-of-4 of 4 plain keys; delay: none",
+   "exposure": {
+    "keys_to_move": 3,
+    "react_hours": 0,
+    "tvl_usd": 489058298.34472257,
+    "money_per_key_usd": 163019432.7815742,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "plasma",
+   "target": "0x061d8e131f26512348ee5fa42e2df1ba9d6505e9",
+   "adminKeyScore": 65,
+   "path": "owner() -> owner() of the holder (contract)",
+   "holder": "0x47aadaae1f05c978e6abb7568d11b7f6e0fc4d6a",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 34674025,
+   "block_end": 34674035,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 50,
+   "behind": {
+    "address": "0xe76eb348e65ef163d85ce282125ff5a7f5712a1d",
+    "kind": "contract",
+    "via": "owner() of the holder"
+   },
+   "posture": "admin: a contract the reader cannot classify; delay: unknown",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 0,
+    "tvl_usd": 417200170.18612754,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "plasma",
+   "target": "0x888888888889758f76e7103c6cbf23abbf58f946",
+   "adminKeyScore": 65,
+   "path": "owner()",
+   "holder": "0x7877…75ac",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 34674025,
+   "block_end": 34674035,
+   "self_delay_seconds": null,
+   "threshold": 3,
+   "owners": 5,
+   "keys_to_act": 3,
+   "keys_lost_to_freeze": 3,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 55,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 5
+   },
+   "timelockScore": 0,
+   "posture": "admin: Safe 3-of-5 of 5 plain keys; delay: none",
+   "shares_admin_with": [
+    {
+     "chain": "arbitrum",
+     "target": "0x888888888889758f76e7103c6cbf23abbf58f946"
+    },
+    {
+     "chain": "robinhood",
+     "target": "0x544bf81c855ae84c1e8b65d5e38770898d01eee2"
+    }
+   ],
+   "cluster_tvl_usd": 216361384.71584174,
+   "exposure": {
+    "keys_to_move": 3,
+    "react_hours": 0,
+    "tvl_usd": 43281001.88855038,
+    "money_per_key_usd": 14427000.629516793,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "plasma",
+   "target": "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34",
+   "adminKeyScore": 55,
+   "path": "owner()",
+   "holder": "0xabd3645ba0bb60c238bede64378826e1206f5072",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 34674025,
+   "block_end": 34674035,
+   "self_delay_seconds": null,
+   "delay_seconds": 86400,
+   "kind": "timelock",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 0,
+   "disagree": "the timelock score says no delay (0), the live read finds a timelock of 24 h in the admin path via owner()",
+   "posture": "admin: a timelock; delay: 24 h on the timelock",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 24,
+    "tvl_usd": 4861030002.784874,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "plasma",
+   "target": "0x42388213c6f56d7e1477632b58ae6bba9adeeea3",
+   "adminKeyScore": 70,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 34674025,
+   "block_end": 34674035,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "plasma",
+   "target": "0x9b3ceb22cab2f1b9ace4cd3132c8a123552eda2c",
+   "adminKeyScore": 68,
+   "path": "DEFAULT_ADMIN_ROLE member 1 of 1 (AccessControl)",
+   "holder": "0x61d942d4809482e6f761a326471053b343ee1921",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 34674025,
+   "block_end": 34674035,
+   "self_delay_seconds": null,
+   "delay_seconds": 172800,
+   "kind": "timelock",
+   "multisigScore": 80,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 55,
+   "posture": "admin: a timelock; delay: 48 h on the timelock",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 48,
+    "tvl_usd": 1977940.8398170492,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "plasma",
+   "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
+   "adminKeyScore": 65,
+   "path": "EIP-1967 admin",
+   "holder": "0x4d6ce4f4498d59eed397bcbc687805a07f9b2346",
+   "impl": "0x3605004f3f40e7147300574e786206de8b342796",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 34674025,
+   "block_end": 34674035,
+   "self_delay_seconds": null,
+   "delay_seconds": 86400,
+   "kind": "timelock",
+   "multisigScore": 55,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 55,
+   "posture": "admin: a timelock; delay: 24 h on the timelock",
+   "shares_admin_with": [
+    {
+     "chain": "arbitrum",
+     "target": "0x52aa899454998be5b000ad077a46bbe360f4e497"
+    }
+   ],
+   "cluster_tvl_usd": 180421689.6662953,
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 24,
+    "tvl_usd": 40375992.17904468,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "plasma",
+   "target": "0xa9c251f8304b1b3fc2b9e8fcae78d94eff82ac66",
+   "adminKeyScore": 40,
+   "path": "owner()",
+   "holder": "0x7d07…dcd8",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 34674025,
+   "block_end": 34674035,
+   "self_delay_seconds": 86400,
+   "threshold": 2,
+   "owners": 5,
+   "keys_to_act": 2,
+   "keys_lost_to_freeze": 4,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 45,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 5
+   },
+   "timelockScore": 0,
+   "disagree": "the timelock score says no delay (0), the contract enforces its own timelock of 24 h (timelock())",
+   "posture": "admin: Safe 2-of-5 of 5 plain keys; delay: 24 h the contract enforces itself",
+   "exposure": {
+    "keys_to_move": 2,
+    "react_hours": 24,
+    "tvl_usd": 99921189.82746753,
+    "money_per_key_usd": 49960594.913733765,
+    "money_source": "contract",
+    "held_symbol": "USDT0",
+    "held_amount": 100003407.267344
+   }
+  },
+  {
+   "chain": "plasma",
+   "target": "0x6695c0f8706c5ace3bdf8995073179cca47926dc",
+   "adminKeyScore": 65,
+   "path": "EIP-1967 admin -> ProxyAdmin owner()",
+   "holder": "0x2130457539612ae9838e0314cda1a8abbdb7cfbc",
+   "impl": "0x8e02392855a51d9d5d18d71a7cfc731f56c68ea5",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 34674025,
+   "block_end": 34674035,
+   "self_delay_seconds": null,
+   "delay_seconds": 172800,
+   "kind": "timelock",
+   "multisigScore": 55,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 0,
+   "disagree": "the timelock score says no delay (0), the live read finds a timelock of 48 h in the admin path via EIP-1967 admin -> ProxyAdmin owner()",
+   "posture": "admin: a timelock; delay: 48 h on the timelock",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 48,
+    "tvl_usd": 59253706.62985022,
+    "money_per_key_usd": null,
+    "money_source": "contract",
+    "held_symbol": "USDT0",
+    "held_amount": 59302461.934613
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0xbeeff033f34c046626b8d0a041844c5d1a5409dd",
+   "adminKeyScore": 10,
+   "path": "owner() -> owner() of the holder (eoa)",
+   "holder": "0xca50d23f1c18c1dfaff5d3cae3aa4b9dc5c8db73",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 35,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 15,
+   "behind": {
+    "address": "0x337f\u20267660",
+    "kind": "eoa",
+    "via": "owner() of the holder"
+   },
+   "posture": "admin: a plain key behind a bare contract; delay: none",
+   "exposure": {
+    "keys_to_move": 1,
+    "react_hours": 0,
+    "tvl_usd": 540275108.2419157,
+    "money_per_key_usd": 540275108.2419157,
+    "money_source": "contract",
+    "held_symbol": "USDG",
+    "held_amount": 540355865.260718
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x1f7d7550b1b028f7571e69a784071f0205fd2efa",
+   "adminKeyScore": 80,
+   "path": "owner() -> owner() of the holder (timelock 172800s)",
+   "holder": "0x05c420bc4823e039aa4da645edde743486daaa25",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 75,
+   "behind": {
+    "address": "0x1a9c…35bc",
+    "kind": "timelock",
+    "via": "owner() of the holder, an Arbitrum L1 alias read on Ethereum L1",
+    "alias_of": "0x1a9c…35bc",
+    "delay_seconds": 172800,
+    "timelock_family": "compound"
+   },
+   "posture": "admin: a timelock behind a bare contract; delay: 48 h on the timelock",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 48,
+    "tvl_usd": 55632361.49720381,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x8366a39cc670b4001a1121b8f6a443a643e40951",
+   "adminKeyScore": 80,
+   "path": "owner() (Arbitrum L1 alias of 0x1a9c…35bc on Ethereum L1)",
+   "holder": "0x1a9c…35bc",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "holder_tx_count": 3,
+   "alias_of": "0x1a9c…35bc",
+   "delay_seconds": 172800,
+   "timelock_family": "compound",
+   "kind": "timelock",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 75,
+   "posture": "admin: a timelock; delay: 48 h on the timelock",
+   "shares_admin_with": [
+    {
+     "chain": "ethereum-l1",
+     "target": "0x000000000004444c5dc75cb358380d2e3de08a90"
+    },
+    {
+     "chain": "robinhood",
+     "target": "0x000000007a1c8e570011eedf86a2a35593013cba"
+    }
+   ],
+   "cluster_tvl_usd": 801346683.2752833,
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 48,
+    "tvl_usd": 55632361.49720381,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x94bab9693ba2f6358507effcbd372b0660afff9d",
+   "adminKeyScore": 75,
+   "path": "EIP-1967 admin",
+   "holder": "0x43cff77cd060a155dce5deb12b93b875f69f2716",
+   "impl": "0x998ecf039eb110b72f5f6c1ea31c2fa41a458faa",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 65,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 15,
+   "posture": "admin: a contract the reader cannot classify; delay: unknown",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 0,
+    "tvl_usd": 114093072.77540241,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x000000007a1c8e570011eedf86a2a35593013cba",
+   "adminKeyScore": 80,
+   "path": "owner() (Arbitrum L1 alias of 0x1a9c…35bc on Ethereum L1)",
+   "holder": "0x1a9c…35bc",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "holder_tx_count": 3,
+   "alias_of": "0x1a9c…35bc",
+   "delay_seconds": 172800,
+   "timelock_family": "compound",
+   "kind": "timelock",
+   "multisigScore": 100,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 75,
+   "posture": "admin: a timelock; delay: 48 h on the timelock",
+   "shares_admin_with": [
+    {
+     "chain": "ethereum-l1",
+     "target": "0x000000000004444c5dc75cb358380d2e3de08a90"
+    },
+    {
+     "chain": "robinhood",
+     "target": "0x8366a39cc670b4001a1121b8f6a443a643e40951"
+    }
+   ],
+   "cluster_tvl_usd": 801346683.2752833,
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 48,
+    "tvl_usd": 55632361.49720381,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0xde770c84fe66e063336b31737cfe9790f18c4087",
+   "adminKeyScore": 50,
+   "path": "DEFAULT_ADMIN_ROLE member 1 of 1 (AccessControl)",
+   "holder": "0x826aeaeee9233fa8ba199518dd8621a5962b1d02",
+   "impl": "0x797c58c9779d46a437d8f57908d6d56371a55f02",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "delay_seconds": 0,
+   "timelock_family": "compound",
+   "kind": "timelock",
+   "multisigScore": 30,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 10,
+   "posture": "admin: a timelock; delay: none",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 0,
+    "tvl_usd": 10236835.348382654,
+    "money_per_key_usd": null,
+    "money_source": "contract",
+    "held_symbol": "USDG",
+    "held_amount": 10238365.487921
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x544bf81c855ae84c1e8b65d5e38770898d01eee2",
+   "adminKeyScore": 70,
+   "path": "EIP-1967 admin -> ProxyAdmin owner()",
+   "holder": "0x7877…75ac",
+   "impl": "0xb8b037cec8603a384da270a73715cd903f7e8ac8",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "threshold": 3,
+   "owners": 5,
+   "keys_to_act": 3,
+   "keys_lost_to_freeze": 3,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 45,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 5
+   },
+   "timelockScore": 0,
+   "posture": "admin: Safe 3-of-5 of 5 plain keys; delay: none",
+   "shares_admin_with": [
+    {
+     "chain": "arbitrum",
+     "target": "0x888888888889758f76e7103c6cbf23abbf58f946"
+    },
+    {
+     "chain": "plasma",
+     "target": "0x888888888889758f76e7103c6cbf23abbf58f946"
+    }
+   ],
+   "cluster_tvl_usd": 216361384.71584174,
+   "exposure": {
+    "keys_to_move": 3,
+    "react_hours": 0,
+    "tvl_usd": 775224.8003945384,
+    "money_per_key_usd": 258408.26679817948,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x8271e06e5887fe5ba05234f5315c19f3ec90e8ad",
+   "adminKeyScore": 2,
+   "path": "admin()",
+   "holder": "0xabc3\u20261cbf",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "holder_tx_count": 1,
+   "kind": "eoa",
+   "multisigScore": 0,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 0,
+   "posture": "admin: a plain key, 1 transactions sent; delay: none",
+   "shares_admin_with": [
+    {
+     "chain": "monad",
+     "target": "0x8271e06e5887fe5ba05234f5315c19f3ec90e8ad"
+    }
+   ],
+   "cluster_tvl_usd": 9581461.829283785,
+   "exposure": {
+    "keys_to_move": 1,
+    "react_hours": 0,
+    "tvl_usd": 620555.8156808342,
+    "money_per_key_usd": 620555.8156808342,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x00000000000014aa86c5d3c41765bb24e11bd701",
+   "adminKeyScore": 100,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x8bceaa40b9acdfaedf85adf4ff01f5ad6517937f",
+   "adminKeyScore": 80,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x9c3663fa9ab976e67b42939486ec4966cb41a0bb",
+   "adminKeyScore": 65,
+   "path": "DEFAULT_ADMIN_ROLE member 1 of 1 (AccessControl)",
+   "holder": "0x81b8…41bd",
+   "impl": "0x58bdc1d3068a0a79d7a662dee033d62cbd4f589f",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "threshold": 2,
+   "owners": 3,
+   "keys_to_act": 2,
+   "keys_lost_to_freeze": 2,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 55,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "safe": 1,
+    "eoa": 2
+   },
+   "timelockScore": 0,
+   "posture": "admin: Safe 2-of-3 of 2 plain keys, 1 Safe; delay: none",
+   "exposure": {
+    "keys_to_move": 2,
+    "react_hours": 0,
+    "tvl_usd": 763151.1046639857,
+    "money_per_key_usd": 381575.55233199283,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x925f92f055edb79c42b5d45e64a1b74143b90ea0",
+   "adminKeyScore": 65,
+   "path": null,
+   "holder": null,
+   "impl": "0x1815a37b6027ae8066720d873a508f25fc151ac5",
+   "impl_via": "beacon implementation()",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x4472c69d299382f8847ebce4fc6ed8e295510e3e",
+   "adminKeyScore": 65,
+   "path": null,
+   "holder": null,
+   "impl": "0x1815a37b6027ae8066720d873a508f25fc151ac5",
+   "impl_via": "beacon implementation()",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x322f0929c4625ed5bad873c95208d54e1c003b2d",
+   "adminKeyScore": 3,
+   "path": null,
+   "holder": null,
+   "impl": "0xb35490d6f9163de4f80d88dc75c3516eb64c5ae2",
+   "impl_via": "beacon implementation()",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x12f190a9f9d7d37a250758b26824b97ce941bf54",
+   "adminKeyScore": 3,
+   "path": null,
+   "holder": null,
+   "impl": "0xb35490d6f9163de4f80d88dc75c3516eb64c5ae2",
+   "impl_via": "beacon implementation()",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x894e1ec2d74ffe5aef8dc8a9e84686accb964f2a",
+   "adminKeyScore": 3,
+   "path": null,
+   "holder": null,
+   "impl": "0xb35490d6f9163de4f80d88dc75c3516eb64c5ae2",
+   "impl_via": "beacon implementation()",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "robinhood",
+   "target": "0xe0444ef8bf4ed74f74fd73686e2ddf4c1c5591e8",
+   "adminKeyScore": 3,
+   "path": null,
+   "holder": null,
+   "impl": "0xb35490d6f9163de4f80d88dc75c3516eb64c5ae2",
+   "impl_via": "beacon implementation()",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x86923f96303d656e4aa86d9d42d1e57ad2023fdc",
+   "adminKeyScore": 3,
+   "path": null,
+   "holder": null,
+   "impl": "0xb35490d6f9163de4f80d88dc75c3516eb64c5ae2",
+   "impl_via": "beacon implementation()",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x99347d5f70d3838763f6bddcf80304c8aa953b57",
+   "adminKeyScore": 36,
+   "path": "owner()",
+   "holder": "0x3bb7…5f42",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "threshold": 1,
+   "owners": 1,
+   "keys_to_act": 1,
+   "keys_lost_to_freeze": 1,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 16,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 1
+   },
+   "owners_detail": [
+    {
+     "owner": "0xe7e8\u202696f6",
+     "kind": "eoa"
+    }
+   ],
+   "timelockScore": 10,
+   "posture": "admin: Safe 1-of-1 of 1 plain key; delay: none",
+   "exposure": {
+    "keys_to_move": 1,
+    "react_hours": 0,
+    "tvl_usd": 1330537.4627777669,
+    "money_per_key_usd": 1330537.4627777669,
+    "money_source": "contract",
+    "held_symbol": "USDG",
+    "held_amount": 1330736.34338
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x37788ff0c1d4e45a7fe06bc7e71e0cc00121d0a8",
+   "adminKeyScore": 48,
+   "path": "owner()",
+   "holder": "0x82b4…98a4",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "threshold": 3,
+   "owners": 5,
+   "keys_to_act": 3,
+   "keys_lost_to_freeze": 3,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 48,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 5
+   },
+   "timelockScore": 10,
+   "posture": "admin: Safe 3-of-5 of 5 plain keys; delay: none",
+   "exposure": {
+    "keys_to_move": 3,
+    "react_hours": 0,
+    "tvl_usd": 62352.20506473938,
+    "money_per_key_usd": 20784.068354913124,
+    "money_source": "contract",
+    "held_symbol": "USDG",
+    "held_amount": 62361.525091
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0xbeeff0fb1dc19344a87b8479dab60a2e16160737",
+   "adminKeyScore": 60,
+   "path": "owner() -> owner() of the holder (safe 5-of-10)",
+   "holder": "0x261a3b7a37904b45e57ae14206314ccf4bbcf2b1",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 64,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 10,
+   "behind": {
+    "address": "0xd062…5ef4",
+    "kind": "safe",
+    "via": "owner() of the holder",
+    "threshold": 5,
+    "owners": 10
+   },
+   "posture": "admin: Safe 5-of-10 behind a bare contract; delay: none",
+   "shares_admin_with": [
+    {
+     "chain": "robinhood",
+     "target": "0xbeefff136e3684273e6aa75a1669b784b373a4fd"
+    }
+   ],
+   "cluster_tvl_usd": 538890901.5285404,
+   "exposure": {
+    "keys_to_move": 5,
+    "react_hours": 0,
+    "tvl_usd": 7.397588253752234,
+    "money_per_key_usd": 1.4795176507504468,
+    "money_source": "contract",
+    "held_symbol": "USDG",
+    "held_amount": 7.398694
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x026df18fbd2a7639089d0a16293383ec687a5ca1",
+   "adminKeyScore": 40,
+   "path": "owner()",
+   "holder": "0x396a…3ed4",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "threshold": 2,
+   "owners": 3,
+   "keys_to_act": 2,
+   "keys_lost_to_freeze": 2,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 40,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 3
+   },
+   "timelockScore": 15,
+   "posture": "admin: Safe 2-of-3 of 3 plain keys; delay: none",
+   "shares_admin_with": [
+    {
+     "chain": "robinhood",
+     "target": "0x65dc90cd3a0bcde967c8ae6019d6790b616e78f7"
+    },
+    {
+     "chain": "robinhood",
+     "target": "0xe129d4cb2d454c4acfac909d1576453a9b835f61"
+    }
+   ],
+   "cluster_tvl_usd": 3966603.00383271,
+   "exposure": {
+    "keys_to_move": 2,
+    "react_hours": 0,
+    "tvl_usd": 92007.90958340524,
+    "money_per_key_usd": 46003.95479170262,
+    "money_source": "contract",
+    "held_symbol": "USDG",
+    "held_amount": 92021.662363
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x65dc90cd3a0bcde967c8ae6019d6790b616e78f7",
+   "adminKeyScore": 40,
+   "path": "owner()",
+   "holder": "0x396a…3ed4",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "threshold": 2,
+   "owners": 3,
+   "keys_to_act": 2,
+   "keys_lost_to_freeze": 2,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 40,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 3
+   },
+   "timelockScore": 15,
+   "posture": "admin: Safe 2-of-3 of 3 plain keys; delay: none",
+   "shares_admin_with": [
+    {
+     "chain": "robinhood",
+     "target": "0x026df18fbd2a7639089d0a16293383ec687a5ca1"
+    },
+    {
+     "chain": "robinhood",
+     "target": "0xe129d4cb2d454c4acfac909d1576453a9b835f61"
+    }
+   ],
+   "cluster_tvl_usd": 3966603.00383271,
+   "exposure": {
+    "keys_to_move": 2,
+    "react_hours": 0,
+    "tvl_usd": 63244.823994521095,
+    "money_per_key_usd": 31622.411997260548,
+    "money_source": "contract",
+    "held_symbol": "USDG",
+    "held_amount": 63254.277444
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0xe129d4cb2d454c4acfac909d1576453a9b835f61",
+   "adminKeyScore": 40,
+   "path": "owner()",
+   "holder": "0x396a…3ed4",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "threshold": 2,
+   "owners": 3,
+   "keys_to_act": 2,
+   "keys_lost_to_freeze": 2,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 40,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 3
+   },
+   "timelockScore": 15,
+   "posture": "admin: Safe 2-of-3 of 3 plain keys; delay: none",
+   "shares_admin_with": [
+    {
+     "chain": "robinhood",
+     "target": "0x026df18fbd2a7639089d0a16293383ec687a5ca1"
+    },
+    {
+     "chain": "robinhood",
+     "target": "0x65dc90cd3a0bcde967c8ae6019d6790b616e78f7"
+    }
+   ],
+   "cluster_tvl_usd": 3966603.00383271,
+   "exposure": {
+    "keys_to_move": 2,
+    "react_hours": 0,
+    "tvl_usd": 5559.007382483028,
+    "money_per_key_usd": 2779.503691241514,
+    "money_source": "contract",
+    "held_symbol": "WETH",
+    "held_amount": 2.2344414077057935
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x23a19d23e89166adedbdcb432518ab01e4272d94",
+   "adminKeyScore": 78,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "native",
+   "why": "no code at this address on the chain's mainnet: a derived identifier for a native (non-EVM) entity such as HyperCore, or a contract that lives on another chain (a rollup's own L1 contracts); nothing for this reader to compare here"
+  },
+  {
+   "chain": "robinhood",
+   "target": "0xbd0d173eeb87d57a09521c24388a12789f33ba96",
+   "adminKeyScore": 78,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "native",
+   "why": "no code at this address on the chain's mainnet: a derived identifier for a native (non-EVM) entity such as HyperCore, or a contract that lives on another chain (a rollup's own L1 contracts); nothing for this reader to compare here"
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x1232813bdd40aa9d53066a880de78a4be70b90fd",
+   "adminKeyScore": 78,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "native",
+   "why": "no code at this address on the chain's mainnet: a derived identifier for a native (non-EVM) entity such as HyperCore, or a contract that lives on another chain (a rollup's own L1 contracts); nothing for this reader to compare here"
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x1a07cc4bd17e0118bdb54d70990d2158abad7a2d",
+   "adminKeyScore": 78,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "native",
+   "why": "no code at this address on the chain's mainnet: a derived identifier for a native (non-EVM) entity such as HyperCore, or a contract that lives on another chain (a rollup's own L1 contracts); nothing for this reader to compare here"
+  },
+  {
+   "chain": "robinhood",
+   "target": "0xdf8755334ce7a73ccf6b581c02ea649ae3e864b3",
+   "adminKeyScore": 78,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "native",
+   "why": "no code at this address on the chain's mainnet: a derived identifier for a native (non-EVM) entity such as HyperCore, or a contract that lives on another chain (a rollup's own L1 contracts); nothing for this reader to compare here"
+  },
+  {
+   "chain": "robinhood",
+   "target": "0xf0ce991ea4a0d2400a4ab49b20ae333f6dce3de9",
+   "adminKeyScore": 78,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "native",
+   "why": "no code at this address on the chain's mainnet: a derived identifier for a native (non-EVM) entity such as HyperCore, or a contract that lives on another chain (a rollup's own L1 contracts); nothing for this reader to compare here"
+  },
+  {
+   "chain": "robinhood",
+   "target": "0xe0c4ceb92d08ca985bb70fe0a22feb121a9854a8",
+   "adminKeyScore": 15,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x4b37359bf291abe8453692db58d515a8b013dca9",
+   "adminKeyScore": 15,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x83341f891f898cb5e0cacc8a70501bba83d9cecf",
+   "adminKeyScore": 15,
+   "path": "EIP-1967 admin -> ProxyAdmin owner()",
+   "holder": "0x20d630cf1f5628285bfb91dfac8c89eb9087be1a",
+   "impl": "0xcc61f2a4ecc33e861c0bd4377a929f4ce6876efb",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "threshold": 1,
+   "owners": 2,
+   "keys_to_act": 1,
+   "keys_lost_to_freeze": 2,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 5,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 2
+   },
+   "owners_detail": [
+    {
+     "owner": "0xb3bf\u20261c9b",
+     "kind": "eoa"
+    },
+    {
+     "owner": "0xbe0c\u20263f89",
+     "kind": "eoa"
+    }
+   ],
+   "timelockScore": 0,
+   "posture": "admin: Safe 1-of-2 of 2 plain keys; delay: none",
+   "shares_admin_with": [
+    {
+     "chain": "robinhood",
+     "target": "0xa203a21dccb461e415daa342e8e635b6cee0ccb3"
+    }
+   ],
+   "cluster_tvl_usd": 6595182.217916069,
+   "exposure": {
+    "keys_to_move": 1,
+    "react_hours": 0,
+    "tvl_usd": 6595182.217916069,
+    "money_per_key_usd": 6595182.217916069,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0xa203a21dccb461e415daa342e8e635b6cee0ccb3",
+   "adminKeyScore": 15,
+   "path": "owner()",
+   "holder": "0x20d630cf1f5628285bfb91dfac8c89eb9087be1a",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "threshold": 1,
+   "owners": 2,
+   "keys_to_act": 1,
+   "keys_lost_to_freeze": 2,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 5,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 2
+   },
+   "owners_detail": [
+    {
+     "owner": "0xb3bf\u20261c9b",
+     "kind": "eoa"
+    },
+    {
+     "owner": "0xbe0c\u20263f89",
+     "kind": "eoa"
+    }
+   ],
+   "timelockScore": 0,
+   "posture": "admin: Safe 1-of-2 of 2 plain keys; delay: none",
+   "shares_admin_with": [
+    {
+     "chain": "robinhood",
+     "target": "0x83341f891f898cb5e0cacc8a70501bba83d9cecf"
+    }
+   ],
+   "cluster_tvl_usd": 6595182.217916069,
+   "exposure": {
+    "keys_to_move": 1,
+    "react_hours": 0,
+    "tvl_usd": 6595182.217916069,
+    "money_per_key_usd": 6595182.217916069,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0xee27d5ae494300902d90454e8630a3f1c68c9c52",
+   "adminKeyScore": 65,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x6f475642a6e85809b1c36fa62763669b1b48dd5b",
+   "adminKeyScore": 55,
+   "path": "owner()",
+   "holder": "0xe590…3942",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 85,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 0,
+   "posture": "admin: a contract the reader cannot classify; delay: unknown",
+   "shares_admin_with": [
+    {
+     "chain": "robinhood",
+     "target": "0xc39161c743d0307eb9bcc9fef03eeb9dc4802de7"
+    },
+    {
+     "chain": "robinhood",
+     "target": "0xe1844c5d63a9543023008d332bd3d2e6f1fe1043"
+    }
+   ],
+   "cluster_tvl_usd": 958491.8237152854,
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 0,
+    "tvl_usd": 958491.8237152854,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0xc39161c743d0307eb9bcc9fef03eeb9dc4802de7",
+   "adminKeyScore": 55,
+   "path": "owner()",
+   "holder": "0xe590…3942",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 85,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 0,
+   "posture": "admin: a contract the reader cannot classify; delay: unknown",
+   "shares_admin_with": [
+    {
+     "chain": "robinhood",
+     "target": "0x6f475642a6e85809b1c36fa62763669b1b48dd5b"
+    },
+    {
+     "chain": "robinhood",
+     "target": "0xe1844c5d63a9543023008d332bd3d2e6f1fe1043"
+    }
+   ],
+   "cluster_tvl_usd": 958491.8237152854,
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 0,
+    "tvl_usd": 958491.8237152854,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0xe1844c5d63a9543023008d332bd3d2e6f1fe1043",
+   "adminKeyScore": 55,
+   "path": "owner()",
+   "holder": "0xe590…3942",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 85,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 0,
+   "posture": "admin: a contract the reader cannot classify; delay: unknown",
+   "shares_admin_with": [
+    {
+     "chain": "robinhood",
+     "target": "0x6f475642a6e85809b1c36fa62763669b1b48dd5b"
+    },
+    {
+     "chain": "robinhood",
+     "target": "0xc39161c743d0307eb9bcc9fef03eeb9dc4802de7"
+    }
+   ],
+   "cluster_tvl_usd": 958491.8237152854,
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 0,
+    "tvl_usd": 958491.8237152854,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x0bfbcf9fa4f9c56b0f40a671ad40e0805a091865",
+   "adminKeyScore": 65,
+   "path": "owner() -> owner() of the holder (safe 3-of-6)",
+   "holder": "0x543ada9eaba5d8c2b1097c3540ac970dcdbf1c2a",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 60,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 0,
+   "behind": {
+    "address": "0xfa20…6047",
+    "kind": "safe",
+    "via": "owner() of the holder",
+    "threshold": 3,
+    "owners": 6
+   },
+   "posture": "admin: Safe 3-of-6 behind a bare contract; delay: none",
+   "exposure": {
+    "keys_to_move": 3,
+    "react_hours": 0,
+    "tvl_usd": 2692018.219306945,
+    "money_per_key_usd": 897339.4064356483,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0xe51960f1b45f1c9fb6d166e6a884f866fc70433b",
+   "adminKeyScore": 50,
+   "path": "owner() -> owner() of the holder (safe 2-of-3)",
+   "holder": "0xefbce7a940274e58cbce5ebcd0d11014048f5239",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 35,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 0,
+   "behind": {
+    "address": "0x6fa4…4657",
+    "kind": "safe",
+    "via": "owner() of the holder",
+    "threshold": 2,
+    "owners": 3
+   },
+   "posture": "admin: Safe 2-of-3 behind a bare contract; delay: none",
+   "exposure": {
+    "keys_to_move": 2,
+    "react_hours": 0,
+    "tvl_usd": 4003311.0819547363,
+    "money_per_key_usd": 2001655.5409773681,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x292fc50e4eb66c3f6514b9e402dbc25961824d62",
+   "adminKeyScore": 65,
+   "path": "EIP-1967 admin -> ProxyAdmin owner()",
+   "holder": "0x0605…f53d",
+   "impl": "0xf8504d2ca2f0bbad9d36927e3d32e278abadada0",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "threshold": 3,
+   "owners": 5,
+   "keys_to_act": 3,
+   "keys_lost_to_freeze": 3,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 55,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 5
+   },
+   "timelockScore": 0,
+   "posture": "admin: Safe 3-of-5 of 5 plain keys; delay: none",
+   "exposure": {
+    "keys_to_move": 3,
+    "react_hours": 0,
+    "tvl_usd": 579826.7275971251,
+    "money_per_key_usd": 193275.57586570838,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x0dc846db6a4ec7b5a3e542f7db88049e9add2541",
+   "adminKeyScore": 45,
+   "path": "owner()",
+   "holder": "0x8c45…f5d5",
+   "impl": "0x3e487139b6e5e7b22350b04d01a8157952e6498f",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "threshold": 2,
+   "owners": 3,
+   "keys_to_act": 2,
+   "keys_lost_to_freeze": 2,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 35,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 3
+   },
+   "timelockScore": 0,
+   "posture": "admin: Safe 2-of-3 of 3 plain keys; delay: none",
+   "exposure": {
+    "keys_to_move": 2,
+    "react_hours": 0,
+    "tvl_usd": 15933047.552695952,
+    "money_per_key_usd": 7966523.776347976,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x159a113e012593d9b3cc63ad45e30f0467e13ef3",
+   "adminKeyScore": 5,
+   "path": "authority() (AccessManaged: the AccessManager holds every role)",
+   "holder": "0xa362d98b33a7bb5b5e2180a05f995a70fb404f30",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 0,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 0,
+   "posture": "admin: a contract the reader cannot classify; delay: unknown",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 0,
+    "tvl_usd": 39915231.97087594,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62",
+   "adminKeyScore": 65,
+   "path": "owner()",
+   "holder": "0x03193ef8c3f75c22faf2995540602399cdcd4cbc",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "delay_seconds": 0,
+   "kind": "timelock",
+   "multisigScore": 60,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 20,
+   "posture": "admin: a timelock; delay: none",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 0,
+    "tvl_usd": 2823624.213276485,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x1195c074f898b7644ba732407619c9804dfe6dce",
+   "adminKeyScore": 2,
+   "path": "EIP-1967 admin -> ProxyAdmin owner()",
+   "holder": "0x6ac5\u202625ff",
+   "impl": "0x999a74ddfde1575c4db454a0300d5f0351a891de",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "holder_tx_count": 1326,
+   "kind": "eoa",
+   "multisigScore": 0,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 0,
+   "posture": "admin: a plain key, 1326 transactions sent; delay: none",
+   "exposure": {
+    "keys_to_move": 1,
+    "react_hours": 0,
+    "tvl_usd": 6587790.6277514035,
+    "money_per_key_usd": 6587790.6277514035,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x02a84c1b3bbd7401a5f7fa98a384ebc70bb5749e",
+   "adminKeyScore": 5,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "robinhood",
+   "target": "0xbeeff039907422219fb367e525954ddc092854d9",
+   "adminKeyScore": 60,
+   "path": "owner()",
+   "holder": "0x5ff98717a18833de1a49e11b498866d6fa1c9296",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "delay_seconds": 86400,
+   "timelock_family": "compound",
+   "kind": "timelock",
+   "multisigScore": 56,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 10,
+   "posture": "admin: a timelock; delay: 24 h on the timelock",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 24,
+    "tvl_usd": 99988.2211002481,
+    "money_per_key_usd": null,
+    "money_source": "contract",
+    "held_symbol": "USDG",
+    "held_amount": 100003.166728
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0xbeefff136e3684273e6aa75a1669b784b373a4fd",
+   "adminKeyScore": 60,
+   "path": "owner() -> owner() of the holder (safe 5-of-10)",
+   "holder": "0x261a3b7a37904b45e57ae14206314ccf4bbcf2b1",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "contract",
+   "multisigScore": 64,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 10,
+   "behind": {
+    "address": "0xd062…5ef4",
+    "kind": "safe",
+    "via": "owner() of the holder",
+    "threshold": 5,
+    "owners": 10
+   },
+   "posture": "admin: Safe 5-of-10 behind a bare contract; delay: none",
+   "shares_admin_with": [
+    {
+     "chain": "robinhood",
+     "target": "0xbeeff0fb1dc19344a87b8479dab60a2e16160737"
+    }
+   ],
+   "cluster_tvl_usd": 538890901.5285404,
+   "exposure": {
+    "keys_to_move": 5,
+    "react_hours": 0,
+    "tvl_usd": 50737.62633693166,
+    "money_per_key_usd": 10147.525267386332,
+    "money_source": "contract",
+    "held_symbol": "USDG",
+    "held_amount": 50745.210287
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0xfd2fd4b046136b540a56c11c75ac679ae7d1db24",
+   "adminKeyScore": 50,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "AccessControl (ERC-165) whose admin-role holders are not enumerable on-chain: read them from RoleGranted events; nothing for this reader to compare",
+   "access_control": true
+  },
+  {
+   "chain": "robinhood",
+   "target": "0xd540f47f214dc7d6d244e62a6ae7e06b586ef44a",
+   "adminKeyScore": 2,
+   "path": "owner()",
+   "holder": "0xf8067d8ca90b8510ce8ade1eec24b7260eafa5f7",
+   "impl": "0x0f17d8468c49d6c80e4ee10cc87a767085a4b9a8",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "threshold": 2,
+   "owners": 3,
+   "keys_to_act": 2,
+   "keys_lost_to_freeze": 2,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 0,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 3
+   },
+   "timelockScore": 0,
+   "posture": "admin: Safe 2-of-3 of 3 plain keys; delay: none",
+   "exposure": {
+    "keys_to_move": 2,
+    "react_hours": 0,
+    "tvl_usd": 3143862.359061071,
+    "money_per_key_usd": 1571931.1795305356,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x9d53d5e3bd5e8d4cbfa6db1ca238aea02e651010",
+   "adminKeyScore": 65,
+   "path": "owner()",
+   "holder": "0x0605…9728",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "threshold": 5,
+   "owners": 9,
+   "keys_to_act": 5,
+   "keys_lost_to_freeze": 5,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 95,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 9
+   },
+   "timelockScore": 0,
+   "posture": "admin: Safe 5-of-9 of 9 plain keys; delay: none",
+   "exposure": {
+    "keys_to_move": 5,
+    "react_hours": 0,
+    "tvl_usd": 610409006.2359842,
+    "money_per_key_usd": 122081801.24719684,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x7f03effbd7ceb22a3f80dd468f67ef27826acd85",
+   "adminKeyScore": 5,
+   "path": "owner()",
+   "holder": "0x7e03\u2026242b",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "holder_tx_count": 45,
+   "kind": "eoa",
+   "multisigScore": 0,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 0,
+   "posture": "admin: a plain key, 45 transactions sent; delay: none",
+   "exposure": {
+    "keys_to_move": 1,
+    "react_hours": 0,
+    "tvl_usd": 4038749.1615643892,
+    "money_per_key_usd": 4038749.1615643892,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0xf28704c691290547924e2129d407da36bda8ce0f",
+   "adminKeyScore": 50,
+   "path": "owner()",
+   "holder": "0x31c4…9693",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "threshold": 2,
+   "owners": 3,
+   "keys_to_act": 2,
+   "keys_lost_to_freeze": 2,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 35,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 3
+   },
+   "timelockScore": 0,
+   "posture": "admin: Safe 2-of-3 of 3 plain keys; delay: none",
+   "shares_admin_with": [
+    {
+     "chain": "robinhood",
+     "target": "0x128a800cbc615cc110bff16e475865c67631603a"
+    }
+   ],
+   "cluster_tvl_usd": 6116108.43016215,
+   "exposure": {
+    "keys_to_move": 2,
+    "react_hours": 0,
+    "tvl_usd": 6116108.43016215,
+    "money_per_key_usd": 3058054.215081075,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x14b107cf534239c59571b066cb6497a321da897c",
+   "adminKeyScore": 50,
+   "path": "DEFAULT_ADMIN_ROLE member 1 of 3 (AccessControl)",
+   "holder": "0x0da180b14721ce46a83669b4816cb652caa1001d",
+   "impl": "0x44c6c2a96e7e51eb0dd81cef58940faa39babf78",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "delay_seconds": 86400,
+   "kind": "timelock",
+   "multisigScore": 35,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 0,
+   "disagree": "the timelock score says no delay (0), the live read finds a timelock of 24 h in the admin path via DEFAULT_ADMIN_ROLE member 1 of 3 (AccessControl)",
+   "posture": "admin: a timelock; delay: 24 h on the timelock",
+   "exposure": {
+    "keys_to_move": null,
+    "react_hours": 24,
+    "tvl_usd": 46156694.15019073,
+    "money_per_key_usd": null,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0xd5c6c79692715145098a65d1eb1f2a10c524f8e8",
+   "adminKeyScore": 5,
+   "path": "DEFAULT_ADMIN_ROLE member 1 of 1 (AccessControl)",
+   "holder": "0x65d0\u2026e57f",
+   "impl": "0x0000000000ac46824e664881581f0e105bb5e492",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "holder_tx_count": 77,
+   "kind": "eoa",
+   "multisigScore": 0,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 0,
+   "posture": "admin: a plain key, 77 transactions sent; delay: none",
+   "exposure": {
+    "keys_to_move": 1,
+    "react_hours": 0,
+    "tvl_usd": 594837.3592219491,
+    "money_per_key_usd": 594837.3592219491,
+    "money_source": "contract",
+    "held_symbol": "WBTC",
+    "held_amount": 7.21550079
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x1ac9db4a2608ba45d6127b1737949b51bb54b7f3",
+   "adminKeyScore": 50,
+   "path": "owner()",
+   "holder": "0x0eea…dfd8",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "threshold": 2,
+   "owners": 4,
+   "keys_to_act": 2,
+   "keys_lost_to_freeze": 3,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 40,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 4
+   },
+   "timelockScore": 0,
+   "posture": "admin: Safe 2-of-4 of 4 plain keys; delay: none",
+   "exposure": {
+    "keys_to_move": 2,
+    "react_hours": 0,
+    "tvl_usd": null,
+    "money_per_key_usd": null,
+    "money_source": null,
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x16494a80e08bcb9285d87b67149d7b01774d82f8",
+   "adminKeyScore": 65,
+   "path": "EIP-1967 admin -> ProxyAdmin owner()",
+   "holder": "0x2a04…2b0e",
+   "impl": "0x8c3bbdabf7b610d54097420e485a5e0e7bd68684",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "threshold": 3,
+   "owners": 5,
+   "keys_to_act": 3,
+   "keys_lost_to_freeze": 3,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 55,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 5
+   },
+   "timelockScore": 0,
+   "posture": "admin: Safe 3-of-5 of 5 plain keys; delay: none",
+   "exposure": {
+    "keys_to_move": 3,
+    "react_hours": 0,
+    "tvl_usd": null,
+    "money_per_key_usd": null,
+    "money_source": null,
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0xb24b143ad6bb5be9559ccc75f34a2261b7456904",
+   "adminKeyScore": 2,
+   "path": "owner()",
+   "holder": "0x58ca\u2026f7c9",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "delegated_to": "0x63c0c19a282a1b52b07dd5a65b58948a07dae32b",
+   "holder_tx_count": 489,
+   "kind": "eoa",
+   "multisigScore": 0,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 0,
+   "posture": "admin: a plain key (EIP-7702: its account runs the code of 0x63c0\u2026e32b), 489 transactions sent; delay: none",
+   "exposure": {
+    "keys_to_move": 1,
+    "react_hours": 0,
+    "tvl_usd": null,
+    "money_per_key_usd": null,
+    "money_source": null,
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x128a800cbc615cc110bff16e475865c67631603a",
+   "adminKeyScore": 50,
+   "path": "owner()",
+   "holder": "0x31c4…9693",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "threshold": 2,
+   "owners": 3,
+   "keys_to_act": 2,
+   "keys_lost_to_freeze": 2,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 35,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 3
+   },
+   "timelockScore": 0,
+   "posture": "admin: Safe 2-of-3 of 3 plain keys; delay: none",
+   "shares_admin_with": [
+    {
+     "chain": "robinhood",
+     "target": "0xf28704c691290547924e2129d407da36bda8ce0f"
+    }
+   ],
+   "cluster_tvl_usd": 6116108.43016215,
+   "exposure": {
+    "keys_to_move": 2,
+    "react_hours": 0,
+    "tvl_usd": null,
+    "money_per_key_usd": null,
+    "money_source": null,
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0x5c98b2d892b37c9a1d3b69472bddc172a64cdc09",
+   "adminKeyScore": 5,
+   "path": "EIP-1967 admin -> ProxyAdmin owner()",
+   "holder": "0x9db4…1a53",
+   "impl": "0x950f3bae94ff783f044f64dca9b2a1b2d781ea72",
+   "impl_via": "EIP-1967 implementation slot",
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "threshold": 3,
+   "owners": 7,
+   "keys_to_act": 3,
+   "keys_lost_to_freeze": 5,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 0,
+   "since": "2026-10-10T06:54:09Z",
+   "disagree": "the score says one key does everything (5), the live read finds a Safe 3-of-7 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisig (0), the live read finds a Safe 3-of-7 via EIP-1967 admin -> ProxyAdmin owner()",
+   "owners_kinds": {
+    "eoa": 7
+   },
+   "timelockScore": 0,
+   "acknowledged": "test: the scorer weighs the protocol admin role, not the ProxyAdmin; reviewed 2026-10-10 (scratch test only)",
+   "posture": "admin: Safe 3-of-7 of 7 plain keys; delay: none",
+   "shares_admin_with": [
+    {
+     "chain": "robinhood",
+     "target": "0xd01c774d4a66408326bc65728ac5ae5aaf004032"
+    }
+   ],
+   "cluster_tvl_usd": 0.0,
+   "exposure": {
+    "keys_to_move": 3,
+    "react_hours": 0,
+    "tvl_usd": null,
+    "money_per_key_usd": null,
+    "money_source": null,
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0xd01c774d4a66408326bc65728ac5ae5aaf004032",
+   "adminKeyScore": 65,
+   "path": "owner()",
+   "holder": "0x9db4…1a53",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "threshold": 3,
+   "owners": 7,
+   "keys_to_act": 3,
+   "keys_lost_to_freeze": 5,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 65,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 7
+   },
+   "timelockScore": 0,
+   "posture": "admin: Safe 3-of-7 of 7 plain keys; delay: none",
+   "shares_admin_with": [
+    {
+     "chain": "robinhood",
+     "target": "0x5c98b2d892b37c9a1d3b69472bddc172a64cdc09"
+    }
+   ],
+   "cluster_tvl_usd": 0.0,
+   "exposure": {
+    "keys_to_move": 3,
+    "react_hours": 0,
+    "tvl_usd": null,
+    "money_per_key_usd": null,
+    "money_source": null,
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d",
+   "adminKeyScore": 2,
+   "path": "owner()",
+   "holder": "0x3b2b\u20262f14",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": "0x9db4…1a53",
+   "pending_via": "pendingOwner() on the contract (Ownable2Step), a contract",
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "holder_tx_count": 599,
+   "kind": "eoa",
+   "multisigScore": 0,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 0,
+   "posture": "admin: a plain key, 599 transactions sent; delay: none; in flight: admin transfer designated, not accepted",
+   "exposure": {
+    "keys_to_move": 1,
+    "react_hours": 0,
+    "tvl_usd": null,
+    "money_per_key_usd": null,
+    "money_source": null,
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "robinhood",
+   "target": "0xd42174d3db28b0fa2bd25381c3521b18ae9db490",
+   "adminKeyScore": 5,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 84804360,
+   "block_end": 84804717,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "tempo",
+   "target": "0xcccccccc00000000000000000000000000000001",
+   "adminKeyScore": 50,
+   "path": "owner()",
+   "holder": "0xdc659eff2784cf79fba88f85d26b1392270cca33",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 43452396,
+   "block_end": 43452409,
+   "self_delay_seconds": null,
+   "threshold": 2,
+   "owners": 5,
+   "keys_to_act": 2,
+   "keys_lost_to_freeze": 4,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 37,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 5
+   },
+   "timelockScore": 0,
+   "posture": "admin: Safe 2-of-5 of 5 plain keys; delay: none",
+   "exposure": {
+    "keys_to_move": 2,
+    "react_hours": 0,
+    "tvl_usd": 81170721.33347504,
+    "money_per_key_usd": 40585360.66673752,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "tempo",
+   "target": "0x20c000000000000000000000b9537d11c60e8b50",
+   "adminKeyScore": 65,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 43452396,
+   "block_end": 43452409,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "tempo",
+   "target": "0x20c00000000000000000000014f22ca97301eb73",
+   "adminKeyScore": 65,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 43452396,
+   "block_end": 43452409,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "tempo",
+   "target": "0x20c0000000000000000000000000000000000000",
+   "adminKeyScore": 10,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 43452396,
+   "block_end": 43452409,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "tempo",
+   "target": "0x20c0000000000000000000003158081efd85bfc2",
+   "adminKeyScore": 10,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 43452396,
+   "block_end": 43452409,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "tempo",
+   "target": "0x20c000000000000000000000c412ec89d0c08be5",
+   "adminKeyScore": 65,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 43452396,
+   "block_end": 43452409,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "tempo",
+   "target": "0x20c00000000000000000000058d0b8b2cfdb358c",
+   "adminKeyScore": 65,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 43452396,
+   "block_end": 43452409,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "tempo",
+   "target": "0x20c0000000000000000000006fd9a167923ba194",
+   "adminKeyScore": 10,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 43452396,
+   "block_end": 43452409,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "tempo",
+   "target": "0x20c0000000000000000000001621e21f71cf12fb",
+   "adminKeyScore": 65,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 43452396,
+   "block_end": 43452409,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "tempo",
+   "target": "0x20c0000000000000000000000520792dcccccccc",
+   "adminKeyScore": 65,
+   "path": null,
+   "holder": null,
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 43452396,
+   "block_end": 43452409,
+   "self_delay_seconds": null,
+   "kind": "unreadable",
+   "why": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+  },
+  {
+   "chain": "tempo",
+   "target": "0x9a044ae05e5e6290dcf56afd69548565e957a626",
+   "adminKeyScore": 10,
+   "path": "owner()",
+   "holder": "0xe8c9c99ecad0686a14a00d8521c572281e938008",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 43452396,
+   "block_end": 43452409,
+   "self_delay_seconds": null,
+   "threshold": 1,
+   "owners": 1,
+   "keys_to_act": 1,
+   "keys_lost_to_freeze": 1,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 15,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 1
+   },
+   "owners_detail": [
+    {
+     "owner": "0x295d\u2026d7e9",
+     "kind": "eoa"
+    }
+   ],
+   "timelockScore": 60,
+   "posture": "admin: Safe 1-of-1 of 1 plain key; delay: none",
+   "exposure": {
+    "keys_to_move": 1,
+    "react_hours": 0,
+    "tvl_usd": 39724043.68603031,
+    "money_per_key_usd": 39724043.68603031,
+    "money_source": "contract",
+    "held_symbol": "pathUSD",
+    "held_amount": 39736498.123455
+   }
+  },
+  {
+   "chain": "tempo",
+   "target": "0x83a1491f3e7f8daab8f787a631334b9ca7a87023",
+   "adminKeyScore": 10,
+   "path": "owner()",
+   "holder": "0x445f\u20268dc9",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 43452396,
+   "block_end": 43452409,
+   "self_delay_seconds": null,
+   "holder_tx_count": 0,
+   "kind": "eoa",
+   "multisigScore": 15,
+   "since": "2026-10-10T06:54:09Z",
+   "timelockScore": 0,
+   "posture": "admin: a plain key, 0 transactions sent; delay: none",
+   "exposure": {
+    "keys_to_move": 1,
+    "react_hours": 0,
+    "tvl_usd": 215107.8927547857,
+    "money_per_key_usd": 215107.8927547857,
+    "money_source": "contract",
+    "held_symbol": "pathUSD",
+    "held_amount": 215175.334222
+   }
+  },
+  {
+   "chain": "tempo",
+   "target": "0xc609656ed9ef219c98c8e549bf729144f211f06e",
+   "adminKeyScore": 65,
+   "path": "owner()",
+   "holder": "0x5a4e19842e09000a582c20a4f524c26fb48dd4d0",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 43452396,
+   "block_end": 43452409,
+   "self_delay_seconds": null,
+   "threshold": 4,
+   "owners": 7,
+   "keys_to_act": 4,
+   "keys_lost_to_freeze": 4,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 56,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 7
+   },
+   "timelockScore": 60,
+   "posture": "admin: Safe 4-of-7 of 7 plain keys; delay: none",
+   "shares_admin_with": [
+    {
+     "chain": "base",
+     "target": "0xee8f4ec5672f09119b96ab6fb59c27e1b7e44b61"
+    }
+   ],
+   "cluster_tvl_usd": 283453.02741217864,
+   "exposure": {
+    "keys_to_move": 4,
+    "react_hours": 0,
+    "tvl_usd": 272178.5970705267,
+    "money_per_key_usd": 68044.64926763167,
+    "money_source": "contract",
+    "held_symbol": "pathUSD",
+    "held_amount": 272263.931568
+   }
+  },
+  {
+   "chain": "tempo",
+   "target": "0x10ee9aac980a180dd4dcfc96c746d60b0ea88f97",
+   "adminKeyScore": 65,
+   "path": "owner()",
+   "holder": "0x6458…fbbc",
+   "impl": null,
+   "impl_via": null,
+   "pending_admin": null,
+   "pending_via": null,
+   "block_start": 43452396,
+   "block_end": 43452409,
+   "self_delay_seconds": null,
+   "threshold": 5,
+   "owners": 9,
+   "keys_to_act": 5,
+   "keys_lost_to_freeze": 5,
+   "modules": [],
+   "guard": null,
+   "kind": "safe",
+   "multisigScore": 96,
+   "since": "2026-10-10T06:54:09Z",
+   "owners_kinds": {
+    "eoa": 9
+   },
+   "timelockScore": 0,
+   "posture": "admin: Safe 5-of-9 of 9 plain keys; delay: none",
+   "exposure": {
+    "keys_to_move": 5,
+    "react_hours": 0,
+    "tvl_usd": 40200146.93656084,
+    "money_per_key_usd": 8040029.387312168,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "solana",
+   "target": "5VhiTAGLEViGgajhxPbzdWz7WLUAiRy42DY6qi6tYh4W",
+   "oracle_self": true,
+   "cluster": "https://api.devnet.solana.com",
+   "adminKeyScore": null,
+   "kind": "eoa",
+   "holder": "BcwteM\u2026y9yx",
+   "path": "program -> ProgramData 5hBzvo\u2026 -> upgrade authority (on the curve: a plain key)",
+   "programdata": "5hBzvoKRvW4kd8HneUoK1wLogjLmjZiFuJY7rWPTDwSx",
+   "deployed_slot": 501396104,
+   "since": "2026-10-10T06:54:09Z"
+  },
+  {
+   "chain": "solana",
+   "target": "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+   "adminKeyScore": 55,
+   "path": "program -> ProgramData 4Ec7Zx\u2026 -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly)",
+   "holder": "CvQZZ23qYDWF2RUpxYJ8y9K4skmuvYEEjH7fK58jtipQ",
+   "programdata": "4Ec7ZxZS6Sbdg5UGSLHbAnM7GQHp2eFd4KYWRexAipQT",
+   "deployed_slot": 454465850,
+   "kind": "pda",
+   "deployed_at": "2026-10-08T06:36:17Z",
+   "since": "2026-10-10T06:54:09Z",
+   "multisigScore": 83,
+   "timelockScore": 0,
+   "posture": "admin: a program-derived address (not a Squads v4 vault); delay: unknown"
+  },
+  {
+   "chain": "solana",
+   "target": "7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF",
+   "adminKeyScore": 65,
+   "path": "account owned by program KLend2g3\u2026 -> program -> ProgramData 9uSbGW\u2026 -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly) -> Squads v4 vault 0 of multisig 6hhBGCtmg7tPWUSgp3LG6X2rsmYWAc4tNsA6G4CnfQbM",
+   "holder": "GzFgdRJXmawPhGeBsyRCDLx4jAKPsvbUqoqitzppkzkW",
+   "programdata": "9uSbGW1y9H5Av6H5TKxQ1wnFApSq2t3oEpfF2YfjDQGA",
+   "deployed_slot": 440486775,
+   "via_program": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD",
+   "threshold": 5,
+   "owners": 10,
+   "delay_seconds": 86400,
+   "config_authority": null,
+   "owners_kinds": {
+    "eoa": 10,
+    "pda": 0
+   },
+   "voters": 10,
+   "initiators": 10,
+   "executors": 10,
+   "former_members_in_account": 0,
+   "multisig": "6hhBGCtmg7tPWUSgp3LG6X2rsmYWAc4tNsA6G4CnfQbM",
+   "multisig_program": "Squads v4",
+   "keys_to_act": 5,
+   "keys_lost_to_freeze": 6,
+   "kind": "squads",
+   "deployed_at": "2026-08-20T14:04:04Z",
+   "since": "2026-10-10T06:54:09Z",
+   "multisigScore": 76,
+   "timelockScore": 25,
+   "posture": "admin: Squads 5-of-10 of 10 plain keys; delay: 24 h Squads time lock",
+   "exposure": {
+    "keys_to_move": 5,
+    "react_hours": 24,
+    "tvl_usd": 1344037416.7524214,
+    "money_per_key_usd": 268807483.35048425,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "solana",
+   "target": "7sf3tcWm58vhtkJMwuw2P3T6UBX7UE5VKxPMnXJUZ1Hn",
+   "adminKeyScore": 5,
+   "path": "account owned by program A7kmu2kU\u2026 -> program -> ProgramData DBvb9p\u2026 -> upgrade authority (on the curve: a plain key)",
+   "holder": "6EpduY\u2026rqUT",
+   "programdata": "DBvb9pnKMCjfQsCzhExQwKUCRAVRxNAyiHFyFKbaPJrC",
+   "deployed_slot": 138109469,
+   "via_program": "A7kmu2kUcnQwAVn8B4znQmGJeUrsJ1WEhYVMtmiBLkEr",
+   "kind": "eoa",
+   "deployed_at": "2022-06-19T06:09:26Z",
+   "since": "2026-10-10T06:54:09Z",
+   "multisigScore": 0,
+   "timelockScore": 0,
+   "posture": "admin: a plain key; delay: none",
+   "exposure": {
+    "keys_to_move": 1,
+    "react_hours": 0,
+    "tvl_usd": 90996770.20114093,
+    "money_per_key_usd": 90996770.20114093,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "solana",
+   "target": "dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH",
+   "adminKeyScore": 65,
+   "path": "program -> ProgramData 7dLgmt\u2026 -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly) -> Squads v4 vault 0 of multisig 7qipzLR9j1JcvdxE1XJEFgvoyFmgBpgw5hMdHBMPcJtM",
+   "holder": "8jj7zJgdr5bDndc7evM74FMGwzLPmd4u4QxNzFi1BMai",
+   "programdata": "7dLgmtcTavcguNoynVimF9ZNVb13FvhXVRfj2HyrDGaP",
+   "deployed_slot": 429731225,
+   "threshold": 4,
+   "owners": 7,
+   "delay_seconds": 3600,
+   "config_authority": null,
+   "owners_kinds": {
+    "eoa": 7,
+    "pda": 0
+   },
+   "voters": 6,
+   "initiators": 7,
+   "executors": 6,
+   "former_members_in_account": 0,
+   "multisig": "7qipzLR9j1JcvdxE1XJEFgvoyFmgBpgw5hMdHBMPcJtM",
+   "multisig_program": "Squads v4",
+   "keys_to_act": 4,
+   "keys_lost_to_freeze": 3,
+   "effective": "4-of-7 members, 6 can vote: effectively 4-of-6",
+   "kind": "squads",
+   "deployed_at": "2026-06-29T19:57:01Z",
+   "since": "2026-10-10T06:54:09Z",
+   "multisigScore": 70,
+   "timelockScore": 2,
+   "posture": "admin: Squads 4-of-7, 6 can vote of 7 plain keys; delay: 1 h Squads time lock",
+   "exposure": {
+    "keys_to_move": 4,
+    "react_hours": 1,
+    "tvl_usd": 642402.9384757723,
+    "money_per_key_usd": 160600.73461894307,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "solana",
+   "target": "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+   "adminKeyScore": 20,
+   "path": "program -> ProgramData HzD2cC\u2026 -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly) -> Squads v4 vault 0 of multisig tr8rgazUrZzgdkfc6Q622nVJHMMzh29trdBE2uBHb4u",
+   "holder": "FytDrVzDybM1TwFQPGb8qaxZR7dBCzNeqT3vtQsceZQK",
+   "programdata": "HzD2cCXXT3UQNjMMY6kDv9w6gZ9qquSdfoGXrLL3LXx",
+   "deployed_slot": 451479902,
+   "threshold": 3,
+   "owners": 4,
+   "delay_seconds": 0,
+   "config_authority": null,
+   "owners_kinds": {
+    "eoa": 4,
+    "pda": 0
+   },
+   "voters": 4,
+   "initiators": 4,
+   "executors": 4,
+   "former_members_in_account": 0,
+   "multisig": "tr8rgazUrZzgdkfc6Q622nVJHMMzh29trdBE2uBHb4u",
+   "multisig_program": "Squads v4",
+   "keys_to_act": 3,
+   "keys_lost_to_freeze": 2,
+   "kind": "squads",
+   "deployed_at": "2026-09-29T00:27:11Z",
+   "since": "2026-10-10T06:54:09Z",
+   "multisigScore": 20,
+   "timelockScore": 0,
+   "posture": "admin: Squads 3-of-4 of 4 plain keys; delay: none",
+   "exposure": {
+    "keys_to_move": 3,
+    "react_hours": 0,
+    "tvl_usd": 1264770883.9499705,
+    "money_per_key_usd": 421590294.64999014,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "solana",
+   "target": "4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8",
+   "adminKeyScore": 45,
+   "path": "account owned by program MFv2hWf3\u2026 -> program -> ProgramData 4Q8u2n\u2026 -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly) -> Squads v4 vault 0 of multisig 7FCPipJWVbPbdHymVt1gJYwKciakkJz5GahdQySemvHk",
+   "holder": "J3oBkTkDXU3TcAggJEa3YeBZE5om5yNAdTtLVNXFD47",
+   "programdata": "4Q8u2ny8YYgytJEncwZQfVWbd5axZtfgDxYKHehvPQR7",
+   "deployed_slot": 444313123,
+   "via_program": "MFv2hWf31Z9kbCa1snEPYctwafyhdvnV7FZnsebVacA",
+   "threshold": 7,
+   "owners": 15,
+   "delay_seconds": 0,
+   "config_authority": null,
+   "owners_kinds": {
+    "eoa": 15,
+    "pda": 0
+   },
+   "voters": 15,
+   "initiators": 15,
+   "executors": 15,
+   "former_members_in_account": 2,
+   "multisig": "7FCPipJWVbPbdHymVt1gJYwKciakkJz5GahdQySemvHk",
+   "multisig_program": "Squads v4",
+   "keys_to_act": 7,
+   "keys_lost_to_freeze": 9,
+   "kind": "squads",
+   "deployed_at": "2026-09-04T18:26:28Z",
+   "since": "2026-10-10T06:54:09Z",
+   "multisigScore": 50,
+   "timelockScore": 0,
+   "posture": "admin: Squads 7-of-15 of 15 plain keys; delay: none",
+   "exposure": {
+    "keys_to_move": 7,
+    "react_hours": 0,
+    "tvl_usd": 40656369.62702737,
+    "money_per_key_usd": 5808052.803861053,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "solana",
+   "target": "GKnHiWh3RRrE1zsNzWxRkomymHc374TvJPSTv2wPeYdB",
+   "adminKeyScore": 60,
+   "path": "account owned by program 6LtLpnUF\u2026 -> program -> ProgramData 8n11WG\u2026 -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly) -> Squads v4 vault 0 of multisig E7994UpSGhSpbpnuSepPXHBuMy3eRvHJL36DjTs1kb2b",
+   "holder": "3pAxu6C9ykZvyyzdknZvmz6CbWGZPTjRevjk4PRF5ib7",
+   "programdata": "8n11WGJCXqRe5pB4gBTo71YxyiZxEYm47r3LfdQiHYAj",
+   "deployed_slot": 445049632,
+   "via_program": "6LtLpnUFNByNXLyCoK9wA2MykKAmQNZKBdY8s47dehDc",
+   "threshold": 5,
+   "owners": 7,
+   "delay_seconds": 86400,
+   "config_authority": null,
+   "owners_kinds": {
+    "eoa": 7,
+    "pda": 0
+   },
+   "voters": 7,
+   "initiators": 7,
+   "executors": 7,
+   "former_members_in_account": 0,
+   "multisig": "E7994UpSGhSpbpnuSepPXHBuMy3eRvHJL36DjTs1kb2b",
+   "multisig_program": "Squads v4",
+   "keys_to_act": 5,
+   "keys_lost_to_freeze": 3,
+   "kind": "squads",
+   "deployed_at": "2026-09-07T11:05:29Z",
+   "since": "2026-10-10T06:54:09Z",
+   "multisigScore": 100,
+   "timelockScore": 0,
+   "disagree": "the timelock score says no delay (0), the Squads multisig enforces a native time lock of 24 h",
+   "posture": "admin: Squads 5-of-7 of 7 plain keys; delay: 24 h Squads time lock",
+   "exposure": {
+    "keys_to_move": 5,
+    "react_hours": 24,
+    "tvl_usd": 74254591.02949221,
+    "money_per_key_usd": 14850918.205898443,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "solana",
+   "target": "H4ND9aYttUVLFmNypZqLjZ52FYiGvdEB45GmwNoKEjTj",
+   "adminKeyScore": 55,
+   "path": "account owned by program PERPHjGB\u2026 -> program -> ProgramData C258Lj\u2026 -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly) -> Squads v4 vault 0 of multisig AxkJ8oH5aDu4ZRWfsujPtxdb6Vhq4gDehpoReBgrUUSm",
+   "holder": "5myNNmEmPm3UAnJ2ggLEpnTFb9t9Gk8369wKw6n3uAKx",
+   "programdata": "C258LjtN8Q928yz2nJe5kwQycckGfWBSrhZBP2mTpLQt",
+   "deployed_slot": 413092478,
+   "via_program": "PERPHjGBqRHArX4DySjwM6UJHiR3sWAatqfdBS2qQJu",
+   "threshold": 4,
+   "owners": 8,
+   "delay_seconds": 86400,
+   "config_authority": null,
+   "owners_kinds": {
+    "eoa": 8,
+    "pda": 0
+   },
+   "voters": 8,
+   "initiators": 8,
+   "executors": 8,
+   "former_members_in_account": 0,
+   "multisig": "AxkJ8oH5aDu4ZRWfsujPtxdb6Vhq4gDehpoReBgrUUSm",
+   "multisig_program": "Squads v4",
+   "keys_to_act": 4,
+   "keys_lost_to_freeze": 5,
+   "kind": "squads",
+   "deployed_at": "2026-04-14T04:40:41Z",
+   "since": "2026-10-10T06:54:09Z",
+   "multisigScore": 80,
+   "timelockScore": 0,
+   "disagree": "the timelock score says no delay (0), the Squads multisig enforces a native time lock of 24 h",
+   "posture": "admin: Squads 4-of-8 of 8 plain keys; delay: 24 h Squads time lock",
+   "exposure": {
+    "keys_to_move": 4,
+    "react_hours": 24,
+    "tvl_usd": 777682947.4504604,
+    "money_per_key_usd": 194420736.8626151,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "solana",
+   "target": "7s1da8DduuBFqGra5bJBjpnvL5E9mGzCuMk1Qkh4or2Z",
+   "adminKeyScore": 65,
+   "path": "account owned by program jupeiUmn\u2026 -> program -> ProgramData J6Ry5y\u2026 -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly) -> Squads v4 vault 0 of multisig J3mJ3wz6xkVUk3T8qHnuAYNxsRH3ixHsryYNZAU2vG8P",
+   "holder": "4MsgBB5VPoTrUSp5XnfbViV386C1UnsTdifLBw33ZMSJ",
+   "programdata": "J6Ry5yuy4Vp4kNa1PTGASiHJxZ8x4pgRPaJ18SmnqtW5",
+   "deployed_slot": 453953579,
+   "via_program": "jupeiUmn818Jg1ekPURTpr4mFo29p46vygyykFJ3wZC",
+   "threshold": 4,
+   "owners": 7,
+   "delay_seconds": 43200,
+   "config_authority": null,
+   "owners_kinds": {
+    "eoa": 7,
+    "pda": 0
+   },
+   "voters": 7,
+   "initiators": 7,
+   "executors": 7,
+   "former_members_in_account": 3,
+   "multisig": "J3mJ3wz6xkVUk3T8qHnuAYNxsRH3ixHsryYNZAU2vG8P",
+   "multisig_program": "Squads v4",
+   "keys_to_act": 4,
+   "keys_lost_to_freeze": 4,
+   "kind": "squads",
+   "deployed_at": "2026-10-06T16:20:54Z",
+   "since": "2026-10-10T06:54:09Z",
+   "multisigScore": 83,
+   "timelockScore": 13,
+   "posture": "admin: Squads 4-of-7 of 7 plain keys; delay: 12 h Squads time lock",
+   "exposure": {
+    "keys_to_move": 4,
+    "react_hours": 12,
+    "tvl_usd": 1190831615.365636,
+    "money_per_key_usd": 297707903.841409,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "solana",
+   "target": "ADyA8hdefvWN2dbGGWFotbzWxrAvLW83WG6QCVXvJKqw",
+   "adminKeyScore": 50,
+   "path": "account owned by program pAMMBay6\u2026 -> program -> ProgramData 6naEzK\u2026 -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly) -> Squads v4 vault 0 of multisig 2yMoQqQrtbhq3nQ3wFoQQawWS65qcqUXcwHEYha4rshW",
+   "holder": "7gZufwwAo17y5kg8FMyJy2phgpvv9RSdzWtdXiWHjFr8",
+   "programdata": "6naEzKeUuFh1Jeeu51NXQgr5qkXgXtc9WKNct4xynVJc",
+   "deployed_slot": 454596406,
+   "via_program": "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA",
+   "threshold": 3,
+   "owners": 4,
+   "delay_seconds": 0,
+   "config_authority": null,
+   "owners_kinds": {
+    "eoa": 4,
+    "pda": 0
+   },
+   "voters": 4,
+   "initiators": 4,
+   "executors": 4,
+   "former_members_in_account": 2,
+   "multisig": "2yMoQqQrtbhq3nQ3wFoQQawWS65qcqUXcwHEYha4rshW",
+   "multisig_program": "Squads v4",
+   "keys_to_act": 3,
+   "keys_lost_to_freeze": 2,
+   "kind": "squads",
+   "deployed_at": "2026-10-08T16:20:03Z",
+   "since": "2026-10-10T06:54:09Z",
+   "multisigScore": 75,
+   "timelockScore": 0,
+   "posture": "admin: Squads 3-of-4 of 4 plain keys; delay: none",
+   "exposure": {
+    "keys_to_move": 3,
+    "react_hours": 0,
+    "tvl_usd": 375584372.80649,
+    "money_per_key_usd": 125194790.93549667,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "solana",
+   "target": "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG",
+   "adminKeyScore": 5,
+   "path": "program -> ProgramData AUh8bm\u2026 -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly)",
+   "holder": "JADaUV8kvDpDbJr55wxXJHVaBS3VCj8thZZHjfeuCVLd",
+   "programdata": "AUh8bm2XsMfex3KjYGcM3G4uBqUNSDw6HEhWaWMYnyPH",
+   "deployed_slot": 445230614,
+   "kind": "pda",
+   "deployed_at": "2026-09-08T03:00:21Z",
+   "since": "2026-10-10T06:54:09Z",
+   "multisigScore": 0,
+   "timelockScore": 0,
+   "posture": "admin: a program-derived address (not a Squads v4 vault); delay: unknown"
+  },
+  {
+   "chain": "solana",
+   "target": "2LecshUwdy9xi7meFgHtFJQNSKk4KdTrcpvaB56dP2NQ",
+   "adminKeyScore": 5,
+   "path": "account owned by program whirLbMi\u2026 -> program -> ProgramData CtXfPz\u2026 -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly) -> Squads v4 vault 0 of multisig BQsDWkL417U4tVE2sDnPks469pKdm6YzFgKH77doiEjF",
+   "holder": "GwH3Hiv5mACLX3ufTw1pFsrhSPon5tdw252DBs4Rx4PV",
+   "programdata": "CtXfPzz36dH5Ws4UYKZvrQ1Xqzn42ecDW6y8NKuiN8nD",
+   "deployed_slot": 440170207,
+   "via_program": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
+   "threshold": 5,
+   "owners": 13,
+   "delay_seconds": 86400,
+   "config_authority": null,
+   "owners_kinds": {
+    "eoa": 13,
+    "pda": 0
+   },
+   "voters": 9,
+   "initiators": 4,
+   "executors": 3,
+   "former_members_in_account": 9,
+   "multisig": "BQsDWkL417U4tVE2sDnPks469pKdm6YzFgKH77doiEjF",
+   "multisig_program": "Squads v4",
+   "keys_to_act": 5,
+   "keys_lost_to_freeze": 5,
+   "effective": "5-of-13 members, 9 can vote: effectively 5-of-9",
+   "kind": "squads",
+   "deployed_at": "2026-08-19T01:28:54Z",
+   "since": "2026-10-10T06:54:09Z",
+   "multisigScore": 0,
+   "timelockScore": 0,
+   "disagree": "the score says one key does everything (5), the upgrade authority is a Squads v4 via account owned by program whirLbMi\u2026 -> program -> ProgramData CtXfPz\u2026 -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly) -> Squads v4 vault 0 of multisig BQsDWkL417U4tVE2sDnPks469pKdm6YzFgKH77doiEjF; the multisig score says no real multisig (0), the Squads multisig is a 5-of-13; the timelock score says no delay (0), the Squads multisig enforces a native time lock of 24 h",
+   "posture": "admin: Squads 5-of-13, 9 can vote of 13 plain keys; delay: 24 h Squads time lock",
+   "exposure": {
+    "keys_to_move": 5,
+    "react_hours": 24,
+    "tvl_usd": 316737656.13934636,
+    "money_per_key_usd": 63347531.22786927,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "solana",
+   "target": "8szGkuLTAux9XMgZ2vtY39jVSowEcpBfFfD8hXSEqdGC",
+   "adminKeyScore": 60,
+   "path": "account owned by program MarBmsSg\u2026 -> program -> ProgramData 4PQH9Y\u2026 -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly)",
+   "holder": "551FBXSXdhcRDDkdcb3ThDRg84Mwe5Zs6YjJ1EEoyzBp",
+   "programdata": "4PQH9YmfuKrVyZaibkLYpJZPv2FPaybhq2GAuBcWMSBf",
+   "deployed_slot": 433290841,
+   "via_program": "MarBmsSgKXdrN1egZf5sqe1TMai9K1rChYNDJgjq7aD",
+   "kind": "pda",
+   "deployed_at": "2026-07-16T14:33:16Z",
+   "since": "2026-10-10T06:54:09Z",
+   "multisigScore": 69,
+   "timelockScore": 0,
+   "posture": "admin: a program-derived address (not a Squads v4 vault); delay: unknown"
+  },
+  {
+   "chain": "solana",
+   "target": "So1endDq2YkqhipRh3WViPa8hdiSpxWy6z3Z6tMCpAo",
+   "adminKeyScore": 5,
+   "path": "program -> ProgramData DMCvGv\u2026 -> upgrade authority (on the curve: a plain key)",
+   "holder": "RY93CZ\u2026mJfh",
+   "programdata": "DMCvGv1fS5rMcAvEDPDDBawPqbDRSzJh2Bo6qXCmgJkR",
+   "deployed_slot": 350614570,
+   "kind": "eoa",
+   "deployed_at": "2025-07-02T10:58:00Z",
+   "since": "2026-10-10T06:54:09Z",
+   "multisigScore": 0,
+   "timelockScore": 0,
+   "posture": "admin: a plain key; delay: none",
+   "exposure": {
+    "keys_to_move": 1,
+    "react_hours": 0,
+    "tvl_usd": 90996770.20114093,
+    "money_per_key_usd": 90996770.20114093,
+    "money_source": "protocol_tvl",
+    "held_symbol": null,
+    "held_amount": null
+   }
+  },
+  {
+   "chain": "solana",
+   "target": "SPoo1Ku8WFXoNDMHPsrGSTSG1Y47rzgn41SLUNakuHy",
+   "adminKeyScore": 60,
+   "path": "program -> ProgramData EmiU8A\u2026 -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly)",
+   "holder": "dPpFfahSWhm5M2RB3nVaHsXfnh9ooz5bWtR3WeUguDH",
+   "programdata": "EmiU8AQkB2sswTxVB6aCmsAJftoowZGGDXuytm6X65R3",
+   "deployed_slot": 429882117,
+   "kind": "pda",
+   "deployed_at": "2026-06-30T12:53:10Z",
+   "since": "2026-10-10T06:54:09Z",
+   "multisigScore": 100,
+   "timelockScore": 0,
+   "posture": "admin: a program-derived address (not a Squads v4 vault); delay: unknown",
+   "shares_admin_with": [
+    {
+     "chain": "solana",
+     "target": "Jito4APyf642JPZPx3hGc6WWJ8zPKtRbRs4P815Awbb"
+    }
+   ],
+   "cluster_tvl_usd": 1171815631.4876125
+  },
+  {
+   "chain": "solana",
+   "target": "Jito4APyf642JPZPx3hGc6WWJ8zPKtRbRs4P815Awbb",
+   "adminKeyScore": 60,
+   "path": "account owned by program SPoo1Ku8\u2026 -> program -> ProgramData EmiU8A\u2026 -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly)",
+   "holder": "dPpFfahSWhm5M2RB3nVaHsXfnh9ooz5bWtR3WeUguDH",
+   "programdata": "EmiU8AQkB2sswTxVB6aCmsAJftoowZGGDXuytm6X65R3",
+   "deployed_slot": 429882117,
+   "via_program": "SPoo1Ku8WFXoNDMHPsrGSTSG1Y47rzgn41SLUNakuHy",
+   "kind": "pda",
+   "deployed_at": "2026-06-30T12:53:10Z",
+   "since": "2026-10-10T06:54:09Z",
+   "multisigScore": 100,
+   "timelockScore": 0,
+   "posture": "admin: a program-derived address (not a Squads v4 vault); delay: unknown",
+   "shares_admin_with": [
+    {
+     "chain": "solana",
+     "target": "SPoo1Ku8WFXoNDMHPsrGSTSG1Y47rzgn41SLUNakuHy"
+    }
+   ],
+   "cluster_tvl_usd": 1171815631.4876125
+  },
+  {
+   "chain": "solana",
+   "target": "5ocnV1qiCgaQR8Jb8xWnVbApfaygJ8tNoZfgPwsgx9kx",
+   "adminKeyScore": 55,
+   "path": "program -> ProgramData ALmAxh\u2026 -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly)",
+   "holder": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz",
+   "programdata": "ALmAxhSP7TDWGMHWBLjD9qS71YjqxjN1ba6JLRdzdVy",
+   "deployed_slot": 411884877,
+   "kind": "pda",
+   "deployed_at": "2026-04-08T16:13:02Z",
+   "since": "2026-10-10T06:54:09Z",
+   "multisigScore": 80,
+   "timelockScore": 0,
+   "posture": "admin: a program-derived address (not a Squads v4 vault); delay: unknown",
+   "shares_admin_with": [
+    {
+     "chain": "solana",
+     "target": "SP12tWFxD9oJsVWNavTTBZvMbA6gkAmxtVgxdqvyvhY"
+    }
+   ],
+   "cluster_tvl_usd": 2067237152.8451707
+  },
+  {
+   "chain": "solana",
+   "target": "SP12tWFxD9oJsVWNavTTBZvMbA6gkAmxtVgxdqvyvhY",
+   "adminKeyScore": 60,
+   "path": "program -> ProgramData Cn5feg\u2026 -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly)",
+   "holder": "47SND7bGKvNXrqfP1bjsLCbwTgZhFBzAgmZ42QSkRScz",
+   "programdata": "Cn5fegqLh8Fmvffisr4Wk3LmuaUgMMzTFfEuidpZFsvV",
+   "deployed_slot": 371704212,
+   "kind": "pda",
+   "deployed_at": "2025-10-07T03:05:26Z",
+   "since": "2026-10-10T06:54:09Z",
+   "multisigScore": 100,
+   "timelockScore": 0,
+   "posture": "admin: a program-derived address (not a Squads v4 vault); delay: unknown",
+   "shares_admin_with": [
+    {
+     "chain": "solana",
+     "target": "5ocnV1qiCgaQR8Jb8xWnVbApfaygJ8tNoZfgPwsgx9kx"
+    }
+   ],
+   "cluster_tvl_usd": 2067237152.8451707
+  }
+ ],
+ "what": "an independent reader (EVM: EIP-1967 admin slot then ProxyAdmin owner(), else owner(), else admin(); holder classified as EOA / Safe / timelock / contract. Solana: the program upgrade authority through ProgramData, classified as plain key / Squads multisig / immutable / program-owned account) against the published adminKeyScore; a disagreement is a finding to review, an unreadable target is not an agreement, a native target (no code at the address: a derived identifier for a non-EVM entity) is outside this reader's reach"
+}

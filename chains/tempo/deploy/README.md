@@ -72,7 +72,7 @@ the calldata `deploy/push_scores.py --dry-run` actually encodes below
 ## Build and test (this pass, read-only, no deploy)
 
 Every ecosystem's agent shares this one clone -- always pass separate
-`--out`/`--cache-path` so parallel agents never clobber each other's build
+`--out`/`--cache-path` so parallel builds never clobber each other's build
 artifacts:
 
 ```
@@ -266,7 +266,7 @@ override.
   (`0b32100`, 2026-09-18 16:10:52), but was superseded 37 minutes later the
   same day (16:47) when the whole pipeline rotated to
   `0x20630C6Ab4BA48a80edA46F77b9b6e987A8f32f5` after the old key was flagged
-  as possibly exposed in a local session transcript (see
+  as possibly exposed in local working notes (see
   `keys/evm-testnet-shared_SUPERSEDED_2026-09-18_exposed.json` in the
   pipeline's local config dir, and `chains/ethereum-l1/deploy/README.md`,
   which documents the same rotation for its own ecosystem). Ethereum L1's

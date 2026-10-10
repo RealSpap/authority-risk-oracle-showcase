@@ -7,7 +7,7 @@ fact is re-derived from scratch on two independent mainnet RPCs (never re-read
 from `scripts/lib/scorers.py`'s own logic), then compared with `getScore()`.
 `trackedTargetsCount()` is 58 going in and is still 58 after this run, because
 nothing was pushed: the 4 new targets are prepared for Spap to broadcast (rule
-of 2026-09-20 -- the agent prepares, the user pushes).
+of 2026-09-20 -- the tooling prepares, Spap pushes).
 
 ## Part 0 -- CORRECTION of this same run's first attempt
 
@@ -84,7 +84,7 @@ logic from this repo, reads every fact itself, transcribes the
 | EIP-1967 implementation and admin slots | both zero -- pure beacon proxy, the token holds no authority of its own |
 | Beacon | 2,332 bytes, `implementation()` = `0xb35490d6f9163DE4F80d88dc75c3516eb64C5aE2`; `owner()` reverts (not Ownable); `getRoleMemberCount()` reverts (not AccessControlEnumerable) |
 | `beacon.hasRole(DEFAULT_ADMIN_ROLE, 0xD6f8378F...5B66d)` | `true` |
-| Admin `0xD6f8378F8e440c65F8382F5f2728c78DfD55B66d` | **0 bytes of code** -- so a bare EOA, and specifically *not* an EIP-7702 delegation, which would leave 23 bytes beginning `0xef0100`. Nonce 2 |
+| Admin `0xD6f8…B66d` | **0 bytes of code** -- so a bare EOA, and specifically *not* an EIP-7702 delegation, which would leave 23 bytes beginning `0xef0100`. Nonce 2 |
 | Is that root a Safe? | `getOwners()` / `getThreshold()` return empty. (A call to a codeless address *succeeds* with empty returndata rather than reverting -- the first version of the check treated "no revert" as "getter exists" and wrongly classified the bare EOA as both a Safe and a timelock. Fixed: only non-empty returndata counts) |
 | Is there a timelock anywhere on the path? | `getMinDelay()` / `delay()` empty on the root, revert on the beacon -- none |
 
@@ -149,7 +149,7 @@ convention of scoring the root mechanism.
 |---|---|
 | Address source | `DefiLlama-Adapters/projects/unicrypt-v4/index.js`, `robinhood` entry, `lockers[0]`, `fromBlock` 20591817 |
 | Primary source cross-confirmed **by the contract itself** | `locker.positionManager()` = `0x58daec3116aae6D93017bAAea7749052E8a04fA7` = exactly the adapter's `nftAddress`. `poolManager()` = `0x8366a39C...0951` |
-| `owner()` | `0x31c44A17aa2E639B40f33DA805CB1DB55d969693` -- **the same Safe that already roots the tracked UNCX V3 locker** |
+| `owner()` | `0x31c4…9693` -- **the same Safe that already roots the tracked UNCX V3 locker** |
 | That Safe | real Gnosis Safe `VERSION()` 1.4.1, singleton `0x29fcb43b...c762`, **2-of-3**, nonce 7, `getModulesPaginated` empty, guard slot zero |
 | Owner-gated surface, from a 120-selector PUSH4 inventory of the runtime + simulation | `adminRescueTokens(address,address,uint256)`, `setMigrator(address)`, `setHookWhitelist(address,bool)`, `setFees`/`setFlatFee`/`setFeeAddresses`, `setBaseURI`. From an arbitrary address each reverts `OwnableUnauthorizedAccount`; from the Safe, `setMigrator` and `setHookWhitelist` pass and `adminRescueTokens` gets **past** the ownership gate (it reverts later on the fake token, `SafeERC20FailedOperation`) |
 | `MIGRATOR()` | zero address -- the migrate path is configured but **unarmed** today |
@@ -182,8 +182,8 @@ Two roots, both re-read live on both RPCs, identical on both:
 
 | Role | Address | What it is |
 |---|---|---|
-| operational owner of the V2 factory **and** of the V4 Vault | `0x3b2b572C56dD96B351ceB95c53e7EdB97BF42F14` | **bare EOA**, 0 bytecode (not a 7702 delegation), nonce 454 |
-| owner of the V4 PoolManager, owner of the V2 ProxyAdmin, and `pendingOwner` of the V4 Vault | `0x9DB42D3BDA1525963db3B2372C4DAABaf0491A53` | real Gnosis Safe 1.3.0, singleton `0x3e5c6364...d36e`, **3-of-7**, nonce 59, no module, guard slot zero |
+| operational owner of the V2 factory **and** of the V4 Vault | `0x3b2b…2F14` | **bare EOA**, 0 bytecode (not a 7702 delegation), nonce 454 |
+| owner of the V4 PoolManager, owner of the V2 ProxyAdmin, and `pendingOwner` of the V4 Vault | `0x9DB4…1A53` | real Gnosis Safe 1.3.0, singleton `0x3e5c6364...d36e`, **3-of-7**, nonce 59, no module, guard slot zero |
 
 **Orvex V4 Vault `0xFe7E25dE55e5cBbEcCcb661F3679F873f72B9b0D` -- the finding.**
 This is the contract that actually holds every Orvex V4 concentrated-liquidity
@@ -319,7 +319,7 @@ Limits, stated rather than glossed:
   `robinhoodchain.blockscout.com` is unchanged and was not bypassed. Every
   claim about what an owner can do rests on the deployed bytecode's selectors
   plus read-only `eth_call` simulation, never on source.
-* The adversarial-review step of `AGENTS.md` was done as a self-refutation pass
+* The adversarial-review step of the project's review rules was done as a self-refutation pass
   by the same agent, not by a separate refuting agent; this run had no way to
   spawn one.
 * 6 addresses already in `signer_overlap.GROUPS` before this change are stored

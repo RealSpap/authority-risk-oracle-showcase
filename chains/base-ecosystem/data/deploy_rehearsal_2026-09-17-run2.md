@@ -20,7 +20,7 @@ Deployer address: `0xA08a76457b758aFF9702dBf5b870679E1232B715`
 (`keys/evm-testnet-shared.json`; private key never printed, logged, or
 written to this repo). Still 0 wei, same as the morning's finding. No
 faucet used (all listed Base Sepolia faucets require a captcha or an
-account login, both explicitly out of scope for an agent).
+account login, both done by hand).
 
 ## 2. Build and test (fresh out/cache dirs, this pass)
 

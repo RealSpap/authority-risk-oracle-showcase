@@ -47,7 +47,7 @@ Sentora-branded vaults.
   live-checked, `Steakhouse Prime EURCV/USDC/USDT/High Yield/Confidential Prime/ETH` ($437.1M
   combined) all read `owner()` as a single verified `VaultV2Supervisor` contract
   (`0x4D7bd498Bb24098Ca281C05519629c605407f71d`), whose OWN `owner()` is
-  **the exact same Steakhouse Safe (`0x0A0e559bc3b0950a7e448F0d4894db195b9cf8DD`, 5-of-10) this oracle
+  **the exact same Steakhouse Safe (`0x0A0e…f8DD`, 5-of-10) this oracle
   already tracks as the owner of 4 Morpho V1 vaults on Ethereum L1 and Base**
   (`scripts/lib/controller_concentration.py`, built earlier today). Not a coincidence discovered by
   re-running the same tool twice -- a genuinely new connection, directly extending this morning's own
@@ -58,7 +58,7 @@ Sentora-branded vaults.
 
   The other 2 non-Safe owners were chased the same one hop and genuinely do NOT lead to a Safe --
   disclosed as still open, not guessed at: **Robinhood Chain's Steakhouse USDG ($501.5M)** owner
-  resolves, one hop in, to a bare EOA (`0x337feFE49514fb901eB455A501b8Be76CDeF7660`) -- a real,
+  resolves, one hop in, to a bare EOA (`0x337f…7660`) -- a real,
   verified finding (a single key, not a multisig, behind Robinhood Chain's largest tracked V2
   exposure), not an unresolved mystery. **Sentora x Spark RLUSD ($250.0M)**'s owner is a verified
   `SubProxy` contract (`0x3300f198988e4C9C63F75dF86De36421f06af8c4`) whose own `owner()` call returns

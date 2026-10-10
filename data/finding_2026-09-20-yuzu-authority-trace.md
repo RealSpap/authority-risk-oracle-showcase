@@ -26,8 +26,8 @@ admin; the OZ4 hash is not even in their bytecode. Nothing was unresolved.
 | ProxyAdmins (one per token) | e.g. yzUSD `0x6ccfD86e...D2Aa` | `owner()` = T2: only T2 can upgrade the logic |
 | T2 | `0x2130457539612AE9838E0314cDa1A8abBdb7CFBc` | OZ5 TimelockController, delay 172,800s (2 days); only proposer Safe S2 |
 | T1 | `0x5f3D29Ef17700F8658C566dac7fbd76E0d86B78C` | OZ5 TimelockController, delay **43,200s (12 hours)**; holds `ADMIN_ROLE` on every token; only proposer Safe S1 |
-| S1 | `0xe61ad2De346db42879B6ee3c7cF0C6a2cDC0530d` | Gnosis Safe **3-of-5** |
-| S2 | `0xa2a9700407934e913C840556B3D29F19cf6f203d` | Gnosis Safe **4-of-5**, the SAME five bare-EOA owners as S1 (verified as sets) |
+| S1 | `0xe61a…530d` | Gnosis Safe **3-of-5** |
+| S2 | `0xa2a9…203d` | Gnosis Safe **4-of-5**, the SAME five bare-EOA owners as S1 (verified as sets) |
 
 `S1` also holds `POOL_MANAGER_ROLE` and `DISTRIBUTOR_ROLE` on yzPP, and `POOL_MANAGER_ROLE` on syzUSDx,
 DIRECTLY, with no delay. Neither timelock has a bypass: byte-identical 5,448-byte OZ5 code, all 28

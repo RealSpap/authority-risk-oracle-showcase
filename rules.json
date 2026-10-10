@@ -1,0 +1,111 @@
+{
+ "version": 1,
+ "about": "Alert rules on CHANGES (a static condition such as 'score under 20' is already the dashboard sorted by at-risk; these fire when something moves), evaluated by scripts/evaluate_rules.py at every watch run. Fork this file: each rule is a name, a plain condition over the fields below, and a severity. Fields: score (0-100), delta (change since the previous run, null if none), stale (true/false), tvl_usd (DefiLlama, null if not matched), at_risk_usd (tvl \u00d7 (100 - score) / 100), admin, multisig, timelock, price_feed, shared (the five sub-scores), chain, title. From the timelock queue: queued_ops (operations queued against this contract), ready_in_hours (until the earliest executes; negative = ready now), executed_14d. Per-axis change since the previous run: admin_delta, multisig_delta, timelock_delta (null on the first run). From the independent reader (scripts/second_opinion.py): second_opinion ('agree', 'disagree', 'reviewed', 'unreadable', 'native', null when not read) admin_changed (true when the live admin read moved since the previous run) shared_admin (how many other tracked contracts the same holder governs, null when not read) and age_days (days since the score was last pushed on-chain; the oracles mark it stale at 9). Operators: <, <=, >, >=, ==, !=, + and -, and/or/not, parentheses. The dashboard evaluates the same syntax in the browser with two extra fields (held, starred) and without not; a null compares false here.",
+ "rules": [
+  {
+   "name": "score dropped by 10 or more",
+   "when": "delta != null and delta <= -10",
+   "severity": "high"
+  },
+  {
+   "name": "score fell under 40",
+   "when": "delta != null and score < 40 and score - delta >= 40",
+   "severity": "medium"
+  },
+  {
+   "name": "score improved by 10 or more",
+   "when": "delta != null and delta >= 10",
+   "severity": "info"
+  },
+  {
+   "name": "delay removed: timelock score fell to 0",
+   "when": "timelock_delta != null and timelock_delta < 0 and timelock == 0",
+   "severity": "high"
+  },
+  {
+   "name": "a queued change against this contract executes within 48 h",
+   "when": "queued_ops > 0 and ready_in_hours != null and ready_in_hours <= 48 and ready_in_hours > 0",
+   "severity": "medium"
+  },
+  {
+   "name": "a queued change against this contract is ready to execute now",
+   "when": "queued_ops > 0 and ready_in_hours != null and ready_in_hours <= 0",
+   "severity": "high"
+  },
+  {
+   "name": "the live admin of this contract changed since the previous run (independent read)",
+   "when": "admin_changed",
+   "severity": "high"
+  },
+  {
+   "name": "the independent reader disagrees with the admin-key score, with money behind it",
+   "when": "second_opinion == 'disagree' and tvl_usd != null and tvl_usd >= 10000000",
+   "severity": "medium"
+  },
+  {
+   "name": "score pushed more than 7 days ago (the oracle marks it stale at 9)",
+   "when": "age_days != null and age_days >= 7 and not stale",
+   "severity": "info"
+  },
+  {
+   "name": "the score is under public dispute (data/disputes.json), review pending",
+   "when": "dispute == 'open'",
+   "severity": "info"
+  },
+  {
+   "name": "an upgrade was executed: the implementation behind this contract changed since the previous run",
+   "when": "upgraded",
+   "severity": "high"
+  },
+  {
+   "name": "an admin transfer is in flight: a new owner or admin is designated and has not accepted yet (pendingOwner / pendingAdmin)",
+   "when": "admin_pending",
+   "severity": "medium"
+  },
+  {
+   "name": "the contract's own balance fell by 30% to 70% since the previous run (totalAssets(), token units, $1M or more gone)",
+   "when": "held_drop_pct != null and held_drop_pct >= 30 and held_drop_pct < 70 and held_drop_usd != null and held_drop_usd >= 1000000",
+   "severity": "medium"
+  },
+  {
+   "name": "the contract's own balance fell by 70% or more since the previous run (totalAssets(), token units, $1M or more gone)",
+   "when": "held_drop_pct != null and held_drop_pct >= 70 and held_drop_usd != null and held_drop_usd >= 1000000",
+   "severity": "high"
+  },
+  {
+   "name": "the contract reported its own balance (totalAssets()) in a previous run and no longer does",
+   "when": "held_vanished",
+   "severity": "medium"
+  },
+  {
+   "name": "the contract has been paused since the previous run (paused() or isPaused() now true)",
+   "when": "pause_change == 'paused'",
+   "severity": "high"
+  },
+  {
+   "name": "the contract is no longer paused (paused() or isPaused() now false)",
+   "when": "pause_change == 'unpaused'",
+   "severity": "info"
+  },
+  {
+   "name": "a secondary role of the contract (curator, guardian, pauser) changed hands, was set or was cleared, or a change of guardian or of delay is announced",
+   "when": "side_role_change",
+   "severity": "medium"
+  },
+  {
+   "name": "the contract's own delay is announced to get shorter (pendingTimelock() lower than timelock()): less time to react to the owner",
+   "when": "side_delay_cut",
+   "severity": "high"
+  },
+  {
+   "severity": "medium",
+   "name": "the Safe that governs this contract, observed idle for 14 days or more, executed a transaction (nonce moved), with money behind it",
+   "when": "safe_woke and tvl_usd != null and tvl_usd >= 10000000"
+  }
+ ],
+ "notify": {
+  "min_severity": "medium",
+  "telegram": "TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID repository secrets",
+  "discord": "DISCORD_WEBHOOK_URL repository secret"
+ }
+}

@@ -1,0 +1,59 @@
+{
+ "evaluated_utc": "2026-10-09T06:51:41Z",
+ "run_utc": "2026-10-08T18:00:14Z",
+ "rules": [
+  "score dropped by 10 or more",
+  "score fell under 40",
+  "score improved by 10 or more",
+  "delay removed: timelock score fell to 0",
+  "a queued change against this contract executes within 48 h",
+  "a queued change against this contract is ready to execute now"
+ ],
+ "active": [
+  {
+   "rule": "a queued change against this contract is ready to execute now",
+   "severity": "high",
+   "chain": "Ethereum L1",
+   "target": "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34",
+   "title": "Ethena USDe",
+   "score": 57,
+   "delta": 0,
+   "tvl_usd": 4861030002.784874,
+   "first_seen": "2026-10-08T18:04:19Z",
+   "new": false,
+   "evidence": [
+    {
+     "timelock": "Ethena Timelock",
+     "timelock_address": "0xE8Dc0Fab349EA169283C48Ccfd09d797E6DB7c94",
+     "family": "oz",
+     "id": "0xfd2d417d107a3e75cafe55dbbd57e36d799ff59b5e9b9d4d948f028073b47d36",
+     "chain": "ethereum",
+     "tx": "0x2fa0bb4d0d84907ce418fd123c1a7e785c3268fda3baa57bdd3cb3991db96ad1",
+     "selector": "0x46f943e9",
+     "signature": "setRateLimits",
+     "ready_at": 1791446531,
+     "state": "waiting"
+    }
+   ],
+   "previous_run": "2026-10-08T12:37:40Z",
+   "notified": true
+  }
+ ],
+ "history": [
+  {
+   "key": "a queued change against this contract is ready to execute now|ethereum-l1:0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34",
+   "rule": "a queued change against this contract is ready to execute now",
+   "severity": "high",
+   "chain": "Ethereum L1",
+   "target": "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34",
+   "title": "Ethena USDe",
+   "first_seen": "2026-10-08T18:04:19Z",
+   "last_seen": "2026-10-09T06:51:41Z",
+   "times": 5,
+   "score": 57,
+   "delta": 0,
+   "tvl_usd": 4861030002.784874
+  }
+ ],
+ "errors": []
+}

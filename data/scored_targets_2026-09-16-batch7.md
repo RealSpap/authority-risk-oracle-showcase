@@ -40,12 +40,12 @@ project.
 
 **Every root signer set was re-derived live this pass**, including cases not
 previously fully resolved:
-- NetNet Credit's 1-of-1 Safe sole signer: `0xe7e867518C5B3d929CA63622f314FF9Dc60E96f6`.
-- Ramses' "Team Multisig" sole signer: `0xbE0ca442D6B7D81E0FAa7dbFd09331019F893f89`
+- NetNet Credit's 1-of-1 Safe sole signer: `0xe7e8…96f6`.
+- Ramses' "Team Multisig" sole signer: `0xbE0c…3f89`
   (confirmed a bare EOA).
 - Longbow's owner/curator Safe addresses (never individually recorded before):
-  `0x396ae0BD5623c3750e15fd222770F1e972153ED4` (owner) and
-  `0xe600452658762042749eb8e11955542B7EBeA4Bb` (curator), on the Core vault --
+  `0x396a…3ED4` (owner) and
+  `0xe600…A4Bb` (curator), on the Core vault --
   confirmed identical 3 owners, 2-of-3, matching the finding already
   documented for all three vaults in batch 5.
 - The L1 rollup's 7-of-8 Safe: `0x7Ae50886c7EA0394613aa7Dcc287a5c9650784b6`,
@@ -61,7 +61,7 @@ previously fully resolved:
 ## The one real overlap found
 
 **Morpho Steakhouse USDG vault and Morpho Ethena x Steakhouse USDG vault share
-the identical curator Safe** (`0x9023FBD6A08C666491A2d1648737E400cF42D2Fb`,
+the identical curator Safe** (`0x9023…D2Fb`,
 3-of-7) -- all 7 owners appear on both groups' root signer sets. Both targets'
 `crossExposureScore` drops from 100 to **80** (one shared group).
 

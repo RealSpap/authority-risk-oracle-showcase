@@ -21,7 +21,7 @@ Live, on two independent RPCs (publicnode and drpc), Ethereum mainnet:
 
 - `PoolAddressesProvider(0x2f39d218...4E9e).owner()` = Executor `0x5300A1a1...192A`
 - `Executor.owner()` = PayloadsController `0xdAbad81a...AEc5`
-- `PayloadsController.guardian()` = Safe `0xCe52ab41C40575B072A18C9700091Ccbe4A06710`
+- `PayloadsController.guardian()` = Safe `0xCe52…6710`
 - that Safe is **5-of-9** and its 9 owners are **identical** to
   `_KNOWN_AAVE_GUARDIAN_OWNERS_2026_09_17` (the frozenset the Arbitrum, Base,
   Plasma and Monad scorers compare against).
@@ -70,7 +70,7 @@ comment), and the Plasma card in `dashboard/index.html`.
 `scripts/lib/scorers.py::score_arcus_perps_bridgevault`'s docstring,
 `scripts/lib/signer_overlap.py` (`known_eoa`) and
 `data/rotation_audit_2026-09-19-robinhood-chain-index11.md` all say the address
-`0x4f1d777bf36E259F3cB66f2cE969f4c5De05ebe2` (on the BridgeVault timelock's
+`0x4f1d…ebe2` (on the BridgeVault timelock's
 proposer/executor/canceller roles, and one of the 3 owners of the Arcus pToken
 2-of-3 Safe) is "exactly one EOA". Re-read by hand on both Robinhood mainnet
 RPCs: it has 171 bytes of code and is a **2-of-4 Gnosis Safe**. The
@@ -120,8 +120,8 @@ Original list, as found:
   `PAUSE_GUARDIAN` or these addresses. Read live (`getRoleMember`) on each chain's
   factory Governor (Monad `0x515C9ff6...`, Plasma `0x939cA204...`): three holders,
   the Labs 2-of-6 Safe (a different address per chain) plus **the same two bare
-  EOAs on both chains**, `0xff217004BdD3A6A592162380dc0E6BbF143291eB` and
-  `0xcC6451385685721778E7Bd80B54F8c92b484F601`. `eth_call` simulation on both
+  EOAs on both chains**, `0xff21…91eB` and
+  `0xcC64…F601`. `eth_call` simulation on both
   chains, no transaction: `pause(eVaultFactory)` from either EOA alone does not
   revert; from a random address it reverts with the access-control error. Effect:
   every upgradeable vault goes read-only, no timelock involved, so `timelockScore`

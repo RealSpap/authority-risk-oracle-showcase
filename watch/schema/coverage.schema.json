@@ -1,0 +1,88 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "watch/coverage.json v1",
+ "type": "object",
+ "required": [
+  "generated_utc",
+  "chains"
+ ],
+ "properties": {
+  "generated_utc": {
+   "type": "string"
+  },
+  "chains": {
+   "type": "object",
+   "additionalProperties": {
+    "type": "object",
+    "required": [
+     "targets",
+     "independent_read",
+     "proxies_fingerprinted",
+     "safes",
+     "timelocks_in_admin_path",
+     "timelock_queues_watched",
+     "tvl_matched",
+     "blind_spots"
+    ],
+    "properties": {
+     "targets": {
+      "type": "integer"
+     },
+     "independent_read": {
+      "type": "object",
+      "required": [
+       "readable",
+       "unreadable",
+       "native"
+      ]
+     },
+     "proxies_fingerprinted": {
+      "type": "integer"
+     },
+     "safes": {
+      "type": "integer"
+     },
+     "safes_modules_read": {
+      "type": "integer"
+     },
+     "timelocks_in_admin_path": {
+      "type": "integer"
+     },
+     "timelock_queues_watched": {
+      "type": "integer"
+     },
+     "safe_events": {
+      "type": [
+       "object",
+       "null"
+      ]
+     },
+     "tvl_matched": {
+      "type": "integer"
+     },
+     "blind_spots": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     },
+     "pause_answered": {
+      "description": "contracts of this chain that answer paused() or isPaused() (non-stale records); null when pause_state.json is missing: not read, never zero"
+     },
+     "roles_read": {
+      "description": "contracts with a secondary role (pauser, guardian, curator ...) read by side_roles.json; null when the file is missing"
+     },
+     "admin_safes_nonce_read": {
+      "description": "admin Safes of this chain whose nonce was read (safe_activity.json, non-stale); null when the file is missing"
+     },
+     "admin_role_probed": {
+      "description": "unreadable contracts of this chain probed for their admin role (admin_probe.json); null when the file is missing"
+     },
+     "held_read": {
+      "description": "contracts with a money figure from their own totalAssets() instead of a DefiLlama protocol"
+     }
+    }
+   }
+  }
+ }
+}

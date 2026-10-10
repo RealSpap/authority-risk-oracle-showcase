@@ -10,7 +10,7 @@ while designing a test fixture, independently re-traced and confirmed by a
 separate adversarial-verify agent against the real source before this file
 was written up. Not fixed here -- a change to this module's scoring
 algorithm needs its own adversarial review before committing, per
-`AGENTS.md`'s "Before committing" section; `scripts/lib/signer_overlap.py`
+the project's review rules' "Before committing" section; `scripts/lib/signer_overlap.py`
 is unmodified by this finding.
 
 ## The gap

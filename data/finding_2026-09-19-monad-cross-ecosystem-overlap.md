@@ -20,7 +20,7 @@ since each only ever reads its own chain.
 `chains/monad/scorers.py::score_curve_monad()`'s target are BOTH:
 
 - Same factory address: `0x8271e06E5887FE5ba05234f5315c19f3Ec90E8aD`
-- Same admin EOA: `0xabc336d4C71ad275695744d32DdB1d8266Db1cbF`
+- Same admin EOA: `0xabc3…1cbF`
 
 Independently re-confirmed live against both chains (`eth_call admin()` on
 Robinhood Chain mainnet and Monad mainnet, both returning the identical
@@ -109,7 +109,7 @@ committee snapshot.
   `0x020cf83c8a007afaef0eadf7ecb271432c80f1ffd9bfafed984ab6eca17c4978`, block 121,858,777). The `steakhouse*` groups
   were not flagged: their within-Robinhood value (40) is already below the cross-ecosystem cap of 80, and
   the cap never raises a score. The stale-oracle bullet above was closed the same day: the two Monad
-  `crossExposureScore` drifts were re-pushed (tx `0xd65b649d...9e35`, per `SUBMISSION.md`, "Live per-oracle
+  `crossExposureScore` drifts were re-pushed (tx `0xd65b649d...9e35`, per the hackathon submission text, "Live per-oracle
   counts"). See
   `data/finding_2026-09-20-cross-exposure-convention-and-score-adjustments.md`.
 - ~~No other ecosystem's `GROUPS` was audited for a similar EOA-vs-EOA or

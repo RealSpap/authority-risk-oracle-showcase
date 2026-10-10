@@ -29,7 +29,7 @@ through `score_uniswap_v2_factory_feetosetter()`'s own cached logic.
 | Check | RPC A result | RPC B result |
 |---|---|---|
 | `eth_getCode` length (factory) | 13,859 bytes (real deployed code) | identical |
-| `feeToSetter()` | `0x2BAD8182C09F50c8318d769245beA52C32Be46CD` | identical |
+| `feeToSetter()` | `0x2BAD…46CD` | identical |
 | `feeTo()` | `0x2aC03e14Cfe755426DaAEe0a4994184Ce81482F8` | identical |
 | `allPairsLength()` | 47,242 | identical |
 | `eth_getCode` length (feeToSetter) | 0 bytes (bare EOA) | identical |
@@ -42,9 +42,9 @@ trusting the prior correction:
 
 ```
 computed_alias = (int(UNISWAP_L1_TIMELOCK, 16) + 0x1111...1111) mod 2**160
-UNISWAP_L1_TIMELOCK = 0x1a9C8182C09F50c8318d769245bEA52c32BE35BC
-computed_alias  = 0x2BAD8182C09F50c8318d769245beA52C32Be46CD
-resolved_root   = 0x2BAD8182C09F50c8318d769245beA52C32Be46CD
+UNISWAP_L1_TIMELOCK = 0x1a9C…35BC
+computed_alias  = 0x2BAD…46CD
+resolved_root   = 0x2BAD…46CD
 match: True
 ```
 
@@ -93,11 +93,11 @@ and `unicrypt-v4/index.js` (`robinhood` entries): V3 locker
 `0xF28704c691290547924e2129D407dA36bda8ce0f`, V4 locker
 `0x128A800cBc615cc110Bff16E475865c67631603A`. Confirmed live on both RPCs:
 both lockers' `owner()` resolve to the exact SAME real Gnosis Safe
-(`0x31c44A17aa2E639B40f33DA805CB1DB55d969693`, 171 bytes, confirmed
+(`0x31c4…9693`, 171 bytes, confirmed
 `getOwners()`/`getThreshold()` = 2-of-3, owners
-`['0x85BD8EBF668e598DC7caF76Fc78cBB644a199579',
-'0xcF936235d2f60809D328a7DA6AD630056d477E58',
-'0xB3FAbECA3A6dBbc9a88109182d0E333295825385']`, identical on both RPCs).
+`['0x85BD…9579',
+'0xcF93…7E58',
+'0xB3FA…5385']`, identical on both RPCs).
 
 That much is solid. What blocked scoring it this run: this project's own
 discipline (see `score_morpho_blue_singleton()`, `data/scored_targets_2026-09-18-batch12.md`'s
@@ -184,7 +184,7 @@ first several `tokenId`s spot-checked via `positions()` all show real
 nonzero `liquidity` (e.g. token 7: `liquidity=36819258015569838458222`),
 identical on both RPCs.
 
-`owner()` = `0x7E035Fb048a31e0481b88074557415b1C187242B`, identical on both
+`owner()` = `0x7E03…242B`, identical on both
 RPCs, 0 bytecode (bare EOA) on both. Nonce 45 / balance
 0.0488 native token on both RPCs -- a real, actively-used key, not a
 dormant/vanity address.
@@ -203,7 +203,7 @@ _composite(5, 0, 0) = 2`.
 `crossExposureScore` independently re-derived live via
 `compute_cross_exposure()` after wiring a new `noxa_fun` group into
 `scripts/lib/signer_overlap.py` (`known_eoa:
-["0x7E035Fb048a31e0481b88074557415b1C187242B"]`): **100** -- this EOA does
+["0x7E03…242B"]`): **100** -- this EOA does
 not appear in any other tracked signer-overlap group. Re-checked that this
 is the ONLY effect of wiring the new group in: spot-checked 9 pre-existing
 groups (`ekubo`, `steakhouse`, `spark_savings` x2, `curve`,
@@ -221,7 +221,7 @@ degraded case, unresolved-owner degraded case). Full suite: 464 tests pass
 
 `python3 scripts/validate_all_scorers.py --ecosystem robinhood-chain` was
 not run this pass (same pre-existing 300-second per-ecosystem timeout gap
-for this specific slow ecosystem already documented in `AGENTS.md`'s
+for this specific slow ecosystem already documented in the project's review rules'
 `--skip robinhood-chain,tempo` note). Not treated as a passing result and
 not substituted with a fabricated one -- the live 2-RPC re-derivation, the
 hand-verified expected tuple match immediately before sending (below), and

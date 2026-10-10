@@ -4,7 +4,7 @@
 
 `score_uniswap_v3_factory`, `score_uniswap_v4_poolmanager`, `score_uniswapx_reactor`,
 and `score_uniswap_v2_factory_feetosetter` all resolve `owner()`/`feeToSetter()` to
-`0x2BAD8182C09F50c8318d769245beA52C32Be46CD`. Since batch 4, this project has
+`0x2BAD…46CD`. Since batch 4, this project has
 described that address in `scorers.py`, `dashboard/index.html`, and `README.md` as a
 "vanity-ground bare EOA" built to resemble Uniswap's real governance address closely
 enough to fool anyone skimming a truncated address -- implying a compromised or
@@ -14,9 +14,9 @@ That characterization is **wrong**.
 
 ## What's actually true, re-verified today (not just recalled)
 
-`0x2BAD8182C09F50c8318d769245beA52C32Be46CD` is the **legitimate Arbitrum L1->L2
+`0x2BAD…46CD` is the **legitimate Arbitrum L1->L2
 address alias** of Uniswap's real Ethereum-mainnet Governance Timelock,
-`0x1a9C8182C09F50c8318d769245bEA52c32BE35BC`. The Arbitrum canonical-bridge aliasing
+`0x1a9C…35BC`. The Arbitrum canonical-bridge aliasing
 formula is deterministic, not a coincidence:
 
 ```
@@ -29,7 +29,7 @@ Re-derived exactly today:
 l1 = int('1a9C8182C09F50c8318d769245bEA52c32BE35BC', 16)
 offset = int('1111000000000000000000000000000000001111', 16)
 alias = (l1 + offset) % (2**160)
-# -> 0x2bad8182c09f50c8318d769245bea52c32be46cd  (matches, case-insensitive)
+# -> 0x2bad…46cd  (matches, case-insensitive)
 ```
 
 Live bytecode check today (`eth_getCode`, both addresses, 2026-09-16):

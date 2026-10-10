@@ -6,7 +6,7 @@ Investigated via a dedicated Explore pass, cross-checked independently
 against the real source before writing this up. Pure investigation --
 **no scorer file is modified by this finding.** A fix touches published
 scores across (potentially) three ecosystems and needs this project's
-own adversarial-review discipline before committing, per `AGENTS.md`'s
+own adversarial-review discipline before committing, per the project's review rules'
 "Before committing" section -- not attempted here.
 
 ## The pattern, and why it matters
@@ -19,7 +19,7 @@ degraded/unresolved fallback scores HIGHER (safer-looking) than this
 same file's own confirmed-weakest real authority (a bare 1-of-1 EOA or
 Safe). An oracle whose "I don't know" answer looks safer than its own
 worst *confirmed* answer defeats the fail-closed principle this project
-states everywhere else (see AGENTS.md's verification-discipline section:
+states everywhere else (see the project's review rules' verification-discipline section:
 "a getter succeeding is not evidence of real gating").
 
 ## Solana (`chains/solana/scorers.py`) -- the dominant case, 21 sites

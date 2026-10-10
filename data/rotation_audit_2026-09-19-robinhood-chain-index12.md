@@ -36,14 +36,14 @@ AccessControl -- not through `score_arcus_ptoken()`'s own cached logic.
 | EIP-1967 implementation slot (own storage) | zero (no direct impl -- routed via the beacon) | identical |
 | EIP-1967 admin slot (own storage) | zero (no transparent-proxy admin -- beacon-governed) | identical |
 | `eth_getCode` length (beacon `0x33846348...73A76`) | 590 bytes | identical |
-| `beacon.owner()` | `0x81B80499C396a9931b9e44953425a82C1b2541bd` | identical |
+| `beacon.owner()` | `0x81B8…41bd` | identical |
 | `eth_getCode` length (beacon owner) | 171 bytes (real contract, not an EOA) | identical |
 | `getOwners()` on beacon owner | `['0x4f1d777b...05ebe2', '0x57D32496...4f5b78', '0xEAb7F386...f989d7']` | identical |
 | `getThreshold()` on beacon owner | 2 | identical |
 | Safe `getModulesPaginated()` | `[]` (no modules) | identical |
 | Safe guard storage slot (`keccak256("guard_manager.guard.address")`, computed live) | `0x0` (no guard) | identical |
 | factory `getRoleMemberCount(DEFAULT_ADMIN_ROLE)` (independent 2nd trace of the SAME root, via the factory's own AccessControl rather than the beacon) | 1 | identical |
-| factory `getRoleMember(DEFAULT_ADMIN_ROLE, 0)` | `0x81B80499C396a9931b9e44953425a82C1b2541bd` (same Safe) | identical |
+| factory `getRoleMember(DEFAULT_ADMIN_ROLE, 0)` | `0x81B8…41bd` (same Safe) | identical |
 
 Confirms both halves of the original finding, independently, from scratch,
 for THIS specific target (index 12 is the pBTC3x token itself, the last
@@ -183,7 +183,7 @@ fabricated as already covered).
 work for this pass; the scorer itself only does a live `hasRole()` check
 going forward, the same `known_admin` convention `score_stock_token()`
 already uses): `DEFAULT_ADMIN_ROLE` granted exactly once, at deployment
-(block 16593422), to `0x65D02Bb13f515DD105Fb733E9E31f11A2F65e57f`, never
+(block 16593422), to `0x65D0…e57f`, never
 revoked. The SAME address self-granted itself 47 other narrower,
 function-level roles at deployment (block 16593422/16593820/16594138), later
 revoking 6 of those 47 from itself (a real partial self-hardening event,
@@ -226,7 +226,7 @@ re-run: 527 tests pass (`python3 -m unittest discover -s scripts/lib/tests`).
 
 `python3 scripts/validate_all_scorers.py --ecosystem robinhood-chain` was
 not run this pass (same pre-existing 300-second per-ecosystem timeout gap
-for this specific slow ecosystem already documented in `AGENTS.md`). Not
+for this specific slow ecosystem already documented in the project's review rules). Not
 treated as a passing result and not substituted with a fabricated one --
 the live 2-RPC re-derivation, the hand-verified expected tuple match
 immediately before sending (below), and the full unit-test suite are what

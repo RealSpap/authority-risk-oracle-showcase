@@ -40,7 +40,7 @@ SAFE_ECOSYSTEMS = ["ethereum-l1", "arbitrum", "base", "plasma", "robinhood"]
 NOT_ATTEMPTED = {"tempo": "public RPC returned no control events", "monad": "public RPC caps eth_getLogs near 100 blocks",
                  "hyperliquid": "public RPC rate-limits the query"}
 ACK_FILE = os.path.join(HERE, "..", "data", "digest_acknowledged.json")
-FRESH_LINE = re.compile(r"^\s+(?P<name>.+?)\s+(?P<n>\d+) targets, oldest update (?P<oldest>.+?), first entry turns stale in (?P<hours>[\d.]+) h \((?P<when>.+?)\)")
+FRESH_LINE = re.compile(r"^\s+(?P<name>.+?)\s+(?P<n>\d+) targets, oldest update (?P<oldest>.+?), first entry (?:turns stale in (?P<hours>[\d.]+) h \((?P<when>.+?)\)|STALE since (?P<since>.+?))\s*$")   # both forms the freshness script prints: turning stale, or already stale
 ACT_NOW_HOURS = 96
 
 
@@ -75,15 +75,30 @@ def freshness():
     return rows, []
 
 
+SHORTER = []   # ecosystems read over a shorter window than asked (a chain that serves only short log ranges), named in the digest
+
+
 def safe_changes(days):
     findings, unread = [], []
     for eco in SAFE_ECOSYSTEMS:
         r = check_safe_changes.check_ecosystem(eco, REGISTRIES[eco][1], days, 1200)
+        if r.get("days_read") is not None and r["days_read"] < days: SHORTER.append(f"{eco} ({r['days_read']} d)")
         if r["status"].startswith("UNREAD"):
             unread.append(f"Safe changes, {eco}: {r['status']}")
             continue
         findings += [(eco, e) for e in rank(r["events"])]
     return findings, unread
+
+
+def discovered_from_file(path="watch/pending_ops.json"):
+    """The timelocks the independent reader found (scripts/pending_ops_discovered.py), as the last run left them in the file: their
+    pending and recent operations join the digest without a second scan."""
+    try: rs = [r for r in json.load(open(path)).get("results", []) if r.get("discovered")]
+    except Exception: return [], [], []  # noqa: BLE001 -- no file, nothing to add
+    act = [(r["name"], p) for r in rs if r.get("status") == "ok" for p in r.get("pending", []) if p.get("state") != "expired"]
+    recent = [(r["name"], p) for r in rs if r.get("status") == "ok" for p in r.get("recent", [])]
+    unread = [f"Timelock queue, {r['name']}: {r['status']}" for r in rs if r.get("status") != "ok"]
+    return act, recent, unread
 
 
 def pending(recent_days):
@@ -95,6 +110,7 @@ def pending(recent_days):
             continue
         act += [(r["name"], p) for p in r["pending"] if p["state"] != "expired"]
         recent += [(r["name"], p) for p in r["recent"]]
+    a2, r2, u2 = discovered_from_file(); act += a2; recent += r2; unread += u2
     return act, recent, unread
 
 
@@ -123,10 +139,25 @@ def signer_kinds():
     return code, bad, head
 
 
+def queue_section(path):
+    """The review queue (watch/review_queue.md, written earlier in the same run) as the first section of the report, so the one page a person reads says what needs them. [] when no path is
+    given; a line saying it was not read when the file is missing: the absence of a list must not read as an empty list."""
+    if not path: return []
+    try: text = open(path, encoding="utf-8").read().strip()
+    except OSError: return ["## Needs a person: not read (%s is missing this run)" % os.path.basename(path), ""]
+    return [text, ""] if text else ["## Needs a person: not read (%s is empty)" % os.path.basename(path), ""]
+
+
+def with_queue(out, path):
+    """out = the report's lines starting with its title: the queue goes right after the title and its blank line."""
+    return out[:2] + queue_section(path) + out[2:]
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--days", type=int, default=7)
     ap.add_argument("--out")
+    ap.add_argument("--queue", help="watch/review_queue.md: put what needs a person at the top of the report")
     args = ap.parse_args()
     now = time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime())
     out = [f"# Authority risk digest, {now}", ""]
@@ -136,19 +167,21 @@ def main():
     unread += u
     out.append("## Act now: oracles turning stale")
     if rows:
+        for r in rows: r["hours"] = r["hours"] or "0"   # already stale reads as 0 h left
         soon = sorted((r for r in rows if float(r["hours"]) <= ACT_NOW_HOURS * 2.5), key=lambda r: float(r["hours"]))
         for r in soon:
             urgent = float(r["hours"]) <= ACT_NOW_HOURS
             findings += urgent
-            out.append(f"- {'**ACT NOW** ' if urgent else ''}{r['name']}: {r['n']} targets, first entry turns stale in {float(r['hours']):.0f} h ({r['when']}); oldest update {r['oldest']}")
+            if r.get("since"): out.append(f"- **ACT NOW** {r['name']}: {r['n']} targets, first entry already stale since {r['since']}; oldest update {r['oldest']}")
+            else: out.append(f"- {'**ACT NOW** ' if urgent else ''}{r['name']}: {r['n']} targets, first entry turns stale in {float(r['hours']):.0f} h ({r['when']}); oldest update {r['oldest']}")
         if not soon:
             out.append("- none within 10 days")
     else:
-        out.append("- not read")
+        out.append("- not read this run: the freshness script did not return every oracle line; the dashboard shows the live staleness of each oracle")
 
     sc, u = safe_changes(args.days)
     unread += u
-    out += ["", f"## Safe authority changes, last {args.days} days"]
+    out += ["", f"## Safe authority changes, last {args.days} days" + (f" (shorter window on: {', '.join(SHORTER)})" if SHORTER else "")]
     ack = load_ack()
     new_sc = [(eco, e) for eco, e in sc if not acknowledged(e["tx"], ack)]
     known_sc = [(eco, e, acknowledged(e["tx"], ack)) for eco, e in sc if acknowledged(e["tx"], ack)]
@@ -166,8 +199,10 @@ def main():
 
     out += ["", "## Timelock queue"]
     findings += len(act)
-    out += [f"- **executable or waiting** {n}: {p['target']} {fn(p)} ready at {time.strftime('%Y-%m-%d %H:%M', time.gmtime(p['ready_at']))}Z ({p['state']})" for n, p in act] or ["- nothing pending on the 6 watched timelocks"]
-    out += [f"- cleared, queued {time.strftime('%Y-%m-%d', time.gmtime(p['queued_at']))}: {n} -> {p['target']} {fn(p)}" for n, p in recent if not p["still_queued"]]
+    def once(lines):   # the same operation can be listed by two watch entries: one line each
+        seen = set(); return [l for l in lines if not (l in seen or seen.add(l))]
+    out += once([f"- **executable or waiting** {n}: {p['target']} {fn(p)} ready at {time.strftime('%Y-%m-%d %H:%M', time.gmtime(p['ready_at']))}Z ({p['state']})" for n, p in act]) or ["- nothing pending on the 6 watched timelocks"]
+    out += once([f"- cleared, queued {time.strftime('%Y-%m-%d', time.gmtime(p['queued_at']))}: {n} -> {p['target']} {fn(p)}" for n, p in recent if not p["still_queued"]])
 
     code, bad, new_targets, snap = code_changes()
     out += ["", "## Code behind tracked targets"]
@@ -179,7 +214,7 @@ def main():
         if any("UNREAD" in h for h in bad) or not bad:
             unread.append("Implementation watch: a target or oracle could not be read, or the script failed")
     if new_targets:
-        out.append(f"- {new_targets} target(s) added since that snapshot are not fingerprinted yet (informational: run check_implementation_changes.py --update after a look)")
+        out.append(f"- {new_targets} target(s) added since that snapshot are not fingerprinted yet (informational)")
 
     code, bad, head = squads_changes()
     out += ["", "## Solana Squads v4 multisigs (members, threshold, time lock)"]
@@ -206,11 +241,11 @@ def main():
 
     out += ["", "## Not read (no conclusion drawn for these)"]
     out += [f"- {u}" for u in unread] or ["- every attempted source was read"]
-    out += ["", "Posture drift (published score vs live scorer) is not part of this digest: run scripts/check_posture_drift.py."]
+    out += ["", "Posture drift (published score vs live scorer) is not part of this digest; the dashboard's verify-all recomputes every score live."]
     out.append("")
     caveat = f" Safe events are not covered for: {', '.join(NOT_ATTEMPTED)}."
     out.append(f"**Nothing moved in the sources read.**{caveat}" if not findings and not unread else f"**{findings} item(s) above; {len(unread)} source(s) not read.**{caveat}")
-    text = "\n".join(out)
+    text = "\n".join(with_queue(out, args.queue))
     print(text)
     if args.out:
         with open(args.out, "w") as f:

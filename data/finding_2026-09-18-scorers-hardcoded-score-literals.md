@@ -7,7 +7,7 @@ Surfaced as a side effect of the 2026-09-18 test-coverage audit (writing
 Each was found while independently tracing a scorer's real branch logic to
 design a test fixture -- not fixed here, per this project's own
 "understanding vs. changing" split: a scoring-logic change needs its own
-adversarial review before committing (see `AGENTS.md`'s "Before
+adversarial review before committing (see the project's review rules' "Before
 committing" section), which this pass did not run. Documented so the gap
 is not silently lost, and so a future session doesn't have to re-derive it
 from scratch. `scripts/lib/scorers.py` itself is unmodified by this
@@ -101,7 +101,7 @@ in this file).
   which reads?) that this test-coverage pass is not the right context to
   make unilaterally -- it needs this project's own adversarial-review
   discipline before committing a scoring-logic change, per
-  `AGENTS.md`. #5 is more mechanical (port the existing guard) and is
+  the project's review rules. #5 is more mechanical (port the existing guard) and is
   the most likely of the five to be a quick, low-risk follow-up.
 - Does not check whether any OTHER scorer in this file (the ~19 not yet
   covered by this test-coverage pass, still a follow-up) has the same

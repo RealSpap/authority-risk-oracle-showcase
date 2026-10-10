@@ -1,6 +1,6 @@
 # Finding (2026-09-19): Hyperliquid target #6 was mislabeled kHYPE, is actually kmHYPE
 
-Prompted by re-reading `SUBMISSION.md`'s Hyperliquid narrative while fixing
+Triggered by re-reading the hackathon submission text's Hyperliquid narrative while fixing
 an unrelated staleness issue: target #6 (`score_kinetiq_staking_manager()`
 in `chains/hyperliquid/scripts/methodology_test.py`, added 2026-09-17) is
 called "kHYPE liquid-staking manager" both in that bullet and in the
@@ -63,7 +63,7 @@ Both are real, neither is a typo or an internal-only contract nickname.
 ## Verdict
 
 Target #6 was scoring kmHYPE's StakingManager the whole time, but its own
-docstring (and this project's `SUBMISSION.md` narrative describing it)
+docstring (and this project's the hackathon submission text narrative describing it)
 called it "kHYPE" -- a real code-level mislabel, not a case of two
 individually-accurate docstrings just being confusing to read side by
 side. Target #9 is genuinely different and was correctly labeled from the
@@ -82,7 +82,7 @@ score changes follow from this pass.
 correction never reached --
 `methodology_test.py::score_kinetiq_staking_manager()`'s own docstring
 (line ~275), `scorers.py::score_mkts_dex()`'s explanatory comment (lines
-~207-208), and `SUBMISSION.md`'s own narrative bullet -- plus a
+~207-208), and the hackathon submission text's own narrative bullet -- plus a
 non-destructive correction note added to the original dated research file
 (`chains/hyperliquid/data/methodology_test_2026-09-17-kinetiq-staking-
 manager.md`), left otherwise unedited per this project's own convention

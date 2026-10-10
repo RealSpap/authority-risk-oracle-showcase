@@ -18,8 +18,8 @@ This run's audit target (`trackedTargets(2)` on the testnet
 (Uniswap v4 PoolManager). Independently re-derived from scratch, without reading
 `scorers.py`'s cached results first:
 
-- `poolManager.owner()` on Robinhood Chain mainnet = `0x2BAD8182C09F50c8318d769245beA52C32Be46CD`
-- Re-computed the Arbitrum L1->L2 alias formula by hand: `(0x1a9C8182C09F50c8318d769245bEA52c32BE35BC + 0x1111000000000000000000000000000000001111) mod 2^160` = `0x2bad8182c09f50c8318d769245bea52c32be46cd` -- matches `owner()`, case-insensitive
+- `poolManager.owner()` on Robinhood Chain mainnet = `0x2BAD…46CD`
+- Re-computed the Arbitrum L1->L2 alias formula by hand: `(0x1a9C…35BC + 0x1111000000000000000000000000000000001111) mod 2^160` = `0x2bad…46cd` -- matches `owner()`, case-insensitive
 - Robinhood-Chain-mainnet bytecode at the owner address: empty (`0x`), consistent with an L1->L2 alias, never itself a deployment target
 - Ethereum-mainnet Governance Timelock (`0x1a9C8182...BE35BC`): real bytecode (13,715 bytes), `.delay()` = 172,800s (2 days), `.admin()` = `0x408ED6354d4973f66138C91495F2f2FCbd8724C3` (GovernorBravo), `.quorumVotes()` = 40,000,000 UNI -- all re-read live via `cast call` against `https://ethereum-rpc.publicnode.com`
 

@@ -95,7 +95,7 @@ The key's private half was committed in clear in `40ca1a4` and stays readable in
 the private repo's history (`data/publisher_key_exposure_2026-09-19.md`). At the
 time of this run the out-of-repo key file (pipeline `keys/zcash-testnet.json`)
 carried a `send_guard_lifted` record: dated 2026-09-19, by Spap, "decision
-explicite dans le chat", risk accepted ("anyone who reads the private repo's
+explicite in writing", risk accepted ("anyone who reads the private repo's
 history can forge an ARO batch from this address; a signature by it proves
 'someone with access to the repo', not a specific publisher"), with the flag
 `exposed_in_git_history` set to false only so that `send` does not refuse and
@@ -121,7 +121,7 @@ Consequence for what the anchor proves: see METHODOLOGY.md 9.6 "does NOT prove".
 - Remaining publisher balance was 9,965,000 zat at the time of this run (since swept, see
   section 7); nothing else has been funded or requested.
 - The Zcash phase in the docs is not advanced by this run (a phase transition is
-  a maker-checker decision, AGENTS.md).
+  a maker-checker decision, the project's review rules).
 
 ## 7. Update 2026-09-20: the same commitment re-anchored from a rotated key
 

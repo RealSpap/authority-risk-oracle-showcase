@@ -1558,7 +1558,7 @@ def score_arcus_perps_bridgevault(w3: Web3) -> dict:
     same mechanic as the PancakeSwap V2/V3 and Steakhouse 4-vault
     crossExposure corrections already in this project's history).
 
-    Scoring judgment call (the kind AGENTS.md requires disclosing, not
+    Scoring judgment call (the kind the project's review rules require disclosing, not
     smoothing over): the 24h TimelockController is REAL, but does not gate
     the operative path to BridgeVault's admin surface, because
     ValidatorConsensus independently holds the identical DEFAULT_ADMIN_ROLE

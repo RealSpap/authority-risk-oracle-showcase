@@ -176,9 +176,8 @@ Kamino Liquidity/Jupiter Perps/Jupiter Lend/PumpSwap facts; the Meteora
 DAMM v2 `ADMINS[]` full-power classification and the deliberate
 non-promotion of DLMM/DAMM v1; the Whirlpool `reward_emissions_super_
 authority` full-power judgment call), each finding then independently
-re-verified by a separate agent instructed to try to refute it via its
-own live RPC calls and GitHub source fetches. 30 agents, 26 findings, 23
-confirmed outright (mostly "matches exactly, no fix needed"), 3 flagged
+re-verified by a separate reviewer instructed to try to refute it via its
+own live RPC calls and GitHub source fetches. 30 reviewers, 26 findings, 23 confirmed outright (mostly "matches exactly, no fix needed"), 3 flagged
 for disposition:
 
 - **marginfi's two "independent" multisigs share almost the same

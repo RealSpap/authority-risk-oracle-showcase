@@ -36,14 +36,14 @@ not through `score_arcus_ptoken()`'s own cached logic.
 | EIP-1967 implementation slot (own storage) | zero (no direct impl -- routed via the beacon) | identical |
 | EIP-1967 admin slot (own storage) | zero (no transparent-proxy admin -- beacon-governed) | identical |
 | `eth_getCode` length (beacon `0x33846348...73A76`) | 590 bytes | identical |
-| `beacon.owner()` | `0x81B80499C396a9931b9e44953425a82C1b2541bd` | identical |
+| `beacon.owner()` | `0x81B8…41bd` | identical |
 | `eth_getCode` length (beacon owner) | 171 bytes (real contract, not an EOA) | identical |
 | `getOwners()` on beacon owner | `['0x4f1d777b...05ebe2', '0x57D32496...4f5b78', '0xEAb7F386...f989d7']` | identical |
 | `getThreshold()` on beacon owner | 2 | identical |
 | Safe `getModulesPaginated()` | `[]` (no modules) | identical |
 | Safe guard storage slot (`keccak256("guard_manager.guard.address")`, computed live) | `0x0` (no guard) | identical |
 | factory `getRoleMemberCount(DEFAULT_ADMIN_ROLE)` (independent 2nd trace of the SAME root, via the factory's own AccessControl rather than the beacon) | 1 | identical |
-| factory `getRoleMember(DEFAULT_ADMIN_ROLE, 0)` | `0x81B80499C396a9931b9e44953425a82C1b2541bd` (same Safe) | identical |
+| factory `getRoleMember(DEFAULT_ADMIN_ROLE, 0)` | `0x81B8…41bd` (same Safe) | identical |
 
 Confirms both halves of the original finding, independently, from scratch,
 for THIS specific target (index 11 is the pBTC token itself, not the
@@ -165,7 +165,7 @@ governance layer, not part of the original bootstrap. But its own
 `PROPOSER_ROLE`/`EXECUTOR_ROLE`/`CANCELLER_ROLE` (re-derived live,
 identical on both RPCs) are held by `ValidatorConsensus` +
 `CheckpointManager` (the same 2 contracts) **plus exactly one EOA**,
-`0x4f1d777bf36E259F3cB66f2cE969f4c5De05ebe2` -- which is not a new,
+`0x4f1d…ebe2` -- which is not a new,
 Perps-specific individual. That address is one of the 3 owners of the
 2-of-3 Gnosis Safe already tracked for the Arcus pToken family (the exact
 Safe re-confirmed in Part 1 above and at index 10). A real, live-confirmed
@@ -235,7 +235,7 @@ unittest discover -s scripts/lib/tests`).
 
 `python3 scripts/validate_all_scorers.py --ecosystem robinhood-chain` was
 not run this pass (same pre-existing 300-second per-ecosystem timeout gap
-for this specific slow ecosystem already documented in `AGENTS.md`). Not
+for this specific slow ecosystem already documented in the project's review rules). Not
 treated as a passing result and not substituted with a fabricated one --
 the live 2-RPC re-derivation, the hand-verified expected tuple match
 immediately before sending (below), and the full unit-test suite are what
@@ -286,7 +286,7 @@ scratch.
 ## CORRECTION (2026-09-19, later): the "shared EOA" is a Safe
 
 This document (Part 2 and the score section) calls
-`0x4f1d777bf36E259F3cB66f2cE969f4c5De05ebe2` a bare EOA. An independent
+`0x4f1d…ebe2` a bare EOA. An independent
 re-verification found otherwise, and it was re-read by hand on both Robinhood
 mainnet RPCs: the address has 171 bytes of code and is a **2-of-4 Gnosis Safe**.
 The crossExposureScore of 80 stands, because the same ADDRESS holds the

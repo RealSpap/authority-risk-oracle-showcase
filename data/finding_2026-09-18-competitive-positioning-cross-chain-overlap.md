@@ -6,8 +6,7 @@ earlier, broader competitive scans this week already covered SolGov,
 Hypernative/Blockaid, Gauntlet/Chaos Labs/LlamaRisk, DeFiSafety, ERC-8241,
 RWA platforms, L2Beat's Stage rubric, Aave's internal governance levels,
 restake.watch, and DORA/MiCA. This pass deliberately asked four NARROW,
-falsifiable questions instead of repeating that general sweep, run as four
-independent research agents. Pure research -- no scorer file or contract is
+falsifiable questions instead of repeating that general sweep, run as four independent research passes. Pure research -- no scorer file or contract is
 modified by this finding itself (the one concrete code change it led to,
 extending `cross_ecosystem_overlap.py` to Tempo and Arbitrum, is a separate,
 disclosed action documented in `README.md`'s "Cross-ECOSYSTEM signer

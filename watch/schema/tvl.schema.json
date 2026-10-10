@@ -1,0 +1,75 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "watch/tvl.json v1",
+ "type": "object",
+ "required": [
+  "generated_utc",
+  "source",
+  "matched",
+  "unmatched"
+ ],
+ "properties": {
+  "generated_utc": {
+   "type": "string"
+  },
+  "source": {
+   "type": "string"
+  },
+  "chains": {
+   "type": "object"
+  },
+  "unmatched": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  },
+  "unknown_slugs": {
+   "type": "array"
+  },
+  "matched": {
+   "type": "object",
+   "additionalProperties": {
+    "type": "object",
+    "required": [
+     "name",
+     "tvl",
+     "scope"
+    ],
+    "properties": {
+     "slug": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "name": {
+      "type": "string"
+     },
+     "tvl": {
+      "type": "number"
+     },
+     "scope": {
+      "enum": [
+       "chain",
+       "total",
+       "chain-total"
+      ]
+     },
+     "chain": {
+      "type": [
+       "string",
+       "null"
+      ]
+     }
+    }
+   }
+  },
+  "no_figure": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  }
+ }
+}

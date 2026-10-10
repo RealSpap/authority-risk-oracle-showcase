@@ -64,8 +64,7 @@ file claimed "this project's research today on Euler-on-Base found a
 specific eVaultFactory address and a governed/immutable-vault spectrum".
 That claim does NOT match this repository's actual state -- a full-text
 search of this repo (`grep -rli euler .`) at the start of this pass returned
-ZERO prior hits anywhere in `data/`, `chains/`, or `README.md`/`AGENTS.md`/
-`METHODOLOGY.md`. No Base research on Euler exists in this project as of
+ZERO prior hits anywhere in `data/`, `chains/`, or `README.md`/`METHODOLOGY.md`. No Base research on Euler exists in this project as of
 2026-09-18. This file is the FIRST time Euler V2 has been researched or
 scored anywhere in this project, done from scratch against Plasma directly
 (chain 9745), not built on any prior Base pass. The "governed vs. immutable

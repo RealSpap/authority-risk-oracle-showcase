@@ -29,7 +29,7 @@ overlap among its own tracked targets, not a lazy default).
 
 Grouping each target by its live-documented root authority surfaced that
 **5 of the file's 9 targets share the exact same root**, the 5-of-10 Safe
-`0x3b0aaf6e6fcd4a7ceef8c92c32dfea9e64dc1862` (reached directly by Ethena
+`0x3b0a…1862` (reached directly by Ethena
 Minting, and via the shared `EthenaTimelockController` by USDtb PSM and all 3
 LayerZero OFTAdapters -- USDe, sUSDe, ENA):
 

@@ -16,9 +16,9 @@ ones (11 new groups plus Compound on Base).
 
 | Chain | pauseGuardian Safe | Threshold | Owners |
 |---|---|---|---|
-| Ethereum L1 | `0xbbf3f1421D886E9b2c5D716B5192aC998af2012c` | 5-of-9 | 9 (8 bare EOAs, 1 contract) |
-| Arbitrum | `0x78E6317DD6D43DdbDa00Dce32C2CbaFc99361a9d` | 5-of-9 | the same 9 |
-| Base | `0x3cb4653F3B45F448D9100b118B75a1503281d2ee` | 5-of-9 | the same 9 |
+| Ethereum L1 | `0xbbf3…012c` | 5-of-9 | 9 (8 bare EOAs, 1 contract) |
+| Arbitrum | `0x78E6…1a9d` | 5-of-9 | the same 9 |
+| Base | `0x3cb4…d2ee` | 5-of-9 | the same 9 |
 
 Three different Safe addresses, byte-identical owner sets, compared as sets. The seat can pause supply, transfer,
 withdraw, absorb and buy instantly, outside the timelock: an availability power, not a fund redirect, which is why

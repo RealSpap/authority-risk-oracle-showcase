@@ -110,7 +110,7 @@ label**, live on 2 independent RPCs:
 | Check | RPC A result | RPC B result |
 |---|---|---|
 | `eth_getCode` length (factory) | 4,917 bytes | identical |
-| `factory.owner()` | `0x0eEA30aBa3f07abFA20E4b544F55e0f917d9DFd8` | identical |
+| `factory.owner()` | `0x0eEA…DFd8` | identical |
 | `eth_getCode` length (owner) | 171 bytes (a real contract, not an EOA) | identical |
 | `getOwners()` on owner | `['0xF0300684...C184D', '0x85Fb9f9B...96651', '0xBC6DF475...C47238', '0xD7D59A46...CDC62eb']` | identical |
 | `getThreshold()` on owner | 2 | identical |
@@ -137,7 +137,7 @@ found) -> `compositeScore = _composite(50, 40, 0) = floor(20 + 12 + 0.5) =
 
 `crossExposureScore` re-derived live via `compute_cross_exposure()` on both
 RPCs after wiring a new `up_v3` group into `scripts/lib/signer_overlap.py`
-(`safes: ["0x0eEA30aBa3f07abFA20E4b544F55e0f917d9DFd8"]`): **100** on both,
+(`safes: ["0x0eEA…DFd8"]`): **100** on both,
 confirming the earlier grep -- no overlap with any existing group, and no
 OTHER existing group's score moved as a side effect.
 
@@ -212,7 +212,7 @@ re-run: 531 tests pass (`python3 -m unittest discover -s scripts/lib/tests`).
 
 `python3 scripts/validate_all_scorers.py --ecosystem robinhood-chain` was
 not run this pass (same pre-existing ~300-second per-ecosystem timeout gap
-for this specific slow ecosystem already documented in `AGENTS.md`; a
+for this specific slow ecosystem already documented in the project's review rules; a
 `--dry-run --skip-slow` attempt this pass also did not complete in a
 reasonable window and was abandoned rather than waited on indefinitely).
 Not treated as a passing result and not substituted with a fabricated one

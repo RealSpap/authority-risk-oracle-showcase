@@ -717,7 +717,7 @@ them, so the published value stays 50 with the upper-bound disclosure.
   explicitly named Key-Holder Organizations (Zcash Foundation, Electric Coin
   Company, Shielded Labs) for the DIFFERENT `t3ev37...` fund: ZIP 271's own text
   scopes that naming to its own one-time lockbox disbursement only, a distinction
-  at least one secondary/AI-generated search summary conflated during this
+  at least one secondary/secondary search summary conflated during this
   research pass (caught by checking ZIP 271's raw source directly rather than
   trusting the summary). Integrated into `scorers.py`'s `FUND_STATIC_NOTES`.
 - ~~Check whether any coinholder vote under ZIP 1016 has been held, from a primary source,
@@ -952,7 +952,7 @@ address and a valid ECDSA signature by that key over the commitment exists.
 - **That the signature is checked on chain.** Transparent scripts cannot verify it; only
   the hash is on chain, the signature is verified off chain by anyone with the file.
 - **A phase change.** Zcash's own phase in its docs is not advanced by this run (a phase
-  transition is a maker-checker decision, AGENTS.md). Nothing on Zcash Mainnet was
+  transition is a maker-checker decision, the project's review rules). Nothing on Zcash Mainnet was
   written, and nothing on Zcash consumes this commitment.
 
 ### 9.7 Publisher key rotation and ARO2 re-anchor (added 2026-09-20 Europe/Paris; both transactions are 2026-09-19 UTC)

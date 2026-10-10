@@ -28,10 +28,10 @@ docstring:
 
 | Group | Root Safe | Shape |
 |---|---|---|
-| Kinetiq staking (kHYPE + kmHYPE) | `0x18a82C968B992D28D4D812920Eb7B4305306f8F1` | 4-of-8 |
-| para StakingVault | `0x8D23a255656f4C8E26D1010e0Aa2B6D20885Ca91` | 1-of-1 (a Safe, not a bare EOA) |
-| Ventuals vHYPE staking | `0x72298a4cB6E571241331172FD90149D38fEAfE08` | 2-of-3 |
-| stHYPE liquid staking | `0x97Dee0eA4CA10560F260a0f6F45BDC128A1d51F9` | 4-of-6 |
+| Kinetiq staking (kHYPE + kmHYPE) | `0x18a8…f8F1` | 4-of-8 |
+| para StakingVault | `0x8D23…Ca91` | 1-of-1 (a Safe, not a bare EOA) |
+| Ventuals vHYPE staking | `0x7229…fE08` | 2-of-3 |
+| stHYPE liquid staking | `0x97De…51F9` | 4-of-6 |
 
 Kinetiq's own kHYPE/kmHYPE overlap (they share the SAME Safe) was already folded into
 `crossExposureScore` by `chains/hyperliquid/scorers.py::_apply_hyperevm_shared_root_exposure`

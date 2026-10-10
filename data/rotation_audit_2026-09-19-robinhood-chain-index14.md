@@ -120,7 +120,7 @@ Same authority, same contract, no new root: not added.
 ### up v2 -- one Safe governs the whole stack, already tracked as up v3
 
 up v2 is up's ve(3,3) V2 exchange. Every authority getter across its stack
-resolves, identically on 2 RPCs, to `0x0eEA30aBa3f07abFA20E4b544F55e0f917d9DFd8`
+resolves, identically on 2 RPCs, to `0x0eEA…DFd8`
 -- the same 2-of-4 Safe that is `owner()` of the already-tracked up v3 Factory
 (index 55):
 
@@ -151,7 +151,7 @@ EOAs, nonces 7,545 and 127), `EMISSION_OPERATOR` (2 bare EOAs and 1 contract)
 and `VAULT_OPERATOR` (1 bare EOA at nonce 1 and 1 contract) are held outside
 that Safe, and which of those roles can move what is unknowable from
 unverified bytecode of that size. Left open rather than scored on a guess (same
-discipline as the UNCX V4 case, and as `AGENTS.md` prescribes: a getter that
+discipline as the UNCX V4 case, and as the project's review rules prescribes: a getter that
 resolves is not evidence of real gating). All facts identical on both RPCs.
 
 ### StonkBrokers -- left open, not scored
@@ -267,7 +267,7 @@ ownership/upgrade chain, never on assumptions about what those extras do**.
 | Factory proxy | 2,210 bytes; runtime embeds OpenZeppelin v4's `TransparentUpgradeableProxy: admin cannot fallback to proxy target`, `ERC1967: new admin is the zero address`, `ERC1967: new implementation is not a contract`, both EIP-1967 slot constants and a `DELEGATECALL` -- an OZ v4-style transparent proxy whose EIP-1967 admin slot is the only upgrade path |
 | EIP-1967 admin slot | `0x95c0bE4a...2f71`, 1,690 bytes; carries all 8 standard OZ v4 `ProxyAdmin` selectors (`upgrade`, `upgradeAndCall`, `changeProxyAdmin`, `getProxyAdmin`, `getProxyImplementation`, `owner`, `transferOwnership`, `renounceOwnership`, each verified by hashing the signature) |
 | EIP-1967 implementation slot | `0x8C3bbDAB...8684`, 8,149 bytes |
-| `ProxyAdmin.owner()` | `0x2a04c1D26767dD30f62712DCFCF1222f733A2B0E` |
+| `ProxyAdmin.owner()` | `0x2a04…2B0E` |
 | `factory.owner()` / `pendingOwner()` | the same address / zero |
 | `DEFAULT_ADMIN_ROLE` holders (`getRoleMemberCount`) | 1, the same address |
 | `POOLS_CREATOR` holders | 3: that Safe, one of its signers, and one further bare EOA (nonce 173); pool-creation permission only |

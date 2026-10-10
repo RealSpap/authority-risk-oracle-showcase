@@ -6,7 +6,7 @@ docs use.
 The Solana oracle (a native Anchor program, not an EVM contract) is read separately, by
 `scripts/solana_oracle_reader.py`, and added as the last row of the output.
 
-Why this exists: SUBMISSION.md/README.md quote a per-oracle target count and a
+Why this exists: the README quote a per-oracle target count and a
 grand total, and the pipeline adds targets all day, so those figures went stale
 several times within one day (54 -> 57 for Robinhood Chain, 100 -> 121 overall)
 even after each was corrected by hand. Run this and paste its output instead of

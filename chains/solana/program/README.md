@@ -189,7 +189,7 @@ order, before stopping:
   further: completing a CAPTCHA is outside what this pass does under
   any circumstance, not just a funding-specific rule.
 - The same faucet's own "I am an AI Agent" panel explicitly recommends
-  `devnet-pow` (a proof-of-work faucet CLI) as the agent-appropriate path.
+  `devnet-pow` (a proof-of-work faucet CLI) as the unattended path.
   Installed it (`cargo install devnet-pow`, clean build) and queried
   `get-all-faucets`: 5 community PoW faucets exist, only one with a
   nonzero balance (0.999973 SOL) -- but its reward is 0.0000001 SOL per

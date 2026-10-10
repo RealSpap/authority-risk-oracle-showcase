@@ -116,8 +116,7 @@ header/transparent/Sapling/Orchard). None of this is Bitcoin's legacy
 double-SHA256 txid or SIGHASH. This project does not have, and did not
 build, a Zcash wallet library -- everything here is new code, written
 directly against ZIP 225/229/244/317's own text (fetched and read as raw
-source from `raw.githubusercontent.com/zcash/zips`, not taken from an
-AI-generated paraphrase of them) and cross-checked against the actual
+source from `raw.githubusercontent.com/zcash/zips`, not taken from a paraphrase of them) and cross-checked against the actual
 reference implementation's source (`zcash/librustzcash`'s
 `zcash_primitives/src/transaction/txid.rs`/`sighash_v5.rs` and
 `zcash/orchard`'s `src/bundle/commitments.rs`) before being trusted to sign

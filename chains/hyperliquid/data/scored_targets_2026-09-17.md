@@ -150,7 +150,7 @@ fallback rather than guessed at), and `OPERATOR_ROLE` (a separate 1-of-3
 Safe). `compositeScore=4` (CRITICAL), dominated by the unverified
 implementation behind `MANAGER_ROLE`. An adversarial review of this
 addition (before any of it reached a commit) confirmed 14 findings and
-refuted 4 (the refuted ones traced to reviewer agents checking against
+refuted 4 (the refuted ones traced to reviewers checking against
 the live public repo, which didn't yet have this pre-commit code) --
 surfacing several real, general fixes to the SHARED HyperEVM read
 helpers: an uncaught RPC-revert crash, a bare `ValueError` escaping every

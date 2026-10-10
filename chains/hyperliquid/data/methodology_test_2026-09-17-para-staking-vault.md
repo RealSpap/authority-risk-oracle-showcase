@@ -158,8 +158,7 @@ Before any of this reached a commit, an adversarial review workflow (3
 independent dimensions -- byte-decode correctness, on-chain-facts-and-
 attribution, scorer-code robustness -- each finding piped to an
 independent verifier) returned 18 findings; 14 were confirmed via fresh,
-independent re-verification and 4 were refuted (the refuted ones traced
-to reviewer agents checking their claims against the live PUBLIC repo,
+independent re-verification and 4 were refuted (the refuted ones traced to reviewers checking their claims against the live PUBLIC repo,
 which didn't yet contain this pre-commit code -- a limitation of the
 review's setup, not a real defect). Of the 14 confirmed, most verified
 existing facts/arithmetic as correct with no action needed; five were

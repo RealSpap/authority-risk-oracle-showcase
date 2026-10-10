@@ -1,6 +1,6 @@
 # SolGov's registry, checked against the chain: 99% accurate, and the 11 untracked candidates that matter
 
-2026-09-26. Prompted by "why does SolGov have 50 to 60 protocols and we 18?". SolGov (github.com/EdgeVault/solgov, `public-dashboard/src/data/protocols.ts`, 53 protocol
+2026-09-26. Triggered by the question "why does SolGov have 50 to 60 protocols and we 18?". SolGov (github.com/EdgeVault/solgov, `public-dashboard/src/data/protocols.ts`, 53 protocol
 entries, 63 multisigs, 183 programs) is treated here as a list of LEADS. `chains/solana/scripts/verify_solgov_leads.py` re-reads, live and read-only, every program's loader-v3
 upgrade authority and every Squads v4 multisig it lists (raw data: `solgov_leads_2026-09-26.json`).
 

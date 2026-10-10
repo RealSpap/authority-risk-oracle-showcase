@@ -1,0 +1,10 @@
+{
+ "_doc": "What the DefiLlama figure attached to a tracked contract means for it. tvl_match.py attaches a protocol's TVL to every tracked contract of that protocol; for a retired or peripheral contract that money does not sit behind its admin. One entry per target, key <chain>:<address>, any case, scope: retired (no longer in use, the protocol's TVL is not behind it), peripheral (in use, but the protocol's TVL is not behind its admin), with a note and a date. Kept by hand after reading the contract; risk_by_cause.py, the exposure ranking of second_opinion.py and cross_chain.py leave the money of a retired or peripheral contract out and say so.",
+ "targets": {
+  "ethereum-l1:0x2cc440b721d2cafd6d64908d6d8c4acc57f8afc3": {
+   "scope": "retired",
+   "note": "EthenaMinting retired on 2026-09-20 (the dashboard card says so); the protocol's TVL does not sit behind this minter's admin",
+   "since": "2026-10-10"
+  }
+ }
+}

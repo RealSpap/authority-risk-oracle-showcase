@@ -107,8 +107,7 @@ both Voter roles too.
 
 2-dimension review before commit (governor identity and scope -- the
 headline claims; emergencyCouncil and cross-exposure), each finding
-independently re-verified by a separate agent instructed to try to
-refute it. 8 agents, 6 findings, 5 confirmed, 1 refuted. The three
+independently re-verified by a separate reviewer instructed to try to refute it. 8 reviewers, 6 findings, 5 confirmed, 1 refuted. The three
 headline claims (governor==pauser==feeManager identity; governor's
 whitelistToken/createGauge-bypass/setGovernor powers; specifically that
 a governor-created gauge can target a genuinely arbitrary, even

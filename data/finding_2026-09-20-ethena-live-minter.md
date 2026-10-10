@@ -42,7 +42,7 @@ The oracle contract has no removal function, so the old target is retired by cea
 - **Admin.** `DEFAULT_ADMIN_ROLE` (also `owner()`) is the `EthenaTimelockController`
   `0xE8Dc0Fab349EA169283C48Ccfd09d797E6DB7c94` since block 25,522,488 (2026-07-13), moved from the
   Safe. `getMinDelay()` is 86400 s. No pending transfer.
-- **Timelock.** The 5-of-10 Safe `0x3b0aaf6e6fcd4a7ceef8c92c32dfea9e64dc1862` is the only PROPOSER
+- **Timelock.** The 5-of-10 Safe `0x3b0a…1862` is the only PROPOSER
   and the only CANCELLER, so the 24h delay is a visibility window and not a second key. EXECUTOR is
   held by the Safe, a bare EOA `0x352040dC...0E8f` and a separate 3-of-6 Safe. The delay is
   exercised: all 176 scheduled operations waited at least 86,628 s, the minimum delay never

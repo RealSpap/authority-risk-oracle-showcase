@@ -103,7 +103,7 @@ the maintainer decision they needed is now made.
 **Radiant (Arbitrum).** The scorer credited only `PoolAddressesProvider.owner()`, a 72h
 `TimelockController` (`0x27fC8f3B...Aff92`, `getMinDelay()` 259200). The
 `LendingPoolConfigurator`'s `onlyPoolAdmin` functions (token-proxy upgrades, freeze, caps,
-rate strategy) are gated by `getPoolAdmin()` instead, `0x111CEEee040739fD91D29C34C33E6B3E112F2177`,
+rate strategy) are gated by `getPoolAdmin()` instead, `0x111C…2177`,
 a 4-of-11 Safe. That Safe holds PROPOSER and CANCELLER on the timelock and 6 of its 11 owners
 hold EXECUTOR (read live 2026-09-20), but the timelock does not bind the pool-admin path, so it is
 scored as a Safe with no timelock: admin 65 (threshold >= 3), multisig
@@ -115,7 +115,7 @@ confident score. `crossExposureScore` stays 100: the pool-admin and emergency-ad
 sets were compared with 70 root-signer groups on 7 ecosystems and none matched, which is
 "found none", not proof of none.
 
-**Aave V3 (Monad).** The PROTOCOL_GUARDIAN Safe `0xc887455536CBD4e615B745e70CaCde15B3117e74`
+**Aave V3 (Monad).** The PROTOCOL_GUARDIAN Safe `0xc887…7e74`
 (4-of-7, read live) holds `POOL_ADMIN` in the ACLManager `0xa9fEe192...3d95B` (`isPoolAdmin` and
 `isEmergencyAdmin` both true, read live), so it acts with no timelock. Scored as a Safe with no
 timelock: admin 65, multisig `min(100, 4*15 + 3*5)` = 75, timelock 0. The admin score is

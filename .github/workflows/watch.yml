@@ -18,11 +18,13 @@ concurrency:
 jobs:
   watch:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 150
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262   # v4.4.0, pinned to its commit: a moved tag cannot change what runs here
+        with:
+          persist-credentials: false   # the write token is handed to the push step only, never to pip or the scripts
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065   # v5.6.0, pinned to its commit
         with:
           python-version: "3.11"
 
@@ -33,36 +35,212 @@ jobs:
         run: |
           set +e
           python3 scripts/watch_run.py | tee watch/run.log
-          echo "code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+          c=${PIPESTATUS[0]}; echo "code=$c" >> "$GITHUB_OUTPUT"
+          if [ "$c" = 1 ] && ! grep -q Traceback watch/run.log; then echo "a target or an oracle was not read this run (exit 1), a warning shown on the page, not a failure" > watch/run.txt; elif [ "$c" != 0 ] && [ "$c" != 2 ]; then echo "exit code $c" > watch/run.txt; fi   # 2 = an alarm, 1 without a traceback = something unread, both known states
 
       - name: Which oracle turns stale, and when (EVM, Solana)
         run: |
           set +e
-          python3 scripts/oracle_freshness.py --warn-hours 48 > watch/freshness.txt 2>&1
-          echo "exit code $?" >> watch/freshness.txt
+          python3 scripts/oracle_freshness.py --warn-hours 48 > watch/freshness.txt 2>&1 || { c=$?; if grep -q Traceback watch/freshness.txt; then echo "exit code $c" >> watch/freshness.txt; else echo "stale or unreadable oracle (exit $c): a warning, not a failure; the dashboard shows it, the digest lists it" >> watch/freshness.txt; fi; }   # a stale oracle is a known state shown on the page, not a red job
+
+      - name: What is queued behind the watched timelocks, and what just went through
+        run: timeout 15m python3 scripts/check_pending_ops.py --days 90 --recent-days 14 --out watch/pending_ops.json > watch/pending_ops.txt 2>&1 || { c=$?; if [ "$c" = 124 ]; then echo "timed out at the step limit (124), previous file kept, a warning" >> watch/pending_ops.txt; else echo "exit code $c" >> watch/pending_ops.txt; fi; }
+
+      - name: How much money sits behind each setup (DefiLlama TVL, matched by hand in scripts/tvl_match.py)
+        run: timeout 5m python3 scripts/tvl_match.py --out watch/tvl.json > watch/tvl.txt 2>&1 || { c=$?; if [ "$c" = 124 ]; then echo "timed out at the step limit (124), previous file kept, a warning" >> watch/tvl.txt; else echo "exit code $c" >> watch/tvl.txt; fi; }
+
+      - name: "What each contract holds by its own account (ERC-4626 totalAssets() priced by DefiLlama's coin API): the attacker's question uses it before the protocol TVL"
+        run: timeout 5m python3 scripts/held_assets.py --scores watch/scores --out watch/held_assets.json > watch/held_assets.txt 2>&1 || echo "exit code $?" >> watch/held_assets.txt
+
+      - name: "Is the contract paused, and did that change since the previous run (paused() / isPaused()): a flip to paused fires a high alert"
+        run: timeout 5m python3 scripts/pause_state.py --scores watch/scores --out watch/pause_state.json > watch/pause_state.txt 2>&1 || echo "exit code $?" >> watch/pause_state.txt
+
+      - name: "The other hands on a contract (curator, guardian, pauser): who holds each and whether one changed hands since the previous run"
+        run: timeout 5m python3 scripts/side_roles.py --scores watch/scores --out watch/side_roles.json > watch/side_roles.txt 2>&1 || echo "exit code $?" >> watch/side_roles.txt
+
+      - name: The paper trail of every target (which dated documents mention its address)
+        run: python3 scripts/paper_trail.py --out watch/paper_trail.json > watch/paper_trail.txt 2>&1 || echo "exit code $?" >> watch/paper_trail.txt
+
+      - name: "The queues of the timelocks the independent reader found (previous run's second_opinion.json), on every chain: merged into pending_ops.json as discovered"
+        run: timeout 15m python3 scripts/pending_ops_discovered.py --so watch/second_opinion.json --pending watch/pending_ops.json --days 14 > watch/pending_discovered.txt 2>&1 || { c=$?; if [ "$c" = 124 ]; then echo "timed out at the step limit (124), the watchlist queues are kept and the discovered ones wait for the next run" >> watch/pending_discovered.txt; else echo "exit code $c" >> watch/pending_discovered.txt; fi; }
+
+      - name: The timelock queue as a calendar feed (.ics)
+        run: python3 scripts/pending_ics.py --pending watch/pending_ops.json --out watch/pending_ops.ics > watch/pending_ics.txt 2>&1 || echo "exit code $?" >> watch/pending_ics.txt
+
+      - name: "A second opinion on every admin-key score: an independent reader on the target's real chain (EIP-1967 admin, owner(), admin(), then EOA / Safe / timelock) against the published score"
+        id: so
+        run: |
+          python3 scripts/second_opinion.py --scores watch/scores --out watch/second_opinion.json --md watch/second_opinion.md > watch/second_opinion.txt 2>&1 || echo "exit code $?" >> watch/second_opinion.txt
+          cat watch/second_opinion.txt
+          echo "disagree=$(python3 -c "import json;print(json.load(open('watch/second_opinion.json')).get('disagree',0))" 2>/dev/null || echo 0)" >> "$GITHUB_OUTPUT"
+          echo "upgraded=$(python3 -c "import json;print(len(json.load(open('watch/second_opinion.json')).get('upgrades',[])))" 2>/dev/null || echo 0)" >> "$GITHUB_OUTPUT"
+
+      - name: "Did a Safe that governs tracked contracts wake up: its nonce, how long it was observed idle, and a move after 14 days or more"
+        run: timeout 5m python3 scripts/safe_activity.py --second-opinion watch/second_opinion.json --out watch/safe_activity.json > watch/safe_activity.txt 2>&1 || echo "exit code $?" >> watch/safe_activity.txt
+
+      - name: "Who holds the admin role of a contract whose role holders cannot be listed: hasRole(DEFAULT_ADMIN_ROLE) for the Safes and timelocks the reader already knows"
+        run: timeout 5m python3 scripts/admin_probe.py --second-opinion watch/second_opinion.json --out watch/admin_probe.json > watch/admin_probe.txt 2>&1 || echo "exit code $?" >> watch/admin_probe.txt
+
+      - name: "Is the code behind each proxy readable: Sourcify verified source for every implementation the reader found"
+        run: timeout 10m python3 scripts/impl_sources.py --so watch/second_opinion.json --out watch/impl_sources.json > watch/impl_sources.txt 2>&1 || echo "exit code $?" >> watch/impl_sources.txt
+
+      - name: "Squads proposal queues (Solana): the proposals of every multisig the independent reader resolved, merged into pending_ops.json"
+        run: timeout 10m python3 scripts/squads_proposals.py --so watch/second_opinion.json --pending watch/pending_ops.json --recent-days 14 > watch/squads_proposals.txt 2>&1 || echo "exit code $?" >> watch/squads_proposals.txt
+
+      - name: "What each EVM timelock operation is (upgrade, authority change, pause, nested timelock, cross-chain message, parameter): named and classified"
+        run: python3 scripts/classify_ops.py --pending watch/pending_ops.json --cache watch/selectors.json > watch/classify_ops.txt 2>&1 || echo "exit code $?" >> watch/classify_ops.txt
+
+      - name: "The same protocol on several chains, hand by hand (DefiLlama grouping, independent reads): weakest deployment named"
+        run: python3 scripts/cross_chain.py --watch watch --data data --out watch/cross_chain.json > watch/cross_chain.txt 2>&1 || echo "exit code $?" >> watch/cross_chain.txt
+
+      - name: "Money at risk by cause (plain key, keys-only multisig, no delay, unverified code, one lost key, upgrade executable, transfer in flight, Safe module), from the run's own files"
+        run: python3 scripts/risk_by_cause.py --watch watch --data data --out watch/risk_by_cause.json > watch/risk_by_cause.txt 2>&1 || echo "exit code $?" >> watch/risk_by_cause.txt
+
+      - name: One share card per target (PNG for link previews), rewritten only when it changes; after the money-at-risk step, whose copy of data/tvl_scope.json it reads (before, a hand edit reached the cards one run late)
+        run: timeout 10m python3 scripts/og_cards.py --scores watch/scores --tvl watch/tvl.json --latest watch/latest.json --out watch/og > watch/og.txt 2>&1 || { c=$?; if [ "$c" = 124 ]; then echo "timed out at the step limit (124), previous file kept, a warning" >> watch/og.txt; else echo "exit code $c" >> watch/og.txt; fi; }
+
+      - name: "Public disputes: data/disputes.json checked against the tracked set, every opening and resolution into the chained log"
+        run: python3 scripts/disputes.py --registry data/disputes.json --scores watch/scores --out watch/disputes.json --events watch/events.jsonl > watch/disputes.txt 2>&1 || echo "exit code $?" >> watch/disputes.txt
+
+      - name: "Score series and calibration: every composite over time from the chained log, and the observed authority actions against the score at the time"
+        run: python3 scripts/score_series.py --scores watch/scores --events watch/events.jsonl --pending watch/pending_ops.json --out watch/score_series.json > watch/score_series.txt 2>&1 || echo "exit code $?" >> watch/score_series.txt
+
+      - name: Evaluate rules.json (alerts page; Telegram and Discord only if the secrets are set)
+        id: rules
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          python3 scripts/evaluate_rules.py --rules rules.json --scores watch/scores --latest watch/latest.json --tvl watch/tvl.json --pending watch/pending_ops.json --prev watch/prev --out watch/alerts.json > watch/alerts.txt 2>&1 || echo "exit code $?" >> watch/alerts.txt
+          echo "hi_new=$(python3 -c "import json;print(sum(1 for x in json.load(open('watch/alerts.json')).get('active',[]) if x['severity']=='high' and x['new']))" 2>/dev/null || echo 0)" >> "$GITHUB_OUTPUT"
+
+      - name: "The event log is hash-chained (every line commits to the previous one): verify the whole chain, then the methodology registry and one Atom feed per contract"
+        id: meth
+        run: |
+          python3 scripts/verify_chain.py --events watch/events.jsonl --json watch/chain.json > watch/chain.txt 2>&1 || { c=$?; cat watch/chain.txt; [ "$c" = 2 ] || { echo "::error::the event log's hash chain is broken: a line was edited, removed or inserted"; exit 1; }; }
+          python3 scripts/methodology_check.py --scores watch/scores --prev watch/prev --events watch/events.jsonl --out watch/methodology.json --md watch/methodology.md > watch/methodology.txt 2>&1 || echo "exit code $?" >> watch/methodology.txt   # before explain_moves refreshes watch/prev
+          echo "changed=$(python3 -c "import json;print(len(json.load(open('watch/methodology.json')).get('changes',[])))" 2>/dev/null || echo 0)" >> "$GITHUB_OUTPUT"
+          python3 scripts/feeds_per_target.py --scores watch/scores --events watch/events.jsonl --alerts watch/alerts.json --pending watch/pending_ops.json --out watch/feed > watch/feeds.txt 2>&1 || echo "exit code $?" >> watch/feeds.txt
+          python3 scripts/badges_protocol.py --watch watch --out watch/badge/protocol >> watch/feeds.txt 2>&1 || echo "exit code $?" >> watch/feeds.txt   # one shields.io badge per protocol (its weakest tracked deployment), for a protocol's own README
+          python3 scripts/watch_run.py --feed-only >> watch/feeds.txt 2>&1 || echo "exit code $?" >> watch/feeds.txt   # the global feed.xml again, now with the independent reader's findings
+
+      - name: Why each score moved (five sub-scores against the previous run) and the requirement badges
+        run: |
+          python3 scripts/explain_moves.py --scores watch/scores --prev watch/prev --out watch/moves.json > watch/moves.txt 2>&1 || echo "exit code $?" >> watch/moves.txt
+          python3 scripts/badges_req.py --scores watch/scores --out watch/badge >> watch/moves.txt 2>&1 || echo "exit code $?" >> watch/moves.txt
+
+      - name: "How many keys sit on several protocols (the index itself stays out of the repository: it is a targeting map)"
+        run: |
+          timeout 15m python3 scripts/who_controls.py --top 20 --write-index "$RUNNER_TEMP/who_controls.json" > "$RUNNER_TEMP/who_controls.txt" 2>&1 || { c=$?; echo "exit code $c" >> "$RUNNER_TEMP/who_controls.txt"; if [ "$c" = 124 ]; then echo "who_controls timed out at the step limit (124), no signer index this run, every watch file is redacted by the contract whitelist alone (a warning)" >> watch/keys.txt; else echo "who_controls exit code $c (no signer index this run, every watch file is redacted by the contract whitelist alone)" >> watch/keys.txt; fi; }
+          python3 scripts/keys_summary.py --index "$RUNNER_TEMP/who_controls.json" --out watch/keys_summary.json >> watch/keys.txt 2>&1 || echo "exit code $?" >> watch/keys.txt
+          rm -f watch/who_controls.json
 
       - name: Safe signer, threshold, module and guard changes over the last 7 days
-        run: timeout 20m python3 scripts/check_safe_changes.py --days 7 --out watch/safe_changes.json > watch/safe_changes.log 2>&1 || echo "exit code $?" >> watch/safe_changes.log
+        run: timeout 20m python3 scripts/check_safe_changes.py --days 7 --out watch/safe_changes.json > watch/safe_changes.log 2>&1 || { c=$?; if [ "$c" = 124 ]; then echo "timed out at the step limit (124), previous file kept, a warning" >> watch/safe_changes.log; else echo "exit code $c" >> watch/safe_changes.log; fi; }
 
-      - name: Record the run
+      - name: "Coverage per chain: what this watch sees and does not see (independent read, proxies, Safe modules, timelock queues, Safe events, TVL), from the files of this run"
+        run: python3 scripts/coverage.py --watch watch --out watch/coverage.json > watch/coverage.txt 2>&1 || echo "exit code $?" >> watch/coverage.txt
+
+      - name: "Review queue: everything a person must look at, from the files of this run, ranked, minus what was already reviewed; a priority-1 item older than 2 days re-enters the alarm"
+        id: rq
+        run: |
+          python3 scripts/review_queue.py --watch watch --data data --out watch/review_queue.json --md watch/review_queue.md > watch/review_queue.txt 2>&1 || echo "exit code $?" >> watch/review_queue.txt
+          echo "overdue=$(python3 -c "import json;print(json.load(open('watch/review_queue.json')).get('overdue',0))" 2>/dev/null || echo 0)" >> "$GITHUB_OUTPUT"
+
+      - name: "Trend: one line per run with the numbers measured, so the next runs can say whether the tracked set improves"
+        run: python3 scripts/trend.py --watch watch --out watch/trend.jsonl > watch/trend.txt 2>&1 || echo "exit code $?" >> watch/trend.txt
+
+      - name: Shorten every root-signer address in what leaves with the run (the index itself stays in the runner)
+        run: python3 scripts/redact_signers.py --index "$RUNNER_TEMP/who_controls.json" --scores watch/scores watch/second_opinion.json watch/second_opinion.md watch/digest.md watch/safe_changes.json watch/pending_ops.json watch/alerts.json watch/moves.json watch/paper_trail.json watch/review_queue.json watch/review_queue.md watch/coverage.json watch/side_roles.json watch/safe_activity.json watch/admin_probe.json
+
+      - name: The watch files keep their published contract (watch/schema)
+        run: python3 scripts/validate_schemas.py --watch watch > watch/schemas.txt 2>&1 || { echo "exit code $?" >> watch/schemas.txt; cat watch/schemas.txt; exit 1; }
+
+      - name: "The files agree with each other: the same contracts in every file, the same counts (watch/consistency.txt; a disagreement is a warning in the run, the files stay valid on their own)"
+        run: python3 scripts/consistency.py --watch watch > watch/consistency.txt 2>&1 || echo "::warning title=Watch files disagree::$(head -c 700 watch/consistency.txt | tr '\n' ' ')"
+
+      - name: "Sign the run (a manifest of every published file and the chain head, Ed25519): with WATCH_SIGNING_KEY the files can be checked against a key GitHub does not hold; without it the manifest says unsigned"
+        env:
+          WATCH_SIGNING_KEY: ${{ secrets.WATCH_SIGNING_KEY }}
+        run: python3 scripts/sign_run.py --watch watch > watch/signature.txt 2>&1 || { echo "exit code $?" >> watch/signature.txt; cat watch/signature.txt; }
+
+      - name: "One health record for the run (watch/status.json: ok / degraded / alarm with the reasons) and the integrity badge"
+        run: python3 scripts/run_status.py --watch watch > watch/status.txt 2>&1 || echo "exit code $?" >> watch/status.txt; cat watch/status.txt
+
+      - name: "The run as Prometheus metrics (watch/metrics.prom): a monitor can alert on a stopped Watch, an alarm, a high alert or an oracle not read, without parsing nine files"
+        run: python3 scripts/metrics_prom.py --watch watch > watch/metrics.txt 2>&1 || echo "exit code $?" >> watch/metrics.txt; cat watch/metrics.txt
+
+      - name: "A catalogue of what the watch publishes (watch/catalog.json): where each file is, what it holds, which one answers which question"
+        run: python3 scripts/catalog.py --watch watch --api watch/API.md > watch/catalog.txt 2>&1 || echo "exit code $?" >> watch/catalog.txt; cat watch/catalog.txt
+
+      - name: "Fail closed: no published file may still name a signer address of the private index (everything under watch/, not only the redaction list)"
+        run: python3 scripts/redact_signers.py --index "$RUNNER_TEMP/who_controls.json" --scores watch/scores --check watch
+
+      - name: "Alarm gate: a new finding opens an issue, a standing state a reminder once a day, an unchanged one nothing (watch/alarm_state.json)"
+        id: gate
+        if: always()
+        env:
+          HAS_TOKEN: ${{ secrets.ISSUES_TOKEN != '' }}
+        run: |
+          if [ "$HAS_TOKEN" = "true" ]; then W="--write"; else W=""; fi
+          python3 scripts/alarm_gate.py --watch watch --run-log watch/run.log $W | tee -a "$GITHUB_OUTPUT"
+
+      - name: Record the run (watch/.gitignore keeps the job logs, *.txt and *.log, out of the repository)
         run: |
           git add watch
           git -c user.name=Spap -c user.email=335248717+RealSpap@users.noreply.github.com \
             commit -qm "Watch $(date -u +%Y-%m-%dT%H:%MZ): $(head -c 160 watch/run.log | tr -d '\n')" || exit 0
-          git push
-
-      - name: Alarm
-        if: steps.run.outputs.code == '2'
+          git -c user.name=Spap -c user.email=335248717+RealSpap@users.noreply.github.com -c http.https://github.com/.extraheader="AUTHORIZATION: basic $(printf x-access-token:%s "$GITHUB_TOKEN" | base64 | tr -d '\n')" pull --rebase -q origin main
+          git -c http.https://github.com/.extraheader="AUTHORIZATION: basic $(printf x-access-token:%s "$GITHUB_TOKEN" | base64 | tr -d '\n')" push
         env:
-          GH_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Alarm (an issue in the private repository, where the work happens; without ISSUES_TOKEN the alarm stays in this log)
+        if: always() && (steps.run.outputs.code == '2' || steps.so.outputs.disagree != '0' || steps.so.outputs.upgraded != '0' || steps.meth.outputs.changed != '0' || steps.rq.outputs.overdue != '0' || steps.rules.outputs.hi_new != '0') && steps.gate.outputs.mode != 'quiet'
+        env:
+          GH_TOKEN: ${{ secrets.ISSUES_TOKEN }}
+          PRIVATE_REPO: RealSpap/authority-risk-oracle
         run: |
-          gh label create alarm --color B60205 --description "A score dropped, a target turned stale or an oracle stopped answering" 2>/dev/null || true
-          gh issue create --title "Alarm $(date -u +%Y-%m-%d %H:%M) UTC: $(grep -c ALARM watch/run.log) finding(s) on the deployed oracles" \
+          [ -f watch/alarm.md ] || printf '# Alarm, %s\n\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > watch/alarm.md
+          [ -f watch/second_opinion.md ] && { printf '\n' >> watch/alarm.md; cat watch/second_opinion.md >> watch/alarm.md; }   # the independent reader's disagreements travel with the alarm
+          [ -f watch/methodology.md ] && { printf '\n' >> watch/alarm.md; cat watch/methodology.md >> watch/alarm.md; }   # a methodology change travels with the alarm
+          [ -f watch/alerts_high.md ] && { printf '\n' >> watch/alarm.md; cat watch/alerts_high.md >> watch/alarm.md; }   # a new high alert (a drain, a pause, a change ready to execute) travels with the alarm: it needs no Discord or Telegram secret
+          [ -f watch/review_queue.md ] && { printf '\n' >> watch/alarm.md; cat watch/review_queue.md >> watch/alarm.md; }   # the whole review queue, with ages: what waits and since when
+          [ "$(wc -c < watch/alarm.md)" -gt 60000 ] && { head -c 60000 watch/alarm.md > watch/alarm.tmp && printf '\n\n(cut at 60000 characters, GitHub refuses an issue body over 65536: the files are in watch/ and the job log)\n' >> watch/alarm.tmp && mv watch/alarm.tmp watch/alarm.md; }   # a long day (every target stale + the whole review queue) must not lose the alarm
+          [ -n "$GH_TOKEN" ] || { echo "::warning::alarm raised but no ISSUES_TOKEN secret: no issue opened (alarm.md is printed below)"; cat watch/alarm.md; exit 0; }
+          gh label create alarm --repo "$PRIVATE_REPO" --color B60205 --description "A score dropped, a target turned stale or an oracle stopped answering" 2>/dev/null || true
+          gh issue create --repo "$PRIVATE_REPO" --title "Alarm$([ "${{ steps.gate.outputs.mode }}" = reminder ] && printf ' reminder (the state below has not changed for a day)') $(date -u '+%Y-%m-%d %H:%M') UTC: $(( $(grep -c ALARM watch/run.log) + ${{ steps.so.outputs.disagree || 0 }} + ${{ steps.so.outputs.upgraded || 0 }} + ${{ steps.meth.outputs.changed || 0 }} + ${{ steps.rq.outputs.overdue || 0 }} + ${{ steps.rules.outputs.hi_new || 0 }} )) finding(s) on the deployed oracles" \
             --label alarm --body-file watch/alarm.md
 
+      - name: "Daily report (first run of the day, about 20 minutes): stale oracles, Safe changes, queued operations, code changes"
+        run: |
+          if [ "$(date -u +%H)" -lt 6 ] || [ "${{ github.event_name }}" = workflow_dispatch ]; then
+            timeout 35m python3 scripts/daily_digest.py --days 7 --out watch/digest.md --queue watch/review_queue.md > watch/digest.log 2>&1 || { c=$?; if [ "$c" = 124 ]; then echo "timed out at the step limit (124), previous file kept, a warning" >> watch/digest.log; else echo "exit code $c" >> watch/digest.log; fi; }
+            python3 scripts/redact_signers.py --index "$RUNNER_TEMP/who_controls.json" --scores watch/scores watch/digest.md
+            WATCH_SIGNING_KEY="${{ secrets.WATCH_SIGNING_KEY }}" python3 scripts/sign_run.py --watch watch > /dev/null 2>&1 || true   # the report changed a published file: sign again so the manifest matches what is committed
+            git add watch && git -c user.name=Spap -c user.email=335248717+RealSpap@users.noreply.github.com commit -qm "Daily report $(date -u +%Y-%m-%d)" || exit 0
+            git -c user.name=Spap -c user.email=335248717+RealSpap@users.noreply.github.com -c http.https://github.com/.extraheader="AUTHORIZATION: basic $(printf x-access-token:%s "$GITHUB_TOKEN" | base64 | tr -d '\n')" pull --rebase -q origin main
+            git -c http.https://github.com/.extraheader="AUTHORIZATION: basic $(printf x-access-token:%s "$GITHUB_TOKEN" | base64 | tr -d '\n')" push
+          fi
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
       - name: Telegram (only if the secrets are set)
-        if: steps.run.outputs.code == '2'
+        if: always() && steps.run.outputs.code == '2'
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: python3 -c "import sys; sys.path.insert(0, 'scripts/lib'); import alerts; alerts.send_telegram_alert(open('watch/alarm.md').read())"
+        run: |
+          python3 - <<'PY'
+          import sys; sys.path.insert(0, 'scripts/lib'); import alerts
+          t = open('watch/alarm.md').read()
+          # Telegram refuses a message over 4096 characters and send_telegram_alert swallows the error: the alarm (12 KB with the independent reader's findings and the review queue) was never delivered
+          alerts.send_telegram_alert(t if len(t) <= 4000 else t[:3900] + "\n... (cut at the Telegram limit of 4096 characters, the full text is in the private issue and the job log)")
+          PY
+
+      - name: "Red if any step failed (the logs are printed here, not committed)"
+        if: always()
+        run: |
+          { cat watch/run.log watch/freshness.txt 2>/dev/null; grep -H 'exit code' watch/*.txt watch/*.log 2>/dev/null; } | sed 's/^/  /' || true   # never digest.log or safe_changes.log here: they hold text from before the redaction, and Actions logs of a public repository are public
+          if grep -lq 'exit code' watch/*.txt watch/*.log 2>/dev/null; then echo "::error::a step failed, see the logs above"; exit 1; fi

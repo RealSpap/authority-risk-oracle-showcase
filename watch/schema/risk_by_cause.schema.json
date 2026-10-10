@@ -1,0 +1,60 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "watch/risk_by_cause.json v1",
+ "type": "object",
+ "required": [
+  "generated_utc",
+  "tracked_tvl_usd",
+  "contracts",
+  "causes"
+ ],
+ "properties": {
+  "generated_utc": {
+   "type": "string"
+  },
+  "tracked_tvl_usd": {
+   "type": "number"
+  },
+  "contracts": {
+   "type": "integer"
+  },
+  "causes": {
+   "type": "object",
+   "additionalProperties": {
+    "type": "object",
+    "required": [
+     "label",
+     "contracts",
+     "tvl_usd",
+     "targets"
+    ],
+    "properties": {
+     "label": {
+      "type": "string"
+     },
+     "contracts": {
+      "type": "integer"
+     },
+     "with_tvl": {
+      "type": "integer"
+     },
+     "tvl_usd": {
+      "type": "number"
+     },
+     "share_of_tracked": {
+      "type": [
+       "number",
+       "null"
+      ]
+     },
+     "targets": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  }
+ }
+}

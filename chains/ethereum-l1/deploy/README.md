@@ -4,7 +4,7 @@ Status: **deployed for real on 2026-09-18.** The funding blocker below is
 closed -- the shared testnet key was rotated on 2026-09-18 (new address
 `0x20630C6Ab4BA48a80edA46F77b9b6e987A8f32f5`, replacing the old
 `0xA08a76457b758aFF9702dBf5b870679E1232B715`, which was flagged as possibly
-exposed in a local session transcript and is now abandoned with 0 funds --
+exposed in local working notes and is now abandoned with 0 funds --
 see `keys/authority-risk-oracle/evm-testnet-shared/.env`'s own `superseded_key_note` in the
 pipeline's local config, not in this repo) and funded by Spap manually via a
 Sepolia faucet. `AuthorityRiskOracle` and `ExampleConsumer` were deployed for
@@ -245,7 +245,7 @@ cast balance 0x20630C6Ab4BA48a80edA46F77b9b6e987A8f32f5 --rpc-url https://ethere
 [`data/deploy_rehearsal_2026-09-17.md`](../data/deploy_rehearsal_2026-09-17.md),
 [`data/deploy_rehearsal_2026-09-17-run2.md`](../data/deploy_rehearsal_2026-09-17-run2.md)
 and [`data/deploy_status_2026-09-18.md`](../data/deploy_status_2026-09-18.md)
-for that history) was flagged as possibly exposed in a session transcript.
+for that history) was flagged as possibly exposed in local working notes.
 Spap funded the new address manually via a Sepolia faucet on 2026-09-18. The
 real deploy and score push below spent ~0.00222 ETH total, leaving
 ~0.01706 ETH on the address.

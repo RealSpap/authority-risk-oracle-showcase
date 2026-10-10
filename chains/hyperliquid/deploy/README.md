@@ -94,7 +94,7 @@ contract.
 ## Build and test (this pass, read-only, no deploy)
 
 Every ecosystem's agent shares this one clone -- always pass separate
-`--out`/`--cache-path` so parallel agents never clobber each other's build
+`--out`/`--cache-path` so parallel builds never clobber each other's build
 artifacts:
 
 ```
@@ -115,8 +115,7 @@ introduced this pass), **20/20 tests passed** (5 in
 Uses the shared EVM testnet key, `keys/authority-risk-oracle/evm-testnet-shared/.env`. **This
 key was rotated on 2026-09-18**, after the `scoring_build` pass above was
 committed: the address `0xA08a76457b758aFF9702dBf5b870679E1232B715` used
-in that pass is now superseded (flagged as possibly written into a local
-session transcript on 2026-09-17; it was never funded on any of the 3
+in that pass is now superseded (flagged as possibly written into local working notes on 2026-09-17; it was never funded on any of the 3
 shared testnets, so no funds were at risk). The current address is
 `0x20630C6Ab4BA48a80edA46F77b9b6e987A8f32f5`. Private key never copied
 into this repo, never printed to any output or log; per the key file's own

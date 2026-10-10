@@ -5,7 +5,7 @@ share a root, across ecosystems, that the oracle still scores as if they did not
 
 ## The finding
 
-Uniswap's Ethereum L1 Governance Timelock (`0x1a9C8182C09F50c8318d769245bEA52c32BE35BC`, 2-day delay, GovernorBravo behind it) is
+Uniswap's Ethereum L1 Governance Timelock (`0x1a9C…35BC`, 2-day delay, GovernorBravo behind it) is
 the root authority of every Uniswap target this oracle tracks, on five ecosystems, reached through three different bridges:
 
 | Ecosystem | Tracked targets | How the Timelock is reached |

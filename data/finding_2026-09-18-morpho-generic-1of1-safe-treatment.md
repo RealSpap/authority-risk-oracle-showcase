@@ -4,7 +4,7 @@ Requested by a tracked GitHub Projects item: "scorer Morpho generique --
 traiter un Safe 1-of-1 comme une EOA ? (NetNet Credit 22 on-chain vs 8 a
 la main)." Pure investigation -- `scripts/lib/scorers.py` is unmodified
 by this finding. A change to this scorer's formula needs this project's
-own adversarial-review discipline before committing, per `AGENTS.md`'s
+own adversarial-review discipline before committing, per the project's review rules'
 "Before committing" section, not a unilateral edit from a research pass.
 
 ## What the code does today, and why

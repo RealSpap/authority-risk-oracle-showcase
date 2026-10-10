@@ -1,6 +1,6 @@
 # Batch 8 -- 2026-09-16
 
-Prompted by a direct research question from Spap: "look at our postmortems
+Triggered by a direct research question from Spap: "look at our postmortems
 (`onchain-postmortems`, 42 independently-reconstructed exploits) and tell me
 what's relevant for authority-risk-oracle." Three cross-cutting patterns came
 out of that read, cross-checked against exactly what this project's own
@@ -119,7 +119,7 @@ L1 rollup bridge this project already tracks.
 
 `EndpointV2`, `SendUln302` and `ReceiveUln302` were each checked
 independently and all three share the identical `owner()`:
-`0xE590a6730D7a8790E99ce3db11466Acb644c3942`. That address is deliberately
+`0xE590…3942`. That address is deliberately
 NOT a Gnosis Safe -- `getOwners()`/`getThreshold()` both revert on it -- it
 is a bespoke on-chain multisig (bytecode contains the string "OneSig"),
 exposing `getSigners()`/`threshold()` instead. New scorer

@@ -32,7 +32,7 @@ The registry is governed by an OpenZeppelin AccessManager (`authority()` =
 `register`/`deregister`/`setAuthority` are all gated by `getTargetFunctionRole()`
 = roleId 0 (`ADMIN_ROLE`). Replaying every `RoleGranted`/`RoleRevoked` event
 for roleId 0 from genesis finds exactly one grant, ever, no revokes: sole
-holder is `0x359856655934338D798f9CCE1f181486301D36a5`.
+holder is `0x3598…36a5`.
 
 That address's on-chain code is the EIP-7702 delegation designator
 (`0xef0100` + `0x5a7fc11397e9a8ad41bf10bf13f22b0a63f96f6d`) -- an EOA that has
@@ -71,7 +71,7 @@ this lead had previously read "official address-book unresolved."
 `vault.owner()` and `strategy.owner()` are two separate, real
 `TimelockController` contracts (contract name confirmed on Blockscout, not
 assumed), both governed by the identical real 3-of-6 Gnosis Safe
-(`0x000000a151650b85742d8c286e09aba7be9bdb82`, 6 distinct owners, re-checked
+(`0x0000…db82`, 6 distinct owners, re-checked
 live via `getOwners()`/`getThreshold()`) holding both `PROPOSER_ROLE` and
 `CANCELLER_ROLE` on each (role holders re-derived via a live
 `RoleGranted`/`RoleRevoked` replay). The deployer's own

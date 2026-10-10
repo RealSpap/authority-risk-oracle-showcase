@@ -1,74 +1,35 @@
 # Security policy
 
-## Scope
+## What is in scope
 
-- [`src/AuthorityRiskOracle.sol`](src/AuthorityRiskOracle.sol) -- the oracle contract.
-- [`src/ExampleConsumer.sol`](src/ExampleConsumer.sol) -- reference consumer, ships as
-  part of this repo and is in scope for the same reason: a bug in reference code that
-  gets copied into a real integration is a real bug.
-- The off-chain scoring pipeline (`scripts/`) is **out of scope** for a funds-at-risk
-  bounty (it holds no funds and has no privileged on-chain role of its own beyond
-  `UPDATER_ROLE`, already covered above) -- report data-integrity bugs there as a
-  normal GitHub issue or a private security advisory (see below), not a paid finding.
+- `src/AuthorityRiskOracle.sol`, the oracle contract, deployed on 8 EVM testnets (Robinhood Chain, Ethereum Sepolia, Arbitrum Sepolia, Base Sepolia, Tempo Moderato, Plasma, Monad, Hyperliquid HyperEVM). The live addresses are in the README.
+- `src/ExampleConsumer.sol`, the reference consumer. A bug in reference code that gets copied into a real integration is a real bug.
+- `chains/solana/program/`, the Anchor program on Solana devnet (program `5VhiTAGLEViGgajhxPbzdWz7WLUAiRy42DY6qi6tYh4W`): the registry and the score accounts.
 
-Currently deployed on [Robinhood Chain Testnet](https://explorer.testnet.chain.robinhood.com)
-only (see `README.md`'s "Status" section for the live address) -- **no real user funds
-are held by this contract today**. It is a publication point, not a custodian: the
-worst-case on-chain impact of a bug here is a wrong or manipulated *score* being
-served to a consumer, not a direct fund drain from this contract itself. Reward tiers
-below are set accordingly, and are explicitly disclosed as modest for that reason, not
-hidden behind a vague "case by case" answer.
+The off-chain scoring pipeline (`scripts/`, `chains/*/scorers.py`) and the watch job hold no funds and have no privileged on-chain role beyond the updater key. A wrong number there is a data-quality question: report it as a normal GitHub issue, with the evidence, and it will be answered in public.
 
-## Reporting a vulnerability
+## What is at stake today
 
-**Preferred, no account needed anywhere**: open a private GitHub Security Advisory
-on this repo (Security tab -> Advisories -> "Report a vulnerability"). GitHub's own
-advisory flow keeps the report private between you and the maintainer until a fix
-ships, and doesn't require sharing an email address or setting up a bounty-platform
-account first. **Checked live 2026-09-17**: this feature (private vulnerability
-reporting) is **not yet enabled** on this repo (`GET
-/repos/{owner}/{repo}/private-vulnerability-reporting` returns 404) -- toggle it on
-under Settings -> Security -> "Private vulnerability reporting" before relying on
-this path; not done automatically by this pass since it's a repo settings change,
-not a docs change. Until then, open a normal (public, since this repo is private
-and only invited collaborators can see it anyway) GitHub issue instead.
+Every deployment is on a testnet and the contracts hold no user funds. They are a publication point, not a custodian. The worst on-chain outcome of a bug is a wrong or manipulated score served to a consumer. The scores are published by one updater key with no timelock; that is disclosed on the dashboard and in the methodology, and it is the first thing a consumer should weigh.
 
-**Funded bug bounty (Immunefi)**: a formal program with real, immunefi.com-escrowed
-rewards is planned but **not live yet** as of 2026-09-17 -- funding and account setup
-are still pending on the maintainer's side. Once live, it will be linked here and on
-[immunefi.com](https://immunefi.com). Until then, report through the GitHub advisory
-above; a retroactive reward for a genuine finding reported before the program formally
-launches is at the maintainer's discretion, not guaranteed.
+## How to report a vulnerability
 
-## What counts as in scope, and severity (Immunefi Vulnerability Severity
-Classification System v2.3, Smart Contracts table -- adopted as-is rather than
-inventing a bespoke scale)
+1. Preferred: a private GitHub security advisory on this repository (Security tab, "Report a vulnerability"). If that option is not available on the repository yet, use the next one.
+2. A GitHub issue titled "Security report", with enough detail to reproduce. For anything that should not be public, say so in the issue without the details and a private channel will be arranged.
 
-| Severity | What it means for THIS contract |
+Please allow 14 days before public disclosure. You will get an answer within 72 hours.
+
+## Severity
+
+The Immunefi Vulnerability Severity Classification System (smart contracts table) is used as is.
+
+| Severity | For these contracts |
 |---|---|
-| **Critical** | Bypassing `UPDATER_ROLE`/`DEFAULT_ADMIN_ROLE` access control to push an unauthorized score; permanently bricking `getScore()`/`isStale()` for every target; any path that lets `updateScore()`/`updateScores()` write a score outside the documented 0-100 range despite the `ScoreOutOfRange` check added 2026-09-17 (see `data/contract_review_2026-09-17-llamaguard-comparison.md` for why that specific class of bug is treated as Critical here -- it directly caused a ~196% collateral factor in `ExampleConsumer.sol`'s own math before the fix). |
-| **High** | A way to grief `updateScore()`/`updateScores()` so legitimate updates can't land (e.g. an unbounded-gas griefing vector in `_updateScore()`), leaving stale data being served as if current without `isStale()` catching it. |
-| **Medium** | Gas griefing, unbounded gas consumption in any view/write path, `trackedTargets` array growth that becomes impractically expensive to enumerate. |
-| **Low** | Anything that doesn't compromise a security guarantee but deviates from documented behavior. |
+| Critical | Bypassing the updater or admin role to push an unauthorized score; permanently breaking `getScore` or `isStale` for every target; any path by which a score account on Solana can be written by someone other than the registry's updater. |
+| High | Griefing `updateScore` or `updateScores` so that legitimate updates cannot land, leaving stale data served as current without `isStale` saying so. |
+| Medium | Unbounded gas in any read or write path; a tracked-targets list that becomes impractical to enumerate. |
+| Low | A deviation from the documented behaviour that does not break a security guarantee. |
 
-Out of scope by design, not oversight: the OFF-CHAIN methodology's correctness (is a
-given protocol's `adminKeyScore` the right number?) is a data-quality question, not a
-smart-contract vulnerability -- see `METHODOLOGY.md`'s own Limitations section, and
-report those as a normal GitHub issue instead.
+## Rewards
 
-## Suggested reward tiers (draft, not yet funded)
-
-Deliberately modest, reflecting the contract's actual current stakes (testnet, no
-custodied funds, hackathon-stage project), not copied from a large, live DeFi
-protocol's bounty table:
-
-| Severity | Suggested reward |
-|---|---|
-| Critical | $500-$2,000 |
-| High | $200-$500 |
-| Medium | $50-$150 |
-| Low | Public acknowledgment |
-
-These are a starting proposal for the maintainer to fund and adjust, not a live,
-binding commitment -- confirm the actual funded amounts on the live Immunefi program
-page once it exists, not this file.
+There is no funded bug bounty programme today. A genuine finding is acknowledged publicly, with credit, and a modest reward is at the maintainer's discretion: it is a testnet, hackathon-stage project and it says so. If a funded programme opens later, it will be linked here.

@@ -1,0 +1,2555 @@
+{
+ "what": "mutations replayed by scripts/mutate.py: a piece of text that must appear once in a file, what it is replaced with, and the sentence for what is being broken. A mutation whose text moved is reported as stale, one that does not compile as invalid; neither counts as caught.",
+ "mutations": [
+  {
+   "file": "scripts/metrics_prom.py",
+   "old": "if not samples: return",
+   "new": "pass",
+   "why": "an empty series is written"
+  },
+  {
+   "file": "scripts/metrics_prom.py",
+   "old": "samples = [(l, v) for l, v in samples if v is not None]",
+   "new": "samples = [(l, 0 if v is None else v) for l, v in samples]",
+   "why": "an absent value is read as zero"
+  },
+  {
+   "file": "scripts/metrics_prom.py",
+   "old": "x.get(\"targets\")) for x in oracles if x.get(\"read_ok\")])",
+   "new": "x.get(\"targets\")) for x in oracles])",
+   "why": "targets of an oracle that was not read"
+  },
+  {
+   "file": "scripts/metrics_prom.py",
+   "old": "if not text: print",
+   "new": "if False: print",
+   "why": "an empty file is written"
+  },
+  {
+   "file": "scripts/metrics_prom.py",
+   "old": "n[a.get(\"severity\") if a.get(\"severity\") in n else \"info\"] += 1",
+   "new": "n[a.get(\"severity\")] += 1",
+   "why": "an unknown severity crashes"
+  },
+  {
+   "file": "scripts/metrics_prom.py",
+   "old": "if status and status.get(\"state\") in (\"ok\", \"degraded\", \"alarm\"):",
+   "new": "if status:",
+   "why": "an unknown state is accepted"
+  },
+  {
+   "file": "scripts/metrics_prom.py",
+   "old": "return calendar.timegm(time.strptime(t, \"%Y-%m-%dT%H:%M:%SZ\"))",
+   "new": "return time.mktime(time.strptime(t, \"%Y-%m-%dT%H:%M:%SZ\"))",
+   "why": "local time taken for UTC"
+  },
+  {
+   "file": "scripts/catalog.py",
+   "old": "if n in SKIP or not n.endswith(EXT): continue",
+   "new": "if n in SKIP: continue",
+   "why": "logs are listed"
+  },
+  {
+   "file": "scripts/catalog.py",
+   "old": "if not d and n not in (\"API.md\", \"README.md\"): undocumented.append(n)",
+   "new": "pass",
+   "why": "an undocumented file is hidden"
+  },
+  {
+   "file": "scripts/catalog.py",
+   "old": "if kids and n not in (\"schema\", \"prev\"):",
+   "new": "if kids:",
+   "why": "the schema folder is listed"
+  },
+  {
+   "file": "scripts/catalog.py",
+   "old": "for n in re.findall(r\"`([^`]+)`\", parts[0]): out.setdefault(n, (desc, schema))",
+   "new": "for n in re.findall(r\"`([^`]+)`\", parts[0])[:1]: out.setdefault(n, (desc, schema))",
+   "why": "a row naming two files describes one"
+  },
+  {
+   "file": "scripts/sign_run.py",
+   "old": "\"status.json\", \"integrity.json\", \"catalog.json\"}",
+   "new": "\"status.json\", \"integrity.json\"}",
+   "why": "catalog.json is not excluded from the signed manifest"
+  },
+  {
+   "file": "scripts/dossier.py",
+   "old": "if so is None: out += [\"- not read: second_opinion.json is missing\"]",
+   "new": "if so is None: out += []",
+   "why": "a missing independent read is not said"
+  },
+  {
+   "file": "scripts/dossier.py",
+   "old": "if sa is None: out += [\"- admin Safe activity not read: safe_activity.json is missing\"]",
+   "new": "pass",
+   "why": "missing Safe activity is not said"
+  },
+  {
+   "file": "scripts/dossier.py",
+   "old": "elif z.get(\"stale\"): out += [\"- pause: the last answer is stale\"]",
+   "new": "elif z.get(\"stale\"): out += [\"- not paused\"]",
+   "why": "a stale pause is read as not paused"
+  },
+  {
+   "file": "scripts/dossier.py",
+   "old": "elif not z: out += [\"- pause: this contract answers neither paused() nor isPaused(), so a pause is not seen\"]",
+   "new": "elif not z: out += [\"- not paused\"]",
+   "why": "no pause getter is read as not paused"
+  },
+  {
+   "file": "scripts/dossier.py",
+   "old": "if po is None: out += [\"- queue: not read (pending_ops.json is missing)\"]",
+   "new": "if po is None: out += [\"- nothing queued\"]",
+   "why": "a missing queue is read as empty"
+  },
+  {
+   "file": "scripts/dossier.py",
+   "old": "if PENDING_CHAIN.get(res.get(\"chain\"), res.get(\"chain\")) != key: continue",
+   "new": "pass",
+   "why": "another chain's queue is shown"
+  },
+  {
+   "file": "scripts/dossier.py",
+   "old": "if norm(op.get(\"target\")) == addr: ops.append",
+   "new": "ops.append",
+   "why": "another contract's operation is shown"
+  },
+  {
+   "file": "scripts/dossier.py",
+   "old": ".get(\"matched\") or {}).get(ka.lower()) or {}; out = []",
+   "new": ".get(\"matched\") or {}).get(ka) or {}; out = []",
+   "why": "Solana money looked up in base58 case"
+  },
+  {
+   "file": "scripts/dossier.py",
+   "old": "and e.get(\"oracle\") in (oname, slug, key): evs.append(e)",
+   "new": "and True: evs.append(e)",
+   "why": "an event of another chain is shown"
+  },
+  {
+   "file": "scripts/dossier.py",
+   "old": "except ValueError: continue",
+   "new": "except ValueError: raise",
+   "why": "a broken log line stops the command"
+  },
+  {
+   "file": "scripts/find.py",
+   "old": "if v is None: unread[field] = unread.get(field, 0) + 1; return False",
+   "new": "if v is None: return True",
+   "why": "an unread field matches a filter"
+  },
+  {
+   "file": "scripts/find.py",
+   "old": "if v is None: unread[field] = unread.get(field, 0) + 1; return False",
+   "new": "if v is None: return False",
+   "why": "an unread field is not counted"
+  },
+  {
+   "file": "scripts/find.py",
+   "old": "\"paused\": None if (pz is None or not z or z.get(\"stale\")) else bool(z.get(\"paused\"))",
+   "new": "\"paused\": bool(z and z.get(\"paused\"))",
+   "why": "an unread pause is read as not paused"
+  },
+  {
+   "file": "scripts/find.py",
+   "old": "out.sort(key=lambda r: (r.get(field) is None, -(r.get(field) or 0) if rev else (r.get(field) or 0)))",
+   "new": "out.sort(key=lambda r: -(r.get(field) or 0) if rev else (r.get(field) or 0))",
+   "why": "unknown values sorted as zeros"
+  },
+  {
+   "file": "scripts/find.py",
+   "old": "return (out[:a.limit] if a.limit else out), unread",
+   "new": "return out, unread",
+   "why": "--limit is ignored"
+  },
+  {
+   "file": "scripts/find.py",
+   "old": "if a.chain and not chain_key(a.chain): print(",
+   "new": "if False: print(",
+   "why": "an unknown chain is accepted"
+  },
+  {
+   "file": "scripts/find.py",
+   "old": "a = ap.parse_args(); utf8_stdout()",
+   "new": "a = ap.parse_args()",
+   "why": "no UTF-8 output on a legacy terminal"
+  },
+  {
+   "file": "scripts/brief.py",
+   "old": "return money_once(kas, tvl, scope, held)",
+   "new": "return sum(float((tvl.get(k) or {}).get('tvl') or 0) for k in kas)",
+   "why": "money summed per contract"
+  },
+  {
+   "file": "scripts/brief.py",
+   "old": "tied = [r for r in rs[1:] if r[\"score\"] == w[\"score\"]]",
+   "new": "tied = []",
+   "why": "a tie for the weakest is not said"
+  },
+  {
+   "file": "scripts/brief.py",
+   "old": "read = [r for r in rs if r.get(\"kind\") not in (None, \"unreadable\", \"native\")]",
+   "new": "read = rs",
+   "why": "plain keys counted over unread admins"
+  },
+  {
+   "file": "scripts/brief.py",
+   "old": "if len(hits) > 1: return None,",
+   "new": "if False: return None,",
+   "why": "an ambiguous name is accepted"
+  },
+  {
+   "file": "scripts/brief.py",
+   "old": "if q in ps: return {q: ps[q]}",
+   "new": "pass",
+   "why": "an exact slug no longer wins"
+  },
+  {
+   "file": "scripts/brief.py",
+   "old": "+ ([] if any(unread.values()) else [\"- everything asked was read\"])",
+   "new": "+ [\"- everything asked was read\"]",
+   "why": "'everything was read' is always said"
+  },
+  {
+   "file": "scripts/feeds_per_target.py",
+   "old": "allx.sort(key=lambda x: x[0] or \"\", reverse=True)",
+   "new": "allx.sort(key=lambda x: x[0] or \"\")",
+   "why": "oldest entry first"
+  },
+  {
+   "file": "scripts/feeds_per_target.py",
+   "old": "allx[:50]",
+   "new": "allx",
+   "why": "no limit of 50 entries"
+  },
+  {
+   "file": "scripts/feeds_per_target.py",
+   "old": "if i not in seen: seen.add(i); allx.append((when, x))",
+   "new": "allx.append((when, x))",
+   "why": "duplicate entries kept"
+  },
+  {
+   "file": "scripts/feeds_per_target.py",
+   "old": "fname = re.sub(r\"[^a-z0-9._-]\", \"-\", str(pslug).lower()) + \".xml\"",
+   "new": "fname = str(pslug) + \".xml\"",
+   "why": "slug used as a file name unchanged"
+  },
+  {
+   "file": "scripts/feeds_per_target.py",
+   "old": "if m_.get(\"slug\"): groups",
+   "new": "if True: groups",
+   "why": "contracts without a protocol are grouped"
+  },
+  {
+   "file": "scripts/safe_activity.py",
+   "old": "idle_s >= wake_days * 86400",
+   "new": "idle_s > wake_days * 86400",
+   "why": "the limit of 14 days is exclusive"
+  },
+  {
+   "file": "scripts/safe_activity.py",
+   "old": "    if nonce < pv[\"nonce\"]: return rec, {\"regressed\": True, \"delta\": None, \"idle_days\": None, \"woke\": False}",
+   "new": "    pass",
+   "why": "a nonce going down counts as a wake"
+  },
+  {
+   "file": "scripts/safe_activity.py",
+   "old": "return chain + \":\" + hashlib.sha256(addr.lower().encode()).hexdigest()[:16]",
+   "new": "return chain + \":\" + addr.lower()",
+   "why": "the record key holds the address"
+  },
+  {
+   "file": "scripts/safe_activity.py",
+   "old": "return n if n < 2 ** 40 else None",
+   "new": "return n",
+   "why": "an oversized word is read as a nonce"
+  },
+  {
+   "file": "scripts/safe_activity.py",
+   "old": "if pv: by_safe[k] = dict(pv, stale=True",
+   "new": "if False: by_safe[k] = dict(pv, stale=True",
+   "why": "a silent Safe loses its record"
+  },
+  {
+   "file": "scripts/review_queue.py",
+   "old": "    state_items(W, add)   #",
+   "new": "    pass   #",
+   "why": "state files are never read"
+  },
+  {
+   "file": "scripts/review_queue.py",
+   "old": "add(1 if x.get(\"shorter\") else 2, \"delay change announced\"",
+   "new": "add(1, \"delay change announced\"",
+   "why": "a longer delay is as urgent as a shorter one"
+  },
+  {
+   "file": "scripts/review_queue.py",
+   "old": "if v.get(\"paused\") and not v.get(\"stale\"):",
+   "new": "if v.get(\"paused\"):",
+   "why": "a stale pause is queued"
+  },
+  {
+   "file": "scripts/review_queue.py",
+   "old": "if ch.get(\"change\") == \"announced\": continue",
+   "new": "pass",
+   "why": "an announcement is queued twice"
+  },
+  {
+   "file": "scripts/coverage.py",
+   "old": "if not (v or {}).get(\"stale\"): out[",
+   "new": "if True: out[",
+   "why": "stale records are counted"
+  },
+  {
+   "file": "scripts/coverage.py",
+   "old": "if key != \"solana\" and c[\"targets\"]:",
+   "new": "if c[\"targets\"]:",
+   "why": "Solana is judged on EVM getters"
+  },
+  {
+   "file": "scripts/coverage.py",
+   "old": "if d is None: return None\n",
+   "new": "if d is None: return {}\n",
+   "why": "a missing file is read as zero"
+  },
+  {
+   "file": "scripts/trend.py",
+   "old": "if vals: out[key] = sum(vals)",
+   "new": "out[key] = sum(vals)",
+   "why": "an unread chain counts as zero"
+  },
+  {
+   "file": "scripts/trend.py",
+   "old": "if st: line[\"state\"] = st",
+   "new": "line[\"state\"] = st",
+   "why": "an empty state block is written"
+  },
+  {
+   "file": "scripts/admin_probe.py",
+   "old": "return as_int(w) == 0",
+   "new": "return as_int(w) in (0, 1)",
+   "why": "a 'true' is taken for the AccessControl shape"
+  },
+  {
+   "file": "scripts/admin_probe.py",
+   "old": "return as_int(w) == 1",
+   "new": "return as_int(w) is not None",
+   "why": "a 'no' counts as a yes"
+  },
+  {
+   "file": "scripts/admin_probe.py",
+   "old": "if not answered: continue",
+   "new": "pass",
+   "why": "silence is read as 'no holder'"
+  },
+  {
+   "file": "scripts/admin_probe.py",
+   "old": "\"complete\": False",
+   "new": "\"complete\": True",
+   "why": "the list is said to be complete"
+  },
+  {
+   "file": "scripts/admin_probe.py",
+   "old": "SKIP_CHAINS = {\"tempo\"}",
+   "new": "SKIP_CHAINS = set()",
+   "why": "Tempo is probed in the wrong argument order"
+  },
+  {
+   "file": "scripts/admin_probe.py",
+   "old": "if len(a) == 42 and a.startswith(\"0x\")",
+   "new": "if a.startswith(\"0x\")",
+   "why": "a shortened address is a candidate"
+  },
+  {
+   "file": "scripts/demo.py",
+   "old": "\"change\": \"paused\", \"from\": False, \"previous_run\": prev_run}}}",
+   "new": "\"change\": None, \"from\": False, \"previous_run\": prev_run}}}",
+   "why": "the pause is not a flip"
+  },
+  {
+   "file": "scripts/demo.py",
+   "old": "\"amount_change_pct\": -80.0",
+   "new": "\"amount_change_pct\": -10.0",
+   "why": "the balance barely moves"
+  },
+  {
+   "file": "scripts/demo.py",
+   "old": "(x.get(\"rule\"), str(x.get(\"target\")).lower()) not in before]",
+   "new": "True]",
+   "why": "alerts already firing are counted as invented"
+  },
+  {
+   "file": "scripts/demo.py",
+   "old": "finally: shutil.rmtree(T, ignore_errors=True)",
+   "new": "finally: pass",
+   "why": "the temporary copy is left behind"
+  },
+  {
+   "file": "scripts/evaluate_rules.py",
+   "old": "out[chain.lower() + \":\" + norm(addr)] = v",
+   "new": "out[str(k)] = v",
+   "why": "hand-entered keys are not normalised"
+  },
+  {
+   "file": "scripts/side_roles.py",
+   "old": "(short(old_.get(f_)) == short(new_.get(f_))) if f_ == \"holder\"",
+   "new": "(old_.get(f_) == new_.get(f_)) if f_ == \"holder\"",
+   "why": "an announced guardian read back shortened is re-announced"
+  },
+  {
+   "file": "scripts/second_opinion.py",
+   "old": "if PROXY_MARKER not in c or \"3659cfe6\" not in c: return None",
+   "new": "pass",
+   "why": "any contract is read as a transparent proxy"
+  },
+  {
+   "file": "scripts/second_opinion.py",
+   "old": "found.discard(\"0\" * 40); ",
+   "new": "",
+   "why": "the zero address is an admin"
+  },
+  {
+   "file": "scripts/second_opinion.py",
+   "old": "    if addr_of(beacon_owner_word): return",
+   "new": "    if False: return",
+   "why": "the owner of a beacon is ignored"
+  },
+  {
+   "file": "scripts/watch_run.py",
+   "old": "return prev_doc.get(\"self_scanned_to\") or prev_doc.get(\"block\")",
+   "new": "return prev_doc.get(\"block\")",
+   "why": "a failed scan window is never read again"
+  },
+  {
+   "file": "scripts/watch_run.py",
+   "old": "if self_w.get(\"read\") or since is None: return block",
+   "new": "if since is None: return block",
+   "why": "a successful scan no longer moves forward"
+  },
+  {
+   "file": "scripts/daily_digest.py",
+   "old": "return out[:2] + queue_section(path) + out[2:]",
+   "new": "return out + queue_section(path)",
+   "why": "the queue is at the bottom of the report"
+  },
+  {
+   "file": "scripts/daily_digest.py",
+   "old": "except OSError: return [\"## Needs a person: not read",
+   "new": "except OSError: return []  # [\"## Needs a person: not read",
+   "why": "a missing queue is shown as empty"
+  },
+  {
+   "file": "scripts/trend.py",
+   "old": "    if cov: line[\"blind_spots\"]",
+   "new": "    if cov: line[\"blind_spots\"] = undefined_helper(cov)\n    if False: line[\"blind_spots\"]",
+   "why": "an undefined name in a branch"
+  },
+  {
+   "file": "scripts/alarm_gate.py",
+   "old": "if not found: return \"unrecognised\"",
+   "new": "if not found: return \"quiet\"",
+   "why": "a cause the gate does not read is silenced"
+  },
+  {
+   "file": "scripts/alarm_gate.py",
+   "old": "return \"reminder\" if age >= REMINDER_HOURS else \"quiet\"",
+   "new": "return \"reminder\" if age > REMINDER_HOURS else \"quiet\"",
+   "why": "the reminder limit is exclusive"
+  },
+  {
+   "file": "scripts/alarm_gate.py",
+   "old": "calendar.timegm(time.strptime(last,",
+   "new": "time.mktime(time.strptime(last,",
+   "why": "the reminder age is read in local time"
+  },
+  {
+   "file": "scripts/alarm_gate.py",
+   "old": "if x.get(\"severity\") == \"high\" and x.get(\"new\"): f.add(",
+   "new": "if x.get(\"severity\") == \"high\": f.add(",
+   "why": "a standing high alert reopens an issue every run"
+  },
+  {
+   "file": "scripts/alarm_gate.py",
+   "old": "if i.get(\"overdue\"): f.add(",
+   "new": "if True: f.add(",
+   "why": "every review item re-enters the alarm"
+  },
+  {
+   "file": "scripts/alarm_gate.py",
+   "old": "REMINDER_HOURS = 24\n\n\ndef load",
+   "new": "REMINDER_HOURS = 1\n\n\ndef load",
+   "why": "a reminder every hour instead of every day"
+  },
+  {
+   "file": "scripts/alarm_gate.py",
+   "old": "f.add(\"alarm:\" + l.strip()[:160])",
+   "new": "f.add(\"alarm:\" + l.strip()[:16])",
+   "why": "two different alarm lines look the same"
+  },
+  {
+   "file": "scripts/held_assets.py",
+   "old": "if r[2 * i] is None or r[2 * i + 1] is None]",
+   "new": "if r[2 * i] is None and r[2 * i + 1] is None]",
+   "why": "one unanswered call is not enough to keep the old record"
+  },
+  {
+   "file": "scripts/held_assets.py",
+   "old": "/ pv[\"amount\"] * 100, 2)",
+   "new": "/ amount * 100, 2)",
+   "why": "the balance change is divided by the new amount"
+  },
+  {
+   "file": "scripts/held_assets.py",
+   "old": "amount = ta / 10 ** d if d is not None else None",
+   "new": "amount = ta / 10 ** 18 if d is not None else None",
+   "why": "decimals are ignored"
+  },
+  {
+   "file": "scripts/held_assets.py",
+   "old": "if pv.get(\"amount\") and pv.get(\"asset\") == x and amount is not None:",
+   "new": "if pv.get(\"amount\") and amount is not None:",
+   "why": "a change of asset is read as a balance move"
+  },
+  {
+   "file": "scripts/held_assets.py",
+   "old": "held_usd=amount * pv[\"price_usd\"], price_stale=True)",
+   "new": "held_usd=amount * pv[\"price_usd\"], price_stale=False)",
+   "why": "a price from the previous run is not marked stale"
+  },
+  {
+   "file": "scripts/held_assets.py",
+   "old": "by_target[key + \":\" + t.lower()] = dict(pv, stale=True, stale_since=pv.get(\"stale_since\") or prev.get(\"generated_utc\")); carried += 1",
+   "new": "by_target[key + \":\" + t.lower()] = dict(pv); carried += 1",
+   "why": "a kept record is not marked stale"
+  },
+  {
+   "file": "scripts/held_assets.py",
+   "old": "vanished=True, vanished_since",
+   "new": "vanished=False, vanished_since",
+   "why": "a vanished balance is not marked"
+  },
+  {
+   "file": "scripts/held_assets.py",
+   "old": "if ts and sum(1 for i in range(len(ts)) if r[2 * i] is None and r[2 * i + 1] is None) == len(ts): unread_chains.append(key)",
+   "new": "if False: unread_chains.append(key)",
+   "why": "an unread chain is not said"
+  },
+  {
+   "file": "scripts/pause_state.py",
+   "old": "int(v, 16) in (0, 1): got",
+   "new": "int(v, 16) in (0, 1, 2): got",
+   "why": "a word that is not a boolean is read as one"
+  },
+  {
+   "file": "scripts/pause_state.py",
+   "old": "if pv and pv.get(\"paused\") != got[1]:   # also against",
+   "new": "if pv and not pv.get(\"stale\") and pv.get(\"paused\") != got[1]:   # also against",
+   "why": "a pause during an outage is never told (a stale record is not compared)"
+  },
+  {
+   "file": "scripts/pause_state.py",
+   "old": "rec[\"change\"] = \"paused\" if got[1] else \"unpaused\"",
+   "new": "rec[\"change\"] = \"unpaused\" if got[1] else \"paused\"",
+   "why": "a pause is reported as an unpause"
+  },
+  {
+   "file": "scripts/pause_state.py",
+   "old": "if pv: by_target[ka] = dict(pv, stale=True",
+   "new": "if False: by_target[ka] = dict(pv, stale=True",
+   "why": "a contract that stops answering loses its record"
+  },
+  {
+   "file": "scripts/pause_state.py",
+   "old": "if v.get(\"paused\") and not v.get(\"stale\"))",
+   "new": "if v.get(\"paused\"))",
+   "why": "a stale record is listed as paused"
+  },
+  {
+   "file": "scripts/pause_state.py",
+   "old": "\"isPaused()\": \"0xb187bd26\"",
+   "new": "\"isPaused()\": \"0xb187bd27\"",
+   "why": "a wrong selector for isPaused()"
+  },
+  {
+   "file": "scripts/evaluate_rules.py",
+   "old": "a = str(a); return a.lower() if a.startswith(\"0x\") else a",
+   "new": "a = str(a); return a.lower()",
+   "why": "a Solana address is lowercased"
+  },
+  {
+   "file": "scripts/evaluate_rules.py",
+   "old": "\"%s balance from %s to %s (%+.1f%%) since %s\"",
+   "new": "\"%s balance from %s to %s (%.1f%%) since %s\"",
+   "why": "the sign of a balance change is dropped"
+  },
+  {
+   "file": "scripts/second_opinion.py",
+   "old": "return a if len(a) <= 14 or \"…\" in a else a[:6] + \"…\" + a[-4:]",
+   "new": "return a if len(a) <= 14 or \"…\" in a else a[:6] + \"…\" + a[-5:]",
+   "why": "a shortened address keeps five end characters"
+  },
+  {
+   "file": "scripts/second_opinion.py",
+   "old": "return None if int(a, 16) == 0 else a",
+   "new": "return a",
+   "why": "the zero address is a holder"
+  },
+  {
+   "file": "scripts/second_opinion.py",
+   "old": "if len(c) == 48 and c.lower().startswith(\"0xef0100\") else None",
+   "new": "if len(c) >= 48 and c.lower().startswith(\"0xef0100\") else None",
+   "why": "a longer contract is read as a 7702 delegation"
+  },
+  {
+   "file": "scripts/second_opinion.py",
+   "old": "return code is not None and (len(code) <= 2 or delegation(code) is not None)",
+   "new": "return code is not None and len(code) <= 2",
+   "why": "a delegated account is not a plain key"
+  },
+  {
+   "file": "scripts/held_assets.py",
+   "old": "vanished=True, vanished_since",
+   "new": "vanished=None, vanished_since",
+   "why": "a vanished balance carries no flag"
+  },
+  {
+   "file": "scripts/redact_signers.py",
+   "old": "if s.lower() in signers or (strict and s.lower() not in keep):",
+   "new": "if s.lower() in signers:",
+   "why": "strict files keep every address that is not a known contract"
+  },
+  {
+   "file": "scripts/redact_signers.py",
+   "old": "strict = os.path.basename(f) in (\"digest.md\", \"safe_changes.json\") or not signers",
+   "new": "strict = os.path.basename(f) in (\"digest.md\", \"safe_changes.json\")",
+   "why": "no signer index: the contract whitelist alone no longer decides"
+  },
+  {
+   "file": "scripts/redact_signers.py",
+   "old": "return s[:6] + \"…\" + s[-4:]",
+   "new": "return s[:6] + \"…\" + s[-5:]",
+   "why": "a shortened address keeps five end characters"
+  },
+  {
+   "file": "scripts/redact_signers.py",
+   "old": "t2 = re.sub(r\"(?<![0-9a-zA-Z])0x[0-9a-fA-F]{40}(?![0-9a-fA-F])\", short, t)",
+   "new": "t2 = re.sub(r\"0x[0-9a-fA-F]{40}\", short, t)",
+   "why": "a 66-character hash is cut as if it were an address"
+  },
+  {
+   "file": "scripts/redact_signers.py",
+   "old": "hits = {m.group(0).lower() for m in re.finditer(r\"(?<![0-9a-zA-Z])0x[0-9a-fA-F]{40}(?![0-9a-fA-F])\", t)} & (signers - allow)",
+   "new": "hits = {m.group(0).lower() for m in re.finditer(r\"(?<![0-9a-zA-Z])0x[0-9a-fA-F]{40}(?![0-9a-fA-F])\", t)} & signers",
+   "why": "the allow-list is ignored by the check"
+  },
+  {
+   "file": "scripts/redact_signers.py",
+   "old": "hits = {m.group(0).lower() for m in re.finditer(",
+   "new": "hits = {m.group(0) for m in re.finditer(",
+   "why": "a mixed-case address escapes the check"
+  },
+  {
+   "file": "scripts/redact_signers.py",
+   "old": "sys.exit(1 if bad else 0)",
+   "new": "sys.exit(0)",
+   "why": "a leak does not stop the run"
+  },
+  {
+   "file": "scripts/redact_signers.py",
+   "old": "if not f.endswith((\".json\", \".jsonl\", \".md\", \".xml\", \".ics\", \".csv\", \".html\", \".js\", \".svg\", \".webmanifest\"))",
+   "new": "if not f.endswith((\".json\", \".jsonl\", \".xml\", \".ics\", \".csv\", \".html\", \".js\", \".svg\", \".webmanifest\"))",
+   "why": "markdown files are not scanned"
+  },
+  {
+   "file": "scripts/redact_signers.py",
+   "old": "if t2 != t: open(f, \"w\").write(t2)",
+   "new": "pass",
+   "why": "the redacted text is never written"
+  },
+  {
+   "file": "scripts/redact_signers.py",
+   "old": "(member (?:added|removed)[^\\n]*?)",
+   "new": "(member added[^\\n]*?)",
+   "why": "a removed Squads member is not shortened"
+  },
+  {
+   "file": "scripts/redact_signers.py",
+   "old": "signers -= keep",
+   "new": "pass",
+   "why": "contracts that sign elsewhere are shortened too"
+  },
+  {
+   "file": "scripts/redact_signers.py",
+   "old": "signers = {k.lower() for k in json.load(open(a.index))}",
+   "new": "signers = {k for k in json.load(open(a.index))}",
+   "why": "a checksummed index key never matches"
+  },
+  {
+   "file": "scripts/sign_run.py",
+   "old": "if m[\"files\"].get(f) != h: bad.append(f)",
+   "new": "if False: bad.append(f)",
+   "why": "a changed file is not reported"
+  },
+  {
+   "file": "scripts/sign_run.py",
+   "old": "if s[\"manifest\"].get(\"events_chain_head\") != m[\"events_chain_head\"]: bad.append(",
+   "new": "if False: bad.append(",
+   "why": "a rewritten event log is not reported"
+  },
+  {
+   "file": "scripts/sign_run.py",
+   "old": "if m[\"code\"].get(f) != h: bad.append(",
+   "new": "if False: bad.append(",
+   "why": "changed code is not reported"
+  },
+  {
+   "file": "scripts/sign_run.py",
+   "old": "sys.exit(1 if bad else 0)",
+   "new": "sys.exit(0)",
+   "why": "a failed verification exits 0"
+  },
+  {
+   "file": "scripts/sign_run.py",
+   "old": "if lines: head = hashlib.sha256(lines[-1].encode()).hexdigest()",
+   "new": "if lines: head = hashlib.sha256(lines[0].encode()).hexdigest()",
+   "why": "the chain head is the first line"
+  },
+  {
+   "file": "scripts/sign_run.py",
+   "old": "or os.path.basename(path) in SKIP or not path.endswith(EXT)",
+   "new": "or not path.endswith(EXT)",
+   "why": "the files written after the signature are in the manifest"
+  },
+  {
+   "file": "scripts/sign_run.py",
+   "old": "return json.dumps(m, sort_keys=True, separators=(\",\", \":\")).encode()",
+   "new": "return json.dumps(m, separators=(\",\", \":\")).encode()",
+   "why": "the signed bytes depend on key order"
+  },
+  {
+   "file": "scripts/sign_run.py",
+   "old": "return json.dumps(m, sort_keys=True, separators=(\",\", \":\")).encode()",
+   "new": "return json.dumps(m, sort_keys=True).encode()",
+   "why": "the signed bytes depend on spacing"
+  },
+  {
+   "file": "scripts/sign_run.py",
+   "old": "except Exception as e: sig = \"INVALID (%s)\" % e; bad.append(\"signature\")",
+   "new": "except Exception as e: sig = \"INVALID (%s)\" % e",
+   "why": "an invalid signature is not an error"
+  },
+  {
+   "file": "scripts/sign_run.py",
+   "old": "extra = [f for f in m[\"files\"] if f not in s[\"manifest\"][\"files\"]]",
+   "new": "extra = []",
+   "why": "a file added after signing is not mentioned"
+  },
+  {
+   "file": "scripts/validate_schemas.py",
+   "old": "if len(errs) == n0: ok = True",
+   "new": "if True: ok = True",
+   "why": "an anyOf with no matching alternative passes"
+  },
+  {
+   "file": "scripts/validate_schemas.py",
+   "old": "else: del errs[n0:]",
+   "new": "else: pass",
+   "why": "the errors of failed alternatives leak out"
+  },
+  {
+   "file": "scripts/validate_schemas.py",
+   "old": "if not ok: errs.append(path + \": no alternative fits\"); return",
+   "new": "if not ok: return",
+   "why": "a failed anyOf says nothing"
+  },
+  {
+   "file": "scripts/validate_schemas.py",
+   "old": "and not (x in (\"integer\", \"number\") and isinstance(d, bool))",
+   "new": "",
+   "why": "a boolean is accepted as a number"
+  },
+  {
+   "file": "scripts/validate_schemas.py",
+   "old": "\"number\": (int, float)",
+   "new": "\"number\": float",
+   "why": "an integer is rejected as a number"
+  },
+  {
+   "file": "scripts/validate_schemas.py",
+   "old": "if \"enum\" in s and d not in s[\"enum\"]: errs.append(",
+   "new": "if False: errs.append(",
+   "why": "a value outside the enum passes"
+  },
+  {
+   "file": "scripts/validate_schemas.py",
+   "old": "if r not in d: errs.append(",
+   "new": "if False: errs.append(",
+   "why": "a missing required property passes"
+  },
+  {
+   "file": "scripts/validate_schemas.py",
+   "old": "elif ap is False: errs.append(\"%s: unexpected property %s\" % (path, k))",
+   "new": "elif ap is False: pass",
+   "why": "an unexpected property passes when forbidden"
+  },
+  {
+   "file": "scripts/validate_schemas.py",
+   "old": "elif isinstance(ap, dict): check(v, ap, path + \".\" + k, errs)",
+   "new": "elif isinstance(ap, dict): pass",
+   "why": "additionalProperties as a schema is not applied"
+  },
+  {
+   "file": "scripts/validate_schemas.py",
+   "old": "if isinstance(d, list) and \"items\" in s:",
+   "new": "if False:",
+   "why": "array items are never checked"
+  },
+  {
+   "file": "scripts/validate_schemas.py",
+   "old": "if k in props: check(v, props[k], path + \".\" + k, errs)",
+   "new": "if k in props: pass",
+   "why": "declared properties are never checked"
+  },
+  {
+   "file": "scripts/audit_public.py",
+   "old": "(NOTE if age_h <= 12 else FAIL)",
+   "new": "(NOTE if age_h <= 120 else FAIL)",
+   "why": "a watch silent for 5 days is alive"
+  },
+  {
+   "file": "scripts/audit_public.py",
+   "old": "__import__(\"calendar\").timegm(time.strptime(lj[\"run_utc\"]",
+   "new": "__import__(\"time\").mktime(time.strptime(lj[\"run_utc\"]",
+   "why": "the age of the run read in local time"
+  },
+  {
+   "file": "scripts/audit_public.py",
+   "old": "(PASS if not changed else FAIL)(\"manifest:",
+   "new": "(PASS if True else FAIL)(\"manifest:",
+   "why": "a changed file passes the manifest"
+  },
+  {
+   "file": "scripts/audit_public.py",
+   "old": "if hashlib.sha256(open(p, \"rb\").read()).hexdigest() != h: changed.append(f)",
+   "new": "if False: changed.append(f)",
+   "why": "hashes are never compared"
+  },
+  {
+   "file": "scripts/audit_public.py",
+   "old": "(PASS if s[\"manifest\"].get(\"events_chain_head\") == head else FAIL)(\"manifest: event-log chain head",
+   "new": "(PASS if True else FAIL)(\"manifest: event-log chain head",
+   "why": "a different chain head passes"
+  },
+  {
+   "file": "scripts/audit_public.py",
+   "old": "json.dumps(s[\"manifest\"], sort_keys=True, separators=(\",\", \":\"))",
+   "new": "json.dumps(s[\"manifest\"], separators=(\",\", \":\"))",
+   "why": "the signed bytes depend on key order"
+  },
+  {
+   "file": "scripts/audit_public.py",
+   "old": "except Exception as e: FAIL(\"signature: INVALID (%s)\" % e)",
+   "new": "except Exception as e: NOTE(\"signature: INVALID (%s)\" % e)",
+   "why": "an invalid signature is only a note"
+  },
+  {
+   "file": "scripts/audit_public.py",
+   "old": "if len(hs) > 1: mixed.append(",
+   "new": "if len(hs) > 2: mixed.append(",
+   "why": "two methodology hashes on one oracle pass"
+  },
+  {
+   "file": "scripts/audit_public.py",
+   "old": "if comp == t[\"compositeScore\"] and ts == t[\"lastUpdated\"]: agree += 1",
+   "new": "if comp == t[\"compositeScore\"]: agree += 1",
+   "why": "the push time is not compared"
+  },
+  {
+   "file": "scripts/audit_public.py",
+   "old": "elif ts > t[\"lastUpdated\"]: later += 1;",
+   "new": "elif ts >= t[\"lastUpdated\"]: later += 1;",
+   "why": "an equal push time with another score is 'pushed again'"
+  },
+  {
+   "file": "scripts/audit_public.py",
+   "old": "(PASS if agree + later + unread == len(sample) else FAIL)(",
+   "new": "(PASS if True else FAIL)(",
+   "why": "a disagreeing on-chain sample passes"
+  },
+  {
+   "file": "scripts/audit_public.py",
+   "old": "sys.exit(1 if fails else 0)",
+   "new": "sys.exit(0)",
+   "why": "a failed audit exits 0"
+  },
+  {
+   "file": "scripts/audit_public.py",
+   "old": "comp, ts = int(r[2 + 64 * 5: 2 + 64 * 6], 16), int(r[2 + 64 * 6: 2 + 64 * 7], 16)",
+   "new": "comp, ts = int(r[2 + 64 * 4: 2 + 64 * 5], 16), int(r[2 + 64 * 6: 2 + 64 * 7], 16)",
+   "why": "the wrong word is read as the score"
+  },
+  {
+   "file": "scripts/audit_public.py",
+   "old": "if c.get(\"reason\") == \"no events file\": NOTE(",
+   "new": "if False: NOTE(",
+   "why": "a missing event log is a failure"
+  },
+  {
+   "file": "scripts/mutate.py",
+   "old": "bad = [r for r in res if r[\"verdict\"] not in (\"CAUGHT\", \"TIMEOUT\")]",
+   "new": "bad = []",
+   "why": "the report lists no failure"
+  },
+  {
+   "file": "scripts/mutate.py",
+   "old": "with open(a.markdown, \"a\", encoding=\"utf-8\") as f:",
+   "new": "with open(a.markdown, \"w\", encoding=\"utf-8\") as f:",
+   "why": "the job summary of the earlier steps is overwritten"
+  },
+  {
+   "file": "scripts/mutate.py",
+   "old": "if path.endswith(\".py\") and not compiles(mutated, path):",
+   "new": "if not compiles(mutated, path):",
+   "why": "a non-Python file is judged by the Python compiler"
+  },
+  {
+   "file": ".github/workflows/mutation.yml",
+   "old": "permissions:\n  contents: read",
+   "new": "permissions:\n  contents: write",
+   "why": "the weekly replay is given write access"
+  },
+  {
+   "file": ".github/workflows/mutation.yml",
+   "old": "run: python3 scripts/mutate.py --markdown \"$GITHUB_STEP_SUMMARY\"",
+   "new": "run: python3 scripts/mutate.py --markdown \"$GITHUB_STEP_SUMMARY\" || true",
+   "why": "a surviving mutant does not turn the workflow red"
+  },
+  {
+   "file": "scripts/watch_run.py",
+   "old": "if not isinstance(out, list) or len(out) != len(calls):",
+   "new": "if not isinstance(out, list):",
+   "why": "a short batch answer is accepted"
+  },
+  {
+   "file": "scripts/watch_run.py",
+   "old": "res = sorted(out, key=lambda x: x[\"id\"])",
+   "new": "res = list(out)",
+   "why": "results are no longer put back in call order"
+  },
+  {
+   "file": "scripts/watch_run.py",
+   "old": "if any(\"error\" in x for x in res):",
+   "new": "if False:",
+   "why": "an error entry inside a batch is returned as a result"
+  },
+  {
+   "file": "scripts/watch_run.py",
+   "old": "raise RuntimeError(f\"{type(last).__name__}: {last}\")",
+   "new": "return None",
+   "why": "the last failure is no longer raised (rpc returns None)"
+  },
+  {
+   "file": "scripts/watch_run.py",
+   "old": "for size, pause in ((CHUNK, 0.0), (5, 1.0), (1, 0.25)):",
+   "new": "for size, pause in ((CHUNK, 0.0),):",
+   "why": "batched never tries a smaller batch"
+  },
+  {
+   "file": "scripts/watch_run.py",
+   "old": "out += rpc(url, calls[i:i + size], tries=2)",
+   "new": "out += rpc(url, calls[i:i + size], tries=2)[:size - 1]",
+   "why": "a batch loses its last answer"
+  },
+  {
+   "file": "scripts/watch_run.py",
+   "old": "return prev_doc.get(\"self_scanned_to\") or prev_doc.get(\"block\")",
+   "new": "return prev_doc.get(\"block\")",
+   "why": "the scan restarts at the previous run's block, not the last good scan"
+  },
+  {
+   "file": "scripts/watch_run.py",
+   "old": "if since_block is None or since_block >= block:\n        out[\"read\"] = since_block is not None and \"roles\" in out; return out",
+   "new": "if since_block is None or since_block >= block:\n        out[\"read\"] = True; return out",
+   "why": "a first read with no earlier block counts as a successful scan"
+  },
+  {
+   "file": "scripts/watch_run.py",
+   "old": "for a in range(since_block + 1, block + 1, span):",
+   "new": "for a in range(since_block, block + 1, span):",
+   "why": "the window starts on the already scanned block"
+  },
+  {
+   "file": "scripts/watch_run.py",
+   "old": "b = min(a + span - 1, block)",
+   "new": "b = min(a + span, block)",
+   "why": "windows overlap by one block"
+  },
+  {
+   "file": "scripts/watch_run.py",
+   "old": "if len(t) < 3: continue",
+   "new": "if len(t) < 2: continue",
+   "why": "a malformed log (no account topic) is read as an event"
+  },
+  {
+   "file": "scripts/watch_run.py",
+   "old": "if len(s) < 2 + 64 * 8:",
+   "new": "if len(s) < 2:",
+   "why": "a getScore answer that is too short is decoded"
+  },
+  {
+   "file": "scripts/watch_run.py",
+   "old": "if bad: raise RuntimeError",
+   "new": "if False: raise RuntimeError",
+   "why": "a target that is not an address is kept"
+  },
+  {
+   "file": "scripts/watch_run.py",
+   "old": "\"stale\": int(st, 16) == 1",
+   "new": "\"stale\": int(st, 16) == 0",
+   "why": "the stale flag is inverted"
+  },
+  {
+   "file": "scripts/watch_run.py",
+   "old": "if not out[\"read\"]: out[\"error\"] =",
+   "new": "if False: out[\"error\"] =",
+   "why": "a failed getLogs window leaves no error"
+  },
+  {
+   "file": "scripts/watch_run.py",
+   "old": "out[\"code_hash\"] = _hl.sha256(bytes.fromhex(code[2:])).hexdigest() if code and code != \"0x\" else \"no-code\"",
+   "new": "out[\"code_hash\"] = _hl.sha256(bytes.fromhex(code[2:])).hexdigest()",
+   "why": "an oracle with no code is hashed as empty bytes instead of 'no-code'"
+  },
+  {
+   "file": "scripts/find.py",
+   "old": "    if v is None: return \"\"\n    if isinstance(v, bool)",
+   "new": "    if v is None: return \"0\"\n    if isinstance(v, bool)",
+   "why": "CSV: an unread value is written as 0"
+  },
+  {
+   "file": "scripts/find.py",
+   "old": "return \"true\" if v else \"false\"",
+   "new": "return \"yes\" if v else \"no\"",
+   "why": "CSV: booleans are not true/false"
+  },
+  {
+   "file": "scripts/find.py",
+   "old": "v[:1] in (\"=\", \"+\", \"-\", \"@\", \"\\t\", \"\\r\") else v",
+   "new": "v[:1] in (\"=\", \"+\", \"@\", \"\\t\", \"\\r\") else v",
+   "why": "CSV: a text starting with - is not neutralised"
+  },
+  {
+   "file": "scripts/find.py",
+   "old": "isinstance(v, str) and v[:1]",
+   "new": "v[:1]",
+   "why": "CSV: a number is neutralised like a text (a negative score gets an apostrophe)"
+  },
+  {
+   "file": "scripts/find.py",
+   "old": "w.writerow(COLUMNS)",
+   "new": "w.writerow(COLUMNS[1:])",
+   "why": "CSV: the header loses its first column"
+  },
+  {
+   "file": "scripts/find.py",
+   "old": "if unread: print(\"\".join(\"%d row(s) excluded because %s was not read.\\n\" % (n, f) for f, n in sorted(unread.items())), end=\"\", file=sys.stderr)",
+   "new": "if unread: print(\"\".join(\"%d row(s) excluded because %s was not read.\\n\" % (n, f) for f, n in sorted(unread.items())), end=\"\")",
+   "why": "CSV: the exclusion footer goes into the CSV on stdout"
+  },
+  {
+   "file": "scripts/second_opinion.py",
+   "old": "return \"1\" * (len(b) - len(b.lstrip(b\"\\0\"))) + out",
+   "new": "return out",
+   "why": "base58 drops the leading zero bytes"
+  },
+  {
+   "file": "scripts/second_opinion.py",
+   "old": "n = n * 58 + _B58.index(c)",
+   "new": "n = n * 57 + _B58.index(c)",
+   "why": "base58 decodes in the wrong base"
+  },
+  {
+   "file": "scripts/second_opinion.py",
+   "old": "return b\"\\0\" * (len(t) - len(t.lstrip(\"1\"))) + n.to_bytes",
+   "new": "return n.to_bytes",
+   "why": "base58 decode drops the leading 1s"
+  },
+  {
+   "file": "scripts/second_opinion.py",
+   "old": "    if len(b) != 32: return None\n    P = 2",
+   "new": "    P = 2",
+   "why": "on_curve accepts a key that is not 32 bytes"
+  },
+  {
+   "file": "scripts/second_opinion.py",
+   "old": "    if y >= P: return False\n    u, v = (y * y - 1) % P, (D * y * y + 1) % P\n    x2 = u * pow(v, P - 2, P) % P\n    return x2 == 0 or pow(x2, (P - 1) // 2, P) == 1",
+   "new": "    if y >= P: return False\n    u, v = (y * y - 1) % P, (D * y * y + 1) % P\n    x2 = u * pow(v, P - 2, P) % P\n    return pow(x2, (P - 1) // 2, P) == 1",
+   "why": "on_curve: a zero x2 is called off the curve"
+  },
+  {
+   "file": "scripts/second_opinion.py",
+   "old": "y = int.from_bytes(b, \"little\") & ((1 << 255) - 1)\n    if y >= P: return False",
+   "new": "y = int.from_bytes(b, \"little\")\n    if y >= P: return False",
+   "why": "on_curve: the sign bit is not masked (a point with it set looks off the curve)"
+  },
+  {
+   "file": "scripts/second_opinion.py",
+   "old": "P = 2 ** 255 - 19; D = (-121665 * pow(121666, P - 2, P)) % P\n    y = int.from_bytes(b, \"little\") & ((1 << 255) - 1)\n    if y >= P: return False",
+   "new": "P = 2 ** 255 - 19; D = (-121665 * pow(121666, P - 2, P)) % P\n    y = int.from_bytes(b, \"little\") & ((1 << 255) - 1)\n    if y > P: return False",
+   "why": "on_curve: y equal to P is accepted as canonical"
+  },
+  {
+   "file": "scripts/second_opinion.py",
+   "old": "if code in (None, \"\"): return {\"kind\": \"unreadable\"}",
+   "new": "if code in (None,): return {\"kind\": \"unreadable\"}",
+   "why": "classify_module: an empty answer is called a key"
+  },
+  {
+   "file": "scripts/second_opinion.py",
+   "old": "(cooldown and cooldown != \"0x\" and len(cooldown) == 66)",
+   "new": "(cooldown and cooldown != \"0x\")",
+   "why": "classify_module: a cooldown of the wrong length is a Delay"
+  },
+  {
+   "file": "scripts/second_opinion.py",
+   "old": "(\"zodiac-module\" if addr_of(avatar) else \"contract\")",
+   "new": "(\"zodiac-module\" if avatar else \"contract\")",
+   "why": "classify_module: a zero avatar word makes a Zodiac module"
+  },
+  {
+   "file": "scripts/second_opinion.py",
+   "old": "\"owner_kind\": None if (not owner or owner_code in (None, \"\"))",
+   "new": "\"owner_kind\": None if (not owner)",
+   "why": "classify_module: an owner whose code was not read gets a kind"
+  },
+  {
+   "file": "scripts/second_opinion.py",
+   "old": "(\"eoa\" if is_plain(owner_code) else \"contract\")",
+   "new": "(\"contract\" if is_plain(owner_code) else \"eoa\")",
+   "why": "classify_module: owner kinds swapped"
+  },
+  {
+   "file": "scripts/second_opinion.py",
+   "old": "return x[:6].lower() == y[:6].lower() and x[-4:].lower() == y[-4:].lower()",
+   "new": "return x[:6].lower() == y[:6].lower() or x[-4:].lower() == y[-4:].lower()",
+   "why": "same_addr: a shortened form matches on either end"
+  },
+  {
+   "file": "scripts/second_opinion.py",
+   "old": "if \"…\" not in x and \"…\" not in y: return x.lower() == y.lower()",
+   "new": "if \"…\" not in x and \"…\" not in y: return x == y",
+   "why": "same_addr: full addresses are compared case-sensitively"
+  },
+  {
+   "file": "scripts/second_opinion.py",
+   "old": "return a if len(a) <= 14 or \"…\" in a else",
+   "new": "return a if len(a) <= 13 or \"…\" in a else",
+   "why": "short: the length limit moves by one"
+  },
+  {
+   "file": "scripts/second_opinion.py",
+   "old": "return None if int(a, 16) == 0 else a",
+   "new": "return a",
+   "why": "addr_of: the zero address is an address"
+  },
+  {
+   "file": "scripts/second_opinion.py",
+   "old": "if not word or len(word) < 42: return None",
+   "new": "if not word: return None",
+   "why": "addr_of: a short word is read as an address"
+  },
+  {
+   "file": "scripts/find.py",
+   "old": "want = [l.split(\"#\")[0].strip().lower() for l in lines]; want = [w for w in want if w]",
+   "new": "want = [l.strip().lower() for l in lines]; want = [w for w in want if w]",
+   "why": "watchlist: a # comment is kept in the entry"
+  },
+  {
+   "file": "scripts/find.py",
+   "old": "want = [w for w in want if w]; hit",
+   "new": "want = want; hit",
+   "why": "watchlist: a blank line is an entry (it would match every contract with no slug)"
+  },
+  {
+   "file": "scripts/find.py",
+   "old": "{r[\"target\"].lower(), (r[\"chain\"] + \":\" + r[\"target\"]).lower(), str(r.get(\"slug\") or \"\").lower()} - {\"\"}",
+   "new": "{r[\"target\"].lower(), str(r.get(\"slug\") or \"\").lower()} - {\"\"}",
+   "why": "watchlist: chain:address no longer matches"
+  },
+  {
+   "file": "scripts/find.py",
+   "old": "return kept, [w for w in want if w not in hit]",
+   "new": "return kept, []",
+   "why": "watchlist: an entry nothing matched is not returned"
+  },
+  {
+   "file": "scripts/find.py",
+   "old": "if m: hit.update(m); kept.append(r)",
+   "new": "if m: hit.update(m); kept.append(r)\n        else: kept.append(r)",
+   "why": "watchlist: every contract is kept"
+  },
+  {
+   "file": "scripts/find.py",
+   "old": "        if sel: sys.exit(3)\n",
+   "new": "        if sel: sys.exit(0)\n",
+   "why": "gate: a selected row does not change the exit code"
+  },
+  {
+   "file": "scripts/find.py",
+   "old": "        if unread: print(\"gate: exit 0",
+   "new": "        if False: print(\"gate: exit 0",
+   "why": "gate: the blind spot is not said"
+  },
+  {
+   "file": "scripts/find.py",
+   "old": "except OSError as e: print(\"cannot read the watchlist: %s\" % e); sys.exit(2)",
+   "new": "except OSError as e: print(\"cannot read the watchlist: %s\" % e); rows = []",
+   "why": "a missing watchlist watches nothing and exits green"
+  },
+  {
+   "file": "scripts/side_roles.py",
+   "old": "if thr and len(thr) == 66 and int(thr, 16) > 0 and owners and len(owners) >= 130:",
+   "new": "if thr and len(thr) == 66 and owners and len(owners) >= 130:",
+   "why": "classify: a zero threshold is a Safe"
+  },
+  {
+   "file": "scripts/side_roles.py",
+   "old": "if thr and len(thr) == 66 and int(thr, 16) > 0 and owners and len(owners) >= 130:",
+   "new": "if thr and int(thr, 16) > 0 and owners and len(owners) >= 130:",
+   "why": "classify: a threshold word of the wrong length is a Safe"
+  },
+  {
+   "file": "scripts/side_roles.py",
+   "old": "\"owners\": int(owners[66:130], 16)}",
+   "new": "\"owners\": int(owners[2:66], 16)}",
+   "why": "classify: the owner count is read from the wrong word"
+  },
+  {
+   "file": "scripts/side_roles.py",
+   "old": "if delay and len(delay) == 66 and int(delay, 16) > 0: return",
+   "new": "if delay and len(delay) == 66: return",
+   "why": "classify: a zero delay is a timelock"
+  },
+  {
+   "file": "scripts/side_roles.py",
+   "old": "\"safe\": \"a Safe %s-of-%s\" % (rec.get(\"threshold\"), rec.get(\"owners\"))",
+   "new": "\"safe\": \"a Safe %s-of-%s\" % (rec.get(\"owners\"), rec.get(\"threshold\"))",
+   "why": "describe: a Safe t-of-n is told n-of-t"
+  },
+  {
+   "file": "scripts/side_roles.py",
+   "old": "(rec.get(\"delay_seconds\") or 0) // 3600",
+   "new": "(rec.get(\"delay_seconds\") or 0) // 60",
+   "why": "describe: a delay in hours is told in minutes"
+  },
+  {
+   "file": "scripts/side_roles.py",
+   "old": "if v is None: holders[(t, n)] = \"?\"",
+   "new": "if v is None: holders[(t, n)] = None",
+   "why": "a call nobody answered is read as a cleared role"
+  },
+  {
+   "file": "scripts/side_roles.py",
+   "old": "if ts and all(x is None for x in r): unread.append(key)",
+   "new": "if False: unread.append(key)",
+   "why": "a chain nobody answered on is not reported"
+  },
+  {
+   "file": "scripts/side_roles.py",
+   "old": "shown = short(h) if k[\"kind\"] == \"eoa\" else h",
+   "new": "shown = h",
+   "why": "a plain key is published in full"
+  },
+  {
+   "file": "scripts/side_roles.py",
+   "old": "self=(h.lower() == t.lower()) or None)",
+   "new": "self=None)",
+   "why": "a role held by the contract itself is not marked"
+  },
+  {
+   "file": "scripts/side_roles.py",
+   "old": "if n in pv: roles[n] = dict(pv[n], stale=True); stale += 1",
+   "new": "if n in pv: roles[n] = dict(pv[n]); stale += 1",
+   "why": "a role kept from the previous run is not marked stale"
+  },
+  {
+   "file": "scripts/side_roles.py",
+   "old": "if p and key + \":\" + t.lower() in prev_by:   # also when",
+   "new": "if p and not p.get(\"stale\") and key + \":\" + t.lower() in prev_by:   # also when",
+   "why": "a handover during an outage is never told (a stale previous role is not compared)"
+  },
+  {
+   "file": "scripts/side_roles.py",
+   "old": "and short(str(p.get(\"holder\"))) != short(roles[n][\"holder\"]):",
+   "new": "and False:",
+   "why": "a changed holder is not told when full and shortened forms differ"
+  },
+  {
+   "file": "scripts/side_roles.py",
+   "old": "and short(str(p.get(\"holder\"))) != short(roles[n][\"holder\"]):",
+   "new": "and p.get(\"holder\") != roles[n][\"holder\"]:",
+   "why": "a shortened previous holder is a change against its full form"
+  },
+  {
+   "file": "scripts/side_roles.py",
+   "old": "elif not h: changes.append({\"target\": ka, \"role\": n, \"change\": \"cleared\"",
+   "new": "elif False: changes.append({\"target\": ka, \"role\": n, \"change\": \"cleared\"",
+   "why": "a cleared role is not told"
+  },
+  {
+   "file": "scripts/side_roles.py",
+   "old": "elif h and (t.lower() and key + \":\" + t.lower() in prev_by) and not p:",
+   "new": "elif h and not p:",
+   "why": "a role added on a contract first seen now is told as added"
+  },
+  {
+   "file": "scripts/side_roles.py",
+   "old": "if g is None or tl is None:",
+   "new": "if g is None and tl is None:",
+   "why": "a half-answered announcement is read as no announcement"
+  },
+  {
+   "file": "scripts/side_roles.py",
+   "old": "ok_ts = lambda w: w == 0 or 1_500_000_000 <= w <= 4_200_000_000",
+   "new": "ok_ts = lambda w: True",
+   "why": "a pending word that is not a time is accepted"
+  },
+  {
+   "file": "scripts/side_roles.py",
+   "old": "\"shorter\": True if (cur_s is not None and secs < cur_s) else None",
+   "new": "\"shorter\": True if (cur_s is not None and secs <= cur_s) else None",
+   "why": "an unchanged delay is flagged as shorter"
+  },
+  {
+   "file": "scripts/side_roles.py",
+   "old": "\"shorter\": True if (cur_s is not None and secs < cur_s) else None",
+   "new": "\"shorter\": True if (cur_s is None or secs < cur_s) else None",
+   "why": "a delay with an unknown current value is flagged as shorter"
+  },
+  {
+   "file": "scripts/side_roles.py",
+   "old": "plain = sorted(k for k, v in by_target.items() if any(x.get(\"kind\") == \"eoa\" and not x.get(\"stale\")",
+   "new": "plain = sorted(k for k, v in by_target.items() if any(x.get(\"kind\") == \"eoa\"",
+   "why": "a stale plain-key role is listed as a plain key now"
+  },
+  {
+   "file": "scripts/side_roles.py",
+   "old": "\"pending\": sorted(k for k, v in by_target.items() if any(not x.get(\"stale\") for x in (v.get(\"pending\") or {}).values()))",
+   "new": "\"pending\": sorted(k for k, v in by_target.items() if (v.get(\"pending\") or {}))",
+   "why": "a stale announcement is listed as pending now"
+  },
+  {
+   "file": "scripts/side_roles.py",
+   "old": "if ppv: pend = {k_: dict(v_, stale=True) for k_, v_ in ppv.items()}; stale += 1",
+   "new": "if ppv: pend = {k_: dict(v_) for k_, v_ in ppv.items()}; stale += 1",
+   "why": "a kept announcement is not marked stale"
+  },
+  {
+   "file": "scripts/pause_state.py",
+   "old": "last_read = (pv.get(\"stale_since\") or prev.get(\"generated_utc\")) if pv.get(\"stale\") else prev.get(\"generated_utc\")",
+   "new": "last_read = prev.get(\"generated_utc\")",
+   "why": "the flip after an outage is dated from the unanswered run instead of the last read"
+  },
+  {
+   "file": "scripts/evaluate_rules.py",
+   "old": "else score - int(prevc)",
+   "new": "else int(prevc) - score",
+   "why": "the delta of a score has the wrong sign"
+  },
+  {
+   "file": "scripts/evaluate_rules.py",
+   "old": "(m[\"tvl\"] * (100 - score) / 100)",
+   "new": "(m[\"tvl\"] * score / 100)",
+   "why": "at-risk money is computed from the score instead of its complement"
+  },
+  {
+   "file": "scripts/evaluate_rules.py",
+   "old": "/ 86400) if t.get(\"lastUpdated\") else None",
+   "new": "/ 3600) if t.get(\"lastUpdated\") else None",
+   "why": "the age of a score is in hours, not days"
+  },
+  {
+   "file": "scripts/evaluate_rules.py",
+   "old": "min((op[\"ready_at\"] - now_s) / 3600 for op",
+   "new": "min((op[\"ready_at\"] - now_s) / 86400 for op",
+   "why": "the time before a queued operation is ready is in days, not hours"
+  },
+  {
+   "file": "scripts/evaluate_rules.py",
+   "old": "-(held_all[ka][\"amount_change_pct\"])",
+   "new": "(held_all[ka][\"amount_change_pct\"])",
+   "why": "a balance drop has the wrong sign"
+  },
+  {
+   "file": "scripts/evaluate_rules.py",
+   "old": "is not None and not held_all[ka].get(\"stale\") else None",
+   "new": "is not None else None",
+   "why": "a stale balance record can still fire a drop rule"
+  },
+  {
+   "file": "scripts/evaluate_rules.py",
+   "old": "if not (pause_all.get(ka) or {}).get(\"stale\") else None, \"paused\"",
+   "new": "if True else None, \"paused\"",
+   "why": "a stale pause record can still fire"
+  },
+  {
+   "file": "scripts/evaluate_rules.py",
+   "old": "\"side_role_change\": any(not c_.get(\"shorter\") for c_ in side_changes.get(ka, []))",
+   "new": "\"side_role_change\": any(True for c_ in side_changes.get(ka, []))",
+   "why": "a shortened delay also fires the plain role-change rule"
+  },
+  {
+   "file": "scripts/evaluate_rules.py",
+   "old": "\"safe_woke\": ka in safe_woke",
+   "new": "\"safe_woke\": False",
+   "why": "an admin Safe waking never fires"
+  },
+  {
+   "file": "scripts/evaluate_rules.py",
+   "old": "is_new = (r[\"name\"] + \"|\" + env[\"chain\"] + \":\" + addr) not in was_active",
+   "new": "is_new = True",
+   "why": "every active alert is new at every run"
+  },
+  {
+   "file": "scripts/evaluate_rules.py",
+   "old": "if is_new: h[\"first_seen\"] = now",
+   "new": "if False: h[\"first_seen\"] = now",
+   "why": "a returning alert keeps its first sighting"
+  },
+  {
+   "file": "scripts/evaluate_rules.py",
+   "old": "\"times\": h.get(\"times\", 0) + 1",
+   "new": "\"times\": h.get(\"times\", 0) + 2",
+   "why": "the count of sightings goes up by two"
+  },
+  {
+   "file": "scripts/evaluate_rules.py",
+   "old": ">= SEV.get(rules.get(\"notify\", {}).get(\"min_severity\", \"medium\"), 1)]",
+   "new": "> SEV.get(rules.get(\"notify\", {}).get(\"min_severity\", \"medium\"), 1)]",
+   "why": "an alert at exactly the minimum severity is not delivered"
+  },
+  {
+   "file": "scripts/evaluate_rules.py",
+   "old": "(bool(sent) and i < 10) or not channels or a.no_send",
+   "new": "(bool(sent)) or not channels or a.no_send",
+   "why": "alerts beyond the ten in a message are marked delivered"
+  },
+  {
+   "file": "scripts/evaluate_rules.py",
+   "old": "(bool(sent) and i < 10) or not channels or a.no_send",
+   "new": "(bool(sent) and i < 10) or a.no_send",
+   "why": "with no channel configured an alert stays undelivered for ever"
+  },
+  {
+   "file": "scripts/evaluate_rules.py",
+   "old": "\"color\": \"e05d5d\" if hi else (\"dfb13a\" if active else \"3fbf8f\")",
+   "new": "\"color\": \"e05d5d\" if active else (\"dfb13a\" if hi else \"3fbf8f\")",
+   "why": "the badge is red for a medium alert"
+  },
+  {
+   "file": "scripts/evaluate_rules.py",
+   "old": "[:500]",
+   "new": "[:5]",
+   "why": "the alert history is cut at five"
+  },
+  {
+   "file": "scripts/evaluate_rules.py",
+   "old": "if msg not in errors: errors.append(msg)",
+   "new": "errors.append(msg)",
+   "why": "a bad rule is listed once per target"
+  },
+  {
+   "file": "scripts/evaluate_rules.py",
+   "old": "key=lambda op: op.get(\"ready_at\") or 0)[:3]",
+   "new": "key=lambda op: op.get(\"ready_at\") or 0)[:1]",
+   "why": "only one queued operation is given as evidence"
+  },
+  {
+   "file": "scripts/evaluate_rules.py",
+   "old": "key=lambda d: d.get(\"opened\") or \"\")[-1][\"status\"]",
+   "new": "key=lambda d: d.get(\"opened\") or \"\")[0][\"status\"]",
+   "why": "the oldest dispute is read as the newest"
+  },
+  {
+   "file": "scripts/evaluate_rules.py",
+   "old": "\"disagree\" if r_.get(\"disagree\") and not r_.get(\"acknowledged\") else",
+   "new": "\"disagree\" if r_.get(\"disagree\") else",
+   "why": "a reviewed disagreement still counts as one"
+  },
+  {
+   "file": "scripts/evaluate_rules.py",
+   "old": "if ka_ not in tvl and ka_ not in scoped_ and h_.get(\"held_usd\")",
+   "new": "if ka_ not in scoped_ and h_.get(\"held_usd\")",
+   "why": "held money overrides a DefiLlama figure"
+  },
+  {
+   "file": "scripts/evaluate_rules.py",
+   "old": "(held_all[ka][\"prev_amount\"] - held_all[ka][\"amount\"]) * held_all[ka][\"price_usd\"]",
+   "new": "(held_all[ka][\"amount\"] - held_all[ka][\"prev_amount\"]) * held_all[ka][\"price_usd\"]",
+   "why": "the money lost in a drop has the wrong sign"
+  },
+  {
+   "file": "scripts/evaluate_rules.py",
+   "old": "\"notified\", True)}",
+   "new": "\"notified\", False)}",
+   "why": "an alert from an older file without the field is not counted as delivered"
+  },
+  {
+   "file": "scripts/evaluate_rules.py",
+   "old": "and held_all[ka].get(\"price_usd\") and not held_all[ka].get(\"stale\") else None)",
+   "new": "and held_all[ka].get(\"price_usd\") else None)",
+   "why": "a stale balance record can still fire a drop in dollars"
+  },
+  {
+   "file": "scripts/tvl_match.py",
+   "old": "elif p.get(\"tvl\") is None: out[\"unmatched\"]",
+   "new": "elif False: out[\"unmatched\"]",
+   "why": "a protocol with no DefiLlama figure is written as zero"
+  },
+  {
+   "file": "scripts/tvl_match.py",
+   "old": "\"tvl\": p[\"tvl\"], \"scope\": \"total\"",
+   "new": "\"tvl\": p[\"tvl\"] or 1, \"scope\": \"total\"",
+   "why": "a real zero total is written as one"
+  },
+  {
+   "file": "scripts/tvl_match.py",
+   "old": "if ct is not None: out[\"matched\"]",
+   "new": "if ct: out[\"matched\"]",
+   "why": "a real zero slice on the chain falls back to the protocol total"
+  },
+  {
+   "file": "scripts/tvl_match.py",
+   "old": "chain = m[3] if len(m) > 3 else LLAMA_CHAIN[key]",
+   "new": "chain = LLAMA_CHAIN[key]",
+   "why": "a bridge on another chain reads the wrong chain"
+  },
+  {
+   "file": "scripts/tvl_match.py",
+   "old": "addr = t[\"target\"].lower(); hit",
+   "new": "addr = t[\"target\"]; hit",
+   "why": "addresses are compared in their original case"
+  },
+  {
+   "file": "scripts/tvl_match.py",
+   "old": "addr.startswith(m[1])]",
+   "new": "addr.endswith(m[1])]",
+   "why": "the table prefix is matched at the end"
+  },
+  {
+   "file": "scripts/tvl_match.py",
+   "old": "if v is None: out[\"unknown_slugs\"].append(target); continue",
+   "new": "if v is None: v = 0",
+   "why": "a chain DefiLlama does not list is worth zero"
+  },
+  {
+   "file": "scripts/tvl_match.py",
+   "old": "\"scope\": \"chain-total\", \"chain\": name}",
+   "new": "\"scope\": \"chain\", \"chain\": name}",
+   "why": "a whole-chain figure is called a chain slice"
+  },
+  {
+   "file": "scripts/tvl_match.py",
+   "old": "if not p: out[\"unknown_slugs\"].append(target); continue",
+   "new": "if not p: continue",
+   "why": "an unknown slug is dropped without a word"
+  },
+  {
+   "file": "scripts/tvl_match.py",
+   "old": "if not hit: out[\"unmatched\"].append(key + \":\" + addr); continue",
+   "new": "if not hit: continue",
+   "why": "a target with no table entry is not listed as unmatched"
+  },
+  {
+   "file": "scripts/tvl_match.py",
+   "old": "out[\"unknown_slugs\"] = sorted(set(out[\"unknown_slugs\"]))",
+   "new": "out[\"unknown_slugs\"] = out[\"unknown_slugs\"]",
+   "why": "the unknown slugs are listed once per target"
+  },
+  {
+   "file": "scripts/compare.py",
+   "old": "vals = [r[field] for r in rs if r.get(field) is not None]; return (min(vals) if vals else None), len(vals)",
+   "new": "vals = [r[field] or 0 for r in rs]; return (min(vals) if vals else None), len(vals)",
+   "why": "an unread value counts as zero in the minimum"
+  },
+  {
+   "file": "scripts/compare.py",
+   "old": "return (min(vals) if vals else None), len(vals)",
+   "new": "return (max(vals) if vals else None), len(vals)",
+   "why": "the weakest is the maximum"
+  },
+  {
+   "file": "scripts/compare.py",
+   "old": "read = [r for r in rs if r.get(\"kind\") not in (None, \"unreadable\", \"native\")]",
+   "new": "read = rs",
+   "why": "the count of admins read includes the unreadable"
+  },
+  {
+   "file": "scripts/compare.py",
+   "old": "if len(hits) > 1: return None, \"%r matches several",
+   "new": "if False: return None, \"%r matches several",
+   "why": "an ambiguous name picks one protocol silently"
+  },
+  {
+   "file": "scripts/compare.py",
+   "old": "if s[\"protocol\"] in seen: continue",
+   "new": "if False: continue",
+   "why": "a protocol named twice is compared with itself"
+  },
+  {
+   "file": "scripts/compare.py",
+   "old": "\"money_usd\": money(W, rs)",
+   "new": "\"money_usd\": sum((r.get(\"money_usd\") or 0) for r in rs)",
+   "why": "money is summed per contract instead of by the dashboard rule"
+  },
+  {
+   "file": "scripts/compare.py",
+   "old": "cell = lambda v: \"?\" if v is None else str(v)",
+   "new": "cell = lambda v: \"0\" if v is None else str(v)",
+   "why": "a value not read is shown as zero"
+  },
+  {
+   "file": "scripts/compare.py",
+   "old": "s, err = summary(a.watch, q, rows)\n        if err: print(err); sys.exit(2)",
+   "new": "s, err = summary(a.watch, q, rows)\n        if err: print(err); continue",
+   "why": "a bad name still prints a partial table"
+  },
+  {
+   "file": "scripts/held_assets.py",
+   "old": "(v.get(\"amount_change_pct\") or 0) <= -30 and not v.get(\"stale\")",
+   "new": "(v.get(\"amount_change_pct\") or 0) < -30 and not v.get(\"stale\")",
+   "why": "a drop of exactly 30 percent is not listed"
+  },
+  {
+   "file": "scripts/held_assets.py",
+   "old": "(v.get(\"amount_change_pct\") or 0) <= -30 and not v.get(\"stale\")",
+   "new": "(v.get(\"amount_change_pct\") or 0) <= -3 and not v.get(\"stale\")",
+   "why": "a drop of 3 percent is listed"
+  },
+  {
+   "file": "scripts/held_assets.py",
+   "old": "(v.get(\"amount_change_pct\") or 0) <= -30 and not v.get(\"stale\")",
+   "new": "(v.get(\"amount_change_pct\") or 0) <= -30",
+   "why": "a stale record is listed as a drop"
+  },
+  {
+   "file": "scripts/held_assets.py",
+   "old": "key=lambda x: x[\"change_pct\"])",
+   "new": "key=lambda x: -x[\"change_pct\"])",
+   "why": "the drops are sorted with the smallest first"
+  },
+  {
+   "file": "scripts/held_assets.py",
+   "old": "rec[\"prev_at\"] = pv.get(\"stale_since\") or prev.get(\"generated_utc\")",
+   "new": "rec[\"prev_at\"] = prev.get(\"generated_utc\")",
+   "why": "a drop after an outage is dated from the unanswered run"
+  },
+  {
+   "file": "scripts/held_assets.py",
+   "old": "out[k.split(\":\", 1)[1].lower()] = v",
+   "new": "out[k.split(\":\", 1)[1]] = v",
+   "why": "price keys keep their case"
+  },
+  {
+   "file": "scripts/held_assets.py",
+   "old": "if held is None: unpriced.append(key + \":\" + t.lower())",
+   "new": "if False: unpriced.append(key + \":\" + t.lower())",
+   "why": "an unpriced vault is not listed"
+  },
+  {
+   "file": "scripts/held_assets.py",
+   "old": "if t not in found and t not in dead and prev_by.get(ka_):",
+   "new": "if t not in found and prev_by.get(ka_):",
+   "why": "a contract not answered is also called vanished"
+  },
+  {
+   "file": "scripts/held_assets.py",
+   "old": "== len(ts): unread_chains.append(key)",
+   "new": "> 0: unread_chains.append(key)",
+   "why": "a chain with one dead call is called unread"
+  },
+  {
+   "file": "scripts/held_assets.py",
+   "old": "return int(h, 16) if (h and h != \"0x\" and len(h) == 66) else None",
+   "new": "return int(h, 16) if (h and h != \"0x\") else None",
+   "why": "a word of the wrong length is read as a number"
+  },
+  {
+   "file": "scripts/held_assets.py",
+   "old": "return int(h, 16) if (h and h != \"0x\" and len(h) == 66) else None",
+   "new": "return int(h, 16) if (h and h != \"0x\" and len(h) == 66) else 0",
+   "why": "a word not answered is read as zero"
+  },
+  {
+   "file": "scripts/held_assets.py",
+   "old": "b[64:64 + min(n, 64)].decode(\"utf-8\", \"replace\") if len(b) >= 96 else b[:32]",
+   "new": "b[64:64 + min(n, 64)].decode(\"utf-8\", \"replace\") if len(b) >= 97 else b[:32]",
+   "why": "an ABI-encoded symbol of exactly 96 bytes is read as bytes32"
+  },
+  {
+   "file": "scripts/held_assets.py",
+   "old": "d = d if d is not None else p.get(\"decimals\")",
+   "new": "d = d if d else p.get(\"decimals\")",
+   "why": "a token with zero decimals takes the price API decimals"
+  },
+  {
+   "file": "scripts/held_assets.py",
+   "old": "round((amount - pv[\"amount\"]) / pv[\"amount\"] * 100, 2)",
+   "new": "round((amount - pv[\"amount\"]) / pv[\"amount\"] * 100, 0)",
+   "why": "the change is rounded to the unit"
+  },
+  {
+   "file": "scripts/held_assets.py",
+   "old": "\"symbol\": p.get(\"symbol\") or sym",
+   "new": "\"symbol\": sym or p.get(\"symbol\")",
+   "why": "the on-chain symbol wins over the price API one"
+  },
+  {
+   "file": "scripts/compare.py",
+   "old": "keys = keys or sorted({r[\"chain\"] for r in rows})",
+   "new": "keys = keys or sorted({r[\"chain\"] for r in rows})[:1]",
+   "why": "only the first chain is shown when none is asked"
+  },
+  {
+   "file": "scripts/compare.py",
+   "old": "for k in dict.fromkeys(keys):",
+   "new": "for k in keys:",
+   "why": "a chain named twice is shown twice"
+  },
+  {
+   "file": "scripts/compare.py",
+   "old": "if wanted and not all(keys): return None",
+   "new": "if False: return None",
+   "why": "an unknown chain is dropped silently"
+  },
+  {
+   "file": "scripts/compare.py",
+   "old": "if not rs: return None, \"no tracked contract on %s\" % LABEL.get(k, k)",
+   "new": "if not rs: continue",
+   "why": "a chain with nothing tracked is skipped without a word"
+  },
+  {
+   "file": "scripts/compare.py",
+   "old": "rs = [r for r in rows if r[\"chain\"] == k]",
+   "new": "rs = [r for r in rows if r[\"chain\"] != k]",
+   "why": "a chain column holds the other chains contracts"
+  },
+  {
+   "file": "scripts/compare.py",
+   "old": "if a.chains: print(\"\\nThe money of two chains is not additive",
+   "new": "if False: print(\"\\nThe money of two chains is not additive",
+   "why": "the chains table does not warn that its money is not additive"
+  },
+  {
+   "file": "scripts/compare.py",
+   "old": "if not a.chains and not a.protocols: ap.error",
+   "new": "if False: ap.error",
+   "why": "no protocol and no --chains prints an empty table"
+  },
+  {
+   "file": "scripts/safe_activity.py",
+   "old": "return n if n < 2 ** 40 else None",
+   "new": "return n",
+   "why": "a huge word is read as a nonce"
+  },
+  {
+   "file": "scripts/safe_activity.py",
+   "old": "if not isinstance(word, str) or len(word) != 66: return None",
+   "new": "if not isinstance(word, str): return None",
+   "why": "a word of the wrong length is read as a nonce"
+  },
+  {
+   "file": "scripts/safe_activity.py",
+   "old": "\"woke\": idle_s >= wake_days * 86400}",
+   "new": "\"woke\": idle_s > wake_days * 86400}",
+   "why": "exactly 14 idle days is not a wake"
+  },
+  {
+   "file": "scripts/safe_activity.py",
+   "old": "\"woke\": idle_s >= wake_days * 86400}",
+   "new": "\"woke\": idle_s >= wake_days * 3600}",
+   "why": "the wake threshold is counted in hours"
+  },
+  {
+   "file": "scripts/safe_activity.py",
+   "old": "\"idle_days\": int(idle_s / 86400 * 10) / 10",
+   "new": "\"idle_days\": int(idle_s / 3600 * 10) / 10",
+   "why": "idle time is told in hours"
+  },
+  {
+   "file": "scripts/safe_activity.py",
+   "old": "\"delta\": nonce - pv[\"nonce\"]",
+   "new": "\"delta\": nonce",
+   "why": "the delta is the nonce itself"
+  },
+  {
+   "file": "scripts/safe_activity.py",
+   "old": "since = pv.get(\"idle_since\") or pv.get(\"observed_since\") or now_utc",
+   "new": "since = pv.get(\"observed_since\") or now_utc",
+   "why": "idle time counts from the first observation, not the last move"
+  },
+  {
+   "file": "scripts/safe_activity.py",
+   "old": "rec[\"idle_since\"] = since\n        if pv.get(\"last_moved\")",
+   "new": "rec[\"idle_since\"] = now_utc\n        if pv.get(\"last_moved\")",
+   "why": "an unchanged nonce restarts the idle clock"
+  },
+  {
+   "file": "scripts/safe_activity.py",
+   "old": "rec = {\"nonce\": nonce, \"observed_since\": (pv or {}).get(\"observed_since\") or now_utc}",
+   "new": "rec = {\"nonce\": nonce, \"observed_since\": now_utc}",
+   "why": "the first observation is forgotten at every run"
+  },
+  {
+   "file": "scripts/safe_activity.py",
+   "old": "rec[\"idle_since\"] = now_utc; return rec, None   # first read",
+   "new": "rec[\"idle_since\"] = now_utc; return rec, {\"delta\": nonce, \"idle_days\": 0, \"woke\": False}   # first read",
+   "why": "a first read is reported as a move"
+  },
+  {
+   "file": "scripts/safe_activity.py",
+   "old": "return chain + \":\" + hashlib.sha256(addr.lower().encode()).hexdigest()[:16]",
+   "new": "return chain + \":\" + hashlib.sha256(addr.encode()).hexdigest()[:16]",
+   "why": "the record key depends on the address case"
+  },
+  {
+   "file": "scripts/safe_activity.py",
+   "old": "if r.get(\"chain\") not in MAINNET: continue",
+   "new": "if False: continue",
+   "why": "a chain with no RPC is asked anyway"
+  },
+  {
+   "file": "scripts/safe_activity.py",
+   "old": "if r.get(\"kind\") == \"safe\" and r.get(\"holder\")",
+   "new": "if r.get(\"holder\")",
+   "why": "any holder is taken as a Safe"
+  },
+  {
+   "file": "scripts/safe_activity.py",
+   "old": "if b.get(\"kind\") == \"safe\" and b.get(\"address\")",
+   "new": "if b.get(\"address\")",
+   "why": "any contract behind the holder is taken as a Safe"
+  },
+  {
+   "file": "scripts/safe_activity.py",
+   "old": "if all(x is None for x in r): unread.append(chain)",
+   "new": "if any(x is None for x in r): unread.append(chain)",
+   "why": "a chain with one silent Safe is called unread"
+  },
+  {
+   "file": "scripts/safe_activity.py",
+   "old": "if pv: by_safe[k] = dict(pv, stale=True, stale_since=pv.get(\"stale_since\") or prev.get(\"generated_utc\"), governs=gov, safe=label); stale += 1",
+   "new": "if pv: by_safe[k] = dict(pv, stale=True, stale_since=pv.get(\"stale_since\") or prev.get(\"generated_utc\"), safe=label); stale += 1",
+   "why": "a stale record keeps the contracts it governed at the previous run"
+  },
+  {
+   "file": "scripts/safe_activity.py",
+   "old": "rec[\"never_executed\"] = (n == 0)",
+   "new": "rec[\"never_executed\"] = (n < 5)",
+   "why": "a Safe with a few transactions is called never used"
+  },
+  {
+   "file": "scripts/safe_activity.py",
+   "old": "woke = sorted(c[\"safe\"] for c in changes if c.get(\"woke\"))",
+   "new": "woke = sorted(c[\"safe\"] for c in changes)",
+   "why": "every move is listed as a wake"
+  },
+  {
+   "file": "scripts/safe_activity.py",
+   "old": "\"read\": sum(1 for v in by_safe.values() if not v.get(\"stale\"))",
+   "new": "\"read\": len(by_safe)",
+   "why": "stale Safes are counted as read"
+  },
+  {
+   "file": "scripts/safe_activity.py",
+   "old": "if nonce < pv[\"nonce\"]: return rec",
+   "new": "if nonce < pv[\"nonce\"] - 1: return rec",
+   "why": "a regression of one is read as a move"
+  },
+  {
+   "file": "scripts/risk_by_cause.py",
+   "old": "if (scope.get(ka) or {}).get(\"scope\") in (\"retired\", \"peripheral\"): continue\n        m = tvl.get(ka)",
+   "new": "if (scope.get(ka) or {}).get(\"scope\") in (\"retired\",): continue\n        m = tvl.get(ka)",
+   "why": "a peripheral contract carries money"
+  },
+  {
+   "file": "scripts/risk_by_cause.py",
+   "old": "if (held.get(ka) or {}).get(\"held_usd\"): seen[\"held:\" + ka] = (None, False, float(held[ka][\"held_usd\"]))\n            continue",
+   "new": "if (held.get(ka) or {}).get(\"held_usd\"): seen[\"held:\" + ka] = (None, False, float(held[ka][\"held_usd\"]))",
+   "why": "a contract with a match also counts the money it holds"
+  },
+  {
+   "file": "scripts/risk_by_cause.py",
+   "old": "k_ = str(s_) + \"|\" + (\"*\" if tot else str(m.get(\"chain\") or \"\"))",
+   "new": "k_ = str(s_)",
+   "why": "the money is keyed on the slug alone"
+  },
+  {
+   "file": "scripts/risk_by_cause.py",
+   "old": "if tot: totals.add(s_)",
+   "new": "if False: totals.add(s_)",
+   "why": "an all-chain total does not swallow its per-chain slices"
+  },
+  {
+   "file": "scripts/risk_by_cause.py",
+   "old": "return sum(v for s_, tot, v in seen.values() if tot or s_ not in totals)",
+   "new": "return sum(v for s_, tot, v in seen.values())",
+   "why": "a swallowed slice is still added"
+  },
+  {
+   "file": "scripts/risk_by_cause.py",
+   "old": "if cid == \"plain_key_admin\": hit = k == \"eoa\"",
+   "new": "if cid == \"plain_key_admin\": hit = k in (\"eoa\", \"contract\")",
+   "why": "a bare contract is called a plain key"
+  },
+  {
+   "file": "scripts/risk_by_cause.py",
+   "old": "{kk for kk, v in (r.get(\"owners_kinds\") or {}).items() if v} == {\"eoa\"}",
+   "new": "{kk for kk, v in (r.get(\"owners_kinds\") or {}).items() if v} <= {\"eoa\"}",
+   "why": "a multisig with no owners read is called keys-only"
+  },
+  {
+   "file": "scripts/risk_by_cause.py",
+   "old": "and not (r.get(\"self_delay_seconds\") or 0)",
+   "new": "",
+   "why": "a self delay is ignored for the no-delay cause"
+  },
+  {
+   "file": "scripts/risk_by_cause.py",
+   "old": "and not (r.get(\"owners_kinds\") or {}).get(\"timelock\")",
+   "new": "",
+   "why": "a timelock among the owners is ignored for the no-delay cause"
+  },
+  {
+   "file": "scripts/risk_by_cause.py",
+   "old": "m.get(\"kind\") == \"zodiac-delay\" and m.get(\"cooldown_seconds\")",
+   "new": "m.get(\"kind\") == \"zodiac-delay\"",
+   "why": "a Zodiac delay with a zero cooldown counts as a delay"
+  },
+  {
+   "file": "scripts/risk_by_cause.py",
+   "old": "elif cid == \"unverified_code\": hit = src.get(\"verified\") is False",
+   "new": "elif cid == \"unverified_code\": hit = not src.get(\"verified\")",
+   "why": "an unread verification is called unverified"
+  },
+  {
+   "file": "scripts/risk_by_cause.py",
+   "old": "elif cid == \"one_key_freezes\": hit = r.get(\"keys_lost_to_freeze\") == 1",
+   "new": "elif cid == \"one_key_freezes\": hit = (r.get(\"keys_lost_to_freeze\") or 9) <= 2",
+   "why": "two keys freezing is called one"
+  },
+  {
+   "file": "scripts/risk_by_cause.py",
+   "old": "if op.get(\"state\") == \"ready\" and",
+   "new": "if op.get(\"state\") in (\"ready\", \"queued\") and",
+   "why": "a queued upgrade is called executable now"
+  },
+  {
+   "file": "scripts/risk_by_cause.py",
+   "old": "or \"upgrade\" in str(op.get(\"signature\") or \"\").lower()",
+   "new": "or \"upgrade\" in str(op.get(\"signature\") or \"\")",
+   "why": "the upgrade signature is matched case-sensitively"
+  },
+  {
+   "file": "scripts/risk_by_cause.py",
+   "old": "if k == \"contract\" and b.get(\"kind\"): k = b[\"kind\"];",
+   "new": "if False: k = b[\"kind\"];",
+   "why": "the owner behind a bare contract is ignored"
+  },
+  {
+   "file": "scripts/risk_by_cause.py",
+   "old": "if not r.get(\"oracle_self\")}",
+   "new": "}",
+   "why": "the oracle itself is scored as a tracked contract"
+  },
+  {
+   "file": "scripts/risk_by_cause.py",
+   "old": "elif cid == \"transfer_in_flight\": hit = bool(r.get(\"pending_admin\"))",
+   "new": "elif cid == \"transfer_in_flight\": hit = True",
+   "why": "every contract has an admin transfer in flight"
+  },
+  {
+   "file": "scripts/risk_by_cause.py",
+   "old": "\"tracked_tvl_usd\": round(total_money)",
+   "new": "\"tracked_tvl_usd\": total_money",
+   "why": "the tracked total is not rounded"
+  },
+  {
+   "file": "scripts/risk_by_cause.py",
+   "old": "\"share_of_tracked\": (round(money / total_money, 3) if total_money",
+   "new": "\"share_of_tracked\": (round(money / total_money, 1) if total_money",
+   "why": "the share is rounded to one decimal"
+  },
+  {
+   "file": "scripts/badges_protocol.py",
+   "old": "def color(v): return \"red\" if v < 20 else \"orange\" if v < 40",
+   "new": "def color(v): return \"red\" if v < 20 else \"orange\" if v <= 40",
+   "why": "a colour band boundary moves"
+  },
+  {
+   "file": "scripts/badges_protocol.py",
+   "old": "w = min(scored, key=lambda r: (r[\"score\"], r[\"chain\"], r[\"target\"]))",
+   "new": "w = max(scored, key=lambda r: (r[\"score\"], r[\"chain\"], r[\"target\"]))",
+   "why": "the badge shows the strongest deployment"
+  },
+  {
+   "file": "scripts/badges_protocol.py",
+   "old": "\" (stale)\" if w.get(\"stale\") else \"\"",
+   "new": "\" (stale)\" if any(r.get(\"stale\") for r in rows) else \"\"",
+   "why": "any stale contract marks the badge"
+  },
+  {
+   "file": "scripts/badges_protocol.py",
+   "old": "len(rows), \"\" if len(rows) == 1 else \"s\")",
+   "new": "len(scored), \"\" if len(rows) == 1 else \"s\")",
+   "why": "contracts without a score are not counted"
+  },
+  {
+   "file": "scripts/badges_protocol.py",
+   "old": "if not scored: return None",
+   "new": "if not scored: return {\"schemaVersion\": 1, \"label\": \"authority risk\", \"message\": \"weakest 0/100, 0 contracts\", \"color\": \"red\"}",
+   "why": "a protocol with no score gets a red zero badge"
+  },
+  {
+   "file": "scripts/badges_protocol.py",
+   "old": "if not b or not SLUG.match(slug): skipped += 1; continue",
+   "new": "if not b: skipped += 1; continue",
+   "why": "a slug that is not a plain slug is written as a file name"
+  },
+  {
+   "file": "scripts/badges_protocol.py",
+   "old": "SLUG = re.compile(r\"[a-z0-9][a-z0-9._-]{0,79}$\")",
+   "new": "SLUG = re.compile(r\"[a-z0-9./_-]{1,80}$\")",
+   "why": "the slug check lets a path through"
+  },
+  {
+   "file": "scripts/badges_protocol.py",
+   "old": "if old == b: same += 1; continue",
+   "new": "if False: same += 1; continue",
+   "why": "an unchanged badge is rewritten at every run"
+  },
+  {
+   "file": "scripts/badges_req.py",
+   "old": "None if t.get(f) is None else t[f] >= th",
+   "new": "False if t.get(f) is None else t[f] >= th",
+   "why": "a sub-score not read is called a failed requirement"
+  },
+  {
+   "file": "scripts/badges_req.py",
+   "old": "None if t.get(f) is None else t[f] >= th",
+   "new": "None if t.get(f) is None else t[f] > th",
+   "why": "a score exactly at the threshold fails the requirement"
+  },
+  {
+   "file": "scripts/badges_req.py",
+   "old": "(\"Bypass paths of the delay checked and ruled out\", \"timelockScore\", 75)",
+   "new": "(\"Bypass paths of the delay checked and ruled out\", \"timelockScore\", 70)",
+   "why": "the bypass requirement threshold moves"
+  },
+  {
+   "file": "scripts/badges_req.py",
+   "old": "def met(t): return sum(1 for _l, ok, _f, _v, _th in requirements(t) if ok)",
+   "new": "def met(t): return sum(1 for _l, ok, _f, _v, _th in requirements(t) if ok is not False)",
+   "why": "a requirement not read counts as met"
+  },
+  {
+   "file": "scripts/dossier.py",
+   "old": "\"not read\" if ok is None else \"met\" if ok else \"**not met**\"",
+   "new": "\"met\" if ok is None else \"met\" if ok else \"**not met**\"",
+   "why": "the dossier says met for a requirement not read"
+  },
+  {
+   "file": "scripts/dossier.py",
+   "old": "\"- %d of %d requirements met\" % (sum(1 for _l, ok, _f, _v, _t in reqs if ok), len(reqs))",
+   "new": "\"- %d of %d requirements met\" % (sum(1 for _l, ok, _f, _v, _t in reqs if ok is not False), len(reqs))",
+   "why": "the dossier counts a requirement not read as met"
+  },
+  {
+   "file": "scripts/dossier.py",
+   "old": "\"?\" if value is None else value, need)",
+   "new": "value, need)",
+   "why": "a missing sub-score is printed as None"
+  },
+  {
+   "file": "scripts/consistency.py",
+   "old": "        if bad: add(file, \"%d %s(s) that no score file tracks",
+   "new": "        if False: add(file, \"%d %s(s) that no score file tracks",
+   "why": "a contract nobody tracks is not reported"
+  },
+  {
+   "file": "scripts/consistency.py",
+   "old": "bad = sorted(k for k in keys if str(k).lower() not in tracked)",
+   "new": "bad = sorted(k for k in keys if str(k) not in tracked)",
+   "why": "keys are compared case-sensitively"
+  },
+  {
+   "file": "scripts/consistency.py",
+   "old": "if latest.get(\"total_targets\") != sum(per.values()): add",
+   "new": "if latest.get(\"total_targets\") != len(tracked): add",
+   "why": "the total is compared with distinct contracts, not with target entries"
+  },
+  {
+   "file": "scripts/consistency.py",
+   "old": "if o.get(\"read_ok\") and o.get(\"slug\") in per and o.get(\"targets\") != per[o[\"slug\"]]",
+   "new": "if o.get(\"slug\") in per and o.get(\"targets\") != per[o[\"slug\"]]",
+   "why": "an oracle that was not read is compared with its score file"
+  },
+  {
+   "file": "scripts/consistency.py",
+   "old": "if len(tracked) != sum(per.values()): add(\"scores/\"",
+   "new": "if False: add(\"scores/\"",
+   "why": "a contract listed twice is not reported"
+  },
+  {
+   "file": "scripts/consistency.py",
+   "old": "if h.get(\"targets\") != sum(per.values()): add(\"history.jsonl\"",
+   "new": "if False: add(\"history.jsonl\"",
+   "why": "a history line with the wrong total is not reported"
+  },
+  {
+   "file": "scripts/consistency.py",
+   "old": "if latest and h.get(\"run_utc\") != latest.get(\"run_utc\")",
+   "new": "if False and h.get(\"run_utc\") != latest.get(\"run_utc\")",
+   "why": "a history one run behind is not reported"
+  },
+  {
+   "file": "scripts/consistency.py",
+   "old": "if rc.get(\"contracts\") != len(tracked): add",
+   "new": "if False: add",
+   "why": "risk_by_cause with the wrong count is not reported"
+  },
+  {
+   "file": "scripts/consistency.py",
+   "old": "if not r.get(\"oracle_self\")])",
+   "new": "if True])",
+   "why": "the oracle itself must be tracked"
+  },
+  {
+   "file": "scripts/consistency.py",
+   "old": "if not tracked: return [{\"file\": \"scores/\", \"what\": \"no tracked contract: nothing to compare the other files with\"}], skipped, 0",
+   "new": "if not tracked: return [], skipped, 0",
+   "why": "no tracked contract is a pass"
+  },
+  {
+   "file": "scripts/consistency.py",
+   "old": "    return 1 if f else 0\n",
+   "new": "    return 0\n",
+   "why": "disagreements do not change the exit code"
+  },
+  {
+   "file": "scripts/consistency.py",
+   "old": "inv.get(str(x.get(\"chain\")).split(\" (\")[0]) or inv.get(x.get(\"chain\"))",
+   "new": "inv.get(x.get(\"chain\"))",
+   "why": "an alert chain label with a network suffix is not matched"
+  },
+  {
+   "file": "scripts/tour.py",
+   "old": "if w < below: out.append",
+   "new": "if w <= below: out.append",
+   "why": "a protocol whose weakest is exactly 40 is listed"
+  },
+  {
+   "file": "scripts/tour.py",
+   "old": "out.sort(key=lambda x: (x[3] is None, -(x[3] or 0), x[2], x[0]))",
+   "new": "out.sort(key=lambda x: (x[3] is None, x[3] or 0, x[2], x[0]))",
+   "why": "the least money comes first"
+  },
+  {
+   "file": "scripts/tour.py",
+   "old": "w = min(r[\"score\"] for r in scored)",
+   "new": "w = max(r[\"score\"] for r in scored)",
+   "why": "the protocol is judged by its strongest deployment"
+  },
+  {
+   "file": "scripts/tour.py",
+   "old": "unread_admin = sum(1 for r in rows if r.get(\"kind\") in (None, \"unreadable\", \"native\"))",
+   "new": "unread_admin = sum(1 for r in rows if r.get(\"kind\") in (\"unreadable\",))",
+   "why": "an admin of kind native or missing is not counted as unread"
+  },
+  {
+   "file": "scripts/tour.py",
+   "old": "unread_keys = sum(1 for r in rows if r.get(\"keys_to_move\") is None)",
+   "new": "unread_keys = 0",
+   "why": "the keys not read are not counted"
+  },
+  {
+   "file": "scripts/tour.py",
+   "old": "unread_pause = sum(1 for r in rows if r.get(\"paused\") is None)",
+   "new": "unread_pause = sum(1 for r in rows if not r.get(\"paused\"))",
+   "why": "a contract that is not paused counts as unread"
+  },
+  {
+   "file": "scripts/tour.py",
+   "old": "big = [r for r in plain if (r.get(\"money_usd\") or 0) >= BIG]",
+   "new": "big = [r for r in plain if (r.get(\"money_usd\") or 0) > BIG * 100]",
+   "why": "the line for a lot of money moves"
+  },
+  {
+   "file": "scripts/tour.py",
+   "old": "plain = [r for r in rows if r.get(\"kind\") == \"eoa\"]",
+   "new": "plain = [r for r in rows if r.get(\"kind\") in (\"eoa\", \"contract\")]",
+   "why": "a contract admin is called a plain key"
+  },
+  {
+   "file": "scripts/tour.py",
+   "old": "\"yes (%d checks)\" % ran if not f else",
+   "new": "\"yes (%d checks)\" % ran if True else",
+   "why": "disagreements between files are hidden"
+  },
+  {
+   "file": "scripts/tour.py",
+   "old": "first = rows and sorted(rows, key=lambda r: (r.get(\"score\") is None, r.get(\"score\") or 0, -(r.get(\"money_usd\") or 0)))[0]",
+   "new": "first = rows and sorted(rows, key=lambda r: (r.get(\"score\") is None, -(r.get(\"score\") or 0), -(r.get(\"money_usd\") or 0)))[0]",
+   "why": "the suggested dossier is the strongest contract"
+  },
+  {
+   "file": "scripts/tour.py",
+   "old": "if len(big_ps) == 2: cmds.append",
+   "new": "if len(big_ps) == 1: cmds.append",
+   "why": "the comparison command needs exactly one protocol"
+  },
+  {
+   "file": "scripts/tour.py",
+   "old": "if err: print(err); sys.exit(2)",
+   "new": "if err: print(err)",
+   "why": "an empty folder is not an error"
+  },
+  {
+   "file": "scripts/watch_age.py",
+   "old": "if age > max_hours: return 1",
+   "new": "if age >= max_hours: return 1",
+   "why": "exactly at the limit is called stale"
+  },
+  {
+   "file": "scripts/watch_age.py",
+   "old": "if age < -0.1: return 2",
+   "new": "if False: return 2",
+   "why": "a run dated in the future is called fresh"
+  },
+  {
+   "file": "scripts/watch_age.py",
+   "old": "if run is None: return 2, None,",
+   "new": "if run is None: return 0, None,",
+   "why": "an unreadable date is called fresh"
+  },
+  {
+   "file": "scripts/watch_age.py",
+   "old": "code, age, msg = 2, None, \"could not read the published file",
+   "new": "code, age, msg = 0, None, \"could not read the published file",
+   "why": "a failed read is called fresh"
+  },
+  {
+   "file": "scripts/watch_age.py",
+   "old": "return 2, age, \"the last run is dated",
+   "new": "return 1, age, \"the last run is dated",
+   "why": "a future date is called stale instead of unknown"
+  },
+  {
+   "file": "scripts/watch_age.py",
+   "old": "age = (now - run) / 3600",
+   "new": "age = (now - run) / 60",
+   "why": "the age is computed in minutes"
+  },
+  {
+   "file": "scripts/watch_age.py",
+   "old": "\"age_hours\": None if age is None else round(age, 2)",
+   "new": "\"age_hours\": 0 if age is None else round(age, 2)",
+   "why": "an unknown age is printed as zero hours"
+  },
+  {
+   "file": "scripts/watch_age.py",
+   "old": "def parse_utc(t):\n    try: return calendar.timegm(time.strptime(t, \"%Y-%m-%dT%H:%M:%SZ\"))\n    except (TypeError, ValueError): return None",
+   "new": "def parse_utc(t):\n    try: return calendar.timegm(time.strptime(t, \"%Y-%m-%dT%H:%M:%SZ\"))\n    except (ValueError,): return 0",
+   "why": "a missing date is the epoch"
+  },
+  {
+   "file": "scripts/whatif.py",
+   "old": "def composite(s): return (4 * s[\"adminKeyScore\"] + 3 * s[\"multisigScore\"] + 3 * s[\"timelockScore\"] + 5) // 10",
+   "new": "def composite(s): return (4 * s[\"adminKeyScore\"] + 3 * s[\"multisigScore\"] + 3 * s[\"timelockScore\"]) // 10",
+   "why": "the composite rounds down instead of half up"
+  },
+  {
+   "file": "scripts/whatif.py",
+   "old": "def composite(s): return (4 * s[\"adminKeyScore\"] + 3 * s[\"multisigScore\"] + 3 * s[\"timelockScore\"] + 5) // 10",
+   "new": "def composite(s): return (3 * s[\"adminKeyScore\"] + 4 * s[\"multisigScore\"] + 3 * s[\"timelockScore\"] + 5) // 10",
+   "why": "admin key and multisig weights swapped"
+  },
+  {
+   "file": "scripts/whatif.py",
+   "old": "def band(c): return BANDS[min(c // 20, 4)]",
+   "new": "def band(c): return BANDS[min(c // 25, 4)]",
+   "why": "the bands are 25 wide"
+  },
+  {
+   "file": "scripts/whatif.py",
+   "old": "need = -(-(10 * nxt - 5 - e) // w10)",
+   "new": "need = (10 * nxt - 5 - e) // w10",
+   "why": "the points needed are rounded down (one too few)"
+  },
+  {
+   "file": "scripts/whatif.py",
+   "old": "if need > 0 and s[k] + need <= 100: out[axis]",
+   "new": "if need > 0: out[axis]",
+   "why": "a move beyond 100 is offered"
+  },
+  {
+   "file": "scripts/whatif.py",
+   "old": "\"model_matches\": model_ok",
+   "new": "\"model_matches\": True",
+   "why": "a cap on top of the formula is not detected"
+  },
+  {
+   "file": "scripts/whatif.py",
+   "old": "model_ok = composite(before) == pub",
+   "new": "model_ok = composite(before) >= pub",
+   "why": "a published composite below the formula passes as matching"
+  },
+  {
+   "file": "scripts/whatif.py",
+   "old": "\"fix\": cheapest_fix(before, pub) if model_ok else None",
+   "new": "\"fix\": cheapest_fix(before, pub)",
+   "why": "a fix is computed even when the formula does not match"
+  },
+  {
+   "file": "scripts/whatif.py",
+   "old": "after = dict(before, **{FIELDS[n]: v for n, v in changes.items()})",
+   "new": "after = dict(before)",
+   "why": "the change is not applied"
+  },
+  {
+   "file": "scripts/whatif.py",
+   "old": "\"newly_failed\": [a[0] for a, b in zip(r0, r1) if a[1] and not b[1]]",
+   "new": "\"newly_failed\": []",
+   "why": "requirements lost by the change are not told"
+  },
+  {
+   "file": "scripts/whatif.py",
+   "old": "if any(v is None for v in before.values()): return {\"error\"",
+   "new": "if False: return {\"error\"",
+   "why": "a missing sub-score is treated as a value"
+  },
+  {
+   "file": "scripts/whatif.py",
+   "old": "bad = {n: v for n, v in changes.items() if not 0 <= v <= 100}",
+   "new": "bad = {n: v for n, v in changes.items() if not 0 <= v <= 1000}",
+   "why": "a sub-score above 100 is accepted"
+  },
+  {
+   "file": "scripts/whatif.py",
+   "old": "\"price-feed\": \"oracleAuthorityScore\"",
+   "new": "\"price-feed\": \"crossExposureScore\"",
+   "why": "the price-feed option changes the wrong sub-score"
+  },
+  {
+   "file": "scripts/mcp_server.py",
+   "old": "    if \"id\" not in msg: return None",
+   "new": "    if False: return None",
+   "why": "a notification gets an answer"
+  },
+  {
+   "file": "scripts/mcp_server.py",
+   "old": "return reply(i, {\"protocolVersion\": params.get(\"protocolVersion\") or PROTOCOL,",
+   "new": "return reply(i, {\"protocolVersion\": PROTOCOL,",
+   "why": "the client's protocol version is not echoed"
+  },
+  {
+   "file": "scripts/mcp_server.py",
+   "old": "\"annotations\": {\"readOnlyHint\": True, \"openWorldHint\": False}",
+   "new": "\"annotations\": {\"readOnlyHint\": False, \"openWorldHint\": False}",
+   "why": "a tool is not announced as read-only"
+  },
+  {
+   "file": "scripts/mcp_server.py",
+   "old": "if unknown: return \"unknown argument(s): %s\"",
+   "new": "if False: return \"unknown argument(s): %s\"",
+   "why": "an unknown argument is accepted"
+  },
+  {
+   "file": "scripts/mcp_server.py",
+   "old": "if missing: return \"missing argument(s): %s\"",
+   "new": "if False: return \"missing argument(s): %s\"",
+   "why": "a missing required argument is accepted"
+  },
+  {
+   "file": "scripts/mcp_server.py",
+   "old": "if not ok: return \"argument %s must be of type %s\"",
+   "new": "if False: return \"argument %s must be of type %s\"",
+   "why": "a wrong type is accepted"
+  },
+  {
+   "file": "scripts/mcp_server.py",
+   "old": "isinstance(v, (int, float)) and not isinstance(v, bool)",
+   "new": "isinstance(v, (int, float))",
+   "why": "a boolean passes as a number"
+  },
+  {
+   "file": "scripts/mcp_server.py",
+   "old": "(\"minimum\" in p and v < p[\"minimum\"] or \"maximum\" in p and v > p[\"maximum\"])",
+   "new": "False",
+   "why": "a number out of its range is accepted"
+  },
+  {
+   "file": "scripts/mcp_server.py",
+   "old": "if \"enum\" in p and v not in p[\"enum\"]",
+   "new": "if False",
+   "why": "a value outside the enum is accepted"
+  },
+  {
+   "file": "scripts/mcp_server.py",
+   "old": "except ToolError as e: return reply(i, {\"content\": [{\"type\": \"text\", \"text\": str(e)}], \"isError\": True})",
+   "new": "except ToolError as e: return reply(i, {\"content\": [{\"type\": \"text\", \"text\": str(e)}], \"isError\": False})",
+   "why": "a tool failure is reported as a success"
+  },
+  {
+   "file": "scripts/mcp_server.py",
+   "old": "text[:MAX_CHARS] + \"\\n[cut at %d characters; narrow the question]\" % MAX_CHARS",
+   "new": "text[:MAX_CHARS]",
+   "why": "a cut answer does not say it was cut"
+  },
+  {
+   "file": "scripts/mcp_server.py",
+   "old": "limit=min(int(a.get(\"limit\", 25)), MAX_ROWS)",
+   "new": "limit=int(a.get(\"limit\", 25))",
+   "why": "the row limit is not capped"
+  },
+  {
+   "file": "scripts/mcp_server.py",
+   "old": "if not tool: return reply(i, error={\"code\": -32602",
+   "new": "if not tool: return reply(i, error={\"code\": -32601",
+   "why": "an unknown tool has the wrong error code"
+  },
+  {
+   "file": "scripts/mcp_server.py",
+   "old": "except ValueError: out = reply(None, error={\"code\": -32700, \"message\": \"parse error\"})",
+   "new": "except ValueError: continue",
+   "why": "a line that is not JSON is dropped without an answer"
+  },
+  {
+   "file": "scripts/mcp_server.py",
+   "old": "if a.get(\"chain\") and not find.chain_key(a[\"chain\"]): raise ToolError",
+   "new": "if False: raise ToolError",
+   "why": "an unknown chain filter returns an empty list instead of an error"
+  },
+  {
+   "file": "scripts/mcp_server.py",
+   "old": "if s[\"protocol\"] not in seen: seen.add(s[\"protocol\"]); sums.append(s)",
+   "new": "sums.append(s)",
+   "why": "a protocol named twice is compared twice"
+  },
+  {
+   "file": "scripts/dossier.py",
+   "old": "unicodedata.category(c) in (\"Cc\", \"Zl\", \"Zp\") or c in \"\\t\\r\\n\"",
+   "new": "c in \"\\t\\r\\n\"",
+   "why": "control characters other than line breaks are kept in a name"
+  },
+  {
+   "file": "scripts/dossier.py",
+   "old": "(\"\" if unicodedata.category(c) == \"Cf\" else c)",
+   "new": "c",
+   "why": "invisible formatting characters are kept in a name"
+  },
+  {
+   "file": "scripts/dossier.py",
+   "old": "return t if len(t) <= limit else t[:limit - 1] + \"…\"\n\n\ndef clean_lines",
+   "new": "return t\n\n\ndef clean_lines",
+   "why": "a name is not cut"
+  },
+  {
+   "file": "scripts/dossier.py",
+   "old": "    t = \" \".join(t.split())\n",
+   "new": "",
+   "why": "runs of spaces in a name are kept"
+  },
+  {
+   "file": "scripts/dossier.py",
+   "old": "(clean_name(m.get(\"name\")) or (addr[:6]",
+   "new": "(m.get(\"name\") or (addr[:6]",
+   "why": "the heading of the dossier prints the raw name"
+  },
+  {
+   "file": "scripts/dossier.py",
+   "old": "\"{:,.0f}\".format(m[\"tvl\"]), clean_name(m.get(\"name\")),",
+   "new": "\"{:,.0f}\".format(m[\"tvl\"]), m.get(\"name\"),",
+   "why": "the money line of the dossier prints the raw name"
+  },
+  {
+   "file": "scripts/find.py",
+   "old": "\"slug\": cn(m.get(\"slug\")), \"protocol\": cn(m.get(\"name\")),",
+   "new": "\"slug\": m.get(\"slug\"), \"protocol\": m.get(\"name\"),",
+   "why": "the rows of find carry the raw protocol name and slug"
+  },
+  {
+   "file": "scripts/find.py",
+   "old": "\"title\": cn(m.get(\"name\")) or",
+   "new": "\"title\": m.get(\"name\") or",
+   "why": "the title of a row is the raw name"
+  },
+  {
+   "file": "scripts/find.py",
+   "old": "cn = lambda v: None if v is None else clean_name(v)",
+   "new": "cn = lambda v: v",
+   "why": "the cleaning helper of find does nothing"
+  },
+  {
+   "file": "scripts/mcp_server.py",
+   "old": "{\"type\": \"text\", \"text\": text}, {\"type\": \"text\", \"text\": DATA_NOTE}]",
+   "new": "{\"type\": \"text\", \"text\": text}]",
+   "why": "the data notice is not sent"
+  },
+  {
+   "file": "scripts/held_assets.py",
+   "old": "b[64:64 + min(n, 64)]",
+   "new": "b[64:64 + n]",
+   "why": "a token symbol is not cut at 64 bytes"
+  },
+  {
+   "file": "scripts/dossier.py",
+   "old": "unicodedata.category(c) in (\"Cc\", \"Cf\") else c) for c in l)",
+   "new": "unicodedata.category(c) in (\"Cf\",) else c) for c in l)",
+   "why": "clean_lines keeps control characters (an escape sequence reaches the terminal)"
+  },
+  {
+   "file": "scripts/dossier.py",
+   "old": "\"\" if unicodedata.category(c) in (\"Cc\", \"Cf\") else c) for c in l)",
+   "new": "\"\" if unicodedata.category(c) in (\"Cc\",) else c) for c in l)",
+   "why": "clean_lines keeps invisible formatting characters"
+  },
+  {
+   "file": "scripts/dossier.py",
+   "old": "\" \" if c in \"\\n\\r\\t\" or unicodedata.category(c) in (\"Zl\", \"Zp\")",
+   "new": "\" \" if c in \"\\t\"",
+   "why": "clean_lines lets a line break inside an element through"
+  },
+  {
+   "file": "scripts/dossier.py",
+   "old": "return t if len(t) <= limit else t[:limit - 1] + \"…\"\n    return [one(l)",
+   "new": "return t\n    return [one(l)",
+   "why": "clean_lines does not cut a long line"
+  },
+  {
+   "file": "scripts/dossier.py",
+   "old": "return [one(l) if l else l for l in lines]",
+   "new": "return list(lines)",
+   "why": "clean_lines does nothing"
+  },
+  {
+   "file": "scripts/dossier.py",
+   "old": "    return clean_lines(out)\n",
+   "new": "    return out\n",
+   "why": "the dossier is returned uncleaned"
+  },
+  {
+   "file": "scripts/brief.py",
+   "old": "return clean_lines(out), None",
+   "new": "return out, None",
+   "why": "the brief is returned uncleaned"
+  },
+  {
+   "file": "scripts/tour.py",
+   "old": "return clean_lines(out), None",
+   "new": "return out, None",
+   "why": "the tour is returned uncleaned"
+  }
+ ]
+}

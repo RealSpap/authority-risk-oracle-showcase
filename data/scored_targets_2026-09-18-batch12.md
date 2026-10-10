@@ -40,7 +40,7 @@ only privileged surface is fee routing:
 | Call | Result (both RPCs identical) |
 |---|---|
 | `factory.feeTo()` | `0xe4C0172679a2475e7De25bf1B933f774641388f4` (has code, not an EOA) |
-| `factory.feeToSetter()` | `0xD09971D8ed6C6a5e57581e90d593ee5B94e348D4` |
+| `factory.feeToSetter()` | `0xD099…48D4` |
 | `feeToSetter`: bare EOA | `True` (0 bytecode) |
 | `feeToSetter`: `getOwners()`/`getThreshold()` (Safe check) | both revert -- not a Safe |
 | `feeToSetter` nonce (`eth_getTransactionCount`) | 20 -- real, actively-used key, not vanity/dormant |
@@ -61,7 +61,7 @@ existed together:
 
 | Check | Result (both RPCs identical) |
 |---|---|
-| PancakeSwap V3's governing Safe `0xfa206DAB60c014bEb6833004D8848910165e6047` `getOwners()` | 6 owners: `0xD09971D8ed6C6a5e57581e90d593ee5B94e348D4`, `0x27cb14cdfA31f6BE86701B429F81f0663fc99006`, `0x08fc23075B0D07132bdEa75864233062E9cc56B2`, `0x897fa2c8A2628b657Cb2b4C093CFCFF86212059B`, `0xb30dF86dE0e1b321451809cCCEbF5651dfF7B900`, `0x7766f6a776c046703263a5C84a5E684aBECD9a75` |
+| PancakeSwap V3's governing Safe `0xfa20…6047` `getOwners()` | 6 owners: `0xD099…48D4`, `0x27cb…9006`, `0x08fc…56B2`, `0x897f…059B`, `0xb30d…B900`, `0x7766…9a75` |
 | `getThreshold()` | 3 |
 | V2 `feeToSetter` is owner #1 of that Safe | `True` |
 

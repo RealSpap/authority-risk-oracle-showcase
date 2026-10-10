@@ -1,0 +1,111 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "watch/scores/<oracle-slug>.json v1",
+ "type": "object",
+ "required": [
+  "name",
+  "oracle",
+  "targets"
+ ],
+ "properties": {
+  "name": {
+   "type": "string"
+  },
+  "oracle": {
+   "type": "string"
+  },
+  "rpc": {
+   "type": "string"
+  },
+  "block": {
+   "type": [
+    "integer",
+    "null"
+   ]
+  },
+  "maxStaleness": {
+   "type": [
+    "integer",
+    "null"
+   ]
+  },
+  "readAt": {
+   "type": "integer"
+  },
+  "kind": {
+   "type": "string"
+  },
+  "targets": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "target",
+     "compositeScore"
+    ],
+    "properties": {
+     "target": {
+      "type": "string"
+     },
+     "index": {
+      "type": "integer"
+     },
+     "adminKeyScore": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+     },
+     "multisigScore": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+     },
+     "timelockScore": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+     },
+     "oracleAuthorityScore": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+     },
+     "crossExposureScore": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+     },
+     "compositeScore": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+     },
+     "previousComposite": {
+      "type": [
+       "integer",
+       "null"
+      ]
+     },
+     "lastUpdated": {
+      "type": "integer"
+     },
+     "methodologyHash": {
+      "type": "string"
+     },
+     "stale": {
+      "type": "boolean"
+     },
+     "previousRun": {
+      "description": "UTC time of the previous watch run this score was compared to; null on a first read (the Solana targets had no previous run on 10/10). Not enforced: a documentation entry."
+     }
+    }
+   }
+  },
+  "self_scanned_to": {
+   "description": "the last block up to which the oracle's own role events were scanned successfully (the next scan starts there, so a window lost to an eth_getLogs failure is read the next time); the block of the run when the scan worked. Not enforced: a documentation entry."
+  },
+  "self": {
+   "description": "the oracle's own authority since the previous run: role events, code hash, hasRole of the known holders, and the error when a read failed. Not enforced: a documentation entry."
+  }
+ }
+}

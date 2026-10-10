@@ -9,7 +9,7 @@ chains/ethereum-l1/deploy/README.md rows 3/14). A count match can hide a SWAP: a
 key that happens to cancel out against a missing scored key, leaving the totals equal while the
 actual sets differ. This compares the SETS themselves, not just their size, for each of the 9
 deployed oracles (Robinhood Chain, Ethereum L1, Arbitrum, Base, Tempo, Plasma, Monad, Hyperliquid,
-Solana; Zcash has no on-chain oracle contract at all -- see SUBMISSION.md -- and is out of scope).
+Solana; Zcash has no on-chain oracle contract at all -- see the hackathon submission text -- and is out of scope).
 
 For each oracle:
 - ON-CHAIN side: every key in trackedTargets(0..trackedTargetsCount()-1) (EVM, same ABI

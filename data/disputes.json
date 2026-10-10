@@ -1,0 +1,4 @@
+{
+ "_doc": "Public disputes of a published score, kept by the maintainer after reading the issue (the per-target pages link to a pre-filled issue). One entry per dispute: id (D-<year>-<n>), chain (the watch key: ethereum-l1, arbitrum, base, robinhood, plasma, tempo, monad, hyperliquid, solana), target (the tracked address), opened (date), issue (its URL), claim (what the score is said to get wrong, in one sentence), status: open (under review), upheld (the score stands, say why), revised (the score was changed, say what and when), withdrawn. A resolved entry keeps resolved (date) and resolution (the reasoning). scripts/disputes.py checks every entry against the tracked set at each run, publishes watch/disputes.json and appends each opening and resolution to the hash-chained event log: a dispute cannot be opened or closed quietly.",
+ "disputes": []
+}

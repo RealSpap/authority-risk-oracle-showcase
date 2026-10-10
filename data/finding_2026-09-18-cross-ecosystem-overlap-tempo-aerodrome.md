@@ -26,12 +26,12 @@ exists to check.
 ## What was added
 
 `scripts/lib/cross_ecosystem_overlap.py`:
-- `TEMPO_GROUPS` (new): `cap_safe` (`0xb8fc49402df3ee4f8587268fb89fda4d621a8793`,
+- `TEMPO_GROUPS` (new): `cap_safe` (`0xb8fc…8793`,
   3-of-5 -- controls cUSD's TimelockController proposer/executor/canceller
   AND is the same OFT's LayerZero endpoint delegate) and `usdt0_safe`
-  (`0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8`, 3-of-5 -- USDT0's TIP-403
+  (`0x4DFF…0bf8`, 3-of-5 -- USDT0's TIP-403
   policy admin and `DEFAULT_ADMIN_ROLE` holder).
-- `BASE_GROUPS["aerodrome_emergency_council"]` (new): `0x99249b10593fCa1Ae9DAE6D4819F1A6dae5C013D`,
+- `BASE_GROUPS["aerodrome_emergency_council"]` (new): `0x9924…013D`,
   3-of-5.
 
 `scripts/check_cross_ecosystem_overlap.py`: wired in Tempo's own RPC

@@ -1,0 +1,154 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "watch/pending_ops.json v1",
+ "type": "object",
+ "required": [
+  "results"
+ ],
+ "properties": {
+  "days": {
+   "type": "integer"
+  },
+  "results": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "name",
+     "chain",
+     "address",
+     "status"
+    ],
+    "properties": {
+     "name": {
+      "type": "string"
+     },
+     "chain": {
+      "type": "string"
+     },
+     "address": {
+      "type": "string"
+     },
+     "family": {
+      "type": "string"
+     },
+     "status": {
+      "type": "string"
+     },
+     "delay": {
+      "type": [
+       "integer",
+       "null"
+      ]
+     },
+     "pending": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "ready_at": {
+         "type": "integer"
+        },
+        "state": {
+         "type": "string"
+        },
+        "selector": {
+         "type": [
+          "string",
+          "null"
+         ]
+        },
+        "signature": {
+         "type": [
+          "string",
+          "null"
+         ]
+        },
+        "target": {
+         "type": "string"
+        },
+        "tx": {
+         "type": "string"
+        },
+        "id": {
+         "type": "string"
+        },
+        "calls": {
+         "type": "integer"
+        }
+       }
+      }
+     },
+     "recent": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "queued_at": {
+         "type": "integer"
+        },
+        "still_queued": {
+         "type": "boolean"
+        },
+        "selector": {
+         "type": [
+          "string",
+          "null"
+         ]
+        },
+        "target": {
+         "type": "string"
+        },
+        "tx": {
+         "type": "string"
+        }
+       }
+      }
+     },
+     "active": {
+      "description": "(observed as array on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "discovered": {
+      "description": "(observed as boolean on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "governs": {
+      "description": "(observed as array on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "grace": {
+      "description": "(observed as number on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "latest_queued": {
+      "description": "(observed as number on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "log_rpc": {
+      "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "proposals": {
+      "description": "(observed as object on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "queued_events": {
+      "description": "(observed as number on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "stale_approved": {
+      "description": "(observed as number on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "stale_transaction_index": {
+      "description": "(observed as number on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "transaction_index": {
+      "description": "(observed as number on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "window_blocks": {
+      "description": "(observed as number on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "window_days_est": {
+      "description": "(observed as number on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "window_note": {
+      "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     }
+    }
+   }
+  }
+ }
+}

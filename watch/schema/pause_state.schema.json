@@ -1,0 +1,120 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "watch/pause_state.json v1",
+ "type": "object",
+ "required": [
+  "generated_utc",
+  "asked",
+  "count",
+  "paused",
+  "changes",
+  "by_target"
+ ],
+ "properties": {
+  "generated_utc": {
+   "type": "string"
+  },
+  "asked": {
+   "type": "integer"
+  },
+  "count": {
+   "type": "integer"
+  },
+  "paused": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  },
+  "changes": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "target",
+     "change"
+    ],
+    "properties": {
+     "target": {
+      "type": "string"
+     },
+     "change": {
+      "enum": [
+       "paused",
+       "unpaused"
+      ]
+     },
+     "since": {
+      "type": [
+       "string",
+       "null"
+      ]
+     }
+    }
+   }
+  },
+  "stale": {
+   "type": "integer"
+  },
+  "unread_chains": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  },
+  "by_target": {
+   "type": "object",
+   "additionalProperties": {
+    "type": "object",
+    "required": [
+     "paused",
+     "via"
+    ],
+    "properties": {
+     "paused": {
+      "type": "boolean"
+     },
+     "via": {
+      "enum": [
+       "paused()",
+       "isPaused()"
+      ]
+     },
+     "since": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "change": {
+      "enum": [
+       "paused",
+       "unpaused"
+      ]
+     },
+     "from": {
+      "type": "boolean"
+     },
+     "previous_run": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "stale": {
+      "type": "boolean"
+     },
+     "stale_since": {
+      "type": [
+       "string",
+       "null"
+      ]
+     }
+    }
+   }
+  },
+  "what": {
+   "type": "string"
+  }
+ }
+}

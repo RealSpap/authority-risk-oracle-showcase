@@ -16,7 +16,7 @@ returned an unrelated error -- "chain is not available on free plan" -- not a
 balance reading, so it was not counted as a confirmation either way.)
 
 This matches the run's known starting fact and the open "A faire" card asking
-Spap to fund the address via a faucet. An agent cannot use a faucet, so no
+Spap to fund the address via a faucet. A faucet needs a captcha or a login, so it is used by hand, so no
 transaction was attempted on real Sepolia this run. Per the phase brief, the
 alternative is a full, reproducible dress rehearsal against a local anvil
 fork of Sepolia -- proving the entire pipeline works end to end so the real
@@ -76,7 +76,7 @@ not a new finding.
   non-dry-run branch) needed to change to make this pass.
 - Does not close: the real Sepolia deployment itself. That still requires
   Spap to fund `0xA08a76457b758aFF9702dBf5b870679E1232B715` on Sepolia (see
-  the open "A faire" card) -- no faucet use by an agent, no funds were moved,
+  the open "A faire" card) -- no faucet use by the tooling, no funds were moved,
   no mainnet or real-Sepolia transaction was sent this run.
 - All contract interaction above happened on an ephemeral local anvil fork,
   using anvil's own public, well-known default dev private key (never the

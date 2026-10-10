@@ -1,0 +1,104 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "watch/disputes.json v1",
+ "type": "object",
+ "required": [
+  "open",
+  "resolved",
+  "disputes",
+  "by_target",
+  "invalid"
+ ],
+ "properties": {
+  "run_utc": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "open": {
+   "type": "integer"
+  },
+  "resolved": {
+   "type": "integer"
+  },
+  "invalid": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "why"
+    ]
+   }
+  },
+  "by_target": {
+   "type": "object"
+  },
+  "disputes": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "id",
+     "chain",
+     "target",
+     "opened",
+     "issue",
+     "claim",
+     "status",
+     "key"
+    ],
+    "properties": {
+     "status": {
+      "type": "string",
+      "enum": [
+       "open",
+       "upheld",
+       "revised",
+       "withdrawn"
+      ]
+     },
+     "resolved": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "resolution": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "score_now": {
+      "type": [
+       "integer",
+       "null"
+      ]
+     },
+     "chain": {
+      "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "claim": {
+      "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "id": {
+      "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "issue": {
+      "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "key": {
+      "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "opened": {
+      "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "target": {
+      "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     }
+    }
+   }
+  }
+ }
+}

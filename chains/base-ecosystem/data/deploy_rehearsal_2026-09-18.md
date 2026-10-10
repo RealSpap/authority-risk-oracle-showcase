@@ -22,7 +22,7 @@ Deployer address: `0xA08a76457b758aFF9702dBf5b870679E1232B715`
 (`keys/evm-testnet-shared.json`; private key never printed, logged, or
 written to this repo -- checked mechanically below). Still 0 wei, unchanged
 since 2026-09-16. No faucet used (every listed Base Sepolia faucet requires
-a captcha or an account login, both out of scope for an agent; per this
+a captcha or an account login, both done by hand; per this
 key's own file, funding is Spap's call to make manually, never requested
 autonomously).
 

@@ -29,8 +29,8 @@ computed by hand from `admin()`/`owner()`), not through `score_curve_dex()`.
 
 | Check | RPC A result | RPC B result |
 |---|---|---|
-| `StableSwapNGFactory.admin()` (`0x8271e06E...0E8aD`) | `0xabc336d4C71ad275695744d32DdB1d8266Db1cbF` | identical |
-| `fee-receiver/x-gov vault.owner()` (`0x193110Ce...c310D`) | `0xabc336d4C71ad275695744d32DdB1d8266Db1cbF` | identical |
+| `StableSwapNGFactory.admin()` (`0x8271e06E...0E8aD`) | `0xabc3…1cbF` | identical |
+| `fee-receiver/x-gov vault.owner()` (`0x193110Ce...c310D`) | `0xabc3…1cbF` | identical |
 | `factory.admin() == fee-receiver.owner()` | `True` | `True` |
 | controller `eth_getCode` | `0x` (0 bytes, bare EOA) | identical |
 | controller nonce on Robinhood Chain | `0` | identical |
@@ -108,7 +108,7 @@ which is what was scored instead.
 `ExchangeGateway.owner()` and `merUSD.owner()` both resolve directly
 (neither reverts -- confirms plain OpenZeppelin `Ownable`, not
 `AccessControl`) to the exact **same** address on both RPCs:
-`0x39C647fdd8524c69be3E05A754bD63E02b019D75` -- `eth_getCode` = `0x` (bare
+`0x39C6…9D75` -- `eth_getCode` = `0x` (bare
 EOA) on both, nonce **84** on Robinhood Chain on both (a real,
 actively-used key, not dormant). EIP-1967 admin slot on the exchange proxy
 is zero (no separate ProxyAdmin, same "owner() gates its own upgrade
@@ -124,7 +124,7 @@ identically, not a new number invented for this target: `admin_key = 2`
 New scorer: `score_meridian_exchangegateway()` in `scripts/lib/scorers.py`,
 added to `SIMPLE_SCORERS`. New signer-overlap group `meridian_perps` in
 `scripts/lib/signer_overlap.py` (`known_eoa`:
-`0x39C647fdd8524c69be3E05A754bD63E02b019D75`, no other tracked target
+`0x39C6…9D75`, no other tracked target
 shares it -- `compute_cross_exposure()` re-run live confirms
 `crossExposureScore = 100`, no ripple effect on any of the other 49
 pre-existing targets). 4 new unit tests added to
@@ -144,7 +144,7 @@ distinct from what's already counted as DEX TVL elsewhere). Adapter:
 `0x7F03effbd7ceB22A3f80Dd468f67eF27826acD85`.
 
 Confirmed live (both RPCs): `locker.owner()` resolves to a bare EOA
-(`0x7E035Fb048a31e0481b88074557415b1C187242B`, 0 bytecode). A raw PUSH4
+(`0x7E03…242B`, 0 bytecode). A raw PUSH4
 bytecode scan of the locker (47 selectors) positively matches
 `owner()`/`renounceOwnership()`/`transferOwnership(address)`/
 `initialize(address)`/`onERC721Received(...)` -- a standard OZ `Ownable`

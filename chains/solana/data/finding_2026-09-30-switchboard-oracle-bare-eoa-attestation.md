@@ -1,6 +1,6 @@
 # Switchboard (oracle, "$5B secured"): a single bare EOA controls 16 programs including Oracle Quotes and the Randomness Service, and has actively used that power days ago -- Oracle V2 is a separate 1-of-4
 
-2026-09-30. Prompted by "voit large, trouve des vrais trous que la concurrence ne couvre pas" (Spap). SolGov doesn't cover Switchboard at all --
+2026-09-30. Triggered by the question "voit large, trouve des vrais trous que la concurrence ne couvre pas" (Spap). SolGov doesn't cover Switchboard at all --
 it's an oracle, out of scope for SolGov's DeFi-protocol registry -- and it isn't in this repo's `SOLGOV_LEADS` either (added 2026-09-26,
 covers Solstice/GMSOL/Loopscale/Huma Finance/Lulo/Exponent/Flash Trade/Solayer; Hylo, Switchboard and Pyth were listed as candidates in
 `finding_2026-09-26-solgov-registry-verified-live.md` but never turned into scorers). This closes that gap for Switchboard specifically.

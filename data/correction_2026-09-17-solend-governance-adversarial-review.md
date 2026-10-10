@@ -36,7 +36,7 @@ correct).
    authority gets fixed while the program authority doesn't (or vice
    versa) will now be caught correctly.
 
-2. **MEDIUM -- stale top-level docs.** `SUBMISSION.md` and `README.md`
+2. **MEDIUM -- stale top-level docs.** the hackathon submission text and `README.md`
    still stated the backtest's illustrative `compositeScore = 8/100` for
    the 2022 incident with no caveat, ~14 minutes after the backtest file
    itself gained a "Correction" section admitting that number was "guessed"
@@ -44,7 +44,7 @@ correct).
    parameters (with the live scorer's actual published score, `2/100`,
    being the number that matters regardless, via a separate authority
    path). **Fix**: both docs updated with the corrected numbers and a
-   pointer to the backtest file's own Correction section; `SUBMISSION.md`'s
+   pointer to the backtest file's own Correction section; the hackathon submission text's
    Solana bullet also updated from 2 to 3 targets.
 
 ## Disclosed, not silently patched (open points, `chains/solana/METHODOLOGY.md` section 7)

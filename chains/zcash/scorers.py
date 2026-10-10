@@ -115,7 +115,7 @@ FUND_STATIC_NOTES = {
         "explicitly named Key-Holder Organizations (Zcash Foundation, Electric Coin "
         "Company, Shielded Labs) for the OTHER fund (t3ev37...): ZIP 271's own text "
         "scopes that naming to its own one-time lockbox disbursement only, and at "
-        "least one secondary/AI-generated search summary conflated the two funds "
+        "least one secondary/secondary search summary conflated the two funds "
         "during this research pass, caught and rejected by checking ZIP 271's raw "
         "source directly rather than trusting the summary.",
     ],

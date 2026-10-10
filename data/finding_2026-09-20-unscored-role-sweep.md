@@ -16,12 +16,11 @@ random control address; no transaction was ever sent).
 
 Result: 104 candidates went through refutation; **42 CONFIRMED,
 48 PARTLY_CONFIRMED, 14 REFUTED** (the refuters
-overturned or downgraded a real share of the first agents' claims, e.g. a MINTER_ROLE on
+overturned or downgraded a real share of the first reviewers' claims, e.g. a MINTER_ROLE on
 Ethena that turned out to be on a retired contract). The full backlog is at the bottom.
 Most entries are availability/freeze or config-only seats; the four below are the ones
 that matter for scores or for cross-chain overlap. Items marked **[by hand]** were
-re-read by me directly on-chain after the agents reported them; the rest are
-agent-reported and verifier-checked, not individually re-derived.
+re-read by me directly on-chain after the reviewers reported them; the rest are reviewer-reported and verifier-checked, not individually re-derived.
 
 ## 1. [by hand] Aave's PROTOCOL_GUARDIAN is a second cross-chain committee, on FIVE chains
 
@@ -34,11 +33,11 @@ owners**, at a different Safe address per chain:
 
 | Chain | Safe | ACLManager `isEmergencyAdmin` |
 |---|---|---|
-| Ethereum L1 | `0x2CFe3ec4d5a6811f4B8067F0DE7e47DfA938Aa30` | true |
-| Arbitrum | `0xCb45E82419baeBCC9bA8b1e5c7858e48A3B26Ea6` | true |
-| Base | `0x56C1a4b54921DEA9A344967a8693C7E661D72968` | true |
-| Plasma | `0xEf323B194caD8e02D9E5D8F07B34f625f1c088f1` | true |
-| Monad | `0xc887455536CBD4e615B745e70CaCde15B3117e74` | true |
+| Ethereum L1 | `0x2CFe…Aa30` | true |
+| Arbitrum | `0xCb45…6Ea6` | true |
+| Base | `0x56C1…2968` | true |
+| Plasma | `0xEf32…88f1` | true |
+| Monad | `0xc887…7e74` | true |
 
 Owners (same set everywhere): `0x3fa960f8...`, `0xe6838d83...`, `0xc2674c1a...`,
 `0xd4af2e86...` (bare EOAs) and `0xa2dcdd6e...`, `0xb291232f...`, `0x4ab2bed1...` (nested 1-of-3

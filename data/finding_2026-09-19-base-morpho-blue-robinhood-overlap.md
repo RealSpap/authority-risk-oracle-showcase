@@ -17,11 +17,11 @@ days, rather than only skimming it for Monad-related rows.
 `chains/base-ecosystem/scorers.py::score_morpho_blue()`'s target -- Base's
 Morpho Blue singleton, **the largest single target this entire project
 tracks** ($3.90B TVL per its own docstring) -- has `owner()` resolving to
-a real 5-of-9 Gnosis Safe (`0xcBa28b38103307Ec8dA98377ffF9816C164f9AFa`).
+a real 5-of-9 Gnosis Safe (`0xcBa2…9AFa`).
 
 `scripts/lib/signer_overlap.py`'s `GROUPS["morpho_blue"]` (Robinhood
 Chain) tracks a DIFFERENT Safe address
-(`0x060595638692de6CCd47ca04094F1772D3D39728`) for the same protocol.
+(`0x0605…9728`) for the same protocol.
 
 Live-fetched `getOwners()`/`getThreshold()` against both chains, same
 session: **the two Safes' owner sets are IDENTICAL as sets, at the
@@ -30,11 +30,11 @@ same 9 individuals, on two of this project's tracked chains, at two
 different (CREATE2-per-chain-deployed) addresses.
 
 ```
-0x13cA8756E9470b71B8e998352c8741706217f963  0x264c86DBbD2E4165FbBf0C35b0ddf0e00AEc6b31
-0x30E7c016fC702cDe9A50720a469d418490b7b652  0x69FcEFDe2B48503d675181448B3D4272128bca9c
-0x84D3E4EE550DD5F99e76a548aC59a6BE1C8dCf79  0x8f02b4a44Eacd9b8eE7739aa0BA58833DD45d002
-0xC100c251bdD297A66795112f04356E6BA5f89D80  0xCF263cEe139763114fAaFC5F52865135412F50Ec
-0xe0aeb6811d33Df42A09066857CDaFca16b506086
+0x13cA…f963  0x264c…6b31
+0x30E7…b652  0x69Fc…ca9c
+0x84D3…Cf79  0x8f02…d002
+0xC100…9D80  0xCF26…50Ec
+0xe0ae…6086
 ```
 
 Before this pass, both chains' `crossExposureScore` for this target read

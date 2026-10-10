@@ -17,7 +17,7 @@ beacon: `0xe10b6f6b275de231345c20d14ab812db62151b00`.
 
 **The beacon is OpenZeppelin AccessControl, not Ownable.** `DEFAULT_ADMIN_ROLE`'s full
 grant/revoke history was walked from genesis via event logs: granted to the deployer
-EOA at block 7662, reassigned to `0xd6f8378f8e440c65f8382f5f2728c78dfd55b66d` at block
+EOA at block 7662, reassigned to `0xd6f8…b66d` at block
 7802, deployer's own admin role revoked at block 8695 -- leaving exactly one current
 holder, confirmed via `hasRole()` (independently re-verified: `true`) and confirmed a
 bare EOA (`eth_getCode` empty, codesize 0).
@@ -37,7 +37,7 @@ share the same beacon and would score identically if scored individually.
 
 ## UniswapX V3DutchOrderReactor (`0x000000007A1C8e570011EeDF86A2A35593013cBA`) - 2/100
 
-`owner()` resolves to `0x2BAD8182C09F50c8318d769245beA52C32Be46CD` -- the **exact
+`owner()` resolves to `0x2BAD…46CD` -- the **exact
 same** bare, vanity-ground EOA already found controlling the Uniswap v3 Factory and
 v4 PoolManager (see batch 2). This extends that one key's control to a third protocol
 surface: order settlement, not just AMM fee switches. `feeController()` currently

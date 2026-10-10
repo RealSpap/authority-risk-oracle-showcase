@@ -5,8 +5,7 @@
 # (0xA08a76457b758aFF9702dBf5b870679E1232B715, keys/evm-testnet-shared.json)
 # has 0 ETH on real Sepolia as of 2026-09-17 (confirmed live on 2 independent
 # RPCs, see chains/ethereum-l1/data/deploy_rehearsal_2026-09-17.md) and an
-# open "A faire" card already asks Spap to fund it via a faucet -- an agent
-# cannot use a faucet. Rather than doing nothing this phase, this script
+# open "A faire" card already asks Spap to fund it via a faucet -- a faucet # needs a captcha or a login, used by hand. Rather than doing nothing this phase, this script
 # proves out the ENTIRE deploy_testnet pipeline end to end against a local
 # anvil fork of real Sepolia state, using anvil's own well-known default
 # dev account (NOT the throwaway key -- no real or testnet-funded private

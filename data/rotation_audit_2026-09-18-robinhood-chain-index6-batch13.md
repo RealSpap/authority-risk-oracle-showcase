@@ -33,8 +33,8 @@ through `score_pendle_v2()`.
 
 | Check | RPC A result | RPC B result |
 |---|---|---|
-| `ProxyAdmin.owner()` (`0xA28c08f1...c5E64`) | `0x7877AdFaDEd756f3248a0EBfe8Ac2E2eF87b75Ac` -> Safe **3-of-5** (`getOwners()`/`getThreshold()`) | identical |
-| `devProxyAdmin.owner()` (`0xD37eB2E6...54EA9`) | `0xE6F0489ED91dc27f40f9dbe8f81fccbFC16b9cb1` -> Safe **3-of-6** | identical |
+| `ProxyAdmin.owner()` (`0xA28c08f1...c5E64`) | `0x7877…75Ac` -> Safe **3-of-5** (`getOwners()`/`getThreshold()`) | identical |
+| `devProxyAdmin.owner()` (`0xD37eB2E6...54EA9`) | `0xE6F0…9cb1` -> Safe **3-of-6** | identical |
 | `MarketFactoryV6.owner()` | `0x2aD631F72fB16d91c4953A7f4260A97C2fE2f31e` (has code, not a Safe -- `getOwners()`/`getThreshold()` both revert) | identical |
 
 The third hop (`MarketFactoryV6.owner()`) is the one `score_pendle_v2()`'s
@@ -56,9 +56,9 @@ open sub-thread". Traced it this pass rather than leaving it open again:
 - `RoleGranted`/`RoleRevoked` full-history replay (`eth_getLogs`, full
   range, on `0x2aD631F7...`, role = `DEFAULT_ADMIN_ROLE` = `0x00...00`):
   granted to the deployer `0x1fCcc097...B1FB7` at block 52437932, granted to
-  `0x7877AdFaDEd756f3248a0EBfe8Ac2E2eF87b75Ac` at block 52652573, deployer's
+  `0x7877…75Ac` at block 52652573, deployer's
   own grant revoked at block 54144495. Current holder set: exactly
-  `{0x7877AdFaDEd756f3248a0EBfe8Ac2E2eF87b75Ac}` -- **the same 3-of-5 Safe
+  `{0x7877…75Ac}` -- **the same 3-of-5 Safe
   that already owns `ProxyAdmin`**, confirmed live via `hasRole()` on both
   RPCs (`True` for that Safe, `False` for the former deployer).
 

@@ -4,7 +4,7 @@ Requested by a tracked GitHub Projects item bundling two related
 cross-ecosystem questions. Pure investigation -- no scorer file
 (`chains/*/scorers.py`, `scripts/lib/scorers.py`) is modified by this
 finding. A change to any of these formulas needs this project's own
-adversarial-review discipline before committing, per `AGENTS.md`.
+adversarial-review discipline before committing, per the project's review rules.
 
 ## Part 1: "external DAO governance via bridge" -- 4 real instances, only 1 shares code
 

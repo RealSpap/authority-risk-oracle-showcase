@@ -104,9 +104,9 @@ Source 1: official `pendle-finance/pendle-core-v2-public` GitHub repo,
 `deployments/143-core.json`. Source 2: live on-chain reads.
 
 `router` (`0x888888888889758F76e7103c6CbF23ABbF58F946`) and `proxyAdmin`
-both resolve to `owner() = 0x7877AdFaDEd756f3248a0EBfe8Ac2E2eF87b75Ac`, a
+both resolve to `owner() = 0x7877…75Ac`, a
 real 3-of-5 Gnosis Safe; `devProxyAdmin.owner() =
-0xE6F0489ED91dc27f40f9dbe8f81fccbFC16b9cb1`, a real 3-of-6 Gnosis Safe. No
+0xE6F0…9cb1`, a real 3-of-6 Gnosis Safe. No
 timelock found protecting either.
 
 This is where the candidate was discarded, not scored: BOTH of these exact

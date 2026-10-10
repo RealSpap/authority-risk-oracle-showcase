@@ -21,8 +21,8 @@ Source-first instead of brute-force event replay: `bgd-labs/aave-address-book`
 import) defines `PROTOCOL_GUARDIAN` in `src/MiscEthereum.sol`:
 
 ```solidity
-// https://etherscan.io/address/0x2CFe3ec4d5a6811f4B8067F0DE7e47DfA938Aa30
-address internal constant PROTOCOL_GUARDIAN = 0x2CFe3ec4d5a6811f4B8067F0DE7e47DfA938Aa30;
+// https://etherscan.io/address/0x2CFe…Aa30
+address internal constant PROTOCOL_GUARDIAN = 0x2CFe…Aa30;
 ```
 
 This was cross-checked LIVE, not trusted from the docs alone:

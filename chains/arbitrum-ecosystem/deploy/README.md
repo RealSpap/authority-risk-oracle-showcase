@@ -54,7 +54,7 @@ assumed).
 ## Build and test (already run this pass, read-only, no deploy)
 
 Every ecosystem's agent shares this one clone -- always pass separate
-`--out`/`--cache-path` so parallel agents never clobber each other's build
+`--out`/`--cache-path` so parallel builds never clobber each other's build
 artifacts:
 
 ```

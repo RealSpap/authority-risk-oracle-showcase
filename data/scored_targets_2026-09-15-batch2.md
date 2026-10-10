@@ -13,7 +13,7 @@ and Lighter's real upgrade-gate mechanics below.
 `owner()` → Uniswap Labs' own `V3OpenFeeAdapter` (`0x05C420bC...`, a real, standard,
 non-custom contract confirmed against Uniswap's own `protocol-fees` repo) → but that
 adapter's `owner()` **and** `feeSetter()` both resolve to the same address,
-`0x2BAD8182C09F50c8318d769245beA52C32Be46CD`, confirmed a bare EOA (codesize 0, live
+`0x2BAD…46CD`, confirmed a bare EOA (codesize 0, live
 balance, nonce 3). `setFactoryOwner()` takes any address with zero validation and zero
 delay. Scope is real but bounded: this role can only set fee tiers and redirect the
 protocol's *own* fee cut (already maxed at 25% via `defaultFee()=68`) -- it cannot
@@ -21,7 +21,7 @@ touch LP principal or swap pricing.
 
 **Worth flagging on its own**: that EOA's address shares its entire 34-character
 middle segment with the real Ethereum-mainnet Uniswap Governance Timelock
-(`0x1a9C8182C09F50C8318d769245beA52C32BE35BC`) while differing only in the first and
+(`0x1a9C…35BC`) while differing only in the first and
 last 4 hex characters -- a vanity-grinding pattern consistent with an address designed
 to *look* like real Uniswap governance to anyone skimming a truncated address.
 

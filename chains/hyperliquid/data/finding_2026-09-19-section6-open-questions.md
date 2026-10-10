@@ -237,7 +237,7 @@ result, since all three land on an identical weakest-key shape despite
 different deployer-level thresholds).
 
 **Why this is NOT promoted into `scorers.py` in this same pass**: per
-`AGENTS.md`'s own phase discipline (`scouting -> scoring_build ->
+the project's review rules' own phase discipline (`scouting -> scoring_build ->
 deploy_testnet`) and its "before committing" rule ("a new
 controller-resolution shape... run an adversarial review before
 committing, not after"), this is scouting-phase output -- three brand-new

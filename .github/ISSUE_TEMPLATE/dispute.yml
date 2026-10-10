@@ -1,0 +1,41 @@
+name: Dispute a score
+description: You think a published score is wrong. Say which contract, what the score gets wrong and where to read the evidence. The dispute is recorded in data/disputes.json and in the hash-chained event log; its resolution is published the same way.
+title: "Score dispute: <protocol> on <chain> (<address>)"
+labels: [dispute]
+body:
+  - type: input
+    id: target
+    attributes:
+      label: Contract
+      description: The tracked address and its chain, as shown on the dashboard
+      placeholder: "0x… on Ethereum L1"
+    validations:
+      required: true
+  - type: input
+    id: score
+    attributes:
+      label: Published score
+      placeholder: "41/100, admin key 20, multisig 60, timelock 40"
+    validations:
+      required: true
+  - type: textarea
+    id: claim
+    attributes:
+      label: What the score gets wrong
+      description: One claim per dispute. Which role, which contract, which delay, which signer set. The scorer weighs a specific role (the API documents which); say if you think it read the wrong one.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence anyone can re-read
+      description: A contract address and the call to make (owner(), getThreshold(), getMinDelay()…), an explorer link, a transaction. Not a screenshot, not a private document.
+    validations:
+      required: true
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Understood
+      options:
+        - label: The dispute and its resolution are public, time-stamped and recorded in the hash-chained event log. No score is changed for a payment, a request or a deadline, only for evidence.
+          required: true

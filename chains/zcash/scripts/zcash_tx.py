@@ -29,8 +29,7 @@ Every constant below is cited to a primary source, not guessed:
     (`to_hash_v6`) and `zcash/orchard`'s `src/bundle/commitments.rs`
     (`ZCASH_ORCHARD_V6_HASH_PERSONALIZATION`, `ZCASH_IRONWOOD_HASH_PERSONALIZATION`),
     both fetched 2026-09-19. This project's own discipline (METHODOLOGY.md,
-    "never trust ... an AI-summarized paraphrase") applied to itself: an
-    LLM-paraphrased read of these ZIPs was cross-checked against the raw
+    "never trust ... a summarized paraphrase") applied to itself: a paraphrased read of these ZIPs was cross-checked against the raw
     ZIP source text and then against the actual reference-implementation
     source before any of it was trusted enough to sign a real transaction.
 """

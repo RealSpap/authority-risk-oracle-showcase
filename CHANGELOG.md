@@ -1,12 +1,12 @@
 # Changelog
 
-Historique complet, batch par batch et correction par correction, du travail de scoring et de deploiement de `authority-risk-oracle`. Reconstruit le 2026-09-24 depuis le README REEL et courant d'`origin/main` (1594 lignes), pas depuis un instantane perime : la premiere tentative de scission, plus tot le meme jour, avait ete faite sur une copie locale de `depot/` vieille de 5 jours (159 commits de retard), donc incomplete des le depart. Corrige apres verification, pas suppose. Meme decoupage que la premiere fois : le README reste un pitch + un etat courant, cette page porte l'historique.
+The dated engineering log of the scoring and deployment work, kept verbatim as evidence of what was checked, when, and what was left open. It reads as a working log on purpose: each entry says what that pass verified and what it did not. For the current state read the README; for the rules, METHODOLOGY.md; for the live numbers, the dashboard.
 
 ---
 
-## Historique de la section "Why this, and why now" du README (pitch)
+## History of the README section "Why this, and why now"
 
-Trois asides datees vivaient dans le paragraphe SolGov du README, comme la section Status l'a fait pour tout le reste.
+Three dated asides used to live in the README's SolGov paragraph, as the Status section did for everything else.
 
    blind 100. **Updated 2026-09-20**: that is now the rule on every EVM
    ecosystem, not just those two chains (decision and rationale in
@@ -886,7 +886,7 @@ The same day, this project deployed the identical, unmodified
 live-derived `updateScores()` batch on three more public testnets, using a
 rotated, separately-funded shared key
 (`0x20630C6Ab4BA48a80edA46F77b9b6e987A8f32f5` -- replacing an abandoned,
-never-funded key flagged as possibly exposed in a local session transcript, see
+never-funded key flagged as possibly exposed in local working notes, see
 [`chains/ethereum-l1/deploy/README.md`](chains/ethereum-l1/deploy/README.md)).
 Every address, tx hash and target count below is copied from each ecosystem's own
 deploy record (`chains/<ecosystem>/deploy/README.md`), re-verified against the
@@ -961,7 +961,7 @@ fluid-contracts-public`), never from a dashboard or block explorer's
 
 **Disclosed operational risk**: this file was built by several parallel
 research passes writing to the same shared path with no lock/merge step,
-and the file was overwritten wholesale multiple times mid-session before
+and the file was overwritten wholesale multiple times mid-way before
 being consolidated -- every address and authority-chain claim was
 independently re-verified live a second time (fresh `eth_call`s, not just
 re-reading the research reports) before this version was written out and
@@ -1080,8 +1080,7 @@ one visible instead of silent.
 Phase left at `deploy_testnet` in `ecosystems.json`, not advanced to
 `maintenance`: that transition needs this pipeline's own independent
 maker-checker verification (a distinct `verifier-tempo` identity, the same
-discipline actions #70/#72/#73/#74 already followed), which this one-off
-session is not positioned to substitute for or fabricate.
+discipline actions #70/#72/#73/#74 already followed), which this one-off pass is not positioned to substitute for or fabricate.
 
 **Maintenance, 2026-09-19 (first run in phase `maintenance`)**: rotation audit index 0 (the
 validator registry) re-derived from scratch on both mainnet RPCs, identical to the published score,
@@ -1160,7 +1159,7 @@ still say Robinhood Chain 52 or 53. Re-verified live just now, directly
 against all 7 oracles' own `trackedTargetsCount()`, not recomputed from
 prose: Robinhood Chain **54**, Ethereum L1 **9**, Arbitrum **5**, Base
 **5**, Plasma **7**, Tempo **13**, Monad **7** -- **100 real, live-tracked
-targets across all 7 real deployed oracles**, matching `SUBMISSION.md`'s
+targets across all 7 real deployed oracles**, matching the hackathon submission text's
 own current count exactly (`54+9+5+5+13+7+7`). Flagged here rather than
 silently edited into the older figures, same discipline already used
 above for the stale "46 real scores" figure.

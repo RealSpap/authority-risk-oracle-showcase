@@ -35,7 +35,7 @@ formula in `scorers.py`, it is a heuristic, not a measured risk.
   (EIP-1967 implementation slot -> `0xCcAc755fdA315D253f51629Cd13aF85c9A6d9E4b`, no admin
   slot). The implementation's bytecode contains `upgradeTo`, `upgradeToAndCall`,
   `proxiableUUID`, `owner`, `transferOwnership`: a UUPS owner wrapper, upgraded by its own owner.
-- `wrapper.owner()` -> `0xfa206DAB60c014bEb6833004D8848910165e6047`, Safe v1.3.0,
+- `wrapper.owner()` -> `0xfa20…6047`, Safe v1.3.0,
   **3-of-6**, nonce 12, no modules, no guard, all 6 owners bare EOAs.
 - The backlog's open hop ("owner is a proxy, controller unknown") is resolved: the
   Safe controls both factory ownership and upgrades of the wrapper.
@@ -52,7 +52,7 @@ formula in `scorers.py`, it is a heuristic, not a measured risk.
 - `Factory.owner()` -> `0xefbcE7A940274e58Cbce5EBCD0D11014048f5239`, a 3,956-byte
   non-proxy contract whose bytecode contains `setFactoryOwner`, `enableFeeAmount`,
   `setProtocolFee`, `pendingOwner`/`acceptOwnership`: an Ownable2Step fee-manager wrapper.
-- `wrapper.owner()` -> `0x6fA4080b70eed82Cf48570DDE705026905a64657`, Safe v1.4.1,
+- `wrapper.owner()` -> `0x6fA4…4657`, Safe v1.4.1,
   **2-of-3**, nonce 10, no modules, no guard, all 3 owners bare EOAs
   (`0xde9B0969...`, `0xb193d7Cb...`, `0xB64Eb68D...`).
 - The backlog's open hop is resolved.
@@ -70,7 +70,7 @@ formula in `scorers.py`, it is a heuristic, not a measured risk.
 - TransparentUpgradeableProxy: admin slot -> ProxyAdmin
   `0x1dA522b35363C1eDA4833Bc121C8f3c67b2Caa75`, implementation
   `0xf39D9a9AbB98593cEAc395D7A37c572dA48fCfD5` (Pausable/Ownable).
-- `ProxyAdmin.owner()` and `Portal.owner()` both -> `0x0605963420C4E8566fCEf2Cf65Dcd575662Bf53d`,
+- `ProxyAdmin.owner()` and `Portal.owner()` both -> `0x0605…f53d`,
   Safe v1.4.1, **3-of-5**, nonce 4, no modules, no guard, all owners bare EOAs.
   The backlog noted "threshold not read yet": now read.
 - One Safe controls upgrades AND pause/business logic of the contract holding locked
@@ -88,7 +88,7 @@ formula in `scorers.py`, it is a heuristic, not a measured risk.
   `UPGRADE_INTERFACE_VERSION`, `owner`, `pause`: UUPS, upgraded by its owner.
   The backlog's open hop ("upgrade controlled outside the proxy, via the factory") is
   resolved differently: upgrade is gated by `owner()` inside the implementation.
-- `depositRouter.owner()` -> `0x8c458F866e603335ef179A63a2528F357732f5d5`, which **is the
+- `depositRouter.owner()` -> `0x8c45…f5d5`, which **is the
   custody Safe itself**: Safe v1.4.1, **2-of-3**, nonce 5, no modules, no guard.
 - Aggravating context found: the identical Safe (same 3 owners, same 2-of-3) also exists
   at the same address on Ethereum and Base, consistent with the backlog's note that custody

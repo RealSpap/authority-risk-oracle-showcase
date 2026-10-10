@@ -1,6 +1,6 @@
 {
- "run_utc": "2026-10-10T21:01:36Z",
- "previous_run_utc": "2026-10-10T18:30:59Z",
+ "run_utc": "2026-10-10T22:35:44Z",
+ "previous_run_utc": "2026-10-10T21:01:36Z",
  "schedule": "every 6 hours (GitHub Actions, cron 17 */6 * * *)",
  "oracles": [
   {
@@ -9,13 +9,13 @@
    "kind": "evm",
    "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
    "read_ok": true,
-   "block": 132526413,
+   "block": 132563680,
    "targets": 63,
    "stale": 0,
    "lastUpdated": 1791664867,
    "maxStaleness": 777600,
    "self_watch": {
-    "read": false,
+    "read": true,
     "role_events": 0,
     "code_hash": "4a6a076bc4a379bd",
     "roles": {
@@ -37,13 +37,13 @@
    "kind": "evm",
    "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
    "read_ok": true,
-   "block": 11887090,
+   "block": 11887561,
    "targets": 27,
    "stale": 1,
    "lastUpdated": 1791661565,
    "maxStaleness": 777600,
    "self_watch": {
-    "read": false,
+    "read": true,
     "role_events": 0,
     "code_hash": "714f7e2a4131dc65",
     "roles": {
@@ -65,13 +65,13 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 317855207,
+   "block": 317877315,
    "targets": 13,
    "stale": 0,
    "lastUpdated": 1791658650,
    "maxStaleness": 777600,
    "self_watch": {
-    "read": false,
+    "read": true,
     "role_events": 0,
     "code_hash": "714f7e2a4131dc65",
     "roles": {
@@ -93,13 +93,13 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 47948906,
+   "block": 47951730,
    "targets": 13,
    "stale": 0,
    "lastUpdated": 1791653885,
    "maxStaleness": 777600,
    "self_watch": {
-    "read": false,
+    "read": true,
     "role_events": 0,
     "code_hash": "714f7e2a4131dc65",
     "roles": {
@@ -121,13 +121,13 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 39039179,
+   "block": 39048450,
    "targets": 14,
    "stale": 0,
    "lastUpdated": 1791662166,
    "maxStaleness": 777600,
    "self_watch": {
-    "read": false,
+    "read": true,
     "role_events": 0,
     "code_hash": "69fdbd05e61b2018",
     "roles": {
@@ -149,13 +149,13 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 35836873,
+   "block": 35842546,
    "targets": 9,
    "stale": 0,
    "lastUpdated": 1791655425,
    "maxStaleness": 777600,
    "self_watch": {
-    "read": false,
+    "read": true,
     "role_events": 0,
     "code_hash": "f33b2e74ee503525",
     "roles": {
@@ -177,7 +177,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 69927331,
+   "block": 69946124,
    "targets": 9,
    "stale": 0,
    "lastUpdated": 1791656126,
@@ -196,7 +196,7 @@
       "updater": false
      }
     },
-    "error": null
+    "error": "getLogs: window of 18793 blocks needs more than 120 calls at 100 blocks each"
    }
   },
   {
@@ -205,7 +205,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 66561963,
+   "block": 66567797,
    "targets": 16,
    "stale": 3,
    "lastUpdated": 1791662291,
@@ -224,7 +224,7 @@
       "updater": false
      }
     },
-    "error": null
+    "error": "getLogs: ValueError: malformed batch answer ({'jsonrpc': '2.0', 'id': None, 'error': {'code': -32005, 'message': 'rate limite)"
    }
   },
   {
@@ -243,448 +243,7 @@
  ],
  "total_targets": 190,
  "stale_total": 4,
- "movers": [
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0xbeeff033f34c046626b8d0a041844c5d1a5409dd",
-   "label": "Morpho Steakhouse USDG vault",
-   "field": "adminKeyScore",
-   "before": 10,
-   "after": 5
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0xbeeff033f34c046626b8d0a041844c5d1a5409dd",
-   "label": "Morpho Steakhouse USDG vault",
-   "field": "multisigScore",
-   "before": 35,
-   "after": 65
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0xbeeff033f34c046626b8d0a041844c5d1a5409dd",
-   "label": "Morpho Steakhouse USDG vault",
-   "field": "timelockScore",
-   "before": 15,
-   "after": 75
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0xbeeff033f34c046626b8d0a041844c5d1a5409dd",
-   "label": "Morpho Steakhouse USDG vault",
-   "field": "oracleAuthorityScore",
-   "before": 100,
-   "after": 2
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0xbeeff033f34c046626b8d0a041844c5d1a5409dd",
-   "label": "Morpho Steakhouse USDG vault",
-   "field": "compositeScore",
-   "before": 19,
-   "after": 44
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0x99347d5f70d3838763f6bddcf80304c8aa953b57",
-   "label": "Morpho NetNet Credit vault",
-   "field": "adminKeyScore",
-   "before": 36,
-   "after": 5
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0x99347d5f70d3838763f6bddcf80304c8aa953b57",
-   "label": "Morpho NetNet Credit vault",
-   "field": "multisigScore",
-   "before": 16,
-   "after": 15
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0x99347d5f70d3838763f6bddcf80304c8aa953b57",
-   "label": "Morpho NetNet Credit vault",
-   "field": "timelockScore",
-   "before": 10,
-   "after": 60
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0x99347d5f70d3838763f6bddcf80304c8aa953b57",
-   "label": "Morpho NetNet Credit vault",
-   "field": "oracleAuthorityScore",
-   "before": 100,
-   "after": 2
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0x99347d5f70d3838763f6bddcf80304c8aa953b57",
-   "label": "Morpho NetNet Credit vault",
-   "field": "compositeScore",
-   "before": 22,
-   "after": 25
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0x37788ff0c1d4e45a7fe06bc7e71e0cc00121d0a8",
-   "label": "Morpho Purinta USDG vault",
-   "field": "adminKeyScore",
-   "before": 48,
-   "after": 60
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0x37788ff0c1d4e45a7fe06bc7e71e0cc00121d0a8",
-   "label": "Morpho Purinta USDG vault",
-   "field": "multisigScore",
-   "before": 48,
-   "after": 55
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0x37788ff0c1d4e45a7fe06bc7e71e0cc00121d0a8",
-   "label": "Morpho Purinta USDG vault",
-   "field": "timelockScore",
-   "before": 10,
-   "after": 75
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0x37788ff0c1d4e45a7fe06bc7e71e0cc00121d0a8",
-   "label": "Morpho Purinta USDG vault",
-   "field": "oracleAuthorityScore",
-   "before": 100,
-   "after": 50
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0x37788ff0c1d4e45a7fe06bc7e71e0cc00121d0a8",
-   "label": "Morpho Purinta USDG vault",
-   "field": "compositeScore",
-   "before": 37,
-   "after": 63
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0xbeeff0fb1dc19344a87b8479dab60a2e16160737",
-   "label": "Morpho Ethena x Steakhouse USDG vault",
-   "field": "adminKeyScore",
-   "before": 60,
-   "after": 70
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0xbeeff0fb1dc19344a87b8479dab60a2e16160737",
-   "label": "Morpho Ethena x Steakhouse USDG vault",
-   "field": "multisigScore",
-   "before": 64,
-   "after": 65
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0xbeeff0fb1dc19344a87b8479dab60a2e16160737",
-   "label": "Morpho Ethena x Steakhouse USDG vault",
-   "field": "timelockScore",
-   "before": 10,
-   "after": 75
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0xbeeff0fb1dc19344a87b8479dab60a2e16160737",
-   "label": "Morpho Ethena x Steakhouse USDG vault",
-   "field": "compositeScore",
-   "before": 46,
-   "after": 70
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0xee27d5ae494300902d90454e8630a3f1c68c9c52",
-   "label": "Chainlink Price Feed Admin (Robinhood Chain)",
-   "field": "oracleAuthorityScore",
-   "before": 100,
-   "after": 52
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0xbeeff039907422219fb367e525954ddc092854d9",
-   "label": "Morpho Grove x Steakhouse USDG vault",
-   "field": "adminKeyScore",
-   "before": 60,
-   "after": 20
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0xbeeff039907422219fb367e525954ddc092854d9",
-   "label": "Morpho Grove x Steakhouse USDG vault",
-   "field": "multisigScore",
-   "before": 56,
-   "after": 30
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0xbeeff039907422219fb367e525954ddc092854d9",
-   "label": "Morpho Grove x Steakhouse USDG vault",
-   "field": "timelockScore",
-   "before": 10,
-   "after": 75
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0xbeeff039907422219fb367e525954ddc092854d9",
-   "label": "Morpho Grove x Steakhouse USDG vault",
-   "field": "compositeScore",
-   "before": 44,
-   "after": 40
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0xbeefff136e3684273e6aa75a1669b784b373a4fd",
-   "label": "Morpho Steakhouse Turbo USDG vault",
-   "field": "adminKeyScore",
-   "before": 60,
-   "after": 70
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0xbeefff136e3684273e6aa75a1669b784b373a4fd",
-   "label": "Morpho Steakhouse Turbo USDG vault",
-   "field": "multisigScore",
-   "before": 64,
-   "after": 65
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0xbeefff136e3684273e6aa75a1669b784b373a4fd",
-   "label": "Morpho Steakhouse Turbo USDG vault",
-   "field": "timelockScore",
-   "before": 10,
-   "after": 60
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0xbeefff136e3684273e6aa75a1669b784b373a4fd",
-   "label": "Morpho Steakhouse Turbo USDG vault",
-   "field": "oracleAuthorityScore",
-   "before": 100,
-   "after": 52
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0xbeefff136e3684273e6aa75a1669b784b373a4fd",
-   "label": "Morpho Steakhouse Turbo USDG vault",
-   "field": "compositeScore",
-   "before": 46,
-   "after": 66
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0xd540f47f214dc7d6d244e62a6ae7e06b586ef44a",
-   "label": "Meridian Perps (ExchangeGateway + merUSD)",
-   "field": "adminKeyScore",
-   "before": 2,
-   "after": 40
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0xd540f47f214dc7d6d244e62a6ae7e06b586ef44a",
-   "label": "Meridian Perps (ExchangeGateway + merUSD)",
-   "field": "compositeScore",
-   "before": 1,
-   "after": 16
-  },
-  {
-   "oracle": "Ethereum L1 (Sepolia)",
-   "target": "0x2f39d218133afab8f2b819b1066c7e434ad94e9e",
-   "label": "0x2f39\u20264e9e",
-   "field": "oracleAuthorityScore",
-   "before": 100,
-   "after": 52
-  },
-  {
-   "oracle": "Ethereum L1 (Sepolia)",
-   "target": "0xc3d688b66703497daa19211eedff47f25384cdc3",
-   "label": "0xc3d6\u2026cdc3",
-   "field": "oracleAuthorityScore",
-   "before": 100,
-   "after": 52
-  },
-  {
-   "oracle": "Ethereum L1 (Sepolia)",
-   "target": "0x02c3ea4e34c0cbd694d2adfa2c690eecbc1793ee",
-   "label": "0x02c3\u202693ee",
-   "field": "oracleAuthorityScore",
-   "before": 100,
-   "after": 20
-  },
-  {
-   "oracle": "Ethereum L1 (Sepolia)",
-   "target": "0x5d39e06b825c1f2b80bf2756a73e28efaa128ba0",
-   "label": "0x5d39\u20268ba0",
-   "field": "oracleAuthorityScore",
-   "before": 100,
-   "after": 52
-  },
-  {
-   "oracle": "Ethereum L1 (Sepolia)",
-   "target": "0x55555815a5595991c3a0ff119b59aef6c8b55555",
-   "label": "0x5555\u20265555",
-   "field": "oracleAuthorityScore",
-   "before": 100,
-   "after": 31
-  },
-  {
-   "oracle": "Ethereum L1 (Sepolia)",
-   "target": "0x94643e86aa5e38ddac6c7791c1297f4e40cd96c1",
-   "label": "0x9464\u202696c1",
-   "field": "oracleAuthorityScore",
-   "before": 100,
-   "after": 31
-  },
-  {
-   "oracle": "Ethereum L1 (Sepolia)",
-   "target": "0xbeef047a543e45807105e51a8bbefcc5950fcfba",
-   "label": "0xbeef\u2026cfba",
-   "field": "multisigScore",
-   "before": 55,
-   "after": 75
-  },
-  {
-   "oracle": "Ethereum L1 (Sepolia)",
-   "target": "0xbeef047a543e45807105e51a8bbefcc5950fcfba",
-   "label": "0xbeef\u2026cfba",
-   "field": "oracleAuthorityScore",
-   "before": 100,
-   "after": 52
-  },
-  {
-   "oracle": "Ethereum L1 (Sepolia)",
-   "target": "0xbeef047a543e45807105e51a8bbefcc5950fcfba",
-   "label": "0xbeef\u2026cfba",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 40
-  },
-  {
-   "oracle": "Ethereum L1 (Sepolia)",
-   "target": "0xbeef047a543e45807105e51a8bbefcc5950fcfba",
-   "label": "0xbeef\u2026cfba",
-   "field": "compositeScore",
-   "before": 67,
-   "after": 73
-  },
-  {
-   "oracle": "Ethereum L1 (Sepolia)",
-   "target": "0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
-   "label": "0xbeef\u202664cb",
-   "field": "multisigScore",
-   "before": 55,
-   "after": 75
-  },
-  {
-   "oracle": "Ethereum L1 (Sepolia)",
-   "target": "0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
-   "label": "0xbeef\u202664cb",
-   "field": "oracleAuthorityScore",
-   "before": 100,
-   "after": 52
-  },
-  {
-   "oracle": "Ethereum L1 (Sepolia)",
-   "target": "0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
-   "label": "0xbeef\u202664cb",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 40
-  },
-  {
-   "oracle": "Ethereum L1 (Sepolia)",
-   "target": "0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
-   "label": "0xbeef\u202664cb",
-   "field": "compositeScore",
-   "before": 67,
-   "after": 73
-  },
-  {
-   "oracle": "Ethereum L1 (Sepolia)",
-   "target": "0xbeef088055857739c12cd3765f20b7679def0f51",
-   "label": "0xbeef\u20260f51",
-   "field": "new",
-   "before": null,
-   "after": 73
-  },
-  {
-   "oracle": "Ethereum L1 (Sepolia)",
-   "target": "0xbeef0c075da5d01112ae5cf34d257074fb5ddb2f",
-   "label": "0xbeef\u2026db2f",
-   "field": "new",
-   "before": null,
-   "after": 73
-  },
-  {
-   "oracle": "Arbitrum (Sepolia)",
-   "target": "0x3c3d99fd298f679dbc2cecd132b4ec4d0f5e6e72",
-   "label": "0x3c3d\u20266e72",
-   "field": "oracleAuthorityScore",
-   "before": 100,
-   "after": 52
-  },
-  {
-   "oracle": "Arbitrum (Sepolia)",
-   "target": "0xe23b4ae3624fb6f7cdef29bc8ead912f1ede6886",
-   "label": "0xe23b\u20266886",
-   "field": "oracleAuthorityScore",
-   "before": 100,
-   "after": 52
-  },
-  {
-   "oracle": "Arbitrum (Sepolia)",
-   "target": "0xa97684ead0e402dc232d5a977953df7ecbab3cdb",
-   "label": "0xa976\u20263cdb",
-   "field": "oracleAuthorityScore",
-   "before": 100,
-   "after": 52
-  },
-  {
-   "oracle": "Arbitrum (Sepolia)",
-   "target": "0x9c4ec768c28520b50860ea7a15bd7213a9ff58bf",
-   "label": "0x9c4e\u202658bf",
-   "field": "oracleAuthorityScore",
-   "before": 100,
-   "after": 52
-  },
-  {
-   "oracle": "Arbitrum (Sepolia)",
-   "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
-   "label": "0x52aa\u2026e497",
-   "field": "oracleAuthorityScore",
-   "before": 100,
-   "after": 20
-  },
-  {
-   "oracle": "Arbitrum (Sepolia)",
-   "target": "0x489ee077994b6658eafa855c308275ead8097c4a",
-   "label": "0x489e\u20267c4a",
-   "field": "oracleAuthorityScore",
-   "before": 100,
-   "after": 2
-  },
-  {
-   "oracle": "Arbitrum (Sepolia)",
-   "target": "0x6bd780e7fdf01d77e4d475c821f1e7ae05409072",
-   "label": "0x6bd7\u20269072",
-   "field": "oracleAuthorityScore",
-   "before": 100,
-   "after": 20
-  },
-  {
-   "oracle": "Hyperliquid (HyperEVM)",
-   "target": "0xffaa4a3d97fe9107cef8a3f48c069f577ff76cc1",
-   "label": "0xffaa\u20266cc1",
-   "field": "new",
-   "before": null,
-   "after": 47
-  }
- ],
+ "movers": [],
  "alerts": [],
  "unread": [],
  "note": "The Zcash commitments are verified by the dashboard itself. An oracle in `unread` has unknown targets, not zero."

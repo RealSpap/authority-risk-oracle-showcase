@@ -5,7 +5,7 @@ base: 8 Safes, ok, control 16 executions, 0 change event(s)
 tempo: 4 Safes, UNREAD (control returned 0 ExecutionSuccess events: the RPC may be truncating, not the Safes being idle), control 0 executions, 0 change event(s)
 plasma: 11 Safes, ok, control 8 executions, 0 change event(s)
 monad: 13 Safes, UNREAD (HTTPError: 413 Client Error: Request Entity Too Large for url: https://rpc.monad.xyz/)
-hyperliquid: 5 Safes, UNREAD (Web3RPCError: {'code': -32005, 'message': 'rate limited'})
+hyperliquid: 5 Safes, UNREAD (Web3RPCError: {'code': -32000, 'message': 'execution aborted (timeout = 5s)'})
 
 === robinhood ===
   2026-10-05 23:27Z  AddedOwner         0xB3bfB32977cFd6200AB9537E3703e501d8381c9B  safe 0x20D630cF1f5628285BfB91DfaC8C89eB9087BE1A (ramses)  tx 6d4610f18f429737dbc1c8714b52a7adccc2494f344ca067afe4c9095f5714de

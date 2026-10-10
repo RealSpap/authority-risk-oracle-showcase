@@ -19,8 +19,8 @@
    ],
    "control": 113,
    "status": "ok",
-   "fromBlock": 79087996,
-   "toBlock": 85001903
+   "fromBlock": 79299915,
+   "toBlock": 85211290
   },
   {
    "ecosystem": "ethereum-l1",
@@ -28,8 +28,8 @@
    "events": [],
    "control": 15,
    "status": "ok",
-   "fromBlock": 26111852,
-   "toBlock": 26162072
+   "fromBlock": 26113631,
+   "toBlock": 26163852
   },
   {
    "ecosystem": "arbitrum",
@@ -37,8 +37,8 @@
    "events": [],
    "control": 7,
    "status": "ok",
-   "fromBlock": 511302257,
-   "toBlock": 513514194
+   "fromBlock": 511381363,
+   "toBlock": 513592173
   },
   {
    "ecosystem": "base",
@@ -46,8 +46,8 @@
    "events": [],
    "control": 16,
    "status": "ok",
-   "fromBlock": 52120813,
-   "toBlock": 52423213
+   "fromBlock": 52131536,
+   "toBlock": 52433935
   },
   {
    "ecosystem": "tempo",
@@ -55,8 +55,8 @@
    "events": [],
    "control": 0,
    "status": "UNREAD (control returned 0 ExecutionSuccess events: the RPC may be truncating, not the Safes being idle)",
-   "fromBlock": 42413554,
-   "toBlock": 43487806
+   "fromBlock": 42452091,
+   "toBlock": 43525036
   },
   {
    "ecosystem": "plasma",
@@ -64,8 +64,8 @@
    "events": [],
    "control": 8,
    "status": "ok",
-   "fromBlock": 34089812,
-   "toBlock": 34694497
+   "fromBlock": 34111255,
+   "toBlock": 34715939
   },
   {
    "ecosystem": "monad",
@@ -73,17 +73,17 @@
    "events": [],
    "control": null,
    "status": "UNREAD (HTTPError: 413 Client Error: Request Entity Too Large for url: https://rpc.monad.xyz/)",
-   "fromBlock": 110182411,
-   "toBlock": 112184565
+   "fromBlock": 110253413,
+   "toBlock": 112255587
   },
   {
    "ecosystem": "hyperliquid",
    "safes": 5,
    "events": [],
    "control": null,
-   "status": "UNREAD (Web3RPCError: {'code': -32000, 'message': 'execution aborted (timeout = 5s)'})",
-   "fromBlock": 47554157,
-   "toBlock": 48168968
+   "status": "UNREAD (Web3RPCError: {'code': -32005, 'message': 'rate limited'})",
+   "fromBlock": 47575950,
+   "toBlock": 48190761
   }
  ]
 }

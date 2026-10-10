@@ -1,13 +1,13 @@
 {
- "run_utc": "2026-10-10T12:33:07Z",
- "previous_run_utc": "2026-10-10T06:33:57Z",
+ "run_utc": "2026-10-10T18:30:59Z",
+ "previous_run_utc": "2026-10-10T12:33:07Z",
  "oracles": [
   {
    "name": "Robinhood Chain",
    "slug": "robinhood-chain",
    "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
    "read_ok": true,
-   "block": 132272978,
+   "block": 132452132,
    "targets": 63,
    "stale": 63,
    "lastUpdated": 1790408560,
@@ -18,7 +18,7 @@
    "slug": "ethereum-l1-sepolia",
    "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
    "read_ok": true,
-   "block": 11884557,
+   "block": 11886339,
    "targets": 25,
    "stale": 25,
    "lastUpdated": 1790407330,
@@ -29,7 +29,7 @@
    "slug": "arbitrum-sepolia",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 317736134,
+   "block": 317820272,
    "targets": 13,
    "stale": 13,
    "lastUpdated": 1790407252,
@@ -40,10 +40,10 @@
    "slug": "base-sepolia",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 47933651,
+   "block": 47944387,
    "targets": 13,
-   "stale": 13,
-   "lastUpdated": 1790407192,
+   "stale": 0,
+   "lastUpdated": 1791653885,
    "maxStaleness": 777600
   },
   {
@@ -51,7 +51,7 @@
    "slug": "tempo-moderato",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 38989321,
+   "block": 39024367,
    "targets": 14,
    "stale": 14,
    "lastUpdated": 1789933789,
@@ -62,10 +62,10 @@
    "slug": "plasma",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 35806367,
+   "block": 35827836,
    "targets": 9,
-   "stale": 9,
-   "lastUpdated": 1789933100,
+   "stale": 0,
+   "lastUpdated": 1791655425,
    "maxStaleness": 777600
   },
   {
@@ -73,10 +73,10 @@
    "slug": "monad",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 69826338,
+   "block": 69897397,
    "targets": 9,
-   "stale": 9,
-   "lastUpdated": 1790270419,
+   "stale": 0,
+   "lastUpdated": 1791656126,
    "maxStaleness": 777600
   },
   {
@@ -84,7 +84,7 @@
    "slug": "hyperliquid-hyperevm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 66530954,
+   "block": 66552772,
    "targets": 15,
    "stale": 15,
    "lastUpdated": 1790279036,
@@ -92,8 +92,209 @@
   }
  ],
  "total_targets": 161,
- "stale_total": 161,
- "movers": [],
+ "stale_total": 130,
+ "movers": [
+  {
+   "oracle": "Base (Sepolia)",
+   "target": "0xe20fcbdbffc4dd138ce8b2e6fbb6cb49777ad64d",
+   "label": "0xe20f\u2026d64d",
+   "field": "oracleAuthorityScore",
+   "before": 100,
+   "after": 52
+  },
+  {
+   "oracle": "Base (Sepolia)",
+   "target": "0xb125e6687d4313864e53df431d5425969c15eb2f",
+   "label": "0xb125\u2026eb2f",
+   "field": "oracleAuthorityScore",
+   "before": 100,
+   "after": 52
+  },
+  {
+   "oracle": "Base (Sepolia)",
+   "target": "0xfbb21d0380bee3312b33c4353c8936a0f13ef26c",
+   "label": "0xfbb2\u2026f26c",
+   "field": "oracleAuthorityScore",
+   "before": 100,
+   "after": 52
+  },
+  {
+   "oracle": "Base (Sepolia)",
+   "target": "0xee8f4ec5672f09119b96ab6fb59c27e1b7e44b61",
+   "label": "0xee8f\u20264b61",
+   "field": "timelockScore",
+   "before": 55,
+   "after": 75
+  },
+  {
+   "oracle": "Base (Sepolia)",
+   "target": "0xee8f4ec5672f09119b96ab6fb59c27e1b7e44b61",
+   "label": "0xee8f\u20264b61",
+   "field": "oracleAuthorityScore",
+   "before": 100,
+   "after": 52
+  },
+  {
+   "oracle": "Base (Sepolia)",
+   "target": "0xee8f4ec5672f09119b96ab6fb59c27e1b7e44b61",
+   "label": "0xee8f\u20264b61",
+   "field": "compositeScore",
+   "before": 60,
+   "after": 66
+  },
+  {
+   "oracle": "Base (Sepolia)",
+   "target": "0x7bfa7c4f149e7415b73bdedfe609237e29cbf34a",
+   "label": "0x7bfa\u2026f34a",
+   "field": "oracleAuthorityScore",
+   "before": 100,
+   "after": 52
+  },
+  {
+   "oracle": "Base (Sepolia)",
+   "target": "0xbeef010f9cb27031ad51e3333f9af9c6b1228183",
+   "label": "0xbeef\u20268183",
+   "field": "multisigScore",
+   "before": 50,
+   "after": 75
+  },
+  {
+   "oracle": "Base (Sepolia)",
+   "target": "0xbeef010f9cb27031ad51e3333f9af9c6b1228183",
+   "label": "0xbeef\u20268183",
+   "field": "oracleAuthorityScore",
+   "before": 100,
+   "after": 52
+  },
+  {
+   "oracle": "Base (Sepolia)",
+   "target": "0xbeef010f9cb27031ad51e3333f9af9c6b1228183",
+   "label": "0xbeef\u20268183",
+   "field": "compositeScore",
+   "before": 66,
+   "after": 73
+  },
+  {
+   "oracle": "Base (Sepolia)",
+   "target": "0xbeef2d50b428675a1921bc6bbf4bfb9d8cf1461a",
+   "label": "0xbeef\u2026461a",
+   "field": "multisigScore",
+   "before": 50,
+   "after": 75
+  },
+  {
+   "oracle": "Base (Sepolia)",
+   "target": "0xbeef2d50b428675a1921bc6bbf4bfb9d8cf1461a",
+   "label": "0xbeef\u2026461a",
+   "field": "oracleAuthorityScore",
+   "before": 100,
+   "after": 52
+  },
+  {
+   "oracle": "Base (Sepolia)",
+   "target": "0xbeef2d50b428675a1921bc6bbf4bfb9d8cf1461a",
+   "label": "0xbeef\u2026461a",
+   "field": "compositeScore",
+   "before": 66,
+   "after": 73
+  },
+  {
+   "oracle": "Plasma",
+   "target": "0x061d8e131f26512348ee5fa42e2df1ba9d6505e9",
+   "label": "0x061d\u202605e9",
+   "field": "oracleAuthorityScore",
+   "before": 100,
+   "after": 52
+  },
+  {
+   "oracle": "Plasma",
+   "target": "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34",
+   "label": "0x5d3a\u2026ef34",
+   "field": "timelockScore",
+   "before": 0,
+   "after": 15
+  },
+  {
+   "oracle": "Plasma",
+   "target": "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34",
+   "label": "0x5d3a\u2026ef34",
+   "field": "compositeScore",
+   "before": 52,
+   "after": 57
+  },
+  {
+   "oracle": "Plasma",
+   "target": "0x42388213c6f56d7e1477632b58ae6bba9adeeea3",
+   "label": "0x4238\u2026eea3",
+   "field": "oracleAuthorityScore",
+   "before": 100,
+   "after": 2
+  },
+  {
+   "oracle": "Plasma",
+   "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
+   "label": "0x52aa\u2026e497",
+   "field": "oracleAuthorityScore",
+   "before": 100,
+   "after": 52
+  },
+  {
+   "oracle": "Plasma",
+   "target": "0xa9c251f8304b1b3fc2b9e8fcae78d94eff82ac66",
+   "label": "0xa9c2\u2026ac66",
+   "field": "oracleAuthorityScore",
+   "before": 100,
+   "after": 34
+  },
+  {
+   "oracle": "Monad",
+   "target": "0x32841a8511d5c2c5b253f45668780b99139e476d",
+   "label": "0x3284\u2026476d",
+   "field": "multisigScore",
+   "before": 55,
+   "after": 75
+  },
+  {
+   "oracle": "Monad",
+   "target": "0x32841a8511d5c2c5b253f45668780b99139e476d",
+   "label": "0x3284\u2026476d",
+   "field": "oracleAuthorityScore",
+   "before": 100,
+   "after": 20
+  },
+  {
+   "oracle": "Monad",
+   "target": "0x32841a8511d5c2c5b253f45668780b99139e476d",
+   "label": "0x3284\u2026476d",
+   "field": "crossExposureScore",
+   "before": 80,
+   "after": 100
+  },
+  {
+   "oracle": "Monad",
+   "target": "0x32841a8511d5c2c5b253f45668780b99139e476d",
+   "label": "0x3284\u2026476d",
+   "field": "compositeScore",
+   "before": 61,
+   "after": 67
+  },
+  {
+   "oracle": "Monad",
+   "target": "0x34793fb9935f7bb5e5ae920fb963f39063e7a615",
+   "label": "0x3479\u2026a615",
+   "field": "oracleAuthorityScore",
+   "before": 100,
+   "after": 52
+  },
+  {
+   "oracle": "Monad",
+   "target": "0xba4dd672062de8feedb665dd4410658864483f1e",
+   "label": "0xba4d\u20263f1e",
+   "field": "oracleAuthorityScore",
+   "before": 100,
+   "after": 2
+  }
+ ],
  "alerts": [],
  "unread": [],
  "note": "EVM oracles only; the Solana program and the Zcash commitments are read by scripts/oracle_freshness.py. An oracle in `unread` has unknown targets, not zero."

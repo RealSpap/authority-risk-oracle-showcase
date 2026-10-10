@@ -19,8 +19,8 @@
    ],
    "control": 113,
    "status": "ok",
-   "fromBlock": 78668533,
-   "toBlock": 84586949
+   "fromBlock": 78876780,
+   "toBlock": 84792549
   },
   {
    "ecosystem": "ethereum-l1",
@@ -28,8 +28,8 @@
    "events": [],
    "control": 15,
    "status": "ok",
-   "fromBlock": 26108296,
-   "toBlock": 26158514
+   "fromBlock": 26110056,
+   "toBlock": 26160275
   },
   {
    "ecosystem": "arbitrum",
@@ -37,8 +37,8 @@
    "events": [],
    "control": 7,
    "status": "ok",
-   "fromBlock": 511149231,
-   "toBlock": 513362340
+   "fromBlock": 511224774,
+   "toBlock": 513435730
   },
   {
    "ecosystem": "base",
@@ -46,15 +46,17 @@
    "events": [],
    "control": 16,
    "status": "ok",
-   "fromBlock": 52099416,
-   "toBlock": 52401815
+   "fromBlock": 52110014,
+   "toBlock": 52412413
   },
   {
    "ecosystem": "tempo",
    "safes": 4,
    "events": [],
-   "control": null,
-   "status": "UNREAD (cannot locate the window start: ExtraDataLengthError: The field extraData is 2611 bytes, but should be 32. It is quite likely that you are connected to a )"
+   "control": 0,
+   "status": "UNREAD (control returned 0 ExecutionSuccess events: the RPC may be truncating, not the Safes being idle)",
+   "fromBlock": 42374707,
+   "toBlock": 43450292
   },
   {
    "ecosystem": "plasma",
@@ -62,8 +64,8 @@
    "events": [],
    "control": 8,
    "status": "ok",
-   "fromBlock": 34047039,
-   "toBlock": 34651709
+   "fromBlock": 34068207,
+   "toBlock": 34672892
   },
   {
    "ecosystem": "monad",
@@ -71,8 +73,8 @@
    "events": [],
    "control": null,
    "status": "UNREAD (HTTPError: 413 Client Error: Request Entity Too Large for url: https://rpc.monad.xyz/)",
-   "fromBlock": 110040649,
-   "toBlock": 112042815
+   "fromBlock": 110110809,
+   "toBlock": 112112966
   },
   {
    "ecosystem": "hyperliquid",
@@ -80,8 +82,8 @@
    "events": [],
    "control": null,
    "status": "UNREAD (Web3RPCError: {'code': -32005, 'message': 'rate limited'})",
-   "fromBlock": 47510738,
-   "toBlock": 48125533
+   "fromBlock": 47532264,
+   "toBlock": 48147059
   }
  ]
 }

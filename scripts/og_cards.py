@@ -76,20 +76,26 @@ def card(name, chain, score, sub, checked):
         d.text((tx, y - 12), t, font=f, fill=DIM)
     return im
 
+def dashboard_titles(path):
+    """{(chain key, registry index): written title} read from the dashboard's CHAINS.<key>.groups, or {} when the file is not there (the job runs without it)."""
+    titles = {}
+    if not os.path.exists(path): return titles
+    dh = open(path).read()
+    for gm in re.finditer(r"CHAINS(?:\.(\w+)|\['([\w-]+)'\])\.groups = \[", dh):
+        gk = gm.group(1) or gm.group(2); end = dh.find("\n  ];", gm.end()); body = dh[gm.end():end if end > 0 else gm.end() + 200000]
+        for om in re.finditer(r"idx: \[([0-9, ]+)\],\s*title: '((?:[^'\\]|\\.)*)'|title: '((?:[^'\\]|\\.)*)',[^{}]*?idx: \[([0-9, ]+)\]", body):
+            ix, ti = (om.group(1), om.group(2)) if om.group(1) else (om.group(4), om.group(3))
+            for i in ix.split(","): titles[(gk, int(i))] = ti.replace("\\'", "'").split(" - ")[0]
+    return titles
+
+
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--scores", default="watch/scores"); ap.add_argument("--names", default="watch/names.json"); ap.add_argument("--tvl", default="watch/tvl.json"); ap.add_argument("--out", default="watch/og"); ap.add_argument("--dashboard", default="dashboard/index.html"); ap.add_argument("--latest", default="watch/latest.json")
     a = ap.parse_args()
     names = json.load(open(a.names)) if a.names and os.path.exists(a.names) else {}   # on-chain name()/symbol() of the targets the dashboard has no title for, read at the site build (null = none)
     names = {k: v for k, v in names.items() if v}
     # the dashboard's own written titles, per (chain key, target index), when dashboard/index.html is next to the job
-    titles = {}
-    if os.path.exists(a.dashboard):
-        dh = open(a.dashboard).read()
-        for gm in re.finditer(r"CHAINS(?:\.(\w+)|\['([\w-]+)'\])\.groups = \[", dh):
-            gk = gm.group(1) or gm.group(2); end = dh.find("\n  ];", gm.end()); body = dh[gm.end():end if end > 0 else gm.end() + 200000]
-            for om in re.finditer(r"idx: \[([0-9, ]+)\],\s*title: '((?:[^'\\]|\\.)*)'|title: '((?:[^'\\]|\\.)*)',[^{}]*?idx: \[([0-9, ]+)\]", body):
-                ix, ti = (om.group(1), om.group(2)) if om.group(1) else (om.group(4), om.group(3))
-                for i in ix.split(","): titles[(gk, int(i))] = ti.replace("\\'", "'").split(" - ")[0]
+    titles = dashboard_titles(a.dashboard)
     if os.path.exists(a.tvl):
         for k, m in json.load(open(a.tvl)).get("matched", {}).items():
             if m.get("scope") != "chain-total": names.setdefault(k, m["name"])   # after the on-chain name, before the short address; never a whole-chain figure as a name

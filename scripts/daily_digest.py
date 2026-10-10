@@ -192,10 +192,13 @@ def main():
 
     act, recent, u = pending(args.days)
     unread += u
-    names = code_review.resolve_names({p["selector"] for _, p in act + recent if p["selector"] != "0x"}) if act + recent else {}
+    # an operation can have no selector at all (None: the parsed line carried none), not only the empty-calldata "0x": sorting a None among strings raised a
+    # TypeError that stopped the whole report (first manual run of the new Watch, 2026-10-10, exit code 1)
+    names = code_review.resolve_names({p["selector"] for _, p in act + recent if p.get("selector") not in (None, "0x")}) if act + recent else {}
 
     def fn(p):
-        return (names.get(p["selector"]) or [p["selector"]])[0]
+        sel = p.get("selector")
+        return "(no selector)" if sel is None else (names.get(sel) or [sel])[0]
 
     out += ["", "## Timelock queue"]
     findings += len(act)

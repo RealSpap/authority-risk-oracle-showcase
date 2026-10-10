@@ -29,9 +29,13 @@ def compiles(src, path="<mutant>"):
 
 
 def run_suite(root, test_dir="scripts/tests", top="scripts", timeout=300):
-    """(return code, output); return code None on a timeout."""
+    """(return code, output); return code None on a timeout. Stale bytecode is removed first and none is written: Python trusts a .pyc whose
+    source has the same size and the same mtime in whole seconds, and a one-character mutation ("a + b" -> "a - b") made within the same
+    second as the previous run is exactly that, so the suite would run the OLD code and report SURVIVED (seen on GitHub Actions, 2026-10-10)."""
+    for d, dirs, _files in os.walk(root):
+        if "__pycache__" in dirs: shutil.rmtree(os.path.join(d, "__pycache__"), ignore_errors=True); dirs.remove("__pycache__")
     try:
-        r = subprocess.run([sys.executable, "-W", "ignore", "-m", "unittest", "discover", "-s", os.path.join(root, test_dir), "-t", os.path.join(root, top)], capture_output=True, text=True, timeout=timeout, cwd=root, env=dict(os.environ, ARO_MUTATING="1"))   # the suite knows it runs on a mutant: the test that reads the mutation list from the files stands aside (see TestMutationSpec)
+        r = subprocess.run([sys.executable, "-B", "-W", "ignore", "-m", "unittest", "discover", "-s", os.path.join(root, test_dir), "-t", os.path.join(root, top)], capture_output=True, text=True, timeout=timeout, cwd=root, env=dict(os.environ, ARO_MUTATING="1"))   # the suite knows it runs on a mutant: the test that reads the mutation list from the files stands aside (see TestMutationSpec)
         return r.returncode, r.stdout + r.stderr
     except subprocess.TimeoutExpired: return None, "timeout"
 

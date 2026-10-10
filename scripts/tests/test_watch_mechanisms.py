@@ -1723,6 +1723,23 @@ class TestMutate(unittest.TestCase):
             self.assertEqual(mutate.check(r, self.mut("a", "b", file="scripts/missing.py"))[0], "ANCHOR_MISSING")
             self.assertEqual(mutate.check(r, self.mut("a + b", "a - b"), suite=lambda root: (None, "timeout"))[0], "TIMEOUT"); self.assertEqual(open(p).read(), self.CALC)
 
+    def test_a_stale_bytecode_of_the_same_size_and_second_does_not_hide_a_mutant(self):
+        """Python reuses a .pyc whose source has the same size and whole-second mtime: the mutant must still be run, not the old code."""
+        import py_compile
+        with tempfile.TemporaryDirectory() as tmp:
+            r = self.toy(tmp); p = os.path.join(r, "scripts", "calc.py"); st = os.stat(p)
+            py_compile.compile(p, doraise=True)   # the baseline run left this behind
+            real_apply = mutate.apply
+            def same_instant(src, old, new):
+                out = real_apply(src, old, new)
+                if out is not None: self.addCleanup(lambda: None)
+                return out
+            m = self.mut("a + b", "a - b"); orig = mutate.run_suite
+            def suite(root):
+                os.utime(p, (st.st_atime, st.st_mtime))   # as if the mutant were written within the second of the baseline
+                return orig(root)
+            self.assertEqual(mutate.check(r, m, suite=suite)[0], "CAUGHT")
+
     def test_only_python_files_are_judged_by_the_compiler(self):
         with tempfile.TemporaryDirectory() as tmp:
             r = self.toy(tmp); open(os.path.join(r, "scripts", "data.yml"), "w").write("key: x\n")
@@ -3542,7 +3559,7 @@ class TestShellModule(unittest.TestCase):
         self.assertIn("(prefers-reduced-motion: reduce) { #app *", css); self.assertIn("animation: none !important", css)
         self.assertIn("data-copy", src); self.assertIn("navigator.clipboard.writeText", src)   # the Copy buttons only write to the clipboard
 
-    def test_the_map_parses_draws_no_signer_makes_no_request_and_is_wired(self):
+    def test_the_forecast_parses_makes_no_request_names_no_signer_and_is_wired(self):
         p = os.path.join(self.ROOT, "module-map.js")
         if not os.path.exists(p): self.skipTest("module-map.js is not beside the surveillance folder in this checkout")
         src = open(p, encoding="utf-8").read()
@@ -3550,10 +3567,77 @@ class TestShellModule(unittest.TestCase):
         r = subprocess.run(["node", "-e", "new Function(require('fs').readFileSync(0,'utf8'))"], input=src, capture_output=True, text=True); self.assertEqual(r.returncode, 0, r.stderr[:300])
         for forbidden in ("fetch(", "XMLHttpRequest", "sendBeacon", "eval(", "new Function", "WebSocket", "innerHTML = location"): self.assertNotIn(forbidden, src, forbidden)
         code = re.sub(r"//[^\n]*", "", src)   # the comments say what is NOT drawn; the code must not touch it
-        for person in ("who_controls", "signer", "owners", "keys_summary", "r.admin"): self.assertNotIn(person, code, person)   # the map draws contracts, scores, money and chains; who shares a key is never on it
-        self.assertIn("prefers-reduced-motion: reduce", src); self.assertIn("document.visibilityState", src); self.assertIn("new IntersectionObserver", src); self.assertIn("if (!seen) return;", src); self.assertIn("esc(String(r.title)", src)   # no animation when asked, none while the tab is hidden, a hostile protocol name is escaped
+        for person in ("who_controls", "signer", "owners", "keys_summary", "r.admin"): self.assertNotIn(person, code, person)
+        for needed in ("'playForm', 'playChips', 'playList'", "<h1 class=\"sm-title\">Can one person <em>move your money?</em></h1>", "</b> contracts stormy.", "!document.getElementById('playForm')", "esc(g.name)", "esc(g.key)"): self.assertIn(needed, src, needed)   # the search moves into the block, the sentence counts from the data, a hostile chain name is escaped
+        self.assertNotRegex(src, r"<b>\d+</b>"); self.assertEqual(src.count("<h1"), 1)
+        shell = open(os.path.join(self.ROOT, "module-shell.js"), encoding="utf-8").read(); self.assertIn("'#app > .top', 'none'", shell)   # the page's own h1 sits in a block that is hidden: the visible hero title is the h1 a screen reader finds
         a = open(os.path.join(self.ROOT, "appliquer_oracle_site.py"), encoding="utf-8").read(); pub = open(os.path.join(self.ROOT, "publier-oracle-site.sh"), encoding="utf-8").read()
         self.assertLess(a.index('"module-shell.js")).read()'), a.index('"module-map.js")).read()')); self.assertIn("module-map.js", [l for l in pub.split("\n") if l.startswith("for f in appliquer_oracle_site.py")][0])
+
+    def test_the_radar_is_back_and_the_forecast_card_moves_every_five_seconds_without_pestering(self):
+        p = os.path.join(self.ROOT, "module-map.js")
+        if not os.path.exists(p): self.skipTest("module-map.js is not beside the surveillance folder in this checkout")
+        src = open(p, encoding="utf-8").read()
+        for needed in ("<canvas", "createConicGradient", "c.crit + ' stormy'", "new IntersectionObserver", "if (!seen) return;", "document.visibilityState", "n.kin", "new ResizeObserver"): self.assertIn(needed, src, needed)   # the radar: sweep, only the shown chain named, threads on hover only, paused out of view, sized to its block
+        self.assertNotIn("links.forEach", src)
+        for needed in ("function cpos(", "function focusPhase(", "n.ox = n.x - mx", "cc[0] + n.ox", "1 - Math.exp(-dt / 320)", "reduce || !phaseSet"): self.assertIn(needed, src, needed)   # every ecosystem comes to the clear side in turn: the ring turns to the chain the card shows, eased, and not at all when motion is declined
+        self.assertIn("W < 640 ? 1.5708 : 0", src)   # the clear side is the right on a wide screen, the bottom on a phone
+        i = src.index("function startRotor"); j = src.index("function stopRotor"); rotor = src[i:j]
+        self.assertIn("}, 5000)", rotor); self.assertNotIn("if (reduce) return;", rotor);   # it turns by default for everyone, reduced motion included (a plain swap then); the Pause button is the way out
+        self.assertIn("if (paused || hold || !seen || document.visibilityState !== 'visible') return;", rotor)   # five seconds, not while the pointer or the keyboard is on the card itself, not out of view, not in a hidden tab
+        for needed in ("paused = true", "paused = false", "focusin", "mouseenter", "fc-pips", "startRotor(); });"): self.assertIn(needed, src, needed)   # hover and keyboard focus stop it, the dots let the visitor pick a chain and restart the clock
+        self.assertIn("act = gs[cur] ? gs[cur].name : null", src)   # the radar lights the chain the card is showing
+
+    def test_the_radar_is_the_background_of_the_block_and_its_contracts_are_quiet_echoes(self):
+        mp = os.path.join(self.ROOT, "module-map.js"); sp = os.path.join(self.ROOT, "module-shell.js"); cp = os.path.join(self.ROOT, "module-all.css")
+        if not all(os.path.exists(x) for x in (mp, sp, cp)): self.skipTest("the site modules are not beside the surveillance folder in this checkout")
+        m = open(mp, encoding="utf-8").read(); sh = open(sp, encoding="utf-8").read(); css = open(cp, encoding="utf-8").read()
+        # "the radar as the background, not a section": one canvas that fills the block, a veil for the text, no stage, legend or caption of its own
+        self.assertIn('<canvas class="sm-bg" role="img"></canvas>', m); self.assertIn(".sh-map > canvas.sm-bg { position: absolute; inset: 0;", css); self.assertIn(".sh-map::before { content: \"\"; position: absolute; inset: 0; z-index: 1; pointer-events: none;", css)
+        for gone in ("sm-stage", "sm-leg", "sm-over", "sm-cv"): self.assertNotIn(gone, m, gone)
+        self.assertIn("sec.clientHeight", m)   # sized to the block, which the text and the card decide
+        # "the radar is cut in two": no cross over it and no hard edge on the sweep
+        self.assertNotIn("ctx.moveTo(cx, 0)", m); self.assertNotIn("ctx.moveTo(0, cy)", m); self.assertNotIn("lineTo(cx + Math.cos(sweep)", m)
+        # "the dots, the weather and the padlock": none of them. A contract is an echo, dim until the sweep passes over it
+        for gone in ("function glyph(", "Path2D", "P_SH_OPEN"): self.assertNotIn(gone, m, gone)
+        for needed in ("var lit = ", "Math.pow(1 - d / 1.5, 1.6)", "reduce ? 0.55 : 0.28"): self.assertIn(needed, m, needed)   # at rest an echo is dim (0.28), brighter only when motion is declined
+        # "text that appears anywhere": the tip is positioned in the block, whose box is the canvas's
+        self.assertIn('<button type="button" class="sm-tip" hidden></button>', m); self.assertIn(".sh-map { position: relative;", css); self.assertIn(".sh-map > .sm-tip { z-index: 3; }", css)
+        # only the chain the card shows is named, so the background stays a background
+        self.assertIn("if (c.name !== act) return;", m)
+        # "it takes me back to the top": the forecast card holds a chain on a tap and says in words where its link goes
+        for needed in ('class="fc-pause" aria-pressed="false">Pause</button>', "setHold(!hold)", "setAttribute('aria-pressed', String(hold))", "hold ? 'Play' : 'Pause'"): self.assertIn(needed, m, needed)   # WCAG 2.2.2: a card that changes by itself every five seconds has a pause button a keyboard can reach
+        self.assertIn(".sm-fc .fc-h > .fc-pause { order: 2; margin-left: auto; }", css)   # the title and the Pause button share the first line (seen in a screenshot: the button used to wrap under the sentence)
+        self.assertNotIn("hold = !hold", m); self.assertIn('class="fc-open"', m); self.assertNotIn('<a class="fc-now', m)
+        # the result of a search is a sheet in the middle of the screen: no transform on its section, centred by insets, closed by a button, Escape or a change of view
+        self.assertIn("#app[data-view] > #play { animation: none; transform: none; }", css); self.assertIn("inset: 0; margin: auto; height: fit-content;", css)
+        card = css[css.index("#playCard:not([hidden]) {"):]; card = card[:card.index("}")]; self.assertNotIn("translate(", card)
+        for needed in ("setAttribute('role', 'dialog')", "setAttribute('aria-modal', 'true')", "x.focus()", "backTo.focus()", "e.key !== 'Tab'", "last.focus()", "first.focus()"): self.assertIn(needed, sh, needed)   # the sheet is a dialog for a keyboard and a screen reader
+        for needed in ("pc-open", "pc-x", "e.key === 'Escape'", "new MutationObserver(sheet)", "if (v !== 'check') { var pc = $('#playCard');"): self.assertIn(needed, sh, needed)
+
+    def test_the_status_line_is_short_and_says_the_same_thing(self):
+        p = os.path.join(self.ROOT, "module-shell.js")
+        if not os.path.exists(p): self.skipTest("module-shell.js is not beside the surveillance folder in this checkout")
+        src = open(p, encoding="utf-8").read(); body = src[src.index("function status()"):src.index("function exposed()")]
+        for needed in ("'Checked ' + esc(ago)", "class=\"sh-chip", "</b> stale</span>", "all fresh", "data-view=\"evidence\">Why?</button>", "scores are older than the limit the oracle sets"): self.assertIn(needed, body, needed)   # a dot, when, one chip, one word; the long sentence is a tooltip
+        self.assertNotIn("scores are stale on the oracles (not pushed within their limit)", body)   # the long sentence was cut off with an ellipsis on a phone and read like a failure at the top of the page
+
+    def test_the_five_modules_together_are_one_valid_script(self):
+        names = ["module-evidence.js", "module-all.js", "module-play.js", "module-shell.js", "module-map.js"]
+        if not all(os.path.exists(os.path.join(self.ROOT, n)) for n in names): self.skipTest("the site modules are not beside the surveillance folder in this checkout")
+        if subprocess.run(["node", "--version"], capture_output=True).returncode != 0: self.skipTest("node is not installed")
+        body = "\n".join(open(os.path.join(self.ROOT, n), encoding="utf-8").read() for n in names)
+        r = subprocess.run(["node", "-e", "new Function(require('fs').readFileSync(0,'utf8'))"], input=body, capture_output=True, text=True); self.assertEqual(r.returncode, 0, r.stderr[:400])   # one quote in one sentence of one module (10/10: "a chain's median") silently emptied the whole page, and only the browser said so
+
+    def test_the_weather_of_a_chain_follows_its_stormy_share_and_the_icons_stand_still_when_asked(self):
+        p = os.path.join(self.ROOT, "module-map.js"); css_p = os.path.join(self.ROOT, "module-all.css")
+        if not (os.path.exists(p) and os.path.exists(css_p)): self.skipTest("the forecast module or the stylesheet is not beside the surveillance folder in this checkout")
+        src = open(p, encoding="utf-8").read(); css = open(css_p, encoding="utf-8").read()
+        for word in ("Stormy", "Rainy", "Cloudy", "Mostly clear", "Clear"): self.assertIn("'%s'" % word, src)
+        self.assertIn("crit / n >= 0.25 ? 'critical' : (crit + weak) / n >= 0.4 ? 'weak'", src)   # stormy at a quarter of critical contracts, rainy at four in ten critical or weak: the rule printed in the file's header
+        self.assertIn("Stormy when a quarter of a chain's contracts are critical", src)
+        for cls in ("wxa-bolt", "wxa-drop", "wxa-cloud", "wxa-rays"): self.assertIn(cls, src); self.assertIn("." + cls, css)
+        self.assertRegex(css, r"@media \(prefers-reduced-motion: reduce\) \{ \.wxa-bolt, \.wxa-drop, \.wxa-cloud, \.wxa-rays, \.fc-t \{ animation: none !important; \}")
 
     def test_the_embedded_fonts_are_free_licensed_wired_and_make_no_request(self):
         p = os.path.join(self.ROOT, "module-fonts.css")
@@ -3569,7 +3653,7 @@ class TestShellModule(unittest.TestCase):
         src = self.source(); mp = os.path.join(self.ROOT, "module-map.js")
         if not os.path.exists(mp): self.skipTest("module-map.js is not beside the surveillance folder in this checkout")
         mapsrc = open(mp, encoding="utf-8").read(); css = open(os.path.join(self.ROOT, "module-all.css"), encoding="utf-8").read()
-        for needed in ("'playForm', 'playChips', 'playList'", "<h1 class=\"sm-title\">Can one person <em>move your money?</em></h1>", "contracts score critical"): self.assertIn(needed, mapsrc)   # the search is moved into the hero, and the sentence under it is counted from the data (no typed number)
+        for needed in ("'playForm', 'playChips', 'playList'", "<h1 class=\"sm-title\">Can one person <em>move your money?</em></h1>", "</b> contracts stormy."): self.assertIn(needed, mapsrc)   # the search is moved into the hero, and the sentence under it is counted from the data (no typed number)
         self.assertNotRegex(mapsrc, r"<b>\d+</b>"); self.assertEqual(mapsrc.count("<h1"), 1); self.assertIn("'#app > .top', 'none'", src)   # the page's own h1 sits in a block that is hidden (display none leaves the accessibility tree): the visible hero title is the h1 a screen reader finds; self.assertIn("!document.getElementById('playForm')", mapsrc)   # the hero waits for the search to exist, so a failure leaves the page as it was
         self.assertIn("at risk, of ", src); self.assertIn("r.tvl * (100 - r.composite) / 100", src)   # the podium shows the money AT RISK (held x (100 - score)), the same measure it is ranked by, not the money held
         self.assertIn("all('.site-bar a')", src); self.assertIn("mountFoot", src); self.assertIn(".site-bar { display: none; }", css)   # the old site bar is replaced by a footer that carries the same links, none is lost
@@ -3624,6 +3708,39 @@ class TestShellModule(unittest.TestCase):
         src = open(p, encoding="utf-8").read(); self.assertIn('"overlay/README.md"', src)   # the README that the public sees carried the same hard-coded counts, and was not read (found by hand on 10/10 when the oracle went from 179 to 190 targets)
         r = subprocess.run([sys.executable, p, "--selftest"], capture_output=True, text=True); self.assertEqual(r.returncode, 0, r.stdout + r.stderr); self.assertIn("selftest ok", r.stdout)
 
+    def test_the_authority_facts_spec_only_names_fields_that_exist_and_the_formula_the_site_uses(self):
+        sp = os.path.join(self.ROOT, "AUTHORITY-FACTS-SPEC.md"); api = os.path.join(self.ROOT, "surveillance", "watch", "API.md"); so = os.path.join(self.ROOT, "surveillance", "scripts", "second_opinion.py"); play = os.path.join(self.ROOT, "module-play.js")
+        if not all(os.path.exists(x) for x in (sp, api, so, play)): self.skipTest("the spec, the API notes or the site are not beside the surveillance folder in this checkout")
+        spec = open(sp, encoding="utf-8").read(); known = open(api, encoding="utf-8").read() + open(so, encoding="utf-8").read()
+        rows = [l for l in spec.split("\n") if l.startswith("| ") and "`" in l and not l.startswith("| Neighbour") and not l.startswith("| Line")]; fields = set()
+        for l in rows:
+            cells = l.split("|"); fields |= set(re.findall(r"`([a-z_]+)`", cells[2] if len(cells) > 2 else ""))
+        self.assertTrue({"composite", "keys_to_move", "react_hours", "money_per_key_usd", "requirements", "independent_read", "last_pushed", "stale", "block", "methodology_hash"} <= fields, fields)
+        for f in fields: self.assertIn(f, known, "the spec names a field the pipeline does not produce: " + f)   # a spec that drifts from the code is worse than none
+        self.assertIn("floor((4a + 3m + 3t + 5) / 10)", spec); self.assertIn("Math.floor((4 * s[0] + 3 * s[1] + 3 * s[2] + 5) / 10)", open(play, encoding="utf-8").read())   # the formula in the spec is the one the site computes
+        self.assertIn("never as zero", spec); self.assertIn("never published", spec)   # the two promises: an unknown is not a zero, a signer is not named
+
+    def test_the_json_twin_and_the_share_page_carry_the_label_lines_the_spec_promises(self):
+        p = os.path.join(self.ROOT, "appliquer_oracle_site.py"); sp = os.path.join(self.ROOT, "AUTHORITY-FACTS-SPEC.md")
+        if not (os.path.exists(p) and os.path.exists(sp)): self.skipTest("the build script or the spec is not beside the surveillance folder")
+        src = open(p, encoding="utf-8").read(); spec = open(sp, encoding="utf-8").read()
+        for f in ("keys_to_move", "react_hours", "money_per_key_usd"): self.assertIn('"%s": _facts(_key, _addr)' % f, src, f)   # found on 10/10: the spec said "the twin has these fields" while the reference twin had none of the three, and called the score `score` where the twin says `composite`
+        self.assertIn("_facts_line(key, addr)", src); self.assertIn("never shown as zero", src); self.assertIn("| Score | `composite` |", spec)
+        self.assertEqual(src.count('"composite": _score'), 1)   # one twin, one name for the score
+
+    def test_the_visible_cheque_carries_the_eight_spec_lines_the_weather_and_never_turns_unknown_into_zero(self):
+        p = os.path.join(self.ROOT, "module-play.js"); sp = os.path.join(self.ROOT, "AUTHORITY-FACTS-SPEC.md")
+        if not (os.path.exists(p) and os.path.exists(sp)): self.skipTest("the play module or the spec is not beside the surveillance folder")
+        src = open(p, encoding="utf-8").read(); spec = open(sp, encoding="utf-8").read(); i = src.index("function labelHtml"); j = src.index("function drawCard"); body = src[i:j]
+        for line in ("score", "keys", "hours", "money", "admin", "independent", "freshness"): self.assertTrue(("'%s'" % line) in body or ('data-line="%s"' % line) in body, line)   # seven of the spec's eight lines are fields of the cheque; the eighth, the method hash, is the cheque number
+        self.assertIn("r.method", body); self.assertIn("no method", body)
+        for w in ("Score", "Keys to move", "Hours to react", "Money behind one key", "Admin power", "Independent reading", "Freshness", "Source"): self.assertIn("| %s |" % w, spec)
+        for unknown in ("ex && ex.keys_to_move != null ? ex.keys_to_move : null", "ex && ex.money_per_key_usd ? esc(fmtUsd(ex.money_per_key_usd)) : NR", "ex && ex.react_hours != null ? (ex.react_hours === 0 ? 'cashable at once' : 'cashable in ' + ex.react_hours + ' h') : NR", "readable ? (dis ? 'disagrees' : (ack ? 'disagrees, reviewed' : 'agrees')) : NR", "keys == null ? NR"): self.assertIn(unknown, body, unknown)   # every line whose source can be missing falls back to "not read" on its own branch, and a reviewed disagreement is still a disagreement
+        self.assertNotRegex(body, r"keys_to_move\s*\|\|\s*0|react_hours\s*\|\|\s*0|money_per_key_usd\s*\|\|\s*0")
+        self.assertIn("Read from the chain, not declared by the protocol. Not an audit, not advice.", body); self.assertIn("pcLbl", src); self.assertIn("aria-expanded", src)
+        for band in ("Stormy", "Rainy", "Cloudy", "Mostly clear", "Clear"): self.assertIn("'%s'" % band, src)   # the weather of the five bands, in order of the spectrum
+        self.assertLess(src.index("'Stormy'"), src.index("'Rainy'")); self.assertLess(src.index("'Rainy'"), src.index("'Cloudy'")); self.assertIn("pcWx", src)
+
     def test_the_installed_app_opens_on_check_not_on_the_rankings(self):
         self.source(); p = os.path.join(self.ROOT, "appliquer_oracle_site.py")
         if not os.path.exists(p): self.skipTest("the build script is not beside the surveillance folder")
@@ -3636,6 +3753,47 @@ class TestShellModule(unittest.TestCase):
         self.assertIn('open(os.path.join(HERE, "module-shell.js")).read()', a); self.assertLess(a.index('"module-play.js")).read()'), a.index('"module-shell.js")).read()'))   # after the card it tags
         line = [l for l in pub.split("\n") if l.startswith("for f in appliquer_oracle_site.py")][0]; self.assertIn("module-shell.js", line)
         css = open(os.path.join(self.ROOT, "module-all.css"), encoding="utf-8").read(); self.assertIn("; backdrop-filter: none", css); self.assertIn("data-view", css)   # the phone's bottom bar is not trapped by a blurred ancestor
+
+
+class TestDailyDigestSelectors(unittest.TestCase):
+    """daily_digest.py: an operation of the timelock queue can have no selector at all. Sorting a None among strings raised a TypeError that stopped the whole report (first manual run of the new Watch, 10/10: red, exit code 1, while the scheduled run of 18:30 was green because the digest runs once a day)."""
+    def test_a_missing_selector_is_set_aside_before_names_are_resolved_and_shown_as_such(self):
+        p = os.path.join(os.path.dirname(__file__), "..", "daily_digest.py"); src = open(p, encoding="utf-8").read()
+        self.assertIn('if p.get("selector") not in (None, "0x")', src)   # the set handed to resolve_names holds strings only
+        self.assertIn('"(no selector)" if sel is None', src)   # and the line says so instead of inventing a name
+        rows = [{"selector": None}, {"selector": "0x"}, {"selector": "0xa9059cbb"}, {"selector": "0xa9059cbb"}]
+        chosen = {r["selector"] for r in rows if r.get("selector") not in (None, "0x")}; self.assertEqual(sorted(chosen), ["0xa9059cbb"])   # the same expression, run on the shapes that crashed
+        with self.assertRaises(TypeError): sorted({None, "0xa9059cbb"})   # and what it avoids
+
+
+class TestUntitled(unittest.TestCase):
+    """untitled.py: the contracts the page would show without a name. A name comes from the dashboard's written title, the on-chain name() or a DefiLlama match; none of the three = a short address."""
+    def run_cli(self, files, *extra):
+        with tempfile.TemporaryDirectory() as d:
+            os.makedirs(os.path.join(d, "scores"))
+            for rel, content in files.items():
+                p = os.path.join(d, rel); os.makedirs(os.path.dirname(p), exist_ok=True); open(p, "w").write(content if isinstance(content, str) else json.dumps(content))
+            sol = [{"target": "Sol%d" % i} for i in range(6)]   # 6 Solana targets: 0 titled, 1 named on-chain, 2 matched, 3 to 5 nothing (the shape of the 10/10 re-push: new indices after the last written title)
+            open(os.path.join(d, "scores", "solana-devnet.json"), "w").write(json.dumps({"targets": sol}))
+            args = [sys.executable, os.path.join(os.path.dirname(__file__), "..", "untitled.py"), "--scores", os.path.join(d, "scores"), "--names", os.path.join(d, "names.json"), "--tvl", os.path.join(d, "tvl.json"), "--dashboard", os.path.join(d, "index.html")] + list(extra)
+            return subprocess.run(args, capture_output=True, text=True)
+
+    FILES = {"index.html": "  CHAINS.solana.groups = [\n    { idx: [0], title: 'Jupiter - perps' },\n  ];\n", "names.json": {"solana:sol1": "Marinade"}, "tvl.json": {"matched": {"solana:sol2": {"name": "Kamino Lend", "scope": "protocol", "tvl": 1}}}}
+
+    def test_only_the_contracts_no_source_names_are_listed(self):
+        r = self.run_cli(self.FILES, "--json"); self.assertEqual(r.returncode, 0, r.stderr); got = json.loads(r.stdout)
+        self.assertEqual(got["targets"], 6); self.assertEqual([x["index"] for x in got["untitled"]], [3, 4, 5]); self.assertEqual({x["chain"] for x in got["untitled"]}, {"Solana"})
+
+    def test_a_chain_total_match_is_not_a_name_and_a_missing_dashboard_is_said(self):
+        files = dict(self.FILES); files["tvl.json"] = {"matched": {"solana:sol2": {"name": "Solana (chain)", "scope": "chain-total", "tvl": 1}}}
+        r = self.run_cli(files, "--json"); self.assertEqual([x["index"] for x in json.loads(r.stdout)["untitled"]], [2, 3, 4, 5])   # a whole-chain figure never names a contract
+        files.pop("index.html"); r = self.run_cli(files); self.assertEqual(r.returncode, 0); self.assertIn("was not found", r.stdout); self.assertIn("5 of 6", r.stdout)
+
+    def test_the_card_generator_still_reads_the_same_titles(self):
+        import og_cards
+        with tempfile.TemporaryDirectory() as d:
+            p = os.path.join(d, "index.html"); open(p, "w").write("  CHAINS.solana.groups = [\n    { idx: [0, 1], title: 'Jupiter - perps' },\n    { title: 'Orca', idx: [2] },\n  ];\n")
+            self.assertEqual(og_cards.dashboard_titles(p), {("solana", 0): "Jupiter", ("solana", 1): "Jupiter", ("solana", 2): "Orca"}); self.assertEqual(og_cards.dashboard_titles(os.path.join(d, "none.html")), {})   # the job runs without the file: no titles, no crash
 
 
 class TestAlertWords(unittest.TestCase):

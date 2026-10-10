@@ -17,10 +17,10 @@
      "timestamp": 1791242831
     }
    ],
-   "control": 108,
+   "control": 113,
    "status": "ok",
-   "fromBlock": 78449252,
-   "toBlock": 84371737
+   "fromBlock": 78668533,
+   "toBlock": 84586949
   },
   {
    "ecosystem": "ethereum-l1",
@@ -28,8 +28,8 @@
    "events": [],
    "control": 15,
    "status": "ok",
-   "fromBlock": 26106463,
-   "toBlock": 26156677
+   "fromBlock": 26108296,
+   "toBlock": 26158514
   },
   {
    "ecosystem": "arbitrum",
@@ -37,8 +37,8 @@
    "events": [],
    "control": 7,
    "status": "ok",
-   "fromBlock": 511068762,
-   "toBlock": 513280755
+   "fromBlock": 511149231,
+   "toBlock": 513362340
   },
   {
    "ecosystem": "base",
@@ -46,17 +46,15 @@
    "events": [],
    "control": 16,
    "status": "ok",
-   "fromBlock": 52088371,
-   "toBlock": 52390771
+   "fromBlock": 52099416,
+   "toBlock": 52401815
   },
   {
    "ecosystem": "tempo",
    "safes": 4,
    "events": [],
-   "control": 0,
-   "status": "UNREAD (control returned 0 ExecutionSuccess events: the RPC may be truncating, not the Safes being idle)",
-   "fromBlock": 42296906,
-   "toBlock": 43375188
+   "control": null,
+   "status": "UNREAD (cannot locate the window start: ExtraDataLengthError: The field extraData is 2611 bytes, but should be 32. It is quite likely that you are connected to a )"
   },
   {
    "ecosystem": "plasma",
@@ -64,8 +62,8 @@
    "events": [],
    "control": 8,
    "status": "ok",
-   "fromBlock": 34024947,
-   "toBlock": 34629636
+   "fromBlock": 34047039,
+   "toBlock": 34651709
   },
   {
    "ecosystem": "monad",
@@ -73,8 +71,8 @@
    "events": [],
    "control": null,
    "status": "UNREAD (HTTPError: 413 Client Error: Request Entity Too Large for url: https://rpc.monad.xyz/)",
-   "fromBlock": 109967496,
-   "toBlock": 111969661
+   "fromBlock": 110040649,
+   "toBlock": 112042815
   },
   {
    "ecosystem": "hyperliquid",
@@ -82,8 +80,8 @@
    "events": [],
    "control": null,
    "status": "UNREAD (Web3RPCError: {'code': -32005, 'message': 'rate limited'})",
-   "fromBlock": 47488283,
-   "toBlock": 48103078
+   "fromBlock": 47510738,
+   "toBlock": 48125533
   }
  ]
 }

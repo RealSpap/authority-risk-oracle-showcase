@@ -7,7 +7,7 @@
    "events": [
     {
      "name": "AddedOwner",
-     "value": "0xB3bf…1c9B",
+     "value": "0xB3bf\u20261c9B",
      "block": 81173405,
      "tx": "6d4610f18f429737dbc1c8714b52a7adccc2494f344ca067afe4c9095f5714de",
      "safe": "0x20D630cF1f5628285BfB91DfaC8C89eB9087BE1A",
@@ -19,8 +19,9 @@
    ],
    "control": 113,
    "status": "ok",
-   "fromBlock": 79299915,
-   "toBlock": 85211290
+   "fromBlock": 79396084,
+   "toBlock": 85306230,
+   "days_read": 7
   },
   {
    "ecosystem": "ethereum-l1",
@@ -28,8 +29,9 @@
    "events": [],
    "control": 15,
    "status": "ok",
-   "fromBlock": 26113631,
-   "toBlock": 26163852
+   "fromBlock": 26114440,
+   "toBlock": 26164660,
+   "days_read": 7
   },
   {
    "ecosystem": "arbitrum",
@@ -37,8 +39,9 @@
    "events": [],
    "control": 7,
    "status": "ok",
-   "fromBlock": 511381363,
-   "toBlock": 513592173
+   "fromBlock": 511416388,
+   "toBlock": 513627725,
+   "days_read": 7
   },
   {
    "ecosystem": "base",
@@ -46,17 +49,20 @@
    "events": [],
    "control": 16,
    "status": "ok",
-   "fromBlock": 52131536,
-   "toBlock": 52433935
+   "fromBlock": 52136392,
+   "toBlock": 52438792,
+   "days_read": 7
   },
   {
    "ecosystem": "tempo",
    "safes": 4,
    "events": [],
    "control": 0,
-   "status": "UNREAD (control returned 0 ExecutionSuccess events: the RPC may be truncating, not the Safes being idle)",
-   "fromBlock": 42452091,
-   "toBlock": 43525036
+   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 67 execution(s) from other Safes on the window's tail)",
+   "fromBlock": 42469557,
+   "toBlock": 43541919,
+   "days_read": 7,
+   "control_witness": 67
   },
   {
    "ecosystem": "plasma",
@@ -64,26 +70,31 @@
    "events": [],
    "control": 8,
    "status": "ok",
-   "fromBlock": 34111255,
-   "toBlock": 34715939
+   "fromBlock": 34120985,
+   "toBlock": 34725670,
+   "days_read": 7
   },
   {
    "ecosystem": "monad",
    "safes": 13,
    "events": [],
-   "control": null,
-   "status": "UNREAD (HTTPError: 413 Client Error: Request Entity Too Large for url: https://rpc.monad.xyz/)",
-   "fromBlock": 110253413,
-   "toBlock": 112255587
+   "control": 0,
+   "status": "UNREAD (control returned 0 ExecutionSuccess events on the tracked Safes and none from any Safe on the window's tail: the RPC may be truncating, not the Safes being idle)",
+   "fromBlock": 112202011,
+   "toBlock": 112287877,
+   "days_read": 0.3,
+   "control_witness": 0
   },
   {
    "ecosystem": "hyperliquid",
    "safes": 5,
    "events": [],
-   "control": null,
-   "status": "UNREAD (Web3RPCError: {'code': -32005, 'message': 'rate limited'})",
-   "fromBlock": 47575950,
-   "toBlock": 48190761
+   "control": 0,
+   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 11 execution(s) from other Safes on the window's tail)",
+   "fromBlock": 47937432,
+   "toBlock": 48200882,
+   "days_read": 3.0,
+   "control_witness": 11
   }
  ]
 }

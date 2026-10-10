@@ -1,12 +1,14 @@
 {
  "name": "Ethereum L1 (Sepolia)",
+ "kind": "evm",
  "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
  "rpc": "https://ethereum-sepolia-rpc.publicnode.com",
- "block": 11886339,
+ "block": 11887090,
  "maxStaleness": 777600,
- "readAt": 1791657062,
+ "readAt": 1791666098,
  "targets": [
   {
+   "index": 0,
    "target": "0x1f98431c8ad98523631ae4a59f267346ea31f984",
    "adminKeyScore": 80,
    "multisigScore": 100,
@@ -14,23 +16,29 @@
    "oracleAuthorityScore": 100,
    "crossExposureScore": 80,
    "compositeScore": 85,
-   "lastUpdated": 1790407330,
-   "methodologyHash": "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167",
-   "stale": true
+   "lastUpdated": 1791661565,
+   "methodologyHash": "0x0083e97693ff260fc496958d01844474cf65fa5cbfac3fea782590b49ae5ffa9",
+   "stale": false,
+   "previousComposite": 85,
+   "previousRun": "2026-10-10T18:30:59Z"
   },
   {
+   "index": 1,
    "target": "0x2f39d218133afab8f2b819b1066c7e434ad94e9e",
    "adminKeyScore": 78,
    "multisigScore": 100,
    "timelockScore": 55,
-   "oracleAuthorityScore": 100,
+   "oracleAuthorityScore": 52,
    "crossExposureScore": 80,
    "compositeScore": 78,
-   "lastUpdated": 1790407330,
-   "methodologyHash": "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167",
-   "stale": true
+   "lastUpdated": 1791661565,
+   "methodologyHash": "0x0083e97693ff260fc496958d01844474cf65fa5cbfac3fea782590b49ae5ffa9",
+   "stale": false,
+   "previousComposite": 78,
+   "previousRun": "2026-10-10T18:30:59Z"
   },
   {
+   "index": 2,
    "target": "0xbe286431454714f511008713973d3b053a2d38f3",
    "adminKeyScore": 75,
    "multisigScore": 100,
@@ -38,11 +46,14 @@
    "oracleAuthorityScore": 100,
    "crossExposureScore": 80,
    "compositeScore": 81,
-   "lastUpdated": 1790407330,
-   "methodologyHash": "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167",
-   "stale": true
+   "lastUpdated": 1791661565,
+   "methodologyHash": "0x0083e97693ff260fc496958d01844474cf65fa5cbfac3fea782590b49ae5ffa9",
+   "stale": false,
+   "previousComposite": 81,
+   "previousRun": "2026-10-10T18:30:59Z"
   },
   {
+   "index": 3,
    "target": "0x2cc440b721d2cafd6d64908d6d8c4acc57f8afc3",
    "adminKeyScore": 55,
    "multisigScore": 100,
@@ -52,9 +63,12 @@
    "compositeScore": 52,
    "lastUpdated": 1790180194,
    "methodologyHash": "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167",
-   "stale": true
+   "stale": true,
+   "previousComposite": 52,
+   "previousRun": "2026-10-10T18:30:59Z"
   },
   {
+   "index": 4,
    "target": "0xc139190f447e929f090edeb554d95abb8b18ac1c",
    "adminKeyScore": 5,
    "multisigScore": 0,
@@ -62,11 +76,14 @@
    "oracleAuthorityScore": 100,
    "crossExposureScore": 100,
    "compositeScore": 2,
-   "lastUpdated": 1790407330,
-   "methodologyHash": "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167",
-   "stale": true
+   "lastUpdated": 1791661565,
+   "methodologyHash": "0x0083e97693ff260fc496958d01844474cf65fa5cbfac3fea782590b49ae5ffa9",
+   "stale": false,
+   "previousComposite": 2,
+   "previousRun": "2026-10-10T18:30:59Z"
   },
   {
+   "index": 5,
    "target": "0x73e35c5c35a274e34ade6eb13cc7f62aee323728",
    "adminKeyScore": 65,
    "multisigScore": 100,
@@ -74,11 +91,14 @@
    "oracleAuthorityScore": 100,
    "crossExposureScore": 20,
    "compositeScore": 73,
-   "lastUpdated": 1790407330,
-   "methodologyHash": "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167",
-   "stale": true
+   "lastUpdated": 1791661565,
+   "methodologyHash": "0x0083e97693ff260fc496958d01844474cf65fa5cbfac3fea782590b49ae5ffa9",
+   "stale": false,
+   "previousComposite": 73,
+   "previousRun": "2026-10-10T18:30:59Z"
   },
   {
+   "index": 6,
    "target": "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34",
    "adminKeyScore": 55,
    "multisigScore": 100,
@@ -86,11 +106,14 @@
    "oracleAuthorityScore": 100,
    "crossExposureScore": 20,
    "compositeScore": 57,
-   "lastUpdated": 1790407330,
-   "methodologyHash": "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167",
-   "stale": true
+   "lastUpdated": 1791661565,
+   "methodologyHash": "0x0083e97693ff260fc496958d01844474cf65fa5cbfac3fea782590b49ae5ffa9",
+   "stale": false,
+   "previousComposite": 57,
+   "previousRun": "2026-10-10T18:30:59Z"
   },
   {
+   "index": 7,
    "target": "0x211cc4dd073734da055fbf44a2b4667d5e5fe5d2",
    "adminKeyScore": 55,
    "multisigScore": 100,
@@ -98,11 +121,14 @@
    "oracleAuthorityScore": 100,
    "crossExposureScore": 20,
    "compositeScore": 57,
-   "lastUpdated": 1790407330,
-   "methodologyHash": "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167",
-   "stale": true
+   "lastUpdated": 1791661565,
+   "methodologyHash": "0x0083e97693ff260fc496958d01844474cf65fa5cbfac3fea782590b49ae5ffa9",
+   "stale": false,
+   "previousComposite": 57,
+   "previousRun": "2026-10-10T18:30:59Z"
   },
   {
+   "index": 8,
    "target": "0x58538e6a46e07434d7e7375bc268d3cb839c0133",
    "adminKeyScore": 55,
    "multisigScore": 100,
@@ -110,35 +136,44 @@
    "oracleAuthorityScore": 100,
    "crossExposureScore": 20,
    "compositeScore": 57,
-   "lastUpdated": 1790407330,
-   "methodologyHash": "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167",
-   "stale": true
+   "lastUpdated": 1791661565,
+   "methodologyHash": "0x0083e97693ff260fc496958d01844474cf65fa5cbfac3fea782590b49ae5ffa9",
+   "stale": false,
+   "previousComposite": 57,
+   "previousRun": "2026-10-10T18:30:59Z"
   },
   {
+   "index": 9,
    "target": "0xc3d688b66703497daa19211eedff47f25384cdc3",
    "adminKeyScore": 78,
    "multisigScore": 100,
    "timelockScore": 60,
-   "oracleAuthorityScore": 100,
+   "oracleAuthorityScore": 52,
    "crossExposureScore": 80,
    "compositeScore": 79,
-   "lastUpdated": 1790407330,
-   "methodologyHash": "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167",
-   "stale": true
+   "lastUpdated": 1791661565,
+   "methodologyHash": "0x0083e97693ff260fc496958d01844474cf65fa5cbfac3fea782590b49ae5ffa9",
+   "stale": false,
+   "previousComposite": 79,
+   "previousRun": "2026-10-10T18:30:59Z"
   },
   {
+   "index": 10,
    "target": "0x02c3ea4e34c0cbd694d2adfa2c690eecbc1793ee",
    "adminKeyScore": 75,
    "multisigScore": 100,
    "timelockScore": 60,
-   "oracleAuthorityScore": 100,
+   "oracleAuthorityScore": 20,
    "crossExposureScore": 80,
    "compositeScore": 78,
-   "lastUpdated": 1790407330,
-   "methodologyHash": "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167",
-   "stale": true
+   "lastUpdated": 1791661565,
+   "methodologyHash": "0x0083e97693ff260fc496958d01844474cf65fa5cbfac3fea782590b49ae5ffa9",
+   "stale": false,
+   "previousComposite": 78,
+   "previousRun": "2026-10-10T18:30:59Z"
   },
   {
+   "index": 11,
    "target": "0x000000000004444c5dc75cb358380d2e3de08a90",
    "adminKeyScore": 80,
    "multisigScore": 100,
@@ -146,11 +181,14 @@
    "oracleAuthorityScore": 100,
    "crossExposureScore": 80,
    "compositeScore": 85,
-   "lastUpdated": 1790407330,
-   "methodologyHash": "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167",
-   "stale": true
+   "lastUpdated": 1791661565,
+   "methodologyHash": "0x0083e97693ff260fc496958d01844474cf65fa5cbfac3fea782590b49ae5ffa9",
+   "stale": false,
+   "previousComposite": 85,
+   "previousRun": "2026-10-10T18:30:59Z"
   },
   {
+   "index": 12,
    "target": "0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",
    "adminKeyScore": 65,
    "multisigScore": 100,
@@ -158,11 +196,14 @@
    "oracleAuthorityScore": 100,
    "crossExposureScore": 100,
    "compositeScore": 56,
-   "lastUpdated": 1790407330,
-   "methodologyHash": "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167",
-   "stale": true
+   "lastUpdated": 1791661565,
+   "methodologyHash": "0x0083e97693ff260fc496958d01844474cf65fa5cbfac3fea782590b49ae5ffa9",
+   "stale": false,
+   "previousComposite": 56,
+   "previousRun": "2026-10-10T18:30:59Z"
   },
   {
+   "index": 13,
    "target": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
    "adminKeyScore": 55,
    "multisigScore": 100,
@@ -170,11 +211,14 @@
    "oracleAuthorityScore": 100,
    "crossExposureScore": 100,
    "compositeScore": 52,
-   "lastUpdated": 1790407330,
-   "methodologyHash": "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167",
-   "stale": true
+   "lastUpdated": 1791661565,
+   "methodologyHash": "0x0083e97693ff260fc496958d01844474cf65fa5cbfac3fea782590b49ae5ffa9",
+   "stale": false,
+   "previousComposite": 52,
+   "previousRun": "2026-10-10T18:30:59Z"
   },
   {
+   "index": 14,
    "target": "0xe3490297a08d6fc8da46edb7b6142e4f461b62d3",
    "adminKeyScore": 65,
    "multisigScore": 100,
@@ -182,11 +226,14 @@
    "oracleAuthorityScore": 100,
    "crossExposureScore": 20,
    "compositeScore": 73,
-   "lastUpdated": 1790407330,
-   "methodologyHash": "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167",
-   "stale": true
+   "lastUpdated": 1791661565,
+   "methodologyHash": "0x0083e97693ff260fc496958d01844474cf65fa5cbfac3fea782590b49ae5ffa9",
+   "stale": false,
+   "previousComposite": 73,
+   "previousRun": "2026-10-10T18:30:59Z"
   },
   {
+   "index": 15,
    "target": "0xae7ab96520de3a18e5e111b5eaab095312d7fe84",
    "adminKeyScore": 80,
    "multisigScore": 100,
@@ -194,11 +241,14 @@
    "oracleAuthorityScore": 95,
    "crossExposureScore": 100,
    "compositeScore": 80,
-   "lastUpdated": 1790407330,
-   "methodologyHash": "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167",
-   "stale": true
+   "lastUpdated": 1791661565,
+   "methodologyHash": "0x0083e97693ff260fc496958d01844474cf65fa5cbfac3fea782590b49ae5ffa9",
+   "stale": false,
+   "previousComposite": 80,
+   "previousRun": "2026-10-10T18:30:59Z"
   },
   {
+   "index": 16,
    "target": "0x858646372cc42e1a627fce94aa7a7033e7cf075a",
    "adminKeyScore": 60,
    "multisigScore": 100,
@@ -206,11 +256,14 @@
    "oracleAuthorityScore": 100,
    "crossExposureScore": 100,
    "compositeScore": 60,
-   "lastUpdated": 1790407330,
-   "methodologyHash": "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167",
-   "stale": true
+   "lastUpdated": 1791661565,
+   "methodologyHash": "0x0083e97693ff260fc496958d01844474cf65fa5cbfac3fea782590b49ae5ffa9",
+   "stale": false,
+   "previousComposite": 60,
+   "previousRun": "2026-10-10T18:30:59Z"
   },
   {
+   "index": 17,
    "target": "0x6a8cbed756804b16e05e741edabd5cb544ae21bf",
    "adminKeyScore": 78,
    "multisigScore": 100,
@@ -218,11 +271,14 @@
    "oracleAuthorityScore": 100,
    "crossExposureScore": 100,
    "compositeScore": 81,
-   "lastUpdated": 1790407330,
-   "methodologyHash": "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167",
-   "stale": true
+   "lastUpdated": 1791661565,
+   "methodologyHash": "0x0083e97693ff260fc496958d01844474cf65fa5cbfac3fea782590b49ae5ffa9",
+   "stale": false,
+   "previousComposite": 81,
+   "previousRun": "2026-10-10T18:30:59Z"
   },
   {
+   "index": 18,
    "target": "0x1d8f8f00cfa6758d7be78336684788fb0ee0fa46",
    "adminKeyScore": 55,
    "multisigScore": 0,
@@ -230,23 +286,29 @@
    "oracleAuthorityScore": 100,
    "crossExposureScore": 100,
    "compositeScore": 22,
-   "lastUpdated": 1790407330,
-   "methodologyHash": "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167",
-   "stale": true
+   "lastUpdated": 1791661565,
+   "methodologyHash": "0x0083e97693ff260fc496958d01844474cf65fa5cbfac3fea782590b49ae5ffa9",
+   "stale": false,
+   "previousComposite": 22,
+   "previousRun": "2026-10-10T18:30:59Z"
   },
   {
+   "index": 19,
    "target": "0x5d39e06b825c1f2b80bf2756a73e28efaa128ba0",
    "adminKeyScore": 65,
    "multisigScore": 70,
    "timelockScore": 0,
-   "oracleAuthorityScore": 100,
+   "oracleAuthorityScore": 52,
    "crossExposureScore": 80,
    "compositeScore": 47,
-   "lastUpdated": 1790407330,
-   "methodologyHash": "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167",
-   "stale": true
+   "lastUpdated": 1791661565,
+   "methodologyHash": "0x0083e97693ff260fc496958d01844474cf65fa5cbfac3fea782590b49ae5ffa9",
+   "stale": false,
+   "previousComposite": 47,
+   "previousRun": "2026-10-10T18:30:59Z"
   },
   {
+   "index": 20,
    "target": "0xf403c135812408bfbe8713b5a23a04b3d48aae31",
    "adminKeyScore": 65,
    "multisigScore": 55,
@@ -254,57 +316,119 @@
    "oracleAuthorityScore": 100,
    "crossExposureScore": 100,
    "compositeScore": 43,
-   "lastUpdated": 1790407330,
-   "methodologyHash": "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167",
-   "stale": true
+   "lastUpdated": 1791661565,
+   "methodologyHash": "0x0083e97693ff260fc496958d01844474cf65fa5cbfac3fea782590b49ae5ffa9",
+   "stale": false,
+   "previousComposite": 43,
+   "previousRun": "2026-10-10T18:30:59Z"
   },
   {
+   "index": 21,
    "target": "0x55555815a5595991c3a0ff119b59aef6c8b55555",
    "adminKeyScore": 5,
    "multisigScore": 0,
    "timelockScore": 0,
-   "oracleAuthorityScore": 100,
+   "oracleAuthorityScore": 31,
    "crossExposureScore": 100,
    "compositeScore": 2,
-   "lastUpdated": 1790407330,
-   "methodologyHash": "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167",
-   "stale": true
+   "lastUpdated": 1791661565,
+   "methodologyHash": "0x0083e97693ff260fc496958d01844474cf65fa5cbfac3fea782590b49ae5ffa9",
+   "stale": false,
+   "previousComposite": 2,
+   "previousRun": "2026-10-10T18:30:59Z"
   },
   {
+   "index": 22,
    "target": "0x94643e86aa5e38ddac6c7791c1297f4e40cd96c1",
    "adminKeyScore": 5,
    "multisigScore": 0,
    "timelockScore": 0,
-   "oracleAuthorityScore": 100,
+   "oracleAuthorityScore": 31,
    "crossExposureScore": 100,
    "compositeScore": 2,
-   "lastUpdated": 1790407330,
-   "methodologyHash": "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167",
-   "stale": true
+   "lastUpdated": 1791661565,
+   "methodologyHash": "0x0083e97693ff260fc496958d01844474cf65fa5cbfac3fea782590b49ae5ffa9",
+   "stale": false,
+   "previousComposite": 2,
+   "previousRun": "2026-10-10T18:30:59Z"
   },
   {
+   "index": 23,
    "target": "0xbeef047a543e45807105e51a8bbefcc5950fcfba",
    "adminKeyScore": 70,
-   "multisigScore": 55,
+   "multisigScore": 75,
    "timelockScore": 75,
-   "oracleAuthorityScore": 100,
-   "crossExposureScore": 80,
-   "compositeScore": 67,
-   "lastUpdated": 1790407330,
-   "methodologyHash": "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167",
-   "stale": true
+   "oracleAuthorityScore": 52,
+   "crossExposureScore": 40,
+   "compositeScore": 73,
+   "lastUpdated": 1791661565,
+   "methodologyHash": "0x0083e97693ff260fc496958d01844474cf65fa5cbfac3fea782590b49ae5ffa9",
+   "stale": false,
+   "previousComposite": 67,
+   "previousRun": "2026-10-10T18:30:59Z"
   },
   {
+   "index": 24,
    "target": "0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
    "adminKeyScore": 70,
-   "multisigScore": 55,
+   "multisigScore": 75,
    "timelockScore": 75,
-   "oracleAuthorityScore": 100,
-   "crossExposureScore": 80,
-   "compositeScore": 67,
-   "lastUpdated": 1790407330,
-   "methodologyHash": "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167",
-   "stale": true
+   "oracleAuthorityScore": 52,
+   "crossExposureScore": 40,
+   "compositeScore": 73,
+   "lastUpdated": 1791661565,
+   "methodologyHash": "0x0083e97693ff260fc496958d01844474cf65fa5cbfac3fea782590b49ae5ffa9",
+   "stale": false,
+   "previousComposite": 67,
+   "previousRun": "2026-10-10T18:30:59Z"
+  },
+  {
+   "index": 25,
+   "target": "0xbeef088055857739c12cd3765f20b7679def0f51",
+   "adminKeyScore": 70,
+   "multisigScore": 75,
+   "timelockScore": 75,
+   "oracleAuthorityScore": 52,
+   "crossExposureScore": 40,
+   "compositeScore": 73,
+   "lastUpdated": 1791661565,
+   "methodologyHash": "0x0083e97693ff260fc496958d01844474cf65fa5cbfac3fea782590b49ae5ffa9",
+   "stale": false,
+   "previousComposite": null,
+   "previousRun": null
+  },
+  {
+   "index": 26,
+   "target": "0xbeef0c075da5d01112ae5cf34d257074fb5ddb2f",
+   "adminKeyScore": 70,
+   "multisigScore": 75,
+   "timelockScore": 75,
+   "oracleAuthorityScore": 52,
+   "crossExposureScore": 40,
+   "compositeScore": 73,
+   "lastUpdated": 1791661565,
+   "methodologyHash": "0x0083e97693ff260fc496958d01844474cf65fa5cbfac3fea782590b49ae5ffa9",
+   "stale": false,
+   "previousComposite": null,
+   "previousRun": null
   }
- ]
+ ],
+ "self": {
+  "code_hash": "714f7e2a4131dc657f0b333392998aa45a874dc82f3e86c6b07c28514736e4e4",
+  "role_events": [],
+  "from_block": null,
+  "to_block": 11887090,
+  "read": false,
+  "roles": {
+   "0x20630C6Ab4BA48a80edA46F77b9b6e987A8f32f5": {
+    "admin": true,
+    "updater": true
+   },
+   "0x646968c33D8F6d5A343B68a6F8b1Ce52F13414ba": {
+    "admin": false,
+    "updater": false
+   }
+  }
+ },
+ "self_scanned_to": 11887090
 }

@@ -1,0 +1,674 @@
+{
+ "run_utc": "2026-10-10T21:13:31Z",
+ "checked": 65,
+ "verified": 25,
+ "unverified": 40,
+ "not_answered": 0,
+ "chains_not_on_sourcify": [],
+ "by_target": {
+  "arbitrum:0xe23b4ae3624fb6f7cdef29bc8ead912f1ede6886": {
+   "impl": "0x36fd2506dd9666a2a659c9061952e548cd8a8e75",
+   "via": "EIP-1967 implementation slot",
+   "verified": true,
+   "match": "match",
+   "name": "LendingPool",
+   "compiler": "0.8.12+commit.f00d7308",
+   "verified_at": "2026-01-31T00:32:23Z"
+  },
+  "arbitrum:0x9c4ec768c28520b50860ea7a15bd7213a9ff58bf": {
+   "impl": "0x5d3dfd6b0c855dcfe2cb768bb0800d16553c758b",
+   "via": "EIP-1967 implementation slot",
+   "verified": true,
+   "match": "exact_match",
+   "name": "CometWithExtendedAssetList",
+   "compiler": "0.8.15+commit.e14f2714",
+   "verified_at": "2026-08-20T10:54:49Z"
+  },
+  "arbitrum:0x52aa899454998be5b000ad077a46bbe360f4e497": {
+   "impl": "0xa57d7cef617271f4cea4f665d33ebcfcba4929f6",
+   "via": "EIP-1967 implementation slot",
+   "verified": true,
+   "match": "exact_match",
+   "name": "FluidLiquidityDummyImpl",
+   "compiler": "0.8.21+commit.d9974bed",
+   "verified_at": "2025-07-16T05:38:15Z"
+  },
+  "arbitrum:0xff162c694eaa571f685030649814282ea457f169": {
+   "impl": "0xff84c4a0d639d598af2088e2ffb76cdbdf1de0ed",
+   "via": "EIP-1967 implementation slot",
+   "verified": true,
+   "match": "exact_match",
+   "name": "GNSMultiCollatDiamond",
+   "compiler": "0.8.23+commit.f704f362",
+   "verified_at": "2025-09-18T20:24:36Z"
+  },
+  "base:0xb125e6687d4313864e53df431d5425969c15eb2f": {
+   "impl": "0xc1455ae6df6cd808ed677f048e434e22892682a7",
+   "via": "EIP-1967 implementation slot",
+   "verified": true,
+   "match": "exact_match",
+   "name": "CometWithExtendedAssetList",
+   "compiler": "0.8.15+commit.e14f2714",
+   "verified_at": "2026-08-26T14:47:06Z"
+  },
+  "ethereum-l1:0xc139190f447e929f090edeb554d95abb8b18ac1c": {
+   "impl": "0x9d6d77a21702b9afcf924983fbfb84aaaae79589",
+   "via": "EIP-1967 implementation slot",
+   "verified": true,
+   "match": "match",
+   "name": "AnchorageTokenUSDtb",
+   "compiler": "0.8.30+commit.73712a01",
+   "verified_at": "2025-10-11T15:01:05Z"
+  },
+  "ethereum-l1:0xc3d688b66703497daa19211eedff47f25384cdc3": {
+   "impl": "0x63e749153baf1838f63ca22c275370bd2b1ceb15",
+   "via": "EIP-1967 implementation slot",
+   "verified": true,
+   "match": "exact_match",
+   "name": "CometWithExtendedAssetList",
+   "compiler": "0.8.15+commit.e14f2714",
+   "verified_at": "2026-09-04T15:48:26Z"
+  },
+  "ethereum-l1:0x858646372cc42e1a627fce94aa7a7033e7cf075a": {
+   "impl": "0xa7536c85898dc424c6bfe8592f983661f830656a",
+   "via": "EIP-1967 implementation slot",
+   "verified": true,
+   "match": "exact_match",
+   "name": "StrategyManager",
+   "compiler": "0.8.30+commit.73712a01",
+   "verified_at": "2026-07-27T09:36:45Z"
+  },
+  "hyperliquid:0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec": {
+   "impl": "0x26264514cd6018d6f944eb30b782aee2794b70b8",
+   "via": "EIP-1967 implementation slot",
+   "verified": true,
+   "match": "exact_match",
+   "name": "HIP3StakingManager",
+   "compiler": "0.8.31+commit.fd3a2265",
+   "verified_at": "2026-05-24T17:41:42Z"
+  },
+  "hyperliquid:0x8888888c43cbb7e1c4132542e46831bffd866ed3": {
+   "impl": "0x00000006711dce34e37ec3e1b18f21a3d5399fbe",
+   "via": "EIP-1967 implementation slot",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null
+  },
+  "hyperliquid:0x8888888192a4a0593c13532ba48449fc24c3beda": {
+   "impl": "0x000000046a8b917b5a62b446ac208f78412192d1",
+   "via": "EIP-1967 implementation slot",
+   "verified": true,
+   "match": "match",
+   "name": "StakingVault",
+   "compiler": "0.8.28+commit.7893614a",
+   "verified_at": "2026-05-23T18:34:25Z"
+  },
+  "hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109": {
+   "impl": "0x23fda3b9f944dbeaf2dcd5e7b9f8207b102c933f",
+   "via": "EIP-1967 implementation slot",
+   "verified": true,
+   "match": "exact_match",
+   "name": "StakingManagerRouter",
+   "compiler": "0.8.26+commit.8a97fa7a",
+   "verified_at": "2026-05-21T15:21:55Z"
+  },
+  "hyperliquid:0xffaa4a3d97fe9107cef8a3f48c069f577ff76cc1": {
+   "impl": "0xe71caf5c1fe56d8897c7b604295d23968049e057",
+   "via": "EIP-1967 implementation slot",
+   "verified": true,
+   "match": "exact_match",
+   "name": "stHYPE",
+   "compiler": "0.8.28+commit.7893614a",
+   "verified_at": "2026-05-23T08:34:06Z"
+  },
+  "monad:0xd691b0afed67f96cec28ab6308cbe5b2c103b7e9": {
+   "impl": "0x7d9a6b4c454ee07561f75fac019c026c7c4db55e",
+   "via": "EIP-1967 implementation slot",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null
+  },
+  "monad:0x36878c6fca7e0e8a88f90dc410cfbbca5b695c95": {
+   "impl": "0xe9eddb05ccb50c3d7935e82709623d2209350221",
+   "via": "EIP-1967 implementation slot",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null
+  },
+  "monad:0xd651346d7c789536ebf06dc72ae3c8502cd695cc": {
+   "impl": "0xf1635175914acf4db170395d524323225e1f1a04",
+   "via": "EIP-1967 implementation slot",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null
+  },
+  "plasma:0x6c50b8ca8eeaa1c75dee5b5ea79772acabc92f48": {
+   "impl": "0xf70191daf77f1072a90466d7539d8c63f8b2bfcc",
+   "via": "EIP-1967 implementation slot",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null
+  },
+  "plasma:0x52aa899454998be5b000ad077a46bbe360f4e497": {
+   "impl": "0x3605004f3f40e7147300574e786206de8b342796",
+   "via": "EIP-1967 implementation slot",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null
+  },
+  "plasma:0x6695c0f8706c5ace3bdf8995073179cca47926dc": {
+   "impl": "0x8e02392855a51d9d5d18d71a7cfc731f56c68ea5",
+   "via": "EIP-1967 implementation slot",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null
+  },
+  "robinhood:0x94bab9693ba2f6358507effcbd372b0660afff9d": {
+   "impl": "0x998ecf039eb110b72f5f6c1ea31c2fa41a458faa",
+   "via": "EIP-1967 implementation slot",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null
+  },
+  "robinhood:0xde770c84fe66e063336b31737cfe9790f18c4087": {
+   "impl": "0x797c58c9779d46a437d8f57908d6d56371a55f02",
+   "via": "EIP-1967 implementation slot",
+   "verified": true,
+   "match": "match",
+   "name": "SparkVault",
+   "compiler": "0.8.29+commit.ab55807c",
+   "verified_at": "2026-09-13T04:50:47Z"
+  },
+  "robinhood:0x544bf81c855ae84c1e8b65d5e38770898d01eee2": {
+   "impl": "0xb8b037cec8603a384da270a73715cd903f7e8ac8",
+   "via": "EIP-1967 implementation slot",
+   "verified": true,
+   "match": "exact_match",
+   "name": "PendleMarketFactoryV7Upg",
+   "compiler": "0.8.30+commit.73712a01",
+   "verified_at": "2026-09-02T10:48:55Z"
+  },
+  "robinhood:0x9c3663fa9ab976e67b42939486ec4966cb41a0bb": {
+   "impl": "0x58bdc1d3068a0a79d7a662dee033d62cbd4f589f",
+   "via": "EIP-1967 implementation slot",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null
+  },
+  "robinhood:0x925f92f055edb79c42b5d45e64a1b74143b90ea0": {
+   "impl": "0x1815a37b6027ae8066720d873a508f25fc151ac5",
+   "via": "beacon implementation()",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null
+  },
+  "robinhood:0x4472c69d299382f8847ebce4fc6ed8e295510e3e": {
+   "impl": "0x1815a37b6027ae8066720d873a508f25fc151ac5",
+   "via": "beacon implementation()",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null
+  },
+  "robinhood:0x322f0929c4625ed5bad873c95208d54e1c003b2d": {
+   "impl": "0xb35490d6f9163de4f80d88dc75c3516eb64c5ae2",
+   "via": "beacon implementation()",
+   "verified": true,
+   "match": "exact_match",
+   "name": "Stock",
+   "compiler": "0.8.33+commit.64118f21",
+   "verified_at": "2026-09-08T09:42:53Z"
+  },
+  "robinhood:0x12f190a9f9d7d37a250758b26824b97ce941bf54": {
+   "impl": "0xb35490d6f9163de4f80d88dc75c3516eb64c5ae2",
+   "via": "beacon implementation()",
+   "verified": true,
+   "match": "exact_match",
+   "name": "Stock",
+   "compiler": "0.8.33+commit.64118f21",
+   "verified_at": "2026-09-08T09:42:53Z"
+  },
+  "robinhood:0x894e1ec2d74ffe5aef8dc8a9e84686accb964f2a": {
+   "impl": "0xb35490d6f9163de4f80d88dc75c3516eb64c5ae2",
+   "via": "beacon implementation()",
+   "verified": true,
+   "match": "exact_match",
+   "name": "Stock",
+   "compiler": "0.8.33+commit.64118f21",
+   "verified_at": "2026-09-08T09:42:53Z"
+  },
+  "robinhood:0xe0444ef8bf4ed74f74fd73686e2ddf4c1c5591e8": {
+   "impl": "0xb35490d6f9163de4f80d88dc75c3516eb64c5ae2",
+   "via": "beacon implementation()",
+   "verified": true,
+   "match": "exact_match",
+   "name": "Stock",
+   "compiler": "0.8.33+commit.64118f21",
+   "verified_at": "2026-09-08T09:42:53Z"
+  },
+  "robinhood:0x86923f96303d656e4aa86d9d42d1e57ad2023fdc": {
+   "impl": "0xb35490d6f9163de4f80d88dc75c3516eb64c5ae2",
+   "via": "beacon implementation()",
+   "verified": true,
+   "match": "exact_match",
+   "name": "Stock",
+   "compiler": "0.8.33+commit.64118f21",
+   "verified_at": "2026-09-08T09:42:53Z"
+  },
+  "robinhood:0x83341f891f898cb5e0cacc8a70501bba83d9cecf": {
+   "impl": "0xcc61f2a4ecc33e861c0bd4377a929f4ce6876efb",
+   "via": "EIP-1967 implementation slot",
+   "verified": true,
+   "match": "match",
+   "name": "AccessHubSatellite",
+   "compiler": "0.8.30+commit.73712a01",
+   "verified_at": "2026-10-06T01:04:06Z"
+  },
+  "robinhood:0x292fc50e4eb66c3f6514b9e402dbc25961824d62": {
+   "impl": "0xf8504d2ca2f0bbad9d36927e3d32e278abadada0",
+   "via": "EIP-1967 implementation slot",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null
+  },
+  "robinhood:0x0dc846db6a4ec7b5a3e542f7db88049e9add2541": {
+   "impl": "0x3e487139b6e5e7b22350b04d01a8157952e6498f",
+   "via": "EIP-1967 implementation slot",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null
+  },
+  "robinhood:0x1195c074f898b7644ba732407619c9804dfe6dce": {
+   "impl": "0x999a74ddfde1575c4db454a0300d5f0351a891de",
+   "via": "EIP-1967 implementation slot",
+   "verified": true,
+   "match": "match",
+   "name": "SnuggleVaultUpgradeable",
+   "compiler": "0.8.33+commit.64118f21",
+   "verified_at": "2026-07-22T23:19:09Z"
+  },
+  "robinhood:0xd540f47f214dc7d6d244e62a6ae7e06b586ef44a": {
+   "impl": "0x0f17d8468c49d6c80e4ee10cc87a767085a4b9a8",
+   "via": "EIP-1967 implementation slot",
+   "verified": true,
+   "match": "exact_match",
+   "name": "ExchangeGateway",
+   "compiler": "0.8.28+commit.7893614a",
+   "verified_at": "2026-08-28T05:14:22Z"
+  },
+  "robinhood:0x14b107cf534239c59571b066cb6497a321da897c": {
+   "impl": "0x44c6c2a96e7e51eb0dd81cef58940faa39babf78",
+   "via": "EIP-1967 implementation slot",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null
+  },
+  "robinhood:0xd5c6c79692715145098a65d1eb1f2a10c524f8e8": {
+   "impl": "0x0000000000ac46824e664881581f0e105bb5e492",
+   "via": "EIP-1967 implementation slot",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null
+  },
+  "robinhood:0x16494a80e08bcb9285d87b67149d7b01774d82f8": {
+   "impl": "0x8c3bbdabf7b610d54097420e485a5e0e7bd68684",
+   "via": "EIP-1967 implementation slot",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null
+  },
+  "robinhood:0x5c98b2d892b37c9a1d3b69472bddc172a64cdc09": {
+   "impl": "0x950f3bae94ff783f044f64dca9b2a1b2d781ea72",
+   "via": "EIP-1967 implementation slot",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null
+  },
+  "solana:jup6lkbzbjs1jkkwapdhny74zcz3tluzoi5qnyvtav4": {
+   "impl": "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+   "via": "program (verified build, OtterSec)",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null,
+   "repo_url": null,
+   "source": "osec",
+   "note": "no verified build registered"
+  },
+  "solana:7u3hehxydlhncoerrtycnokbqybwgzls6jsdqgav5pff": {
+   "impl": "KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD",
+   "via": "program (verified build, OtterSec)",
+   "verified": true,
+   "match": "verified build",
+   "name": null,
+   "compiler": null,
+   "verified_at": "2026-08-20T14:10:54.539227",
+   "repo_url": "https://github.com/Kamino-Finance/klend/tree/a08760976f51a3a58c4a0c6ea27b4a0e565bca79",
+   "source": "osec",
+   "note": null
+  },
+  "solana:7sf3tcwm58vhtkjmwuw2p3t6ubx7ue5vkxpmnxjuz1hn": {
+   "impl": "A7kmu2kUcnQwAVn8B4znQmGJeUrsJ1WEhYVMtmiBLkEr",
+   "via": "program (verified build, OtterSec)",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null,
+   "repo_url": null,
+   "source": "osec",
+   "note": "no verified build registered"
+  },
+  "solana:driftyha39mwei3m9aunc5mzrf1jyubsbn6vpcn33uh": {
+   "impl": "dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH",
+   "via": "program (verified build, OtterSec)",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null,
+   "repo_url": "https://github.com/drift-labs/protocol-v2/tree/fee7bfa60f52274969500c37acbbe79bea847ba1",
+   "source": "osec",
+   "note": "a repository is registered but no build matches the deployed binary"
+  },
+  "solana:cammczo5yl8w4vff8kvhrk22ggusp5vtaw7grrkgrwqk": {
+   "impl": "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+   "via": "program (verified build, OtterSec)",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null,
+   "repo_url": "https://github.com/raydium-io/raydium-clmm/tree/119ed36bf9f33",
+   "source": "osec",
+   "note": "a repository is registered but no build matches the deployed binary"
+  },
+  "solana:4qp6fx6tnzky5wropq9wuygtfxxkwe6vizxfhg3rdag8": {
+   "impl": "MFv2hWf31Z9kbCa1snEPYctwafyhdvnV7FZnsebVacA",
+   "via": "program (verified build, OtterSec)",
+   "verified": true,
+   "match": "verified build",
+   "name": null,
+   "compiler": null,
+   "verified_at": "2026-09-04T19:00:08.612500",
+   "repo_url": "https://github.com/0dotxyz/marginfi-v2/tree/33c67987a661f59c6683a65485ebb4f0ef030b77",
+   "source": "osec",
+   "note": null
+  },
+  "solana:gknhiwh3rrre1zsnzwxrkomymhc374tvjpstv2wpeydb": {
+   "impl": "6LtLpnUFNByNXLyCoK9wA2MykKAmQNZKBdY8s47dehDc",
+   "via": "program (verified build, OtterSec)",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null,
+   "repo_url": null,
+   "source": "osec",
+   "note": "no verified build registered"
+  },
+  "solana:h4nd9ayttuvlfmnypzqljz52fyigvdeb45gmwnokejtj": {
+   "impl": "PERPHjGBqRHArX4DySjwM6UJHiR3sWAatqfdBS2qQJu",
+   "via": "program (verified build, OtterSec)",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null,
+   "repo_url": null,
+   "source": "osec",
+   "note": "no verified build registered"
+  },
+  "solana:7s1da8dduubfqgra5bjbjpnvl5e9mgzcumk1qkh4or2z": {
+   "impl": "jupeiUmn818Jg1ekPURTpr4mFo29p46vygyykFJ3wZC",
+   "via": "program (verified build, OtterSec)",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null,
+   "repo_url": null,
+   "source": "osec",
+   "note": "no verified build registered"
+  },
+  "solana:adya8hdefvwn2dbggwfotbzwxravlw83wg6qcvxvjkqw": {
+   "impl": "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA",
+   "via": "program (verified build, OtterSec)",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null,
+   "repo_url": null,
+   "source": "osec",
+   "note": "no verified build registered"
+  },
+  "solana:cpamdpzcgkuy5jxqxb4dcpgpiikhawvswad6men1sgg": {
+   "impl": "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG",
+   "via": "program (verified build, OtterSec)",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null,
+   "repo_url": null,
+   "source": "osec",
+   "note": "no verified build registered"
+  },
+  "solana:2lecshuwdy9xi7mefghtfjqnskk4kdtrcpvab56dp2nq": {
+   "impl": "whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
+   "via": "program (verified build, OtterSec)",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null,
+   "repo_url": "https://github.com/orca-so/whirlpools",
+   "source": "osec",
+   "note": "a repository is registered but no build matches the deployed binary"
+  },
+  "solana:8szgkultaux9xmgz2vty39jvsowecpbfffd8hxseqdgc": {
+   "impl": "MarBmsSgKXdrN1egZf5sqe1TMai9K1rChYNDJgjq7aD",
+   "via": "program (verified build, OtterSec)",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": "2024-01-26T07:53:47.286115",
+   "repo_url": "https://github.com/marinade-finance/liquid-staking-program",
+   "source": "osec",
+   "note": "a repository is registered but no build matches the deployed binary"
+  },
+  "solana:so1enddq2ykqhiprh3wvipa8hdispxwy6z3z6tmcpao": {
+   "impl": "So1endDq2YkqhipRh3WViPa8hdiSpxWy6z3Z6tMCpAo",
+   "via": "program (verified build, OtterSec)",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": "2025-07-02T11:00:29.919669",
+   "repo_url": "https://github.com/solendprotocol/solana-program-library",
+   "source": "osec",
+   "note": "a repository is registered but no build matches the deployed binary"
+  },
+  "solana:spoo1ku8wfxondmhpsrgstsg1y47rzgn41slunakuhy": {
+   "impl": "SPoo1Ku8WFXoNDMHPsrGSTSG1Y47rzgn41SLUNakuHy",
+   "via": "program (verified build, OtterSec)",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null,
+   "repo_url": null,
+   "source": "osec",
+   "note": "no verified build registered"
+  },
+  "solana:jito4apyf642jpzpx3hgc6wwj8zpktrbrs4p815awbb": {
+   "impl": "SPoo1Ku8WFXoNDMHPsrGSTSG1Y47rzgn41SLUNakuHy",
+   "via": "program (verified build, OtterSec)",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null,
+   "repo_url": null,
+   "source": "osec",
+   "note": "no verified build registered"
+  },
+  "solana:5ocnv1qicgaqr8jb8xwnvbapfaygj8tnozfgpwsgx9kx": {
+   "impl": "5ocnV1qiCgaQR8Jb8xWnVbApfaygJ8tNoZfgPwsgx9kx",
+   "via": "program (verified build, OtterSec)",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": "2026-04-24T20:09:05.729796",
+   "repo_url": "https://github.com/igneous-labs/S/tree/4e35462fb335a24738a57e7ced424a27b3c52f34",
+   "source": "osec",
+   "note": "a repository is registered but no build matches the deployed binary"
+  },
+  "solana:sp12twfxd9ojsvwnavttbzvmba6gkamxtvgxdqvyvhy": {
+   "impl": "SP12tWFxD9oJsVWNavTTBZvMbA6gkAmxtVgxdqvyvhY",
+   "via": "program (verified build, OtterSec)",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null,
+   "repo_url": null,
+   "source": "osec",
+   "note": "no verified build registered"
+  },
+  "solana:usxyistspewz55psk7szoul79ntovgqbatdt57th6bx": {
+   "impl": "USXyiSTsPEWz55pSK7sZoUL79ntoVGQbaTDT57tH6bx",
+   "via": "program (verified build, OtterSec)",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null,
+   "repo_url": null,
+   "source": "osec",
+   "note": "no verified build registered"
+  },
+  "solana:gmso1uvjnlbawvw7yezdfcdcpydww2s2iqg3w6mduclo": {
+   "impl": "Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
+   "via": "program (verified build, OtterSec)",
+   "verified": true,
+   "match": "verified build",
+   "name": null,
+   "compiler": null,
+   "verified_at": "2026-08-12T08:18:48.421129",
+   "repo_url": "https://github.com/gmsol-labs/gmx-solana/tree/665fe60a00e3134457b9bcea0b4d94c989a22f4f",
+   "source": "osec",
+   "note": null
+  },
+  "solana:1oopbojg58dgkuvkkezkgyg9dvrmpgeem1avjohkf78": {
+   "impl": "1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78",
+   "via": "program (verified build, OtterSec)",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null,
+   "repo_url": null,
+   "source": "osec",
+   "note": "no verified build registered"
+  },
+  "solana:humaxephnjarcpjytokxy4utajcmx41prq8cxgmfc5fn": {
+   "impl": "HumaXepHnjaRCpjYTokxY4UtaJcmx41prQ8cxGmFC5fn",
+   "via": "program (verified build, OtterSec)",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null,
+   "repo_url": null,
+   "source": "osec",
+   "note": "no verified build registered"
+  },
+  "solana:fl3x2prsq9zhenpzskdrretccwjuei8yg9fwdu9un69q": {
+   "impl": "FL3X2pRsQ9zHENpZSKDRREtccwJuei8yg9fwDu9UN69Q",
+   "via": "program (verified build, OtterSec)",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null,
+   "repo_url": null,
+   "source": "osec",
+   "note": "no verified build registered"
+  },
+  "solana:exponentnarg3cqbw6dqqnzkxp7gtz9dgmp1cwc4has7": {
+   "impl": "ExponentnaRg3CQbW6dqQNZKXp7gtZ9DGMp1cwC4HAS7",
+   "via": "program (verified build, OtterSec)",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null,
+   "repo_url": "https://github.com/exponent-finance/exponent-core/tree/a5ffb39ac886e954be641a3411b4626a28cf98c6",
+   "source": "osec",
+   "note": "a repository is registered but no build matches the deployed binary"
+  },
+  "solana:flash6lo6h3iasjkwds2f8tkw2ukf3s15c8pmguvfgbn": {
+   "impl": "FLASH6Lo6h3iasJKWDs2F8TkW2UKf3s15C8PMGuVfgBn",
+   "via": "program (verified build, OtterSec)",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null,
+   "repo_url": null,
+   "source": "osec",
+   "note": "no verified build registered"
+  },
+  "solana:sso1iu21jbru9vaj8pjib1mtorefuv4fzc9gura2knn": {
+   "impl": "sSo1iU21jBrU9VaJ8PJib1MtorefUV4fzC9GURa2KNn",
+   "via": "program (verified build, OtterSec)",
+   "verified": false,
+   "match": null,
+   "name": null,
+   "compiler": null,
+   "verified_at": null,
+   "repo_url": null,
+   "source": "osec",
+   "note": "no verified build registered"
+  }
+ },
+ "what": "for every implementation behind a tracked proxy (second_opinion.json, impl): whether Sourcify holds a verified source on that chain, with match, name, compiler and date; for every Solana program behind a tracked account: whether OtterSec holds a verified build matching the deployed binary (source osec, repo_url); an upgrade to an unverified implementation is an upgrade nobody can read; written by scripts/impl_sources.py after every run"
+}

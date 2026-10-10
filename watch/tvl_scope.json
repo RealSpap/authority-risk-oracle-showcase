@@ -1,0 +1,10 @@
+{
+ "what": "copy of data/tvl_scope.json for the dashboard and the pages: a retired or peripheral contract carries none of its protocol's TVL; keyed <chain>:<address>",
+ "targets": {
+  "ethereum-l1:0x2cc440b721d2cafd6d64908d6d8c4acc57f8afc3": {
+   "scope": "retired",
+   "note": "EthenaMinting retired on 2026-09-20 (the dashboard card says so); the protocol's TVL does not sit behind this minter's admin",
+   "since": "2026-10-10"
+  }
+ }
+}

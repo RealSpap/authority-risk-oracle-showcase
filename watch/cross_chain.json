@@ -1,0 +1,591 @@
+{
+ "generated_utc": "2026-10-10T21:14:08Z",
+ "protocols": 11,
+ "differing": 6,
+ "items": [
+  {
+   "slug": "curve-dex",
+   "protocol": "Curve DEX",
+   "chains": {
+    "ethereum-l1": {
+     "chain": "Ethereum L1",
+     "contracts": 1,
+     "composite_min": 81,
+     "composite_max": 81,
+     "admin_kinds": {
+      "contract": 1
+     },
+     "postures": [
+      "contract"
+     ],
+     "tvl_usd": 1176382817.2351012
+    },
+    "monad": {
+     "chain": "Monad",
+     "contracts": 1,
+     "composite_min": 4,
+     "composite_max": 4,
+     "admin_kinds": {
+      "eoa": 1
+     },
+     "postures": [
+      "plain key"
+     ],
+     "tvl_usd": 9955055.851390969
+    },
+    "robinhood": {
+     "chain": "Robinhood Chain",
+     "contracts": 1,
+     "composite_min": 1,
+     "composite_max": 1,
+     "admin_kinds": {
+      "eoa": 1
+     },
+     "postures": [
+      "plain key"
+     ],
+     "tvl_usd": 617934.1374677854
+    }
+   },
+   "weakest_chain": "robinhood",
+   "weakest_composite": 1,
+   "strongest_chain": "ethereum-l1",
+   "strongest_composite": 81,
+   "spread": 80,
+   "postures_differ": true,
+   "text": "Curve DEX: Robinhood Chain plain key (composite 1); Monad plain key (composite 4); Ethereum L1 contract (composite 81)"
+  },
+  {
+   "slug": "aave-v3",
+   "protocol": "Aave V3",
+   "chains": {
+    "arbitrum": {
+     "chain": "Arbitrum",
+     "contracts": 1,
+     "composite_min": 71,
+     "composite_max": 71,
+     "admin_kinds": {
+      "contract": 1
+     },
+     "postures": [
+      "contract"
+     ],
+     "tvl_usd": 508609363.0484135
+    },
+    "base": {
+     "chain": "Base",
+     "contracts": 1,
+     "composite_min": 71,
+     "composite_max": 71,
+     "admin_kinds": {
+      "contract": 1
+     },
+     "postures": [
+      "contract"
+     ],
+     "tvl_usd": 545152534.3613708
+    },
+    "ethereum-l1": {
+     "chain": "Ethereum L1",
+     "contracts": 1,
+     "composite_min": 78,
+     "composite_max": 78,
+     "admin_kinds": {
+      "contract": 1
+     },
+     "postures": [
+      "contract"
+     ],
+     "tvl_usd": 14601559067.025715
+    },
+    "monad": {
+     "chain": "Monad",
+     "contracts": 1,
+     "composite_min": 49,
+     "composite_max": 49,
+     "admin_kinds": {
+      "contract": 1
+     },
+     "postures": [
+      "contract"
+     ],
+     "tvl_usd": 347250557.08852303
+    },
+    "plasma": {
+     "chain": "Plasma",
+     "contracts": 1,
+     "composite_min": 71,
+     "composite_max": 71,
+     "admin_kinds": {
+      "contract": 1
+     },
+     "postures": [
+      "contract"
+     ],
+     "tvl_usd": 438769197.13953614
+    }
+   },
+   "weakest_chain": "monad",
+   "weakest_composite": 49,
+   "strongest_chain": "ethereum-l1",
+   "strongest_composite": 78,
+   "spread": 29,
+   "postures_differ": true,
+   "text": "Aave V3: Monad contract (composite 49); Arbitrum contract (composite 71); Base contract (composite 71); Plasma contract (composite 71); Ethereum L1 contract (composite 78)"
+  },
+  {
+   "slug": "steakhouse-financial",
+   "protocol": "Steakhouse Financial",
+   "chains": {
+    "monad": {
+     "chain": "Monad",
+     "contracts": 1,
+     "composite_min": 67,
+     "composite_max": 67,
+     "admin_kinds": {
+      "safe": 1
+     },
+     "postures": [
+      "Safe 5-of-10 (10 plain keys) + contract timelock 336 h"
+     ],
+     "tvl_usd": 29738985.231817815
+    },
+    "robinhood": {
+     "chain": "Robinhood Chain",
+     "contracts": 4,
+     "composite_min": 40,
+     "composite_max": 70,
+     "admin_kinds": {
+      "contract": 3,
+      "timelock": 1
+     },
+     "postures": [
+      "contract owned by a plain key",
+      "contract owned by a Safe 5-of-10",
+      "timelock 24 h"
+     ],
+     "tvl_usd": 548632570.0532401
+    }
+   },
+   "weakest_chain": "robinhood",
+   "weakest_composite": 40,
+   "strongest_chain": "monad",
+   "strongest_composite": 67,
+   "spread": 27,
+   "postures_differ": true,
+   "text": "Steakhouse Financial: Robinhood Chain contract owned by a plain key / contract owned by a Safe 5-of-10 / timelock 24 h (composite 40 to 70); Monad Safe 5-of-10 (10 plain keys) + contract timelock 336 h (composite 67)"
+  },
+  {
+   "slug": "ethena-usde",
+   "protocol": "Ethena USDe",
+   "chains": {
+    "ethereum-l1": {
+     "chain": "Ethereum L1",
+     "contracts": 5,
+     "composite_min": 52,
+     "composite_max": 73,
+     "admin_kinds": {
+      "safe": 1,
+      "timelock": 4
+     },
+     "postures": [
+      "Safe 5-of-10 (10 plain keys)",
+      "timelock 24 h"
+     ],
+     "tvl_usd": 4776422827.662592
+    },
+    "plasma": {
+     "chain": "Plasma",
+     "contracts": 1,
+     "composite_min": 57,
+     "composite_max": 57,
+     "admin_kinds": {
+      "timelock": 1
+     },
+     "postures": [
+      "timelock 24 h"
+     ],
+     "tvl_usd": 0.0
+    }
+   },
+   "weakest_chain": "ethereum-l1",
+   "weakest_composite": 52,
+   "strongest_chain": "plasma",
+   "strongest_composite": 57,
+   "spread": 5,
+   "postures_differ": true,
+   "text": "Ethena USDe: Ethereum L1 Safe 5-of-10 (10 plain keys) / timelock 24 h (composite 52 to 73); Plasma timelock 24 h (composite 57)"
+  },
+  {
+   "slug": "uniswap-v4",
+   "protocol": "Uniswap V4",
+   "chains": {
+    "base": {
+     "chain": "Base",
+     "contracts": 1,
+     "composite_min": 85,
+     "composite_max": 85,
+     "admin_kinds": {
+      "contract": 1
+     },
+     "postures": [
+      "contract"
+     ],
+     "tvl_usd": 68751800.216781
+    },
+    "ethereum-l1": {
+     "chain": "Ethereum L1",
+     "contracts": 1,
+     "composite_min": 85,
+     "composite_max": 85,
+     "admin_kinds": {
+      "timelock": 1
+     },
+     "postures": [
+      "timelock 48 h"
+     ],
+     "tvl_usd": 760436459.6422759
+    },
+    "monad": {
+     "chain": "Monad",
+     "contracts": 1,
+     "composite_min": 80,
+     "composite_max": 80,
+     "admin_kinds": {
+      "contract": 1
+     },
+     "postures": [
+      "contract"
+     ],
+     "tvl_usd": 31492035.318694647
+    }
+   },
+   "weakest_chain": "monad",
+   "weakest_composite": 80,
+   "strongest_chain": "base",
+   "strongest_composite": 85,
+   "spread": 5,
+   "postures_differ": true,
+   "text": "Uniswap V4: Monad contract (composite 80); Base contract (composite 85); Ethereum L1 timelock 48 h (composite 85)"
+  },
+  {
+   "slug": "uniswap-v3",
+   "protocol": "Uniswap V3",
+   "chains": {
+    "arbitrum": {
+     "chain": "Arbitrum",
+     "contracts": 1,
+     "composite_min": 85,
+     "composite_max": 85,
+     "admin_kinds": {
+      "contract": 1
+     },
+     "postures": [
+      "contract owned by a timelock 48 h"
+     ],
+     "tvl_usd": 136385259.69051707
+    },
+    "base": {
+     "chain": "Base",
+     "contracts": 1,
+     "composite_min": 85,
+     "composite_max": 85,
+     "admin_kinds": {
+      "contract": 1
+     },
+     "postures": [
+      "contract"
+     ],
+     "tvl_usd": 316998467.1256516
+    },
+    "ethereum-l1": {
+     "chain": "Ethereum L1",
+     "contracts": 1,
+     "composite_min": 85,
+     "composite_max": 85,
+     "admin_kinds": {
+      "contract": 1
+     },
+     "postures": [
+      "contract owned by a timelock 48 h"
+     ],
+     "tvl_usd": 903858821.4092463
+    },
+    "robinhood": {
+     "chain": "Robinhood Chain",
+     "contracts": 4,
+     "composite_min": 85,
+     "composite_max": 85,
+     "admin_kinds": {
+      "contract": 1,
+      "timelock": 2,
+      "unreadable": 1
+     },
+     "postures": [
+      "contract owned by a timelock 48 h",
+      "timelock 48 h",
+      "not read"
+     ],
+     "tvl_usd": 52995474.81332687
+    }
+   },
+   "weakest_chain": "arbitrum",
+   "weakest_composite": 85,
+   "strongest_chain": "arbitrum",
+   "strongest_composite": 85,
+   "spread": 0,
+   "postures_differ": true,
+   "text": "Uniswap V3: Arbitrum contract owned by a timelock 48 h (composite 85); Base contract (composite 85); Ethereum L1 contract owned by a timelock 48 h (composite 85); Robinhood Chain contract owned by a timelock 48 h / timelock 48 h / not read (composite 85)"
+  },
+  {
+   "slug": "euler-v2",
+   "protocol": "Euler V2",
+   "chains": {
+    "monad": {
+     "chain": "Monad",
+     "contracts": 1,
+     "composite_min": 64,
+     "composite_max": 64,
+     "admin_kinds": {
+      "unreadable": 1
+     },
+     "postures": [
+      "not read"
+     ],
+     "tvl_usd": 215300281.79711452
+    },
+    "plasma": {
+     "chain": "Plasma",
+     "contracts": 2,
+     "composite_min": 68,
+     "composite_max": 72,
+     "admin_kinds": {
+      "unreadable": 1,
+      "timelock": 1
+     },
+     "postures": [
+      "not read",
+      "timelock 48 h"
+     ],
+     "tvl_usd": 2006070.518953773
+    }
+   },
+   "weakest_chain": "monad",
+   "weakest_composite": 64,
+   "strongest_chain": "plasma",
+   "strongest_composite": 68,
+   "spread": 4,
+   "postures_differ": false,
+   "text": "Euler V2: Monad not read (composite 64); Plasma not read / timelock 48 h (composite 68 to 72)"
+  },
+  {
+   "slug": "compound-v3",
+   "protocol": "Compound V3",
+   "chains": {
+    "arbitrum": {
+     "chain": "Arbitrum",
+     "contracts": 1,
+     "composite_min": 78,
+     "composite_max": 78,
+     "admin_kinds": {
+      "timelock": 1
+     },
+     "postures": [
+      "timelock 24 h"
+     ],
+     "tvl_usd": 68765611.0004641
+    },
+    "base": {
+     "chain": "Base",
+     "contracts": 1,
+     "composite_min": 78,
+     "composite_max": 78,
+     "admin_kinds": {
+      "timelock": 1
+     },
+     "postures": [
+      "timelock 24 h"
+     ],
+     "tvl_usd": 26419452.884680875
+    },
+    "ethereum-l1": {
+     "chain": "Ethereum L1",
+     "contracts": 1,
+     "composite_min": 79,
+     "composite_max": 79,
+     "admin_kinds": {
+      "timelock": 1
+     },
+     "postures": [
+      "timelock 48 h"
+     ],
+     "tvl_usd": 1334492087.5795693
+    }
+   },
+   "weakest_chain": "arbitrum",
+   "weakest_composite": 78,
+   "strongest_chain": "ethereum-l1",
+   "strongest_composite": 79,
+   "spread": 1,
+   "postures_differ": false,
+   "text": "Compound V3: Arbitrum timelock 24 h (composite 78); Base timelock 24 h (composite 78); Ethereum L1 timelock 48 h (composite 79)"
+  },
+  {
+   "slug": "morpho-blue",
+   "protocol": "Morpho Blue",
+   "chains": {
+    "base": {
+     "chain": "Base",
+     "contracts": 1,
+     "composite_min": 55,
+     "composite_max": 55,
+     "admin_kinds": {
+      "safe": 1
+     },
+     "postures": [
+      "Safe 5-of-9 (9 plain keys)"
+     ],
+     "tvl_usd": 4447188479.496586
+    },
+    "ethereum-l1": {
+     "chain": "Ethereum L1",
+     "contracts": 1,
+     "composite_min": 56,
+     "composite_max": 56,
+     "admin_kinds": {
+      "safe": 1
+     },
+     "postures": [
+      "Safe 6-of-10 (9 plain keys, 1 Safe)"
+     ],
+     "tvl_usd": 5158457755.212914
+    },
+    "robinhood": {
+     "chain": "Robinhood Chain",
+     "contracts": 1,
+     "composite_min": 55,
+     "composite_max": 55,
+     "admin_kinds": {
+      "safe": 1
+     },
+     "postures": [
+      "Safe 5-of-9 (9 plain keys)"
+     ],
+     "tvl_usd": 619854680.3298309
+    },
+    "tempo": {
+     "chain": "Tempo",
+     "contracts": 1,
+     "composite_min": 55,
+     "composite_max": 55,
+     "admin_kinds": {
+      "safe": 1
+     },
+     "postures": [
+      "Safe 5-of-9 (9 plain keys)"
+     ],
+     "tvl_usd": 65235641.70169643
+    }
+   },
+   "weakest_chain": "base",
+   "weakest_composite": 55,
+   "strongest_chain": "ethereum-l1",
+   "strongest_composite": 56,
+   "spread": 1,
+   "postures_differ": false,
+   "text": "Morpho Blue: Base Safe 5-of-9 (9 plain keys) (composite 55); Robinhood Chain Safe 5-of-9 (9 plain keys) (composite 55); Tempo Safe 5-of-9 (9 plain keys) (composite 55); Ethereum L1 Safe 6-of-10 (9 plain keys, 1 Safe) (composite 56)"
+  },
+  {
+   "slug": "pendle-v2",
+   "protocol": "Pendle V2",
+   "chains": {
+    "arbitrum": {
+     "chain": "Arbitrum",
+     "contracts": 1,
+     "composite_min": 43,
+     "composite_max": 43,
+     "admin_kinds": {
+      "safe": 1
+     },
+     "postures": [
+      "Safe 3-of-5 (5 plain keys)"
+     ],
+     "tvl_usd": 170202099.22708184
+    },
+    "plasma": {
+     "chain": "Plasma",
+     "contracts": 1,
+     "composite_min": 43,
+     "composite_max": 43,
+     "admin_kinds": {
+      "safe": 1
+     },
+     "postures": [
+      "Safe 3-of-5 (5 plain keys)"
+     ],
+     "tvl_usd": 43292711.5639093
+    },
+    "robinhood": {
+     "chain": "Robinhood Chain",
+     "contracts": 1,
+     "composite_min": 42,
+     "composite_max": 42,
+     "admin_kinds": {
+      "safe": 1
+     },
+     "postures": [
+      "Safe 3-of-5 (5 plain keys)"
+     ],
+     "tvl_usd": 696862.1654919814
+    }
+   },
+   "weakest_chain": "robinhood",
+   "weakest_composite": 42,
+   "strongest_chain": "arbitrum",
+   "strongest_composite": 43,
+   "spread": 1,
+   "postures_differ": false,
+   "text": "Pendle V2: Robinhood Chain Safe 3-of-5 (5 plain keys) (composite 42); Arbitrum Safe 3-of-5 (5 plain keys) (composite 43); Plasma Safe 3-of-5 (5 plain keys) (composite 43)"
+  },
+  {
+   "slug": "fluid-lending",
+   "protocol": "Fluid Lending",
+   "chains": {
+    "arbitrum": {
+     "chain": "Arbitrum",
+     "contracts": 1,
+     "composite_min": 59,
+     "composite_max": 59,
+     "admin_kinds": {
+      "timelock": 1
+     },
+     "postures": [
+      "timelock 24 h"
+     ],
+     "tvl_usd": 138462375.18226108
+    },
+    "plasma": {
+     "chain": "Plasma",
+     "contracts": 1,
+     "composite_min": 59,
+     "composite_max": 59,
+     "admin_kinds": {
+      "timelock": 1
+     },
+     "postures": [
+      "timelock 24 h"
+     ],
+     "tvl_usd": 40441902.35589888
+    }
+   },
+   "weakest_chain": "arbitrum",
+   "weakest_composite": 59,
+   "strongest_chain": "arbitrum",
+   "strongest_composite": 59,
+   "spread": 0,
+   "postures_differ": false,
+   "text": "Fluid Lending: Arbitrum timelock 24 h (composite 59); Plasma timelock 24 h (composite 59)"
+  }
+ ],
+ "what": "protocols tracked on two chains or more (grouped by DefiLlama slug, watch/tvl.json): per chain the composite range, the admin kinds the independent reader found and the postures in one line; weakest_chain is the deployment with the lowest composite, postures_differ when the admin kinds differ between chains or the composites are 15 points apart; written by scripts/cross_chain.py after every run"
+}

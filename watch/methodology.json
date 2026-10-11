@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-11T06:49:03Z",
+ "generated_utc": "2026-10-11T12:48:05Z",
  "hashes": {
   "0xf178bca63c9d3257a306dd7cf6a4e5b3e3817a4ae59fd289ae3486d7bbc25374": {
    "oracles": {
@@ -84,16 +84,6 @@
    }
   }
  ],
- "changes": [
-  {
-   "oracle": "ethereum-l1-sepolia",
-   "name": "Ethereum L1 (Sepolia)",
-   "chain": "ethereum-l1",
-   "from": "0x0083e97693ff260fc496958d01844474cf65fa5cbfac3fea782590b49ae5ffa9",
-   "to": "0xa39b4e35813b802d9f7b0daf2e685521ca2ffae61b210674e8ea97493c54f84b",
-   "targets": 33,
-   "run_utc": "2026-10-11T06:49:03Z"
-  }
- ],
+ "changes": [],
  "what": "methodologyHash as read on each oracle (keccak256 of the scoring code and its version, set at the push): one hash per oracle is the normal state; a mix means a push half done or a target scored by an older method; a change (against the previous run) means every score of that oracle was produced by a new method: compare across it with care, the chained log keeps the date"
 }

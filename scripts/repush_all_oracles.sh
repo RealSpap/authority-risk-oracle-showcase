@@ -11,6 +11,9 @@
 #   bash scripts/repush_all_oracles.sh                     # every oracle, real send
 #   DRY=1 bash scripts/repush_all_oracles.sh               # recompute + encode only: no key read, nothing sent
 #   ONLY="base plasma" bash scripts/repush_all_oracles.sh  # a subset (names: base plasma monad arbitrum l1 tempo hyperliquid solana robinhood)
+#   ACCEPT_HELD_l1=0xA,0xB ACCEPT_HELD_base=0xC bash scripts/repush_all_oracles.sh # accept these held addresses, PER STEP (scripts/lib/push_guard.py), after reading each one.
+#   One list for all steps is refused when several steps run: the same address (Morpho Blue is tracked on L1 and on Base) would be accepted on every chain.
+#   A single step may still use ACCEPT_HELD=0xA,0xB.
 #
 # Keys (never printed, never written anywhere): KEYS_DIR/evm-testnet-shared/.env for base, plasma, monad,
 # arbitrum, l1, tempo and hyperliquid; KEYS_DIR/robinhood-chain-testnet/.env for robinhood (its own updater
@@ -19,6 +22,9 @@
 # Solana takes a keypair FILE path (KEYS_DIR/solana-devnet/.env -- a raw solana-keygen-style JSON
 # uint8[64] array despite the .env name, confirmed live 2026-09-24, matches work/ecosystems.json's
 # own key_file field), not a key value. Override KEYS_DIR if your keys live elsewhere.
+#
+# READ RPCs (2026-10-07): the free Base, Arbitrum and Ethereum endpoints answer 429 or refuse wide log ranges to a full scoring run, which read as
+# "price walk failed" (oracleAuthorityScore 20) on seven Base entries and as UNREAD role replays on L1; the Tenderly public gateways serve both.
 #
 # Time: each step recomputes every target live before it sends. base/plasma/monad/arbitrum/l1 take about a
 # minute each, tempo about 9 minutes, robinhood about 25 (run it alone in a second terminal:
@@ -34,6 +40,15 @@ L1_ORACLE=0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906
 DRYFLAG=""
 if [ "${DRY:-}" = "1" ]; then DRYFLAG="--dry-run"; echo "DRY RUN: nothing will be sent and no key file is read"; fi
 ONLY="${ONLY:-base plasma monad arbitrum l1 tempo hyperliquid solana robinhood}"
+for n in $ONLY; do
+  case " base plasma monad arbitrum l1 tempo hyperliquid solana robinhood " in
+    *" $n "*) ;;
+    *) echo "ONLY names an unknown step: $n (known: base plasma monad arbitrum l1 tempo hyperliquid solana robinhood)"; exit 2 ;;
+  esac
+done
+if [ -n "${ACCEPT_HELD:-}" ] && [ "$(echo $ONLY | wc -w | tr -d ' ')" -gt 1 ]; then
+  echo "ACCEPT_HELD applies to every step and several steps are selected: use ACCEPT_HELD_<step>=0xA,0xB per step (or ONLY=<one step>)."; exit 2
+fi
 SOLANA_PROGRAM_ID=5VhiTAGLEViGgajhxPbzdWz7WLUAiRy42DY6qi6tYh4W
 
 # Preflight, read-only and never blocking: has the code behind any tracked target changed since the last reviewed snapshot?
@@ -67,18 +82,21 @@ step() {  # $1 = name, $2 = key file (shared or robinhood), rest = env assignmen
     key="$(read_key "$KEYS_DIR/$keyfile")" || { echo "cannot read the key for $name"; FAILED="$FAILED $name"; return 0; }
     export PRIVATE_KEY="$key"
   fi
-  if ! eval "$@ $DRYFLAG"; then FAILED="$FAILED $name"; fi
+  local accfile="ACCEPT_HELD_$name" acc ACCEPTFLAG=""
+  acc="${!accfile:-${ACCEPT_HELD:-}}"
+  if [ -n "$acc" ] && [ -z "$DRYFLAG" ]; then ACCEPTFLAG="--accept-held=$acc"; fi
+  if ! eval "$@ $DRYFLAG $ACCEPTFLAG"; then FAILED="$FAILED $name"; fi
   unset PRIVATE_KEY
 }
 
 echo "--- freshness before"
 python3 scripts/oracle_freshness.py || true
 
-step base evm-testnet-shared/.env "READ_RPC_URL=https://mainnet.base.org ORACLE_RPC_URL=https://sepolia.base.org ORACLE_ADDRESS=$SHARED_ORACLE python3 chains/base-ecosystem/deploy/push_scores.py"
+step base evm-testnet-shared/.env "READ_RPC_URL=https://gateway.tenderly.co/public/base ORACLE_RPC_URL=https://sepolia.base.org ORACLE_ADDRESS=$SHARED_ORACLE python3 chains/base-ecosystem/deploy/push_scores.py"
 step plasma evm-testnet-shared/.env "READ_RPC_URL=https://rpc.plasma.to ORACLE_RPC_URL=https://testnet-rpc.plasma.to ORACLE_ADDRESS=$SHARED_ORACLE python3 chains/plasma-ecosystem/deploy/push_scores.py"
 step monad evm-testnet-shared/.env "READ_RPC_URL=https://rpc.monad.xyz ORACLE_RPC_URL=https://testnet-rpc.monad.xyz/ ORACLE_ADDRESS=$SHARED_ORACLE python3 chains/monad/deploy/push_scores.py"
-step arbitrum evm-testnet-shared/.env "READ_RPC_URL=https://arb1.arbitrum.io/rpc ORACLE_RPC_URL=https://sepolia-rollup.arbitrum.io/rpc ORACLE_ADDRESS=$SHARED_ORACLE python3 chains/arbitrum-ecosystem/deploy/push_scores.py"
-step l1 evm-testnet-shared/.env "READ_RPC_URL=https://ethereum-rpc.publicnode.com ORACLE_RPC_URL=https://ethereum-sepolia-rpc.publicnode.com ORACLE_ADDRESS=$L1_ORACLE python3 chains/ethereum-l1/deploy/update_scores_ethereum_l1.py"
+step arbitrum evm-testnet-shared/.env "READ_RPC_URL=https://gateway.tenderly.co/public/arbitrum ORACLE_RPC_URL=https://sepolia-rollup.arbitrum.io/rpc ORACLE_ADDRESS=$SHARED_ORACLE python3 chains/arbitrum-ecosystem/deploy/push_scores.py"
+step l1 evm-testnet-shared/.env "READ_RPC_URL=https://gateway.tenderly.co/public/mainnet ORACLE_RPC_URL=https://ethereum-sepolia-rpc.publicnode.com ORACLE_ADDRESS=$L1_ORACLE python3 chains/ethereum-l1/deploy/update_scores_ethereum_l1.py"
 step tempo evm-testnet-shared/.env "ORACLE_RPC_URL=https://rpc.moderato.tempo.xyz ORACLE_ADDRESS=$SHARED_ORACLE python3 chains/tempo/deploy/push_scores.py"
 step hyperliquid evm-testnet-shared/.env "ORACLE_RPC_URL=https://rpc.hyperliquid-testnet.xyz/evm ORACLE_ADDRESS=$SHARED_ORACLE python3 chains/hyperliquid/deploy/push_scores.py"
 

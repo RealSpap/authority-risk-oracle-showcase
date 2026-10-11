@@ -517,6 +517,49 @@ and two frozen markets of unknown value are all UNREAD); Jupiter Lend 35 (the Hu
 Safe); Steakhouse Turbo 52. Every other target is unchanged. Open points are listed at the end of the finding. The deeper
 inputs left out by the one-hop rule are listed in `data/finding_2026-10-04-price-paths-beyond-one-hop.md`.
 
+## Tokens: WETH, the large dollar stablecoins (added 2026-10-11)
+
+Seven Ethereum L1 targets score a token itself: who can change it (upgrade, mint, freeze, pause). `chains/ethereum-l1/scorers.py`
+(`score_weth9`, `score_usdc`, `score_usdt`, `score_dai`, `score_usds`, `score_pyusd`, `score_fdusd`, oracle indices 27 to 33). Every
+value was read on two independent RPCs the same day, and they agreed.
+
+How a token is read: every controller found is classified, and the token takes the componentwise minimum over all of them.
+The controllers are the proxy admin (EIP-1967 and ZeppelinOS slots, read from storage), `owner()`, and the role getters the token
+exposes (`blacklister()`, `pauser()`, `masterMinter()` for USDC). A controller that is itself a contract with an `owner()` is
+followed one hop, never two.
+
+| Controller found | Admin / multisig / timelock | Note |
+|---|---|---|
+| an account with no code | 5 / 0 / 0 | a bare EOA by this methodology |
+| an EIP-7702 delegation | 5 / 0 / 0 | one account |
+| a Gnosis Safe (threshold t of n) | 65 if t is 3 or more, 50 if 2, 10 if 1 / min(100, 15t + 5(n - t)) / 0 | same convention as every Safe-rooted target |
+| a legacy multisig wallet (`required()`, `getOwners()`) | 55 if 3 or more required, else 20 / same multisig formula / 0 | the WBTC convention |
+| a contract of an unknown kind | unresolved | the token degrades to 20 / 20 / 0 |
+
+"An account with no code" is the fact; "one key" is not claimed. Whether one person, a hardware module or an MPC service holds
+such an account cannot be observed on chain, and every note and page says so. A score here describes who holds the controls today,
+not how they are operated, and it is not a prediction of loss.
+
+Special cases:
+
+- **WETH9** has no owner, no admin, no proxy slot, and no DELEGATECALL, CALLCODE or SELFDESTRUCT in the code it can execute. The
+  code hash is pinned (3,124 bytes). If every check holds it scores 100 / 100 / 100; if any fails, it degrades like any other token.
+- **DAI and USDS** have no owner. Whoever is a ward can mint (and, for USDS, upgrade). The ward set is replayed from the token's own
+  history on every pass (USDS: `Rely` and `Deny` events; DAI: the legacy anonymous `LogNote` events, whose first topic is the function
+  selector) and must be exactly the expected one: DAI has only DaiJoin; USDS has the Sky pause proxy and UsdsJoin. Each join's `vat()`
+  must be the Sky Vat and the pause proxy must be a ward of the Vat. If so, the token takes the values of the Sky governance pause
+  target (the 2-day `MCD_PAUSE` behind DSChief, 75 / 100 / 70). If any of this differs, it degrades to 20 / 20 / 0. They share the
+  `makerdao-sky-governance` root group with the Sky pause and SparkLend, so their crossExposureScore is lowered (four targets share
+  one root: 100 - 20 x 3 = 40).
+- **USDC** reads five controllers (proxy admin, owner, blacklister, pauser, and the owner of the masterMinter contract). On
+  2026-10-11 all five are accounts with no code, so the score is 5 / 0 / 0 (composite 2). **PYUSD**: the proxy admin, `owner()`, `defaultAdmin()` and `supplyControl()` (the mint authority, a contract whose `owner()` is followed), all accounts with no code, same score.
+- **USDT** (no proxy): `owner()` is a legacy multisig wallet needing 3 of 6, 55 / 60 / 0. **FDUSD**: the ProxyAdmin's owner and the token's
+  `owner()` are the same 4-of-6 Safe, 65 / 70 / 0.
+
+What this does not read: the token's off-chain issuer, custody and reserves, the in-state roles a controller can grant, and any
+role getter a build does not expose. The existing issuer-power report (`scripts/check_issuer_power.py`) still discloses freeze,
+seize and pause functions by name; it is not folded into these scores.
+
 ## Morpho Vault V2 scoring
 
 ADDED 2026-09-26, on Spap's explicit go-ahead after `data/finding_2026-09-25-vault-v2-scoring-scope.md`

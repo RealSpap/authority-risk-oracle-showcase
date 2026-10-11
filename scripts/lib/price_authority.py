@@ -2027,7 +2027,7 @@ def _spark_savings_usdg(w3, gov):
     if l1_facts["chain"] != 1 or not all(l1_facts["code"]) or l1_facts["SubProxy wards"] != [1, 1, 1] or l1_facts["StarGuard ward"] != 1:
         return [path(label, "UNREAD", note=f"not the verified Ethereum shape: {l1_facts}")]
     try:
-        changes = (logs_since(w3, ex, [_ROLE_EVENTS], SPARK_RH_PROOF_BLOCK + 1, 10**7)
+        changes = (logs_since(w3, ex, [_ROLE_EVENTS], SPARK_RH_PROOF_BLOCK + 1, 90_000)  # Robinhood's RPC allows 100,000 blocks for an OR-topic filter (2026-10-07)
                    + sum(logs_since(l1, c, [_WARD_EVENTS], SPARK_L1_PROOF_BLOCK + 1, 10**9) for c in (sp, sg)))
     except Exception as e:  # noqa: BLE001 -- a failed log read is unknown, never "no change"
         return [path(label, "UNREAD", note=f"role or ward replay after the proof blocks failed: {type(e).__name__}")]

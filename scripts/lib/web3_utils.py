@@ -56,7 +56,45 @@ _ADDRESS_ARRAY_GETTER_ABI = lambda name: [  # noqa: E731
 
 
 def get_w3(rpc_url: str) -> Web3:
-    return Web3(Web3.HTTPProvider(rpc_url, request_kwargs={"timeout": 20}))
+    """HTTP provider that waits and retries READS on 429 / 502 / 503 / 504. On 2026-10-07 the free Base RPCs answered 429 to a full scoring run and
+    seven Base entries read "price walk failed" (oracleAuthorityScore 20): a rate limit is not an unread path, and a score published from one would
+    have been wrong, not conservative. Waits 0, 2, 4, 8, 16, 32 s (at most about a minute per request); a Retry-After header is NOT honoured, so a
+    server cannot make a run sleep for an hour.
+
+    A transaction is never replayed: a request carrying eth_sendRawTransaction or eth_sendTransaction goes through a plain adapter with no retry. After a
+    504 or a timeout the first attempt may already be in the mempool, and a replay would answer "already known" or "nonce too low" for a transaction
+    that was in fact accepted (found by the second review, 2026-10-11)."""
+    from requests import Session
+    from requests.adapters import HTTPAdapter
+    from urllib3.util.retry import Retry
+
+    class _Adapter(HTTPAdapter):
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            self._plain = HTTPAdapter(max_retries=0)
+
+        def send(self, request, **kwargs):
+            body = request.body or b""
+            body = body.encode() if isinstance(body, str) else body
+            if b"eth_sendRawTransaction" in body or b"eth_sendTransaction" in body:
+                return self._plain.send(request, **kwargs)
+            return super().send(request, **kwargs)
+
+    session = Session()
+    adapter = _Adapter(max_retries=Retry(total=6, status_forcelist=(429, 502, 503, 504), backoff_factor=1.0,
+                                         allowed_methods=None, respect_retry_after_header=False))
+    session.mount("https://", adapter)
+    session.mount("http://", adapter)
+    kwargs = {}
+    try:   # web3 itself replays eth_sendRawTransaction on a connection error (it is in its own retry allowlist): switch that off too
+        from web3.providers.rpc.utils import REQUEST_RETRY_ALLOWLIST, ExceptionRetryConfiguration
+        from requests.exceptions import ConnectionError as _CE, HTTPError as _HE, Timeout as _TO, TooManyRedirects as _TM
+        kwargs["exception_retry_configuration"] = ExceptionRetryConfiguration(
+            errors=(_CE, _HE, _TO, _TM), retries=5, backoff_factor=0.125,   # web3's own defaults, minus the two send methods
+            method_allowlist=[m for m in REQUEST_RETRY_ALLOWLIST if m not in ("eth_sendRawTransaction", "eth_sendTransaction")])
+    except Exception:  # noqa: BLE001 -- another web3 major without these names: keep its defaults, the adapter above still guards the HTTP layer
+        pass
+    return Web3(Web3.HTTPProvider(rpc_url, request_kwargs={"timeout": 20}, session=session, **kwargs))
 
 
 def is_eoa(w3: Web3, address: str) -> bool:
@@ -153,6 +191,23 @@ def _retrying(fn, retries=4):
 
 
 ARBITRUM_L1_L2_ALIAS_OFFSET = 0x1111000000000000000000000000000000001111
+
+
+def get_logs_spanned(w3: Web3, params: dict, span: int = 9_000_000) -> list:
+    """eth_getLogs over [fromBlock, toBlock] in windows of at most `span` blocks, results concatenated in order.
+
+    Why: on 2026-10-07 the Robinhood Chain mainnet RPC began refusing any getLogs spanning more than 10,000,000 blocks
+    ("query spans 82597022 blocks ... only 10000000 are allowed"), which made a whole-history read fail and the target
+    SKIPPED. A failed window raises, so a partial history is never returned as a complete one."""
+    start = int(params.get("fromBlock", 0))
+    end = params.get("toBlock", "latest")
+    end = w3.eth.block_number if end == "latest" else int(end)
+    out = []
+    while start <= end:
+        stop = min(end, start + span - 1)
+        out.extend(w3.eth.get_logs({**params, "fromBlock": start, "toBlock": stop}))
+        start = stop + 1
+    return out
 
 
 def arbitrum_l1_l2_alias(l1_address: str) -> str:

@@ -545,9 +545,9 @@ class TestRegistry(unittest.TestCase):
     # from the end (-8, -7) rather than a hardcoded absolute count, so the next addition doesn't
     # silently break this test's own assumption a third time.
     def test_horizon_keeps_its_position_ahead_of_later_additions(self):
-        self.assertIs(scorers.SIMPLE_SCORERS[-8], scorers.score_aave_v3_horizon_pool)
-        self.assertIs(scorers.SIMPLE_SCORERS[-7], scorers.score_convex_finance_booster)
-        self.assertEqual(len(scorers.SIMPLE_SCORERS), 24)
+        self.assertIs(scorers.SIMPLE_SCORERS[-15], scorers.score_aave_v3_horizon_pool)
+        self.assertIs(scorers.SIMPLE_SCORERS[-14], scorers.score_convex_finance_booster)
+        self.assertEqual(len(scorers.SIMPLE_SCORERS), 31)
 
 
 if __name__ == "__main__":

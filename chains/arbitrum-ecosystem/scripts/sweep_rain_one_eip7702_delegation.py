@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Contre-verification independante : rain.one (Arbitrum) -- delegation EIP-7702.
+"""Independent cross-check: rain.one (Arbitrum), EIP-7702 delegation.
 
-Lecture seule. Aucune cle, aucun appel destructif. Toutes les valeurs sont
-lues en direct (RPC Arbitrum, DefiLlama, GitHub, Blockscout) -- rien n'est
-recopie d'un rapport precedent. Chaque assertion imprime sa source.
+Read-only. No key, no destructive call. All values are
+read live (Arbitrum RPC, DefiLlama, GitHub, Blockscout); nothing is
+copied from a previous report. Each assertion prints its source.
 
 Usage: python3 verify_rain_one.py
 """
@@ -77,7 +77,7 @@ def decode_owners_array(hex_data):
 
 def main():
     findings = {}
-    print("=== 1. Identification DefiLlama (api.llama.fi/protocol/rain) ===")
+    print("=== 1. DefiLlama identification (api.llama.fi/protocol/rain) ===")
     llama = json.loads(http_get("https://api.llama.fi/protocol/rain"))
     print(f"  name={llama.get('name')} category={llama.get('category')} chains={llama.get('chains')}")
     print(f"  url={llama.get('url')} github={llama.get('github')} address={llama.get('address')}")
@@ -87,13 +87,13 @@ def main():
     findings["defillama_chains"] = llama.get("chains")
     findings["defillama_github"] = llama.get("github")
 
-    print("\n=== 2. Org GitHub rain1-labs (api.github.com) ===")
+    print("\n=== 2. GitHub org rain1-labs (api.github.com) ===")
     gh = json.loads(http_get("https://api.github.com/orgs/rain1-labs"))
     print(f"  login={gh.get('login')} created_at={gh.get('created_at')} blog={gh.get('blog')} type={gh.get('type')}")
     findings["github_org_verified"] = gh.get("login") == "rain1-labs"
     findings["github_org_blog"] = gh.get("blog")
 
-    print("\n=== 3. Doc officielle rain1-labs/docs (raw.githubusercontent.com) ===")
+    print("\n=== 3. Official docs rain1-labs/docs (raw.githubusercontent.com) ===")
     doc = http_get(
         "https://raw.githubusercontent.com/rain1-labs/docs/main/"
         "For-Developers/Rain-SDK/Environments-and-Configuration.mdx"
@@ -103,17 +103,17 @@ def main():
         if "| production" in line:
             cells = [c.strip() for c in line.strip().strip("|").split("|")]
             factory_addr = cells[-1]
-    print(f"  Factory production extraite de la doc = {factory_addr}")
+    print(f"  Production Factory extracted from the docs = {factory_addr}")
     findings["factory_from_docs"] = factory_addr
     if not factory_addr or not factory_addr.startswith("0x") or len(factory_addr) != 42:
-        print("  ECHEC: adresse factory introuvable/mal formee dans la doc.")
+        print("  FAILURE: factory address not found/malformed in the docs.")
         findings["worth_committing"] = False
         print(json.dumps(findings, indent=2))
         return
 
-    print(f"\n=== 4. Lectures on-chain Arbitrum (RPC {ARB_RPC}) ===")
+    print(f"\n=== 4. On-chain reads on Arbitrum (RPC {ARB_RPC}) ===")
     bn = rpc("eth_blockNumber", [])
-    print(f"  bloc courant = {int(bn, 16)}")
+    print(f"  current block = {int(bn, 16)}")
 
     def describe_eip1967(addr, label):
         code = rpc("eth_getCode", [addr, "latest"])
@@ -121,8 +121,8 @@ def main():
         impl_word = rpc("eth_getStorageAt", [addr, EIP1967_IMPL_SLOT, "latest"])
         impl = addr_from_word(impl_word)
         is_proxy = impl != "0x" + "0" * 40
-        print(f"  {label} ({addr}): {code_len} octets de code")
-        print(f"    slot impl EIP-1967 = {impl if is_proxy else '(vide, pas un proxy EIP-1967)'}")
+        print(f"  {label} ({addr}): {code_len} bytes of code")
+        print(f"    EIP-1967 impl slot = {impl if is_proxy else '(empty, not an EIP-1967 proxy)'}")
         return code_len, (impl if is_proxy else None)
 
     factory_len, factory_impl = describe_eip1967(factory_addr, "Factory")
@@ -133,7 +133,7 @@ def main():
     factory_owner_code = rpc("eth_getCode", [factory_owner, "latest"])
     factory_owner_nonce = rpc("eth_getTransactionCount", [factory_owner, "latest"])
     print(f"  Factory.owner() = {factory_owner}")
-    print(f"    code de l'owner = {factory_owner_code!r} ({'EOA' if factory_owner_code == '0x' else 'CONTRAT'}), nonce={int(factory_owner_nonce, 16)}")
+    print(f"    owner code = {factory_owner_code!r} ({'EOA' if factory_owner_code == '0x' else 'CONTRACT'}), nonce={int(factory_owner_nonce, 16)}")
     findings["factory_owner"] = factory_owner
     findings["factory_owner_is_eoa"] = factory_owner_code == "0x"
     findings["factory_owner_nonce"] = int(factory_owner_nonce, 16)
@@ -147,7 +147,7 @@ def main():
     token_owner = addr_from_word(eth_call(token_addr, SEL_OWNER))
     token_owner_code = rpc("eth_getCode", [token_owner, "latest"])
     print(f"  Token.owner() = {token_owner}")
-    print(f"    code de l'owner = {(len(token_owner_code) - 2) // 2} octets ({'EOA' if token_owner_code == '0x' else 'CONTRAT'})")
+    print(f"    owner code = {(len(token_owner_code) - 2) // 2} bytes ({'EOA' if token_owner_code == '0x' else 'CONTRACT'})")
     findings["token_owner"] = token_owner
     findings["token_owner_is_contract"] = token_owner_code != "0x"
 
@@ -159,39 +159,39 @@ def main():
             owners = decode_owners_array(eth_call(token_owner, SEL_OWNERS))
             print(f"    getThreshold()={threshold}, getOwners()={owners}  (Safe standard)")
         except Exception as e:
-            print(f"    pas un Safe standard (getThreshold/getOwners a echoue: {e})")
+            print(f"    not a standard Safe (getThreshold/getOwners failed: {e})")
     findings["safe_threshold"] = threshold
     findings["safe_owners"] = owners
 
-    print("\n=== 5. Delegations EIP-7702 sur chaque signataire du Safe ===")
+    print("\n=== 5. EIP-7702 delegations on each Safe signer ===")
     delegated = {}
     for o in owners:
         code = rpc("eth_getCode", [o, "latest"])
         nonce = int(rpc("eth_getTransactionCount", [o, "latest"]), 16)
         if code.startswith("0x" + EIP7702_PREFIX):
             target = "0x" + code[2 + 6:2 + 6 + 40]
-            print(f"  {o}: DELEGATION EIP-7702 -> {target}  (nonce={nonce})")
+            print(f"  {o}: EIP-7702 DELEGATION -> {target}  (nonce={nonce})")
             delegated[o] = {"target": target, "nonce": nonce}
         else:
-            kind = "EOA" if code == "0x" else f"CONTRAT ({(len(code) - 2) // 2} octets)"
-            print(f"  {o}: {kind}, pas de delegation (nonce={nonce})")
+            kind = "EOA" if code == "0x" else f"CONTRACT ({(len(code) - 2) // 2} bytes)"
+            print(f"  {o}: {kind}, no delegation (nonce={nonce})")
     findings["signers_with_7702_delegation"] = delegated
 
-    print("\n=== 6. Comparaison a l'adresse deja documentee en passe 8 ===")
+    print("\n=== 6. Comparison with the address already documented in pass 8 ===")
     KNOWN_PASS8_DELEGATE = "0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B".lower()
-    print(f"  Adresse connue (lue dans scripts/lib/nested_signers.py du depot) = {KNOWN_PASS8_DELEGATE}")
+    print(f"  Known address (read in the repo's scripts/lib/nested_signers.py) = {KNOWN_PASS8_DELEGATE}")
     matches = [addr for addr, d in delegated.items() if d["target"].lower() == KNOWN_PASS8_DELEGATE]
-    print(f"  Signataires dont la delegation cible cette adresse exacte: {matches}")
+    print(f"  Signers whose delegation targets this exact address: {matches}")
     findings["known_pass8_delegate"] = KNOWN_PASS8_DELEGATE
     findings["signers_matching_pass8_delegate"] = matches
 
     if matches:
         target = delegated[matches[0]]["target"]
         target_code_len = (len(rpc("eth_getCode", [target, "latest"])) - 2) // 2
-        print(f"  Taille du contrat delegue ({target}) sur Arbitrum = {target_code_len} octets")
+        print(f"  Size of the delegate contract ({target}) on Arbitrum = {target_code_len} bytes")
         findings["delegate_contract_len_arbitrum"] = target_code_len
 
-    print("\n=== 7. Recoupement independant : Blockscout Arbitrum (arbitrum.blockscout.com) ===")
+    print("\n=== 7. Independent cross-check: Blockscout Arbitrum (arbitrum.blockscout.com) ===")
     try:
         bs = json.loads(http_get(f"https://arbitrum.blockscout.com/api/v2/addresses/{token_owner}"))
         print(f"  Blockscout: is_contract={bs.get('is_contract')} name={bs.get('name')} "
@@ -199,7 +199,7 @@ def main():
         findings["blockscout_token_owner_name"] = bs.get("name")
         findings["blockscout_token_owner_is_contract"] = bs.get("is_contract")
     except Exception as e:
-        print(f"  Blockscout injoignable/erreur: {e}")
+        print(f"  Blockscout unreachable/error: {e}")
         findings["blockscout_error"] = str(e)
 
     print("\n=== 8. www.rain.one direct ===")
@@ -210,7 +210,7 @@ def main():
         print(f"  {e}")
         findings["rain_one_site_status"] = str(e)
 
-    print("\n=== RESUME (valeurs observees par CE run) ===")
+    print("\n=== SUMMARY (values observed by THIS run) ===")
     print(json.dumps(findings, indent=2, default=str))
 
 

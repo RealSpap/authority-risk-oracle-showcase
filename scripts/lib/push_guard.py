@@ -18,6 +18,7 @@ In a dry run the report is printed only. Before a real send, the published score
 push is refused while any entry is held, unless that entry's address is passed in `--accept-held=0xA,0xB` after a person
 looked at it. A failed read of the published scores refuses the push too (`--skip-published-check` overrides it, by hand).
 """
+import os
 import re
 import sys
 
@@ -62,9 +63,11 @@ def read_published(oracle_w3, oracle_address, targets) -> dict:
     return {t: s[5] for t, s in _read_scores(oracle_w3, oracle_address, targets).items()}
 
 
-def review(scored, published, accepted=(), published_oracle=None):
+def review(scored, published, accepted=(), published_oracle=None, published_cross=None):
     """(held entries, report lines). published: {target lowercase: composite}, or None when it was not read.
-    published_oracle: {target lowercase: oracleAuthorityScore}, or None when not read."""
+    published_oracle: {target lowercase: oracleAuthorityScore}, or None when not read.
+    published_cross: {target lowercase: crossExposureScore}, or None when not read: a target joining a shared root lowers the score of the targets already
+    in it (DAI and USDS joining the Sky group took the Sky pause and SparkLend from 80 to 40 on 2026-10-11 with nothing held), so a drop is held like the others."""
     accepted = {a.lower() for a in accepted}
     held, lines = [], []
     for e in scored:
@@ -84,6 +87,9 @@ def review(scored, published, accepted=(), published_oracle=None):
                 why.append(f"oracleAuthorityScore {old_o} -> {new_o} (drops more than {MAX_DROP})")
             elif new_o == 100:
                 why.append(f"oracleAuthorityScore {old_o} -> 100 (no material price path left: check it is really not applicable)")
+        old_c, new_c = (published_cross or {}).get(t), e.get("crossExposureScore")
+        if old_c is not None and new_c is not None and old_c - new_c > MAX_DROP:
+            why.append(f"crossExposureScore {old_c} -> {new_c} (drops more than {MAX_DROP}: a root group it belongs to got bigger)")
         if why:
             status = "accepted by hand" if t in accepted else "HELD"
             lines.append(f"  {status}: {e.get('label', '')} {key_of(e)}: {'; '.join(why)}")
@@ -110,6 +116,18 @@ def enforce(scored, oracle_w3=None, oracle_address=None, argv=None, accepted=Non
     argv = sys.argv if argv is None else argv
     accepted = _accepted(argv) if accepted is None else [a.strip() for a in accepted if a.strip()]
     skip = ("--skip-published-check" in argv) if skip_published_check is None else skip_published_check
+    if oracle_w3 is None and os.environ.get("PREVIEW_PUBLISHED") == "1" and os.environ.get("ORACLE_RPC_URL") and os.environ.get("ORACLE_ADDRESS"):
+        # dry run that READS the published scores (eth_call, no key, nothing sent) to show what a real send would hold
+        try:
+            w3 = Web3(Web3.HTTPProvider(os.environ["ORACLE_RPC_URL"]))
+            raw = _read_scores(w3, os.environ["ORACLE_ADDRESS"], [key_of(e) for e in scored])
+            held, lines = review(scored, {k: s[5] for k, s in raw.items()}, accepted, {k: s[3] for k, s in raw.items()}, {k: s[4] for k, s in raw.items()})
+            print(f"\nPush guard (dry run, PUBLISHED SCORES READ): a real send would hold {len(held)} entr{'y' if len(held) == 1 else 'ies'}")
+            print("\n".join(lines) if lines else "  none")
+            print("  accept list: --accept-held=" + ",".join(key_of(e) for e in held) if held else "  nothing to accept")
+            return held
+        except Exception as e:  # noqa: BLE001 -- a failed read is never 'nothing would be held'
+            print(f"\nPush guard preview: published scores UNREAD ({type(e).__name__}: {e}); falling back to the plain dry-run report")
     if oracle_w3 is None:
         held, lines = review(scored, None, accepted)
         print(f"\nPush guard (dry run, published scores not read): {len(held)} entr{'y' if len(held) == 1 else 'ies'} would be held "
@@ -119,13 +137,14 @@ def enforce(scored, oracle_w3=None, oracle_address=None, argv=None, accepted=Non
     try:
         raw = _read_scores(oracle_w3, oracle_address, [key_of(e) for e in scored])
         published, published_oracle = {t: s[5] for t, s in raw.items()}, {t: s[3] for t, s in raw.items()}
+        published_cross = {t: s[4] for t, s in raw.items()}
     except Exception as e:  # noqa: BLE001 -- a failed read is never 'nothing changed'
         if not skip:
             raise SystemExit(f"Push guard: published scores UNREAD ({type(e).__name__}: {e}); refusing to push. "
                              "Re-run, or pass --skip-published-check after checking by hand.")
-        published = published_oracle = None
+        published = published_oracle = published_cross = None
         print("Push guard: published scores UNREAD, --skip-published-check given: drop check not run")
-    held, lines = review(scored, published, accepted, published_oracle)
+    held, lines = review(scored, published, accepted, published_oracle, published_cross)
     print(f"\nPush guard: {len(held)} entr{'y' if len(held) == 1 else 'ies'} held")
     print("\n".join(lines) if lines else "  none")
     if held:

@@ -1,25 +1,25 @@
 #!/usr/bin/env python3
-"""Audit de rotation, ethereum-l1, index 1 (run 2026-09-20).
+"""Rotation audit, ethereum-l1, index 1 (run 2026-09-20).
 
-LECTURE SEULE. Ne lit ni keys/, ni chains/ethereum-l1/scorers.py.
-Re-derive la cible trackedTargets(1) depuis zero sur DEUX RPC mainnet
-independants, applique les formules publiees de METHODOLOGY.md, et compare
-au getScore() lu sur l'oracle Sepolia.
+READ-ONLY. Reads neither keys/ nor chains/ethereum-l1/scorers.py.
+Re-derives the trackedTargets(1) target from scratch on TWO independent mainnet
+RPCs, applies the formulas published in METHODOLOGY.md, and compares the result
+with the getScore() read from the Sepolia oracle.
 
-Code de sortie : 0 si tout concorde, 1 s'il y a la moindre divergence.
+Exit code: 0 if everything matches, 1 on the slightest divergence.
 
-FIXE 2026-09-22 (carte tableau "quatre reimplementations separees") : deux changements de forme,
-zero changement de logique de derivation/comparaison.
-(1) call() n'avait AUCUN re-essai -- une coupure reseau transitoire sur `cast` levait RuntimeError
-    non rattrapee et faisait planter tout l'audit par une traceback brute, contrairement aux 3
-    fichiers cousins (audit_rotation_index2.py, celui de base, celui de tempo) qui re-essaient tous.
-    Meme distinction que web3_utils.py (commit 894b3ac, cette session) et audit_rotation_index2.py
-    ::rpc() : un ECHEC RESEAU (timeout, connexion, DNS, 429/502/503) se re-essaie, un REVERT EVM
-    deterministe remonte IMMEDIATEMENT -- le re-essayer masquerait une vraie divergence.
-(2) tout le corps du script (autrefois du code de niveau module qui s'executait a l'IMPORT) est
-    maintenant dans main(), comme le sont deja les 3 autres fichiers de la meme famille -- ce
-    fichier etait le seul a executer des appels RPC reels des qu'on l'importait, ce qui le rendait
-    totalement impossible a tester unitairement sans skill_shell.
+FIXED 2026-09-22 (backlog item "four separate reimplementations"): two changes of form,
+zero change to the derivation/comparison logic.
+(1) call() had NO retry: a transient network drop on `cast` raised an uncaught RuntimeError
+    and crashed the whole audit with a raw traceback, unlike the 3 sibling files
+    (audit_rotation_index2.py, the base one, the tempo one) which all retry.
+    Same distinction as web3_utils.py (commit 894b3ac, this pass) and audit_rotation_index2.py
+    ::rpc(): a NETWORK FAILURE (timeout, connection, DNS, 429/502/503) is retried, a deterministic
+    EVM REVERT is raised IMMEDIATELY (retrying it would mask a real divergence).
+(2) the whole body of the script (formerly module-level code that ran at IMPORT time) now lives
+    in main(), as it already does in the 3 other files of the same family. This file was the only
+    one to run real RPC calls as soon as it was imported, which made it impossible to unit-test
+    without skill_shell.
 """
 import json
 import os
@@ -45,9 +45,9 @@ ORACLE_RPCS = ["https://ethereum-rpc.publicnode.com", "https://mainnet.gateway.t
 
 
 def oracle_authority_live():
-    """oracleAuthorityScore de la cible selon la regle des consommateurs de prix (METHODOLOGY, decidee le 04/10/2026),
-    sur chaque RPC de ORACLE_RPCS. C'est le MEME moteur que le scorer (scripts/lib/price_authority.py) : pas une derivation
-    independante, donc affiche a titre d'information et hors du code de sortie. None si le parcours a echoue."""
+    """oracleAuthorityScore of the target under the price-consumer rule (METHODOLOGY, decided 2026-10-04),
+    on each RPC of ORACLE_RPCS. This is the SAME engine as the scorer (scripts/lib/price_authority.py): not an
+    independent derivation, so it is shown for information only and kept out of the exit code. None if the walk failed."""
     lib = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "scripts", "lib")
     if lib not in sys.path:
         sys.path.insert(0, lib)
@@ -60,15 +60,15 @@ def oracle_authority_live():
         why = [n for n in notes if price_authority.FAILED_MARK in n or price_authority.UNREAD_MARK in n]
         out.append(v if not why else None)
         if why:
-            print(f"  oracle sur {rpc} : {why[0][:200]}")
+            print(f"  oracle on {rpc}: {why[0][:200]}")
     return out
 
 divergences = []
 
-# Marqueurs d'un echec RESEAU/TRANSPORT (transitoire, a re-essayer) plutot que d'un revert EVM
-# deterministe (a ne PAS re-essayer -- le re-essayer masquerait une vraie divergence). `cast` ecrit
-# ces messages sur stderr avant tout code d'erreur JSON-RPC structure, donc c'est une correspondance
-# textuelle sur stderr, comme audit_rotation_index2.py::rpc() le fait sur le message d'exception.
+# Markers of a NETWORK/TRANSPORT failure (transient, to be retried) as opposed to a deterministic
+# EVM revert (NOT to be retried: retrying it would mask a real divergence). `cast` writes
+# these messages on stderr before any structured JSON-RPC error code, so this is a textual
+# match on stderr, as audit_rotation_index2.py::rpc() does on the exception message.
 # Checked FIRST and unconditionally disqualifying: cast prints a revert's ABI-encoded return data
 # inline in the same stderr blob (e.g. `execution reverted: Dai/insufficient-balance, data:
 # "0x08c379a0..."`), and that hex blob can easily contain the bare digits "502"/"503"/"429" by pure
@@ -104,19 +104,19 @@ def call(rpc, addr, sig, *args, tries=4):
             return out.stdout.strip()
         stderr = out.stderr.strip()
         if not _is_transient_failure(stderr):
-            raise RuntimeError(f"cast call a echoue: {' '.join(cmd)}\n{stderr}")
+            raise RuntimeError(f"cast call failed: {' '.join(cmd)}\n{stderr}")
         last = stderr
         if attempt < tries - 1:
             time.sleep(1.5 * (attempt + 1))
     # Reached only if EVERY attempt failed transiently -- a deterministic (non-transient) failure
     # always raises above, inside the loop, on its first occurrence.
-    raise RuntimeError(f"cast call a echoue apres {tries} tentatives (reseau): {' '.join(cmd)}\n{last}")
+    raise RuntimeError(f"cast call failed after {tries} attempts (network): {' '.join(cmd)}\n{last}")
 
 
 def agree(label, values):
-    """Exige que les deux RPC rendent la meme valeur."""
+    """Require both RPCs to return the same value."""
     if len(set(values)) != 1:
-        divergences.append(f"{label}: RPC en desaccord {values}")
+        divergences.append(f"{label}: RPCs disagree {values}")
         return values[0]
     return values[0]
 
@@ -133,16 +133,16 @@ def composite(admin, msig, tl):
 
 
 def main():
-    divergences.clear()  # main() peut etre appele plusieurs fois (tests) : ne pas accumuler
+    divergences.clear()  # main() may be called several times (tests): do not accumulate
 
-    # --- 1. quelle cible est l'index 1 ? (lu en direct, pas suppose) ---
+    # --- 1. which target is index 1? (read live, not assumed) ---
     target = agree(
         "trackedTargets(1)",
         [call(r, ORACLE, "trackedTargets(uint256)(address)", 1) for r in SEPOLIA_RPCS],
     )
     print(f"trackedTargets(1) = {target}")
 
-    # --- 2. score publie on-chain ---
+    # --- 2. score published on-chain ---
     raw = agree(
         "getScore()",
         [
@@ -162,10 +162,10 @@ def main():
     last_updated = int(nums[6].split()[0])
     print(f"on-chain  = {onchain}  lastUpdated={last_updated}")
 
-    # --- 3. re-derivation depuis zero sur 2 RPC mainnet independants ---
+    # --- 3. re-derivation from scratch on 2 independent mainnet RPCs ---
     market = agree("getMarketId()", [call(r, target, "getMarketId()(string)") for r in MAINNET_RPCS])
     if "Aave Ethereum" not in market:
-        divergences.append(f"getMarketId() inattendu: {market}")
+        divergences.append(f"unexpected getMarketId(): {market}")
     owner = agree("PoolAddressesProvider.owner()", [call(r, target, "owner()(address)") for r in MAINNET_RPCS])
     acl = agree("getACLManager()", [call(r, target, "getACLManager()(address)") for r in MAINNET_RPCS])
     root = agree("Executor.owner()", [call(r, owner, "owner()(address)") for r in MAINNET_RPCS])
@@ -179,8 +179,8 @@ def main():
     delay_s = int(settings.strip("()").split(",")[1].split()[0])
     if settings_executor.lower() != owner.lower():
         divergences.append(
-            f"L'executor niveau 1 du PayloadsController ({settings_executor}) n'est pas le owner du "
-            f"PoolAddressesProvider ({owner}): la chaine d'autorite n'est plus celle qui a ete scoree"
+            f"The level 1 executor of the PayloadsController ({settings_executor}) is not the owner of the "
+            f"PoolAddressesProvider ({owner}): the authority chain is no longer the one that was scored"
         )
 
     g_thr = int(agree("guardian.getThreshold()", [call(r, guardian, "getThreshold()(uint256)") for r in MAINNET_RPCS]))
@@ -205,55 +205,55 @@ def main():
         "isEmergencyAdmin(protocol_guardian)": ea_pg,
     }, indent=1))
 
-    # --- 4. faits attendus par le score publie (METHODOLOGY.md) ---
-    # adminKey 78 = racine DAO externe resolue (fourchette 75-85 documentee), atteinte via
-    #   PoolAddressesProvider.owner() -> Executor lvl 1 -> PayloadsController (gouvernance Aave).
-    # msig 100 = racine DAO reelle sans couche Safe au-dessus (pas de Safe a la racine).
-    # timelock 55 = delai reel de 86400 s (24 h) confirme, plafonne sous 100 parce qu'un chemin
-    #   de contournement d'urgence EXISTE (ACLManager.isEmergencyAdmin(PROTOCOL_GUARDIAN)=true).
-    # oracle : hors controle (meme moteur que le scorer, voir oracle_authority_live). cross 80 = plafond de chevauchement
-    #   inter-ecosysteme.
+    # --- 4. facts expected by the published score (METHODOLOGY.md) ---
+    # adminKey 78 = external DAO root resolved (documented 75-85 range), reached via
+    #   PoolAddressesProvider.owner() -> Executor lvl 1 -> PayloadsController (Aave governance).
+    # msig 100 = real DAO root with no Safe layer above it (no Safe at the root).
+    # timelock 55 = real delay of 86400 s (24 h) confirmed, capped below 100 because an emergency
+    #   bypass path EXISTS (ACLManager.isEmergencyAdmin(PROTOCOL_GUARDIAN)=true).
+    # oracle: not checked (same engine as the scorer, see oracle_authority_live). cross 80 = cross-ecosystem
+    #   overlap ceiling.
     faits_attendus = [
-        ("delai de 24 h (86400 s) sur l'executor niveau 1", delay_s == 86400),
-        ("racine = PayloadsController, pas une EOA nue (bytecode present)", root.lower() != owner.lower()),
-        ("aucune couche Safe a la racine (PayloadsController n'expose pas getThreshold)", True),
-        ("un chemin d'urgence existe: isEmergencyAdmin(PROTOCOL_GUARDIAN) = true", ea_pg == "true"),
-        ("l'executor lui-meme n'est PAS emergency admin", ea_exec == "false"),
-        ("guardian Safe 5 sur 9", (g_thr, g_n) == (5, 9)),
-        ("PROTOCOL_GUARDIAN Safe 4 sur 7", (pg_thr, pg_n) == (4, 7)),
+        ("24 h delay (86400 s) on the level 1 executor", delay_s == 86400),
+        ("root = PayloadsController, not a bare EOA (bytecode present)", root.lower() != owner.lower()),
+        ("no Safe layer at the root (PayloadsController does not expose getThreshold)", True),
+        ("an emergency path exists: isEmergencyAdmin(PROTOCOL_GUARDIAN) = true", ea_pg == "true"),
+        ("the executor itself is NOT an emergency admin", ea_exec == "false"),
+        ("guardian Safe 5 of 9", (g_thr, g_n) == (5, 9)),
+        ("PROTOCOL_GUARDIAN Safe 4 of 7", (pg_thr, pg_n) == (4, 7)),
     ]
     for label, ok in faits_attendus:
         if not ok:
-            divergences.append(f"fait attendu FAUX: {label}")
-        print(f"  [{'OK' if ok else 'ECART'}] {label}")
+            divergences.append(f"expected fact FALSE: {label}")
+        print(f"  [{'OK' if ok else 'MISMATCH'}] {label}")
 
     derive = {"admin": 78, "msig": 100, "timelock": 55, "cross": 80}
-    # Controle negatif: AUDIT_FAULT_INJECT=1 fausse volontairement une dimension, le script
-    # DOIT alors sortir 1. Cela prouve que le code de sortie 0 n'est pas vide de sens.
+    # Negative control: AUDIT_FAULT_INJECT=1 deliberately corrupts one dimension, the script
+    # MUST then exit 1. This proves that exit code 0 is not meaningless.
     if os.environ.get("AUDIT_FAULT_INJECT") == "1":
         derive["admin"] = 79
-        print("!! AUDIT_FAULT_INJECT=1 : admin force a 79, une divergence est attendue")
+        print("!! AUDIT_FAULT_INJECT=1: admin forced to 79, a divergence is expected")
     derive["composite"] = composite(derive["admin"], derive["msig"], derive["timelock"])
 
     for k in ("admin", "msig", "timelock", "cross", "composite"):
         if derive[k] != onchain[k]:
-            divergences.append(f"{k}: derive={derive[k]} != on-chain={onchain[k]}")
+            divergences.append(f"{k}: derived={derive[k]} != on-chain={onchain[k]}")
     oracle = oracle_authority_live()
-    print(f"oracle (information, meme moteur que le scorer, pas une derivation independante) : par RPC {oracle}, "
-          f"on-chain {onchain['oracle']}" + ("" if len(set(oracle)) == 1 and None not in oracle else " -- RPC en desaccord ou parcours NON LU"))
+    print(f"oracle (information only, same engine as the scorer, not an independent derivation): per RPC {oracle}, "
+          f"on-chain {onchain['oracle']}" + ("" if len(set(oracle)) == 1 and None not in oracle else " - RPCs disagree or walk NOT READ"))
 
-    # le composite on-chain doit aussi etre coherent avec SES PROPRES dimensions on-chain
+    # the on-chain composite must also be consistent with ITS OWN on-chain dimensions
     recompute = composite(onchain["admin"], onchain["msig"], onchain["timelock"])
     if recompute != onchain["composite"]:
-        divergences.append(f"composite on-chain incoherent: floor(formule)={recompute} != {onchain['composite']}")
+        divergences.append(f"on-chain composite inconsistent: floor(formula)={recompute} != {onchain['composite']}")
 
-    print(f"derive    = {derive}")
+    print(f"derived   = {derive}")
     if divergences:
         print("\nDIVERGENCES:")
         for d in divergences:
             print(" -", d)
         return 1
-    print("\nAUCUNE DIVERGENCE: la derivation live reproduit exactement le score on-chain.")
+    print("\nNO DIVERGENCE: the live derivation exactly reproduces the on-chain score.")
     return 0
 
 

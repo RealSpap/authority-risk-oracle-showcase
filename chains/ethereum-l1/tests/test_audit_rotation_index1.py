@@ -95,7 +95,7 @@ class TestCallRetry(unittest.TestCase):
              patch.object(a.time, "sleep"):
             with self.assertRaises(RuntimeError) as cm:
                 a.call("http://rpc", "0xTo", "owner()(address)", tries=3)
-        self.assertIn("apres 3 tentatives", str(cm.exception))
+        self.assertIn("after 3 attempts", str(cm.exception))
         self.assertIn("connection timed out", str(cm.exception))
 
     def test_a_deterministic_revert_raises_immediately_without_retrying(self):

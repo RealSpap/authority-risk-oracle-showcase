@@ -51,6 +51,16 @@ API_SNAPSHOT_PATH = os.path.join(REPO_ROOT, "api", "scores.json")
 # reachable by anyone with access today, dashboard included.
 DASHBOARD_URL = "https://github.com/RealSpap/authority-risk-oracle/tree/main/dashboard"  # moved from RealSpap 2026-09-29
 
+EXPECTED_READ_CHAIN_ID = 4663      # Robinhood Chain mainnet: the targets are read here, nothing is ever written
+EXPECTED_ORACLE_CHAIN_ID = 46630   # Robinhood Chain testnet: the only chain this script sends a transaction to
+
+
+def _redact_urls(text: str) -> str:
+    """An RPC URL can carry an API key in its path or query string; an alert must not."""
+    import re
+    return re.sub(r"https?://\S+", "<url>", str(text))
+
+
 ORACLE_ABI = [
     {
         "name": "updateScores",
@@ -142,7 +152,7 @@ def main():
         # Never fires in --dry-run mode, matching that mode's existing
         # "not alerting" contract.
         if not dry_run:
-            message = f"Authority Risk Oracle: update run FAILED -- {type(e).__name__}: {e}\n\n{DASHBOARD_URL}"
+            message = f"Authority Risk Oracle: update run FAILED -- {type(e).__name__}: {_redact_urls(e)}\n\n{DASHBOARD_URL}"
             sent = send_telegram_alert(message)
             print(f"Run failed ({type(e).__name__}: {e}) -- failure alert {'sent' if sent else 'NOT sent (Telegram not configured or send failed)'}.")
         raise
@@ -161,6 +171,8 @@ def _run(dry_run: bool, skip_slow: bool = False):
         raise SystemExit(f"Could not connect to read RPC: {read_rpc_url}")
 
     print(f"Reading target state from chain ID: {read_w3.eth.chain_id}")
+    if read_w3.eth.chain_id != EXPECTED_READ_CHAIN_ID:
+        raise SystemExit(f"READ_RPC_URL answers chain ID {read_w3.eth.chain_id}, this script reads Robinhood Chain mainnet ({EXPECTED_READ_CHAIN_ID}): refusing.")
     if skip_slow:
         print("--skip-slow set: omitting the 4 full-chain-history log-replay scorers (dev/verification pass only, not a complete run).")
     print("Re-deriving every tracked target's score from live chain state...\n")
@@ -241,6 +253,9 @@ def _run(dry_run: bool, skip_slow: bool = False):
     if not oracle_w3.is_connected():
         raise SystemExit(f"Could not connect to oracle RPC: {oracle_rpc_url}")
     print(f"Pushing to oracle on chain ID: {oracle_w3.eth.chain_id}")
+    if oracle_w3.eth.chain_id != EXPECTED_ORACLE_CHAIN_ID:
+        raise SystemExit(f"ORACLE_RPC_URL answers chain ID {oracle_w3.eth.chain_id}, the oracle is on Robinhood Chain testnet ({EXPECTED_ORACLE_CHAIN_ID}): refusing to send. "
+                         "This project never writes to a mainnet.")
 
     private_key = os.environ["PRIVATE_KEY"]
     account = oracle_w3.eth.account.from_key(private_key)

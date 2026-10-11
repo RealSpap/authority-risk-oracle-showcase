@@ -1220,8 +1220,8 @@ class TestSimpleScorersList(unittest.TestCase):
     # This guard is deliberately an exact count AND an exact name set: it is the
     # one shared-file line an ecosystem worker has to touch when it adds a
     # target, which is exactly what makes an accidental addition visible.
-    def test_twentyfour_entries_matching_module_functions(self):
-        self.assertEqual(len(scorers.SIMPLE_SCORERS), 24)
+    def test_thirtyone_entries_matching_module_functions(self):
+        self.assertEqual(len(scorers.SIMPLE_SCORERS), 31)
         names = {fn.__name__ for fn in scorers.SIMPLE_SCORERS}
         self.assertEqual(names, {
             "score_uniswap_v3_factory", "score_aave_v3_pool", "score_makerdao_sky_pause",
@@ -1234,6 +1234,8 @@ class TestSimpleScorersList(unittest.TestCase):
             "score_morpho_adpend_usdc", "score_morpho_1337_usdc",
             "score_morpho_steakhouse_usdt_l1", "score_morpho_steakhouse_usdc_l1",
             "score_morpho_steakhouse_prime_usdc_v2", "score_morpho_steakhouse_prime_eurcv_v2",
+            # ADDED 2026-10-11 (WETH and the large dollar stablecoins)
+            "score_weth9", "score_usdc", "score_usdt", "score_dai", "score_usds", "score_pyusd", "score_fdusd",
         })
 
 

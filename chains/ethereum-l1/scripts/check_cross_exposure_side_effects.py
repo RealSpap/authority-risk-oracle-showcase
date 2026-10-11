@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Effet de bord de _apply_cross_exposure() apres l'ajout des 4 nouvelles cibles.
+"""Side effect of _apply_cross_exposure() after the addition of the 4 new targets.
 
-LECTURE SEULE sur Ethereum mainnet (chain 1). Lance le VRAI score_all() deux
-fois contre le MEME RPC : une fois avec les 14 scorers d'origine, une fois avec
-les 18 (14 + les 4 ajoutes ce run). Si le crossExposureScore -- ou n'importe
-quelle autre dimension -- d'une cible PREEXISTANTE bouge, sortie 1.
+READ-ONLY on Ethereum mainnet (chain 1). Runs the REAL score_all() twice
+against the SAME RPC: once with the 14 original scorers, once with
+the 18 (14 + the 4 added in this run). If the crossExposureScore, or any
+other dimension, of a PRE-EXISTING target moves, exit 1.
 
-Usage: python3 audit/check_cross_exposure_side_effects.py [rpc_url]
+Usage: python3 chains/ethereum-l1/scripts/check_cross_exposure_side_effects.py [rpc_url]
 """
 import importlib.util
 import os
@@ -27,11 +27,11 @@ NOUVEAUX = {
 }
 rpc = sys.argv[1] if len(sys.argv) > 1 else "https://ethereum-rpc.publicnode.com"
 w3 = get_w3(rpc)
-assert w3.eth.chain_id == 1, f"refus: chain_id {w3.eth.chain_id}, attendu 1 (lecture seule mainnet)"
+assert w3.eth.chain_id == 1, f"refused: chain_id {w3.eth.chain_id}, expected 1 (read-only mainnet)"
 
 tous = list(m.SIMPLE_SCORERS)
 anciens = [f for f in tous if f.__name__ not in NOUVEAUX]
-assert len(tous) - len(anciens) == 4, "les 4 nouveaux scorers ne sont pas tous dans SIMPLE_SCORERS"
+assert len(tous) - len(anciens) == 4, "the 4 new scorers are not all in SIMPLE_SCORERS"
 
 DIMS = ("adminKeyScore", "multisigScore", "timelockScore", "oracleAuthorityScore", "crossExposureScore", "compositeScore")
 
@@ -47,24 +47,24 @@ apres = run(tous)
 ecarts = []
 for t, v in avant.items():
     if t not in apres:
-        ecarts.append((t, "disparue", v, None))
+        ecarts.append((t, "disappeared", v, None))
     elif apres[t] != v:
-        ecarts.append((t, "modifiee", v, apres[t]))
+        ecarts.append((t, "modified", v, apres[t]))
 
-print(f"RPC={rpc}  cibles avant={len(avant)}  apres={len(apres)}")
+print(f"RPC={rpc}  targets before={len(avant)}  after={len(apres)}")
 for t in sorted(avant):
-    etat = "CHANGE" if apres.get(t) != avant[t] else "inchange"
+    etat = "CHANGED" if apres.get(t) != avant[t] else "unchanged"
     print(f"  {etat:9s} {t} cross={avant[t]['crossExposureScore']} -> {apres.get(t, {}).get('crossExposureScore')}")
-print("  --- nouvelles ---")
+print("  --- new ---")
 for t in sorted(set(apres) - set(avant)):
     print(f"            {t} {apres[t]}")
 
 if len(apres) - len(avant) != 4:
-    ecarts.append(("comptage", f"{len(avant)} -> {len(apres)}", None, None))
+    ecarts.append(("count", f"{len(avant)} -> {len(apres)}", None, None))
 if ecarts:
-    print("\nEFFET DE BORD DETECTE:")
+    print("\nSIDE EFFECT DETECTED:")
     for e in ecarts:
         print(" -", e)
     sys.exit(1)
-print(f"\nAUCUN effet de bord: les {len(avant)} cibles preexistantes sont identiques sur les 6 dimensions.")
+print(f"\nNO side effect: the {len(avant)} pre-existing targets are identical on all 6 dimensions.")
 sys.exit(0)

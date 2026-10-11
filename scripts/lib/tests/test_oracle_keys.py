@@ -257,9 +257,10 @@ except Exception as e:
 
 _RH_SETUP = """
 class W3:
-    eth = types.SimpleNamespace(chain_id=1)
+    def __init__(self, url):   # the push script now checks which chain each RPC answers (Robinhood mainnet to read, testnet to write)
+        self.eth = types.SimpleNamespace(chain_id={"read": 4663, "oracle": 46630, "wrongread": 1, "wrongoracle": 4663}.get(url))
     def is_connected(self): return True
-m.get_w3 = lambda url: (calls.append("get_w3:" + url), W3())[1]
+m.get_w3 = lambda url: (calls.append("get_w3:" + url), W3(url))[1]
 m.score_all = lambda w3, skip_slow=False: scored
 # ADDED 2026-09-22: check_completeness() (its own dedicated coverage lives in
 # scripts/tests/test_update_scores.py::TestCheckCompleteness) would otherwise compare this test's
@@ -309,6 +310,14 @@ class TestInlineAssemblersBehaviour(unittest.TestCase):
         scored = [_entry("first", A_LOWER, notes=[]), _entry("second", B, notes=[])]
         r = _run_inline("scripts/update_scores.py", scored, _RH_SETUP, "m._run(True, False)", env=RH_ENV)
         self.assertEqual((r["refused"], r.get("error")), (False, None), r)
+
+    def test_robinhood_refuses_to_read_or_to_send_on_the_wrong_chain(self):
+        scored = [_entry("first", A_LOWER, notes=[]), _entry("second", B, notes=[])]
+        r = _run_inline("scripts/update_scores.py", scored, _RH_SETUP, "m._run(True, False)", env={**RH_ENV, "READ_RPC_URL": "wrongread"})
+        self.assertTrue(r["refused"], r); self.assertIn("refusing", r["message"]); self.assertEqual(r["calls"], ["get_w3:wrongread"])
+        # a real send whose ORACLE_RPC_URL answers the mainnet (4663) is refused before the private key is read (PRIVATE_KEY is not even set here)
+        r = _run_inline("scripts/update_scores.py", scored, _RH_SETUP, "m._run(False, False)", env={**RH_ENV, "ORACLE_RPC_URL": "wrongoracle"})
+        self.assertTrue(r["refused"], r); self.assertIn("never writes to a mainnet", r["message"])
 
     def test_solana_push_live_refuses_a_collision_before_the_key_is_read_or_any_transaction_is_sent(self):
         scored = [_entry("first", SOL_LOWER), _entry("second", SOL_LOWER)]

@@ -63,7 +63,7 @@ confirmed via `getBlockTime` to be **2026-08-10T20:13:29 UTC**, so this is the p
 transaction slots checked earlier reflects one deployment's chunked buffer writes, not ongoing daily activity) -- and `upgrade_authority`
 reads back the same EOA. Identified via web
 search: this is Switchboard's own **Oracle Quotes program**, part of the confidential-runtime quote pipeline behind their oracle
-attestation system ([switchboard-docs.web.app](https://switchboard-docs.web.app/), [docs.switchboard.xyz](https://docs.switchboard.xyz/docs-by-chain/solana-svm)) --
+attestation system (switchboard-docs.web.app (no longer reachable), [docs.switchboard.xyz](https://docs.switchboard.xyz/docs-by-chain/solana-svm)) --
 real, live, and not one of the 3 programs SolGov's registry (or this finding, before this update) had ever associated with Switchboard.
 It does not appear anywhere else in this repo's data.
 

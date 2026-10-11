@@ -2,21 +2,22 @@
   "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
   "chainId": 46630,
   "methodologyVersion": "authority-risk-oracle-v3",
-  "methodologyHash": "0xf2606acddcba40931e80d6e2a5a45ff06a0788ef4db7a53b60e19de4133b8975",
-  "generatedAt": 1790408560,
-  "txHash": "521076fcda7d834af03240e6bb03ebd771e7789962cf1ecde5f673b9d784fad8",
-  "blockNumber": 124480424,
+  "methodologyHash": "0x795edc64fdbb202de7639a1c6c1148aee4788c27ffc66050f9aa6cf0e09614c5",
+  "methodologyCommit": "55b3f1a4c67ad7c1269272a37f9de5ee6ca847ca",
+  "generatedAt": 1791664867,
+  "txHash": "4dc4cdcb4ac07bd4a26c664e19b1dea09fe130695118d864ff8606df257f145f",
+  "blockNumber": 132517705,
   "scores": [
     {
       "target": "0xBeEff033F34C046626B8D0A041844C5d1A5409dd",
       "label": "Morpho Steakhouse USDG vault",
-      "adminKeyScore": 10,
-      "multisigScore": 35,
-      "timelockScore": 15,
-      "oracleAuthorityScore": 100,
+      "adminKeyScore": 5,
+      "multisigScore": 65,
+      "timelockScore": 75,
+      "oracleAuthorityScore": 2,
       "crossExposureScore": 40,
-      "compositeScore": 19,
-      "l1CappedComposite": 19
+      "compositeScore": 44,
+      "l1CappedComposite": 44
     },
     {
       "target": "0x1f7d7550B1b028f7571E69A784071F0205FD2EfA",
@@ -134,7 +135,7 @@
       "adminKeyScore": 65,
       "multisigScore": 85,
       "timelockScore": 0,
-      "oracleAuthorityScore": 100,
+      "oracleAuthorityScore": 52,
       "crossExposureScore": 100,
       "compositeScore": 52,
       "l1CappedComposite": 52
@@ -230,13 +231,13 @@
     {
       "target": "0xD540F47F214dC7D6D244E62A6aE7e06B586Ef44A",
       "label": "Meridian Perps (ExchangeGateway + merUSD)",
-      "adminKeyScore": 2,
+      "adminKeyScore": 40,
       "multisigScore": 0,
       "timelockScore": 0,
       "oracleAuthorityScore": 100,
       "crossExposureScore": 100,
-      "compositeScore": 1,
-      "l1CappedComposite": 1
+      "compositeScore": 16,
+      "l1CappedComposite": 16
     },
     {
       "target": "0x9D53d5E3bd5E8d4Cbfa6DB1ca238AEA02E651010",
@@ -472,57 +473,57 @@
     {
       "target": "0x99347d5F70D3838763f6Bddcf80304C8aa953B57",
       "label": "Morpho NetNet Credit vault",
-      "adminKeyScore": 36,
-      "multisigScore": 16,
-      "timelockScore": 10,
-      "oracleAuthorityScore": 100,
+      "adminKeyScore": 5,
+      "multisigScore": 15,
+      "timelockScore": 60,
+      "oracleAuthorityScore": 2,
       "crossExposureScore": 100,
-      "compositeScore": 22,
-      "l1CappedComposite": 22
+      "compositeScore": 25,
+      "l1CappedComposite": 25
     },
     {
       "target": "0x37788ff0c1d4e45A7FE06BC7e71e0cc00121d0A8",
       "label": "Morpho Purinta USDG vault",
-      "adminKeyScore": 48,
-      "multisigScore": 48,
-      "timelockScore": 10,
-      "oracleAuthorityScore": 100,
+      "adminKeyScore": 60,
+      "multisigScore": 55,
+      "timelockScore": 75,
+      "oracleAuthorityScore": 50,
       "crossExposureScore": 100,
-      "compositeScore": 37,
-      "l1CappedComposite": 37
+      "compositeScore": 63,
+      "l1CappedComposite": 57
     },
     {
       "target": "0xbEeFF0fb1Dc19344A87b8479dAb60A2e16160737",
       "label": "Morpho Ethena x Steakhouse USDG vault",
-      "adminKeyScore": 60,
-      "multisigScore": 64,
-      "timelockScore": 10,
+      "adminKeyScore": 70,
+      "multisigScore": 65,
+      "timelockScore": 75,
       "oracleAuthorityScore": 100,
       "crossExposureScore": 40,
-      "compositeScore": 46,
-      "l1CappedComposite": 46
+      "compositeScore": 70,
+      "l1CappedComposite": 57
     },
     {
       "target": "0xBEEff039907422219Fb367e525954DDC092854d9",
       "label": "Morpho Grove x Steakhouse USDG vault",
-      "adminKeyScore": 60,
-      "multisigScore": 56,
-      "timelockScore": 10,
+      "adminKeyScore": 20,
+      "multisigScore": 30,
+      "timelockScore": 75,
       "oracleAuthorityScore": 100,
       "crossExposureScore": 40,
-      "compositeScore": 44,
-      "l1CappedComposite": 44
+      "compositeScore": 40,
+      "l1CappedComposite": 40
     },
     {
       "target": "0xbeEfFF136E3684273e6aA75A1669B784B373A4FD",
       "label": "Morpho Steakhouse Turbo USDG vault",
-      "adminKeyScore": 60,
-      "multisigScore": 64,
-      "timelockScore": 10,
-      "oracleAuthorityScore": 100,
+      "adminKeyScore": 70,
+      "multisigScore": 65,
+      "timelockScore": 60,
+      "oracleAuthorityScore": 52,
       "crossExposureScore": 40,
-      "compositeScore": 46,
-      "l1CappedComposite": 46
+      "compositeScore": 66,
+      "l1CappedComposite": 57
     },
     {
       "target": "0x026df18fbd2A7639089D0a16293383ec687A5Ca1",

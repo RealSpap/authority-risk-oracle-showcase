@@ -247,7 +247,7 @@
     </div>
   </div>
 
-  <div class="aggregate" id="aggregate">Reading targets across <b id="aggChains">7</b> deployed oracles…</div>
+  <div class="aggregate" id="aggregate">Reading targets across <b id="aggChains">9</b> deployed oracles…</div>
 
   <div class="incidents">
     <h2>What this risk score actually guards against</h2>
@@ -317,8 +317,8 @@
   <footer>
     <p>Every chain tab above reads live, in your browser, straight from <code>getScore(address)</code> on that chain's deployed oracle (selector <code>0xd47875d0</code>), after enumerating <code>trackedTargets(uint256)</code> (<code>0x9481e5e0</code>) up to <code>trackedTargetsCount()</code> (<code>0x835e2172</code>). Not-applicable sub-scores (e.g. <code>oracleAuthorityScore</code> on a lending vault) read 100 by convention - full marks, not a penalty - rather than being silently omitted. Click a card's <b>Link</b> chip to get a shareable, deep-linkable URL straight to that finding.</p>
     <p>The <b>Zcash</b> tab is a genuinely different mechanism, not a smaller version of the EVM one: Zcash has no contract VM, so there's no oracle contract to call. Instead it's a signed, off-chain score attestation with its commitment hash anchored in a real Zcash Testnet <code>OP_RETURN</code> output - this dashboard fetches that transaction, decodes the commitment, and recomputes it from the full attestation live in your browser, rather than trusting either side alone. It now verifies four publications: the <b>ARO2</b> commitment over the six live targets (the Zenrock zenZEC keyring was retired from the live set on 2026-09-20, see <a href="../chains/zcash/data/legacy_snapshot_zenzec_keyring_2026-09-20.json" target="_blank" rel="noopener">its legacy snapshot</a>), the <b>ARO2</b> whole-set commitment re-anchored from a rotated key (<a href="../chains/zcash/data/publisher_key_exposure_2026-09-19.md" target="_blank" rel="noopener">publisher_key_exposure_2026-09-19.md</a>), the <b>first ARO2</b> anchor of the same set (<a href="../chains/zcash/data/testnet_oracle_batch_2026-09-19.md" target="_blank" rel="noopener">testnet_oracle_batch_2026-09-19.md</a>), and the earlier single-score <b>ARO1</b> proof of concept (<a href="../chains/zcash/data/testnet_oracle_poc_2026-09-19.md" target="_blank" rel="noopener">testnet_oracle_poc_2026-09-19.md</a>). All four prove integrity and timing of the scores, not that the scores are true, and the last two were signed by a publisher key that was later found in the repository's history.</p>
-    <p><b>Cross-exposure</b> is a 5th dimension, separate from the composite: it checks whether the same real signer (a bare EOA, or a Gnosis Safe owner) also controls <em>another</em> tracked target, on the same chain or on another ecosystem, reusing this project's <a href="https://github.com/RealSpap/multisig-overlap" target="_blank" rel="noopener">multisig-overlap</a> methodology. 100 = no shared signer with any other group; within one ecosystem it drops by 20 per additional group sharing a root signer, and a root committee identical to a tracked target's committee on another ecosystem is capped at a flat 80. The cap is <code>min(within-ecosystem score, 80)</code>, so a value already lowered is never raised back, and a scorer compares the owner set it just read against a dated snapshot of the other chain's committee instead of calling a second RPC (the rule is documented once, in <a href="../METHODOLOGY.md">METHODOLOGY.md</a>, under "Convention (decided 2026-09-20)"). As of 2026-09-20 the EVM tabs and Tempo fold the committees they hold a dated snapshot of; a target with no snapshot to compare against (for example Arbitrum's GMX and Camelot, or Plasma's validator set and Yuzu) reports 100, which means no overlap was checked for, not that none exists. These values were pushed on-chain on 2026-09-20 to the Ethereum L1, Arbitrum, Plasma, Monad, Tempo and Robinhood Chain oracles (Base had no score change and was not re-pushed), and each oracle now reads back equal to the scorer output; cards whose numbers changed in that push say "pushed on-chain 2026-09-20". On the Arbitrum and Base tabs this caught a real, live finding: Aave's own emergency-guardian Safe is the identical 9-signer committee on both chains, just redeployed at a different address, so one compromised committee reaches both chains' cancel path.</p>
-    <p>Full methodology, per-target proof files, and the scorer source: <a href="https://github.com/RealSpap/authority-risk-oracle" target="_blank" rel="noopener">the repository</a>. Built for <a href="https://colosseum.com/worldsfair" target="_blank" rel="noopener">Colosseum's Crypto World's Fair</a>.</p>
+    <p><b>Cross-exposure</b> is a 5th dimension, separate from the composite: it checks whether the same real signer (a bare EOA, or a Gnosis Safe owner) also controls <em>another</em> tracked target, on the same chain or on another ecosystem, reusing this project's <a href="https://github.com/RealSpap/multisig-overlap-showcase" target="_blank" rel="noopener">multisig-overlap</a> methodology. 100 = no shared signer with any other group; within one ecosystem it drops by 20 per additional group sharing a root signer, and a root committee identical to a tracked target's committee on another ecosystem is capped at a flat 80. The cap is <code>min(within-ecosystem score, 80)</code>, so a value already lowered is never raised back, and a scorer compares the owner set it just read against a dated snapshot of the other chain's committee instead of calling a second RPC (the rule is documented once, in <a href="../METHODOLOGY.md">METHODOLOGY.md</a>, under "Convention (decided 2026-09-20)"). As of 2026-09-20 the EVM tabs and Tempo fold the committees they hold a dated snapshot of; a target with no snapshot to compare against (for example Arbitrum's GMX and Camelot, or Plasma's validator set and Yuzu) reports 100, which means no overlap was checked for, not that none exists. These values were pushed on-chain on 2026-09-20 to the Ethereum L1, Arbitrum, Plasma, Monad, Tempo and Robinhood Chain oracles (Base had no score change and was not re-pushed), and each oracle now reads back equal to the scorer output; cards whose numbers changed in that push say "pushed on-chain 2026-09-20". On the Arbitrum and Base tabs this caught a real, live finding: Aave's own emergency-guardian Safe is the identical 9-signer committee on both chains, just redeployed at a different address, so one compromised committee reaches both chains' cancel path.</p>
+    <p>Full methodology, per-target proof files, and the scorer source: <a href="https://github.com/RealSpap/authority-risk-oracle-showcase" target="_blank" rel="noopener">the repository</a>. Built for <a href="https://colosseum.com/worldsfair" target="_blank" rel="noopener">Colosseum's Crypto World's Fair</a>.</p>
   </footer>
 </div>
 
@@ -877,6 +877,41 @@
       summary: 'The owner is a VaultV2Supervisor whose owner is Steakhouse\'s 5-of-10 Safe, the same Safe that owns four of the Morpho V1 vaults tracked here; the curator is a 3-of-9 Safe. Every fund-redirecting action sits behind a 7-day timelock, and several exit gates are permanently abdicated.',
       tag: '5-of-10 owner Safe, 7-day timelock, composite 73',
       detail: 'Pushed on-chain 2026-10-10. Scored 70 / 75 / 75 with an oracle-authority score of 52, the weakest controller among the price paths that carry at least 1% of the vault: a Chainlink proxy owner, a 4-of-9 Safe with no timelock above it. The send-assets gate is the one exit gate not abdicated: the curator controls it behind a 7-day timelock. The sister vault Steakhouse Prime USDC has the same owner and curator Safes.' },
+    { idx: [27],
+      title: 'WETH9 (Wrapped Ether)',
+      summary: 'Nobody can change it: no owner, no admin, no proxy slot, and no DELEGATECALL, CALLCODE or SELFDESTRUCT in the code it can execute. The code is pinned by hash.',
+      tag: 'immutable, composite 100',
+      detail: 'Added 2026-10-11 so that the most widely held tokens are covered. Scored 100 / 100 / 100: the three dimensions are not applicable to a contract nobody controls. The check is re-run on every scoring pass; a different code at this address, a proxy slot or an owner would degrade the score instead of keeping it.' },
+    { idx: [28],
+      title: 'USDC (Circle FiatTokenProxy)',
+      summary: 'The proxy admin, the owner, the blacklister and the pauser are all accounts with no code, and so is the owner of the masterMinter contract. Any of them can upgrade, blacklist, pause or set minters, with no delay.',
+      tag: 'accounts with no code, no timelock, composite 2',
+      detail: 'Added 2026-10-11. Scored 5 / 0 / 0 (composite 2): the componentwise minimum over five controllers, all read on two independent RPCs the same day. Whether one key, an HSM or an MPC service holds an account with no code cannot be observed on chain; the score treats it as a bare EOA, the methodology\'s convention. The implementation slot holds 0x4350…02dd, so the logic can be replaced by the proxy admin. This reads who holds the controls, not how they are operated: it is a statement about on-chain authority, not a prediction of loss.' },
+    { idx: [29],
+      title: 'USDT (Tether)',
+      summary: 'owner() is a legacy multisig wallet that needs 3 of 6 signatures and has no timelock. It can issue, redeem, blacklist and change the fee parameters. There is no proxy.',
+      tag: '3-of-6 multisig, no delay, composite 40',
+      detail: 'Added 2026-10-11. Scored 55 / 60 / 0 (composite 40) by the same convention as WBTC\'s legacy multisig: a 3-of-6 wallet that executes on confirmation, with nothing between a signed transaction and its effect. Read on two independent RPCs the same day.' },
+    { idx: [30],
+      title: 'DAI (Sky)',
+      summary: 'No proxy and no owner. Its only ward is the DaiJoin adapter, whose vat() is the Sky Vat, which the Sky governance pause proxy controls behind a 2-day delay.',
+      tag: 'Sky governance, 2-day pause, composite 81',
+      detail: 'Added 2026-10-11. Scored with the Sky pause target\'s own values (75 / 100 / 70, composite 81), re-read on every pass together with the ward set (replayed from the token\'s legacy LogNote history), the DaiJoin link to the Vat and the pause proxy\'s ward on the Vat. If any of those differs, the score degrades. Shares its root with the Sky pause, SparkLend and USDS, so its cross-exposure is lowered.' },
+    { idx: [31],
+      title: 'USDS (Sky)',
+      summary: 'An EIP-1967 upgradeable proxy whose mint and upgrade rights are wards: the Sky governance pause proxy and the UsdsJoin adapter. Nobody else holds one.',
+      tag: 'Sky governance, 2-day pause, composite 81',
+      detail: 'Added 2026-10-11. Scored with the Sky pause target\'s own values (75 / 100 / 70, composite 81). The ward set is replayed from the token\'s Rely and Deny history on every pass and must be exactly those two; a third ward degrades the score. Shares its root with the Sky pause, SparkLend and DAI.' },
+    { idx: [32],
+      title: 'PYUSD (Paxos)',
+      summary: 'The proxy admin and the owner are accounts with no code. Either can replace the token\'s logic or act as the owner, with no delay.',
+      tag: 'accounts with no code, no timelock, composite 2',
+      detail: 'Added 2026-10-11. Scored 5 / 0 / 0 (composite 2). The supply controller and the asset protection role did not answer through the proxy on this build, so only the proxy admin and owner() are read. Whether one key, an HSM or an MPC service holds an account with no code cannot be observed on chain; the score treats it as a bare EOA, the methodology\'s convention.' },
+    { idx: [33],
+      title: 'FDUSD (First Digital)',
+      summary: 'An EIP-1967 proxy whose admin is a ProxyAdmin contract; the ProxyAdmin\'s owner and the token\'s owner() are the same 4-of-6 Gnosis Safe, with no timelock.',
+      tag: '4-of-6 Safe, no delay, composite 47',
+      detail: 'Added 2026-10-11. Scored 65 / 70 / 0 (composite 47) by the Safe-rooted convention: four signatures out of six, nothing between a signed transaction and its effect. Read on two independent RPCs the same day.' },
   ];
 
   CHAINS.arbitrum.groups = [
@@ -2253,7 +2288,7 @@
    read by scripts/incident_exposure.py on the date below; refresh it by rerunning that script with --out and copying the compositeScore of each row. */
 (function () {
   'use strict';
-  var SNAPSHOT = { date: '2026-09-26', composites: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4, 5, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 14, 19, 19, 22, 22, 26, 27, 29, 30, 31, 31, 31, 31, 31, 31, 31, 32, 32, 32, 32, 33, 33, 33, 33, 35, 37, 37, 39, 39, 40, 42, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 44, 44, 44, 45, 46, 46, 46, 46, 46, 46, 46, 47, 47, 48, 48, 48, 48, 48, 49, 50, 52, 52, 52, 52, 54, 54, 54, 54, 54, 55, 55, 55, 55, 55, 55, 55, 56, 56, 57, 57, 57, 57, 57, 57, 57, 57, 57, 57, 59, 59, 60, 60, 60, 61, 61, 61, 63, 64, 64, 66, 66, 67, 67, 68, 71, 71, 71, 71, 72, 73, 73, 78, 78, 78, 78, 79, 80, 80, 81, 81, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 100] };
+  var SNAPSHOT = { date: '2026-10-11', composites: [1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4, 5, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 14, 16, 19, 22, 25, 26, 27, 29, 30, 31, 31, 31, 31, 31, 31, 31, 32, 32, 32, 32, 33, 33, 33, 33, 35, 35, 37, 38, 39, 39, 39, 40, 40, 40, 40, 42, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 44, 44, 44, 45, 46, 46, 46, 46, 46, 47, 47, 47, 47, 48, 48, 48, 48, 48, 49, 50, 51, 51, 52, 52, 52, 54, 54, 54, 54, 54, 55, 55, 55, 55, 55, 55, 55, 56, 56, 57, 57, 57, 57, 57, 57, 57, 57, 57, 57, 57, 59, 59, 60, 60, 61, 61, 63, 63, 64, 64, 66, 66, 66, 67, 68, 70, 70, 71, 71, 71, 71, 72, 73, 73, 73, 73, 73, 73, 73, 73, 78, 78, 78, 78, 79, 80, 80, 81, 81, 81, 81, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 100, 100] };
   var INCIDENTS = [
     { name: 'Radiant Capital, Oct 2024 ($53M)', t: 3, n: 11 },
     { name: 'WazirX, Jul 2024 ($235M)', t: 4, n: 6 },

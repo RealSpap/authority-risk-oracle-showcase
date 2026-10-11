@@ -197,4 +197,65 @@ contract AuthorityRiskOracleTest is Test {
         // a revert on entry 2 must roll back entry 1 too, not partially apply.
         assertTrue(oracle.isStale(vault));
     }
+
+    // ADDED 2026-10-11 (second review): a mutation that removed the multisig, timelock and oracleAuthority range checks left all
+    // 20 tests green, so each sub-score is now pinned on its own. ScoreOutOfRange reports the composite, whichever field is bad
+    // (documented below), so the revert data is the same for the five sub-scores.
+    function _expectOutOfRange(AuthorityRiskOracle.AuthorityScore memory score) private {
+        vm.prank(updater);
+        vm.expectRevert(abi.encodeWithSelector(AuthorityRiskOracle.ScoreOutOfRange.selector, vault, score.compositeScore));
+        oracle.updateScore(vault, score);
+    }
+
+    function test_EachSubScoreAbove100RevertsOnItsOwn() public {
+        AuthorityRiskOracle.AuthorityScore memory s = _sampleScore(75);
+        s.adminKeyScore = 101;
+        _expectOutOfRange(s);
+        s = _sampleScore(75);
+        s.multisigScore = 101;
+        _expectOutOfRange(s);
+        s = _sampleScore(75);
+        s.timelockScore = 101;
+        _expectOutOfRange(s);
+        s = _sampleScore(75);
+        s.oracleAuthorityScore = 101;
+        _expectOutOfRange(s);
+        s = _sampleScore(75);
+        s.crossExposureScore = 101;
+        _expectOutOfRange(s);
+    }
+
+    function test_EachSubScoreOfExactly100IsAccepted() public {
+        AuthorityRiskOracle.AuthorityScore memory s = _sampleScore(75);
+        s.adminKeyScore = 100;
+        s.multisigScore = 100;
+        s.timelockScore = 100;
+        s.oracleAuthorityScore = 100;
+        s.crossExposureScore = 100;
+        vm.prank(updater);
+        oracle.updateScore(vault, s);
+        assertEq(oracle.getScore(vault).timelockScore, 100);
+    }
+
+    // DOCUMENTED LIMITS of the deployed contract (found by an independent review on 2026-10-11, not changed because redeploying the
+    // nine oracles is not part of this release): lastUpdated is whatever the updater pushes, not block.timestamp, and the
+    // freshness check adds maxStaleness to it with checked arithmetic. The Solana program takes the time from the Clock instead.
+    // These tests state the behaviour so that nobody reads isStale() as a guarantee against a compromised updater.
+    function test_Limitation_LastUpdatedIsTheUpdatersValueNotTheChains() public {
+        AuthorityRiskOracle.AuthorityScore memory s = _sampleScore(75);
+        s.lastUpdated = uint64(block.timestamp + 100 * 365 days);
+        vm.prank(updater);
+        oracle.updateScore(vault, s);
+        vm.warp(block.timestamp + 50 * 365 days);
+        assertFalse(oracle.isStale(vault)); // an updater that sets a far-future time keeps the score looking fresh
+    }
+
+    function test_Limitation_IsStaleRevertsOnOverflow() public {
+        AuthorityRiskOracle.AuthorityScore memory s = _sampleScore(75);
+        s.lastUpdated = type(uint64).max;
+        vm.prank(updater);
+        oracle.updateScore(vault, s);
+        vm.expectRevert(); // Panic(0x11): lastUpdated + maxStaleness overflows uint64
+        oracle.isStale(vault);
+    }
 }

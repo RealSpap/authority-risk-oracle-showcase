@@ -10,6 +10,8 @@ optimizer = true
 optimizer_runs = 200
 
 [rpc_endpoints]
-robinhood = "https://rpc.mainnet.chain.robinhood.com"
+# The oracle runs on testnets while the stack is validated: this alias points at Robinhood Chain TESTNET (chain 46630).
+# This project never writes to a mainnet; Deploy.s.sol also refuses unless EXPECTED_CHAIN_ID matches the chain it is broadcast to.
+robinhood = "https://rpc.testnet.chain.robinhood.com/rpc"
 
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options

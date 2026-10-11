@@ -225,7 +225,7 @@ single-target push in this rotation.
 
 ## Git note
 
-The local clone at `~/Desktop/workspace/authority-risk-oracle` hit
+The local clone at `<local clone>` hit
 the known dataless-`.git`-pack-file-on-iCloud issue again this run
 (`git status` fails with "Operation timed out" reading
 `.git/objects/pack/pack-530e331d...pack`). Per this project's own known-issue

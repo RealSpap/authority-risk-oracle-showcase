@@ -52,7 +52,7 @@ cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 \
   0x1f7d7550B1b028f7571E69A784071F0205FD2EfA \
   --rpc-url https://rpc.testnet.chain.robinhood.com/rpc
 # adminKey, multisig, timelock, oracleAuthority, crossExposure, composite, lastUpdated, methodologyHash
-# 80, 100, 75, 100, 80, 85, 1790408560, 0xf2606acd...   (read live on 2026-10-06)
+# 80, 100, 75, 100, 80, 85, 1791664867, 0x795edc64...   (read live on 2026-10-11; the last two values change at every push)
 ```
 
 **2. Open the dashboard**: [realspap.github.io/oracle](https://realspap.github.io/oracle/), one table for the 197 tracked contracts on 9 chains
@@ -78,7 +78,7 @@ page per contract. Every score can be re-read from the chain in your browser ("v
 - One Atom feed per protocol (`watch/feed/protocol/<slug>.xml`) lets a team follow every chain of its protocol at once.
 - For programs and monitors: `watch/catalog.json` lists every published file with the question it answers, `watch/metrics.prom` is the run in the Prometheus text format (a stopped watch is `time() - aro_run_timestamp_seconds > 8 * 3600`), and the site publishes an `llms.txt`.
 
-**3. Pull the whole table as JSON**, with the transaction that produced it so you can cross-check it:
+**3. Pull Robinhood Chain's table as JSON** (63 of the tracked targets; `python3 scripts/live_target_counts.py` counts every oracle), with the transaction that produced it so you can cross-check it:
 
 ```bash
 curl -s https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/api/scores.json | jq '.txHash, (.scores | length)'
@@ -88,8 +88,8 @@ curl -s https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcas
 
 ```bash
 pip install -r scripts/requirements.txt
-python3 scripts/who_controls.py --top 20          # the most connected signers across every tracked protocol
-python3 scripts/incident_exposure.py              # how many targets score at or below the multisig behind a documented incident
+python3 scripts/who_controls.py --top 20          # the most connected signers across every tracked protocol (about a minute: it reads nine oracles live)
+python3 scripts/incident_exposure.py              # how many targets score at or below the multisig behind a documented incident (about two to three minutes)
 ```
 
 ## What it scores
@@ -115,20 +115,20 @@ Fluid, Dolomite, Moonwell, Radiant, GMX and Kamino and Jupiter Lend on Solana. D
 
 ## Deployed oracles
 
-Read live on 2026-10-06 with `python3 scripts/live_target_counts.py` (`trackedTargetsCount()` on each oracle). 179 targets on 9 on-chain oracles,
+Read live on 2026-10-11 with `python3 scripts/live_target_counts.py` (`trackedTargetsCount()` on each oracle). 197 targets on 9 on-chain oracles,
 plus 6 Zcash targets attested through on-chain commitments (Zcash has no contract VM).
 
 | Ecosystem | Network | Oracle | Targets |
 |---|---|---|---|
 | Robinhood Chain | Testnet, chain 46630 | [`0x9BF4...7f52`](https://explorer.testnet.chain.robinhood.com/address/0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52) | 63 |
-| Ethereum L1 | Sepolia, chain 11155111 | [`0xB6F8...f906`](https://sepolia.etherscan.io/address/0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906) | 25 |
+| Ethereum L1 | Sepolia, chain 11155111 | [`0xB6F8...f906`](https://sepolia.etherscan.io/address/0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906) | 34 |
 | Arbitrum | Sepolia, chain 421614 | [`0x5084...8720`](https://sepolia.arbiscan.io/address/0x50840a7667baEa9D05ad4ae3dCeb384724b58720) | 13 |
 | Base | Sepolia, chain 84532 | [`0x5084...8720`](https://sepolia.basescan.org/address/0x50840a7667baEa9D05ad4ae3dCeb384724b58720) | 13 |
 | Tempo | Moderato, chain 42431 | [`0x5084...8720`](https://explore.testnet.tempo.xyz/address/0x50840a7667baEa9D05ad4ae3dCeb384724b58720) | 14 |
 | Plasma | Testnet, chain 9746 | [`0x5084...8720`](https://testnet.plasmascan.to/address/0x50840a7667baEa9D05ad4ae3dCeb384724b58720) | 9 |
 | Monad | Testnet, chain 10143 | [`0x5084...8720`](https://testnet.monadvision.com/address/0x50840a7667baEa9D05ad4ae3dCeb384724b58720) | 9 |
-| Hyperliquid | HyperEVM testnet, chain 998 | `0x5084...8720` (no public explorer for this network) | 15 |
-| Solana | Devnet, native Anchor program | [`5VhiTA...Yh4W`](https://explorer.solana.com/address/5VhiTAGLEViGgajhxPbzdWz7WLUAiRy42DY6qi6tYh4W?cluster=devnet) | 18 |
+| Hyperliquid | HyperEVM testnet, chain 998 | `0x5084...8720` (no public explorer for this network) | 16 |
+| Solana | Devnet, native Anchor program | [`5VhiTA...Yh4W`](https://explorer.solana.com/address/5VhiTAGLEViGgajhxPbzdWz7WLUAiRy42DY6qi6tYh4W?cluster=devnet) | 26 |
 | Zcash | Testnet, no contract | [latest OP_RETURN commitment](https://testnet.cipherscan.app/tx/462de12bf72e5e635a1feed4a4cedb02c03f17745bd15176787f8f5f8fcd701c) | 6 attested |
 
 The six EVM oracles at `0x5084...8720` share one address by construction (the same deployer was at nonce 0 on each chain).
@@ -185,7 +185,7 @@ flowchart LR
 | The scores a consumer reads | contract storage | `getScore(target)` |
 | Who may write a score | `UPDATER_ROLE` | `hasRole(UPDATER_ROLE, address)` |
 | A score is not too old | contract | `isStale(target)` |
-| Which code produced a batch | `methodologyHash` | recompute with `python3 scripts/lib/methodology.py <ecosystem> --label <label>` |
+| Which code produced a batch | `methodologyHash` | recompute with `python3 scripts/lib/methodology.py <ecosystem> --label <label>` from a commit of the private working repository; the digest of this public copy differs (see "Built during the hackathon") |
 | Zcash scores | OP_RETURN commitments on Zcash testnet | [`chains/zcash/`](chains/zcash/) |
 | The inputs (keys, thresholds, delays) | public chain state, re-read at scoring time | each scorer and every dated audit in `data/` |
 | The classification rules | documented heuristics, tested | [`METHODOLOGY.md`](METHODOLOGY.md) |
@@ -220,10 +220,13 @@ The longer comparison, including what SolGov and LlamaRisk do better and where t
   protocols. A mainnet deployment would move the updater to a multisig first.
 - **Trust in the updater.** A consumer trusts whoever holds `UPDATER_ROLE` to publish what the scorers computed. The
   `methodologyHash`, the public code and the push guard make a bad push detectable, not impossible.
-- **Coverage is partial.** 179 targets is a fraction of DeFi TVL; `python3 scripts/check_tvl_coverage.py` measures it per ecosystem.
+- **Coverage is partial.** 197 targets is a fraction of DeFi TVL; `python3 scripts/check_tvl_coverage.py` measures it per ecosystem.
 - **Heuristics.** Classifying an account (EOA, Safe, DAO, timelock) and bounding a lever are judgments, documented and tested, not proofs.
 - **Freshness is not continuous.** Scores are pushed on a cadence; `isStale` tells a consumer when to stop trusting one.
 - **The contract has had no external audit.** It is small (see [`src/`](src/)) and was reviewed against the LlamaGuard pattern by this project itself.
+- **On the EVM oracles, freshness is the updater's word.** `lastUpdated` is the timestamp the updater pushes, not `block.timestamp`, so a compromised or buggy updater key can keep a score looking fresh, and an extreme value makes `isStale` revert on an overflow. The Solana program reads the cluster clock instead. A mainnet version should take the time from the chain; [`test/AuthorityRiskOracle.t.sol`](test/AuthorityRiskOracle.t.sol) states this behaviour in two `test_Limitation_*` tests.
+- **A fresh Solana deployment must be initialised in the same transaction as the deploy.** `initialize` has no authority check, so on a new deployment whoever calls it first becomes admin and updater. The devnet registry was initialised by the operator.
+- **The Robinhood push script now refuses to send anywhere but Robinhood Chain testnet** (and to read anywhere but its mainnet), and `Deploy.s.sol` requires `EXPECTED_CHAIN_ID`: a wrong URL cannot write to a mainnet by accident.
 
 ## Built during the hackathon, and what came before
 
@@ -260,7 +263,7 @@ python3 -m unittest discover -s scripts/lib/tests
 python3 -m unittest discover -s scripts/tests
 ```
 
-Deploying needs `PRIVATE_KEY` in the environment, never committed: `forge script script/Deploy.s.sol --rpc-url robinhood --broadcast`.
+Deploying needs `PRIVATE_KEY` in the environment, never committed: `EXPECTED_CHAIN_ID=46630 forge script script/Deploy.s.sol --rpc-url robinhood --broadcast`.
 Every deploy script defaults to a dry run and refuses a chain whose `eth_chainId` is not the expected one.
 Report a vulnerability as described in [`SECURITY.md`](SECURITY.md).
 

@@ -49,9 +49,10 @@ class WhatIfParity(unittest.TestCase):
             self.assertGreater(r[3], 0)
 
     def test_snapshot_matches_the_finding_it_is_quoted_in(self):
-        # data/finding_2026-09-26-incident-configurations-vs-published-scores.md quotes these numbers; refreshing the snapshot means updating that note (and this test).
+        # The snapshot was refreshed on 2026-10-11 (197 targets, scripts/incident_exposure.py --out); data/finding_2026-09-26-incident-configurations-vs-published-scores.md still
+        # quotes the 2026-09-26 figures (179 targets: 91, 101, 112, 88) and says so in its update note. Numbers below: Bybit and Humanity ETH 44, WazirX 47, Radiant 52, Humanity BNB 43.
         rows = self.run_node("[a.SNAPSHOT.composites.length, a.atOrBelow(44), a.atOrBelow(47), a.atOrBelow(52), a.atOrBelow(43)]")
-        self.assertEqual(rows, [179, 91, 101, 112, 88])
+        self.assertEqual(rows, [197, 97, 107, 119, 94])
 
     def test_snapshot_is_a_list_of_composites(self):
         snap = self.run_node("a.SNAPSHOT")

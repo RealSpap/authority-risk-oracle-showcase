@@ -445,7 +445,7 @@ each, a real (if narrower) authority gap this project hadn't been scoring for:
 composite: for each target's group of real root signers (a bare EOA, or a Gnosis
 Safe's individual owners), it checks whether any of those signers also control
 *another* tracked target -- reusing this project's own
-[`multisig-overlap`](https://github.com/RealSpap/multisig-overlap) methodology
+[`multisig-overlap`](https://github.com/RealSpap/multisig-overlap-showcase) methodology
 (337 protocols, 547 confirmed Safes, corrected 2026-09-17), which this oracle had never actually applied
 to itself until now. `100` = no shared signer with any other group; it drops 20
 points per additional group sharing a root signer. Kept out of `compositeScore`

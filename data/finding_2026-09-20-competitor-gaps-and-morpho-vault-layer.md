@@ -1,6 +1,6 @@
 # Finding (2026-09-20): where competitors leave holes the oracle can fill, and one new territory found on the way
 
-Requested directly: "cherche des trous chez les concurrents que l'on pourrait couvrir avec l'Oracle". This is not a
+Requested directly: "find the gaps at competitors that the Oracle could cover". This is not a
 repeat of `finding_2026-09-18-competitive-positioning-cross-chain-overlap.md` (SolGov, Hypernative, Blockaid, Gauntlet,
 Chaos Labs, LlamaRisk, DeFiSafety, ERC-8241, L2BEAT). It adds DeFiScan, Foreshock, Webacy, Exponential, Credora and
 B.Protocol, and corrects two claims made earlier in this pass. Pure research plus one read-only scouting script; no

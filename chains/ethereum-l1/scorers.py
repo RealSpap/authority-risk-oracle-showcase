@@ -32,6 +32,7 @@ from web3 import Web3  # noqa: E402
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "scripts", "lib"))
 from web3_utils import (  # noqa: E402
+    _read,
     call_raw,
     cross_checked,
     get_w3,
@@ -2646,6 +2647,230 @@ def score_morpho_steakhouse_prime_eurcv_v2(w3) -> dict:
     }
 
 
+# ---------------------------------------------------------------------------------------------------------------------
+# ADDED 2026-10-11 (Spap, before the Colosseum submission; he scanned his own wallet on the page and found no tracked token):
+# WETH and the large dollar stablecoins, each read live on two independent RPCs the same day (publicnode and the Tenderly
+# gateway agreed on every value). Appended, never reordered: trackedTargets(i) is the first-push order (indices 27 to 33).
+#
+# What is scored: WHO CAN CHANGE THE TOKEN (upgrade, mint, freeze, pause), by the same convention as WBTC above. Every
+# controller found is classified and the token takes the componentwise minimum:
+#   - an account with no code: (5, 0, 0), a bare EOA by this methodology. Whether one key, an HSM or an MPC service holds it
+#     cannot be seen on chain, and the notes say so; "no code" is the fact, "one key" is not claimed;
+#   - a Safe: the Safe-rooted convention (3+ signers 65, 2 signers 50, 1 signer 10; no timelock above it);
+#   - a legacy MultiSigWallet (required()/getOwners()): the WBTC convention (55 from three signatures, 20 below);
+#   - a contract with owner(): followed one hop, the same rules apply to that owner;
+#   - anything else: unresolved, the token degrades to (20, 20, 0) and says so. An unreadable controller is never a safe one.
+# DAI and USDS are governed through Sky governance behind the 2-day MCD_PAUSE: they take the Sky pause target's values, after
+# re-reading who holds their mint rights; WETH9 has no controller at all and is scored by what its code cannot do.
+# ---------------------------------------------------------------------------------------------------------------------
+_ZOS_ADMIN_SLOT = "0x" + bytes(Web3.keccak(text="org.zeppelinos.proxy.admin")).hex()
+_EIP1967_ADMIN_SLOT = "0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103"
+_EIP1967_IMPL_SLOT = "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
+_ZOS_IMPL_SLOT = "0x" + bytes(Web3.keccak(text="org.zeppelinos.proxy.implementation")).hex()
+_EIP7702_PREFIX = bytes.fromhex("ef0100")
+_ZERO_ADDRESS = "0x" + "0" * 40
+WETH9_CODE_HASH = "d0a06b12ac47863b5c7be4185c2deaad1c61557033f56c7d4ea74429cbb25e23"  # keccak of the 3,124-byte runtime code, read on two RPCs on 2026-10-11
+_NO_CODE_NOTE = ("an account with no code (a bare EOA by this methodology; whether one key, an HSM or an MPC service holds it "
+                 "cannot be observed on chain)")
+
+
+def _holder_scores(w3, address, notes, what, depth=0):
+    """(admin, multisig, timelock) of the account that can change a token, or None when its kind is not resolved."""
+    a = Web3.to_checksum_address(address)
+    code = bytes(_read_code(w3, a))
+    if not code:
+        notes.append(f"{what} {a}: {_NO_CODE_NOTE}")
+        return 5, 0, 0
+    if code[:3] == _EIP7702_PREFIX:
+        notes.append(f"{what} {a}: an EOA with an EIP-7702 delegation (one account, no extra check on chain)")
+        return 5, 0, 0
+    safe = safe_owners_and_threshold(w3, a)
+    if safe:
+        owners, threshold = safe
+        notes.append(f"{what} {a}: Gnosis Safe {threshold}-of-{len(owners)}, no timelock above it")
+        return (65 if threshold >= 3 else (50 if threshold == 2 else 10)), min(100, threshold * 15 + max(0, len(owners) - threshold) * 5), 0
+    required = call_raw(w3, a, _UINT_GETTER("required"), "required")
+    owners = call_raw(w3, a, _SAFE_GETOWNERS, "getOwners") if required is not None else None
+    if required is not None and owners:
+        notes.append(f"{what} {a}: legacy multisig wallet, {required}-of-{len(owners)}, no timelock (it executes on confirmation)")
+        return (55 if required >= 3 else 20), min(100, required * 15 + max(0, len(owners) - required) * 5), 0
+    owner = call_raw(w3, a, _ADDR_GETTER("owner"), "owner") if depth == 0 else None
+    if owner and not _same(owner, a):
+        notes.append(f"{what} {a}: a contract with {len(code)} bytes of code; its owner() is followed")
+        return _holder_scores(w3, owner, notes, what + " owner", depth + 1)
+    notes.append(f"{what} {a}: a contract of {len(code)} bytes that is neither a Safe, a multisig wallet nor owned: unresolved")
+    return None
+
+
+def _read_code(w3, address):
+    return _read(lambda: w3.eth.get_code(address), what=f"code of {address}", classify=lambda _: False)  # eth_getCode cannot revert: a failure is never "no code"
+
+
+def _score_token(w3, token, label, controllers, group, notes):
+    """The token's scores: the componentwise minimum over every proxy admin slot found and every named controller. A controller
+    that cannot be resolved, or a getter that does not answer, degrades the whole token to (20, 20, 0)."""
+    parts, unresolved = [], False
+    for name, slot in (("EIP-1967 admin slot", _EIP1967_ADMIN_SLOT), ("ZeppelinOS admin slot", _ZOS_ADMIN_SLOT)):
+        found = read_slot_as_address(w3, token, slot)
+        if found and not _same(found, _ZERO_ADDRESS):
+            controllers = [(f"proxy admin ({name})", found)] + list(controllers)
+    for name, slot in (("EIP-1967 implementation slot", _EIP1967_IMPL_SLOT), ("ZeppelinOS implementation slot", _ZOS_IMPL_SLOT)):
+        impl = read_slot_as_address(w3, token, slot)
+        if impl and not _same(impl, _ZERO_ADDRESS):
+            notes.append(f"{name} = {impl} (the token's logic can be replaced by whoever holds the proxy admin)")
+    for what, address in controllers:
+        if not address or _same(address, _ZERO_ADDRESS):
+            notes.append(f"{what}: unreadable or unset")
+            unresolved = True
+            continue
+        s = _holder_scores(w3, address, notes, what)
+        if s is None:
+            unresolved = True
+        else:
+            parts.append(s)
+    if unresolved or not parts:
+        admin_key, multisig, timelock_score = 20, 20, 0
+        notes.append("at least one controller did not resolve this run: the token degrades to (20, 20, 0), nothing is assumed safe")
+    else:
+        admin_key, multisig, timelock_score = (min(p[i] for p in parts) for i in range(3))
+    return {
+        "target": token, "label": label,
+        "adminKeyScore": admin_key, "multisigScore": multisig, "timelockScore": timelock_score,
+        "oracleAuthorityScore": 100, "compositeScore": _composite(admin_key, multisig, timelock_score),
+        "notes": notes, "_rootGroup": group,
+    }
+
+
+def score_weth9(w3) -> dict:
+    """WETH9 (Ethereum L1), 0xC02aaA39...6Cc2. No owner, no admin, no proxy slot, and no DELEGATECALL, CALLCODE or SELFDESTRUCT in
+    the code it can execute: nobody can change it, so the three dimensions are not applicable (100). Pinned to the code hash read
+    on two RPCs on 2026-10-11 (3,124 bytes); a different code is not scored as immutable."""
+    token = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+    notes = []
+    code = bytes(_read_code(w3, token))
+    pinned = bytes(Web3.keccak(code)).hex() == WETH9_CODE_HASH
+    no_proxy = all(not read_slot_as_address(w3, token, s) or _same(read_slot_as_address(w3, token, s), _ZERO_ADDRESS)
+                   for s in (_EIP1967_ADMIN_SLOT, _EIP1967_IMPL_SLOT, _ZOS_ADMIN_SLOT, _ZOS_IMPL_SLOT))
+    no_owner = call_raw(w3, token, _ADDR_GETTER("owner"), "owner") is None
+    no_delegate = price_authority._no_opcode(code, (0xF4, 0xF2, 0xFF))
+    notes.append(f"code {len(code)} bytes, hash pinned: {pinned}; no proxy slot: {no_proxy}; no owner(): {no_owner}; "
+                 f"no DELEGATECALL, CALLCODE or SELFDESTRUCT in the executable code: {no_delegate}")
+    if pinned and no_proxy and no_owner and no_delegate:
+        admin_key = multisig = timelock_score = 100
+        notes.append("immutable: no account can change this contract, and no function in it is restricted to one")
+    else:
+        admin_key, multisig, timelock_score = 20, 20, 0
+        notes.append("the immutability checks did not all hold this run: degraded, treat as unverified")
+    return {
+        "target": token, "label": "WETH9 (Wrapped Ether)",
+        "adminKeyScore": admin_key, "multisigScore": multisig, "timelockScore": timelock_score,
+        "oracleAuthorityScore": 100, "compositeScore": _composite(admin_key, multisig, timelock_score),
+        "notes": notes, "_rootGroup": "weth9-immutable",
+    }
+
+
+def score_usdc(w3) -> dict:
+    """USDC (Circle's FiatTokenProxy), Ethereum L1. Controllers read: the proxy admin (ZeppelinOS slot), owner(), blacklister(),
+    pauser() and masterMinter() (a contract, its owner() is followed). On 2026-10-11 all five resolve to accounts with no code."""
+    token = "0xA0b86991c6218b36c1d19d4a2e9eB0cE3606eB48"
+    notes = []
+    controllers = [(g + "()", read_address_getter(w3, token, g)) for g in ("owner", "blacklister", "pauser", "masterMinter")]
+    return _score_token(w3, token, "USDC (Circle FiatTokenProxy)", controllers, "usdc-circle-accounts", notes)
+
+
+def score_usdt(w3) -> dict:
+    """USDT (TetherToken, no proxy), Ethereum L1. owner() is a legacy multisig wallet (required() = 3 of 6 signers on 2026-10-11)
+    that can issue, redeem, blacklist and set the fee parameters; there is no timelock."""
+    token = "0xdAC17F958D2ee523a2206206994597C13D831ec7"
+    notes = []
+    return _score_token(w3, token, "USDT (Tether)", [("owner()", read_address_getter(w3, token, "owner"))], "usdt-tether-multisig", notes)
+
+
+def score_pyusd(w3) -> dict:
+    """PYUSD (Paxos), Ethereum L1: a ZeppelinOS proxy. Controllers read: the proxy admin, owner(), defaultAdmin() and supplyControl() (the
+    mint authority, a small contract whose owner() is followed). On 2026-10-11 all four resolve to accounts with no code, the same one for owner(),
+    defaultAdmin() and the supplyControl contract's owner (found by the second review: this scorer first read only the proxy admin and owner())."""
+    token = "0x6c3ea9036406852006290770BEdFcAbA0e23A0e8"
+    notes = []
+    controllers = [(g + "()", read_address_getter(w3, token, g)) for g in ("owner", "defaultAdmin", "supplyControl")]
+    return _score_token(w3, token, "PYUSD (Paxos)", controllers, "pyusd-paxos-accounts", notes)
+
+
+def score_fdusd(w3) -> dict:
+    """FDUSD (First Digital), Ethereum L1: an EIP-1967 proxy whose admin is a ProxyAdmin contract; the ProxyAdmin's owner and the
+    token's owner() are the same 4-of-6 Gnosis Safe on 2026-10-11, with no timelock."""
+    token = "0xc5f0f7b66764F6ec8C8Dff7BA683102295E16409"
+    notes = []
+    return _score_token(w3, token, "FDUSD (First Digital)", [("owner()", read_address_getter(w3, token, "owner"))], "fdusd-safe", notes)
+
+
+_SKY_PAUSE_PROXY = "0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB"
+_SKY_VAT = "0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B"
+_DAI_TOKEN = "0x6B175474E89094C44Da98b954EedeAC495271d0F"
+_DAI_JOIN = "0x9759A6Ac90977b93B58547b4A71c78317f391A28"
+_USDS_TOKEN = "0xdC035D45d973E3EC169d2276DDab16f1e407384F"
+_USDS_JOIN = "0x3C0f895007CA717Aa01c8693e59DF1e8C3777FEB"
+
+
+def _wards_of(w3, token, start_block, legacy_note):
+    """The set of current wards, replayed from the token's own Rely/Deny history on the Tenderly gateway (2M-block windows)."""
+    lw3 = get_w3(_TENDERLY_MAINNET)
+    topics = {"R": [bytes(Web3.keccak(text="rely(address)")[:4]).ljust(32, b"\0")], "D": [bytes(Web3.keccak(text="deny(address)")[:4]).ljust(32, b"\0")]} if legacy_note \
+        else {"R": [bytes(Web3.keccak(text="Rely(address)"))], "D": [bytes(Web3.keccak(text="Deny(address)"))]}
+    tip, events, s = lw3.eth.block_number, [], start_block
+    while s <= tip:
+        e = min(s + 2_000_000 - 1, tip)
+        for kind, topic in topics.items():
+            for log in lw3.eth.get_logs({"address": Web3.to_checksum_address(token), "fromBlock": s, "toBlock": e, "topics": ["0x" + topic[0].hex()]}):
+                events.append((log["blockNumber"], log["logIndex"], kind, Web3.to_checksum_address("0x" + log["topics"][1 if not legacy_note else 2].hex()[-40:])))
+        s = e + 1
+    current = set()
+    for _, _, kind, addr in sorted(events):
+        current.add(addr) if kind == "R" else current.discard(addr)
+    return current
+
+
+def _sky_governed_token(w3, token, label, join, start_block, legacy_note, expected_wards):
+    """DAI / USDS: the token has no owner; whoever is a ward can mint. Re-read the ward set; each ward must be the expected join (whose vat() is the Sky Vat)
+    or the pause proxy, and the pause proxy must be a ward of the Vat. Then the token takes the Sky pause target's scores."""
+    notes = []
+    sky = score_makerdao_sky_pause(w3)
+    wards = _wards_of(w3, token, start_block, legacy_note)
+    vat_of_join = call_raw(w3, join, _ADDR_GETTER("vat"), "vat")
+    vat_ward = call_raw(w3, _SKY_VAT, _WARDS, "wards", Web3.to_checksum_address(_SKY_PAUSE_PROXY))
+    proxy_slots = [read_slot_as_address(w3, token, s) for s in (_EIP1967_ADMIN_SLOT, _ZOS_ADMIN_SLOT)]
+    notes.append(f"wards of {token} replayed from its Rely/Deny history: {sorted(wards)}")
+    notes.append(f"{join}.vat() = {vat_of_join}; Vat.wards(MCD_PAUSE_PROXY) = {vat_ward}; admin slots = {proxy_slots}")
+    rereads = [call_raw(w3, token, _WARDS, "wards", Web3.to_checksum_address(w)) for w in sorted(wards)]
+    notes.append(f"wards() re-read on the chain for each replayed ward: {rereads}")
+    ok = ({w.lower() for w in wards} == {w.lower() for w in expected_wards} and all(r == 1 for r in rereads) and _same(vat_of_join, _SKY_VAT) and vat_ward == 1
+          and all(not s or _same(s, _ZERO_ADDRESS) for s in proxy_slots))
+    if ok:
+        admin_key, multisig, timelock_score = sky["adminKeyScore"], sky["multisigScore"], sky["timelockScore"]
+        notes.append("every ward is Sky machinery: the scores are those of the Sky governance pause (2-day MCD_PAUSE behind DSChief), re-read this run")
+        notes += [f"Sky pause: {n}" for n in sky["notes"]]
+    else:
+        admin_key, multisig, timelock_score = 20, 20, 0
+        notes.append("the ward set or the Vat link is not the expected Sky one this run: degraded, treat as unverified")
+    return {
+        "target": token, "label": label,
+        "adminKeyScore": admin_key, "multisigScore": multisig, "timelockScore": timelock_score,
+        "oracleAuthorityScore": 100, "compositeScore": _composite(admin_key, multisig, timelock_score),
+        "notes": notes, "_rootGroup": "makerdao-sky-governance",
+    }
+
+
+def score_dai(w3) -> dict:
+    """DAI (Ethereum L1): no proxy and no owner; its only ward is the DaiJoin adapter, whose vat() is the Sky Vat, itself warded by the pause proxy.
+    Rely/Deny were logged as legacy LogNote events (anonymous, topic0 = the function selector)."""
+    return _sky_governed_token(w3, _DAI_TOKEN, "DAI (Sky)", _DAI_JOIN, 8_900_000, True, [_DAI_JOIN])
+
+
+def score_usds(w3) -> dict:
+    """USDS (Ethereum L1): an EIP-1967 UUPS proxy whose upgrade and mint rights are wards: the Sky pause proxy and the UsdsJoin adapter."""
+    return _sky_governed_token(w3, _USDS_TOKEN, "USDS (Sky)", _USDS_JOIN, 20_000_000, False, [_SKY_PAUSE_PROXY, _USDS_JOIN])
+
+
 SIMPLE_SCORERS = [
     score_uniswap_v3_factory,
     score_aave_v3_pool,
@@ -2675,6 +2900,14 @@ SIMPLE_SCORERS = [
     # as the batch above.
     score_morpho_steakhouse_prime_usdc_v2,
     score_morpho_steakhouse_prime_eurcv_v2,
+    # ADDED 2026-10-11 (WETH and the large dollar stablecoins, Spap's request) -- appended, never reordered.
+    score_weth9,
+    score_usdc,
+    score_usdt,
+    score_dai,
+    score_usds,
+    score_pyusd,
+    score_fdusd,
 ]
 
 

@@ -558,11 +558,12 @@ class TestScoreFablesPoolRegistry(unittest.TestCase):
         _patch_helpers(self, fake)
 
         responses = {
-            (FABLES_MANAGER, 0, "latest", FABLES_GRANT_TOPIC): [_role_log(500, 0, b"\x00" * 32, FABLES_HOLDER)],
+            (FABLES_MANAGER, 0, 100, FABLES_GRANT_TOPIC): [_role_log(500, 0, b"\x00" * 32, FABLES_HOLDER)],
         }
         code_7702 = b"\xef\x01\x00" + bytes.fromhex(FABLES_IMPL[2:])
         w3 = FakeW3(
             get_logs_fn=_canned_get_logs(responses),
+            block_number=100,
             code_sizes={FABLES_HOLDER: code_7702},
             tx_counts={FABLES_HOLDER: 470},
         )
@@ -588,12 +589,12 @@ class TestScoreFablesPoolRegistry(unittest.TestCase):
         fake.call_raw_results[(FABLES_REGISTRY, "authority", ())] = FABLES_MANAGER
         _patch_helpers(self, fake)
         responses = {
-            (FABLES_MANAGER, 0, "latest", FABLES_GRANT_TOPIC): [
+            (FABLES_MANAGER, 0, 100, FABLES_GRANT_TOPIC): [
                 _role_log(500, 0, b"\x00" * 32, FABLES_HOLDER),
                 _role_log(501, 0, b"\x00" * 32, FABLES_HOLDER_2),
             ],
         }
-        w3 = FakeW3(get_logs_fn=_canned_get_logs(responses))
+        w3 = FakeW3(get_logs_fn=_canned_get_logs(responses), block_number=100)
 
         result = scorers.score_fables_pool_registry(w3)
         self.assertTrue(any("WARNING: 2 ADMIN_ROLE holders found" in n for n in result["notes"]))

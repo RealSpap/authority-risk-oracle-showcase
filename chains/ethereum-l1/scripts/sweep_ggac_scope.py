@@ -55,31 +55,31 @@ def call(to, sig, extra_data=""):
 
 
 # ---- 1. address book: GRANULAR_GUARDIAN on Ethereum (live, not from memory) ----
-print("== 1. Adresse GRANULAR_GUARDIAN (bgd-labs/aave-address-book, GitHub raw) ==")
+print("== 1. GRANULAR_GUARDIAN address (bgd-labs/aave-address-book, GitHub raw) ==")
 src = curl("https://raw.githubusercontent.com/bgd-labs/aave-address-book/main/src/GovernanceV3Ethereum.sol")
 m = re.search(r"GRANULAR_GUARDIAN\s*=\s*(0x[0-9a-fA-F]{40})", src)
 if not m:
-    print("PISTE MORTE: adresse GRANULAR_GUARDIAN introuvable dans l'address-book -> arret.")
+    print("DEAD END: GRANULAR_GUARDIAN address not found in the address-book -> stop.")
     raise SystemExit(0)
 GGAC = Web3.to_checksum_address(m.group(1))
 print(f"  GRANULAR_GUARDIAN (Ethereum) = {GGAC}")
 
 # ---- 2. verified source + ABI from Blockscout ----
-print("\n== 2. Source verifiee (Blockscout) du contrat a cette adresse ==")
+print("\n== 2. Verified source (Blockscout) of the contract at this address ==")
 bs = curl(f"https://eth.blockscout.com/api/v2/smart-contracts/{GGAC}")
 try:
     bs = json.loads(bs)
 except Exception:
-    print("PISTE MORTE: Blockscout injoignable/reponse non-JSON -> arret.")
+    print("DEAD END: Blockscout unreachable/non-JSON response -> stop.")
     raise SystemExit(0)
 name = bs.get("name")
 verified = bs.get("is_verified")
-print(f"  nom du contrat verifie : {name}")
+print(f"  verified contract name: {name}")
 print(f"  is_verified : {verified}")
-print(f"  compilateur : {bs.get('compiler_version')}")
-print(f"  fichier principal : {bs.get('file_path')}")
+print(f"  compiler: {bs.get('compiler_version')}")
+print(f"  main file: {bs.get('file_path')}")
 if not verified or name != "GranularGuardianAccessControl":
-    print("PISTE MORTE: le contrat a cette adresse n'est pas le GranularGuardianAccessControl attendu -> arret.")
+    print("DEAD END: the contract at this address is not the expected GranularGuardianAccessControl -> stop.")
     raise SystemExit(0)
 
 abi = bs.get("abi") or []
@@ -92,9 +92,9 @@ for fm in re.finditer(r"function\s+(\w+)\s*\([^)]*\)[^{;]*?\bonlyRole\(([A-Z_]+)
     role_of_fn[fm.group(1)] = fm.group(2)
 # grantRole/revokeRole are inherited from OZ AccessControl: onlyRole(getRoleAdmin(role)), default admin = DEFAULT_ADMIN_ROLE
 for inherited in ("grantRole", "revokeRole"):
-    role_of_fn.setdefault(inherited, "getRoleAdmin(role) [par defaut DEFAULT_ADMIN_ROLE]")
+    role_of_fn.setdefault(inherited, "getRoleAdmin(role) [DEFAULT_ADMIN_ROLE by default]")
 
-print("\n  Fonctions EXACTES protegees par role (nom, role gate, signature) :")
+print("\n  EXACT role-protected functions (name, role gate, signature):")
 protected = []
 for e in fn_entries:
     n = e["name"]
@@ -103,10 +103,10 @@ for e in fn_entries:
         protected.append((n, role_of_fn.get(n, "?"), sig))
         print(f"    - {n:24s} role={role_of_fn.get(n, '?'):45s} sig={sig}")
 other_fns = sorted(e["name"] for e in fn_entries if e["name"] not in role_of_fn and e["name"] not in ("grantRole", "revokeRole"))
-print(f"  Autres fonctions (non protegees par onlyRole direct, lecture ou AccessControl standard) : {other_fns}")
+print(f"  Other functions (not protected by a direct onlyRole, read-only or standard AccessControl): {other_fns}")
 
 # ---- 3. on-chain role holders ----
-print("\n== 3. Titulaires actuels des roles (on-chain, eth_call) ==")
+print("\n== 3. Current role holders (on-chain, eth_call) ==")
 roles = {}
 for role_name in ("SOLVE_EMERGENCY_ROLE", "RETRY_ROLE"):
     rh, err = call(GGAC, f"{role_name}()")
@@ -117,7 +117,7 @@ roles["DEFAULT_ADMIN_ROLE"] = "0" * 64  # OZ constant, always bytes32(0)
 for role_name, role_hash in roles.items():
     cnt, err = call(GGAC, "getRoleMemberCount(bytes32)", role_hash)
     if err or not cnt:
-        print(f"  {role_name}: eth_call getRoleMemberCount a echoue ({err})")
+        print(f"  {role_name}: eth_call getRoleMemberCount failed ({err})")
         continue
     n = int(cnt, 16)
     members = []
@@ -127,13 +127,13 @@ for role_name, role_hash in roles.items():
         if addr_res and not aerr:
             members.append(Web3.to_checksum_address("0x" + addr_res[-40:]))
         time.sleep(0.3)
-    print(f"  {role_name} ({n} titulaire(s)) : {members}")
+    print(f"  {role_name} ({n} holder(s)): {members}")
 
 # ---- 4. CROSS_CHAIN_CONTROLLER address + proxy/implementation ----
-print("\n== 4. CROSS_CHAIN_CONTROLLER cible (lu on-chain sur le guardian, pas suppose) ==")
+print("\n== 4. Target CROSS_CHAIN_CONTROLLER (read on-chain from the guardian, not assumed) ==")
 ccc_res, ccc_err = call(GGAC, "CROSS_CHAIN_CONTROLLER()")
 if ccc_err or not ccc_res:
-    print(f"PISTE MORTE: impossible de lire CROSS_CHAIN_CONTROLLER on-chain ({ccc_err}) -> arret.")
+    print(f"DEAD END: cannot read CROSS_CHAIN_CONTROLLER on-chain ({ccc_err}) -> stop.")
     raise SystemExit(0)
 CCC = Web3.to_checksum_address("0x" + ccc_res[-40:])
 print(f"  CROSS_CHAIN_CONTROLLER = {CCC}")
@@ -143,18 +143,18 @@ try:
     bs_ccc = json.loads(bs_ccc)
 except Exception:
     bs_ccc = {}
-print(f"  nom (proxy) : {bs_ccc.get('name')}  proxy_type : {bs_ccc.get('proxy_type')}")
+print(f"  name (proxy): {bs_ccc.get('name')}  proxy_type: {bs_ccc.get('proxy_type')}")
 impls = bs_ccc.get("implementations") or []
 if not impls:
-    print("PISTE MORTE: pas d'implementation detectee derriere ce proxy -> arret partiel, section 5 sautee.")
+    print("DEAD END: no implementation detected behind this proxy -> partial stop, section 5 skipped.")
     impl_addr = None
 else:
     impl_addr = impls[0]["address_hash"]
-    print(f"  implementation actuelle : {impl_addr} ({impls[0].get('name')})")
+    print(f"  current implementation: {impl_addr} ({impls[0].get('name')})")
 
 # ---- 5. does the CURRENT implementation actually contain solveEmergency? (source-level truth) ----
 if impl_addr:
-    print("\n== 5. L'implementation ACTUELLE de CROSS_CHAIN_CONTROLLER contient-elle solveEmergency ? ==")
+    print("\n== 5. Does the CURRENT implementation of CROSS_CHAIN_CONTROLLER contain solveEmergency? ==")
     bs_impl = curl(f"https://eth.blockscout.com/api/v2/smart-contracts/{impl_addr}")
     try:
         bs_impl = json.loads(bs_impl)
@@ -165,9 +165,9 @@ if impl_addr:
         all_src[s.get("file_path")] = s.get("source_code") or ""
     hits = [fp for fp, s in all_src.items() if s and "function solveEmergency" in s]
     inherits = [fp for fp, s in all_src.items() if s and re.search(r"\bcontract\s+\w+\s+is\b[^{]*EmergencyConsumer", s)]
-    print(f"  fichiers de l'implementation verifiee : {len(all_src)}")
-    print(f"  fichiers contenant 'function solveEmergency' : {hits or 'AUCUN'}")
-    print(f"  fichiers dont le contrat herite d'EmergencyConsumer : {inherits or 'AUCUN'}")
+    print(f"  files of the verified implementation: {len(all_src)}")
+    print(f"  files containing 'function solveEmergency': {hits or 'NONE'}")
+    print(f"  files whose contract inherits from EmergencyConsumer: {inherits or 'NONE'}")
 
     # empirical on-chain confirmation: does the deployed runtime bytecode dispatch the solveEmergency selector?
     se_entry = next(e for e in abi if e.get("name") == "solveEmergency")
@@ -181,9 +181,9 @@ if impl_addr:
     code, _ = rpc("eth_getCode", [impl_addr, "latest"])
     code = (code or "0x")[2:]
     push4 = "63" + se_selector  # PUSH4 <selector>, how Solidity's function dispatcher checks selectors
-    print(f"  signature canonique reconstruite : {canon_sig}")
+    print(f"  canonical signature rebuilt: {canon_sig}")
     print(f"  selector solveEmergency = 0x{se_selector}")
-    print(f"  ce selector (PUSH4) present dans le bytecode runtime de l'implementation actuelle : {'OUI' if push4 in code else 'NON'}")
+    print(f"  this selector (PUSH4) is present in the runtime bytecode of the current implementation: {'YES' if push4 in code else 'NO'}")
 
     # live eth_call against the PROXY directly (empty-array args), to see the actual revert
     from eth_abi import encode
@@ -192,13 +192,13 @@ if impl_addr:
              "address[]", "address[]", "(address,address,uint256)[]", "(address,uint256[])[]", "(uint256,uint256)[]"]
     encoded = encode(types, args).hex()
     call_res, call_err = rpc("eth_call", [{"to": CCC, "data": "0x" + se_selector + encoded}, "latest"])
-    print(f"  eth_call solveEmergency(9x []) direct sur le proxy CROSS_CHAIN_CONTROLLER : result={call_res} error={call_err}")
+    print(f"  eth_call solveEmergency(9x []) directly on the CROSS_CHAIN_CONTROLLER proxy: result={call_res} error={call_err}")
 
 # ---- 6. what Aave's OWN public documentation says about the scope ----
-print("\n== 6. Documentation publique d'Aave (bgd-labs/aave-delivery-infrastructure, docs/overview.md) ==")
+print("\n== 6. Aave's public documentation (bgd-labs/aave-delivery-infrastructure, docs/overview.md) ==")
 doc = curl("https://raw.githubusercontent.com/bgd-labs/aave-delivery-infrastructure/main/docs/overview.md")
 if not doc or len(doc) < 200:
-    print("PISTE MORTE: README/overview.md injoignable -> pas de comparaison possible.")
+    print("DEAD END: README/overview.md unreachable -> no comparison possible.")
 else:
     lines = doc.splitlines()
     for i, l in enumerate(lines):
@@ -206,14 +206,14 @@ else:
             print(f"  L{i}: {l.strip()}")
     m2 = re.search(r"goal is to return.*?(?=\n\n|\Z)", doc, re.S)
     if m2:
-        print("\n  Paragraphe de portee (docs/overview.md, resume, pas copie integralement) :")
-        print("  -> solveEmergency vise a ramener a.DI en mode operationnel : etat d'envoi fonctionnel (>=1 bridge adapter")
-        print("     actif par chaine destination) et etat de reception fonctionnel (assez d'adaptateurs pour atteindre")
-        print("     requiredConfirmations) ; peut aussi etre utilise pour forcer un etat NON fonctionnel si les bridges")
-        print("     sont compromis. Aucune mention d'un pouvoir sur les fonds du Pool Aave ou d'autres contrats.")
+        print("\n  Scope paragraph (docs/overview.md, summarized, not copied in full):")
+        print("  -> solveEmergency aims to bring a.DI back to operational mode: a working sending state (>=1 active bridge")
+        print("     adapter per destination chain) and a working receiving state (enough adapters to reach")
+        print("     requiredConfirmations); it can also be used to force a NON-working state if the bridges")
+        print("     are compromised. No mention of any power over the funds of the Aave Pool or of other contracts.")
 
 # ---- 7. what kind of account actually holds each role (EOA / Safe-sized proxy / other contract) ----
-print("\n== 7. Nature des comptes titulaires (EOA vs contrat, taille du bytecode) ==")
+print("\n== 7. Nature of the holder accounts (EOA vs contract, bytecode size) ==")
 all_members = set()
 for role_name, role_hash in roles.items():
     cnt, err = call(GGAC, "getRoleMemberCount(bytes32)", role_hash)
@@ -228,8 +228,8 @@ for role_name, role_hash in roles.items():
 for a in sorted(all_members):
     code, _ = rpc("eth_getCode", [a, "latest"])
     code = code or "0x"
-    kind = "EOA" if code == "0x" else f"contrat ({(len(code) - 2) // 2} octets)"
+    kind = "EOA" if code == "0x" else f"contract ({(len(code) - 2) // 2} bytes)"
     print(f"  {a} : {kind}")
     time.sleep(0.3)
 
-print("\n== FIN ==")
+print("\n== END ==")

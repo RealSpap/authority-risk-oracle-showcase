@@ -179,6 +179,7 @@ def main():
     elif cmd == "tx":
         addr, start, end = sys.argv[3], int(sys.argv[4]), int(sys.argv[5])
         script = transparent_output_script(addr)
+        h160 = script[4:-2] if script.startswith("a914") else script[6:-4]   # the 20-byte hash inside a P2SH (a914..87) or P2PKH (76a914..88ac) script
         rng = field_bytes(1, field_varint(1, start)) + field_bytes(2, field_varint(1, end))
         msg = field_bytes(1, addr.encode()) + field_bytes(2, rng)
         for m in grpc(host, "GetTaddressTxids", msg):

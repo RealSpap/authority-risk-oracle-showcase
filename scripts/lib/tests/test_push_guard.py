@@ -167,8 +167,8 @@ class TestOracleKey(unittest.TestCase):
 
 class RecordingOracle:
     """Answers getScore like the deployed oracle, and records which addresses were asked."""
-    def __init__(self, published):
-        self.published, self.asked = published, []
+    def __init__(self, published, cross=None):
+        self.published, self.asked, self.cross = published, [], cross or {}
         outer = self
 
         class _Fn:
@@ -178,7 +178,7 @@ class RecordingOracle:
             def call(self):
                 outer.asked.append(self.addr.lower())
                 comp = outer.published.get(self.addr.lower())
-                return (0, 0, 0, 0, 0, comp or 0, 1 if comp is not None else 0, b"\0" * 32)
+                return (0, 0, 0, 0, outer.cross.get(self.addr.lower(), 0), comp or 0, 1 if comp is not None else 0, b"\0" * 32)
 
         class _Contract:
             class functions:
@@ -209,6 +209,55 @@ class TestExplicitFlagsAndKeys(unittest.TestCase):
             g.enforce([dex], oracle, OK, argv=[])
         self.assertEqual(oracle.asked, [OK.lower()])
         self.assertIn(f"--accept-held={OK}", str(cm.exception))
+
+
+class TestCrossExposureDrop(unittest.TestCase):
+    """Second review, 2026-10-11: DAI and USDS joined the Sky root group and took the Sky pause and SparkLend from 80 to 40 with nothing held."""
+
+    def test_a_drop_of_more_than_the_limit_is_held_and_a_small_one_is_not(self):
+        big = dict(entry(OK, 57), crossExposureScore=40)
+        small = dict(entry(OFT, 57), crossExposureScore=70)
+        held, lines = g.review([big, small], {OK.lower(): 57, OFT.lower(): 57}, published_cross={OK.lower(): 80, OFT.lower(): 80})
+        self.assertEqual([e["target"] for e in held], [OK])
+        self.assertIn("crossExposureScore 80 -> 40", lines[0])
+
+    def test_a_new_target_and_an_unread_published_cross_are_not_held_for_it(self):
+        e = dict(entry(OK, 57), crossExposureScore=40)
+        self.assertEqual(g.review([e], {}, published_cross={})[0], [])
+        self.assertEqual(g.review([e], {OK.lower(): 57}, published_cross=None)[0], [])
+
+    def test_the_real_send_reads_and_uses_the_published_cross(self):
+        e = dict(entry(OK, 57), crossExposureScore=40)
+        with self.assertRaises(SystemExit) as cm:
+            g.enforce([e], RecordingOracle({OK.lower(): 57}, cross={OK.lower(): 80}), OK, argv=[])
+        self.assertIn(f"--accept-held={OK}", str(cm.exception))
+        g.enforce([e], RecordingOracle({OK.lower(): 57}, cross={OK.lower(): 50}), OK, argv=[])   # 50 -> 40 is within the limit: no hold
+
+
+class TestPreview(unittest.TestCase):
+    """PREVIEW_PUBLISHED=1 in a dry run reads the published scores (read-only) and reports what a real send would hold."""
+
+    def setUp(self):
+        self.old = (g._read_scores, dict(os.environ))
+        os.environ.update(PREVIEW_PUBLISHED="1", ORACLE_RPC_URL="http://127.0.0.1:1", ORACLE_ADDRESS=OK)
+
+    def tearDown(self):
+        g._read_scores = self.old[0]
+        os.environ.clear()
+        os.environ.update(self.old[1])
+
+    def test_drop_is_held_and_unchanged_degradation_is_not(self):
+        g._read_scores = lambda w3, addr, keys: {OFT.lower(): (0, 0, 0, 100, 0, 52), USDAI.lower(): (0, 0, 0, 100, 0, 8)}
+        scored = [entry(OFT, 14, [DEGRADED_NOTE], (20, 20, 0)), entry(USDAI, 8, [DEGRADED_NOTE], (20, 0, 0))]
+        held = g.enforce(scored, argv=[])
+        self.assertEqual([e["target"] for e in held], [OFT])
+
+    def test_unreadable_published_falls_back_to_the_plain_report(self):
+        def boom(*a):
+            raise RuntimeError("rpc down")
+        g._read_scores = boom
+        held = g.enforce([entry(USDAI, 8, [DEGRADED_NOTE], (20, 0, 0))], argv=[])
+        self.assertEqual([e["target"] for e in held], [USDAI])
 
 
 if __name__ == "__main__":

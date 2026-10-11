@@ -64,6 +64,23 @@ page per contract. Every score can be re-read from the chain in your browser ("v
 **3. Audit it yourself, then ask it questions.** Standard library only, no network unless a line says so.
 
 - `python3 scripts/tour.py` is the thirty-second tour: run it first after cloning.
+- `python3 scripts/audit_public.py` checks the hash-chained event log, the signed manifest and the schemas, and re-reads scores from the oracles. `watch/status.json` is the run health in one record. The manifest is signed with the maintainer's Ed25519 key `11baca3ef6a69de4901c185f6cbbd3f93318fbb74f9961a8d39aead841adf409` (the dashboard pins it): a manifest signed by another key is not ours.
+- `python3 scripts/consistency.py` checks that the published files describe the same contracts and the same counts (each file passes its schema on its own; this is the check between them).
+- `python3 scripts/dossier.py base 0x...` prints everything the watch knows about one contract, in words, from a clone and with no network.
+- `python3 scripts/brief.py morpho-blue` writes a one-page brief for a protocol on all its chains: weakest deployment, fewest keys, shortest reaction, money counted once per chain, and what was not read.
+- `python3 scripts/find.py --kind eoa --min-money 1e8` asks a question of every tracked contract at once. A value the watch did not read excludes the row and is counted, never matched as a zero; `--csv` gives the rows to a spreadsheet; `--watchlist mine.txt --alert --fail-if-any` is a gate for a cron job that exits 3 when a rule fires on one of your contracts.
+- `python3 scripts/compare.py morpho-blue aave-v3 lido` sets protocols side by side, or chains with `--chains`; every figure says on how many contracts it was read. Each protocol can show its own badge in its README (`watch/badge/protocol/<slug>.json`, its weakest tracked deployment).
+- `python3 scripts/whatif.py base 0x... --timelock 75` shows what the published formula gives if a sub-score changed (arithmetic, not a prediction).
+- `python3 scripts/mcp_server.py --watch watch` is the same data as a local, read-only MCP server for an AI agent (stdio, no account, no key, no network).
+- `python3 scripts/watch_age.py --max-hours 14` is a watchdog for a cron or an uptime monitor: exit 1 if the last run is too old, 2 if its age cannot be established.
+- `python3 scripts/mutate.py` replays the mutations listed in `scripts/tests/mutations.json` (break the code one way, see whether the tests notice) and counts a mutant that does not run as invalid, never as caught. The `Mutation` workflow replays them every week and turns red when one survives.
+- `python3 scripts/demo.py` replays four invented events (a pause, a shorter delay announced, an idle admin Safe waking up, a balance collapse) on a copy of the data and runs the real scripts, so you can see the alerts, the review queue and the dossier react.
+- One Atom feed per protocol (`watch/feed/protocol/<slug>.xml`) lets a team follow every chain of its protocol at once.
+- For programs and monitors: `watch/catalog.json` lists every published file with the question it answers, `watch/metrics.prom` is the run in the Prometheus text format (a stopped watch is `time() - aro_run_timestamp_seconds > 8 * 3600`), and the site publishes an `llms.txt`.
+
+**3. Audit it yourself, then ask it questions.** Standard library only, no network unless a line says so.
+
+- `python3 scripts/tour.py` is the thirty-second tour: run it first after cloning.
 - `python3 scripts/audit_public.py` checks the hash-chained event log, the signed manifest and the schemas, and re-reads scores from the oracles. `watch/status.json` is the run health in one record.
 - `python3 scripts/consistency.py` checks that the published files describe the same contracts and the same counts (each file passes its schema on its own; this is the check between them).
 - `python3 scripts/dossier.py base 0x...` prints everything the watch knows about one contract, in words, from a clone and with no network.

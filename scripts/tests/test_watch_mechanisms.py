@@ -3747,7 +3747,7 @@ class TestShellModule(unittest.TestCase):
         if not os.path.exists(ap): self.skipTest("module-all.js is not beside the surveillance folder in this checkout")
         al = open(ap, encoding="utf-8").read()
         # 11/10, the visitor pasted his own address: "it gives nothing". A wallet that holds none of the tracked tokens now lists what it does hold on Ethereum (public Blockscout, the explorer that answers a browser), says that none of it is scored, and offers to ask for a check; a failed read is "not a zero", and the page says where the address goes
-        for needed in ("function inventory(addr, mine)", "https://eth.blockscout.com/api/v2/addresses/", "'/token-balances'", "not scored yet", "Ask for a check", "not a zero. Retry in a minute", "if (mine !== seq) return;", "if (!isSol) inventory(w, my); return; }", "the address is also sent to Blockscout", "tk.reputation !== 'ok'", "flagged by the explorer as spam or scam"): self.assertIn(needed, al, needed)
+        for needed in ("function inventory(addr, mine, unr)", "https://eth.blockscout.com/api/v2/addresses/", "'/token-balances'", "not scored yet", "Ask for a check", "not a zero. Retry in a minute", "if (mine !== seq) return;", "if (!isSol) inventory(w, my, unread); return; }", "the address is also sent to Blockscout", "tk.reputation !== 'ok'", "flagged by the explorer as spam or scam"): self.assertIn(needed, al, needed)
         self.assertEqual(al.count("eth.blockscout.com"), 1)   # one explorer, named once
 
     def test_the_wallet_inventory_reads_each_token_live_and_never_scores_it(self):
@@ -3826,7 +3826,7 @@ class TestShellModule(unittest.TestCase):
         if not all(os.path.exists(x) for x in (ap, sp, pp, cp, bp)): self.skipTest("the site modules are not beside the surveillance folder in this checkout")
         al = open(ap, encoding="utf-8").read(); sh = open(sp, encoding="utf-8").read(); play = open(pp, encoding="utf-8").read(); css = open(cp, encoding="utf-8").read(); build = open(bp, encoding="utf-8").read()
         # 11/10, the visitor did not like the league and asked to look at the competition. L2BEAT's risk table: bands as tabs with counts, one quiet table, each risk said in a word and coloured by level, a logo per row, sortable columns with an explanation, search and filters in one place. Here: the bands are tabs with their counts (they press the existing band filter and follow the chain filter), the table has the contract's shape as its logo, the score, the three readings as coloured words, the Authority Facts (keys and hours to react, where the independent reader gave them, a dot otherwise: not read is never zero), the money held and the money at risk
-        for needed in ("function pickBand(k)", "class=\"bt-tab\" data-pick=\"all\"", "No contract changed band since the last run.", "mountChanges, bdTick]", "window.aroLeagueSync = function () { mountLeague(); leagueSync(); };"): self.assertIn(needed, sh, needed)
+        for needed in ("function pickBand(k)", "class=\"bt-tab\" data-pick=\"all\"", "No contract changed band since the last run.", "mountChanges, bdTick, mountSheet]", "window.aroLeagueSync = function () { mountLeague(); leagueSync(); };"): self.assertIn(needed, sh, needed)
         for needed in ('<table class="rk-table">', "function axisCell(r, i, what)", "function factsCell(r)", "keys not read", "delay not read", "data-rid=", "thc('admin', 'Admin key'", "thc('keys', 'Keys · reaction'", "SORTS = ['chain', 'name', 'composite', 'delta', 'tvl', 'risk', 'admin', 'multisig', 'timelock', 'stale', 'keys', 'react']", ">Overview</button>", ">Details</button>", "tr.querySelector('.rk-name')", "aria-sort=", "th.click(); } }); });"): self.assertIn(needed, al, needed)
         self.assertNotIn('data-id="\' + esc(r.key + \':\' + r.address) + \'"><td class="rk-n">', al)   # the old table binds its row toggle to tr[data-id]: the new rows must not carry it (it threw on every click)
         self.assertIn("e.target.closest('.sh-pod, .sh-pod2, .lbb, .rk-name')", sh)
@@ -3838,7 +3838,7 @@ class TestShellModule(unittest.TestCase):
         if not all(os.path.exists(x) for x in (sp, cp)): self.skipTest("the site modules are not beside the surveillance folder in this checkout")
         sh = open(sp, encoding="utf-8").read(); css = open(cp, encoding="utf-8").read()
         # 11/10, the visitor, twice: the first redesign was "too repetitive", the single page "does not help, too much text, not clear". The answers to the questions asked: five tabs again but clean, the strip of days first, almost no text, and four reasons to come back (a score of the day, the contracts I follow, a countdown, a streak). So: a row of pills (the day's weather in the site's words, the next watch run, days in a row, calls graded right, followed contracts), the strip of 14 days, then the five tabs, each with labels of a few words and the long sentence behind "Why?" or a tooltip
-        for needed in ("function mountChanges()", "function renderTop()", "function dayWeather()", "function renderAlerts()", "function renderSoonList()", "function renderFeed()", "function renderGet(ch)", "function renderAll()", "function shortText(text)", "function alertItems()", "function itemRow(it, max)", "function plainRule(rule)", "A change is queued and can be executed now", "A second, independent read disagrees with the score", "return 'Ready to run'", "return 'Second read differs'", "mountChanges, bdTick]", "returnTo = from; if (host)", "function shortSig(x)", "function nameOfAlert(x, r)", "rv.appendChild(d);", "a redrawn headline brings fresh copies", "#headline details.sub > summary, #chReview details.sub > summary", "<h2 class=\"ch-h\">Changes</h2><div id=\"chTop\"></div><div class=\"ch-tabs\"", "['feed', 'Feed'], ['alerts', 'Alerts'], ['soon', 'Coming up'], ['get', 'Get alerts'], ['review', 'Review']", "setAttribute('role', 'tablist')", "$('#app').setAttribute('data-ch', 'feed')", "<div class=\"ch-det\" hidden>"): self.assertIn(needed, sh, needed)
+        for needed in ("function mountChanges()", "function renderTop()", "function dayWeather()", "function renderAlerts()", "function renderSoonList()", "function renderFeed()", "function renderGet(ch)", "function renderAll()", "function shortText(text)", "function alertItems()", "function itemRow(it, max)", "function plainRule(rule)", "A change is queued and can be executed now", "A second, independent read disagrees with the score", "return 'Ready to run'", "return 'Second read differs'", "mountChanges, bdTick, mountSheet]", "returnTo = from; if (host)", "function shortSig(x)", "function nameOfAlert(x, r)", "rv.appendChild(d);", "a redrawn headline brings fresh copies", "#headline details.sub > summary, #chReview details.sub > summary", "<h2 class=\"ch-h\">Changes</h2><div id=\"chTop\"></div><div class=\"ch-tabs\"", "['feed', 'Feed'], ['alerts', 'Alerts'], ['soon', 'Coming up'], ['get', 'Get alerts'], ['review', 'Review']", "setAttribute('role', 'tablist')", "$('#app').setAttribute('data-ch', 'feed')", "<div class=\"ch-det\" hidden>"): self.assertIn(needed, sh, needed)
         for gone in ("Your briefing</h2>", "ch-hero"): self.assertNotIn(gone, sh, gone)
         for needed in ('#app[data-view="changes"] #shPulse { display: none; }', '[data-ch="none"]', ".ch-ev.k-alert", ".ch-card.s-high", ".ch-pills {", ".ch-pl.wx-storm", '[data-ch="feed"] #pFeed'): self.assertIn(needed, css, needed)
 
@@ -4057,7 +4057,7 @@ class TestShellModule(unittest.TestCase):
         if not all(os.path.exists(x) for x in (ap, sp)): self.skipTest("the site modules are not beside the surveillance folder in this checkout")
         al = open(ap, encoding="utf-8").read(); sh = open(sp, encoding="utf-8").read()
         # 11/10, the visitor: "do better" on the top of Rankings. One big number (the money at risk, counted up when seen), the sentence about the scale cut to one line, the four stats as cards that filter; the count of the stats no longer runs under reduced motion
-        self.assertIn('<div class="hero-big"', al); self.assertIn("sits behind setups scoring under 40, out of <em>", al); self.assertNotIn("at risk of <em>", al); self.assertIn("function heroAnim()", sh); self.assertIn("[tag, mountTop, mountSections, pulse, evRender, mountDay, podium, mountRank, heroAnim, mountDuel, mountLeague, mountChanges, bdTick]", sh)
+        self.assertIn('<div class="hero-big"', al); self.assertIn("sits behind setups scoring under 40, out of <em>", al); self.assertNotIn("at risk of <em>", al); self.assertIn("function heroAnim()", sh); self.assertIn("[tag, mountTop, mountSections, pulse, evRender, mountDay, podium, mountRank, heroAnim, mountDuel, mountLeague, mountChanges, bdTick, mountSheet]", sh)
         self.assertIn("if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) el.querySelectorAll('.hs b')", al)
 
     def test_rankings_top_moves_and_gives_reasons_to_come_back(self):
@@ -4338,6 +4338,36 @@ class TestScannedTo(unittest.TestCase):
         self.assertEqual(watch_run.scanned_to({"read": True}, 100, 90), 100)
         self.assertEqual(watch_run.scanned_to({"read": False, "error": "x"}, 100, 120), 100)
         self.assertEqual(watch_run.scanned_to({"read": False}, None, 120), 120)
+
+
+class TestReviewOfTheDashboardScript(unittest.TestCase):
+    """What the third review (11/10) found in the five modules, pinned: each line is the fix of a defect seen live."""
+    def src(self, name):
+        p = os.path.join(os.path.dirname(__file__), "..", "..", "..", name)
+        if not os.path.exists(p): self.skipTest(name + " is not beside the surveillance folder in this checkout")
+        return open(p, encoding="utf-8").read()
+
+    def test_fixes_stay(self):
+        a, s, p, c = self.src("module-all.js"), self.src("module-shell.js"), self.src("module-play.js"), self.src("module-all.css")
+        self.assertIn(".filter(function (r) { return r.offsetParent !== null; }); if (!rows.length) return;", a)   # the arrows and the space bar scroll the page on Check: the hidden table does not take them
+        self.assertIn("window.aroMountSheet = mountSheet;", s); self.assertIn("window.aroMountSheet", p)   # the sheet always gets its close button, Escape and backdrop, whoever starts first
+        self.assertIn("#app[data-view] > #shDay, #app[data-view] > #shMap { animation: shFade", c)   # no animated transform on the parents of a position: fixed child
+        self.assertNotIn("cat|since|sort", s)   # since is a Changes block, not a Rankings key
+        self.assertNotIn("st.s.join(',') + location.hash", p)   # a shared play link carries no Rankings filter
+        self.assertIn("addrKey(r) + '.html'", s)   # a Solana address is case sensitive: its share page keeps the case
+        self.assertIn("function lsArr(k)", a)   # a corrupted local storage value is not a list
+        self.assertIn("(unr ? '<b>unknown</b> behind a contract the oracle scores", a)   # an unread contract is not a zero
+
+
+class TestPinnedKey(unittest.TestCase):
+    """The public key pinned in the dashboard (ARO_PUBKEY) and the one written in watch/API.md are the same 64 hex characters."""
+    def test_same_key_everywhere(self):
+        import re
+        root = os.path.join(os.path.dirname(__file__), "..", "..", "..")
+        js, md = os.path.join(root, "module-all.js"), os.path.join(root, "surveillance", "watch", "API.md")
+        if not (os.path.exists(js) and os.path.exists(md)): self.skipTest("module-all.js and watch/API.md are not both here in this checkout")
+        k = re.search(r"var ARO_PUBKEY = '([0-9a-f]*)'", open(js, encoding="utf-8").read()).group(1)
+        self.assertRegex(k, r"^[0-9a-f]{64}$"); self.assertIn("`" + k + "`", open(md, encoding="utf-8").read())
 
 
 class TestAlertWords(unittest.TestCase):

@@ -21,6 +21,7 @@ import os
 import re
 import sys
 import time
+import urllib.error
 import urllib.request
 from xml.sax.saxutils import escape as _xml_escape
 def escape(t): return _xml_escape(str(t), {'"': "&quot;"})
@@ -64,38 +65,68 @@ def slug(name):
     return re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
 
 
+class RateLimited(RuntimeError):
+    """The node answered "rate limited" (JSON-RPC code -32005, or HTTP 429). The same call a little later works; a smaller batch only means more calls, which is worse against a limit per address."""
+
+
+RATE_WAITS = (6, 15, 30, 60)   # seconds: one wait per rate-limited answer of the same call, growing
+RATE_BUDGET = 240              # seconds one run may spend waiting on one endpoint; after that the read is reported as unread and the run moves on
+_rate_spent, _rate_seen = {}, set()
+
+
+def _rate_limited(out):
+    if isinstance(out, dict) and isinstance(out.get("error"), dict):
+        e = out["error"]; return e.get("code") == -32005 or "rate" in str(e.get("message", "")).lower()
+    return False
+
+
 def rpc(url, calls, tries=3):
-    """One JSON-RPC batch; returns a list of results in order. Raises on the last failed try."""
+    """One JSON-RPC batch; returns a list of results in order. Raises on the last failed try. A rate-limited answer (the public Hyperliquid testnet node does this to GitHub's shared runner
+    addresses, 11/10: three reads in four came back unread) is waited out with growing pauses instead of being counted as one of the `tries`."""
     body = json.dumps([{"jsonrpc": "2.0", "id": i, "method": m, "params": p} for i, (m, p) in enumerate(calls)]).encode()
-    last = None
-    for attempt in range(tries):
+    last, attempt, waits = None, 0, 0
+    while True:
         try:
             req = urllib.request.Request(url, data=body, headers={"content-type": "application/json", "user-agent": "watch_run/1"})
-            with urllib.request.urlopen(req, timeout=40) as r:
-                out = json.loads(r.read().decode())
+            try:
+                with urllib.request.urlopen(req, timeout=40) as r:
+                    out = json.loads(r.read().decode())
+            except urllib.error.HTTPError as e:
+                if e.code == 429: raise RateLimited("HTTP 429")
+                raise
+            if _rate_limited(out): raise RateLimited(str(out.get("error"))[:100])
             if not isinstance(out, list) or len(out) != len(calls):
                 raise ValueError(f"malformed batch answer ({str(out)[:80]})")
             res = sorted(out, key=lambda x: x["id"])
             if any("error" in x for x in res):
+                if any(_rate_limited(x) for x in res): raise RateLimited(str([x["error"] for x in res if "error" in x])[:100])
                 raise ValueError(str([x["error"] for x in res if "error" in x])[:160])
             return [x["result"] for x in res]
+        except RateLimited as e:
+            last = e; _rate_seen.add(url)
+            if waits >= len(RATE_WAITS) or _rate_spent.get(url, 0) + RATE_WAITS[waits] > RATE_BUDGET: break
+            _rate_spent[url] = _rate_spent.get(url, 0) + RATE_WAITS[waits]; time.sleep(RATE_WAITS[waits]); waits += 1
         except Exception as e:  # noqa: BLE001 -- retried, then reported
-            last = e
-            time.sleep(2 * (attempt + 1))
+            last = e; attempt += 1
+            if attempt >= tries: break
+            time.sleep(2 * attempt)
+    if isinstance(last, RateLimited): raise RateLimited(f"RateLimited: {last}")
     raise RuntimeError(f"{type(last).__name__}: {last}")
 
 
 def batched(url, calls):
     """Send `calls` in batches the endpoint accepts: 20 at a time, then 5 with a pause, then one by one.
-    Some testnet RPCs reject or rate-limit batches (HTTP 413, 'requests limited to 15/sec', 'batch too large')."""
+    Some testnet RPCs reject or rate-limit batches (HTTP 413, 'requests limited to 15/sec', 'batch too large'). A rate limit is not a size problem: the pause grows and the size stays
+    (a smaller batch is more calls), and once an endpoint has limited us the pace between calls is at least half a second for the rest of the run."""
     last = None
     for size, pause in ((CHUNK, 0.0), (5, 1.0), (1, 0.25)):
         try:
             out = []
             for i in range(0, len(calls), size):
                 out += rpc(url, calls[i:i + size], tries=2)
-                time.sleep(pause)
+                time.sleep(max(pause, 0.5 if url in _rate_seen else 0.0))
             return out
+        except RateLimited: raise
         except Exception as e:  # noqa: BLE001 -- try a smaller batch before giving up
             last = e
     raise last

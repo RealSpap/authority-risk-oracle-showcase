@@ -2197,6 +2197,30 @@ class TestOracleReads(unittest.TestCase):
         with self.assertRaises(RuntimeError) as cm: self.with_urlopen([[{"id": 0, "result": "a"}, {"id": 1, "error": {"message": "limit"}}]], [("m", []), ("n", [])], tries=1)
         self.assertIn("limit", str(cm.exception))
 
+    RATE = {"jsonrpc": "2.0", "id": None, "error": {"code": -32005, "message": "rate limited"}}
+
+    def test_a_rate_limited_answer_is_waited_out_with_growing_pauses_not_counted_as_a_try(self):
+        # 11/10: the public Hyperliquid testnet node answered "rate limited" (-32005) to GitHub's shared runner addresses, three reads in four came back unread. The pause grows and the call is repeated
+        watch_run._rate_spent.clear(); watch_run._rate_seen.clear(); slept = []; watch_run.time.sleep = slept.append
+        out, seen = self.with_urlopen([dict(self.RATE), dict(self.RATE), [{"id": 0, "result": "ok"}]], [("m", [])], tries=1)
+        self.assertEqual(out, ["ok"]); self.assertEqual(len(seen), 3); self.assertEqual(slept, [6, 15])   # tries=1 did not stop it: a rate limit is not a failed try
+
+    def test_a_node_that_keeps_limiting_us_is_reported_and_the_batch_size_is_not_reduced(self):
+        watch_run._rate_spent.clear(); watch_run._rate_seen.clear(); slept = []; watch_run.time.sleep = slept.append; sizes = []
+        def rpc(url, calls, tries=3): sizes.append(len(calls)); raise watch_run.RateLimited("RateLimited: x")
+        watch_run.rpc = rpc
+        with self.assertRaises(watch_run.RateLimited): watch_run.batched("u", [("m", [])] * 12)
+        self.assertEqual(sizes, [12])   # one try at 12, not 5 then 1: smaller batches are more calls against a limit per address
+        watch_run.rpc = self.saved[0]
+        with self.assertRaises(watch_run.RateLimited): self.with_urlopen([dict(self.RATE)] * 6, [("m", [])])
+        self.assertEqual(sum(slept), sum(watch_run.RATE_WAITS))   # waited 6 + 15 + 30 + 60 and then said so
+
+    def test_after_a_rate_limit_the_pace_between_calls_is_at_least_half_a_second(self):
+        watch_run._rate_spent.clear(); watch_run._rate_seen.clear(); watch_run._rate_seen.add("slow"); slept = []; watch_run.time.sleep = slept.append
+        watch_run.rpc = lambda url, calls, tries=3: [0] * len(calls)
+        watch_run.batched("slow", [("m", [])] * 45); self.assertEqual(slept, [0.5, 0.5, 0.5])
+        slept.clear(); watch_run.batched("fast", [("m", [])] * 45); self.assertEqual(slept, [0.0, 0.0, 0.0])
+
     def test_batched_falls_back_to_smaller_batches_and_keeps_the_order(self):
         sizes = []
         def rpc(url, calls, tries=3):
@@ -3756,7 +3780,7 @@ class TestShellModule(unittest.TestCase):
         if not all(os.path.exists(x) for x in (sp, cp)): self.skipTest("the site modules are not beside the surveillance folder in this checkout")
         sh = open(sp, encoding="utf-8").read(); css = open(cp, encoding="utf-8").read()
         # 11/10, the visitor, twice: the first redesign was "too repetitive", the single page "does not help, too much text, not clear". The answers to the questions asked: five tabs again but clean, the strip of days first, almost no text, and four reasons to come back (a score of the day, the contracts I follow, a countdown, a streak). So: a row of pills (the day's weather in the site's words, the next watch run, days in a row, calls graded right, followed contracts), the strip of 14 days, then the five tabs, each with labels of a few words and the long sentence behind "Why?" or a tooltip
-        for needed in ("function mountChanges()", "function renderTop()", "function dayWeather()", "function renderAlerts()", "function renderSoonList()", "function renderFeed()", "function renderGet(ch)", "function renderAll()", "function shortText(text)", "function alertCard(xs, rk)", "function plainRule(rule)", "A change is queued and can be executed now", "A second, independent read disagrees with the score", "return 'Ready to run'", "return 'Second read differs'", "mountDuel(); mountLeague(); mountChanges(); }", "returnTo = from; if (host)", "function shortSig(x)", "function nameOfAlert(x, r)", "rv.appendChild(d);", "a redrawn headline brings fresh copies", "#headline details.sub > summary, #chReview details.sub > summary", "<h2 class=\"ch-h\">Changes</h2><div id=\"chTop\"></div><div class=\"ch-tabs\"", "['feed', 'Feed'], ['alerts', 'Alerts'], ['soon', 'Coming up'], ['get', 'Get alerts'], ['review', 'Review']", "setAttribute('role', 'tablist')", "$('#app').setAttribute('data-ch', 'feed')", "<details class=\"ch-why\"><summary>Why?</summary>"): self.assertIn(needed, sh, needed)
+        for needed in ("function mountChanges()", "function renderTop()", "function dayWeather()", "function renderAlerts()", "function renderSoonList()", "function renderFeed()", "function renderGet(ch)", "function renderAll()", "function shortText(text)", "function alertItems()", "function itemCard(it, max)", "function itemRow(it, max)", "function plainRule(rule)", "A change is queued and can be executed now", "A second, independent read disagrees with the score", "return 'Ready to run'", "return 'Second read differs'", "mountDuel(); mountLeague(); mountChanges(); }", "returnTo = from; if (host)", "function shortSig(x)", "function nameOfAlert(x, r)", "rv.appendChild(d);", "a redrawn headline brings fresh copies", "#headline details.sub > summary, #chReview details.sub > summary", "<h2 class=\"ch-h\">Changes</h2><div id=\"chTop\"></div><div class=\"ch-tabs\"", "['feed', 'Feed'], ['alerts', 'Alerts'], ['soon', 'Coming up'], ['get', 'Get alerts'], ['review', 'Review']", "setAttribute('role', 'tablist')", "$('#app').setAttribute('data-ch', 'feed')", "<details class=\"ch-why\"><summary>Why?</summary>"): self.assertIn(needed, sh, needed)
         for gone in ("Your briefing</h2>", "ch-hero"): self.assertNotIn(gone, sh, gone)
         for needed in ('#app[data-view="changes"] #shPulse { display: none; }', '[data-ch="none"]', ".ch-ev.k-alert", ".ch-card.s-high", ".ch-pills {", ".ch-pl.wx-storm", '[data-ch="feed"] #pFeed'): self.assertIn(needed, css, needed)
 
@@ -3807,6 +3831,15 @@ class TestShellModule(unittest.TestCase):
         self.assertIn('if not o.get("still_queued")', er)
         mp = os.path.join(self.ROOT, "module-all.js")
         if os.path.exists(mp): self.assertIn("filter(function (o) { return !o.still_queued; }).length", open(mp, encoding="utf-8").read())
+
+    def test_the_review_tab_is_tiles_and_short_rows_and_the_old_folds_wait_behind_full_details(self):
+        sp = os.path.join(self.ROOT, "module-shell.js"); cp = os.path.join(self.ROOT, "module-all.css")
+        if not all(os.path.exists(x) for x in (sp, cp)): self.skipTest("the site modules are not beside the surveillance folder in this checkout")
+        sh = open(sp, encoding="utf-8").read(); css = open(cp, encoding="utf-8").read()
+        # 11/10, the visitor: "make Review better" (it was three closed folds, a fourth one and raw red ALARM lines) and "the Ready now chip is not aligned" in Coming up. Review: four tiles against the previous run (lower is better), the three most urgent items that need a person, the watch's alarms one line each, the biggest moves; the old folds are moved into a closed Full details. Every row of Coming up and Review has the same trailing slot, so the chips line up. The old blocks stay hidden until the tabs exist
+        for needed in ("function renderReview()", "function spark(vals)", "Is it getting better?", "Needs a person <span", "Alarms from the watch", "<details class=\"ch-full\"><summary>Full details</summary><div id=\"chFullBody\"></div></details>", "var rv = $('#chFullBody');", "$('#app').classList.add('ch-ready')", "renderReview(); }"): self.assertIn(needed, sh, needed)
+        self.assertNotIn("// their numbers are the Review tab now var rv", sh)   # a comment on the same line once swallowed the code after it
+        for needed in (".ch-sl { display: grid; grid-template-columns: minmax(0, 1fr) auto 14px;", ".ch-chip2 { min-width: 92px;", ".ch-tiles {", '#app[data-view="changes"]:not(.ch-ready) [data-sh="changes"] { display: none !important; }', ".ch-tabs { display: flex; flex-wrap: nowrap; width: 100%; overflow-x: auto;"): self.assertIn(needed, css, needed)
 
     def test_every_button_of_changes_answers_a_click(self):
         sp = os.path.join(self.ROOT, "module-shell.js"); cp = os.path.join(self.ROOT, "module-all.css")

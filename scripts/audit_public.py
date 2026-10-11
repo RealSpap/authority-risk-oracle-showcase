@@ -123,11 +123,15 @@ def main():
         (PASS if not errs else FAIL)("schemas: %d file(s) checked, %d problem(s)%s" % (n, len(errs), (": " + errs[0]) if errs else ""))
     except Exception as e: NOTE("schemas not checked (%s)" % e)
     # 4. methodology
-    mixed = []
+    mixed, old_kept = [], []
     for f in sorted(glob.glob(os.path.join(watch, "scores", "*.json"))):
-        d = json.load(open(f)); hs = {(t.get("methodologyHash") or "").lower() for t in d.get("targets", [])}
+        d = json.load(open(f)); tg = d.get("targets", []); h = lambda t: (t.get("methodologyHash") or "").lower()
+        live = {h(t) for t in tg if not t.get("stale")}; hs = live or {h(t) for t in tg}   # an entry retired by design (or not re-pushed yet) is stale and keeps the hash it was last scored under: it is not a second method in use (11/10)
         if len(hs) > 1: mixed.append(os.path.basename(f)[:-5])
+        n_old = sum(1 for t in tg if t.get("stale") and h(t) not in hs)
+        if live and n_old: old_kept.append("%s: %d" % (os.path.basename(f)[:-5], n_old))
     (PASS if not mixed else FAIL)("methodology: one hash per oracle" if not mixed else "methodology: mixed hashes on " + ", ".join(mixed))
+    if old_kept: NOTE("methodology: stale entries that keep an older hash (retired, or not re-pushed yet), counted apart from the live ones: " + "; ".join(old_kept))
     # 5. sample re-read from the oracles
     rows = []
     for f in sorted(glob.glob(os.path.join(watch, "scores", "*.json"))):

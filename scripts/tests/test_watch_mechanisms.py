@@ -2016,6 +2016,19 @@ class TestAuditPublic(unittest.TestCase):
                 time.tzset()
         return code, buf.getvalue()
 
+    def test_an_entry_retired_by_design_keeps_its_old_hash_without_failing_the_methodology_check(self):
+        # 11/10, found by an independent reader on a fresh clone: four entries retired on purpose (stale, last scored under the previous method) made "one hash per oracle" fail, so the one-command audit of the README came out FAILED. Live entries decide; stale ones are noted apart
+        with tempfile.TemporaryDirectory() as tmp:
+            sc = {"kind": "solana", "name": "E", "targets": [{"target": "A", "methodologyHash": "0xNEW", "stale": False}, {"target": "B", "methodologyHash": "0xnew", "stale": False}, {"target": "C", "methodologyHash": "0xOLD", "stale": True}]}
+            code, out = self.audit(self.watch(tmp, scores=sc, sign=False))
+        self.assertIn("PASS  methodology: one hash per oracle", out); self.assertIn("NOTE  methodology: stale entries that keep an older hash", out)
+
+    def test_two_live_entries_under_two_methods_still_fail_the_methodology_check(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            sc = {"kind": "solana", "name": "E", "targets": [{"target": "A", "methodologyHash": "0xNEW", "stale": False}, {"target": "B", "methodologyHash": "0xOLD", "stale": False}]}
+            code, out = self.audit(self.watch(tmp, scores=sc, sign=False))
+        self.assertIn("FAIL  methodology: mixed hashes on", out)
+
     def have_nacl(self):
         try: import nacl.signing  # noqa: F401
         except ImportError: self.skipTest("pynacl is not installed")
@@ -3207,7 +3220,9 @@ class TestDocumentedExamplesRun(unittest.TestCase):
                 args = shlex.split(cmd)[1:]
                 if sc == "badges_protocol": args = [a for a in args if a not in ("watch/badge/protocol",)]; args = [a for i, a in enumerate(args) if not (a == "--out")] + ["--out", os.path.join(tmp, "b")]
                 r = subprocess.run([sys.executable, "-W", "ignore"] + args, cwd=self.ROOT, capture_output=True, text=True, timeout=120)
-                if r.returncode != 0: bad.append("%s -> exit %d: %s" % (cmd, r.returncode, (r.stdout + r.stderr).strip().split("\n")[0][:100]))
+                # consistency.py exits 1 when the committed DATA disagrees with itself (a Watch that read an oracle only in part, 11/10): that is a finding about the data, not a broken example. Only a crash (exit 2 or more, or a traceback) fails here; the script's own logic is tested on made-up files in TestConsistencyBetweenFiles
+                ok = r.returncode == 0 or (sc == "consistency" and r.returncode == 1 and "Traceback" not in r.stderr)
+                if not ok: bad.append("%s -> exit %d: %s" % (cmd, r.returncode, (r.stdout + r.stderr).strip().split("\n")[0][:100]))
         self.assertEqual(bad, []); self.assertGreater(len(ex), 12)   # a dozen-odd examples were found: a pattern that matched nothing could not pass
 
     def test_the_example_finder_skips_placeholders_and_drops_redirections(self):
@@ -3736,13 +3751,24 @@ class TestShellModule(unittest.TestCase):
         self.assertIn("var ARO_FACTS = ", build)   # the page carries the keys and hours of every contract, the same numbers as its JSON twin
         for needed in (".rk-table", ".bt-tab.on", ".rk-critical", "#cards .band-filters .band-btn[data-band] { display: none; }"): self.assertIn(needed, css, needed)
 
-    def test_changes_is_one_panel_with_four_tabs_a_feed_and_plain_alerts(self):
+    def test_changes_is_five_clean_tabs_under_a_row_of_pills_and_a_strip_of_days(self):
         sp = os.path.join(self.ROOT, "module-shell.js"); cp = os.path.join(self.ROOT, "module-all.css")
         if not all(os.path.exists(x) for x in (sp, cp)): self.skipTest("the site modules are not beside the surveillance folder in this checkout")
         sh = open(sp, encoding="utf-8").read(); css = open(cp, encoding="utf-8").read()
-        # 11/10, the visitor (asked questions on purpose): Changes has too many blocks, unreadable alerts, nothing visual; it should be a news feed and an alert board, with the blocks grouped in tabs. One panel, four tabs (Feed, Alerts, Coming up, Review). The feed lists real events newest first, by day (alerts, changes queued behind a timelock, changes that went through, scores that moved), a click opens the contract and closing its card returns to Changes. The alerts are cards by severity with a plain sentence, one line on what to do, and the evidence in short form. The old blocks keep their code and are filed under the tabs; the four counters are hidden (the alert count is on the tab)
-        for needed in ("function mountChanges()", "function renderFeed()", "function renderAlerts()", "function plainRule(rule)", "A change is queued and can be executed now", "A second, independent read disagrees with the score", "setAttribute('role', 'tablist')", "data-tab=", "mountDuel(); mountLeague(); mountChanges(); }", "returnTo = from; if (host)", "function shortSig(x)", "function nameOfAlert(x, r)", 'id="chReview" data-ch="review"', "rv.appendChild(d);", "a redrawn headline brings fresh copies", "#headline details.sub > summary, #chReview details.sub > summary"): self.assertIn(needed, sh, needed)
-        for needed in ('#app[data-view="changes"] #shPulse { display: none; }', '[data-ch="none"]', ".ch-ev.k-alert", ".ch-card.s-high"): self.assertIn(needed, css, needed)
+        # 11/10, the visitor, twice: the first redesign was "too repetitive", the single page "does not help, too much text, not clear". The answers to the questions asked: five tabs again but clean, the strip of days first, almost no text, and four reasons to come back (a score of the day, the contracts I follow, a countdown, a streak). So: a row of pills (the day's weather in the site's words, the next watch run, days in a row, calls graded right, followed contracts), the strip of 14 days, then the five tabs, each with labels of a few words and the long sentence behind "Why?" or a tooltip
+        for needed in ("function mountChanges()", "function renderTop()", "function dayWeather()", "function renderAlerts()", "function renderSoonList()", "function renderFeed()", "function renderGet(ch)", "function renderAll()", "function shortText(text)", "function alertCard(xs, rk)", "function plainRule(rule)", "A change is queued and can be executed now", "A second, independent read disagrees with the score", "return 'Ready to run'", "return 'Second read differs'", "mountDuel(); mountLeague(); mountChanges(); }", "returnTo = from; if (host)", "function shortSig(x)", "function nameOfAlert(x, r)", "rv.appendChild(d);", "a redrawn headline brings fresh copies", "#headline details.sub > summary, #chReview details.sub > summary", "<h2 class=\"ch-h\">Changes</h2><div id=\"chTop\"></div><div class=\"ch-tabs\"", "['feed', 'Feed'], ['alerts', 'Alerts'], ['soon', 'Coming up'], ['get', 'Get alerts'], ['review', 'Review']", "setAttribute('role', 'tablist')", "$('#app').setAttribute('data-ch', 'feed')", "<details class=\"ch-why\"><summary>Why?</summary>"): self.assertIn(needed, sh, needed)
+        for gone in ("Your briefing</h2>", "ch-hero"): self.assertNotIn(gone, sh, gone)
+        for needed in ('#app[data-view="changes"] #shPulse { display: none; }', '[data-ch="none"]', ".ch-ev.k-alert", ".ch-card.s-high", ".ch-pills {", ".ch-pl.wx-storm", '[data-ch="feed"] #pFeed'): self.assertIn(needed, css, needed)
+
+    def test_changes_second_version_groups_repeats_shows_a_strip_and_lists_the_channels_honestly(self):
+        sp = os.path.join(self.ROOT, "module-shell.js"); cp = os.path.join(self.ROOT, "module-all.css"); ap = os.path.join(self.ROOT, "appliquer_oracle_site.py")
+        if not all(os.path.exists(x) for x in (sp, cp, ap)): self.skipTest("the site files are not beside the surveillance folder in this checkout")
+        sh = open(sp, encoding="utf-8").read(); css = open(cp, encoding="utf-8").read(); app = open(ap, encoding="utf-8").read()
+        # 11/10, the visitor: Changes is repetitive, flat, with nothing to do, and the Telegram and Discord alerts the watch can send are nowhere on the page. A strip of 14 days (a cell per day, the worst event colours it, a click filters the feed), one line for the same sentence on three contracts or more, follow and copy-link on a line, and a Get alerts tab that says what is on and what is not (no secret and no account on a static page, so Telegram and Discord read "not open yet" until the maintainer writes channels.json next to the page)
+        for needed in ("function stripHtml(ev)", "function groupHtml(day, items)", "it.length >= 3 ? groupHtml(d, it)", "many[t] = []", "function renderGet(ch)", "fetchJson('channels.json')", "chip('off', 'Telegram', 'soon')", "chip('off', 'Discord', 'soon')", "data-follow=", "data-link=", "signed log ↗", "/^https:\\/\\//.test(String(u || ''))"): self.assertIn(needed, sh, needed)
+        for needed in (".ch-days { display: grid; grid-template-columns: repeat(14,", ".ch-grp > summary", ".ch-chans {", ".ch-bechips {", ".ch-evs a { color: var(--accent); }"): self.assertIn(needed, css, needed)
+        self.assertIn('"channels.json"', app)
+        self.assertNotIn("DISCORD_WEBHOOK_URL", sh); self.assertNotIn("TELEGRAM_BOT_TOKEN", sh)   # the page never holds a secret
 
     def test_the_forecast_card_link_has_its_own_colour(self):
         cp = os.path.join(self.ROOT, "module-all.css")
@@ -3750,14 +3776,14 @@ class TestShellModule(unittest.TestCase):
         # 11/10, a screenshot of Check: "See its contracts" was the browser's default dark blue on a dark card
         self.assertIn(".fc-now .fc-open { grid-column: 1 / -1; margin-top: 8px; justify-self: start; color: var(--accent);", open(cp, encoding="utf-8").read())
 
-    def test_the_box_for_your_own_alert_rules_is_reachable_from_the_changes_alerts_tab(self):
+    def test_the_box_for_your_own_alert_rules_is_reachable_from_the_get_alerts_tab(self):
         sp = os.path.join(self.ROOT, "module-shell.js"); cp = os.path.join(self.ROOT, "module-all.css")
         if not all(os.path.exists(x) for x in (sp, cp)): self.skipTest("the site modules are not beside the surveillance folder in this checkout")
         sh = open(sp, encoding="utf-8").read(); css = open(cp, encoding="utf-8").read()
-        # 11/10, a loop pass that measured the live page: the Changes tabs had filed the old Alerts fold under data-ch="none", which hides it with !important, so #myRule (the box where a visitor writes a rule such as `held and score < 50`, named in the README and the demo script) was hidden in every view. It is now shown under the Alerts tab, without the old table, and the fold is opened with the tab
+        # 11/10, a loop pass that measured the live page: the old Alerts fold had been filed under data-ch="none" (hidden with !important), so #myRule, where a visitor writes a rule such as `held and score < 50`, was hidden in every view. It sits in the Get alerts tab, open, without the old table (the cards of the Alerts tab replace it)
         self.assertNotIn("d.setAttribute('data-ch', 'none'); });   // the plain list of the Alerts tab replaces it", sh)
-        for needed in ("d.setAttribute('data-ch', 'alerts')", "if (v === 'alerts') all('#alerts-fold').forEach(function (d) { d.open = true; });"): self.assertIn(needed, sh, needed)
-        for needed in ('[data-ch="alerts"] #alerts-fold { display: block !important; }', "#alerts-fold #alList { display: none; }"): self.assertIn(needed, css, needed)
+        for needed in ("d.setAttribute('data-ch', 'get')", "if (v === 'get') all('#alerts-fold').forEach(function (d) { d.open = true; });"): self.assertIn(needed, sh, needed)
+        for needed in ('[data-ch="get"] #alerts-fold { display: block !important; }', "#alerts-fold #alList { display: none; }"): self.assertIn(needed, css, needed)
 
     def test_the_calendar_has_no_reminder_for_a_change_past_its_grace_window(self):
         here = os.path.dirname(__file__)
@@ -3782,6 +3808,15 @@ class TestShellModule(unittest.TestCase):
         mp = os.path.join(self.ROOT, "module-all.js")
         if os.path.exists(mp): self.assertIn("filter(function (o) { return !o.still_queued; }).length", open(mp, encoding="utf-8").read())
 
+    def test_every_button_of_changes_answers_a_click(self):
+        sp = os.path.join(self.ROOT, "module-shell.js"); cp = os.path.join(self.ROOT, "module-all.css")
+        if not all(os.path.exists(x) for x in (sp, cp)): self.skipTest("the site modules are not beside the surveillance folder in this checkout")
+        sh = open(sp, encoding="utf-8").read(); css = open(cp, encoding="utf-8").read()
+        # 11/10, the visitor: "when I click nothing happens, look at every button". Clicking every button of the live page found six that did nothing visible: a day of the strip while another tab was open (it only filtered the feed), a copy refused by the browser (no answer), a notification request that stayed silent, the calendar link that opened plain text, and a row about a timelock operation (no tracked contract to open). Now: a day opens the feed, a refused copy shows the text to copy, the notification chip says "asking" then "blocked by your browser", the calendar button saves a real .ics file, an operation row opens its details (call, timelock, time, state, explorer, a command to check), and every action ends with a short toast
+        for needed in ("function toast(msg, keep)", "function copyText(text, btn, done)", "document.execCommand('copy')", "Your browser blocked the copy. Select the text and copy it:", "function opDetailHtml(op)", "function queueIcs()", "a.download = 'authority-timelock-queue.ics'", "data-det=", "sm.textContent = 'asking…'", "blocked by your browser", "setCh('feed'); toast(", "toast('Marked as looked at.", "toast('Call saved: '", "{ id: 'chIcs' }"): self.assertIn(needed, sh, needed)
+        self.assertNotIn("window.prompt(", sh)   # a native prompt can be blocked by the host: the text is shown in the page instead
+        for needed in ("#chToast {", "#chToast.keep", ".ch-det {", ".ch-sl[data-det]"): self.assertIn(needed, css, needed)
+
     def test_a_call_and_a_feed_line_never_say_executed_for_a_change_that_only_left_the_queue(self):
         sp = os.path.join(self.ROOT, "module-shell.js")
         if not os.path.exists(sp): self.skipTest("module-shell.js is not beside the surveillance folder in this checkout")
@@ -3798,12 +3833,12 @@ class TestShellModule(unittest.TestCase):
         self.assertIn("str(len(_pages)) + ' DeFi contracts on 9 chains scored", src)
         self.assertNotIn('content="197 DeFi contracts', src)
 
-    def test_the_arrow_keys_move_between_the_changes_tabs_only_from_a_tab(self):
+    def test_the_inbox_can_reach_zero_a_day_read_is_counted_and_the_countdown_is_the_real_next_run(self):
         sp = os.path.join(self.ROOT, "module-shell.js")
         if not os.path.exists(sp): self.skipTest("module-shell.js is not beside the surveillance folder in this checkout")
         sh = open(sp, encoding="utf-8").read()
-        # 11/10, a loop pass on the keyboard: the handler sat on the whole Changes panel, so an arrow key pressed on a call button, a link or a scrolling row switched the tab and stole the focus. It now acts only when the key comes from a tab
-        self.assertIn("|| !e.target.closest('.ch-tab')) return; var i = CHT", sh)
+        # 11/10, the reasons to come back, with nothing invented: a change is reviewed with one click ("I looked") and comes back after a day if it still fires; at zero a button closes the day, which counts a day read (a streak kept in this browser) and grants the small briefing reward once a day. The weather of the day is a rule on the data (stormy, rainy, cloudy, sunny), the countdown is the real next run of the watch (6 hours after the last) and says "late" when it is
+        for needed in ("if (now - r[k] < 86400) o[k] = r[k]", "data-rev=", "id=\"chClose\"", "function briefStreak()", "lsSet(CHD, dd.slice(-60))", "window.aroGrant('briefing', 5, 'Briefing closed')", "run + 6 * 3600 - now", "'late ' + agoText(", "id=\"chRun\"", "chAbove[op.tx]", "return ['storm',", "return ['sun',", "function isMine(r)", "id=\"chMine\""): self.assertIn(needed, sh, needed)
 
     def test_a_printed_page_has_no_blank_first_sheet_and_prints_the_true_figures(self):
         cp = os.path.join(self.ROOT, "module-all.css"); pp = os.path.join(self.ROOT, "module-play.js")
@@ -4090,3 +4125,28 @@ class TestAlertWords(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestPublicReadmePatch(unittest.TestCase):
+    """patch_readme_vitrine.py runs on the public repository's README at every push. An independent reader of the public repo (11/10) found a literal backslash-n between two badges, a block of about 4000 characters under "Try it in 60 seconds", and counts typed by hand (190, 179) that disagreed with the 197 the oracles hold."""
+    HERE = os.path.dirname(__file__); PATCH = os.path.join(HERE, "..", "..", "..", "patch_readme_vitrine.py")
+
+    def run_patch(self, readme, n_targets):
+        with tempfile.TemporaryDirectory() as tmp:
+            os.makedirs(os.path.join(tmp, "watch", "scores")); json.dump({"targets": [{} for _ in range(n_targets)]}, open(os.path.join(tmp, "watch", "scores", "a.json"), "w"))
+            p = os.path.join(tmp, "README.md"); open(p, "w", encoding="utf-8").write(readme)
+            for _ in range(2): subprocess.run([sys.executable, self.PATCH, p], capture_output=True, text=True, check=True)   # twice: it must be idempotent
+            return open(p, encoding="utf-8").read()
+
+    OLD = ('<img alt="Network" src="https://img.shields.io/badge/deployed-testnets-orange">' + chr(92) + 'n  <a href="watch/API.md"><img alt="Watch integrity" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FRealSpap%2Fauthority-risk-oracle-showcase%2Fmain%2Fwatch%2Fbadge%2Fintegrity.json"></a>\n'
+           'in one call any contract can make.</b><br><sub>9 on-chain oracles, 10 ecosystems, 190 tracked contracts. Composite = 40%</sub>\n\n'
+           '**2. Open the dashboard**: x, one table for the 179 tracked contracts on 9 chains\n(8 EVM). The source is [`dashboard/index.html`](dashboard/index.html), a single file with no backend; the watch files are under [`watch/`](watch/API.md). Audit it yourself in one command: `python3 scripts/audit_public.py` (standard library), `python3 scripts/tour.py` is the thirty-second tour to run first after cloning, and `python3 scripts/consistency.py` checks the files.\n\n## Next\n')
+
+    def test_the_patch_cleans_an_older_run_and_is_idempotent(self):
+        if not os.path.exists(self.PATCH): self.skipTest("patch_readme_vitrine.py is not beside the surveillance folder in this checkout")
+        out = self.run_patch(self.OLD, 197)
+        self.assertNotIn(chr(92) + "n  <a href=", out)                                  # no literal backslash-n between the badges
+        self.assertEqual(out.count("Watch integrity"), 1); self.assertEqual(out.count("**3. Audit it yourself"), 1)   # one badge, one list, never two
+        self.assertTrue(all(len(line) < 1500 for line in out.split("\n")))               # no block of thousands of characters
+        self.assertLess(out.index("`python3 scripts/tour.py`"), out.index("`python3 scripts/audit_public.py`"))   # the tour comes first
+        self.assertIn("197 tracked contracts.", out); self.assertNotIn("190 tracked", out); self.assertNotIn("179 tracked", out)   # the count is the one the score files hold

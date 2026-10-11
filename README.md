@@ -4,7 +4,7 @@
 
 <h1 align="center">Authority Risk Oracle</h1>
 
-<p align="center"><b>Who can really move a DeFi protocol's funds? An on-chain oracle that answers, for 10 ecosystems, in one call any contract can make.</b><br><sub>9 on-chain oracles (8 EVM testnets and Solana devnet), plus Zcash Testnet as a hash commitment: 10 ecosystems, 190 tracked contracts. Composite = 40% admin key + 30% multisig + 30% timelock; price feed and shared control are published beside it. On the EVM oracles the call is <code>getScore(address)</code>; on Solana the score is an account (PDA, seeds <code>["score", target]</code>), read by account.</sub></p>
+<p align="center"><b>Who can really move a DeFi protocol's funds? An on-chain oracle that answers, for 10 ecosystems, in one call any contract can make.</b><br><sub>9 on-chain oracles (8 EVM testnets and Solana devnet), plus Zcash Testnet as a hash commitment: 10 ecosystems, 197 tracked contracts. Composite = 40% admin key + 30% multisig + 30% timelock; price feed and shared control are published beside it. On the EVM oracles the call is <code>getScore(address)</code>; on Solana the score is an account (PDA, seeds <code>["score", target]</code>), read by account.</sub></p>
 
 <p align="center">
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue"></a>
@@ -13,7 +13,8 @@
   <a href=".github/workflows/mutation.yml"><img alt="Mutation" src="https://github.com/RealSpap/authority-risk-oracle-showcase/actions/workflows/mutation.yml/badge.svg"></a>
   <img alt="Ecosystems" src="https://img.shields.io/badge/ecosystems-10-informational">
   <a href="https://realspap.github.io/oracle/"><img alt="Targets read by the watch" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FRealSpap%2Fauthority-risk-oracle-showcase%2Fmain%2Fwatch%2Fbadge.json"></a>
-  <img alt="Network" src="https://img.shields.io/badge/deployed-testnets-orange">\n  <a href="watch/API.md"><img alt="Watch integrity" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FRealSpap%2Fauthority-risk-oracle-showcase%2Fmain%2Fwatch%2Fbadge%2Fintegrity.json"></a>
+  <img alt="Network" src="https://img.shields.io/badge/deployed-testnets-orange">
+  <a href="watch/API.md"><img alt="Watch integrity" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FRealSpap%2Fauthority-risk-oracle-showcase%2Fmain%2Fwatch%2Fbadge%2Fintegrity.json"></a>
 </p>
 
 <p align="center">
@@ -54,11 +55,28 @@ cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 \
 # 80, 100, 75, 100, 80, 85, 1790408560, 0xf2606acd...   (read live on 2026-10-06)
 ```
 
-**2. Open the dashboard**: [realspap.github.io/oracle](https://realspap.github.io/oracle/), one table for the 179 tracked contracts on 9 chains
+**2. Open the dashboard**: [realspap.github.io/oracle](https://realspap.github.io/oracle/), one table for the 197 tracked contracts on 9 chains
 (8 EVM testnets and Solana devnet), re-read from the oracles every 6 hours by a read-only job. It shows the money behind each
 setup, the timelock queue before a change applies, the alerts that fire on rules you can fork, why a score moved, and one static
 page per contract. Every score can be re-read from the chain in your browser ("verify all live"). The source is
-[`dashboard/index.html`](dashboard/index.html), a single file with no backend; the watch files are under [`watch/`](watch/API.md). Audit it yourself in one command: `python3 scripts/audit_public.py` (standard library) checks the hash-chained event log, the signed manifest, the schemas and re-reads scores from the oracles; `watch/status.json` is the run health in one record. `python3 scripts/dossier.py base 0x...` prints everything the watch knows about one contract, in words, from a clone and with no network, `python3 scripts/find.py --kind eoa --min-money 1e8` asks a question of every tracked contract at once (a value the watch did not read excludes the row and is counted, never matched as a zero; `--csv` gives the rows to a spreadsheet, an unread value being an empty cell; `--watchlist mine.txt --alert --fail-if-any` is a gate for a cron job that exits 3 when a rule fires on one of your contracts), `python3 scripts/compare.py morpho-blue aave-v3 lido` sets protocols side by side, or chains with `--chains` (every figure says on how many contracts it was read), and each protocol can show its own badge in its README (`watch/badge/protocol/<slug>.json`, its weakest tracked deployment), `python3 scripts/mcp_server.py --watch watch` is the same data as a local, read-only MCP server for an AI agent (stdio, no account, no key, no network), `python3 scripts/whatif.py base 0x... --timelock 75` shows what the published formula gives if a sub-score changed (arithmetic, not a prediction), and `python3 scripts/tour.py` is the thirty-second tour to run first after cloning, and `python3 scripts/watch_age.py --max-hours 14` is a watchdog for a cron or uptime monitor (exit 1 if the last run is too old, 2 if its age cannot be established), and `python3 scripts/consistency.py` checks that the published files describe the same contracts and the same counts (each file passes its schema on its own; this is the check between them), `python3 scripts/brief.py morpho-blue` writes a one-page brief for a protocol on all its chains (weakest deployment, fewest keys, shortest reaction, money counted once per chain, and what was not read), `python3 scripts/mutate.py` replays the mutations listed in `scripts/tests/mutations.json` (break the code one way, see whether the tests notice) and counts a mutant that does not run as invalid, never as caught; the `Mutation` workflow replays them every week in this repository and turns red when one survives, and `python3 scripts/demo.py` replays four invented events (a pause, a shorter delay announced, an idle admin Safe waking up, a balance collapse) on a copy of the data and runs the real scripts, so you can see the alerts, the review queue and the dossier react. One Atom feed per protocol (`watch/feed/protocol/<slug>.xml`) lets a team follow every chain of its protocol at once. For programs and monitors: `watch/catalog.json` lists every published file with the question it answers, `watch/metrics.prom` is the run in the Prometheus text format (a stopped watch is `time() - aro_run_timestamp_seconds > 8 * 3600`), and the site publishes an `llms.txt`.
+[`dashboard/index.html`](dashboard/index.html), a single file with no backend; the watch files are under [`watch/`](watch/API.md).
+
+**3. Audit it yourself, then ask it questions.** Standard library only, no network unless a line says so.
+
+- `python3 scripts/tour.py` is the thirty-second tour: run it first after cloning.
+- `python3 scripts/audit_public.py` checks the hash-chained event log, the signed manifest and the schemas, and re-reads scores from the oracles. `watch/status.json` is the run health in one record.
+- `python3 scripts/consistency.py` checks that the published files describe the same contracts and the same counts (each file passes its schema on its own; this is the check between them).
+- `python3 scripts/dossier.py base 0x...` prints everything the watch knows about one contract, in words, from a clone and with no network.
+- `python3 scripts/brief.py morpho-blue` writes a one-page brief for a protocol on all its chains: weakest deployment, fewest keys, shortest reaction, money counted once per chain, and what was not read.
+- `python3 scripts/find.py --kind eoa --min-money 1e8` asks a question of every tracked contract at once. A value the watch did not read excludes the row and is counted, never matched as a zero; `--csv` gives the rows to a spreadsheet; `--watchlist mine.txt --alert --fail-if-any` is a gate for a cron job that exits 3 when a rule fires on one of your contracts.
+- `python3 scripts/compare.py morpho-blue aave-v3 lido` sets protocols side by side, or chains with `--chains`; every figure says on how many contracts it was read. Each protocol can show its own badge in its README (`watch/badge/protocol/<slug>.json`, its weakest tracked deployment).
+- `python3 scripts/whatif.py base 0x... --timelock 75` shows what the published formula gives if a sub-score changed (arithmetic, not a prediction).
+- `python3 scripts/mcp_server.py --watch watch` is the same data as a local, read-only MCP server for an AI agent (stdio, no account, no key, no network).
+- `python3 scripts/watch_age.py --max-hours 14` is a watchdog for a cron or an uptime monitor: exit 1 if the last run is too old, 2 if its age cannot be established.
+- `python3 scripts/mutate.py` replays the mutations listed in `scripts/tests/mutations.json` (break the code one way, see whether the tests notice) and counts a mutant that does not run as invalid, never as caught. The `Mutation` workflow replays them every week and turns red when one survives.
+- `python3 scripts/demo.py` replays four invented events (a pause, a shorter delay announced, an idle admin Safe waking up, a balance collapse) on a copy of the data and runs the real scripts, so you can see the alerts, the review queue and the dossier react.
+- One Atom feed per protocol (`watch/feed/protocol/<slug>.xml`) lets a team follow every chain of its protocol at once.
+- For programs and monitors: `watch/catalog.json` lists every published file with the question it answers, `watch/metrics.prom` is the run in the Prometheus text format (a stopped watch is `time() - aro_run_timestamp_seconds > 8 * 3600`), and the site publishes an `llms.txt`.
 
 **3. Pull the whole table as JSON**, with the transaction that produced it so you can cross-check it:
 

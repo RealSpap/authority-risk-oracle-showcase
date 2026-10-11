@@ -3619,8 +3619,287 @@ class TestShellModule(unittest.TestCase):
         p = os.path.join(self.ROOT, "module-shell.js")
         if not os.path.exists(p): self.skipTest("module-shell.js is not beside the surveillance folder in this checkout")
         src = open(p, encoding="utf-8").read(); body = src[src.index("function status()"):src.index("function exposed()")]
-        for needed in ("'Checked ' + esc(ago)", "class=\"sh-chip", "</b> stale</span>", "all fresh", "data-view=\"evidence\">Why?</button>", "scores are older than the limit the oracle sets"): self.assertIn(needed, body, needed)   # a dot, when, one chip, one word; the long sentence is a tooltip
+        for needed in ('<svg class="sh-clock ', "'Checked ' + esc(ago)", "class=\"sh-chip", "</b> stale</span>", "all fresh", "data-view=\"evidence\">Why?</button>", "scores are older than the limit the oracle sets"): self.assertIn(needed, body, needed)   # a dot, when, one chip, one word; the long sentence is a tooltip
+        self.assertNotIn('class="sh-dot', body)   # a clock, not a dull orange dot with a brown halo (the visitor pointed at it)
         self.assertNotIn("scores are stale on the oracles (not pushed within their limit)", body)   # the long sentence was cut off with an ellipsis on a phone and read like a failure at the top of the page
+
+    def test_the_examples_the_radar_and_the_podium_still_open_a_card(self):
+        pp = os.path.join(self.ROOT, "module-play.js"); mp = os.path.join(self.ROOT, "module-map.js"); sp = os.path.join(self.ROOT, "module-shell.js")
+        if not all(os.path.exists(x) for x in (pp, mp, sp)): self.skipTest("the site modules are not beside the surveillance folder in this checkout")
+        play = open(pp, encoding="utf-8").read(); m = open(mp, encoding="utf-8").read(); sh = open(sp, encoding="utf-8").read()
+        # found on 11/10 by the visitor: "when I click on Lido, nothing happens". The examples, the radar's tip and the podium cards live outside the section whose click handler opened a card
+        self.assertNotIn("$('play').addEventListener('click'", play)
+        self.assertIn("document.addEventListener('click', function (e) {\n        var b = e.target.closest('button'); if (!b || !b.closest('#play, #shMap, #shPodium, .lb-board')) return;", play)
+        self.assertIn("b.getAttribute('data-q') !== null", play); self.assertIn("b.getAttribute('data-id')", play)
+        # every place that carries an example or a contract id is inside one of the three places the handler answers to
+        self.assertIn("['playForm', 'playChips', 'playList']", m); self.assertIn("box.id = 'shPodium'", sh)
+        self.assertIn('class="sm-tip"', m); self.assertIn('data-id="', sh)
+
+    def test_the_mission_says_what_you_win_and_the_game_keeps_score(self):
+        pp = os.path.join(self.ROOT, "module-play.js")
+        if not os.path.exists(pp): self.skipTest("module-play.js is not beside the surveillance folder in this checkout")
+        play = open(pp, encoding="utf-8").read()
+        # 11/10, the visitor: "I do not see the goal of the game, what do we win, it must be addictive". The card says what is won (stars, XP, streak, rank), the moves are counted (one per drag, one per use of the smallest fix, none for a reset), the win screen pays out once per contract and day, and nothing leaves the browser
+        for needed in ("Make ' + esc(name(r)) + ' safer", "You win", "one precise move", "var RANKS = [[0, 'Intern']", "Goal reached in ' + rw.moves", "st.moves = 0; st.drag = false; st.hint = false; st.reward = null;", "fresh: !p.solved[key]", "id=\"pcNext\"", "Tomorrow: "): self.assertIn(needed, play, needed)
+        self.assertEqual(play.count("st.moves++"), 2)   # a drag (once per drag, not per step) and the smallest fix
+        self.assertIn("hint ? Math.min(n, 2) : n", play)   # the hint costs a star: the smallest fix is shown, not earned
+        self.assertNotIn("fetch(", play[play.index("var RANKS"):play.index("function dailyPick")])   # the score never leaves the browser
+
+    def test_a_wallet_with_no_tracked_token_still_gets_a_useful_answer(self):
+        ap = os.path.join(self.ROOT, "module-all.js")
+        if not os.path.exists(ap): self.skipTest("module-all.js is not beside the surveillance folder in this checkout")
+        al = open(ap, encoding="utf-8").read()
+        # 11/10, the visitor pasted his own address: "it gives nothing". A wallet that holds none of the tracked tokens now lists what it does hold on Ethereum (public Blockscout, the explorer that answers a browser), says that none of it is scored, and offers to ask for a check; a failed read is "not a zero", and the page says where the address goes
+        for needed in ("function inventory(addr, mine)", "https://eth.blockscout.com/api/v2/addresses/", "'/token-balances'", "not scored yet", "Ask for a check", "not a zero. Retry in a minute", "if (mine !== seq) return;", "if (!isSol) inventory(w, my); return; }", "the address is also sent to Blockscout", "tk.reputation !== 'ok'", "flagged by the explorer as spam or scam"): self.assertIn(needed, al, needed)
+        self.assertEqual(al.count("eth.blockscout.com"), 1)   # one explorer, named once
+
+    def test_the_wallet_inventory_reads_each_token_live_and_never_scores_it(self):
+        ap = os.path.join(self.ROOT, "module-all.js")
+        if not os.path.exists(ap): self.skipTest("module-all.js is not beside the surveillance folder in this checkout")
+        al = open(ap, encoding="utf-8").read()
+        # 11/10, "do better": each listed token gets what can be read from the chain in the browser: proxy slots (EIP-1967 implementation, admin, beacon, the Zeppelin admin slot), owner(), and what kind of address the admin or owner is (no code = a plain account, getThreshold = a Safe m of n, else a contract of N bytes). Checked by hand against the stablecoin registry of the other session on USDC, USDT, DAI, USDS and PYUSD. Facts, never a score; and "no owner" is never sold as safe
+        for slot in ("360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc", "b53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103", "10d6a54a4754c8869d6886b5f5d7fbfa5b4522237ea5c60d11bc4e7a1ff9390b", "a3f0ad74e5423aebfd80d3ef4346578335a9a72aeaee59ff6cb3582b35133d50"): self.assertIn(slot, al)
+        for needed in ("data: '0x8da5cb5b'", "data: '0xe75235b8'", "an address with no code: nothing more can be read", "not a clean bill of health", "Read live, not a score", "Not read (a public RPC refused): not a zero."): self.assertIn(needed, al, needed)
+
+    def test_xp_follows_useful_actions_and_needs_no_account(self):
+        pp = os.path.join(self.ROOT, "module-play.js"); ap = os.path.join(self.ROOT, "module-all.js")
+        if not all(os.path.exists(x) for x in (pp, ap)): self.skipTest("the site modules are not beside the surveillance folder in this checkout")
+        play = open(pp, encoding="utf-8").read(); al = open(ap, encoding="utf-8").read()
+        # 11/10, the visitor: "why do they earn XP when they have no account? make the useful pleasant". XP is paid for useful actions (a fix, a contract watched, a wallet checked, a fix sent to the team), once per action and day, kept in the browser, and a link carries it to another device
+        for needed in ("grant('watch|'", "grant('team|'", "window.aroGrant = grant;", "id=\"pcTeam\"", "id=\"pfKeep\"", "No account: it stays in this browser", "Please correct us if a reading is wrong", "if (p.solved[k]) return false;"): self.assertIn(needed, play, needed)
+        self.assertIn("window.aroGrant('wallet', 25", al)
+        self.assertEqual(play.count("URLSearchParams"), 1)   # the address bar is read once, the progress link too
+        self.assertIn("Math.min(x, 1e6)", play)   # an imported score is bounded, nothing real depends on it
+        self.assertNotIn("fetch(", play)   # the message is copied, never sent
+
+    def test_a_reload_does_not_reopen_the_last_card_and_the_profile_sits_under_the_mission(self):
+        pp = os.path.join(self.ROOT, "module-play.js")
+        if not os.path.exists(pp): self.skipTest("module-play.js is not beside the surveillance folder in this checkout")
+        play = open(pp, encoding="utf-8").read()
+        # 11/10, the visitor: "every time I load the page Hyperliquid L1 opens" (the address kept ?play= from the last card) and "why is the account in the middle". A reload drops ?play= and ?s=; a followed link still opens its card; the profile is under the mission card, not above the contracts
+        self.assertIn("nv.type === 'reload'", play); self.assertIn("uu.searchParams.delete('play')", play)
+        self.assertLess(play.index('id="playDaily"></div><div class="play-profile"'), play.index('id="playPro"'))
+
+    def test_the_check_view_puts_the_reason_to_come_back_first(self):
+        pp = os.path.join(self.ROOT, "module-play.js"); sp = os.path.join(self.ROOT, "module-shell.js")
+        if not all(os.path.exists(x) for x in (pp, sp)): self.skipTest("the site modules are not beside the surveillance folder in this checkout")
+        play = open(pp, encoding="utf-8").read(); sh = open(sp, encoding="utf-8").read()
+        # 11/10, the visitor: "look at the structure and the text, make it coherent, addictive, something that makes people want to come back". Order of the Check view: search and forecast, today's mission, the profile, then the six exposed contracts, then the wallet. The mission says how hard it is, what keeps a streak alive, and when a rank is within reach; one word for the money ("at stake") everywhere
+        self.assertIn("play.insertBefore(sec, $('#playPro'))", sh)
+        for needed in ("easy' : goal - r.composite <= 12 ? 'medium' : 'hard'", "Keeps your ' + streak() + '-day streak alive", "this mission is enough", "' held' : '') + '</div>'", "q0.value = ''"): self.assertIn(needed, play, needed)
+        self.assertNotIn("exposed' : '')", play)
+        self.assertIn("id=\"pdRemind\"", play); self.assertIn("RRULE:FREQ=DAILY", play)   # a daily reminder file made in the browser: the way back that needs no server
+        self.assertNotIn("at stake", play)   # one word for the money: "held", as the Rankings say (\"of $9.6B held\")
+
+    def test_the_page_answers_the_pointer_and_every_motion_respects_reduced_motion(self):
+        pp = os.path.join(self.ROOT, "module-play.js"); cp = os.path.join(self.ROOT, "module-all.css")
+        if not all(os.path.exists(x) for x in (pp, cp)): self.skipTest("the site modules are not beside the surveillance folder in this checkout")
+        play = open(pp, encoding="utf-8").read(); css = open(cp, encoding="utf-8").read()
+        # 11/10, the visitor: "make all of it interactive, and with animations". The mission can be tried in place (a slider on the cheapest axis moves the big number and lights the card when the goal is reached, nothing is saved), a badge says how it is earned, a card follows the pointer with a soft light, numbers count up when seen and end on their true text, the wallet field takes focus when its fold opens
+        self.assertIn("if (today() !== shownDay) { shownDay = today(); renderStreak(); renderProfile(); renderDaily(); }", play)   # a page left open past midnight takes the new mission
+        for needed in ("function pdTryInput(inp)", "Goal reached with one move. Start the mission to score it.", "data-badge=", "'--mx'", "window.aroAnim = { inView: inView, num: animNum };", "el.textContent = p < 1 ?", ": t;", "q.focus({ preventScroll: true })"): self.assertIn(needed, play, needed)
+        for needed in (".pd-try", ".play-daily.hit", ".sh-go", "@keyframes pdBreathe", "@keyframes pfFlame", ".sh-row:hover::after"): self.assertIn(needed, css, needed)
+        tail = css[css.index("everything answers the pointer"):]
+        self.assertIn("@media (prefers-reduced-motion: reduce) { .pf-medal, .pf-sk b, .play-daily .play-btn.primary", tail)   # the new loops are switched off, not just slowed
+        self.assertIn("reduce", play[play.index("function animNum"):play.index("function animNum") + 200])   # a count never runs under reduced motion
+
+    def test_the_check_view_is_one_main_block_and_one_secondary_panel_with_tabs(self):
+        sp = os.path.join(self.ROOT, "module-shell.js"); cp = os.path.join(self.ROOT, "module-all.css")
+        if not all(os.path.exists(x) for x in (sp, cp)): self.skipTest("the site modules are not beside the surveillance folder in this checkout")
+        sh = open(sp, encoding="utf-8").read(); css = open(cp, encoding="utf-8").read()
+        # 11/10, the visitor: "why are there three sections, can there be one main and one secondary?". The hero is the main block; the mission with its profile, the most exposed contracts and the wallet are one panel with three tabs (arrow keys move between them, the wallet tab opens the fold), only one of the three is shown at a time
+        for needed in ("function mountSections()", "role', 'tablist'", "if (hf && hf.parentNode !== play) play.appendChild(hf);", "e.key !== 'ArrowRight' && e.key !== 'ArrowLeft'", "if (v === 'wallet') { var hf = $('#hold-fold'); if (hf && !hf.open) hf.open = true; }", "mountBar(); mountTop(); mountSections(); mountBuild();"): self.assertIn(needed, sh, needed)
+        self.assertIn('#play[data-sec="mission"] > [data-sec-tag]:not([data-sec-tag="mission"])', css)
+        self.assertIn("setAttribute('data-sec-tag', 'mission')", sh)
+
+    def test_the_scale_sits_under_the_text_with_the_four_cards_under_it_and_can_be_scrubbed(self):
+        ap = os.path.join(self.ROOT, "module-all.js"); cp = os.path.join(self.ROOT, "module-all.css")
+        if not all(os.path.exists(x) for x in (ap, cp)): self.skipTest("the site modules are not beside the surveillance folder in this checkout")
+        al = open(ap, encoding="utf-8").read(); css = open(cp, encoding="utf-8").read()
+        # 11/10, the visitor: "improve it, I want it under the text, then the cards under it". One column: the text and the big number, the scale across the whole width, the four cards under the scale. The scale shows what is under the pointer (score, how many contracts, band) and a click on a bar lists the contracts at or below that score
+        self.assertIn('<div class="hero-stats">', al)
+        self.assertLess(al.index('<div class="spectrum"'), al.index('<div class="hero-stats">'))   # the cards come after the scale in the markup
+        for needed in (".spec-hist i[data-max]", "tip.className = 'spec-tip'", "(c ? ' data-max=\"' + s + '\"' : '')"): self.assertIn(needed, al, needed)
+        self.assertIn("@media (min-width: 900px) { .hero { grid-template-columns: minmax(0, 1fr); } }", css)
+        sh = open(os.path.join(self.ROOT, "module-shell.js"), encoding="utf-8").read()
+        self.assertIn("setTag('#headline .hero-stats', 'none')", sh)   # moved out of the left column, the four cards must keep belonging to Rankings alone: they showed on Evidence and Changes
+
+    def test_rankings_is_a_risk_table_with_band_tabs_and_plain_coloured_cells(self):
+        ap = os.path.join(self.ROOT, "module-all.js"); sp = os.path.join(self.ROOT, "module-shell.js"); pp = os.path.join(self.ROOT, "module-play.js"); cp = os.path.join(self.ROOT, "module-all.css"); bp = os.path.join(self.ROOT, "appliquer_oracle_site.py")
+        if not all(os.path.exists(x) for x in (ap, sp, pp, cp, bp)): self.skipTest("the site modules are not beside the surveillance folder in this checkout")
+        al = open(ap, encoding="utf-8").read(); sh = open(sp, encoding="utf-8").read(); play = open(pp, encoding="utf-8").read(); css = open(cp, encoding="utf-8").read(); build = open(bp, encoding="utf-8").read()
+        # 11/10, the visitor did not like the league and asked to look at the competition. L2BEAT's risk table: bands as tabs with counts, one quiet table, each risk said in a word and coloured by level, a logo per row, sortable columns with an explanation, search and filters in one place. Here: the bands are tabs with their counts (they press the existing band filter and follow the chain filter), the table has the contract's shape as its logo, the score, the three readings as coloured words, the Authority Facts (keys and hours to react, where the independent reader gave them, a dot otherwise: not read is never zero), the money held and the money at risk
+        for needed in ("function pickBand(k)", "class=\"bt-tab\" data-pick=\"all\"", "No contract changed band since the last run.", "mountDuel(); mountLeague(); mountChanges(); }", "window.aroLeagueSync = function () { mountLeague(); leagueSync(); };"): self.assertIn(needed, sh, needed)
+        for needed in ('<table class="rk-table">', "function axisCell(r, i, what)", "function factsCell(r)", "keys not read", "delay not read", "data-rid=", "thc('admin', 'Admin key'", "thc('keys', 'Keys · reaction'", "SORTS = ['chain', 'name', 'composite', 'delta', 'tvl', 'risk', 'admin', 'multisig', 'timelock', 'stale', 'keys', 'react']", ">Overview</button>", ">Details</button>", "tr.querySelector('.rk-name')", "aria-sort=", "th.click(); } }); });"): self.assertIn(needed, al, needed)
+        self.assertNotIn('data-id="\' + esc(r.key + \':\' + r.address) + \'"><td class="rk-n">', al)   # the old table binds its row toggle to tr[data-id]: the new rows must not carry it (it threw on every click)
+        self.assertIn("e.target.closest('.sh-pod, .sh-pod2, .lbb, .rk-name')", sh)
+        self.assertIn("var ARO_FACTS = ", build)   # the page carries the keys and hours of every contract, the same numbers as its JSON twin
+        for needed in (".rk-table", ".bt-tab.on", ".rk-critical", "#cards .band-filters .band-btn[data-band] { display: none; }"): self.assertIn(needed, css, needed)
+
+    def test_changes_is_one_panel_with_four_tabs_a_feed_and_plain_alerts(self):
+        sp = os.path.join(self.ROOT, "module-shell.js"); cp = os.path.join(self.ROOT, "module-all.css")
+        if not all(os.path.exists(x) for x in (sp, cp)): self.skipTest("the site modules are not beside the surveillance folder in this checkout")
+        sh = open(sp, encoding="utf-8").read(); css = open(cp, encoding="utf-8").read()
+        # 11/10, the visitor (asked questions on purpose): Changes has too many blocks, unreadable alerts, nothing visual; it should be a news feed and an alert board, with the blocks grouped in tabs. One panel, four tabs (Feed, Alerts, Coming up, Review). The feed lists real events newest first, by day (alerts, changes queued behind a timelock, changes that went through, scores that moved), a click opens the contract and closing its card returns to Changes. The alerts are cards by severity with a plain sentence, one line on what to do, and the evidence in short form. The old blocks keep their code and are filed under the tabs; the four counters are hidden (the alert count is on the tab)
+        for needed in ("function mountChanges()", "function renderFeed()", "function renderAlerts()", "function plainRule(rule)", "A change is queued and can be executed now", "A second, independent read disagrees with the score", "setAttribute('role', 'tablist')", "data-tab=", "mountDuel(); mountLeague(); mountChanges(); }", "returnTo = from; if (host)", "function shortSig(x)", "function nameOfAlert(x, r)", 'id="chReview" data-ch="review"', "rv.appendChild(d);", "a redrawn headline brings fresh copies", "#headline details.sub > summary, #chReview details.sub > summary"): self.assertIn(needed, sh, needed)
+        for needed in ('#app[data-view="changes"] #shPulse { display: none; }', '[data-ch="none"]', ".ch-ev.k-alert", ".ch-card.s-high"): self.assertIn(needed, css, needed)
+
+    def test_the_forecast_card_link_has_its_own_colour(self):
+        cp = os.path.join(self.ROOT, "module-all.css")
+        if not os.path.exists(cp): self.skipTest("module-all.css is not beside the surveillance folder in this checkout")
+        # 11/10, a screenshot of Check: "See its contracts" was the browser's default dark blue on a dark card
+        self.assertIn(".fc-now .fc-open { grid-column: 1 / -1; margin-top: 8px; justify-self: start; color: var(--accent);", open(cp, encoding="utf-8").read())
+
+    def test_the_box_for_your_own_alert_rules_is_reachable_from_the_changes_alerts_tab(self):
+        sp = os.path.join(self.ROOT, "module-shell.js"); cp = os.path.join(self.ROOT, "module-all.css")
+        if not all(os.path.exists(x) for x in (sp, cp)): self.skipTest("the site modules are not beside the surveillance folder in this checkout")
+        sh = open(sp, encoding="utf-8").read(); css = open(cp, encoding="utf-8").read()
+        # 11/10, a loop pass that measured the live page: the Changes tabs had filed the old Alerts fold under data-ch="none", which hides it with !important, so #myRule (the box where a visitor writes a rule such as `held and score < 50`, named in the README and the demo script) was hidden in every view. It is now shown under the Alerts tab, without the old table, and the fold is opened with the tab
+        self.assertNotIn("d.setAttribute('data-ch', 'none'); });   // the plain list of the Alerts tab replaces it", sh)
+        for needed in ("d.setAttribute('data-ch', 'alerts')", "if (v === 'alerts') all('#alerts-fold').forEach(function (d) { d.open = true; });"): self.assertIn(needed, sh, needed)
+        for needed in ('[data-ch="alerts"] #alerts-fold { display: block !important; }', "#alerts-fold #alList { display: none; }"): self.assertIn(needed, css, needed)
+
+    def test_the_calendar_has_no_reminder_for_a_change_past_its_grace_window(self):
+        here = os.path.dirname(__file__)
+        src = open(os.path.join(here, "..", "pending_ics.py"), encoding="utf-8").read()
+        # 11/10, a loop pass: the daily digest already leaves expired changes out; the calendar still wrote "becomes executable" for them
+        self.assertIn('o.get("state") == "expired": continue', src)
+
+    def test_a_change_past_its_grace_window_is_not_ready_to_execute_now(self):
+        here = os.path.dirname(__file__)
+        er = open(os.path.join(here, "..", "evaluate_rules.py"), encoding="utf-8").read()
+        # 11/10, a loop pass: a Compound-style timelock keeps a change as queued after ready_at + grace, with state "expired". The rule "ready to execute now" (HIGH, which pages a person) used ready_in_hours <= 0, so an expired change that can no longer run would have fired it. Expired ones are left out of ready_in_hours, here and on the page
+        self.assertIn('op.get("state") != "expired"', er)
+        for name, needed in (("module-all.js", "o.ready_at && o.state !== 'expired'"), ("module-shell.js", "op.state === 'expired' ? 'past its grace window, can no longer run'")):
+            mp = os.path.join(self.ROOT, name)
+            if os.path.exists(mp): self.assertIn(needed, open(mp, encoding="utf-8").read(), needed)
+
+    def test_executed_14d_does_not_count_an_operation_still_waiting_in_the_queue(self):
+        here = os.path.dirname(__file__)
+        er = open(os.path.join(here, "..", "evaluate_rules.py"), encoding="utf-8").read()
+        # 11/10, a loop pass: `recent` lists every operation queued in the last 14 days, still waiting or not. The field counted them all, so a rule on executed_14d fired the moment a change was merely queued (and counted it twice with queued_ops)
+        self.assertIn('if not o.get("still_queued")', er)
+        mp = os.path.join(self.ROOT, "module-all.js")
+        if os.path.exists(mp): self.assertIn("filter(function (o) { return !o.still_queued; }).length", open(mp, encoding="utf-8").read())
+
+    def test_a_call_and_a_feed_line_never_say_executed_for_a_change_that_only_left_the_queue(self):
+        sp = os.path.join(self.ROOT, "module-shell.js")
+        if not os.path.exists(sp): self.skipTest("module-shell.js is not beside the surveillance folder in this checkout")
+        sh = open(sp, encoding="utf-8").read()
+        # 11/10, a loop pass: `still_queued` false is read from isOperationPending, which is false after an execution AND after a cancellation. The page said "went through" and graded "it ran". It now says what the chain shows: it left the queue
+        for needed in ("left the queue (run or cancelled)", "Make the call: out of the queue within 24 h?", ">It clears<"): self.assertIn(needed, sh, needed)
+        for banned in ("'went through'", "executed within 24 h", ">It runs<"): self.assertNotIn(banned, sh, banned)
+
+    def test_the_share_preview_counts_the_pages_it_builds_not_a_typed_number(self):
+        ap = os.path.join(self.ROOT, "appliquer_oracle_site.py")
+        if not os.path.exists(ap): self.skipTest("appliquer_oracle_site.py is not beside the surveillance folder in this checkout")
+        src = open(ap, encoding="utf-8").read()
+        # 11/10, a loop pass on counts: the link preview said "197 DeFi contracts" while the page and the contract pages said 179 (the targets still without a title are not shown). The preview now counts the pages built, like the page does
+        self.assertIn("str(len(_pages)) + ' DeFi contracts on 9 chains scored", src)
+        self.assertNotIn('content="197 DeFi contracts', src)
+
+    def test_the_arrow_keys_move_between_the_changes_tabs_only_from_a_tab(self):
+        sp = os.path.join(self.ROOT, "module-shell.js")
+        if not os.path.exists(sp): self.skipTest("module-shell.js is not beside the surveillance folder in this checkout")
+        sh = open(sp, encoding="utf-8").read()
+        # 11/10, a loop pass on the keyboard: the handler sat on the whole Changes panel, so an arrow key pressed on a call button, a link or a scrolling row switched the tab and stole the focus. It now acts only when the key comes from a tab
+        self.assertIn("|| !e.target.closest('.ch-tab')) return; var i = CHT", sh)
+
+    def test_a_printed_page_has_no_blank_first_sheet_and_prints_the_true_figures(self):
+        cp = os.path.join(self.ROOT, "module-all.css"); pp = os.path.join(self.ROOT, "module-play.js")
+        if not all(os.path.exists(x) for x in (cp, pp)): self.skipTest("the site modules are not beside the surveillance folder in this checkout")
+        css = open(cp, encoding="utf-8").read(); play = open(pp, encoding="utf-8").read()
+        # 11/10, a loop pass on the print output: a long block forced onto one sheet left the first page of Rankings and Changes empty, and a count-up caught mid-run printed "$3B" for "$15B". Long blocks may split, rows may not, and the true figure is restored before printing
+        for needed in ("#app[data-view] > #cards, #app[data-view] > #shChanges", "tr, .ch-ev, .ch-card, .rk-row { break-inside: avoid; }"): self.assertIn(needed, css, needed)
+        for needed in ("el.setAttribute('data-final', t)", "addEventListener('beforeprint'"): self.assertIn(needed, play, needed)
+
+    def test_changes_is_a_daily_habit_new_since_last_visit_and_a_call_graded_next_day(self):
+        sp = os.path.join(self.ROOT, "module-shell.js")
+        if not os.path.exists(sp): self.skipTest("module-shell.js is not beside the surveillance folder in this checkout")
+        sh = open(sp, encoding="utf-8").read()
+        # 11/10, the visitor: "it is our product, people will look at it every day: make it addictive, interactive, make them want to come back, be a precursor". Two mechanisms nobody in the field has, both on real data and without an account. (1) What is new since the last visit: a NEW chip on each event newer than the last "Mark as read", the count, and an up-to-date state; reading earns a few XP. (2) A call: for a change queued behind a timelock, will it be executed within 24 hours? The pick is kept in this browser and graded on a later visit against what the watch saw (executed = it ran, still queued = it stayed); a call the watch no longer sees is not graded, never guessed
+        for needed in ("function callsGet()", "function callResolve(c)", "if (now < c.t + 86400) return null;", "return ran ? 'yes' : still ? 'no' : null;", "lsSet('aro-calls', rest)", "lsSet('aro-changes-seen'", "u class=\"sv-new\">new</u>", "window.aroGrant('call|' + c.tx, 10, 'Call graded right')", "no grade: the watch did not see it again", "Math.floor(Date.now() / 36e5)", "window.aroChangesRefresh"): self.assertIn(needed, sh, needed)
+        self.assertNotIn("fetch(", sh[sh.index("function callsGet()"):sh.index("function renderFeed()")])   # the call never leaves the browser
+
+    def test_the_detail_of_a_row_says_little_first(self):
+        ap = os.path.join(self.ROOT, "module-all.js")
+        if not os.path.exists(ap): self.skipTest("module-all.js is not beside the surveillance folder in this checkout")
+        al = open(ap, encoding="utf-8").read()
+        # 11/10, the visitor: "in the detail table there is too much text". An expanded row shows the shape, the summary and the six requirements; the exit window, the way to read it live, the example policy, the other setups, the timeline, the badges and the follow links sit behind one fold; the long METHODOLOGY sentence is gone from every row
+        self.assertIn('<details class="why-more"><summary>Everything else about this contract</summary>', al)
+        self.assertIn("followBlock(r) + '</div></details></div></div></td></tr>';", al)
+        self.assertIn("var deep = '<p class=\"exitw\">Exit window", al)
+        self.assertNotIn("for scale, L2BEAT asks rollups", al)
+
+    def test_the_title_and_subtitle_of_rankings_say_the_point(self):
+        sp = os.path.join(self.ROOT, "module-shell.js")
+        if not os.path.exists(sp): self.skipTest("module-shell.js is not beside the surveillance folder in this checkout")
+        sh = open(sp, encoding="utf-8").read()
+        # 11/10, the visitor liked the quiet top of Rankings but found it basic: "title and subtitle, I am talking about them". A kicker (how many contracts on how many chains), a title that says the point, the figure as the subtitle (money behind setups under 40, its share of the tracked total, counted up when seen), the delta since the last visit, a strip showing the five bands in proportion; the figure follows the chain filter
+        for needed in ("Where weak control <em>meets the money</em>", 'class="lg-k">Rankings · ', 'class="lg-fig"', "behind setups scoring <em>under 40</em>", "' tracked</small>", "since you last looked", 'class="bt-strip"', "pct + '% of the '"): self.assertIn(needed, sh, needed)
+
+    def test_the_top_of_rankings_has_one_big_number_and_respects_reduced_motion(self):
+        ap = os.path.join(self.ROOT, "module-all.js"); sp = os.path.join(self.ROOT, "module-shell.js")
+        if not all(os.path.exists(x) for x in (ap, sp)): self.skipTest("the site modules are not beside the surveillance folder in this checkout")
+        al = open(ap, encoding="utf-8").read(); sh = open(sp, encoding="utf-8").read()
+        # 11/10, the visitor: "do better" on the top of Rankings. One big number (the money at risk, counted up when seen), the sentence about the scale cut to one line, the four stats as cards that filter; the count of the stats no longer runs under reduced motion
+        self.assertIn('<div class="hero-big"', al); self.assertIn("sits behind setups scoring under 40, out of <em>", al); self.assertNotIn("at risk of <em>", al); self.assertIn("function heroAnim()", sh); self.assertIn("pulse(); podium(); heroAnim();", sh)
+        self.assertIn("if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) el.querySelectorAll('.hs b')", al)
+
+    def test_rankings_top_moves_and_gives_reasons_to_come_back(self):
+        ap = os.path.join(self.ROOT, "module-all.js"); sp = os.path.join(self.ROOT, "module-shell.js"); cp = os.path.join(self.ROOT, "module-all.css")
+        if not all(os.path.exists(x) for x in (ap, sp, cp)): self.skipTest("the site modules are not beside the surveillance folder in this checkout")
+        al = open(ap, encoding="utf-8").read(); sh = open(sp, encoding="utf-8").read(); css = open(cp, encoding="utf-8").read()
+        # 11/10, the visitor: "make it addictive, interactive, something that makes people want to come back, add animations". The scale grows bar by bar when seen; the big number says what changed since the visitor last looked (a baseline kept six hours, computed from the SAME figure as the big number); a duel asks which of two contracts holds more money at risk (score and chain shown, money hidden until the pick), with a streak, a best and five XP a day; all of it off under reduced motion
+        self.assertIn("allState.heroRisk = sumU;", al); self.assertIn("var now = allState.heroRisk,", sh); self.assertIn("6 * 36e5", sh); self.assertIn("since you last looked", sh)
+        for needed in ("function duelPlay(k)", "function mountDuel()", "window.aroGrant('duel|' + duel.wins, 5, 'Duel won')", "duel.wins <= 5", "lsSet('aro-duel-best', best)", "> 1.3) return [a, b]"): self.assertIn(needed, sh, needed)
+        for needed in (".hero .spectrum.on .spec-hist i", "@keyframes specDrop", ".hero-delta.up", ".du-card.win", "@keyframes duShake"): self.assertIn(needed, css, needed)
+        self.assertIn(".hero .spectrum.on .spec-pin, .hero .spectrum.on .spec-band, .hero .spectrum.on .spec-med, .hero-big b, .hero-delta, .du-card.win, .du-card.picked.lose { animation: none; }", css)
+
+    def test_closing_a_card_opened_from_rankings_goes_back_to_rankings(self):
+        sp = os.path.join(self.ROOT, "module-shell.js")
+        if not os.path.exists(sp): self.skipTest("module-shell.js is not beside the surveillance folder in this checkout")
+        sh = open(sp, encoding="utf-8").read()
+        # 11/10, the visitor: "on Rankings I click a protocol and when I close it, it takes me back to Check". The card lives on Check, so opening it from Rankings switched the view and closing left the visitor there. The view and the scroll position are kept and restored on close (button, Escape); a card opened on Check stays on Check; leaving the Check view by hand forgets the way back
+        for needed in ("var returnTo = null;", "returnTo = from;", "if (!open && wasOpen && returnTo && view === 'check') { var rt = returnTo; returnTo = null; setView(rt.view, { keepScroll: true }); window.scrollTo(0, rt.y); }", "if (v !== 'check') returnTo = null;"): self.assertIn(needed, sh, needed)
+
+    def test_the_shape_is_kept_everywhere_the_card_is_calmer_and_rankings_has_a_quieter_top(self):
+        ap = os.path.join(self.ROOT, "module-all.js"); sp = os.path.join(self.ROOT, "module-shell.js"); pp = os.path.join(self.ROOT, "module-play.js"); cp = os.path.join(self.ROOT, "module-all.css")
+        if not all(os.path.exists(x) for x in (ap, sp, pp, cp)): self.skipTest("the site modules are not beside the surveillance folder in this checkout")
+        al = open(ap, encoding="utf-8").read(); sh = open(sp, encoding="utf-8").read(); play = open(pp, encoding="utf-8").read(); css = open(cp, encoding="utf-8").read()
+        # 11/10, the visitor: "I wanted to keep the hexagon! It is the top that bothers me, and when you click on a protocol it is too messy". The hexagon is the pentagon of the five axes (the rosette): it comes back on every tile and row (shapeHtml), and becomes the picture of the card, which changes shape as the sliders move; the card drops the duplicate reasons and folds its secondary links into "More"; the top of Rankings loses its second paragraph, the leaders (which repeat the first three rows of the leaderboard) and its second row of filters
+        self.assertIn("function shapeHtml(r, big)", al); self.assertIn("shapeHtml(r)", al); self.assertGreaterEqual(sh.count("shapeHtml(r, i === 0)"), 2)
+        for needed in ("function morphPoly(from, to)", 'id="pcPoly"', "AXN = ['Admin', 'Signers', 'Delay', 'Price', 'Keys']", 'class="pc-menu"', '<ul class="pc-why" id="pcWhy" hidden>'): self.assertIn(needed, play, needed)
+        self.assertNotIn("pcArc", play)   # the ring is gone, nothing may still write to it
+        for needed in ('body[data-rank-layout="board"] #shPodium { display: none; }', "#cards:not(.more-open) .cat-filters { display: none; }", ".pc-why[hidden] { display: none !important; }"): self.assertIn(needed, css, needed)
+        self.assertIn("id=\"lbMore\"", al)
+
+    def test_rankings_opens_on_the_money_and_fits_a_phone(self):
+        ap = os.path.join(self.ROOT, "module-all.js"); sp = os.path.join(self.ROOT, "module-shell.js"); cp = os.path.join(self.ROOT, "module-all.css")
+        if not all(os.path.exists(x) for x in (ap, sp, cp)): self.skipTest("the site modules are not beside the surveillance folder in this checkout")
+        al = open(ap, encoding="utf-8").read(); sh = open(sp, encoding="utf-8").read(); css = open(cp, encoding="utf-8").read()
+        # 11/10, the visitor: "go, the Rankings menu, review the page and do better". The table opened on the lowest scores, which were contracts with nothing behind them (score 1, no money): it now opens on the money at risk, the same measure the title and the leaders use; the leaders are the same tiles as on Check; on a phone the table fits (no TVL, admin, multisig or timelock columns, no horizontal scroll)
+        self.assertIn("sort: 'risk', dir: 1,", al); self.assertIn(": 'risk';", al); self.assertIn("if (allState.sort !== 'risk') parts.push('sort=' + allState.sort);", al)
+        self.assertIn("Every contract, ranked by <em>money at risk</em>", al)
+        self.assertIn("['tvl', 'risk', 'delta', 'stale'].indexOf(c[0]) < 0", al)   # the arrow of the sorted column says what the rows do: money columns go largest first, so the default shows a down arrow
+        self.assertIn('<ol class="sh-pl">', sh); self.assertIn("sh-row sh-pod2 sh-bd-", sh)
+        self.assertIn(".lb-table td:nth-child(2), .lb-table td.lb-name { width: 100%; min-width: 0 !important;", css)
+
+    def test_a_reload_starts_on_check_and_a_link_keeps_its_view(self):
+        sp = os.path.join(self.ROOT, "module-shell.js")
+        if not os.path.exists(sp): self.skipTest("module-shell.js is not beside the surveillance folder in this checkout")
+        sh = open(sp, encoding="utf-8").read()
+        # 11/10, the visitor: "when I load the page it opens on Rankings". The address keeps ?v=rank (or a #chain= hash) from the last visit; a reload must start on Check, a followed link must keep its deep link
+        self.assertIn("nav.type === 'reload'", sh); self.assertIn("u.searchParams.delete('v')", sh)
+        self.assertIn("START = null; return parseView();", sh)   # any other kind of navigation still reads the address
+
+    def test_a_click_inside_the_page_does_not_scroll_to_the_top(self):
+        sp = os.path.join(self.ROOT, "module-shell.js")
+        if not os.path.exists(sp): self.skipTest("module-shell.js is not beside the surveillance folder in this checkout")
+        sh = open(sp, encoding="utf-8").read()
+        # found on 11/10 by the visitor: "when I click on What do I hold?, it takes me back to the top". #app itself carries data-view (the current view), so closest('[data-view]') matched #app for any click in the page, and setView scrolled to the top of the app
+        self.assertIn("e.target.closest('[data-view]:not(#app)')", sh)
+        self.assertNotIn("e.target.closest('[data-view]')", sh)
 
     def test_the_five_modules_together_are_one_valid_script(self):
         names = ["module-evidence.js", "module-all.js", "module-play.js", "module-shell.js", "module-map.js"]
@@ -3658,7 +3937,7 @@ class TestShellModule(unittest.TestCase):
         self.assertIn("at risk, of ", src); self.assertIn("r.tvl * (100 - r.composite) / 100", src)   # the podium shows the money AT RISK (held x (100 - score)), the same measure it is ranked by, not the money held
         self.assertIn("all('.site-bar a')", src); self.assertIn("mountFoot", src); self.assertIn(".site-bar { display: none; }", css)   # the old site bar is replaced by a footer that carries the same links, none is lost
         self.assertNotRegex(src, r"(?i)\b(sponsor(ed)? by|trusted by|customers)\b.*\d"); self.assertIn("Paying never changes a score", src)   # no invented client or counter, and the promise stays on the page
-        self.assertIn("#playPro { display: none; }", css); self.assertIn("document.getElementById('ppJoin')", src)   # the waitlist box leaves the first screen, its button still works from the Build tab
+        self.assertNotIn("#playPro { display: none; }", css); self.assertNotIn(".play-steps, #playPro { display: none; }", css); self.assertIn("#playPro { margin-top: 14px; border-style: dashed;", css); self.assertIn("document.getElementById('ppJoin')", src)   # 11/10, the visitor: "I do not see the waitlist any more". The first redesign had hidden its box on Check; it is back as a quiet dashed strip under the panel, and the button still works from the Build tab too
 
     def test_the_share_pages_have_no_dark_ink_left_on_their_dark_ground(self):
         p = os.path.join(self.ROOT, "appliquer_oracle_site.py")

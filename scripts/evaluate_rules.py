@@ -174,7 +174,7 @@ def main():
     if os.path.exists(a.pending):
         for tl in json.load(open(a.pending)).get("results", []):
             for op in tl.get("pending", []): queued.setdefault(PENDING_CHAIN.get(tl["chain"], tl["chain"]) + ":" + norm(op["target"]), []).append({"timelock": tl["name"], "timelock_address": tl.get("address"), "family": tl.get("family"), "id": op.get("id"), "chain": tl["chain"], "tx": op.get("tx"), "selector": op.get("selector"), "signature": op.get("signature") or SELNAMES.get(str(op.get("selector") or "").lower()), "ready_at": op.get("ready_at"), "state": op.get("state")})
-            for op in tl.get("recent", []): recent.setdefault(PENDING_CHAIN.get(tl["chain"], tl["chain"]) + ":" + norm(op["target"]), []).append({"timelock": tl["name"], "tx": op.get("tx"), "queued_at": op.get("queued_at")})
+            for op in (o for o in tl.get("recent", []) if not o.get("still_queued")): recent.setdefault(PENDING_CHAIN.get(tl["chain"], tl["chain"]) + ":" + norm(op["target"]), []).append({"timelock": tl["name"], "tx": op.get("tx"), "queued_at": op.get("queued_at")})
     now_s = time.time()
     prev = json.load(open(a.out)) if os.path.exists(a.out) else {"active": [], "history": []}
     was_active = {x["rule"] + "|" + x["chain"] + ":" + norm(x["target"]) for x in prev.get("active", [])}
@@ -204,7 +204,7 @@ def main():
                    "held_drop_usd": ((held_all[ka]["prev_amount"] - held_all[ka]["amount"]) * held_all[ka]["price_usd"] if (held_all.get(ka) or {}).get("amount_change_pct") is not None and held_all[ka].get("price_usd") and not held_all[ka].get("stale") else None),   # a stale record never fires, in dollars either (the shipped rules also test held_drop_pct, which already ignored it)
                    "second_opinion": so_status.get(ka), "admin_changed": ka in so_changed, "shared_admin": so_shared.get(ka), "dispute": disputes.get(ka), "upgraded": ka in so_upgraded, "admin_pending": ka in so_pending,
                    "age_days": ((now_s - int(t["lastUpdated"])) / 86400) if t.get("lastUpdated") else None,   # since the last push of this score; the oracles mark it stale at 9 days
-                   "ready_in_hours": (min((op["ready_at"] - now_s) / 3600 for op in queued[ka] if op.get("ready_at")) if any(op.get("ready_at") for op in queued.get(ka, [])) else None)}
+                   "ready_in_hours": (min((op["ready_at"] - now_s) / 3600 for op in queued[ka] if op.get("ready_at") and op.get("state") != "expired") if any(op.get("ready_at") and op.get("state") != "expired" for op in queued.get(ka, [])) else None)}   # a Compound-style change past its grace window can no longer run: it is not "ready to execute now"
             evidence = sorted(queued.get(ka, []), key=lambda op: op.get("ready_at") or 0)[:3]
             for r, tree in compiled:
                 try: hit = bool(ev(tree, env))

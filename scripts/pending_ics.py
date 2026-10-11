@@ -19,7 +19,7 @@ def main():
         if t.get("status") != "ok": continue
         for o in t.get("pending", []):
             at = o.get("ready_at")
-            if not at: continue
+            if not at or o.get("state") == "expired": continue   # past its grace window it can no longer run: no reminder (the digest leaves it out too)
             fn = (o.get("signature") or SELNAMES.get(str(o.get("selector") or "").lower()) or ("a call with no data" if o.get("selector") == "0x" else o.get("selector")) or "call").split("(")[0]   # the event's own signature, else the same small table the page uses, else the raw selector
             uid = (o.get("tx") or "") + "-" + str(o.get("index", 0)) + "@realspap.github.io"
             def ics(t): return str(t).replace("\\", "\\\\").replace("\n", " ").replace("\r", " ").replace(";", "\\;").replace(",", "\\,")[:200]

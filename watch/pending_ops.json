@@ -322,23 +322,7 @@
    "status": "ok",
    "queued_events": 279,
    "latest_queued": 1791360131,
-   "pending": [
-    {
-     "block": 26133942,
-     "tx": "0x9ff5f5039df79c4f35f784f71cc747e00bd0a876f2038ea7eb3ff93ebdad0bb0",
-     "id": "0xc1655888d044e9249c15ae8c8eda9822a66735ae6c6450e25b99023483b32cd9",
-     "index": 0,
-     "target": "0x1a44076050125825900e736c501f859c50fE728c",
-     "value": 0,
-     "selector": "0x6dbd9f90",
-     "delay": 86400,
-     "signature": "setConfig(address,address,(uint32,uint32,bytes)[])",
-     "calls": 6,
-     "ready_at": 1791383447,
-     "state": "ready",
-     "decoded": "parameter change"
-    }
-   ],
+   "pending": [],
    "recent": [
     {
      "block": 26088955,
@@ -411,7 +395,7 @@
      "delay": 86400,
      "signature": "setConfig(address,address,(uint32,uint32,bytes)[])",
      "calls": 6,
-     "still_queued": true,
+     "still_queued": false,
      "queued_at": 1791297047,
      "decoded": "parameter change"
     },
@@ -483,7 +467,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 4382608,
+   "window_blocks": 4480000,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -503,7 +487,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 4398545,
+   "window_blocks": 4480000,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -523,7 +507,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 4398545,
+   "window_blocks": 4463468,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -710,7 +694,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 0,
    "window_blocks": 3000000,
-   "window_days_est": 3.6,
+   "window_days_est": 3.5,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62"
@@ -730,7 +714,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 86400,
    "window_blocks": 3000000,
-   "window_days_est": 3.6,
+   "window_days_est": 3.5,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x14b107cf534239c59571b066cb6497a321da897c"
@@ -1757,22 +1741,6 @@
    "pending": [],
    "recent": [
     {
-     "id": "squads:CxnEVpQQcYa628TywzHGXeJ2jdVmbU51rnERat9xunP1:953",
-     "index": 953,
-     "target": "Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
-     "value": 0,
-     "selector": null,
-     "signature": "Squads proposal #953: call to the governed program Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
-     "still_queued": false,
-     "queued_at": 1790520022,
-     "executed_at": 1790520022,
-     "account": "EkWoCzgDEMNPCcThymtzUwSDKTT1kYksHmGvSMP3uAMA",
-     "undecoded": false,
-     "decoded": "call to the governed program",
-     "what": "call to the governed program Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
-     "touches_governed": true
-    },
-    {
      "id": "squads:CxnEVpQQcYa628TywzHGXeJ2jdVmbU51rnERat9xunP1:974",
      "index": 974,
      "target": "Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
@@ -2245,12 +2213,15 @@
      "target": "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
      "value": 0,
      "selector": null,
-     "signature": "Squads proposal #51 executed",
+     "signature": "Squads proposal #51: Upgrade of program CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
      "still_queued": false,
      "queued_at": 1790641631,
      "executed_at": 1790641631,
      "account": "DekokcHy5SPBDzRtq47gJfZMZUhPY7wiuRzqqzPq3jzo",
-     "undecoded": true
+     "undecoded": false,
+     "decoded": "program upgrade",
+     "what": "Upgrade of program CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+     "touches_governed": true
     },
     {
      "id": "squads:tr8rgazUrZzgdkfc6Q622nVJHMMzh29trdBE2uBHb4u:52",
@@ -2339,7 +2310,7 @@
    "transaction_index": 71
   }
  ],
- "discovered_utc": "2026-10-11T14:10:05Z",
+ "discovered_utc": "2026-10-11T15:43:55Z",
  "discovered": 14,
- "squads_utc": "2026-10-11T14:15:08Z"
+ "squads_utc": "2026-10-11T15:48:40Z"
 }

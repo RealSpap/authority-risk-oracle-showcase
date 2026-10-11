@@ -1,6 +1,6 @@
 {
- "run_utc": "2026-10-11T14:01:13Z",
- "previous_run_utc": "2026-10-11T12:34:29Z",
+ "run_utc": "2026-10-11T15:33:21Z",
+ "previous_run_utc": "2026-10-11T14:01:13Z",
  "schedule": "every 6 hours (GitHub Actions, cron 17 */6 * * *)",
  "oracles": [
   {
@@ -9,7 +9,7 @@
    "kind": "evm",
    "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
    "read_ok": true,
-   "block": 132991205,
+   "block": 133033458,
    "targets": 63,
    "stale": 0,
    "lastUpdated": 1791664867,
@@ -37,7 +37,7 @@
    "kind": "evm",
    "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
    "read_ok": true,
-   "block": 11892181,
+   "block": 11892641,
    "targets": 34,
    "stale": 1,
    "lastUpdated": 1791687028,
@@ -65,7 +65,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 318096129,
+   "block": 318117919,
    "targets": 13,
    "stale": 0,
    "lastUpdated": 1791658650,
@@ -93,7 +93,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 47979496,
+   "block": 47982260,
    "targets": 13,
    "stale": 0,
    "lastUpdated": 1791653885,
@@ -121,7 +121,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 39138925,
+   "block": 39147930,
    "targets": 14,
    "stale": 0,
    "lastUpdated": 1791662166,
@@ -149,7 +149,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 35898077,
+   "block": 35903588,
    "targets": 9,
    "stale": 0,
    "lastUpdated": 1791655425,
@@ -177,7 +177,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 70130033,
+   "block": 70148276,
    "targets": 9,
    "stale": 0,
    "lastUpdated": 1791656126,
@@ -196,14 +196,14 @@
       "updater": false
      }
     },
-    "error": "getLogs: window of 17196 blocks needs more than 120 calls at 100 blocks each"
+    "error": "getLogs: window of 18243 blocks needs more than 120 calls at 100 blocks each"
    }
   },
   {
    "name": "Hyperliquid (HyperEVM)",
    "slug": "hyperliquid-hyperevm",
    "read_ok": false,
-   "error": "RuntimeError: ValueError: malformed batch answer (  jsonrpc :  2.0    id : None   error :   code : -32005   message :  rate limite)"
+   "error": "RateLimited: RateLimited:   code : -32005   message :  rate limited  "
   },
   {
    "name": "Solana (Devnet)",

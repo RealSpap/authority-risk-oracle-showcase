@@ -1308,6 +1308,17 @@ class TestFind(unittest.TestCase):
         for k, v in argv: setattr(ns, k, v)
         sel, un = find.select(find.table(w), ns); return [r["target"][2] for r in sel], un
 
+    def test_a_hostile_protocol_name_is_cleaned_in_every_row_field(self):
+        """The mutation run of 11/10 left three mutations of find.py alive: nothing checked that the name and the slug of a row (read from DefiLlama, so controlled by a stranger) are cleaned before they are printed."""
+        bad = "Cee\x1b[31m   evil\u202e\nline two"
+        with tempfile.TemporaryDirectory() as tmp:
+            w = self.watch(tmp); json.dump({"matched": {"base:" + self.C: {"name": bad, "slug": bad, "tvl": 3e7}}}, open(os.path.join(w, "tvl.json"), "w"))
+            row = {r["target"][2]: r for r in find.table(w)}["c"]
+        for f in ("protocol", "slug", "title"):
+            v = row[f]; self.assertIsInstance(v, str, f)
+            self.assertNotIn("\x1b", v, f); self.assertNotIn("\u202e", v, f); self.assertNotIn("\n", v, f); self.assertNotIn("  ", v, f)
+        self.assertEqual(row["protocol"], "Cee [31m evil line two")
+
     def test_every_contract_is_a_row_and_the_joins_are_right(self):
         with tempfile.TemporaryDirectory() as tmp: rows = {r["target"][2]: r for r in find.table(self.watch(tmp))}
         self.assertEqual(sorted(rows), ["a", "b", "c", "d"]); a, b, c, d = rows["a"], rows["b"], rows["c"], rows["d"]
@@ -2138,7 +2149,7 @@ class TestMutationWorkflowAndReport(unittest.TestCase):
 
     def test_the_workflow_is_weekly_read_only_bounded_and_runs_the_tool_with_a_summary(self):
         t = self.wf("mutation.yml")
-        for want in ('cron: "41 4 * * 1"', "workflow_dispatch:", "permissions:\n  contents: read", "timeout-minutes: 60", 'python3 scripts/mutate.py --markdown "$GITHUB_STEP_SUMMARY"', "persist-credentials: false", "python-version: \"3.11\""): self.assertIn(want, t)
+        for want in ('cron: "41 4 * * 1"', "workflow_dispatch:", "permissions:\n  contents: read", "timeout-minutes: 150", 'python3 scripts/mutate.py --markdown "$GITHUB_STEP_SUMMARY"', "persist-credentials: false", "python-version: \"3.11\""): self.assertIn(want, t)
         self.assertNotIn("contents: write", t); self.assertNotIn("secrets.", t)   # it reads, it needs no secret
         self.assertIn('run: python3 scripts/mutate.py --markdown "$GITHUB_STEP_SUMMARY"\n', t + "\n"); self.assertNotIn("|| true", t); self.assertNotIn("continue-on-error", t)   # a surviving mutant must turn the workflow red
 
@@ -4276,6 +4287,57 @@ class TestUntitled(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             p = os.path.join(d, "index.html"); open(p, "w").write("  CHAINS.solana.groups = [\n    { idx: [0, 1], title: 'Jupiter - perps' },\n    { title: 'Orca', idx: [2] },\n  ];\n")
             self.assertEqual(og_cards.dashboard_titles(p), {("solana", 0): "Jupiter", ("solana", 1): "Jupiter", ("solana", 2): "Orca"}); self.assertEqual(og_cards.dashboard_titles(os.path.join(d, "none.html")), {})   # the job runs without the file: no titles, no crash
+
+
+class TestApiPaths(unittest.TestCase):
+    """The page read api/score_series.json for weeks; that file never existed (the history with causes is api/score_history.json). The error was swallowed, so 'why a score moved' was empty online and no test saw it. Pin the name; the live check is in the post-publication list."""
+    def test_history_url(self):
+        js = os.path.join(os.path.dirname(__file__), "..", "..", "..", "module-all.js")
+        if not os.path.exists(js): self.skipTest("module-all.js is not beside the surveillance folder in this checkout")
+        src = open(js, encoding="utf-8").read()
+        self.assertIn("main/api/score_history.json", src)
+        self.assertNotIn("main/api/score_series.json", src)
+
+
+class TestNoFilledTransformOnAppSections(unittest.TestCase):
+    """The result sheet (#playCard, position: fixed) lives inside the Check section. That section kept the transform of its entry animation (fill-mode both), which made it the containing block of the fixed sheet: opened at the top of the screen it was drawn 800 px lower, below the visible area (seen live 11/10, 'the card bugs when I open it'). The entry animation of the app sections must not fill forwards."""
+    def test_sections_do_not_fill_forwards(self):
+        css = os.path.join(os.path.dirname(__file__), "..", "..", "..", "module-all.css")
+        if not os.path.exists(css): self.skipTest("module-all.css is not beside the surveillance folder in this checkout")
+        src = open(css, encoding="utf-8").read()
+        i = src.index("#app[data-view] > [data-sh] {"); rule = src[i:src.index("}", i)]
+        self.assertIn("shIn", rule); self.assertIn("backwards", rule); self.assertNotIn(" both", rule)
+
+
+class TestWatchChecksOutMain(unittest.TestCase):
+    """A run queued behind another one checks out the commit that existed when it was triggered, not when it starts: it read a stale watch/ (previous state, alert memory) and its final rebase conflicted on every file (a manual Watch queued at 20:04 on 11/10 failed at 20:38). The checkout must name the branch."""
+    def test_checkout_names_the_branch(self):
+        wf = os.path.join(os.path.dirname(__file__), "..", "..", "..", ".github", "workflows", "watch.yml")
+        if not os.path.exists(wf): wf = os.path.join(os.path.dirname(__file__), "..", "..", ".github", "workflows", "watch.yml")
+        if not os.path.exists(wf): self.skipTest("watch.yml is not beside the scripts in this checkout")
+        src = open(wf, encoding="utf-8").read()
+        i = src.index("actions/checkout@"); block = src[i:src.index("- uses: actions/setup-python", i)]
+        self.assertIn("ref: main", block)
+
+    def test_a_crash_reaches_run_log_and_the_secret_goes_by_env(self):
+        wf = os.path.join(os.path.dirname(__file__), "..", "..", "..", ".github", "workflows", "watch.yml")
+        if not os.path.exists(wf): wf = os.path.join(os.path.dirname(__file__), "..", "..", ".github", "workflows", "watch.yml")
+        if not os.path.exists(wf): self.skipTest("watch.yml is not beside the scripts in this checkout")
+        src = open(wf, encoding="utf-8").read()
+        self.assertIn("python3 scripts/watch_run.py 2>&1 | tee watch/run.log", src)   # stderr too: a Traceback must be in run.log, or a crash reads as 'something unread'
+        self.assertNotIn("issues: write", src)   # the alarm issue goes to the private repository with ISSUES_TOKEN, the workflow token never writes issues
+        self.assertNotIn('WATCH_SIGNING_KEY="${{ secrets.WATCH_SIGNING_KEY }}"', src)   # a secret is not written into the text of a script
+        self.assertNotIn("sign_run.py --watch watch > /dev/null 2>&1 || true", src)   # a failed re-signature is not hidden
+
+
+class TestScannedTo(unittest.TestCase):
+    """The marker of the role-event scan: it moves forward after a good scan, stays after a failed one, and never moves BACK when the node that answered is behind (a fallback node: the next run would scan the same window and log a RoleGranted twice, in a hash-chained log that cannot be edited)."""
+    def test_marker(self):
+        import watch_run
+        self.assertEqual(watch_run.scanned_to({"read": True}, 100, 120), 120)
+        self.assertEqual(watch_run.scanned_to({"read": True}, 100, 90), 100)
+        self.assertEqual(watch_run.scanned_to({"read": False, "error": "x"}, 100, 120), 100)
+        self.assertEqual(watch_run.scanned_to({"read": False}, None, 120), 120)
 
 
 class TestAlertWords(unittest.TestCase):

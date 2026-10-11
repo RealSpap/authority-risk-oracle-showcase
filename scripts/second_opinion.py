@@ -353,7 +353,7 @@ def main():
         if pend_idx:   # what the designated admin is: a plain key leaves shortened, a contract stays whole (the same rule as every holder)
             rcode = rpc_batch(url, [("eth_getCode", [pendings[i][0], "latest"]) for i in pend_idx])
             for i, c_ in zip(pend_idx, rcode):
-                if c_ is None: pendings[i] = (pendings[i][0], pendings[i][1] + ", nature not read")
+                if c_ is None: pendings[i] = (short(pendings[i][0]), pendings[i][1] + ", nature not read")   # unread = may be a plain key: it leaves shortened (fail closed)
                 elif is_plain(c_): pendings[i] = (short(pendings[i][0]), pendings[i][1] + ", a plain key" + (" (EIP-7702 delegation)" if delegation(c_) else ""))
                 else: pendings[i] = (pendings[i][0], pendings[i][1] + ", a contract")
         c2b = [("eth_call", [{"to": b, "data": SEL["implementation"]}, "latest"]) if (b and not im) else ("eth_blockNumber", []) for im, b in impls]   # a beacon proxy: the implementation is the beacon's
@@ -658,7 +658,7 @@ def main():
         p_ = posture_line(r_)
         if p_: r_["posture"] = p_
     for r_ in results:   # plain keys leave shortened, whatever the index says; contracts stay whole
-        if r_.get("kind") == "eoa" and r_.get("holder"): r_["holder"] = short(r_["holder"])
+        if r_.get("kind") in ("eoa", "unreadable") and r_.get("holder"): r_["holder"] = short(r_["holder"])   # a holder whose code could not be read may be a plain key: shortened too (fail closed)
         for d_ in (r_.get("modules_detail") or []) + ([r_["guard_detail"]] if r_.get("guard_detail") else []):   # a module or guard that is a plain key, and a plain key that owns one, leave shortened too
             if d_.get("kind") == "eoa" and d_.get("address"):
                 r_["modules"] = [short(m) if same_addr(m, d_["address"]) else m for m in (r_.get("modules") or [])]

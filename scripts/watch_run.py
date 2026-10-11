@@ -169,7 +169,8 @@ def scan_start(prev_doc):
 def scanned_to(self_w, since, block):
     """The block up to which the role events have now been scanned: this run's block when the scan worked (or there was nothing before to scan: the first read is a baseline, the hasRole reads give
     the current state), the old start when it failed, so the next run covers the lost window too. A window too large to scan at all would never close, so it is given up, said so (`gap_blocks`) and the start moves on."""
-    if self_w.get("read") or since is None: return block
+    if since is None: return block
+    if self_w.get("read"): return max(block, since)   # a fallback node that is behind (block < since) must not move the marker back: the next run would scan the same window again and log a RoleGranted twice
     if "window of" in str(self_w.get("error")): self_w["gap_blocks"] = block - since; return block
     return since
 

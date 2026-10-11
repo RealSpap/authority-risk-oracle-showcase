@@ -153,7 +153,7 @@ def main():
             except Exception as e: unread += 1; NOTE("%s %s: not read (%s)" % (name, t["target"][:10], str(e)[:60]))
             time.sleep(0.3)
         if unread == len(sample): NOTE("on-chain sample NOT RUN: no read answered, so this check proves nothing (it is not a pass)")
-        (NOTE if unread == len(sample) else PASS if agree + later + unread == len(sample) else FAIL)("on-chain sample: %d of %d re-read scores equal the published file, %d pushed again since, %d not read (RPC)" % (agree, len(sample), later, unread))
+        (NOTE if unread == len(sample) else FAIL if agree + later + unread != len(sample) else NOTE if unread else PASS)("on-chain sample: %d of %d re-read scores equal the published file, %d pushed again since, %d not read (RPC)" % (agree, len(sample), later, unread))
     else: NOTE("on-chain sample skipped: the scores files carry no oracle address and RPC (a run before 2026-10-07), nothing to re-read")
     print("\n%s: %d failure(s)" % ("AUDIT PASSED" if not fails else "AUDIT FAILED", fails))
     sys.exit(1 if fails else 0)

@@ -18,7 +18,7 @@ concurrency:
 jobs:
   mutation:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 150   # the run took 3056 s on 11/10 (427 mutations) against a limit of 60 minutes: it grows with every mutation added
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262   # v4.4.0, pinned to its commit: a moved tag cannot change what runs here
         with:

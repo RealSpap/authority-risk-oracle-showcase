@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-10T23:00:41Z",
+ "generated_utc": "2026-10-11T00:59:13Z",
  "total": 34,
  "by_priority": {
   "1": 11,
@@ -138,7 +138,7 @@
    "text": "0x9db4…1a53 designated (pendingOwner() on the contract (Ownable2Step), a contract)",
    "todo": "identify the designated admin; when it accepts, the admin read changes",
    "source": "second_opinion.json pending_admin",
-   "first_seen": "2026-10-10T23:00:41Z",
+   "first_seen": "2026-10-11T00:59:13Z",
    "age_days": 0.0,
    "overdue": false
   },
@@ -349,6 +349,18 @@
   {
    "priority": 2,
    "kind": "timelock queue unread",
+   "chain": "hyperliquid",
+   "target": "0xc5ded4f7f53919c714059a17d31371ae847e23d2",
+   "text": "hyperliquid timelock 0xc5de\u202623d2, found by the independent reader (1 tracked contract): UNREAD (Web3RPCError: {'code': -32005, 'message': 'rate limited'})",
+   "todo": "find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen",
+   "source": "pending_ops.json",
+   "first_seen": "2026-10-10T23:00:41Z",
+   "age_days": 0.1,
+   "overdue": false
+  },
+  {
+   "priority": 2,
+   "kind": "timelock queue unread",
    "chain": "robinhood",
    "target": "0x5ff98717a18833de1a49e11b498866d6fa1c9296",
    "text": "robinhood timelock 0x5ff9\u20269296, found by the independent reader (1 tracked contract): UNREAD (ContractLogicError: ('execution reverted', '0x'))",
@@ -368,18 +380,6 @@
    "source": "pending_ops.json",
    "first_seen": "2026-10-10T21:24:57Z",
    "age_days": 0.1,
-   "overdue": false
-  },
-  {
-   "priority": 2,
-   "kind": "timelock queue unread",
-   "chain": "hyperliquid",
-   "target": "0xc5ded4f7f53919c714059a17d31371ae847e23d2",
-   "text": "hyperliquid timelock 0xc5de\u202623d2, found by the independent reader (1 tracked contract): UNREAD (Web3RPCError: {'code': -32005, 'message': 'rate limited'})",
-   "todo": "find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen",
-   "source": "pending_ops.json",
-   "first_seen": "2026-10-10T23:00:41Z",
-   "age_days": 0.0,
    "overdue": false
   },
   {

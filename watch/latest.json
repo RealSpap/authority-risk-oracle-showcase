@@ -1,6 +1,6 @@
 {
- "run_utc": "2026-10-11T00:39:01Z",
- "previous_run_utc": "2026-10-10T22:35:44Z",
+ "run_utc": "2026-10-11T06:34:38Z",
+ "previous_run_utc": "2026-10-11T00:39:01Z",
  "schedule": "every 6 hours (GitHub Actions, cron 17 */6 * * *)",
  "oracles": [
   {
@@ -9,7 +9,7 @@
    "kind": "evm",
    "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
    "read_ok": true,
-   "block": 132611525,
+   "block": 132785949,
    "targets": 63,
    "stale": 0,
    "lastUpdated": 1791664867,
@@ -37,10 +37,10 @@
    "kind": "evm",
    "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
    "read_ok": true,
-   "block": 11888174,
-   "targets": 27,
+   "block": 11889950,
+   "targets": 34,
    "stale": 1,
-   "lastUpdated": 1791661565,
+   "lastUpdated": 1791687028,
    "maxStaleness": 777600,
    "self_watch": {
     "read": true,
@@ -65,7 +65,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 317906307,
+   "block": 317990339,
    "targets": 13,
    "stale": 0,
    "lastUpdated": 1791658650,
@@ -93,7 +93,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 47955430,
+   "block": 47966099,
    "targets": 13,
    "stale": 0,
    "lastUpdated": 1791653885,
@@ -121,7 +121,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 39060569,
+   "block": 39095450,
    "targets": 14,
    "stale": 0,
    "lastUpdated": 1791662166,
@@ -149,7 +149,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 35849947,
+   "block": 35871289,
    "targets": 9,
    "stale": 0,
    "lastUpdated": 1791655425,
@@ -177,7 +177,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 69970635,
+   "block": 70041322,
    "targets": 9,
    "stale": 0,
    "lastUpdated": 1791656126,
@@ -196,7 +196,7 @@
       "updater": false
      }
     },
-    "error": "getLogs: window of 24511 blocks needs more than 120 calls at 100 blocks each"
+    "error": "getLogs: window of 70687 blocks needs more than 120 calls at 100 blocks each"
    }
   },
   {
@@ -205,7 +205,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 66575297,
+   "block": 66597018,
    "targets": 16,
    "stale": 3,
    "lastUpdated": 1791662291,
@@ -241,10 +241,86 @@
    "self_watch": null
   }
  ],
- "total_targets": 190,
+ "total_targets": 197,
  "stale_total": 4,
- "movers": [],
- "alerts": [],
+ "movers": [
+  {
+   "oracle": "Ethereum L1 (Sepolia)",
+   "target": "0xbe286431454714f511008713973d3b053a2d38f3",
+   "label": "0xbe28\u202638f3",
+   "field": "crossExposureScore",
+   "before": 80,
+   "after": 40
+  },
+  {
+   "oracle": "Ethereum L1 (Sepolia)",
+   "target": "0x02c3ea4e34c0cbd694d2adfa2c690eecbc1793ee",
+   "label": "0x02c3\u202693ee",
+   "field": "crossExposureScore",
+   "before": 80,
+   "after": 40
+  },
+  {
+   "oracle": "Ethereum L1 (Sepolia)",
+   "target": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+   "label": "0xc02a\u20266cc2",
+   "field": "new",
+   "before": null,
+   "after": 100
+  },
+  {
+   "oracle": "Ethereum L1 (Sepolia)",
+   "target": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+   "label": "0xa0b8\u2026eb48",
+   "field": "new",
+   "before": null,
+   "after": 2
+  },
+  {
+   "oracle": "Ethereum L1 (Sepolia)",
+   "target": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+   "label": "0xdac1\u20261ec7",
+   "field": "new",
+   "before": null,
+   "after": 40
+  },
+  {
+   "oracle": "Ethereum L1 (Sepolia)",
+   "target": "0x6b175474e89094c44da98b954eedeac495271d0f",
+   "label": "0x6b17\u20261d0f",
+   "field": "new",
+   "before": null,
+   "after": 81
+  },
+  {
+   "oracle": "Ethereum L1 (Sepolia)",
+   "target": "0xdc035d45d973e3ec169d2276ddab16f1e407384f",
+   "label": "0xdc03\u2026384f",
+   "field": "new",
+   "before": null,
+   "after": 81
+  },
+  {
+   "oracle": "Ethereum L1 (Sepolia)",
+   "target": "0x6c3ea9036406852006290770bedfcaba0e23a0e8",
+   "label": "0x6c3e\u2026a0e8",
+   "field": "new",
+   "before": null,
+   "after": 2
+  },
+  {
+   "oracle": "Ethereum L1 (Sepolia)",
+   "target": "0xc5f0f7b66764f6ec8c8dff7ba683102295e16409",
+   "label": "0xc5f0\u20266409",
+   "field": "new",
+   "before": null,
+   "after": 47
+  }
+ ],
+ "alerts": [
+  "Ethereum L1 (Sepolia): new target 0xa0b8\u2026eb48 first published at composite 2",
+  "Ethereum L1 (Sepolia): new target 0x6c3e\u2026a0e8 first published at composite 2"
+ ],
  "unread": [],
  "note": "The Zcash commitments are verified by the dashboard itself. An oracle in `unread` has unknown targets, not zero."
 }

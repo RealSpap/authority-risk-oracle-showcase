@@ -1,9 +1,57 @@
 {
- "generated_utc": "2026-10-11T00:52:36Z",
+ "generated_utc": "2026-10-11T06:49:05Z",
  "compared": 190,
- "new_this_run": 0,
+ "new_this_run": 2,
  "first_seen_oracles": [],
  "moves": [
+  {
+   "run_utc": "2026-10-11T06:49:05Z",
+   "oracle": "ethereum-l1-sepolia",
+   "target": "0xbe286431454714f511008713973d3b053a2d38f3",
+   "composite": [
+    81,
+    81
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 40,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 40)"
+    }
+   ],
+   "block": 11889950,
+   "lastUpdated": [
+    1791661565,
+    1791687028
+   ]
+  },
+  {
+   "run_utc": "2026-10-11T06:49:05Z",
+   "oracle": "ethereum-l1-sepolia",
+   "target": "0x02c3ea4e34c0cbd694d2adfa2c690eecbc1793ee",
+   "composite": [
+    78,
+    78
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 40,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 40)"
+    }
+   ],
+   "block": 11889950,
+   "lastUpdated": [
+    1791661565,
+    1791687028
+   ]
+  },
   {
    "run_utc": "2026-10-10T21:14:28Z",
    "oracle": "arbitrum-sepolia",

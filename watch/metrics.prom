@@ -1,6 +1,6 @@
 # HELP aro_run_timestamp_seconds UTC time of the last Watch run (Unix seconds)
 # TYPE aro_run_timestamp_seconds gauge
-aro_run_timestamp_seconds 1791679141
+aro_run_timestamp_seconds 1791700478
 # HELP aro_oracle_read 1 when the oracle was read at the last run, 0 when it was not (its targets are then unknown, not zero)
 # TYPE aro_oracle_read gauge
 aro_oracle_read{oracle="Robinhood Chain"} 1
@@ -15,7 +15,7 @@ aro_oracle_read{oracle="Solana (Devnet)"} 1
 # HELP aro_oracle_targets Targets the oracle tracks
 # TYPE aro_oracle_targets gauge
 aro_oracle_targets{oracle="Robinhood Chain"} 63
-aro_oracle_targets{oracle="Ethereum L1 (Sepolia)"} 27
+aro_oracle_targets{oracle="Ethereum L1 (Sepolia)"} 34
 aro_oracle_targets{oracle="Arbitrum (Sepolia)"} 13
 aro_oracle_targets{oracle="Base (Sepolia)"} 13
 aro_oracle_targets{oracle="Tempo (Moderato)"} 14
@@ -36,15 +36,15 @@ aro_oracle_stale_targets{oracle="Hyperliquid (HyperEVM)"} 3
 aro_oracle_stale_targets{oracle="Solana (Devnet)"} 0
 # HELP aro_targets Targets tracked across the oracles that were read
 # TYPE aro_targets gauge
-aro_targets 190
+aro_targets 197
 # HELP aro_targets_stale Targets whose score is stale
 # TYPE aro_targets_stale gauge
 aro_targets_stale 4
 # HELP aro_status The run's health, one series per state, 1 for the current one
 # TYPE aro_status gauge
 aro_status{state="ok"} 0
-aro_status{state="degraded"} 1
-aro_status{state="alarm"} 0
+aro_status{state="degraded"} 0
+aro_status{state="alarm"} 1
 # HELP aro_chain_ok 1 when the hash-chained event log verifies
 # TYPE aro_chain_ok gauge
 aro_chain_ok 1
@@ -53,21 +53,21 @@ aro_chain_ok 1
 aro_signed 0
 # HELP aro_alerts_active Alerts firing now, by severity
 # TYPE aro_alerts_active gauge
-aro_alerts_active{severity="high"} 3
-aro_alerts_active{severity="medium"} 10
+aro_alerts_active{severity="high"} 4
+aro_alerts_active{severity="medium"} 9
 aro_alerts_active{severity="info"} 0
 # HELP aro_second_opinion Targets by verdict of the independent reader
 # TYPE aro_second_opinion gauge
-aro_second_opinion{result="agree"} 124
+aro_second_opinion{result="agree"} 128
 aro_second_opinion{result="disagree"} 15
-aro_second_opinion{result="unreadable"} 35
+aro_second_opinion{result="unreadable"} 38
 aro_second_opinion{result="native"} 16
 # HELP aro_contracts_paused Tracked contracts that answer paused() true now
 # TYPE aro_contracts_paused gauge
 aro_contracts_paused 0
 # HELP aro_safes Safes that administer a tracked contract
 # TYPE aro_safes gauge
-aro_safes 39
+aro_safes 40
 # HELP aro_safes_woke Admin Safes that executed after 14 days or more observed idle, at the last run
 # TYPE aro_safes_woke gauge
 aro_safes_woke 0
@@ -129,6 +129,13 @@ aro_target_score{chain="ethereum-l1-sepolia",target="0xbeef047a543e45807105e51a8
 aro_target_score{chain="ethereum-l1-sepolia",target="0xbeef01735c132ada46aa9aa4c54623caa92a64cb"} 73
 aro_target_score{chain="ethereum-l1-sepolia",target="0xbeef088055857739c12cd3765f20b7679def0f51"} 73
 aro_target_score{chain="ethereum-l1-sepolia",target="0xbeef0c075da5d01112ae5cf34d257074fb5ddb2f"} 73
+aro_target_score{chain="ethereum-l1-sepolia",target="0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"} 100
+aro_target_score{chain="ethereum-l1-sepolia",target="0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"} 2
+aro_target_score{chain="ethereum-l1-sepolia",target="0xdac17f958d2ee523a2206206994597c13d831ec7"} 40
+aro_target_score{chain="ethereum-l1-sepolia",target="0x6b175474e89094c44da98b954eedeac495271d0f"} 81
+aro_target_score{chain="ethereum-l1-sepolia",target="0xdc035d45d973e3ec169d2276ddab16f1e407384f"} 81
+aro_target_score{chain="ethereum-l1-sepolia",target="0x6c3ea9036406852006290770bedfcaba0e23a0e8"} 2
+aro_target_score{chain="ethereum-l1-sepolia",target="0xc5f0f7b66764f6ec8c8dff7ba683102295e16409"} 47
 aro_target_score{chain="hyperliquid-hyperevm",target="0xea394cd63ca3a5c8a130bb2b955cc71c22e5ea6c"} 26
 aro_target_score{chain="hyperliquid-hyperevm",target="0x88806a71d74ad0a510b350545c9ae490912f0888"} 9
 aro_target_score{chain="hyperliquid-hyperevm",target="0x320c8988e3d1b5198f335802d7bfd2728a8fcac6"} 32
@@ -321,6 +328,13 @@ aro_target_stale{chain="ethereum-l1-sepolia",target="0xbeef047a543e45807105e51a8
 aro_target_stale{chain="ethereum-l1-sepolia",target="0xbeef01735c132ada46aa9aa4c54623caa92a64cb"} 0
 aro_target_stale{chain="ethereum-l1-sepolia",target="0xbeef088055857739c12cd3765f20b7679def0f51"} 0
 aro_target_stale{chain="ethereum-l1-sepolia",target="0xbeef0c075da5d01112ae5cf34d257074fb5ddb2f"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0xdac17f958d2ee523a2206206994597c13d831ec7"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0x6b175474e89094c44da98b954eedeac495271d0f"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0xdc035d45d973e3ec169d2276ddab16f1e407384f"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0x6c3ea9036406852006290770bedfcaba0e23a0e8"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0xc5f0f7b66764f6ec8c8dff7ba683102295e16409"} 0
 aro_target_stale{chain="hyperliquid-hyperevm",target="0xea394cd63ca3a5c8a130bb2b955cc71c22e5ea6c"} 0
 aro_target_stale{chain="hyperliquid-hyperevm",target="0x88806a71d74ad0a510b350545c9ae490912f0888"} 0
 aro_target_stale{chain="hyperliquid-hyperevm",target="0x320c8988e3d1b5198f335802d7bfd2728a8fcac6"} 1

@@ -1,17 +1,18 @@
 {
- "generated_utc": "2026-10-11T00:44:32Z",
- "asked": 164,
- "count": 30,
+ "generated_utc": "2026-10-11T06:40:58Z",
+ "asked": 171,
+ "count": 31,
  "pending": [],
  "plain_key_roles": [
   "base:0xbeef010f9cb27031ad51e3333f9af9c6b1228183",
   "ethereum-l1:0x55555815a5595991c3a0ff119b59aef6c8b55555",
+  "ethereum-l1:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
   "tempo:0x83a1491f3e7f8daab8f787a631334b9ca7a87023"
  ],
  "changes": [],
  "stale": 0,
  "unread_chains": [],
- "previous_run": "2026-10-10T22:41:50Z",
+ "previous_run": "2026-10-11T00:44:32Z",
  "by_target": {
   "arbitrum:0x9c4ec768c28520b50860ea7a15bd7213a9ff58bf": {
    "roles": {
@@ -177,6 +178,14 @@
      "threshold": 3,
      "owners": 9,
      "holder": "0x827e…ecdb"
+    }
+   }
+  },
+  "ethereum-l1:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": {
+   "roles": {
+    "pauser()": {
+     "kind": "eoa",
+     "holder": "0x4914\u20268566"
     }
    }
   },

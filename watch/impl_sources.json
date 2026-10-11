@@ -1,7 +1,7 @@
 {
- "run_utc": "2026-10-11T00:51:46Z",
- "checked": 65,
- "verified": 25,
+ "run_utc": "2026-10-11T06:48:07Z",
+ "checked": 67,
+ "verified": 27,
  "unverified": 40,
  "not_answered": 0,
  "chains_not_on_sourcify": [],
@@ -77,6 +77,24 @@
    "name": "StrategyManager",
    "compiler": "0.8.30+commit.73712a01",
    "verified_at": "2026-07-27T09:36:45Z"
+  },
+  "ethereum-l1:0xdc035d45d973e3ec169d2276ddab16f1e407384f": {
+   "impl": "0x1923dfee706a8e78157416c29cbccfde7cdf4102",
+   "via": "EIP-1967 implementation slot",
+   "verified": true,
+   "match": "match",
+   "name": "Usds",
+   "compiler": "0.8.21+commit.d9974bed",
+   "verified_at": "2024-09-03T08:03:33Z"
+  },
+  "ethereum-l1:0xc5f0f7b66764f6ec8c8dff7ba683102295e16409": {
+   "impl": "0xa6b2c3d2910246fb0adb02e5f6b39e29026e6d50",
+   "via": "EIP-1967 implementation slot",
+   "verified": true,
+   "match": "exact_match",
+   "name": "StablecoinV2",
+   "compiler": "0.8.14+commit.80d49f37",
+   "verified_at": "2026-03-20T01:31:16Z"
   },
   "hyperliquid:0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec": {
    "impl": "0x26264514cd6018d6f944eb30b782aee2794b70b8",

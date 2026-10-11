@@ -1,0 +1,50 @@
+name: Alert test
+
+# A button (Actions > Alert test > Run workflow, from the GitHub site or app) that sends ONE test message to each alert channel whose secret is set,
+# and says in plain words why it failed. The token is never typed anywhere else, never printed (only its length is). Red when a configured channel fails,
+# or when none is configured: GitHub then also e-mails the failure.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Send a test message to Telegram and Discord (whichever is configured)
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          python3 - <<'PY'
+          import json, os, re, sys, urllib.error, urllib.request
+          ok_any, bad = False, False
+          def post(url, payload):
+              req = urllib.request.Request(url, data=json.dumps(payload).encode(), headers={"Content-Type": "application/json", "User-Agent": "authority-risk-oracle-alert-test"}, method="POST")
+              try:
+                  with urllib.request.urlopen(req, timeout=20) as r: return r.status, r.read().decode("utf-8", "replace")
+              except urllib.error.HTTPError as e: return e.code, e.read().decode("utf-8", "replace")
+              except Exception as e: return 0, type(e).__name__
+          tok, chat, hook = os.environ.get("TELEGRAM_BOT_TOKEN", ""), os.environ.get("TELEGRAM_CHAT_ID", ""), os.environ.get("DISCORD_WEBHOOK_URL", "")
+          if tok or chat:
+              print("Telegram: token length %d (a real token is about 46), chat id %r" % (len(tok), chat))
+              if not re.fullmatch(r"[0-9]{8,12}:[A-Za-z0-9_-]{35}", tok): print("Telegram: the token does not have the shape of a bot token (digits, a colon, 35 letters or digits): it was pasted with something else, or truncated. Set the secret again with ONLY the token."); bad = True
+              elif not chat: print("Telegram: TELEGRAM_CHAT_ID is missing (the public channel name with its @)."); bad = True
+              else:
+                  st, body = post("https://api.telegram.org/bot%s/sendMessage" % tok, {"chat_id": chat, "text": "Authority Risk Oracle: alert test, the channel is connected."})
+                  if st == 200 and '"ok":true' in body: print("Telegram: message sent to %s." % chat); ok_any = True
+                  else:
+                      d = (re.search(r'"description":"([^"]*)"', body) or [None, body[:120]])[1]; print("Telegram: FAILED (%s): %s" % (st, d)); bad = True
+                      if "chat not found" in d: print("  -> the channel name is wrong or private, or the bot is not an administrator of it (channel > Administrators > add the bot, with the right to post).")
+                      if st in (401, 404): print("  -> Telegram does not accept the token: revoke it in @BotFather and set the new one.")
+          if hook:
+              st, body = post(hook, {"content": "Authority Risk Oracle: alert test, the channel is connected."})
+              if 200 <= st < 300: print("Discord: message sent."); ok_any = True
+              else: print("Discord: FAILED (%s)" % st); bad = True
+          if not (tok or chat or hook): print("No alert channel is configured (TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID, or DISCORD_WEBHOOK_URL)."); bad = True
+          sys.exit(1 if bad or not ok_any else 0)
+          PY

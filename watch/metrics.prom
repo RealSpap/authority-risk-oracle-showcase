@@ -1,6 +1,6 @@
 # HELP aro_run_timestamp_seconds UTC time of the last Watch run (Unix seconds)
 # TYPE aro_run_timestamp_seconds gauge
-aro_run_timestamp_seconds 1791743504
+aro_run_timestamp_seconds 1791747986
 # HELP aro_oracle_read 1 when the oracle was read at the last run, 0 when it was not (its targets are then unknown, not zero)
 # TYPE aro_oracle_read gauge
 aro_oracle_read{oracle="Robinhood Chain"} 1
@@ -10,7 +10,7 @@ aro_oracle_read{oracle="Base (Sepolia)"} 1
 aro_oracle_read{oracle="Tempo (Moderato)"} 1
 aro_oracle_read{oracle="Plasma"} 1
 aro_oracle_read{oracle="Monad"} 1
-aro_oracle_read{oracle="Hyperliquid (HyperEVM)"} 0
+aro_oracle_read{oracle="Hyperliquid (HyperEVM)"} 1
 aro_oracle_read{oracle="Solana (Devnet)"} 1
 # HELP aro_oracle_targets Targets the oracle tracks
 # TYPE aro_oracle_targets gauge
@@ -21,6 +21,7 @@ aro_oracle_targets{oracle="Base (Sepolia)"} 13
 aro_oracle_targets{oracle="Tempo (Moderato)"} 14
 aro_oracle_targets{oracle="Plasma"} 9
 aro_oracle_targets{oracle="Monad"} 9
+aro_oracle_targets{oracle="Hyperliquid (HyperEVM)"} 16
 aro_oracle_targets{oracle="Solana (Devnet)"} 26
 # HELP aro_oracle_stale_targets Targets of the oracle whose score is older than its maxStaleness
 # TYPE aro_oracle_stale_targets gauge
@@ -31,13 +32,14 @@ aro_oracle_stale_targets{oracle="Base (Sepolia)"} 0
 aro_oracle_stale_targets{oracle="Tempo (Moderato)"} 0
 aro_oracle_stale_targets{oracle="Plasma"} 0
 aro_oracle_stale_targets{oracle="Monad"} 0
+aro_oracle_stale_targets{oracle="Hyperliquid (HyperEVM)"} 3
 aro_oracle_stale_targets{oracle="Solana (Devnet)"} 0
 # HELP aro_targets Targets tracked across the oracles that were read
 # TYPE aro_targets gauge
-aro_targets 181
+aro_targets 197
 # HELP aro_targets_stale Targets whose score is stale
 # TYPE aro_targets_stale gauge
-aro_targets_stale 1
+aro_targets_stale 4
 # HELP aro_status The run's health, one series per state, 1 for the current one
 # TYPE aro_status gauge
 aro_status{state="ok"} 0

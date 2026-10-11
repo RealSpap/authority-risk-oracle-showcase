@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-11T18:52:38Z",
+ "generated_utc": "2026-10-11T20:07:36Z",
  "repo": "RealSpap/authority-risk-oracle-showcase",
  "raw_base": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/",
  "pages": "https://realspap.github.io/oracle/",
@@ -8,7 +8,7 @@
   {
    "path": "API.md",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/API.md",
-   "bytes": 49612,
+   "bytes": 50692,
    "description": "",
    "schema": null,
    "schema_url": null
@@ -79,7 +79,7 @@
   {
    "path": "cross_chain.json",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/cross_chain.json",
-   "bytes": 13993,
+   "bytes": 13985,
    "description": "the same protocol on several chains, hand by hand: the tracked contracts grouped by DefiLlama protocol (`tvl.json`), kept when present on two chains or more; per chain the composite range, the admin kinds the\u2026",
    "schema": "schema/cross_chain.schema.json",
    "schema_url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/schema/cross_chain.schema.json"
@@ -126,7 +126,7 @@
   {
    "path": "held_assets.json",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/held_assets.json",
-   "bytes": 13582,
+   "bytes": 13572,
    "description": "what each tracked contract holds by its own account: ERC-4626 `totalAssets()` in `asset()`, the asset's `decimals` and `symbol`, the price from coins.llama.fi (`price_usd`, `price_at`) and `held_usd`; `by_target` keyed\u2026",
    "schema": null,
    "schema_url": null
@@ -134,7 +134,7 @@
   {
    "path": "history.jsonl",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/history.jsonl",
-   "bytes": 2673,
+   "bytes": 2798,
    "description": "one line per run (append-only)",
    "schema": null,
    "schema_url": null
@@ -150,7 +150,7 @@
   {
    "path": "keys_summary.json",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/keys_summary.json",
-   "bytes": 1179,
+   "bytes": 1269,
    "description": "how many root signers sit on several tracked groups, and the union of groups the ten most connected sit on; no address (the full index is a targeting map and is not published)",
    "schema": null,
    "schema_url": null
@@ -158,7 +158,7 @@
   {
    "path": "latest.json",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/latest.json",
-   "bytes": 5335,
+   "bytes": 5760,
    "description": "the last run: one line per oracle (read ok, block, targets, stale, and `self_watch`: the oracle watching itself, role events since the previous run, code hash), movers, alerts, sources not read",
    "schema": "schema/latest.schema.json",
    "schema_url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/schema/latest.schema.json"
@@ -174,7 +174,7 @@
   {
    "path": "metrics.prom",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/metrics.prom",
-   "bytes": 41462,
+   "bytes": 41577,
    "description": "the run in the Prometheus text format (mechanism 88), for a monitor that does not parse nine JSON files: `aro_run_timestamp_seconds`, `aro_status{state}` (one series per state, 1 for the current one),\u2026",
    "schema": null,
    "schema_url": null
@@ -253,7 +253,7 @@
   {
    "path": "risk_by_cause.json",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/risk_by_cause.json",
-   "bytes": 13907,
+   "bytes": 13846,
    "description": "money at risk by cause, from the independent reads of the run and DefiLlama: for each cause (`plain_key_admin`, `keys_only_multisig`, `no_delay`, `unverified_code`, `one_key_freezes`, `upgrade_executable`,\u2026",
    "schema": "schema/risk_by_cause.schema.json",
    "schema_url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/schema/risk_by_cause.schema.json"
@@ -292,7 +292,7 @@
   {
    "path": "second_opinion.json",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/second_opinion.json",
-   "bytes": 221068,
+   "bytes": 221166,
    "description": "an independent reader on every EVM target's real chain (EIP-1967 admin slot then the ProxyAdmin's owner(), else owner(), else admin(); since 2026-10-10, for a target with none of those, the roles path: AccessControl\u2026",
    "schema": "schema/second_opinion.schema.json",
    "schema_url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/schema/second_opinion.schema.json"
@@ -340,7 +340,7 @@
   {
    "path": "status.json",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/status.json",
-   "bytes": 927,
+   "bytes": 879,
    "description": "the run's health in one record: `state` ok / degraded / alarm, the `reasons`, and the counters (oracles read, stale, alarms, chain, signed, second opinion); for a monitor that alerts on `state`; `checks.disputes_open`:\u2026",
    "schema": null,
    "schema_url": null
@@ -348,7 +348,7 @@
   {
    "path": "trend.jsonl",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/trend.jsonl",
-   "bytes": 9168,
+   "bytes": 10314,
    "description": "one line per run, appended, never rewritten: the numbers the run measured (targets, stale, tracked TVL, money and contracts per cause, agree / disagree / unreadable / changed / upgrades of the independent reader, signer\u2026",
    "schema": null,
    "schema_url": null
@@ -356,7 +356,7 @@
   {
    "path": "tvl.json",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/tvl.json",
-   "bytes": 33330,
+   "bytes": 33295,
    "description": "DefiLlama TVL per target, matched by hand (`scripts/tvl_match.py`), with the scope of each number",
    "schema": "schema/tvl.schema.json",
    "schema_url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/schema/tvl.schema.json"

@@ -34,6 +34,33 @@ class TestReview(unittest.TestCase):
         held, _ = g.review([entry(OK, 31)], {OK.lower(): 46})  # exactly MAX_DROP: not held
         self.assertEqual(held, [])
 
+    def test_cross_exposure_defaulted_to_100_after_a_failed_computation_is_held(self):
+        # score_all() writes this note when compute_cross_exposure() fails; a rise 40 -> 100 must not go out unseen
+        note = "crossExposureScore defaulted to 100 this run (degraded: compute_cross_exposure() failed), this is NOT a confirmed no-overlap result"
+        e = entry(OFT, 60, [note])
+        held, _ = g.review([e], {OFT.lower(): 52})
+        self.assertEqual(len(held), 1)
+
+    def test_cross_exposure_default_is_held_even_when_the_composite_does_not_move(self):
+        # the composite does not depend on crossExposureScore: 40 -> 100 after a failed computation leaves it at 32
+        note = "crossExposureScore defaulted to 100 this run (degraded: compute_cross_exposure() failed), this is NOT a confirmed no-overlap result"
+        e = dict(entry(OFT, 32, [note]), crossExposureScore=100)
+        held, _ = g.review([e], {OFT.lower(): 32}, published_cross={OFT.lower(): 40})
+        self.assertEqual(len(held), 1)
+        held, _ = g.review([e], {OFT.lower(): 32}, published_cross={OFT.lower(): 100})
+        self.assertEqual(held, [], "an unchanged 100 is not a change")
+
+    def test_arbitrum_cross_exposure_not_computed_note_is_held_too(self):
+        e = dict(entry(OFT, 32, ["crossExposureScore not computed"]), crossExposureScore=100)
+        held, _ = g.review([e], {OFT.lower(): 32}, published_cross={OFT.lower(): 80})
+        self.assertEqual(len(held), 1)
+
+    def test_a_rotated_stock_token_admin_and_an_unreadable_spark_delay_are_degraded(self):
+        for note in ("the known admin does not hold DEFAULT_ADMIN_ROLE (or the read did not answer): unresolved authority (the current holder is not known), adminKeyScore 20",
+                     "executor.delay() did not answer: unresolved authority timing, timelockScore 0"):
+            held, _ = g.review([entry(OFT, 8, [note])], {OFT.lower(): 1})
+            self.assertEqual(len(held), 1, note)
+
     def test_unread_published_holds_every_degraded_entry(self):
         held, _ = g.review([entry(USDAI, 8, [DEGRADED_NOTE])], None)
         self.assertEqual(len(held), 1)

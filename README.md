@@ -39,7 +39,7 @@ and act on it without trusting anyone's website.
   and shared signers across protocols (0 = one bare key can do anything, 100 = no unchecked power found).
 - **Two view functions**: `getScore(address)` and `isStale(address)`. A consumer contract can freeze collateral behind a weak
   authority and refuse a stale read outright ([`ExampleConsumer.sol`](src/ExampleConsumer.sol) does exactly that).
-- **Every number is re-derived live** from two or more independent RPCs on every run, never cached. The methodology states
+- **Every number is re-derived live** on every run, from one public RPC per chain, and a second RPC that cross-checks the reads that matter most (mainly Ethereum L1 and its tokens). The only values not re-read are the dated snapshots and pins listed in the methodology. The methodology states
   what the oracle cannot see, next to what it can.
 
 ## Try it in 60 seconds
@@ -161,7 +161,7 @@ against the LlamaGuard pattern ([`data/contract_review_2026-09-17-llamaguard-com
 
 ```mermaid
 flowchart LR
-    RPC["2+ independent RPCs per chain<br/>eth_call, eth_getLogs, Solana accounts"] --> S["Scorers per ecosystem<br/>(Python, chains/*/scorers.py)"]
+    RPC["Public RPCs per chain<br/>eth_call, eth_getLogs, Solana accounts"] --> S["Scorers per ecosystem<br/>(Python, chains/*/scorers.py)"]
     S --> G["Push guard<br/>holds a score that drops sharply<br/>until a person accepts it"]
     G --> U["Updater<br/>scripts/update_scores.py"]
     U --> O["AuthorityRiskOracle.sol<br/>UPDATER_ROLE, range checks, staleness"]
@@ -171,9 +171,9 @@ flowchart LR
 ```
 
 1. **Score**: each ecosystem's scorer re-derives every target from live chain state (owners, thresholds, modules, proxy admins,
-   timelock delays, price sources), with the second RPC as a cross-check.
+   timelock delays, price sources), with a second RPC cross-checking the reads that matter most (Ethereum L1 and its tokens).
 2. **Guard**: a push that lowers a score by more than 15 points, or that follows a read that could not be completed, is held until
-   a person looks at it. An unreadable source is never reported as safe.
+   a person looks at it. An unreadable source takes a conservative score and is held, not reported as safe.
 3. **Publish**: the updater writes a batch on-chain with a `methodologyHash` derived from the code that produced it
    (`scripts/lib/methodology.py`), so a consumer can tell a scorer fix from a real change in the target's keys.
 4. **Read**: any contract calls `getScore`; the dashboard and `api/scores.json` do the same for people.
@@ -200,6 +200,28 @@ flowchart LR
 - **Read-only watch tools** that answer what a score alone does not (stale oracles, Safe changes, queued timelock operations,
   signer-kind changes, TVL coverage): [`docs/OPERATIONS.md`](docs/OPERATIONS.md).
 
+## Beyond the hackathon: who it is for
+
+Authority risk is not a hackathon problem. The losses that hurt DeFi most (one admin key, a thin multisig, no timelock) keep repeating, and
+the risk is still sold as a closed service, paid by the protocol it rates. This repository is built to be used, not only judged:
+
+| If you are | What you use | How |
+|---|---|---|
+| A lending market, a vault or a curator | `getScore` and `isStale` as a listing and exposure gate | Import the interface; [`src/ExampleConsumer.sol`](src/ExampleConsumer.sol) derives a collateral factor, freezes collateral behind a weak authority and refuses a stale or missing score outright |
+| A DAO risk committee or a delegate | The Watch: the timelock queue before a change applies, Safe changes, signer-kind changes, alerts on rules you can fork | The [dashboard](https://realspap.github.io/oracle/) and the [`watch/`](watch/API.md) files, refreshed every 6 hours; [dispute a score](https://github.com/RealSpap/authority-risk-oracle-showcase/issues/new?template=dispute.yml) and the dispute is recorded in the event log |
+| An auditor, an insurer or a researcher | Open data you can re-derive | [`api/scores.json`](api/scores.json), [`watch/API.md`](watch/API.md) and the dated notes in [`data/`](data/README.md): every number comes from public chain state read on two RPCs, with the method written down |
+| A builder on another chain | A pattern, not a product | One scorer file per ecosystem ([`chains/`](chains/README.md)); add a target, pin its score with a test, push through the dry-run-first script |
+
+Where it goes next, stated plainly:
+
+1. **Mainnet.** The oracles run on testnets today. A mainnet release needs the updater key behind a multisig, timestamps taken from the chain
+   (see Limitations below) and an external audit of the contract.
+2. **A standing mandate.** DAOs already pay for live risk monitoring ([`BUSINESS.md`](BUSINESS.md)), and none of it covers authority risk. No
+   insurer or institution was found paying for a continuous authority feed: this is a bet on latent demand, not a sold product.
+3. **A standard.** ERC-8241 (Protocol Control Disclosure) standardizes the raw facts of who controls what and leaves scoring to external layers.
+   This oracle is built to be that layer.
+4. **More targets, one at a time.** The list is chosen by what people actually hold and lend against, and every addition is read twice and tested.
+
 ## How it compares
 
 | | On-chain, composable | Independent of the rated protocol | Authority risk specifically |
@@ -220,7 +242,7 @@ The longer comparison, including what SolGov and LlamaRisk do better and where t
   protocols. A mainnet deployment would move the updater to a multisig first.
 - **Trust in the updater.** A consumer trusts whoever holds `UPDATER_ROLE` to publish what the scorers computed. The
   `methodologyHash`, the public code and the push guard make a bad push detectable, not impossible.
-- **Coverage is partial.** 197 targets is a fraction of DeFi TVL; `python3 scripts/check_tvl_coverage.py` measures it per ecosystem.
+- **Coverage is partial.** 197 targets is a fraction of DeFi TVL; `python3 scripts/check_tvl_coverage.py` measures it per ecosystem (slow: about 15 minutes, and it prints nothing until the end).
 - **Heuristics.** Classifying an account (EOA, Safe, DAO, timelock) and bounding a lever are judgments, documented and tested, not proofs.
 - **Freshness is not continuous.** Scores are pushed on a cadence; `isStale` tells a consumer when to stop trusting one.
 - **The contract has had no external audit.** It is small (see [`src/`](src/)) and was reviewed against the LlamaGuard pattern by this project itself.

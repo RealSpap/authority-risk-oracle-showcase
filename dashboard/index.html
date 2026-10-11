@@ -248,6 +248,7 @@
   </div>
 
   <div class="aggregate" id="aggregate">Reading targets across <b id="aggChains">9</b> deployed oracles…</div>
+  <p style="margin:6px 0 0;font-size:12px;color:var(--text-faint)">Card text is the finding as written on its date. The scores and bars are read live from the chain and can be newer: when a later push changed a number, the live one is the current one.</p>
 
   <div class="incidents">
     <h2>What this risk score actually guards against</h2>
@@ -382,7 +383,8 @@
       label: 'Tempo', network: 'Testnet (Moderato) · chain 42431',
       oracle: '0x50840a7667baEa9D05ad4ae3dCeb384724b58720',
       rpc: 'https://rpc.moderato.tempo.xyz',
-      rateLimit: 28,
+      // this RPC answers HTTP 413 above about 1.8 KB per request (8 eth_calls pass, 9 do not; measured 2026-10-11): chunks of 6
+      rateLimit: 12,
       explorer: 'https://explore.testnet.tempo.xyz/address/',
     },
     monad: {
@@ -518,7 +520,7 @@
   // Tempo's public RPC (rpc.moderato.tempo.xyz) answers HTTP 429 when about 28
   // calls land inside a fraction of a second: its tab sends 1 + 14 + 14 = 29 in
   // ~0.4s and failed on the third batch, while 14 calls a second for 8 seconds in
-  // a row (measured from a browser) all succeeded. Hence `rateLimit: 28` there,
+  // a row (measured from a browser) all succeeded. Hence a `rateLimit` there (28 at the time; 12 since the RPC started answering 413 above about 1.8 KB per request),
   // which gives chunks of 14 one second apart. Any chain's batch is also retried
   // twice on a 429, since a shared public RPC can throttle for reasons outside
   // this page's control.
@@ -657,6 +659,7 @@
   }
 
   function band(score) {
+    if (!isFinite(score)) return { key: 'unread', label: 'UNREAD' };
     if (score < 20) return { key: 'critical', label: 'CRITICAL' };
     if (score < 40) return { key: 'weak', label: 'WEAK' };
     if (score < 60) return { key: 'moderate', label: 'MODERATE' };
@@ -906,7 +909,7 @@
       title: 'PYUSD (Paxos)',
       summary: 'The proxy admin and the owner are accounts with no code. Either can replace the token\'s logic or act as the owner, with no delay.',
       tag: 'accounts with no code, no timelock, composite 2',
-      detail: 'Added 2026-10-11. Scored 5 / 0 / 0 (composite 2). The supply controller and the asset protection role did not answer through the proxy on this build, so only the proxy admin and owner() are read. Whether one key, an HSM or an MPC service holds an account with no code cannot be observed on chain; the score treats it as a bare EOA, the methodology\'s convention.' },
+      detail: 'Added 2026-10-11. Scored 5 / 0 / 0 (composite 2). Read: the proxy admin, owner(), defaultAdmin() and supplyControl() (the mint authority, a contract whose owner is followed); all four lead to accounts with no code, three of them to the same one. Whether one key, an HSM or an MPC service holds an account with no code cannot be observed on chain; the score treats it as a bare EOA, the methodology\'s convention.' },
     { idx: [33],
       title: 'FDUSD (First Digital)',
       summary: 'An EIP-1967 proxy whose admin is a ProxyAdmin contract; the ProxyAdmin\'s owner and the token\'s owner() are the same 4-of-6 Gnosis Safe, with no timelock.',
@@ -1594,7 +1597,7 @@
   // attestation file's anchor record, said so in the label.
   var ZC_NOT_INDEXED = ' <i title="the explorer has not indexed this transaction yet; taken from the attestation file, not independently verified here">(from the file, explorer not caught up)</i>';
   function zcBlockSpan(t, att) {
-    if (t.txMeta) return '<span><b>Block</b> ' + t.txMeta.blockHeight + ' (' + t.txMeta.confirmations + ' confirmations)</span>';
+    if (t.txMeta) return '<span><b>Block</b> ' + (Number(t.txMeta.blockHeight) || 'n/a') + ' (' + (Number(t.txMeta.confirmations) || 0) + ' confirmations)</span>';
     var a = (att && att.anchor) || {};
     if (!a.blockHeight) return '<span><b>Block</b> not shown <i title="the explorer has not indexed this transaction yet and the attestation file records no block">(explorer not caught up)</i></span>';
     return '<span><b>Block</b> ' + a.blockHeight + ZC_NOT_INDEXED + '</span>';
@@ -1610,7 +1613,7 @@
     return '<span title="' + tip + '"><b>Block time</b> ' + (a.blockTimeUtc || 'n/a') + ZC_NOT_INDEXED + '</span>';
   }
   function zcFeeSpan(t, att) {
-    if (t.txMeta) return '<span><b>Fee</b> ' + t.txMeta.feeZat + ' zat</span>';
+    if (t.txMeta) return '<span><b>Fee</b> ' + (Number(t.txMeta.feeZat) || 'n/a') + ' zat</span>';
     var a = (att && att.anchor) || {};
     return '<span><b>Fee</b> ' + (a.feeZat || 'n/a') + ' zat' + ZC_NOT_INDEXED + '</span>';
   }
@@ -1962,7 +1965,7 @@
     h.split('&').forEach(function (kv) {
       var i = kv.indexOf('=');
       if (i === -1) return;
-      parts[decodeURIComponent(kv.slice(0, i))] = decodeURIComponent(kv.slice(i + 1));
+      try { parts[decodeURIComponent(kv.slice(0, i))] = decodeURIComponent(kv.slice(i + 1)); } catch (e) { /* a malformed escape in the URL is ignored */ }
     });
     return parts;
   }
@@ -2141,12 +2144,17 @@
     return rpcBatch(chain, [{ id: 1, data: SEL.count }])
       .then(function (m) {
         var count = parseInt(m.get(1), 16);
+        if (!isFinite(count) || count < 0) throw new Error('the oracle returned no target count (empty response: wrong address or a reset testnet)');
         setStatus('Reading ' + count + ' tracked target addresses on ' + chain.label + '…', false, true);
         var calls = [];
         for (var i = 0; i < count; i++) calls.push({ id: i, data: SEL.target + pad32('0x' + i.toString(16)) });
         return rpcBatch(chain, calls).then(function (targetMap) {
           var addresses = [];
-          for (var i = 0; i < count; i++) addresses.push('0x' + targetMap.get(i).slice(-40));
+          for (var i = 0; i < count; i++) {
+            var a = '0x' + String(targetMap.get(i)).slice(-40);
+            if (!/^0x[0-9a-fA-F]{40}$/.test(a)) throw new Error('target ' + i + ' did not come back as an address');
+            addresses.push(a);
+          }
           return addresses;
         });
       })
@@ -2156,6 +2164,7 @@
         return rpcBatch(chain, calls).then(function (scoreMap) {
           return addresses.map(function (a, i) {
             var hex = scoreMap.get(i);
+            if (!hex || hex.replace(/^0x/, '').length < 64 * 8) throw new Error('no score returned for ' + a);   // an empty read must not display as STRONG
             return {
               address: a,
               adminKeyScore: u8(word(hex, 0)),
@@ -2172,8 +2181,12 @@
       });
   }
 
+  var loadSeq = 0;   // a read that finishes after the visitor switched tabs must not render under the other tab
   function load() {
     var chain = CHAINS[activeKey];
+    var seq = ++loadSeq;
+    lastScores = null;
+    if (retryBtn && retryBtn.parentNode) retryBtn.parentNode.removeChild(retryBtn);
     document.getElementById('chainNetworkLabel').textContent = chain.label + ' · ' + chain.network;
     setLive(false, 'connecting…');
     document.getElementById('stats').style.display = 'none';
@@ -2209,6 +2222,8 @@
 
     reading
       .then(function (scores) {
+        if (seq !== loadSeq) return;
+        if (!scores.length) throw new Error('the oracle holds no scores yet');
         var comps = scores.map(function (s) { return s.compositeScore; });
         var mean = comps.reduce(function (a, b) { return a + b; }, 0) / comps.length;
         document.getElementById('statCount').textContent = scores.length;
@@ -2227,6 +2242,7 @@
         document.getElementById('statusBanner').style.display = 'none';
       })
       .catch(function (err) {
+        if (seq !== loadSeq) return;
         setLive(false, 'chain read failed');
         setStatus('Could not read the ' + chain.label + ' oracle: ' + err.message, true, false);
         var banner = document.getElementById('statusBanner');
@@ -2274,8 +2290,8 @@
   }
 
   var initial = parseHash();
-  if (initial && initial.chain && CHAINS[initial.chain]) activeKey = initial.chain;
-  if (initial && initial.card) pendingDeepLink = { chain: activeKey, card: initial.card };
+  if (initial && initial.chain && Object.prototype.hasOwnProperty.call(CHAINS, initial.chain)) activeKey = initial.chain;
+  if (initial && initial.card && /^[a-z0-9-]+$/.test(initial.card)) pendingDeepLink = { chain: activeKey, card: initial.card };
 
   renderChainTabs();
   load();

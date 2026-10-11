@@ -347,7 +347,10 @@ def read_modules(w3, safe, retries=4):
         modules.extend(Web3.to_checksum_address(m) for m in found)
         if not nxt or nxt.lower() in (SENTINEL.lower(), ZERO_ADDRESS):
             return modules
-        start = nxt
+        # Safe v1.3.0 returns in `next` the first module NOT yet returned, and the call lists the modules AFTER `start`: restarting from `next`
+        # skips it (a Safe with more than one page of modules lost its 11th). v1.4.0 returns the last module of the page. Restarting from the
+        # last module read is right in both (second review, 2026-10-11).
+        start = Web3.to_checksum_address(found[-1]) if found else nxt
     return modules
 
 

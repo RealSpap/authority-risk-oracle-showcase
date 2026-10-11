@@ -49,6 +49,10 @@ done
 if [ -n "${ACCEPT_HELD:-}" ] && [ "$(echo $ONLY | wc -w | tr -d ' ')" -gt 1 ]; then
   echo "ACCEPT_HELD applies to every step and several steps are selected: use ACCEPT_HELD_<step>=0xA,0xB per step (or ONLY=<one step>)."; exit 2
 fi
+# The accept lists go through eval below: only addresses and commas are allowed in them.
+for v in $(env | grep -E '^ACCEPT_(HELD|MISSING)[A-Za-z0-9_]*=' | cut -d= -f1); do
+  case "${!v}" in *[!0-9A-Za-z,]*) echo "$v may contain only addresses separated by commas"; exit 2 ;; esac
+done
 SOLANA_PROGRAM_ID=5VhiTAGLEViGgajhxPbzdWz7WLUAiRy42DY6qi6tYh4W
 
 # Preflight, read-only and never blocking: has the code behind any tracked target changed since the last reviewed snapshot?
@@ -104,7 +108,11 @@ step hyperliquid evm-testnet-shared/.env "ORACLE_RPC_URL=https://rpc.hyperliquid
 if wanted solana; then
   echo
   echo "=== solana"
-  if ! eval "READ_RPC_URL=https://api.mainnet-beta.solana.com ORACLE_RPC_URL=https://api.devnet.solana.com ORACLE_PROGRAM_ID=$SOLANA_PROGRAM_ID KEYPAIR_FILE=$KEYS_DIR/solana-devnet/.env python3 chains/solana/deploy/update_scores_solana.py $DRYFLAG"; then FAILED="$FAILED solana"; fi
+  SOLFLAGS=""
+  solacc="${ACCEPT_HELD_solana:-${ACCEPT_HELD:-}}"
+  if [ -n "$solacc" ] && [ -z "$DRYFLAG" ]; then SOLFLAGS="--accept-held=$solacc"; fi
+  if [ -n "${ACCEPT_MISSING_solana:-}" ] && [ -z "$DRYFLAG" ]; then SOLFLAGS="$SOLFLAGS --accept-missing=$ACCEPT_MISSING_solana"; fi
+  if ! eval "READ_RPC_URL=https://api.mainnet-beta.solana.com ORACLE_RPC_URL=https://api.devnet.solana.com ORACLE_PROGRAM_ID=$SOLANA_PROGRAM_ID KEYPAIR_FILE=$KEYS_DIR/solana-devnet/.env python3 chains/solana/deploy/update_scores_solana.py $DRYFLAG $SOLFLAGS"; then FAILED="$FAILED solana"; fi
 fi
 
 step robinhood robinhood-chain-testnet/.env "READ_RPC_URL=https://rpc.mainnet.chain.robinhood.com ORACLE_RPC_URL=https://rpc.testnet.chain.robinhood.com/rpc ORACLE_ADDRESS=$ROBINHOOD_ORACLE python3 scripts/update_scores.py"

@@ -21,6 +21,8 @@ median in 2 of 5 sets. Every sensitivity (without Wasabi, the draft lists, the o
 | Resolv (USR, Safe 3-of-5) | 43 | bitwise-uscc 2; bitfi-basis 2 (bare EOAs); aegis 43; Falcon 47 |
 | Wasabi (LongPool, AccessManager unresolved) | 8 | hakka 32; derivadex 101; apex-pro 101; aevo 56 |
 
+*Correction 2026-10-11: the peers shown as 101 (Chainlink, Immutable X, derivadex, apex-pro) have no authority to score; the contract refuses any value above 100, so read them as "not applicable", not as a score.*
+
 Quality: 0 read failures on 23 subjects; an independent re-read of 6 subjects with separate code matched every root, sub-score and
 composite; the conformity audit found the run "compliant with minor deviations", none touching selection, formula or test.
 

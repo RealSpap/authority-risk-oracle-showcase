@@ -68,6 +68,7 @@ sys.path.append(os.path.join(REPO_ROOT, "scripts", "lib"))
 
 from scorers import score_all  # noqa: E402
 from oracle_keys import assert_unique_oracle_keys  # noqa: E402
+import push_guard  # noqa: E402  (scripts/lib; held scores and a lost target are refused as on the EVM oracles)
 
 DEFAULT_READ_RPC_URL = "https://api.mainnet-beta.solana.com"  # Solana Mainnet Beta, READ ONLY
 DEFAULT_ORACLE_RPC_URL = "https://api.devnet.solana.com"  # Solana Devnet, the only network this pipeline may write to
@@ -132,6 +133,64 @@ def encode_update_score_ix_data(target_pubkey_b58: str, scored: dict) -> bytes:
     return anchor_discriminator("update_score") + target_bytes + payload + methodology_hash()
 
 
+def review_before_push(scored, tracked_and_published, accepted=(), accepted_missing=(), skip_published_check=False):
+    """Refuse a push that would lose a target or move a score without a person looking, as the EVM push scripts do.
+
+    tracked_and_published: (tracked, published) where tracked is the list of base58 targets in the oracle's Registry and
+    published is {target: decoded AuthorityScore} for the ones already written, or None when the read failed.
+    Raises SystemExit on: a tracked target the scorer did not return (its on-chain score would silently go stale),
+    an unreadable published state (unless skip_published_check), or any entry push_guard.review holds."""
+    tracked, published = tracked_and_published
+    accepted_missing = {a.lower() for a in accepted_missing}
+    scored_keys = {e["target"].lower() for e in scored}
+    missing = [x for x in tracked if x.lower() not in scored_keys and x.lower() not in accepted_missing]
+    if missing:
+        raise SystemExit("Push guard: the Registry tracks target(s) the scorer did not return, so their on-chain score would go stale: "
+                         + ", ".join(missing) + ". Fix the read, or pass --accept-missing=" + ",".join(missing) + " if they were retired on purpose.")
+    if published is None:
+        if not skip_published_check:
+            raise SystemExit("Push guard: published scores UNREAD; refusing to push. Re-run, or pass --skip-published-check after checking by hand.")
+        print("Push guard: published scores UNREAD, --skip-published-check given: the drop check and the lost-target check were not run")
+        pub = pub_o = pub_c = None
+    else:
+        pub = {k.lower(): v["compositeScore"] for k, v in published.items()}
+        pub_o = {k.lower(): v["oracleAuthorityScore"] for k, v in published.items()}
+        pub_c = {k.lower(): v["crossExposureScore"] for k, v in published.items()}
+    held, lines = push_guard.review(scored, pub, accepted, pub_o, pub_c)
+    print(f"[push] push guard: {len(held)} entr{'y' if len(held) == 1 else 'ies'} held")
+    for l in lines:
+        print(l)
+    if held:
+        raise SystemExit("Push guard: refusing to push. Look at each HELD entry, then re-run with --accept-held="
+                         + ",".join(e["target"] for e in held) + " if it is right.")
+
+
+def read_registry_and_published(oracle_rpc_url, program_id_b58, scored):
+    """(tracked, published): the Registry's tracked targets and the decoded score of each scored target already written.
+    (tracked, None) when a read failed: the caller must not treat that as 'nothing published'. ([], {}) on a first publish."""
+    import solana_tx as stx
+    import read_scores_solana as rs
+    program_id = stx.b58decode(program_id_b58, 32)
+    registry, _ = stx.find_program_address([b"registry"], program_id)
+    try:
+        rdata, rowner = stx.get_account_data(oracle_rpc_url, stx.b58encode(registry))
+        if rdata is None:
+            return [], {}
+        if rowner != program_id_b58:
+            return [], None
+        tracked = rs.decode_registry(rdata)["tracked"]
+        published = {}
+        for e in scored:
+            pda, _ = stx.find_program_address([b"score", stx.b58decode(e["target"], 32)], program_id)
+            data, owner = stx.get_account_data(oracle_rpc_url, stx.b58encode(pda))
+            if data is not None and owner == program_id_b58:
+                published[e["target"]] = rs.decode_score(data)
+        return tracked, published
+    except Exception as ex:  # noqa: BLE001 -- a failed read is never 'nothing published'
+        print(f"[push] published scores UNREAD ({type(ex).__name__}: {ex})")
+        return [], None
+
+
 def push_live(args):
     """Real write path (deploy_testnet phase): re-derive every score live
     from Mainnet Beta (READ ONLY), then send `initialize` (only if the
@@ -170,6 +229,11 @@ def push_live(args):
     ready = stx.wait_program_invocable(args.oracle_rpc_url, args.program_id)
     print(f"[push] program executable, last deployed slot {ready['last_deployed_slot']} "
           f"< confirmed slot {ready['confirmed_slot']} -- invocable")
+
+    review_before_push(scored, read_registry_and_published(args.oracle_rpc_url, args.program_id, scored),
+                       accepted=[x for x in (args.accept_held or "").split(",") if x.strip()],
+                       accepted_missing=[x for x in (args.accept_missing or "").split(",") if x.strip()],
+                       skip_published_check=args.skip_published_check)
 
     registry, _ = stx.find_program_address([b"registry"], program_id)
     record = {"oracle_rpc_url": args.oracle_rpc_url, "genesis": genesis, "program_id": args.program_id,
@@ -219,6 +283,9 @@ def main():
     ap.add_argument("--oracle-rpc-url", default=os.environ.get("ORACLE_RPC_URL", DEFAULT_ORACLE_RPC_URL))
     ap.add_argument("--program-id", default=os.environ.get("ORACLE_PROGRAM_ID"))
     ap.add_argument("--keypair-file", default=os.environ.get("KEYPAIR_FILE"))
+    ap.add_argument("--accept-held", default="", help="comma-separated base58 targets the push guard holds that a person accepted")
+    ap.add_argument("--accept-missing", default="", help="comma-separated base58 targets the Registry tracks that were retired on purpose")
+    ap.add_argument("--skip-published-check", action="store_true", help="push although the published scores could not be read (after checking by hand)")
     ap.add_argument("--out", help="write a JSON record of every pushed score + tx signature here")
     args = ap.parse_args()
 

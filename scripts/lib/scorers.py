@@ -392,7 +392,13 @@ def score_stock_token(w3: Web3, target_address: str, label: str) -> dict:
     admin_is_eoa = is_eoa(w3, known_admin) if still_holds_role else None
     notes.append(f"admin is bare EOA = {admin_is_eoa}")
 
-    admin_key = 3 if (still_holds_role and admin_is_eoa) else 40
+    if not still_holds_role:
+        # the known admin no longer holds DEFAULT_ADMIN_ROLE (False: the role moved to a key nobody here has read) or the read answered nothing (None):
+        # whoever holds it now is unknown, so the unresolved floor applies, not a score above the floor (found by the second review, 2026-10-11)
+        admin_key = 20
+        notes.append("the known admin does not hold DEFAULT_ADMIN_ROLE (or the read did not answer): unresolved authority (the current holder is not known), adminKeyScore 20")
+    else:
+        admin_key = 3 if admin_is_eoa else 40
     multisig = 0
     timelock_score = 0  # upgradeTo/blockAccounts: no delay found
 
@@ -546,7 +552,9 @@ def score_spark_savings_usdg(w3: Web3) -> dict:
     # regardless: a real controller does not make an undelayed action safe.
     admin_key = 50
     multisig = 30  # real, identifiable chain, but not a Safe -- capped well below an actual multisig
-    timelock_score = 10 if delay == 0 else 60
+    timelock_score = 0 if delay is None else (10 if delay == 0 else 60)  # an unreadable delay() is unknown, never the best case
+    if delay is None:
+        notes.append("executor.delay() did not answer: unresolved authority timing, timelockScore 0")
 
     return {
         "target": target,
@@ -629,7 +637,9 @@ def score_spark_liquidity_layer_almproxy(w3: Web3) -> dict:
         # own docstring/comment for why these specific values).
         admin_key = 50
         multisig = 30
-        timelock_score = 10 if delay == 0 else 60
+        timelock_score = 0 if delay is None else (10 if delay == 0 else 60)  # an unreadable delay() is unknown, never the best case
+        if delay is None:
+            notes.append("executor.delay() did not answer: unresolved authority timing, timelockScore 0")
 
     return {
         "target": target,
@@ -1559,7 +1569,7 @@ def score_arcus_perps_bridgevault(w3: Web3) -> dict:
     same mechanic as the PancakeSwap V2/V3 and Steakhouse 4-vault
     crossExposure corrections already in this project's history).
 
-    Scoring judgment call (the kind the project's review rules require disclosing, not
+    Scoring judgment call (the kind AGENTS.md requires disclosing, not
     smoothing over): the 24h TimelockController is REAL, but does not gate
     the operative path to BridgeVault's admin surface, because
     ValidatorConsensus independently holds the identical DEFAULT_ADMIN_ROLE
@@ -3116,7 +3126,7 @@ def score_all(w3: Web3, skip_slow: bool = False) -> list:
         entry["crossExposureScore"] = cross_exposure.get(Web3.to_checksum_address(entry["target"]), 100)
         entry["notes"].extend(cross_exposure_notes.get(Web3.to_checksum_address(entry["target"]), []))
         if not cross_exposure_ok:
-            entry["notes"].append("crossExposureScore defaulted to 100 this run: compute_cross_exposure() failed, this is NOT a confirmed no-overlap result")
+            entry["notes"].append("crossExposureScore defaulted to 100 this run (degraded: compute_cross_exposure() failed), this is NOT a confirmed no-overlap result")
         _apply_l1_cap(entry, l1_authority_composite)
 
     return results

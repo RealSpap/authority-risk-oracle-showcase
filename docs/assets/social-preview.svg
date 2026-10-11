@@ -1,0 +1,26 @@
+<svg width="1280" height="640" viewBox="0 0 1280 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Authority Risk Oracle">
+<title>Authority Risk Oracle: can one person move this protocol's funds?</title>
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#05070B"/><stop offset="1" stop-color="#0C1320"/></linearGradient>
+<linearGradient id="a" gradientUnits="userSpaceOnUse" x1="202" y1="116" x2="256" y2="406"><stop offset="0" stop-color="#FF5A78"/><stop offset="1" stop-color="#3BDFFF"/></linearGradient>
+<linearGradient id="b" gradientUnits="userSpaceOnUse" x1="256" y1="406" x2="106" y2="251"><stop offset="0" stop-color="#3BDFFF"/><stop offset="1" stop-color="#30E8C8"/></linearGradient>
+<linearGradient id="bar" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FF5A78"/><stop offset="0.5" stop-color="#3BDFFF"/><stop offset="1" stop-color="#30E8C8"/></linearGradient>
+</defs>
+<rect width="1280" height="640" fill="url(#bg)"/>
+<rect x="0" y="632" width="1280" height="8" fill="url(#bar)"/>
+<g transform="translate(96,120) scale(0.78)">
+<path d="M202.2 116.0 A150 150 0 1 1 256 406" fill="none" stroke="url(#a)" stroke-width="38"/>
+<circle cx="202.2" cy="116" r="19" fill="#FF5A78"/>
+<path d="M256 406 A150 150 0 0 1 106.1 250.8" fill="none" stroke="url(#b)" stroke-width="38"/>
+<circle cx="106.1" cy="250.8" r="19" fill="#30E8C8"/>
+<circle fill="#EAF2FF" cx="256" cy="225" r="45"/>
+<path fill="#EAF2FF" d="M236 262 L276 262 L298 358 L214 358 Z"/>
+</g>
+<g font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif" fill="#EAF2FF">
+<text x="560" y="236" font-size="30" letter-spacing="6" fill="#3BDFFF" font-weight="600">ON-CHAIN AUTHORITY RISK</text>
+<text x="556" y="318" font-size="86" font-weight="700">Authority</text>
+<text x="556" y="408" font-size="86" font-weight="700">Risk Oracle</text>
+<text x="560" y="476" font-size="34" fill="#B9C4D6">Can one person move this protocol's funds?</text>
+<text x="560" y="540" font-size="28" fill="#8794AA">197 contracts · 9 oracles · 10 ecosystems</text>
+</g>
+</svg>

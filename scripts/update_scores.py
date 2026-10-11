@@ -186,8 +186,8 @@ def _run(dry_run: bool, skip_slow: bool = False):
 
     # Load the previous published snapshot (if any) BEFORE anything downstream can overwrite it --
     # this is the only source both the completeness guard below and diff_alerts() (further down)
-    # have for "what was published last time". Missing/corrupt file is treated as "first publish",
-    # not an error. Moved earlier than the dry-run check on 2026-09-22 so the completeness guard
+    # have for "what was published last time". A missing file is a first publish; a file that exists
+    # but cannot be read refuses the run (it must not switch the guards off). Moved earlier than the dry-run check on 2026-09-22 so the completeness guard
     # applies there too (a --dry-run operator relying on it to verify "does this currently work"
     # should see a silent gap just as loudly as a real push would refuse it).
     previous_snapshot = None
@@ -196,7 +196,8 @@ def _run(dry_run: bool, skip_slow: bool = False):
             with open(API_SNAPSHOT_PATH) as f:
                 previous_snapshot = json.load(f)
         except (json.JSONDecodeError, OSError) as e:
-            print(f"Warning: could not read previous snapshot ({e}), treating as first publish.")
+            # A snapshot that exists but cannot be read must not switch the completeness and alert guards off.
+            raise SystemExit(f"Refusing to run: {API_SNAPSHOT_PATH} exists but cannot be read ({e}). Restore it from git, or delete it for a deliberate first publish.")
 
     # The oracle keeps one score per address: refuse the whole push if two entries share one
     # (scripts/lib/oracle_keys.py). Checked BEFORE completeness on purpose: a key collision is a
@@ -315,9 +316,11 @@ def _run(dry_run: bool, skip_slow: bool = False):
         "scores": api_scores,
     }
     os.makedirs(os.path.dirname(API_SNAPSHOT_PATH), exist_ok=True)
-    with open(API_SNAPSHOT_PATH, "w") as f:
+    tmp = API_SNAPSHOT_PATH + ".tmp"   # write then rename: an interrupted run cannot leave a half-written snapshot behind
+    with open(tmp, "w") as f:
         json.dump(snapshot, f, indent=2)
         f.write("\n")
+    os.replace(tmp, API_SNAPSHOT_PATH)
     print(f"Wrote {API_SNAPSHOT_PATH}")
 
     alerts = diff_alerts(previous_snapshot, api_scores)

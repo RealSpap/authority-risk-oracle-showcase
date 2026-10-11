@@ -6,16 +6,12 @@ being scored can check any number below against the live chain themselves,
 not take it on trust.
 
 This document covers the **core model** - the one live on Robinhood Chain
-today and used (in slightly adapted form) by the EVM `scoring_build`-phase
-ecosystems (Ethereum L1, Base, Arbitrum). **Updated 2026-09-17**: every
-non-EVM ecosystem (Hyperliquid, Solana, Tempo, Zcash) also reached
-`scoring_build` this same day - none is left in a pure `methodology`-only
-phase. Each has its own `chains/<ecosystem>/METHODOLOGY.md` adapting these
-same five dimensions to a non-EVM or non-Safe authority model, plus its own
-`scorers.py` and `data/scored_targets_2026-09-17.md` with the live-verified
-numbers - see those files for the chain-specific translation and the exact
-targets covered so far (2-3 flagship targets per ecosystem, not full
-coverage). This document doesn't duplicate them.
+today and used (in slightly adapted form) by the other EVM oracles (Ethereum L1, Base,
+Arbitrum, Plasma, Monad). **Updated 2026-10-11**: Hyperliquid (a HyperEVM oracle), Tempo (an EVM chain), Solana and
+Zcash also have their own `chains/<ecosystem>/METHODOLOGY.md` adapting these same five dimensions to a different or
+non-Safe authority model, plus their own `scorers.py` and dated `data/scored_targets_*.md` notes with the live-verified
+numbers. Target counts change with every batch: `python3 scripts/live_target_counts.py` reads them from the oracles
+(197 across nine oracles on 2026-10-11, plus the Zcash commitment). This document doesn't duplicate the chain files.
 
 ## The five dimensions
 
@@ -139,8 +135,8 @@ individual target is scored (`scripts/lib/signer_overlap.py`): re-derives
 every tracked group's root signer set live, and checks whether any signer
 also appears in another tracked group's signer set. `crossExposureScore =
 max(0, 100 - 20 * sharedGroupCount)`. This reuses the same discipline as
-this project's sister research program, `multisig-overlap` (337 protocols,
-547 confirmed Safes tracked for exactly this pattern at a larger scale),
+this project's sister research program, `multisig-overlap` (about 400 protocol entries on 25 chains, as of its own README;
+the 2026-09 figure was 337 protocols and 547 confirmed Safes tracked for exactly this pattern at a larger scale),
 scoped down to this oracle's own tracked target set. A separate module,
 [`scripts/lib/cross_ecosystem_overlap.py`](scripts/lib/cross_ecosystem_overlap.py),
 extends the same check ACROSS ecosystems (does a Robinhood Chain Safe's owner
@@ -326,7 +322,7 @@ oracleAuthorityScore = min, over the MATERIAL price paths ONE HOP upstream, of e
   Zeppelin slot), its `manager()` and, for a beacon proxy, its beacon's owner.
 - **Behind a shorter timelock** (decided 2026-10-05): a timelock shorter than the target's own delay is
   no longer UNREAD by itself. The accounts that can schedule on it are scored, each behind that delay,
-  with timelockScore `delay_points(seconds)` (the notice-period curve of section 6.1, 50 x hours / 24
+  with timelockScore `delay_points(seconds)` (the notice-period curve of section 6.1 of `chains/solana/METHODOLOGY.md`, 50 x hours / 24
   below a day then +10 a day, capped at 60, the EVM level of a real delay whose bypass paths were not
   ruled out), and the weakest one counts. For an OpenZeppelin TimelockController these are the
   PROPOSER_ROLE holders and the holders of its admin role other than itself; the roles are not
@@ -514,7 +510,7 @@ Safe ProxyAdmin); the Monad Morpho vault 49 (Chronicle's 7-day timelocks, each s
 days); Moonwell 52; Fluid Plasma 52 and Fluid Arbitrum 20 (its sUSDai rate, 75% of debt, has no spec, and 23 dust vaults
 the API does not price count as material); Dolomite 20 (the GMX keeper keys, the three GMX ROLE_ADMIN timelock paths
 and two frozen markets of unknown value are all UNREAD); Jupiter Lend 35 (the Huma PST loss authority, a 2-of-3 Squads with no delay); Purinta 50 (a proxyless 4-of-8
-Safe); Steakhouse Turbo 52. Every other target is unchanged. Open points are listed at the end of the finding. The deeper
+Safe); Steakhouse Turbo 52. Every other target is unchanged. These are the scorer's values at that decision, not the values on chain today: an `oracleAuthorityScore` is pushed as 20 when a material price path could not be read at push time, and `getScore` returned 20 for SparkLend, the Monad vault and Jupiter Lend when read on 2026-10-11. Read the current value on chain. Open points are listed at the end of the finding. The deeper
 inputs left out by the one-hop rule are listed in `data/finding_2026-10-04-price-paths-beyond-one-hop.md`.
 
 ## Tokens: WETH, the large dollar stablecoins (added 2026-10-11)
@@ -639,7 +635,7 @@ an executor contract with a 1-day `delay()` whose roles are not read yet: it sta
 - **Never trust a name, a docs page, or a block explorer's "verified
   contract" label as the final answer about who controls what.** Every
   sub-score is re-derived from a live `eth_call`/`eth_getStorageAt`/
-  `eth_getLogs` this run, not cached, not copied from a prior pass, not
+  `eth_getLogs` this run, not cached (except the dated snapshots and pins this document lists), not copied from a prior pass, not
   inferred from a variable name (`DELTA_FINANCIAL_MULTISIG` has, in
   practice elsewhere, resolved to a single EOA on the actual live contract -
   a name is a hypothesis, not ground truth).
@@ -755,7 +751,7 @@ edges, not just its claims.
   [`data/finding_2026-10-01-backtest-victims-vs-controls.md`](data/finding_2026-10-01-backtest-victims-vs-controls.md))
   read 5 incident victims on Ethereum and 18 untouched peers of similar
   size one month before each incident: the composite did not separate them
-  (victims at 43 to 49, several peers rooted in a single bare key). The
+  (four victims at 43 to 49 and Wasabi at 8, several peers rooted in a single bare key). The
   attacks went around the configuration (spoofed signing interface,
   compromised devices, a service key), so watching changes matters as much
   as the static score. Five sets can only rule out a large, regular gap.
@@ -808,7 +804,7 @@ edges, not just its claims.
   64,022,942). The same sweep found a third case of a different shape: the Ethereum
   L1 Ethena target was USDe's retired minter, inert since 2024-07-08, not the live
   one. The live minter (admin a 24h timelock behind a 5-of-10 Safe) now scores
-  65/100/55, composite 73, as a new target, and the old one is no longer refreshed (it turns stale after 2026-09-28 16:39 UTC)
+  65/100/55, composite 73, as a new target, and the old one is no longer refreshed (its last push was 2026-09-23 16:16 UTC, so it turned stale after 2026-10-02 16:16 UTC)
   (`data/finding_2026-09-20-ethena-live-minter.md`). The sweep covered the
   AccessControl-shaped contracts the scorers already touch, so the same pattern may
   still hide in an authority shape it did not enumerate.
@@ -879,8 +875,7 @@ for r in score_all(get_w3('https://rpc.mainnet.chain.robinhood.com')):
 
 Every number printed is re-derived from live chain state in that run - never
 replayed from a cached value. See `scripts/update_scores.py --dry-run` for
-the same re-derivation against the exact code path the weekly production
-cron actually runs.
+the same re-derivation against the exact code path a real push runs (pushes are run by hand, at the latest every nine days, the staleness limit; the weekly workflow `update_scores.yml` only pushes Robinhood Chain testnet and stops at the same guards, so a held or missing target fails it instead of being sent).
 
 To check which code produced a published score, check out the commit recorded with the
 push (`methodologyCommit` in `api/scores.json` for Robinhood Chain, in the push record

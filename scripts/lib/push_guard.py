@@ -28,6 +28,7 @@ MAX_DROP = 15
 ORACLE_UNREAD = re.compile(r"material price path\(s\) UNREAD|price walk failed")  # price_authority.UNREAD_MARK, FAILED_MARK (a test pins both)
 DEGRADED = re.compile(r"degraded|unresolved authority|treat as unresolved|treat as unverified|conservative score|"
                       r"not resolvable|did not (?:fully )?resolve", re.I)
+CROSS_DEFAULTED = re.compile(r"crossExposureScore (?:defaulted|not computed)")  # scorers.score_all, arbitrum-ecosystem: the 100 is a default, not a measurement
 GET_SCORE_ABI = [{"name": "getScore", "type": "function", "stateMutability": "view", "inputs": [{"type": "address"}],
                   "outputs": [{"type": "tuple", "components": [
                       {"name": "adminKeyScore", "type": "uint8"}, {"name": "multisigScore", "type": "uint8"},
@@ -88,6 +89,8 @@ def review(scored, published, accepted=(), published_oracle=None, published_cros
             elif new_o == 100:
                 why.append(f"oracleAuthorityScore {old_o} -> 100 (no material price path left: check it is really not applicable)")
         old_c, new_c = (published_cross or {}).get(t), e.get("crossExposureScore")
+        if any(CROSS_DEFAULTED.search(str(n)) for n in e.get("notes", [])) and (published_cross is None or old_c != new_c):
+            why.append(f"crossExposureScore {old_c} -> {new_c} is a default after a failed computation, not a measurement")
         if old_c is not None and new_c is not None and old_c - new_c > MAX_DROP:
             why.append(f"crossExposureScore {old_c} -> {new_c} (drops more than {MAX_DROP}: a root group it belongs to got bigger)")
         if why:

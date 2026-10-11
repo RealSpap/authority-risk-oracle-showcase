@@ -285,7 +285,8 @@ def main():
             overall_ok = False
             continue
         if not report["entries"]:
-            print("  (score_all() returned zero entries)")
+            print("  FAIL: score_all() returned zero entries (an ecosystem that scores nothing is not a pass)")
+            overall_ok = False
             continue
         for e in report["entries"]:
             total_targets += 1

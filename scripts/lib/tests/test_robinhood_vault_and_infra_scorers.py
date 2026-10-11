@@ -246,23 +246,23 @@ class TestScoreStockToken(unittest.TestCase):
                     (3, 0, 0),
                 )
 
-    def test_role_check_unresolved_fails_closed_to_40(self):
+    def test_role_check_unresolved_fails_closed_to_the_unresolved_floor_20(self):
         fake = FakeHelpers()
         # hasRole(...) key deliberately absent -> None -> is_eoa() never even called
         _patch_helpers(self, fake)
 
         target_address, label = scorers.STOCK_TOKEN_TARGETS[0]
         result = scorers.score_stock_token(FakeW3(), target_address, label)
-        self.assertEqual(result["adminKeyScore"], 40)
+        self.assertEqual(result["adminKeyScore"], 20)   # was 40, above the floor, until the second review of 2026-10-11
 
-    def test_admin_role_revoked_scores_40(self):
+    def test_admin_role_revoked_scores_the_unresolved_floor_20(self):
         fake = FakeHelpers()
         fake.call_raw_results[self._has_role_key()] = False
         _patch_helpers(self, fake)
 
         target_address, label = scorers.STOCK_TOKEN_TARGETS[0]
         result = scorers.score_stock_token(FakeW3(), target_address, label)
-        self.assertEqual(result["adminKeyScore"], 40)
+        self.assertEqual(result["adminKeyScore"], 20)   # the role moved to a key nobody here has read: unresolved, not 40
 
     def test_admin_holds_role_but_is_not_a_bare_eoa_scores_40(self):
         fake = FakeHelpers()
@@ -474,20 +474,15 @@ class TestScoreSparkSavingsUsdg(unittest.TestCase):
         result = scorers.score_spark_savings_usdg(FakeW3())
         self.assertEqual(result["timelockScore"], 60)
 
-    def test_delay_unresolved_falls_into_same_branch_as_confirmed_nonzero_regression(self):
-        # NOTE: `timelockScore = 10 if delay == 0 else 60` means an
-        # UNRESOLVED delay() read (None, e.g. every retry hit a transient RPC
-        # failure) is indistinguishable from a confirmed nonzero delay -- it
-        # lands on the BETTER score (60), not a fail-closed default. This
-        # looks like a real scoring bug (inconsistent with the rest of this
-        # file's "unresolved read -> conservative score" discipline);
-        # flagged in the final report, not fixed here.
+    def test_delay_unresolved_is_unknown_not_the_best_case(self):
+        # FIXED 2026-10-11 (second review): `timelockScore = 10 if delay == 0 else 60` used to read an UNRESOLVED delay() (None) as a confirmed
+        # nonzero delay, the BETTER score (60). It is now 0: unknown is never better than a confirmed zero delay (10).
         fake = FakeHelpers()
         # (EXECUTOR, "delay", ()) deliberately absent -> None
         _patch_helpers(self, fake)
 
         result = scorers.score_spark_savings_usdg(FakeW3())
-        self.assertEqual(result["timelockScore"], 60)
+        self.assertEqual(result["timelockScore"], 0)
 
     def test_admin_key_and_multisig_constant_regardless_of_reads(self):
         # Even a materially WORSE live state (the executor is now a bare EOA,
@@ -547,15 +542,11 @@ class TestScoreSparkLiquidityLayerAlmproxy(unittest.TestCase):
         result = scorers.score_spark_liquidity_layer_almproxy(FakeW3())
         self.assertEqual(result["timelockScore"], 60)
 
-    def test_delay_unresolved_lands_in_the_same_branch_as_nonzero_regression(self):
-        # Same disclosed oddity as score_spark_savings_usdg() above:
-        # `timelock_score = 10 if delay == 0 else 60` treats an UNRESOLVED
-        # delay() read (None, e.g. every retry hit a transient RPC failure)
-        # identically to a confirmed nonzero delay -- the better score (60),
-        # not a fail-closed default. Exercised here, not fixed.
+    def test_delay_unresolved_is_unknown_not_the_best_case(self):
+        # Same fix as score_spark_savings_usdg() above (2026-10-11): an unresolved delay() is 0, not the 60 of a confirmed nonzero delay.
         self._wire(executor_holds_admin=True, delay=None)
         result = scorers.score_spark_liquidity_layer_almproxy(FakeW3())
-        self.assertEqual(result["timelockScore"], 60)
+        self.assertEqual(result["timelockScore"], 0)
 
     def test_executor_does_not_hold_admin_role_fails_closed(self):
         # Unlike score_spark_savings_usdg()'s flat-literal admin/multisig

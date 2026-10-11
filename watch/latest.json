@@ -1,6 +1,6 @@
 {
- "run_utc": "2026-10-11T15:33:21Z",
- "previous_run_utc": "2026-10-11T14:01:13Z",
+ "run_utc": "2026-10-11T18:31:44Z",
+ "previous_run_utc": "2026-10-11T15:33:21Z",
  "schedule": "every 6 hours (GitHub Actions, cron 17 */6 * * *)",
  "oracles": [
   {
@@ -9,7 +9,7 @@
    "kind": "evm",
    "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
    "read_ok": true,
-   "block": 133033458,
+   "block": 133107254,
    "targets": 63,
    "stale": 0,
    "lastUpdated": 1791664867,
@@ -37,7 +37,7 @@
    "kind": "evm",
    "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
    "read_ok": true,
-   "block": 11892641,
+   "block": 11893529,
    "targets": 34,
    "stale": 1,
    "lastUpdated": 1791687028,
@@ -65,7 +65,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 318117919,
+   "block": 318159877,
    "targets": 13,
    "stale": 0,
    "lastUpdated": 1791658650,
@@ -93,7 +93,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 47982260,
+   "block": 47987611,
    "targets": 13,
    "stale": 0,
    "lastUpdated": 1791653885,
@@ -121,7 +121,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 39147930,
+   "block": 39165435,
    "targets": 14,
    "stale": 0,
    "lastUpdated": 1791662166,
@@ -149,7 +149,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 35903588,
+   "block": 35914287,
    "targets": 9,
    "stale": 0,
    "lastUpdated": 1791655425,
@@ -177,7 +177,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 70148276,
+   "block": 70183724,
    "targets": 9,
    "stale": 0,
    "lastUpdated": 1791656126,
@@ -196,7 +196,7 @@
       "updater": false
      }
     },
-    "error": "getLogs: window of 18243 blocks needs more than 120 calls at 100 blocks each"
+    "error": "getLogs: window of 35448 blocks needs more than 120 calls at 100 blocks each"
    }
   },
   {

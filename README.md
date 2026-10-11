@@ -25,6 +25,8 @@
   <a href="docs/OPERATIONS.md">Operate it</a>
 </p>
 
+<p align="center"><b>Live:</b> <a href="https://realspap.github.io/oracle/">overview</a> · <a href="https://realspap.github.io/oracle/dashboard.html">dashboard</a></p>
+
 Built for Colosseum's [Crypto World's Fair](https://colosseum.com/worldsfair) hackathon.
 
 Most DeFi exploits are not code bugs. They are one admin key, one thin multisig, or one missing timelock. Risk providers

@@ -1,8 +1,7 @@
 {
- "run_utc": "2026-10-11T12:34:29Z",
- "state": "alarm",
+ "run_utc": "2026-10-11T14:01:13Z",
+ "state": "degraded",
  "reasons": [
-  "1 alarm(s) raised by the watch",
   "oracle(s) not read: Hyperliquid (HyperEVM)",
   "1 of 181 targets stale on the oracles",
   "run unsigned (no signing key set)",
@@ -15,7 +14,7 @@
   "oracles": 9,
   "targets": 181,
   "stale": 1,
-  "alarms": 1,
+  "alarms": 0,
   "chain_ok": true,
   "chain_entries": 77,
   "signed": false,

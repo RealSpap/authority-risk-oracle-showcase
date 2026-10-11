@@ -1,9 +1,8 @@
 {
- "run_utc": "2026-10-11T19:46:26Z",
+ "run_utc": "2026-10-11T20:58:50Z",
  "state": "degraded",
  "reasons": [
   "4 of 197 targets stale on the oracles",
-  "run unsigned (no signing key set)",
   "15 second-opinion disagreement(s) to review",
   "4 high alert(s) from the rules firing now (a queued change against this contract is ready to execute no)",
   "methodology hashes mixed on 2 oracle(s)"
@@ -16,13 +15,13 @@
   "alarms": 0,
   "chain_ok": true,
   "chain_entries": 77,
-  "signed": false,
-  "signing_key": null,
+  "signed": true,
+  "signing_key": "11baca3ef6a69de4901c185f6cbbd3f93318fbb74f9961a8d39aead841adf409",
   "second_opinion": {
-   "agree": 128,
+   "agree": 127,
    "disagree": 15,
    "acknowledged": 0,
-   "unreadable": 38,
+   "unreadable": 39,
    "native": 16
   },
   "methodology_mixed": 2,

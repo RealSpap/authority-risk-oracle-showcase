@@ -77,6 +77,8 @@ def main():
     watch = a.watch
     if not watch:
         watch = os.path.join(tempfile.mkdtemp(prefix="aro-audit-"), "watch"); n = fetch_watch(watch); print("fetched %d published file(s) from %s into %s" % (n, RAW, watch))
+    if not os.path.exists(os.path.join(watch, "latest.json")) and not glob.glob(os.path.join(watch, "scores", "*.json")):
+        FAIL("nothing to audit: no latest.json and no scores file under %s (an empty folder proves nothing)" % watch)   # 11/10 review: an empty folder used to end on AUDIT PASSED
     # 1. chain
     import verify_chain
     c = verify_chain.check(os.path.join(watch, "events.jsonl"))
@@ -103,7 +105,7 @@ def main():
             try:
                 from nacl.signing import VerifyKey
                 VerifyKey(bytes.fromhex(s["public_key"])).verify(json.dumps(s["manifest"], sort_keys=True, separators=(",", ":")).encode(), bytes.fromhex(s["signature"]))
-                PASS("signature: valid Ed25519 signature by %s… (compare this key with the one the README publishes)" % s["public_key"][:16])
+                PASS("signature: valid Ed25519 signature by %s… (SELF-ATTESTED: the key is read from the same file, so this proves the files match what that key signed, not who holds it; compare the key with one you pinned yourself)" % s["public_key"][:16])
             except ImportError: NOTE("signature present (key %s…), pynacl not installed here: pip install pynacl to verify it" % s["public_key"][:16])
             except Exception as e: FAIL("signature: INVALID (%s)" % e)
         else: NOTE("run unsigned (no signing key set by the maintainer at that run)")
@@ -150,7 +152,8 @@ def main():
                 else: FAIL("%s %s: chain says %d (pushed %d), file says %d (pushed %d)" % (name, t["target"][:10], comp, ts, t["compositeScore"], t["lastUpdated"]))
             except Exception as e: unread += 1; NOTE("%s %s: not read (%s)" % (name, t["target"][:10], str(e)[:60]))
             time.sleep(0.3)
-        (PASS if agree + later + unread == len(sample) else FAIL)("on-chain sample: %d of %d re-read scores equal the published file, %d pushed again since, %d not read (RPC)" % (agree, len(sample), later, unread))
+        if unread == len(sample): NOTE("on-chain sample NOT RUN: no read answered, so this check proves nothing (it is not a pass)")
+        (NOTE if unread == len(sample) else PASS if agree + later + unread == len(sample) else FAIL)("on-chain sample: %d of %d re-read scores equal the published file, %d pushed again since, %d not read (RPC)" % (agree, len(sample), later, unread))
     else: NOTE("on-chain sample skipped: the scores files carry no oracle address and RPC (a run before 2026-10-07), nothing to re-read")
     print("\n%s: %d failure(s)" % ("AUDIT PASSED" if not fails else "AUDIT FAILED", fails))
     sys.exit(1 if fails else 0)

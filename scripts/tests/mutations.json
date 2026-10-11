@@ -873,8 +873,8 @@
   },
   {
    "file": "scripts/audit_public.py",
-   "old": "(PASS if agree + later + unread == len(sample) else FAIL)(",
-   "new": "(PASS if True else FAIL)(",
+   "old": "else PASS if agree + later + unread == len(sample) else FAIL)(",
+   "new": "else PASS if True else FAIL)(",
    "why": "a disagreeing on-chain sample passes"
   },
   {
@@ -2550,6 +2550,18 @@
    "old": "return clean_lines(out), None",
    "new": "return out, None",
    "why": "the tour is returned uncleaned"
+  },
+  {
+   "file": "scripts/audit_public.py",
+   "old": "FAIL(\"nothing to audit:",
+   "new": "NOTE(\"nothing to audit:",
+   "why": "an empty folder ends on AUDIT PASSED"
+  },
+  {
+   "file": "scripts/audit_public.py",
+   "old": "(NOTE if unread == len(sample) else PASS",
+   "new": "(PASS if unread == len(sample) else PASS",
+   "why": "a sample where nothing was read is reported as a pass"
   }
  ]
 }

@@ -218,6 +218,7 @@ jobs:
           if [ "$(date -u +%H)" -lt 6 ] || [ "${{ github.event_name }}" = workflow_dispatch ]; then
             timeout 35m python3 scripts/daily_digest.py --days 7 --out watch/digest.md --queue watch/review_queue.md > watch/digest.log 2>&1 || { c=$?; if [ "$c" = 124 ]; then echo "timed out at the step limit (124), previous file kept, a warning" >> watch/digest.log; else echo "exit code $c" >> watch/digest.log; fi; }
             python3 scripts/redact_signers.py --index "$RUNNER_TEMP/who_controls.json" --scores watch/scores watch/digest.md
+            python3 scripts/redact_signers.py --index "$RUNNER_TEMP/who_controls.json" --scores watch/scores --check watch   # the guard again, before the commit: the report must not publish a signer
             WATCH_SIGNING_KEY="${{ secrets.WATCH_SIGNING_KEY }}" python3 scripts/sign_run.py --watch watch > /dev/null 2>&1 || true   # the report changed a published file: sign again so the manifest matches what is committed
             git add watch && git -c user.name=Spap -c user.email=335248717+RealSpap@users.noreply.github.com commit -qm "Daily report $(date -u +%Y-%m-%d)" || exit 0
             git -c user.name=Spap -c user.email=335248717+RealSpap@users.noreply.github.com -c http.https://github.com/.extraheader="AUTHORIZATION: basic $(printf x-access-token:%s "$GITHUB_TOKEN" | base64 | tr -d '\n')" pull --rebase -q origin main

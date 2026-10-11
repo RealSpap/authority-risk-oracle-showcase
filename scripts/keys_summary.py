@@ -23,7 +23,7 @@ def main():
     rows = sorted(({"n": len(g), "e": len({x[0] for x in g}), "g": g} for g in idx.values() if len(g) > 1), key=lambda r: (-r["e"], -r["n"]))[:10]
     groups = sorted({(x[0], x[1]) for r in rows for x in r["g"]})
     _dump_json({"generated_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "signers": len(idx), "signers_on_more_than_one_group": sum(1 for g in idx.values() if len(g) > 1),
-               "top10": len(rows), "top10_groups": [list(g) for g in groups], "note": "no address here on purpose: the index itself is a targeting map and is not published"}, a.out, indent=1)
+               "top10": len(rows), "top10_groups": [list(g) for g in groups], "note": "no address in this file on purpose; signer addresses are public on-chain and some snapshots of them sit in data/ of this repository (the maintainer decides whether they stay)"}, a.out, indent=1)
     print(f"keys: {len(idx)} signers, {len(rows)} most connected, {len(groups)} groups reachable by them")
 
 if __name__ == "__main__":

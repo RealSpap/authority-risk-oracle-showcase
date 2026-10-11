@@ -71,7 +71,10 @@ class RateLimited(RuntimeError):
 
 RATE_WAITS = (6, 15, 30, 60)   # seconds: one wait per rate-limited answer of the same call, growing
 RATE_BUDGET = 240              # seconds one run may spend waiting on one endpoint; after that the read is reported as unread and the run moves on
-_rate_spent, _rate_seen = {}, set()
+_rate_spent, _rate_seen, _rate_cap = {}, set(), {}
+# The public Hyperliquid testnet node answers "rate limited" to GitHub's shared runner addresses (11/10: the manual Watch of 15:33 UTC still could not read it after a 240 s wait). Two other public
+# nodes of the same chain (998) return exactly the same 16 rows (same lastUpdated, same methodologyHash, same three stale entries): read on them in turn when the official one limits us.
+FALLBACK_RPC = {"https://rpc.hyperliquid-testnet.xyz/evm": ["https://998.rpc.thirdweb.com", "https://hyperliquid-testnet.drpc.org"]}
 
 
 def _rate_limited(out):
@@ -104,7 +107,7 @@ def rpc(url, calls, tries=3):
             return [x["result"] for x in res]
         except RateLimited as e:
             last = e; _rate_seen.add(url)
-            if waits >= len(RATE_WAITS) or _rate_spent.get(url, 0) + RATE_WAITS[waits] > RATE_BUDGET: break
+            if waits >= len(RATE_WAITS) or _rate_spent.get(url, 0) + RATE_WAITS[waits] > _rate_cap.get(url, RATE_BUDGET): break
             _rate_spent[url] = _rate_spent.get(url, 0) + RATE_WAITS[waits]; time.sleep(RATE_WAITS[waits]); waits += 1
         except Exception as e:  # noqa: BLE001 -- retried, then reported
             last = e; attempt += 1
@@ -128,6 +131,21 @@ def batched(url, calls):
             return out
         except RateLimited: raise
         except Exception as e:  # noqa: BLE001 -- try a smaller batch before giving up
+            last = e
+    raise last
+
+
+def read_evm_any(name, oracle, url, since_block=None):
+    """read_evm on the oracle's node, then on its fallback nodes when that one limits or fails. With a fallback available the wait on the first node is cut to one pause (the next node is
+    the better use of the time). The document says which node served it (`rpc`), and `read_via` when it was not the first."""
+    urls = [url] + FALLBACK_RPC.get(url, []); last = None
+    if len(urls) > 1: _rate_cap[url] = RATE_WAITS[0]
+    for u in urls:
+        try:
+            doc = read_evm(name, oracle, u, since_block)
+            if u != url: doc["read_via"] = u; print(f"{name}: {url} was not readable ({last}); read on {u}")
+            return doc
+        except Exception as e:  # noqa: BLE001 -- the next node, then the error of the last one
             last = e
     raise last
 
@@ -263,6 +281,13 @@ def write_feed(events):
     open(os.path.join(WATCH, "feed.xml"), "w").write("\n".join(out) + "\n")
 
 
+def restore_dropped_targets(current, prev_by_target):
+    """A smaller list than the last run is not trusted (the contract cannot remove a target): the targets that are missing from the answer come back from the last run, unchanged, in their original order."""
+    have = {t["target"] for t in current}
+    back = [dict(p) for k, p in prev_by_target.items() if k not in have]
+    return sorted(list(current) + back, key=lambda t: t.get("index", 0))
+
+
 def main():
     os.makedirs(os.path.join(WATCH, "scores"), exist_ok=True)
     now = datetime.datetime.now(datetime.timezone.utc)
@@ -276,7 +301,7 @@ def main():
         pass
     prev_ok = {o["slug"] for o in prev_latest.get("oracles", []) if o.get("read_ok")}
 
-    readers = [(name, lambda since, n=name, o=oracle, u=url: read_evm(n, o, u, since)) for name, oracle, url in ORACLES] + [("Solana (Devnet)", lambda since: read_solana())]
+    readers = [(name, lambda since, n=name, o=oracle, u=url: read_evm_any(n, o, u, since)) for name, oracle, url in ORACLES] + [("Solana (Devnet)", lambda since: read_solana())]
     for name, reader in readers:
         s = slug(name)
         path = os.path.join(WATCH, "scores", s + ".json")
@@ -297,9 +322,10 @@ def main():
             prev = {t["target"]: t for t in json.load(open(path))["targets"]}
         except Exception:  # noqa: BLE001
             pass
-        stale = [t for t in cur["targets"] if t["stale"]]
         if prev is not None and len(cur["targets"]) < len(prev):   # the contract cannot remove a target: a smaller list is an RPC answer not to trust
             alerts.append(f"{name}: {len(cur['targets'])} targets read, {len(prev)} last run: the oracle cannot remove a target, this RPC answer is not trusted")
+            cur["targets"] = restore_dropped_targets(cur["targets"], prev)   # QA 11/10: the short list used to be written as it was, and the targets that came back next run were announced as new ones, for ever in the chained log
+        stale = [t for t in cur["targets"] if t["stale"]]
         sw = cur.get("self") or {}
         if sw:
             for ev in sw.get("role_events", []):

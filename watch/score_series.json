@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-10-12T10:17:46Z",
+ "run_utc": "2026-10-12T13:03:50Z",
  "targets": 197,
  "moves_recorded": 19,
  "series": {
@@ -1530,43 +1530,16 @@
  },
  "calibration": {
   "window_days": 14,
-  "actions": 21,
+  "actions": 18,
   "under_40": 4,
   "by_band": {
    "critical": 1,
    "weak": 3,
-   "moderate": 17,
+   "moderate": 14,
    "decent": 0,
    "strong": 0
   },
   "list": [
-   {
-    "kind": "Squads proposal executed",
-    "key": "solana:Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
-    "t": "2026-09-28T11:34:46Z",
-    "via": "Squads v4 multisig CxnE\u2026unP1 (4-of-7, time lock 600 s), found by the independent reader (1 tracked program)",
-    "tx": "DUdSj8j7yxFqbqKbtUREKmkQAqzRWUV22DUCrsr6U1ct",
-    "score_then": 51,
-    "band_then": "moderate"
-   },
-   {
-    "kind": "Squads proposal executed",
-    "key": "solana:Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
-    "t": "2026-09-28T11:35:03Z",
-    "via": "Squads v4 multisig CxnE\u2026unP1 (4-of-7, time lock 600 s), found by the independent reader (1 tracked program)",
-    "tx": "2qhafLVSYngSAd1QWKJYeRPWBriKNBJF68wA3Ef3RW2x",
-    "score_then": 51,
-    "band_then": "moderate"
-   },
-   {
-    "kind": "Squads proposal executed",
-    "key": "solana:Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
-    "t": "2026-09-28T11:35:18Z",
-    "via": "Squads v4 multisig CxnE\u2026unP1 (4-of-7, time lock 600 s), found by the independent reader (1 tracked program)",
-    "tx": "8kwZRPtLSYd1iZsyoZcWP6p4k389SySG3UW3rdHU8az8",
-    "score_then": 51,
-    "band_then": "moderate"
-   },
    {
     "kind": "upgrade executed (Squads proposal)",
     "key": "solana:CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",

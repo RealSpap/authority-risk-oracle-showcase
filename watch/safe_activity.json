@@ -1,10 +1,41 @@
 {
- "generated_utc": "2026-10-12T13:02:24Z",
+ "generated_utc": "2026-10-12T18:48:56Z",
  "wake_days": 14,
  "safes": 40,
  "read": 40,
  "woke": [],
- "changes": [],
+ "changes": [
+  {
+   "delta": 1,
+   "idle_days": 1.9,
+   "woke": false,
+   "safe": "base:0xe6a4\u20262075",
+   "governs": [
+    "base:0x5e7bb104d84c7cb9b682aac2f3d509f5f406809a"
+   ],
+   "previous_run": "2026-10-12T13:02:24Z"
+  },
+  {
+   "delta": 3,
+   "idle_days": 1.9,
+   "woke": false,
+   "safe": "ethereum-l1:0x3b0a\u20261862",
+   "governs": [
+    "ethereum-l1:0x2cc440b721d2cafd6d64908d6d8c4acc57f8afc3"
+   ],
+   "previous_run": "2026-10-12T13:02:24Z"
+  },
+  {
+   "delta": 1,
+   "idle_days": 1.9,
+   "woke": false,
+   "safe": "robinhood:0x3bb7\u20265f42",
+   "governs": [
+    "robinhood:0x99347d5f70d3838763f6bddcf80304c8aa953b57"
+   ],
+   "previous_run": "2026-10-12T13:02:24Z"
+  }
+ ],
  "never_executed": [
   "robinhood:0x0605\u20269728",
   "tempo:0x6458\u2026fbbc"
@@ -84,9 +115,10 @@
    "never_executed": false
   },
   "base:813d4f2afbe04aad": {
-   "nonce": 2725,
+   "nonce": 2726,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-10-10T21:12:49Z",
+   "idle_since": "2026-10-12T18:48:56Z",
+   "last_moved": "2026-10-12T18:48:56Z",
    "governs": [
     "base:0x5e7bb104d84c7cb9b682aac2f3d509f5f406809a"
    ],
@@ -117,9 +149,10 @@
    "never_executed": false
   },
   "ethereum-l1:9f957a8d13d777f4": {
-   "nonce": 742,
+   "nonce": 745,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-10-10T21:12:49Z",
+   "idle_since": "2026-10-12T18:48:56Z",
+   "last_moved": "2026-10-12T18:48:56Z",
    "governs": [
     "ethereum-l1:0x2cc440b721d2cafd6d64908d6d8c4acc57f8afc3"
    ],
@@ -285,9 +318,10 @@
    "never_executed": false
   },
   "robinhood:5e41f828c627cbe2": {
-   "nonce": 381,
+   "nonce": 382,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-10-10T21:12:49Z",
+   "idle_since": "2026-10-12T18:48:56Z",
+   "last_moved": "2026-10-12T18:48:56Z",
    "governs": [
     "robinhood:0x99347d5f70d3838763f6bddcf80304c8aa953b57"
    ],

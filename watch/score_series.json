@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-10-12T13:03:50Z",
+ "run_utc": "2026-10-12T18:50:40Z",
  "targets": 197,
  "moves_recorded": 19,
  "series": {
@@ -1530,25 +1530,16 @@
  },
  "calibration": {
   "window_days": 14,
-  "actions": 18,
-  "under_40": 4,
+  "actions": 21,
+  "under_40": 5,
   "by_band": {
-   "critical": 1,
-   "weak": 3,
-   "moderate": 14,
+   "critical": 0,
+   "weak": 5,
+   "moderate": 16,
    "decent": 0,
    "strong": 0
   },
   "list": [
-   {
-    "kind": "upgrade executed (Squads proposal)",
-    "key": "solana:CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
-    "t": "2026-09-29T00:27:11Z",
-    "via": "Squads v4 multisig tr8r\u2026Hb4u (3-of-4, time lock 0 s), found by the independent reader (1 tracked program)",
-    "tx": "DekokcHy5SPBDzRtq47gJfZMZUhPY7wiuRzqqzPq3jzo",
-    "score_then": 14,
-    "band_then": "critical"
-   },
    {
     "kind": "Squads proposal executed",
     "key": "solana:USXyiSTsPEWz55pSK7sZoUL79ntoVGQbaTDT57tH6bx",
@@ -1661,7 +1652,7 @@
     "kind": "upgrade executed (Squads proposal)",
     "key": "solana:7s1da8DduuBFqGra5bJBjpnvL5E9mGzCuMk1Qkh4or2Z",
     "t": "2026-10-06T16:20:54Z",
-    "via": "Squads v4 multisig J3mJ\u2026vG8P (4-of-7, time lock 43200 s), found by the independent reader (1 tracked program)",
+    "via": "Squads v4 multisig J3mJ\u2026vG8P (4-of-6, time lock 43200 s), found by the independent reader (1 tracked program)",
     "tx": "DSwGchRdiz92Y3i7TtzjC1Zro94L7JbW83z9npBiJhLG",
     "score_then": 55,
     "band_then": "moderate"
@@ -1697,10 +1688,46 @@
     "kind": "Squads proposal executed",
     "key": "solana:7s1da8DduuBFqGra5bJBjpnvL5E9mGzCuMk1Qkh4or2Z",
     "t": "2026-10-09T11:02:58Z",
-    "via": "Squads v4 multisig J3mJ\u2026vG8P (4-of-7, time lock 43200 s), found by the independent reader (1 tracked program)",
+    "via": "Squads v4 multisig J3mJ\u2026vG8P (4-of-6, time lock 43200 s), found by the independent reader (1 tracked program)",
     "tx": "BYG6M88eoZqADGKcXyiBM93UbBXb3aG2UjqXNpBSNimp",
     "score_then": 55,
     "band_then": "moderate"
+   },
+   {
+    "kind": "upgrade executed (Squads proposal)",
+    "key": "solana:4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8",
+    "t": "2026-10-12T15:18:53Z",
+    "via": "Squads v4 multisig 7FCP\u2026mvHk (7-of-15, time lock 0 s), found by the independent reader (1 tracked program)",
+    "tx": "FYXPwePQfugH8yeYvUwSViSijCUjhoctyhR8M56S1dHg",
+    "score_then": 33,
+    "band_then": "weak"
+   },
+   {
+    "kind": "Squads proposal executed",
+    "key": "solana:7s1da8DduuBFqGra5bJBjpnvL5E9mGzCuMk1Qkh4or2Z",
+    "t": "2026-10-12T17:58:05Z",
+    "via": "Squads v4 multisig J3mJ\u2026vG8P (4-of-6, time lock 43200 s), found by the independent reader (1 tracked program)",
+    "tx": "SsecZk7xSh4WehV9NEaZRz2x2cGup7wxZZkBcYBG2if",
+    "score_then": 55,
+    "band_then": "moderate"
+   },
+   {
+    "kind": "admin changed (independent read)",
+    "key": "solana:7s1da8DduuBFqGra5bJBjpnvL5E9mGzCuMk1Qkh4or2Z",
+    "t": "2026-10-12T18:45:12Z",
+    "via": null,
+    "tx": null,
+    "score_then": 55,
+    "band_then": "moderate"
+   },
+   {
+    "kind": "upgrade executed",
+    "key": "solana:4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8",
+    "t": "2026-10-12T18:45:12Z",
+    "via": "slot 456093551",
+    "tx": null,
+    "score_then": 33,
+    "band_then": "weak"
    }
   ],
   "read_as": "every authority action the watch observed in the window (a timelock operation queued or executed against a tracked contract, an admin change read independently) and the composite score the contract carried at that moment. Small counts prove little; the file grows with every run and the chained log keeps every move"

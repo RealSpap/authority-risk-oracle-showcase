@@ -1,4 +1,16 @@
-## Second opinion, 2026-10-12T12:59:10Z
+## Second opinion, 2026-10-12T18:45:12Z
+
+### 1 upgrade(s) executed since the previous run (2026-10-12T12:59:10Z)
+
+- **4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8** on solana: program redeployed since the previous run: slot 444313123 -> 456093551 (2026-10-12T15:18:53Z); the score reads who may upgrade, this is an upgrade that happened
+
+The code behind a tracked proxy changed: read what the new implementation does before trusting the score (the private pipeline's implementation check names the selectors added and dropped).
+
+### 1 admin change(s) since the previous run (2026-10-12T12:59:10Z)
+
+- **7s1da8DduuBFqGra5bJBjpnvL5E9mGzCuMk1Qkh4or2Z** on solana: admin read changed since the previous run: squads 4MsgBB5VPoTrUSp5XnfbViV386C1UnsTdifLBw33ZMSJ 4-of-7 (7 voters), time lock 43200s -> squads 4MsgBB5VPoTrUSp5XnfbViV386C1UnsTdifLBw33ZMSJ 4-of-6 (6 voters), time lock 43200s (via account owned by program jupeiUmn… -> program -> ProgramData J6Ry5y… -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly) -> Squads v4 vault 0 of multisig J3mJ3wz6xkVUk3T8qHnuAYNxsRH3ixHsryYNZAU2vG8P)
+
+The live admin of a tracked contract moved between two watch runs: the published score may be out of date before the next push. Read the case now.
 
 ### 15 disagreement(s) with the published score
 

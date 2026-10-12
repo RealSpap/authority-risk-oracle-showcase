@@ -467,7 +467,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 4142465,
+   "window_blocks": 4156701,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -487,7 +487,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 4142465,
+   "window_blocks": 4156701,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -507,7 +507,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 4142465,
+   "window_blocks": 4156701,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -635,25 +635,10 @@
    "address": "0xabd3645ba0bb60c238bede64378826e1206f5072",
    "family": "oz",
    "status": "ok",
-   "queued_events": 7,
+   "queued_events": 1,
    "latest_queued": 1791360355,
    "pending": [],
    "recent": [
-    {
-     "block": 34248802,
-     "tx": "0xbb16a7688f721ac69cb306de0fadca86c1869aa1c1ddc5257b27a3dec67a4ddc",
-     "id": "0xc121e1461a598c83126044bbc9ff88b48f42d3b27036c2dd89f2b72aabb6c1fd",
-     "index": 0,
-     "target": "0x6F475642a6e85809B1c36Fa62763669b1b48DD5B",
-     "value": 0,
-     "selector": "0x6dbd9f90",
-     "delay": 86400,
-     "signature": "setConfig(address,address,(uint32,uint32,bytes)[])",
-     "calls": 6,
-     "still_queued": false,
-     "queued_at": 1791190011,
-     "decoded": "parameter change"
-    },
     {
      "block": 34419096,
      "tx": "0xbaeb4bc374d5fa8b1a5e60f66d63b76ea8545f60230bd8efd90e4c409a3fe6e4",
@@ -1141,14 +1126,14 @@
    "active": [
     {
      "index": 103,
-     "approvals": 2,
+     "approvals": 3,
      "rejections": 0,
      "since": 1791629504,
      "account": "5c92ALpQmPWrW5XzWQMrja7KWc8RVgVZieDFqywXCyni"
     },
     {
      "index": 104,
-     "approvals": 2,
+     "approvals": 3,
      "rejections": 0,
      "since": 1791629556,
      "account": "7uroP1P9h1UECTnWc7jcsLdBFzmr5nxr6HmpMsqx9whX"
@@ -1249,22 +1234,6 @@
      "undecoded": false,
      "decoded": "call",
      "what": "call to rdemKHu2ueeKkhwmM2GfJFaqD3zsrj7s3oGMN3dQMJT",
-     "touches_governed": false
-    },
-    {
-     "id": "squads:7qipzLR9j1JcvdxE1XJEFgvoyFmgBpgw5hMdHBMPcJtM:131",
-     "index": 131,
-     "target": "distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp",
-     "value": 0,
-     "selector": null,
-     "signature": "Squads proposal #131: call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; c (not the tracked program)",
-     "still_queued": false,
-     "queued_at": 1790580914,
-     "executed_at": 1790580914,
-     "account": "JC7SPRM4vL85fcjWEn9AwiK3bkYRUwRsB5JjwdhQFVbf",
-     "undecoded": false,
-     "decoded": "call",
-     "what": "call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to rdemKHu2ueeKkhwmM2GfJFaqD3zsrj7s3oGMN3dQMJT",
      "touches_governed": false
     },
     {
@@ -2310,7 +2279,7 @@
    "transaction_index": 71
   }
  ],
- "discovered_utc": "2026-10-12T07:20:55Z",
+ "discovered_utc": "2026-10-12T08:42:58Z",
  "discovered": 14,
- "squads_utc": "2026-10-12T07:25:02Z"
+ "squads_utc": "2026-10-12T08:47:12Z"
 }

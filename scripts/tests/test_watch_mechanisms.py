@@ -4506,6 +4506,7 @@ class TestPublicReadmePatch(unittest.TestCase):
 
     def test_the_dead_dashboard_link_and_the_duplicated_guide_are_fixed(self):
         """12/10 review of the public repository: the header linked /oracle/dashboard.html (404: the page is /oracle/), and the guide step was inserted twice, three steps carrying the number 3."""
+        if not os.path.exists(self.PATCH): self.skipTest("patch_readme_vitrine.py is not beside the surveillance folder in this checkout")
         r = ('<p align="center"><b>Live:</b> <a href="https://realspap.github.io/oracle/">overview</a> · <a href="https://realspap.github.io/oracle/dashboard.html">dashboard</a></p>\n\n'
              '**3. Audit it yourself, then ask it questions.** first copy\n\n- a\n\n**3. Audit it yourself, then ask it questions.** second copy\n\n- b\n\n**3. Pull Robinhood Chain\'s table as JSON** z\n\n**4. Ask a question the score alone does not answer** q\n')
         out = self.run_patch(r, 5)

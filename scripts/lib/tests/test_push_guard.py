@@ -133,6 +133,50 @@ class TestOracleAuthorityField(unittest.TestCase):
             g._read_scores = orig
 
 
+class TestMissingTracked(unittest.TestCase):
+    """A scorer that skips a target after an RPC or API failure returns a shorter list (Hyperliquid scored 12 of 15 in one preview on
+    2026-10-11); with require_all_tracked the oracle's own tracked keys are compared with what was scored."""
+
+    def test_a_tracked_key_the_scorer_did_not_return_is_reported(self):
+        self.assertEqual(g.missing_tracked([entry(OK, 57)], [OK.lower(), OFT.lower()]), [OFT.lower()])
+
+    def test_a_derived_oracle_key_counts_as_scored(self):
+        e = dict(entry(OK, 57), oracleKey=OFT)
+        self.assertEqual(g.missing_tracked([e], [OFT.lower()]), [])
+
+    def test_retired_on_purpose_and_accepted_keys_do_not_count(self):
+        retired = next(iter(g.RETIRED_ON_PURPOSE))
+        self.assertEqual(g.missing_tracked([entry(OK, 57)], [OK.lower(), retired]), [])
+        self.assertEqual(g.missing_tracked([entry(OK, 57)], [OK.lower(), OFT.lower()], [OFT.upper().replace("0X", "0x")]), [])
+
+    def test_enforce_refuses_a_lost_target_only_when_asked_to_check(self):
+        o = RecordingOracle({OK.lower(): 57})
+        orig_s, orig_t = g._read_scores, g.read_tracked
+        g._read_scores = lambda w3, a, ts: {OK.lower(): (0, 0, 0, 100, 0, 57, 1, b"")}
+        g.read_tracked = lambda w3, a: [OK.lower(), OFT.lower()]
+        try:
+            self.assertEqual(g.enforce([entry(OK, 57)], oracle_w3=o, oracle_address=OK, argv=[]), [])
+            with self.assertRaises(SystemExit) as c:
+                g.enforce([entry(OK, 57)], oracle_w3=o, oracle_address=OK, argv=[], require_all_tracked=True)
+            self.assertIn(OFT.lower(), str(c.exception))
+            g.enforce([entry(OK, 57)], oracle_w3=o, oracle_address=OK, argv=[], require_all_tracked=True, accepted_missing=[OFT])
+        finally:
+            g._read_scores, g.read_tracked = orig_s, orig_t
+
+    def test_an_unreadable_tracked_list_refuses(self):
+        o = RecordingOracle({OK.lower(): 57})
+        orig_s, orig_t = g._read_scores, g.read_tracked
+        g._read_scores = lambda w3, a, ts: {OK.lower(): (0, 0, 0, 100, 0, 57, 1, b"")}
+        def boom(w3, a):
+            raise ConnectionError("rpc down")
+        g.read_tracked = boom
+        try:
+            with self.assertRaises(SystemExit):
+                g.enforce([entry(OK, 57)], oracle_w3=o, oracle_address=OK, argv=[], require_all_tracked=True)
+        finally:
+            g._read_scores, g.read_tracked = orig_s, orig_t
+
+
 class FailingOracle:
     class eth:
         @staticmethod

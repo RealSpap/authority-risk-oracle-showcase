@@ -11,8 +11,8 @@ INCIDENTS = (
     ("Radiant Capital, 2024-10-16 ($53M): Safe 3-of-11", 3, 11),
     ("WazirX, 2024-07-18 ($235M): Safe 4-of-6", 4, 6),
     ("Bybit, 2025-02-21 ($1.46B): Safe 3-of-6", 3, 6),
-    ("Humanity Protocol Ethereum, 2026-06 ($32M to $36M): Safe 3-of-6", 3, 6),
-    ("Humanity Protocol BNB Chain, 2026-06: Safe 3-of-5", 3, 5),
+    ("Humanity Protocol, 2026-06 ($32M to $36M): its Ethereum Safe 3-of-6", 3, 6),
+    ("Humanity Protocol, same incident: its BNB Chain Safe 3-of-5", 3, 5),
 )
 LOWEST_BAND = 10  # composite 10 or less: mostly bare-key roots (METHODOLOGY.md: a bare EOA adminKeyScore is 2 to 10), plus a few placeholder or partial scores
 

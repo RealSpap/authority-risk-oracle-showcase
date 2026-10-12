@@ -37,6 +37,29 @@ GET_SCORE_ABI = [{"name": "getScore", "type": "function", "stateMutability": "vi
                       {"name": "lastUpdated", "type": "uint64"}, {"name": "methodologyHash", "type": "bytes32"}]}]}]
 
 
+TRACKED_ABI = [{"name": "trackedTargetsCount", "type": "function", "stateMutability": "view", "inputs": [], "outputs": [{"type": "uint256"}]},
+               {"name": "trackedTargets", "type": "function", "stateMutability": "view", "inputs": [{"type": "uint256"}], "outputs": [{"type": "address"}]}]
+# Keys an oracle still tracks on purpose although the scorer no longer produces them: they are left to go stale, so they never block a push.
+RETIRED_ON_PURPOSE = {
+    "0x2cc440b721d2cafd6d64908d6d8c4acc57f8afc3",  # Ethereum L1: USDe's retired minter, replaced by the live one (data/finding_2026-09-20-ethena-live-minter.md)
+    "0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec",  # Hyperliquid: the raw address of the HIP-3 dex `mkts`, moved to a derived oracle key (METHODOLOGY 4.7); entry left from before the move
+}
+
+
+def read_tracked(oracle_w3, oracle_address) -> list:
+    """Every key the oracle tracks, lowercase. Raises on a failed read."""
+    c = oracle_w3.eth.contract(address=Web3.to_checksum_address(oracle_address), abi=TRACKED_ABI)
+    return [c.functions.trackedTargets(i).call().lower() for i in range(c.functions.trackedTargetsCount().call())]
+
+
+def missing_tracked(scored, tracked, accepted_missing=()) -> list:
+    """Tracked keys the scorer did not return, minus the retired-on-purpose ones and those a person accepted. A scorer that skips a target
+    after an RPC or API failure returns a shorter list; without this the target is simply not refreshed and turns stale nine days later."""
+    have = {key_of(e).lower() for e in scored}
+    skip = RETIRED_ON_PURPOSE | {a.strip().lower() for a in accepted_missing if a.strip()}
+    return [k for k in tracked if k not in have and k not in skip]
+
+
 def is_degraded(entry) -> bool:
     floor = (entry.get("adminKeyScore"), entry.get("multisigScore"), entry.get("timelockScore")) == (20, 20, 0)
     return floor or any(DEGRADED.search(str(n)) for n in entry.get("notes", []))
@@ -112,7 +135,7 @@ def _accepted(argv):
     return []
 
 
-def enforce(scored, oracle_w3=None, oracle_address=None, argv=None, accepted=None, skip_published_check=None):
+def enforce(scored, oracle_w3=None, oracle_address=None, argv=None, accepted=None, skip_published_check=None, require_all_tracked=False, accepted_missing=()):
     """Dry run (oracle_w3 None): print the report. Real send: read the published scores, print, and SystemExit while any
     entry is held and not accepted by address. `accepted` / `skip_published_check` are passed explicitly by a script
     that parses its own flags (argparse); otherwise they are read from argv (default sys.argv)."""
@@ -125,6 +148,9 @@ def enforce(scored, oracle_w3=None, oracle_address=None, argv=None, accepted=Non
             w3 = Web3(Web3.HTTPProvider(os.environ["ORACLE_RPC_URL"]))
             raw = _read_scores(w3, os.environ["ORACLE_ADDRESS"], [key_of(e) for e in scored])
             held, lines = review(scored, {k: s[5] for k, s in raw.items()}, accepted, {k: s[3] for k, s in raw.items()}, {k: s[4] for k, s in raw.items()})
+            if require_all_tracked:
+                miss = missing_tracked(scored, read_tracked(w3, os.environ["ORACLE_ADDRESS"]), accepted_missing)
+                print(f"\nPush guard (dry run): {len(miss)} tracked key(s) the scorer did not return" + (": " + ", ".join(miss) if miss else ""))
             print(f"\nPush guard (dry run, PUBLISHED SCORES READ): a real send would hold {len(held)} entr{'y' if len(held) == 1 else 'ies'}")
             print("\n".join(lines) if lines else "  none")
             print("  accept list: --accept-held=" + ",".join(key_of(e) for e in held) if held else "  nothing to accept")
@@ -147,6 +173,19 @@ def enforce(scored, oracle_w3=None, oracle_address=None, argv=None, accepted=Non
                              "Re-run, or pass --skip-published-check after checking by hand.")
         published = published_oracle = published_cross = None
         print("Push guard: published scores UNREAD, --skip-published-check given: drop check not run")
+    if require_all_tracked:
+        try:
+            miss = missing_tracked(scored, read_tracked(oracle_w3, oracle_address), accepted_missing)
+        except Exception as e:  # noqa: BLE001 -- a failed read is never 'nothing is missing'
+            if not skip:
+                raise SystemExit(f"Push guard: the oracle's tracked targets UNREAD ({type(e).__name__}: {e}); refusing to push. "
+                                 "Re-run, or pass --skip-published-check after checking by hand.")
+            miss = []
+            print("Push guard: tracked targets UNREAD, --skip-published-check given: the lost-target check was not run")
+        if miss:
+            raise SystemExit("Push guard: the oracle tracks key(s) the scorer did not return this run (a read failed and the target was skipped), "
+                             "so their on-chain score would go stale: " + ", ".join(miss) + ". Re-run when the reads answer, or pass "
+                             "--accept-missing=" + ",".join(miss) + " if they were retired on purpose.")
     held, lines = review(scored, published, accepted, published_oracle, published_cross)
     print(f"\nPush guard: {len(held)} entr{'y' if len(held) == 1 else 'ies'} held")
     print("\n".join(lines) if lines else "  none")

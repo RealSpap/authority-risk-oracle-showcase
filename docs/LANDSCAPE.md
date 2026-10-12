@@ -2,16 +2,11 @@
 
 Who else looks at authority risk, what they do better, and where this project is still thin. Facts as of 2026-09-17 to 2026-10-05.
 
-| | On-chain, composable | Independent of the rated protocol | Authority risk specifically |
-|---|---|---|---|
-| Hypernative, Blockaid | no, closed dashboard | yes | partial |
-| Gauntlet, Chaos Labs, LlamaRisk | LlamaGuard PT is on-chain, for collateral risk | no, paid by the protocol rated | no |
-| [SolGov](https://solgov.xyz) | no, a website | yes | yes, Solana only |
-| [Forta Risk Graph](https://github.com/forta-network/forta-risk-skills) | no, an OAuth-gated MCP server | yes | yes, Ethereum mainnet only, and deliberately no scores |
-| DeFiSafety, DeFiScan | no, static reports (DeFiScan stopped in 2026) | yes | partial |
-| **This project** | **yes, `getScore` / `isStale`** | **yes** | **yes, across 10 ecosystems** |
+The side-by-side comparison with the neighbouring tools has one source and one page: [realspap.github.io/oracle/compare](https://realspap.github.io/oracle/compare/).
 
-The conflict of interest in the second row is not theoretical: the earlier research program this project grew out of
+The closest open-source scanner on the same question is [Hermes](https://github.com/saintparish4/hermes) (Rust, MIT, created 2026-08-17): it ranks upgrade authorities on Base and Ethereum from ERC-1967 storage slots, following Safe signers, timelocks and AccessControl role holders (role holders only when its index lists them, per its README), and answers "which proxies does a compromise of this key reach". It is a local tool and not an on-chain feed.
+
+The conflict of interest when the rater is paid by the protocol it rates (Gauntlet, Chaos Labs, LlamaRisk) is not theoretical: the earlier research program this project grew out of
 (`defi-admin-key-risk`) documented it in real incidents. And
 [ERC-8241 "Protocol Control Disclosure"](https://paragraph.com/@0x0afe5e054249b19ae29075540d9e6951c66e49b7/making-the-case-for-erc-8241-protocol-control-disclosure)
 (draft) standardizes exposing raw authority facts and leaves scoring to "external interpretation layers". This project is that layer.
@@ -35,7 +30,7 @@ What SolGov does not do:
 
 What SolGov does better, stated plainly: its safety benchmark columns (verified builds, nonce detection, hardware wallets, key
 rotation, insurance fund, treasury segmentation) are a concrete signal list this project does not fully check on Solana yet
-(26 Solana targets scored, 18 published on-chain). It is a real open gap, not a completed step.
+(26 Solana targets scored and published on-chain). It is a real open gap, not a completed step.
 
 ## Closest governance precedent: Aave x LlamaRisk
 

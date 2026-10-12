@@ -303,6 +303,7 @@ def parse_args(argv=None):
     p.add_argument("--oracle", default=None,
                     help="override ORACLE_ADDRESS from the CLI instead of the environment "
                          "(ORACLE_RPC_URL/PRIVATE_KEY are still read from the environment)")
+    p.add_argument("--accept-missing", default="", help="comma-separated oracle keys the oracle tracks that the scorer no longer produces, retired on purpose")
     p.add_argument("--accept-held", default="", help="comma-separated oracle keys the push guard held and a person checked")
     p.add_argument("--skip-published-check", action="store_true", help="push even if the published scores could not be read")
     return p.parse_args(argv)
@@ -381,7 +382,8 @@ def main(argv=None):
     print(f"Target chain for this calldata: HyperEVM Testnet, chain ID {HYPEREVM_TESTNET_CHAIN_ID}")
 
     if dry_run:
-        push_guard.enforce(scored, accepted=args.accept_held.split(","), skip_published_check=args.skip_published_check)
+        push_guard.enforce(scored, accepted=args.accept_held.split(","), skip_published_check=args.skip_published_check,
+                           require_all_tracked=True, accepted_missing=args.accept_missing.split(","))
         print("\n--dry-run set: calldata encoded above, but NOT sending a transaction, NOT reading ORACLE_RPC_URL/ORACLE_ADDRESS/PRIVATE_KEY.")
         return
 
@@ -403,7 +405,8 @@ def main(argv=None):
     private_key = os.environ["PRIVATE_KEY"]
     account = oracle_w3.eth.account.from_key(private_key)
     oracle = oracle_w3.eth.contract(address=Web3.to_checksum_address(oracle_address), abi=ORACLE_ABI)
-    push_guard.enforce(scored, oracle_w3, oracle_address, accepted=args.accept_held.split(","), skip_published_check=args.skip_published_check)
+    push_guard.enforce(scored, oracle_w3, oracle_address, accepted=args.accept_held.split(","), skip_published_check=args.skip_published_check,
+                       require_all_tracked=True, accepted_missing=args.accept_missing.split(","))
 
     tx = oracle.functions.updateScores(targets, tuples).build_transaction(
         {

@@ -89,6 +89,8 @@ step() {  # $1 = name, $2 = key file (shared or robinhood), rest = env assignmen
   local accfile="ACCEPT_HELD_$name" acc ACCEPTFLAG=""
   acc="${!accfile:-${ACCEPT_HELD:-}}"
   if [ -n "$acc" ] && [ -z "$DRYFLAG" ]; then ACCEPTFLAG="--accept-held=$acc"; fi
+  local missfile="ACCEPT_MISSING_$name"
+  if [ "$name" = "hyperliquid" ] && [ -n "${!missfile:-}" ] && [ -z "$DRYFLAG" ]; then ACCEPTFLAG="$ACCEPTFLAG --accept-missing=${!missfile}"; fi
   if ! eval "$@ $DRYFLAG $ACCEPTFLAG"; then FAILED="$FAILED $name"; fi
   unset PRIVATE_KEY
 }

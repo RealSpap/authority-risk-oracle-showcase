@@ -1,8 +1,8 @@
-# Authority risk digest, 2026-10-12 07:00 UTC
+# Authority risk digest, 2026-10-12 07:31 UTC
 
-## Needs a person, 2026-10-12T07:00:00Z: 34 item(s) (priority 1: 11, priority 2: 20, priority 3: 3); oldest 1.4 d
+## Needs a person, 2026-10-12T07:31:41Z: 33 item(s) (priority 1: 10, priority 2: 20, priority 3: 3); oldest 1.4 d
 
-### Something happened: read before trusting the score (11)
+### Something happened: read before trusting the score (10)
 - **Safe AddedOwner** robinhood 0x20D630cF1f5628285BfB91DfaC8C89eB9087BE1A (1.4 d): AddedOwner 0xB3bf…1c9B (ramses). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **queued operation executable** solana 1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78 (1.4 d): program upgrade: Squads proposal #1022: Upgrade of program 1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78 via Squads v4 multisig C4aw…SuPk (4-of-9, time lock 86400 s), found by the independent reader (1 tracked program). To do: read the call before it lands. (pending_ops.json)
 - **queued operation executable** solana 1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78 (1.4 d): program upgrade: Squads proposal #1026: Upgrade of program 1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78 via Squads v4 multisig C4aw…SuPk (4-of-9, time lock 86400 s), found by the independent reader (1 tracked program). To do: read the call before it lands. (pending_ops.json)
@@ -13,7 +13,6 @@
 - **queued operation executable** solana beamVVkNmKeXcuZ6zLpC9eM5YgVyAn4Z9xdPrz3gCW2 (1.4 d): program upgrade: Squads proposal #1021: Upgrade of program beamVVkNmKeXcuZ6zLpC9eM5YgVyAn4Z9xdPrz3gCW2 (not the tracked program) via Squads v4 multisig C4aw…SuPk (4-of-9, time lock 86400 s), found by the independent reader (1 tracked program). To do: read the call before it lands. (pending_ops.json)
 - **queued operation executable** solana 7s1da8DduuBFqGra5bJBjpnvL5E9mGzCuMk1Qkh4or2Z (1.0 d): multisig config: Squads proposal #60: multisig configuration: remove member via Squads v4 multisig J3mJ…vG8P (4-of-7, time lock 43200 s), found by the independent reader (1 tracked program). To do: read the call before it lands. (pending_ops.json)
 - **admin transfer in flight** robinhood 0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d (0.0 d): 0x9db4…1a53 designated (pendingOwner() on the contract (Ownable2Step), a contract). To do: identify the designated admin; when it accepts, the admin read changes. (second_opinion.json pending_admin)
-- **methodology changed** hyperliquid  (0.0 d): Hyperliquid (HyperEVM): 0xf39ff2bfb9 -> 0x36452ea42a on 16 target(s). To do: expected after a release of the scorer; otherwise a push by a key that should not hold the updater role. (methodology.json)
 
 ### Decide (20)
 - **Safe guard to identify** ethereum-l1 0x2cc440b721d2cafd6d64908d6d8c4acc57f8afc3 (1.4 d): 0x74ab…8d29: contract, owned by 0xa075…c344. To do: say what this guard checks and who can change it. (second_opinion.json guard_detail)
@@ -33,9 +32,9 @@
 - **second opinion disagrees** solana H4ND9aYttUVLFmNypZqLjZ52FYiGvdEB45GmwNoKEjTj (1.4 d): the timelock score says no delay (0), the Squads multisig enforces a native time lock of 24 h. To do: review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json. (second_opinion.json disagreements)
 - **second opinion disagrees** solana USXyiSTsPEWz55pSK7sZoUL79ntoVGQbaTDT57tH6bx (1.4 d): the timelock score says no delay (0), the Squads multisig enforces a native time lock of 24 h. To do: review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json. (second_opinion.json disagreements)
 - **timelock queue unread** base 0xf93b7122450a50af3e5a76e1d546e95ac1d0f579 (1.4 d): base timelock 0xf93b…f579, found by the independent reader (1 tracked contract): UNREAD (ContractLogicError: ('execution reverted', 'no data')). To do: find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen. (pending_ops.json)
+- **timelock queue unread** hyperliquid 0xc5ded4f7f53919c714059a17d31371ae847e23d2 (1.4 d): hyperliquid timelock 0xc5de…23d2, found by the independent reader (1 tracked contract): UNREAD (Web3RPCError: {'code': -32005, 'message': 'rate limited'}). To do: find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen. (pending_ops.json)
 - **timelock queue unread** robinhood 0x5ff98717a18833de1a49e11b498866d6fa1c9296 (1.4 d): robinhood timelock 0x5ff9…9296, found by the independent reader (1 tracked contract): UNREAD (ContractLogicError: ('execution reverted', '0x')). To do: find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen. (pending_ops.json)
 - **timelock queue unread** robinhood 0x826aeaeee9233fa8ba199518dd8621a5962b1d02 (1.4 d): robinhood timelock 0x826a…1d02, found by the independent reader (1 tracked contract): UNREAD (ContractLogicError: ('execution reverted', '0x')). To do: find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen. (pending_ops.json)
-- **timelock queue unread** hyperliquid 0xc5ded4f7f53919c714059a17d31371ae847e23d2 (1.3 d): hyperliquid timelock 0xc5de…23d2, found by the independent reader (1 tracked contract): UNREAD (Web3RPCError: {'code': -32005, 'message': 'rate limited'}). To do: find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen. (pending_ops.json)
 
 ### Coverage to extend (3)
 - **admin Safe never used** robinhood 0x9d53d5e3bd5e8d4cbfa6db1ca238aea02e651010 (1.4 d): robinhood:0x0605…9728 has executed no transaction (nonce 0). To do: an admin path nobody has exercised: confirm the signers can still act. (safe_activity.json)
@@ -44,14 +43,14 @@
 
 ## Act now: oracles turning stale
 - **ACT NOW** Ethereum L1 (Sepolia): 34 targets, first entry already stale since 2026-10-02 16:16 UTC; oldest update 2026-09-23 16:16 UTC
-- Base (Sepolia): 13 targets, first entry turns stale in 179 h (2026-10-19 17:38 UTC); oldest update 2026-10-10 17:38 UTC
-- Plasma: 9 targets, first entry turns stale in 179 h (2026-10-19 18:03 UTC); oldest update 2026-10-10 18:03 UTC
+- Base (Sepolia): 13 targets, first entry turns stale in 178 h (2026-10-19 17:38 UTC); oldest update 2026-10-10 17:38 UTC
+- Plasma: 9 targets, first entry turns stale in 178 h (2026-10-19 18:03 UTC); oldest update 2026-10-10 18:03 UTC
 - Monad: 9 targets, first entry turns stale in 179 h (2026-10-19 18:15 UTC); oldest update 2026-10-10 18:15 UTC
-- Arbitrum (Sepolia): 13 targets, first entry turns stale in 180 h (2026-10-19 18:57 UTC); oldest update 2026-10-10 18:57 UTC
-- Tempo (Moderato): 14 targets, first entry turns stale in 181 h (2026-10-19 19:56 UTC); oldest update 2026-10-10 19:56 UTC
-- Solana (Devnet): 26 targets, first entry turns stale in 181 h (2026-10-19 20:00 UTC); oldest update 2026-10-10 20:00 UTC
-- Robinhood Chain: 63 targets, first entry turns stale in 182 h (2026-10-19 20:41 UTC); oldest update 2026-10-10 20:41 UTC
-- Hyperliquid (HyperEVM): 16 targets, first entry turns stale in 215 h (2026-10-21 05:46 UTC); oldest update 2026-10-12 05:46 UTC
+- Arbitrum (Sepolia): 13 targets, first entry turns stale in 179 h (2026-10-19 18:57 UTC); oldest update 2026-10-10 18:57 UTC
+- Tempo (Moderato): 14 targets, first entry turns stale in 180 h (2026-10-19 19:56 UTC); oldest update 2026-10-10 19:56 UTC
+- Solana (Devnet): 26 targets, first entry turns stale in 180 h (2026-10-19 20:00 UTC); oldest update 2026-10-10 20:00 UTC
+- Robinhood Chain: 63 targets, first entry turns stale in 181 h (2026-10-19 20:41 UTC); oldest update 2026-10-10 20:41 UTC
+- Hyperliquid (HyperEVM): 16 targets, first entry turns stale in 214 h (2026-10-21 05:46 UTC); oldest update 2026-10-12 05:46 UTC
 
 ## Safe authority changes, last 7 days
 - robinhood: AddedOwner 0xB3bf…1c9B on 0x20D630cF1f5628285BfB91DfaC8C89eB9087BE1A (ramses), tx 6d4610f18f429737dbc1c8714b52a7adccc2494f344ca067afe4c9095f5714de

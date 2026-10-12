@@ -1,6 +1,6 @@
 # HELP aro_run_timestamp_seconds UTC time of the last Watch run (Unix seconds)
 # TYPE aro_run_timestamp_seconds gauge
-aro_run_timestamp_seconds 1791765733
+aro_run_timestamp_seconds 1791787076
 # HELP aro_oracle_read 1 when the oracle was read at the last run, 0 when it was not (its targets are then unknown, not zero)
 # TYPE aro_oracle_read gauge
 aro_oracle_read{oracle="Robinhood Chain"} 1
@@ -32,14 +32,14 @@ aro_oracle_stale_targets{oracle="Base (Sepolia)"} 0
 aro_oracle_stale_targets{oracle="Tempo (Moderato)"} 0
 aro_oracle_stale_targets{oracle="Plasma"} 0
 aro_oracle_stale_targets{oracle="Monad"} 0
-aro_oracle_stale_targets{oracle="Hyperliquid (HyperEVM)"} 3
+aro_oracle_stale_targets{oracle="Hyperliquid (HyperEVM)"} 0
 aro_oracle_stale_targets{oracle="Solana (Devnet)"} 0
 # HELP aro_targets Targets tracked across the oracles that were read
 # TYPE aro_targets gauge
 aro_targets 197
 # HELP aro_targets_stale Targets whose score is stale
 # TYPE aro_targets_stale gauge
-aro_targets_stale 4
+aro_targets_stale 1
 # HELP aro_status The run's health, one series per state, 1 for the current one
 # TYPE aro_status gauge
 aro_status{state="ok"} 0
@@ -337,9 +337,9 @@ aro_target_stale{chain="ethereum-l1-sepolia",target="0x6c3ea9036406852006290770b
 aro_target_stale{chain="ethereum-l1-sepolia",target="0xc5f0f7b66764f6ec8c8dff7ba683102295e16409"} 0
 aro_target_stale{chain="hyperliquid-hyperevm",target="0xea394cd63ca3a5c8a130bb2b955cc71c22e5ea6c"} 0
 aro_target_stale{chain="hyperliquid-hyperevm",target="0x88806a71d74ad0a510b350545c9ae490912f0888"} 0
-aro_target_stale{chain="hyperliquid-hyperevm",target="0x320c8988e3d1b5198f335802d7bfd2728a8fcac6"} 1
-aro_target_stale{chain="hyperliquid-hyperevm",target="0x30e96fbd515243d47703e78581b88cba60f51360"} 1
-aro_target_stale{chain="hyperliquid-hyperevm",target="0xbf6d3bbce71dbce6f4121bfe2e2cad8c77bbc1fc"} 1
+aro_target_stale{chain="hyperliquid-hyperevm",target="0x320c8988e3d1b5198f335802d7bfd2728a8fcac6"} 0
+aro_target_stale{chain="hyperliquid-hyperevm",target="0x30e96fbd515243d47703e78581b88cba60f51360"} 0
+aro_target_stale{chain="hyperliquid-hyperevm",target="0xbf6d3bbce71dbce6f4121bfe2e2cad8c77bbc1fc"} 0
 aro_target_stale{chain="hyperliquid-hyperevm",target="0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec"} 0
 aro_target_stale{chain="hyperliquid-hyperevm",target="0x8888888c43cbb7e1c4132542e46831bffd866ed3"} 0
 aro_target_stale{chain="hyperliquid-hyperevm",target="0x8888888192a4a0593c13532ba48449fc24c3beda"} 0

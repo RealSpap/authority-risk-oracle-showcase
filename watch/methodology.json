@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-12T06:52:42Z",
+ "generated_utc": "2026-10-12T07:25:23Z",
  "hashes": {
   "0xf178bca63c9d3257a306dd7cf6a4e5b3e3817a4ae59fd289ae3486d7bbc25374": {
    "oracles": {
@@ -71,16 +71,6 @@
    }
   }
  ],
- "changes": [
-  {
-   "oracle": "hyperliquid-hyperevm",
-   "name": "Hyperliquid (HyperEVM)",
-   "chain": "hyperliquid",
-   "from": "0xf39ff2bfb9ca0b609b00f3f3058fc2ef40d3d8abbcb08228bfc8091235a5fbd4",
-   "to": "0x36452ea42a84016f691a665855cc3482c3e8bb4d87155901b491b293457a4004",
-   "targets": 16,
-   "run_utc": "2026-10-12T06:52:42Z"
-  }
- ],
+ "changes": [],
  "what": "methodologyHash as read on each oracle (keccak256 of the scoring code and its version, set at the push): one hash per oracle is the normal state; a mix means a push half done or a target scored by an older method; a change (against the previous run) means every score of that oracle was produced by a new method: compare across it with care, the chained log keeps the date"
 }

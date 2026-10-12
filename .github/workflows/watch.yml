@@ -111,6 +111,9 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          TELEGRAM_MODE: ${{ vars.TELEGRAM_MODE }}   # empty = today's behaviour; "daily" = the public channel gets one summary a day (set by the owner, a repository variable)
+          ALERT_WEBHOOK_URL: ${{ secrets.ALERT_WEBHOOK_URL }}
+          ALERT_WEBHOOK_SECRET: ${{ secrets.ALERT_WEBHOOK_SECRET }}
         run: |
           python3 scripts/evaluate_rules.py --rules rules.json --scores watch/scores --latest watch/latest.json --tvl watch/tvl.json --pending watch/pending_ops.json --prev watch/prev --out watch/alerts.json > watch/alerts.txt 2>&1 || echo "exit code $?" >> watch/alerts.txt
           echo "hi_new=$(python3 -c "import json;print(sum(1 for x in json.load(open('watch/alerts.json')).get('active',[]) if x['severity']=='high' and x['new']))" 2>/dev/null || echo 0)" >> "$GITHUB_OUTPUT"
@@ -150,6 +153,9 @@ jobs:
 
       - name: "Trend: one line per run with the numbers measured, so the next runs can say whether the tracked set improves"
         run: python3 scripts/trend.py --watch watch --out watch/trend.jsonl > watch/trend.txt 2>&1 || echo "exit code $?" >> watch/trend.txt
+
+      - name: "Warning ledger: for every queued operation, the run that first saw it, the notice that gave, and the ones that went through between two runs (watch/warning_ledger.json)"
+        run: python3 scripts/warning_ledger.py --watch watch --out watch/warning_ledger.json > watch/warning_ledger.txt 2>&1 || echo "exit code $?" >> watch/warning_ledger.txt
 
       - name: Shorten every root-signer address in what leaves with the run (the index itself stays in the runner)
         run: python3 scripts/redact_signers.py --index "$RUNNER_TEMP/who_controls.json" --scores watch/scores watch/second_opinion.json watch/second_opinion.md watch/digest.md watch/safe_changes.json watch/pending_ops.json watch/alerts.json watch/moves.json watch/paper_trail.json watch/review_queue.json watch/review_queue.md watch/coverage.json watch/side_roles.json watch/safe_activity.json watch/admin_probe.json
@@ -228,8 +234,30 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
           WATCH_SIGNING_KEY: ${{ secrets.WATCH_SIGNING_KEY }}   # by env, never written into the script text
 
-      - name: Telegram (only if the secrets are set)
-        if: always() && steps.run.outputs.code == '2'
+      - name: Daily summary on Telegram (only when the repository variable TELEGRAM_MODE is "daily"; first run of the day; nothing is sent without the two secrets)
+        if: always() && vars.TELEGRAM_MODE == 'daily'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          # prepared 12/10 (not active until the variable is set): one message a day, counted by kind, no protocol and no detail (scripts/telegram_digest.py --daily)
+          if [ "$(date -u +%H)" -lt 6 ]; then
+            python3 scripts/telegram_digest.py --watch watch --daily || echo "::warning title=Daily Telegram summary::not sent (see the line above)"
+          fi
+
+      - name: Weekly summary on Telegram (Monday, first run of the day; nothing is sent without the two secrets; replaced by the daily summary when TELEGRAM_MODE is "daily")
+        if: always() && vars.TELEGRAM_MODE != 'daily'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          # the channel only speaks on an alarm, so a quiet week looked like a dead channel: once a week it says what the watch did (scripts/telegram_digest.py, built from the published files only)
+          if [ "$(date -u +%u)" = 1 ] && [ "$(date -u +%H)" -lt 6 ]; then
+            python3 scripts/telegram_digest.py --watch watch || echo "::warning title=Weekly Telegram summary::not sent (see the line above)"
+          fi
+
+      - name: "Telegram (only if the secrets are set, and not in daily mode, because the full alarm text names protocols and findings that the public channel no longer carries when TELEGRAM_MODE is daily)"
+        if: always() && steps.run.outputs.code == '2' && vars.TELEGRAM_MODE != 'daily'
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}

@@ -2515,6 +2515,20 @@ class TestAlertEngine(unittest.TestCase):
         self.assertEqual(self.fired(d), sorted((r["name"], "a") for r in rules))   # all seven fire on A, none on B (delta +2, 80, fresh, no tvl)
         ready = [x for x in d["active"] if x["rule"] == "ready"][0]; self.assertEqual([e["id"] for e in ready["evidence"]], ["1", "0", "2"])   # three at most, the earliest ready first
 
+    def test_a_change_ready_for_weeks_is_not_an_emergency(self):
+        """12/10: 5 of the 6 Squads proposals shown as "ready to execute now" (HIGH) had been ready for 1 to 3 months. Ready for at most 7 days stays high; older is a medium "approved, not executed, still executable" with its date in the evidence; an expired one fires neither."""
+        import evaluate_rules as e
+        docs = {"pending": {"results": [{"chain": "base", "name": "TL", "address": "0x1", "family": "oz", "pending": [
+            {"target": self.A, "id": "new", "ready_at": self.now - 2 * 86400, "selector": "0x12345678"},
+            {"target": self.B, "id": "old", "ready_at": self.now - 40 * 86400, "selector": "0x12345678"},
+            {"target": self.B, "id": "gone", "ready_at": self.now - 40 * 86400, "state": "expired", "selector": "0x12345678"}]}]}}
+        rules = json.load(open(os.path.join(os.path.dirname(e.__file__), "..", "rules.json")))["rules"]
+        with tempfile.TemporaryDirectory() as tmp: d = self.go(tmp, rules, docs, extra=["--no-send"])
+        urgent = "a queued change against this contract is ready to execute now"; old = "a queued change against this contract was approved and has not been executed for more than 7 days, and is still executable today"
+        got = sorted((x["rule"], x["severity"], x["target"][2]) for x in d["active"] if x["rule"] in (urgent, old))
+        self.assertEqual(got, [(urgent, "high", "a"), (old, "medium", "b")], got)
+        oldev = [ev for x in d["active"] if x["rule"] == old for ev in x["evidence"]]; self.assertTrue(oldev and all(ev.get("ready_at") for ev in oldev))   # the evidence keeps the date from which each queued change has been ready
+
     def test_a_balance_drop_a_pause_a_role_change_and_a_wake_each_reach_their_own_rule(self):
         ka = "base:" + self.A; t = int(self.now)
         docs = {"held": {"by_target": {ka: {"symbol": "USDC", "prev_amount": 100.0, "amount": 55.0, "amount_change_pct": -45.0, "price_usd": 2.0}}},
@@ -3404,7 +3418,7 @@ class TestMcpServer(unittest.TestCase):
             W = self.watch(tmp); r = self.rpc(W, "initialize", {"protocolVersion": "2024-11-05", "capabilities": {}, "clientInfo": {"name": "x"}})
             self.assertEqual((r["id"], r["result"]["protocolVersion"], r["result"]["serverInfo"]["name"]), (1, "2024-11-05", "authority-risk-oracle-watch")); self.assertIn("tools", r["result"]["capabilities"]); self.assertIn("not an audit", r["result"]["instructions"])
             self.assertEqual(self.rpc(W, "initialize", {})["result"]["protocolVersion"], mcp_server.PROTOCOL)   # no version asked: ours
-            tl = self.rpc(W, "tools/list")["result"]["tools"]; self.assertEqual([x["name"] for x in tl], ["tour", "dossier", "find", "compare", "brief", "whatif"])
+            tl = self.rpc(W, "tools/list")["result"]["tools"]; self.assertEqual([x["name"] for x in tl], ["tour", "dossier", "find", "compare", "brief", "check", "whatif"])
             self.assertTrue(all(x["annotations"]["readOnlyHint"] is True and x["inputSchema"]["type"] == "object" and x["description"] for x in tl))
             self.assertIsNone(mcp_server.handle({"jsonrpc": "2.0", "method": "notifications/initialized"}, W)); self.assertEqual(self.rpc(W, "ping")["result"], {})
 
@@ -3432,6 +3446,17 @@ class TestMcpServer(unittest.TestCase):
             W = TestWhatIf("test_the_command_line").watch(tmp); w = self.text(self.call(W, "whatif", {"chain": "base", "address": TestWhatIf.A, "timelock": 75}))
             self.assertIn("Composite: 46 -> 68 (band 40-59 -> 60-79)", w); self.assertIn("not a prediction", w); self.assertIn("Requirements met: 3 of 6 -> 5 of 6", w)
 
+    def test_check_is_a_verdict_an_agent_can_act_on_and_never_a_pass_by_default(self):
+        x = TestBrief
+        with tempfile.TemporaryDirectory() as tmp:
+            W = self.watch(tmp)
+            self.assertIn("FAIL", self.text(self.call(W, "check", {"chain": "base", "address": x.A})))                              # stale: a fail even with no minimum
+            self.assertTrue(self.text(self.call(W, "check", {"chain": "base", "address": x.B})).startswith("OK"))
+            self.assertIn("under the minimum 50", self.text(self.call(W, "check", {"chain": "base", "address": x.B, "min_score": 50})))
+            self.assertIn("not tracked", self.text(self.call(W, "check", {"chain": "base", "address": "0x" + "99" * 20})))      # not tracked is a fail, not an ok
+            self.assertTrue(self.text(self.call(W, "check", {"chain": "ethereum-l1", "address": x.A})).startswith("UNREAD"))   # no score file for that chain here: unread, not a pass
+            self.assertEqual(self.call(W, "check", {"chain": "base", "address": x.B, "min_score": 101})["error"]["code"], -32602)
+
     def test_a_tool_failure_is_an_error_result_the_agent_can_read_not_a_crash(self):
         with tempfile.TemporaryDirectory() as tmp:
             W = self.watch(tmp)
@@ -3457,7 +3482,7 @@ class TestMcpServer(unittest.TestCase):
             W = self.watch(tmp); msgs = [{"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-06-18"}}, {"jsonrpc": "2.0", "method": "notifications/initialized"}, {"jsonrpc": "2.0", "id": 2, "method": "tools/list"}]
             r = subprocess.run([sys.executable, "-W", "ignore", os.path.join(os.path.dirname(mcp_server.__file__), "mcp_server.py"), "--watch", W], input="\n".join(json.dumps(m) for m in msgs) + "\nnot json\n\n", capture_output=True, text=True)
         out = [json.loads(l) for l in r.stdout.strip().split("\n")]; self.assertEqual(r.returncode, 0); self.assertEqual([o.get("id") for o in out], [1, 2, None]); self.assertEqual(out[2]["error"]["code"], -32700)   # the notification got no answer, the broken line a parse error
-        self.assertEqual(len(out[1]["result"]["tools"]), 6); self.assertEqual(r.stderr, "")
+        self.assertEqual(len(out[1]["result"]["tools"]), 7); self.assertEqual(r.stderr, "")
 
 
 class TestHostileNames(unittest.TestCase):
@@ -4217,7 +4242,7 @@ class TestShellModule(unittest.TestCase):
         p = os.path.join(self.ROOT, "appliquer_oracle_site.py"); sp = os.path.join(self.ROOT, "AUTHORITY-FACTS-SPEC.md")
         if not (os.path.exists(p) and os.path.exists(sp)): self.skipTest("the build script or the spec is not beside the surveillance folder")
         src = open(p, encoding="utf-8").read(); spec = open(sp, encoding="utf-8").read()
-        for f in ("keys_to_move", "react_hours", "money_per_key_usd"): self.assertIn('"%s": _facts(_key, _addr)' % f, src, f)   # found on 10/10: the spec said "the twin has these fields" while the reference twin had none of the three, and called the score `score` where the twin says `composite`
+        for i, f in enumerate(("keys_to_move", "react_hours", "money_per_key_usd")): self.assertIn('"%s": _fa[%d]' % (f, i), src, f)   # _fa = _facts(_key, _addr), read once   # found on 10/10: the spec said "the twin has these fields" while the reference twin had none of the three, and called the score `score` where the twin says `composite`
         self.assertIn("_facts_line(key, addr)", src); self.assertIn("never shown as zero", src); self.assertIn("| Score | `composite` |", spec)
         self.assertEqual(src.count('"composite": _score'), 1)   # one twin, one name for the score
 
@@ -4355,6 +4380,9 @@ class TestReviewOfTheDashboardScript(unittest.TestCase):
         self.assertNotIn("cat|since|sort", s)   # since is a Changes block, not a Rankings key
         self.assertNotIn("st.s.join(',') + location.hash", p)   # a shared play link carries no Rankings filter
         self.assertIn("addrKey(r) + '.html'", s)   # a Solana address is case sensitive: its share page keeps the case
+        self.assertIn("['ci', '🛡', 'CI check'", s); self.assertIn("uses: RealSpap/authority-risk-oracle-showcase@main", s)   # the Build tab hands out the GitHub Action
+        self.assertIn("ap0.setAttribute('role', 'main')", s); self.assertIn('<h3 class="ch-day">', s)   # a main landmark, and day titles one level under the page title (accessibility audit 12/10)
+        self.assertIn(".lb-addr, .lb-title.lb-why, .ex-link, .ex, .lb-btn.star { display: inline-flex;", c)   # 24 px targets
         self.assertIn("function lsArr(k)", a)   # a corrupted local storage value is not a list
         self.assertIn("(unr ? '<b>unknown</b> behind a contract the oracle scores", a)   # an unread contract is not a zero
 
@@ -4368,6 +4396,84 @@ class TestPinnedKey(unittest.TestCase):
         if not (os.path.exists(js) and os.path.exists(md)): self.skipTest("module-all.js and watch/API.md are not both here in this checkout")
         k = re.search(r"var ARO_PUBKEY = '([0-9a-f]*)'", open(js, encoding="utf-8").read()).group(1)
         self.assertRegex(k, r"^[0-9a-f]{64}$"); self.assertIn("`" + k + "`", open(md, encoding="utf-8").read())
+
+
+class TestClaimsCheck(unittest.TestCase):
+    """The tool that replaces correcting numbers by hand (claims/): its own self-test runs here, and the two shipped configs stay well-formed (a pattern that does not compile, or a claim without a target, would make a check silently check nothing)."""
+    def setUp(self):
+        self.dir = os.path.join(os.path.dirname(__file__), "..", "..", "..", "claims")
+        if not os.path.exists(os.path.join(self.dir, "claims_check.py")): self.skipTest("claims/ is not beside the surveillance folder in this checkout")
+
+    def test_selftest(self):
+        r = subprocess.run([sys.executable, os.path.join(self.dir, "claims_check.py"), "--selftest"], capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr); self.assertIn("selftest ok", r.stdout)
+
+    def test_configs_are_well_formed(self):
+        import re as _re
+        for name in ("claims.research.json", "claims.oracle.json"):
+            cfg = json.load(open(os.path.join(self.dir, name), encoding="utf-8")); ids = [c["id"] for c in cfg["claims"]]
+            self.assertEqual(len(ids), len(set(ids)), name)
+            for c in cfg["claims"]:
+                self.assertTrue(c["targets"], name + ":" + c["id"])
+                self.assertIn(c["truth"]["type"], ("table_count", "table_row_sum", "table_cell", "cells_regex_sum", "regex", "json_path"))
+                for t in c["targets"]:
+                    self.assertEqual(_re.compile(t["pattern"]).groups, 1, name + ":" + t["pattern"])   # exactly one group: the number
+                    self.assertIn(t["where"].split(":", 1)[0], ("file", "url", "gh-description"))
+
+    def test_publication_script_runs_it(self):
+        src = open(os.path.join(self.dir, "..", "publier-oracle-site.sh"), encoding="utf-8").read()
+        self.assertIn("claims/claims_check.py", src); self.assertIn("--apply", src)
+
+
+class TestFeedTitleForAnAddedTarget(unittest.TestCase):
+    """Found 12/10 in the public feeds: 20 titles read "new None to 47" (a target ADDED to the watch has no previous value). The title must say it was added."""
+    def test_added_target(self):
+        import tempfile
+        ev = [{"kind": "move", "run_utc": "2026-10-12T00:17:00Z", "oracle": "Base", "label": "Foo", "target": "0xabc", "field": "new", "before": None, "after": 47},
+              {"kind": "move", "run_utc": "2026-10-12T00:17:00Z", "oracle": "Base", "label": "Bar", "target": "0xdef", "field": "compositeScore", "before": 50, "after": 41}]
+        with tempfile.TemporaryDirectory() as tmp:
+            old = watch_run.WATCH; watch_run.WATCH = tmp
+            try: watch_run.write_feed(ev); xml = open(os.path.join(tmp, "feed.xml")).read()
+            finally: watch_run.WATCH = old
+        self.assertIn("Foo added at 47", xml); self.assertNotIn("None", xml); self.assertIn("Bar compositeScore 50 to 41", xml)
+
+
+class TestAuthorityCheck(unittest.TestCase):
+    """The CI gate (scripts/authority_check.py) and the GitHub Action that wraps it (action.yml). A gate that passes on an unreadable file, or reads a missing score as 0, would be worse than none."""
+    HERE = os.path.dirname(__file__)
+
+    def test_selftest(self):
+        r = subprocess.run([sys.executable, os.path.join(self.HERE, "..", "authority_check.py"), "--selftest"], capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr); self.assertIn("selftest ok", r.stdout)
+
+    def test_the_action_passes_its_inputs_by_environment(self):
+        import authority_check
+        ac = os.path.join(self.HERE, "..", "..", "action.yml")
+        if not os.path.exists(ac): self.skipTest("action.yml is not beside the scripts in this checkout")
+        src = open(ac, encoding="utf-8").read(); body = src.split("      run: |", 1)[1]
+        self.assertNotIn("${{", body)   # an input spliced into the shell text is a script injection: they travel by env
+        self.assertIn("using: composite", src)
+        for want in ("min-score", "max-drop", "allow-unread", "chain", "address", "targets"): self.assertIn("  %s:" % want, src)
+        self.assertEqual(set(authority_check.FILES), {"robinhood", "ethereum-l1", "arbitrum", "base", "tempo", "plasma", "monad", "hyperliquid", "solana"})
+
+    def test_every_chain_has_a_published_score_file(self):
+        import authority_check
+        names = {"robinhood-chain", "ethereum-l1-sepolia", "arbitrum-sepolia", "base-sepolia", "tempo-moderato", "plasma", "monad", "hyperliquid-hyperevm", "solana-devnet"}
+        self.assertEqual(set(authority_check.FILES.values()), names)   # the same nine files the watch writes under watch/scores/
+
+
+class TestTelegramDigest(unittest.TestCase):
+    """The weekly summary of the public channel: built only from the published files, honest about what a method change is, never a message of zeros."""
+    def test_selftest(self):
+        r = subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), "..", "telegram_digest.py"), "--selftest"], capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr); self.assertIn("selftest ok", r.stdout)
+
+    def test_the_workflow_sends_it_on_mondays_only(self):
+        wf = os.path.join(os.path.dirname(__file__), "..", "..", ".github", "workflows", "watch.yml")
+        if not os.path.exists(wf): wf = os.path.join(os.path.dirname(__file__), "..", "..", "..", ".github", "workflows", "watch.yml")
+        if not os.path.exists(wf): self.skipTest("watch.yml is not beside the scripts in this checkout")
+        src = open(wf, encoding="utf-8").read(); i = src.index("Weekly summary on Telegram"); step = src[i:src.index("- name:", i + 10)]
+        self.assertIn('date -u +%u)" = 1', step); self.assertIn("scripts/telegram_digest.py", step); self.assertNotIn("${{ secrets.TELEGRAM_BOT_TOKEN }}\"", step)
 
 
 class TestAlertWords(unittest.TestCase):
@@ -4398,6 +4504,17 @@ class TestPublicReadmePatch(unittest.TestCase):
             for _ in range(2): subprocess.run([sys.executable, self.PATCH, p], capture_output=True, text=True, check=True)   # twice: it must be idempotent
             return open(p, encoding="utf-8").read()
 
+    def test_the_dead_dashboard_link_and_the_duplicated_guide_are_fixed(self):
+        """12/10 review of the public repository: the header linked /oracle/dashboard.html (404: the page is /oracle/), and the guide step was inserted twice, three steps carrying the number 3."""
+        r = ('<p align="center"><b>Live:</b> <a href="https://realspap.github.io/oracle/">overview</a> · <a href="https://realspap.github.io/oracle/dashboard.html">dashboard</a></p>\n\n'
+             '**3. Audit it yourself, then ask it questions.** first copy\n\n- a\n\n**3. Audit it yourself, then ask it questions.** second copy\n\n- b\n\n**3. Pull Robinhood Chain\'s table as JSON** z\n\n**4. Ask a question the score alone does not answer** q\n')
+        out = self.run_patch(r, 5)
+        self.assertNotIn("dashboard.html", out); self.assertIn(">live dashboard</a>", out)
+        self.assertEqual(out.count("Audit it yourself"), 1); self.assertIn("first copy", out); self.assertNotIn("second copy", out)
+        self.assertIn("**4. Pull Robinhood Chain's table as JSON**", out)
+        self.assertIn("**5. Ask a question the score alone does not answer**", out)               # the step after the renumbered one was left as 4: two steps carried the number 4
+        steps = re.findall(r"^\*\*(\d)\. ", out, re.M); self.assertEqual(steps, sorted(set(steps)))   # every step number appears once, in order
+
     OLD = ('<img alt="Network" src="https://img.shields.io/badge/deployed-testnets-orange">' + chr(92) + 'n  <a href="watch/API.md"><img alt="Watch integrity" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FRealSpap%2Fauthority-risk-oracle-showcase%2Fmain%2Fwatch%2Fbadge%2Fintegrity.json"></a>\n'
            'in one call any contract can make.</b><br><sub>9 on-chain oracles, 10 ecosystems, 190 tracked contracts. Composite = 40%</sub>\n\n'
            '**2. Open the dashboard**: x, one table for the 179 tracked contracts on 9 chains\n(8 EVM). The source is [`dashboard/index.html`](dashboard/index.html), a single file with no backend; the watch files are under [`watch/`](watch/API.md). Audit it yourself in one command: `python3 scripts/audit_public.py` (standard library), `python3 scripts/tour.py` is the thirty-second tour to run first after cloning, and `python3 scripts/consistency.py` checks the files.\n\n## Next\n')
@@ -4410,3 +4527,387 @@ class TestPublicReadmePatch(unittest.TestCase):
         self.assertTrue(all(len(line) < 1500 for line in out.split("\n")))               # no block of thousands of characters
         self.assertLess(out.index("`python3 scripts/tour.py`"), out.index("`python3 scripts/audit_public.py`"))   # the tour comes first
         self.assertIn("197 tracked contracts.", out); self.assertNotIn("190 tracked", out); self.assertNotIn("179 tracked", out)   # the count is the one the score files hold
+
+
+class TestConformance(unittest.TestCase):
+    """Authority Facts v0.1 conformance (scripts/conformance.py + watch/schema/label.schema.json): a checker that anybody can point at any implementation's JSON twins."""
+    HERE = os.path.dirname(__file__)
+    OK = {"chain": "Base", "address": "0xabc", "composite": 55, "band": "moderate", "keys_to_move": 2, "react_hours": 0, "money_per_key_usd": 10.5, "sub": {"adminKeyScore": 65, "multisigScore": 95, "timelockScore": 0},
+          "requirements": [{"label": "r", "met": True}] * 6, "last_pushed": 1, "stale": False, "methodology_hash": "0x" + "ab" * 32, "block": 5, "license": "CC BY 4.0"}
+
+    def run_dir(self, **over):
+        import conformance
+        with tempfile.TemporaryDirectory() as d:
+            json.dump({**self.OK, **over}, open(os.path.join(d, "a.json"), "w")); json.dump({"addresses": []}, open(os.path.join(d, "index.json"), "w")); log = []
+            return conformance.main([d], out=log.append), log
+
+    def test_selftest(self):
+        r = subprocess.run([sys.executable, os.path.join(self.HERE, "..", "conformance.py"), "--selftest"], capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr); self.assertIn("selftest ok", r.stdout)
+
+    def test_a_conforming_label_passes_and_the_index_is_skipped(self):
+        code, log = self.run_dir(); self.assertEqual(code, 0, log); self.assertIn("1 label(s), 0 break", log[-1])
+
+    def test_each_way_to_break_the_specification_is_a_failure(self):
+        for over, why in (({"band": "strong"}, "band"), ({"keys_to_move": 0}, "zero keys"), ({"money_per_key_usd": 0}, "unknown amount"), ({"keys_to_move": None}, "not read"), ({"requirements": []}, "six"), ({"license": ""}, "licence")):
+            code, log = self.run_dir(**over); self.assertEqual(code, 1, (over, log)); self.assertTrue(any(l.startswith("FAIL") and why in l for l in log), (over, log))
+
+    def test_off_formula_is_a_difference_to_declare_not_a_failure(self):
+        code, log = self.run_dir(composite=60, band="decent"); self.assertEqual(code, 0); self.assertTrue(any(l.startswith("DIFFERENCE") for l in log))
+
+    def test_nothing_to_read_is_exit_2_never_a_pass(self):
+        import conformance
+        with tempfile.TemporaryDirectory() as d: self.assertEqual(conformance.main([d], out=lambda s: None), 2)
+        self.assertEqual(conformance.main([os.path.join(d, "nope.json")], out=lambda s: None), 2)
+
+    def test_url_follows_the_real_index_shape_and_a_bad_index_is_exit_2(self):
+        import conformance
+        twins = {"https://x.org/p/index.json": {"count": 1, "addresses": {"0xabc": [{"chain": "Base", "key": "base", "name": "n"}]}}, "https://x.org/p/base-0xabc.json": {**self.OK}}
+        real = conformance.load; conformance.load = lambda src: twins[src]
+        try:
+            log = []; self.assertEqual(conformance.main(["--url", "https://x.org/p/index.json"], out=log.append), 0, log); self.assertIn("1 label(s)", log[-1])
+            twins["https://x.org/p/base-0xabc.json"] = {**self.OK, "band": "strong"}; self.assertEqual(conformance.main(["--url", "https://x.org/p/index.json"], out=lambda s: None), 1)
+            twins["https://x.org/p/index.json"] = {"addresses": ["0xabc"]}; self.assertEqual(conformance.main(["--url", "https://x.org/p/index.json"], out=lambda s: None), 2)   # a list is not the index: unreadable, not a break of the spec
+            self.assertEqual(conformance.main(["--url"], out=lambda s: None), 2)
+        finally: conformance.load = real
+
+    def test_a_truncated_network_answer_is_unreadable_not_a_crash(self):
+        import conformance, http.client
+        real = conformance.load
+        def boom(src): raise http.client.IncompleteRead(b"x")
+        conformance.load = boom
+        try: self.assertEqual(conformance.main(["--url", "https://x.org/p/index.json"], out=lambda s: None), 2)
+        finally: conformance.load = real
+
+    def test_the_schema_lists_the_fields_the_spec_names(self):
+        sch = json.load(open(os.path.join(self.HERE, "..", "..", "watch", "schema", "label.schema.json")))
+        for f in ("composite", "keys_to_move", "react_hours", "money_per_key_usd", "requirements", "methodology_hash", "block", "stale", "last_pushed"): self.assertIn(f, sch["required"])
+
+
+class TestSignedWebhook(unittest.TestCase):
+    """The machine webhook of the alerts (evaluate_rules.signed_webhook): a receiver can prove the body is ours and refuse a replay; plain http and a missing secret never send."""
+    def test_signature_is_the_hmac_of_timestamp_dot_body_and_a_receiver_can_check_it(self):
+        import hashlib, hmac
+        h, body = evaluate_rules.signed_webhook("https://example.org/hook", "s3cret", {"event": "alerts", "alerts": [{"rule": "r"}]}, now=1760000000)
+        self.assertEqual(h["x-aro-timestamp"], "1760000000")
+        want = "sha256=" + hmac.new(b"s3cret", b"1760000000." + body, hashlib.sha256).hexdigest()
+        self.assertTrue(hmac.compare_digest(h["x-aro-signature"], want))
+        self.assertNotEqual(h["x-aro-signature"], evaluate_rules.signed_webhook("https://example.org/hook", "other", {"event": "alerts", "alerts": [{"rule": "r"}]}, now=1760000000)[0]["x-aro-signature"])
+        self.assertNotEqual(h["x-aro-signature"], evaluate_rules.signed_webhook("https://example.org/hook", "s3cret", {"event": "alerts", "alerts": [{"rule": "r"}]}, now=1760000001)[0]["x-aro-signature"])   # the timestamp is signed: a replay with a new one fails
+
+    def test_http_and_an_empty_secret_never_send(self):
+        for url, sec in (("http://example.org/hook", "x"), ("https://example.org/hook", ""), ("ftp://x", "x")):
+            self.assertIsNone(evaluate_rules.signed_webhook(url, sec, {}))
+            self.assertFalse(evaluate_rules.post_signed(url, sec, {}))
+
+    def test_the_workflow_hands_both_secrets_by_environment(self):
+        w = os.path.join(os.path.dirname(__file__), "..", "..", ".github", "workflows", "watch.yml")
+        if not os.path.exists(w): self.skipTest("watch.yml is not beside the scripts in this checkout")
+        src = open(w, encoding="utf-8").read()
+        self.assertIn("ALERT_WEBHOOK_URL: ${{ secrets.ALERT_WEBHOOK_URL }}", src); self.assertIn("ALERT_WEBHOOK_SECRET: ${{ secrets.ALERT_WEBHOOK_SECRET }}", src)
+
+
+class TestWarningLedger(unittest.TestCase):
+    """scripts/warning_ledger.py: the notice the watch really gave, and the misses kept next to the warnings."""
+    HERE = os.path.dirname(__file__)
+
+    def test_selftest(self):
+        r = subprocess.run([sys.executable, os.path.join(self.HERE, "..", "warning_ledger.py"), "--selftest"], capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr); self.assertIn("selftest ok", r.stdout)
+
+    def test_the_workflow_runs_it_before_the_run_is_signed_and_the_contract_names_it(self):
+        w = os.path.join(self.HERE, "..", "..", ".github", "workflows", "watch.yml")
+        if not os.path.exists(w): self.skipTest("watch.yml is not beside the scripts in this checkout")
+        src = open(w, encoding="utf-8").read(); self.assertIn("scripts/warning_ledger.py", src); self.assertLess(src.index("scripts/warning_ledger.py"), src.index("scripts/sign_run.py"))
+        api = os.path.join(self.HERE, "..", "..", "watch", "API.md")
+        if os.path.exists(api): self.assertIn("`warning_ledger.json`", open(api, encoding="utf-8").read())
+
+    def test_only_the_first_run_makes_history_baseline_later_applied_before_sight_is_a_miss(self):
+        import warning_ledger as wl
+        T = 1_790_000_000
+        po = lambda recent: {"results": [{"chain": "ethereum", "address": "0xAA", "name": "TL", "status": "ok", "pending": [], "recent": recent}]}
+        old = {"id": "old", "queued_at": T - 5000, "still_queued": False}; fresh = {"id": "fresh", "queued_at": T + 100, "still_queued": False}
+        l1 = wl.update(None, po([old]), T); self.assertEqual(l1["entries"]["ethereum:0xaa:old"]["outcome"], "baseline")
+        l2 = wl.update(l1, po([old, fresh]), T + 3600); self.assertEqual(l2["entries"]["ethereum:0xaa:fresh"]["outcome"], "missed"); self.assertEqual(l2["summary"]["baseline"], 1)
+
+
+class TestPageWithoutJavaScriptAndTheLedgerCard(unittest.TestCase):
+    """12/10: the page was empty without JavaScript (a reader and any crawler saw no number); the warning ledger had no display; the cheapest fix of GMX crossed a band without saying what was missing."""
+    def src(self, name):
+        p = os.path.join(os.path.dirname(__file__), "..", "..", "..", name)
+        if not os.path.exists(p): self.skipTest(name + " is not beside the surveillance folder in this checkout")
+        return open(p, encoding="utf-8").read()
+
+    def test_the_build_writes_the_facts_into_the_noscript_block(self):
+        b = self.src("appliquer_oracle_site.py")
+        self.assertIn("Authority risk, read from the chain", b); self.assertIn("The 15 lowest scores", b); self.assertIn("everything below does not", b)
+        self.assertIn('assert _m, "the noscript block of the page was not found"', b)      # a dashboard whose block moved stops the build instead of publishing the old one-line message
+
+    def test_the_ledger_card_is_in_the_page_and_in_the_evidence_view(self):
+        b, a, s = self.src("appliquer_oracle_site.py"), self.src("module-all.js"), self.src("module-shell.js")
+        self.assertIn('id="ledger-fold"', b); self.assertIn('id="ledgerPanel"', b); self.assertIn("function ledgerPanel()", a); self.assertIn("incidents(allState.rows); ledgerPanel();", a)
+        self.assertEqual(s.count("#ledger-fold"), 2); self.assertIn("warning ledger", s)                  # tagged to Evidence and listed with the folds that become cards
+        self.assertIn("(missed)", a); self.assertIn("count as neither", a)                                  # the misses are said in the same breath as the warnings
+
+    def test_the_cheapest_fix_says_what_is_actually_missing(self):
+        b = self.src("appliquer_oracle_site.py")
+        self.assertIn("def _main_gap(t):", b); self.assertIn('"main_gap": (_main_gap(_t) if _t else None)', b); self.assertIn("not a fix for the weakness", b)
+        api = os.path.join(os.path.dirname(__file__), "..", "..", "watch", "API.md")
+        if os.path.exists(api): self.assertIn("| `main_gap` |", open(api, encoding="utf-8").read())
+
+    def test_placeholders_are_not_text_not_assessed_is_generated_and_the_independent_read_goes_to_latest_where_old_state_is_gone(self):
+        b, c = self.src("appliquer_oracle_site.py"), self.src("module-all.css")
+        self.assertIn('class="js-ph" data-ph="%s"', b); self.assertIn(".js-ph::before { content: attr(data-ph); }", c)            # the waiting text is drawn by CSS, so the text of the HTML has no "Loading…"
+        self.assertIn("do not read \\\"no key shared\\\" as established", b)   # 16 pages said no key shared while their own independent read listed another contract with the same admin
+        self.assertIn("def _not_assessed(key, addr):", b); self.assertIn('"not_assessed": _not_assessed(_key, _addr)', b); self.assertIn("Not assessed for this contract", b)
+        self.assertIn('_SO_LATEST = {"ethereum-l1", "arbitrum"}', b); self.assertIn("key not in _SO_LATEST", b)
+        api = os.path.join(os.path.dirname(__file__), "..", "..", "watch", "API.md")
+        if os.path.exists(api): self.assertIn("| `not_assessed` |", open(api, encoding="utf-8").read())
+
+    def test_first_impression_fixes_stay(self):
+        """12/10, a harsh review of the whole site: the radar crossed the words on a wide screen, and the Evidence view opened on 'Not verified yet'."""
+        c, s = self.src("module-all.css"), self.src("module-shell.js")
+        self.assertIn('.sm-left .sm-head::before, #app[data-view="check"] .sm-left .sm-fc::before', c)      # a calm dark pool behind each text block, the radar stays whole around it
+        self.assertIn(".fc-now { background: color-mix(in srgb, var(--wxc) 9%, #0b1018); }", c)
+        self.assertIn(".sh-add { background: transparent;", c); self.assertIn("#app[data-view=\"check\"] .fc-pips { flex-wrap: wrap;", c)   # one filled button per screen; the chain chips are not cut
+        self.assertIn("ev-na", s); self.assertIn(".ev-step.ev-na em", c)   # no data is not a warning
+        self.assertIn("setView.autoVerified", s); self.assertIn("saveData", s)                              # the four checks run on their own the first time Evidence opens, never on a data-saver connection
+
+
+def _owner_approval(here, folder):
+    """An approval file may exist (the owner asked for the page); when it does it carries a dated line. An empty file is not an approval."""
+    p = os.path.join(here, "..", "..", "..", folder, "approved.txt")
+    if os.path.exists(p): assert open(p, encoding="utf-8").read().strip(), p + " is empty"
+
+
+class TestBacktestPage(unittest.TestCase):
+    owner_approval = staticmethod(_owner_approval)
+    """The Backtest page (construire_backtest.py): published only after its owner has read it, every figure computed from backtest/incidents.json, misses in the same sentence as the hits."""
+    HERE = os.path.dirname(__file__)
+
+    def path(self, name):
+        p = os.path.join(self.HERE, "..", "..", "..", name)
+        if not os.path.exists(p): self.skipTest(name + " is not beside the surveillance folder in this checkout")
+        return p
+
+    def test_selftest_and_the_approval_gate(self):
+        r = subprocess.run([sys.executable, self.path("construire_backtest.py"), "--selftest"], capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr); self.assertIn("selftest ok", r.stdout)
+        self.owner_approval(self.HERE, "backtest")   # the file exists only when the owner asked for it: a dated line says whose request it is, never an empty file
+
+    def test_on_a_phone_every_cell_carries_its_own_label(self):
+        """The header row is hidden under 640 px: a table whose cells lost their column names is unreadable (a11y pass, 12/10)."""
+        for name in ("construire_backtest.py", "construire_comparaison.py"):
+            src = open(self.path(name), encoding="utf-8").read(); self.assertGreaterEqual(src.count('data-label="'), 5, name)
+        self.assertIn("td[data-label]::before{content:attr(data-label)", open(self.path("construire_backtest.py"), encoding="utf-8").read())
+
+    def test_the_build_calls_it_and_the_data_is_consistent_with_the_note(self):
+        b = open(self.path("appliquer_oracle_site.py"), encoding="utf-8").read()
+        self.assertIn("construire_backtest", b); self.assertIn("_bt.build(SITE, HERE, _CSP_STATIC)", b); self.assertIn("oracle/backtest/", b)
+        d = json.load(open(self.path("backtest/incidents.json"), encoding="utf-8"))
+        self.assertEqual((len(d["incidents"]), len(d["in_scope"])), (55, 7)); slugs = {i["slug"] for i in d["incidents"]}
+        self.assertTrue(all(s["slug"] in slugs for s in d["in_scope"])); self.assertEqual(sum(1 for i in d["incidents"] if i["in_scope"]), 7)
+        self.assertEqual(sorted(s["flagged"] for s in d["in_scope"]), ["no", "no", "not measurable", "not measurable", "not measurable", "yes", "yes"])
+
+
+    def test_a_code_block_scrolls_inside_itself_instead_of_widening_the_page(self):
+        """12/10, measured on the published pages at 375 px: roles, provenance and verify were 2927, 900 and 1675 px wide because a curl line in a pre pushed the whole page sideways. The shared stylesheet now scrolls the block itself."""
+        p = self.path("construire_backtest.py"); s = open(p, encoding="utf-8").read()
+        self.assertIn("pre{overflow-x:auto;max-width:100%", s); self.assertIn("overflow-wrap:anywhere", s)
+
+
+class TestProvenancePage(unittest.TestCase):
+    owner_approval = staticmethod(_owner_approval)
+    """construire_provenance.py: every figure from the signature file, the limits said, nothing written without the owner's approval file, and the commands on the page are real options of the scripts."""
+    HERE = os.path.dirname(__file__)
+
+    def path(self, name):
+        p = os.path.join(self.HERE, "..", "..", "..", name)
+        if not os.path.exists(p): self.skipTest(name + " is not beside the surveillance folder in this checkout")
+        return p
+
+    def test_selftest_and_no_approval_file_written_by_a_session(self):
+        r = subprocess.run([sys.executable, self.path("construire_provenance.py"), "--selftest"], capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr); self.assertIn("selftest ok", r.stdout)
+        self.owner_approval(self.HERE, "provenance")   # the file exists only when the owner asked for it: a dated line says whose request it is, never an empty file
+
+    def test_the_commands_on_the_page_exist_in_the_scripts(self):
+        pg = open(self.path("construire_provenance.py"), encoding="utf-8").read()
+        for cmd, needle in (("audit_public.py", '"--ref"'), ("verify_chain.py", '"--events"'), ("sign_run.py", '"--verify"')):
+            self.assertIn(cmd, pg); src = open(os.path.join(self.HERE, "..", cmd), encoding="utf-8").read(); self.assertIn(needle, src, cmd + " has no " + needle)
+        b = open(self.path("appliquer_oracle_site.py"), encoding="utf-8").read(); self.assertIn("construire_provenance", b); self.assertIn("provenance/approved.txt", b)
+
+
+class TestNeighboursPage(unittest.TestCase):
+    owner_approval = staticmethod(_owner_approval)
+    """construire_comparaison.py: one row per neighbour from its own pages, every cell filled ("Not stated" when unknown), nothing written without the owner's approval file."""
+    HERE = os.path.dirname(__file__)
+
+    def path(self, name):
+        p = os.path.join(self.HERE, "..", "..", "..", name)
+        if not os.path.exists(p): self.skipTest(name + " is not beside the surveillance folder in this checkout")
+        return p
+
+    def test_selftest_and_the_gate(self):
+        r = subprocess.run([sys.executable, self.path("construire_comparaison.py"), "--selftest"], capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr); self.assertIn("selftest ok", r.stdout)
+        self.owner_approval(self.HERE, "compare")   # the file exists only when the owner asked for it: a dated line says whose request it is, never an empty file
+        b = open(self.path("appliquer_oracle_site.py"), encoding="utf-8").read(); self.assertIn("construire_comparaison", b); self.assertIn("compare/approved.txt", b)
+
+    def test_no_adjective_of_praise_or_blame_in_the_rows(self):
+        d = json.load(open(self.path("compare/tools.json"), encoding="utf-8")); txt = " ".join(" ".join(str(v) for v in x.values()) for x in d["tools"]).lower()
+        for w in ("best", "worst", "better", "inferior", "superior", "powerful", "limited", "weak", "poor", "excellent", "only tool", "unique"): self.assertNotIn(w, txt, w)
+
+
+class TestSiteForbiddenPatternsCheck(unittest.TestCase):
+    """controle_site_interdits.py: the publication guard's own regular expression, run over a folder of files to publish; the publish script stops on an occurrence."""
+    HERE = os.path.dirname(__file__)
+
+    def test_selftest_and_the_publish_script_calls_it_before_the_commit(self):
+        p = os.path.join(self.HERE, "..", "..", "..", "controle_site_interdits.py"); sh = os.path.join(self.HERE, "..", "..", "..", "publier-oracle-site.sh")
+        if not os.path.exists(p) or not os.path.exists(sh): self.skipTest("not beside the surveillance folder in this checkout")
+        if not os.path.exists(os.path.join(self.HERE, "..", "..", "..", "..", "2026-09-30-garde-publication", "garde_prepush.py")): self.skipTest("the publication guard is not on this machine")
+        r = subprocess.run([sys.executable, p, "--selftest"], capture_output=True, text=True); self.assertEqual(r.returncode, 0, r.stdout + r.stderr); self.assertIn("selftest ok", r.stdout)
+        s = open(sh, encoding="utf-8").read(); self.assertIn("controle_site_interdits.py", s); self.assertLess(s.index("controle_site_interdits.py"), s.index('git -C "$W/$r" add -A'))
+
+
+class TestReadItYourselfPage(unittest.TestCase):
+    """construire_lecture.py: the slots and selectors on the page are read from second_opinion.py (never retyped), the counts from the published file, nothing written without the approval file."""
+    HERE = os.path.dirname(__file__)
+
+    def test_selftest_the_constants_are_the_readers_own_and_the_build_calls_it(self):
+        p = os.path.join(self.HERE, "..", "..", "..", "construire_lecture.py"); b = os.path.join(self.HERE, "..", "..", "..", "appliquer_oracle_site.py")
+        if not os.path.exists(p) or not os.path.exists(b): self.skipTest("not beside the surveillance folder in this checkout")
+        r = subprocess.run([sys.executable, p, "--selftest"], capture_output=True, text=True); self.assertEqual(r.returncode, 0, r.stdout + r.stderr); self.assertIn("selftest ok", r.stdout)
+        src = open(p, encoding="utf-8").read(); self.assertIn("second_opinion.py", src); self.assertNotIn("0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103", src)   # no retyped constant: it cannot drift
+        bs = open(b, encoding="utf-8").read(); self.assertIn("construire_lecture", bs); self.assertIn("lecture/approved.txt", bs); self.assertIn("oracle/verify/", bs)
+
+
+class TestSingleSourceForTheComparison(unittest.TestCase):
+    """12/10 (Spap: one source): compare/tools.json builds the Neighbouring tools page; the README carries a sentence and a link, never a hand-written table of competitors again."""
+    HERE = os.path.dirname(__file__)
+    TABLE = "| | On-chain, composable | Independent of the rated protocol | Authority risk specifically |\n|---|---|---|---|\n| Hypernative, Blockaid | no | yes | partial |\n| **This project** | **yes** | **yes** | **yes** |\n"
+
+    def test_the_patch_replaces_the_table_and_is_idempotent(self):
+        patch = os.path.join(self.HERE, "..", "..", "..", "patch_readme_vitrine.py")
+        if not os.path.exists(patch): self.skipTest("patch_readme_vitrine.py is not beside the surveillance folder in this checkout")
+        with tempfile.TemporaryDirectory() as tmp:
+            os.makedirs(os.path.join(tmp, "watch", "scores")); json.dump({"targets": [{}]}, open(os.path.join(tmp, "watch", "scores", "a.json"), "w"))
+            p = os.path.join(tmp, "README.md"); open(p, "w", encoding="utf-8").write("# T\n\n## How it compares\n\n" + self.TABLE + "\nThe longer comparison is in docs.\n")
+            for _ in range(2): subprocess.run([sys.executable, patch, p], capture_output=True, text=True, check=True)
+            out = open(p, encoding="utf-8").read()
+        self.assertNotIn("Hypernative", out); self.assertNotIn("On-chain, composable", out); self.assertIn("realspap.github.io/oracle/compare/", out); self.assertEqual(out.count("Neighbouring tools, one row each"), 1)
+
+    def test_no_hand_written_competitor_table_in_the_readme_of_the_folder_and_the_source_of_truth_exists(self):
+        ov = os.path.join(self.HERE, "..", "..", "..", "overlay", "README.md"); tj = os.path.join(self.HERE, "..", "..", "..", "compare", "tools.json")
+        if not os.path.exists(ov) or not os.path.exists(tj): self.skipTest("not beside the surveillance folder in this checkout")
+        r = open(ov, encoding="utf-8").read(); self.assertNotIn("On-chain, composable", r); self.assertNotIn("| Hypernative, Blockaid", r); self.assertIn("oracle/compare/", r)
+        self.assertTrue(json.load(open(tj, encoding="utf-8"))["tools"])
+
+
+class TestRolesPage(unittest.TestCase):
+    """construire_roles.py: one measured case with its null result and limits, holders shown shortened, nothing written without the approval file."""
+    HERE = os.path.dirname(__file__)
+
+    def test_selftest_the_build_calls_it_and_no_full_address_of_a_holder_is_in_the_data(self):
+        p = os.path.join(self.HERE, "..", "..", "..", "construire_roles.py"); b = os.path.join(self.HERE, "..", "..", "..", "appliquer_oracle_site.py"); f = os.path.join(self.HERE, "..", "..", "..", "roles", "finding.json")
+        if not all(os.path.exists(x) for x in (p, b, f)): self.skipTest("not beside the surveillance folder in this checkout")
+        r = subprocess.run([sys.executable, p, "--selftest"], capture_output=True, text=True); self.assertEqual(r.returncode, 0, r.stdout + r.stderr); self.assertIn("selftest ok", r.stdout)
+        bs = open(b, encoding="utf-8").read(); self.assertIn("construire_roles", bs); self.assertIn("roles/approved.txt", bs)
+        d = json.load(open(f, encoding="utf-8")); self.assertEqual(len(d["holders_short"]), 4); self.assertEqual(d["divergences"], 0)
+        self.assertFalse(re.search(r"0x[0-9a-fA-F]{40}", " ".join(d["holders_short"]))); self.assertTrue(re.fullmatch(r"0x[0-9a-fA-F]{40}", d["contract"]))   # the contract is public; the role holders are shortened
+
+
+class TestWaitlistAndDailyChannel(unittest.TestCase):
+    """12/10, the waitlist for per-protocol alerts (a thumbs-up on a public issue, no form, no e-mail, no price) and the prepared, off-by-default daily summary of the public Telegram channel."""
+    HERE = os.path.dirname(__file__)
+
+    def path(self, name):
+        p = os.path.join(self.HERE, "..", "..", "..", name)
+        if not os.path.exists(p): self.skipTest(name + " is not beside the surveillance folder in this checkout")
+        return p
+
+    def test_the_issue_text_has_no_price_no_collection_and_the_title_of_the_config(self):
+        cfg = json.load(open(self.path("waitlist/config.json"), encoding="utf-8")); body = open(self.path("waitlist/issue.md"), encoding="utf-8").read()
+        self.assertEqual(cfg["title"], "Waitlist: per-protocol alerts, faster than 6 h"); self.assertNotIn("fallback_count", cfg)            # no invented count
+        for w in ("$", "USD", "EUR", "per month", "a month", "price:", "first", "only tool"): self.assertNotIn(w, body, w)
+        self.assertIn("no e-mail", body); self.assertIn("thumbs-up", body); self.assertIn("RealSpap", body)
+
+    def test_the_site_reads_the_count_at_build_shows_a_dash_when_unread_and_collects_nothing(self):
+        b = open(self.path("appliquer_oracle_site.py"), encoding="utf-8").read(); s = open(self.path("module-shell.js"), encoding="utf-8").read()
+        self.assertIn('"count": None', b); self.assertIn("var ARO_WAITLIST", b); self.assertIn("u2014", s); self.assertIn("Join the waitlist", s); self.assertIn("Per-protocol alerts, faster than 6 h: coming soon", s)
+        self.assertNotIn("<form", s[s.index("function wlState"):s.index("function mountFoot")])            # no form, no input: the signup is on GitHub
+
+    def test_daily_summary_is_off_by_default_and_names_no_protocol(self):
+        w = os.path.join(self.HERE, "..", "..", ".github", "workflows", "watch.yml")
+        if not os.path.exists(w): self.skipTest("watch.yml is not beside the scripts in this checkout")
+        src = open(w, encoding="utf-8").read(); self.assertIn("vars.TELEGRAM_MODE == 'daily'", src); self.assertIn("vars.TELEGRAM_MODE != 'daily'", src); self.assertIn("steps.run.outputs.code == '2' && vars.TELEGRAM_MODE != 'daily'", src)          # nothing changes until the owner sets the variable; the full alarm text (protocols, findings) does not reach the public channel in daily mode
+        import evaluate_rules, telegram_digest
+        r = subprocess.run([sys.executable, os.path.join(self.HERE, "..", "telegram_digest.py"), "--selftest"], capture_output=True, text=True); self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        self.assertIn('os.environ.get("TELEGRAM_MODE") != "daily"', open(os.path.join(self.HERE, "..", "evaluate_rules.py"), encoding="utf-8").read())
+
+
+class TestLiveCriticalAlertsInDailyMode(unittest.TestCase):
+    """12/10, in daily mode the public Telegram channel still carries critical alerts live (a drain, a pause, an executed upgrade whose code is not verified); everything else waits for the summary."""
+    def alert(self, rule, sev="high", target="0xAbC0000000000000000000000000000000000001"):
+        return {"rule": rule, "severity": sev, "target": target, "chain": "Base", "title": "T", "score": 10}
+
+    def test_the_live_set_is_exactly_drain_pause_and_unverified_upgrade(self):
+        import evaluate_rules as e
+        drain = "the contract's own balance fell by 70% or more since the previous run (totalAssets(), token units, $1M or more)"
+        self.assertTrue(e.live_on_telegram(self.alert(drain))); self.assertTrue(e.live_on_telegram(self.alert("the contract has been paused since the previous run (paused() or isPaused() now true)")))
+        up = "an upgrade was executed: the implementation behind this contract changed since the previous run"
+        self.assertTrue(e.live_on_telegram(self.alert(up), {}))                                            # no source file: not verified, the cautious side
+        self.assertTrue(e.live_on_telegram(self.alert(up), {"0xabc0000000000000000000000000000000000001": False}))
+        self.assertFalse(e.live_on_telegram(self.alert(up), {"0xabc0000000000000000000000000000000000001": True}))   # verified code waits for the summary
+
+    def test_everything_else_waits_even_when_it_is_high(self):
+        import evaluate_rules as e
+        for rule in ("the live admin of this contract changed since the previous run (independent read)", "delay removed: timelock score fell to 0", "a queued change against this contract is ready to execute now",
+                     "a secondary role of the contract (curator, guardian, pauser) changed hands", "score dropped by 10 or more", "the contract's own delay is announced to get shorter"):
+            self.assertFalse(e.live_on_telegram(self.alert(rule)), rule)
+        self.assertFalse(e.live_on_telegram(self.alert("the contract has been paused since the previous run", sev="medium")))      # a downgraded rule leaves the live set
+        self.assertFalse(e.live_on_telegram(self.alert("the contract's own balance fell by 30% to 70% since the previous run")))   # 30 to 70 percent is medium and not a drain
+
+    def test_the_source_file_is_reduced_to_addresses_and_a_missing_file_is_empty(self):
+        import evaluate_rules as e
+        with tempfile.TemporaryDirectory() as d:
+            p = os.path.join(d, "impl_sources.json"); json.dump({"by_target": {"base:0xABC": {"verified": True}, "arbitrum:0xdef": {"verified": None}}}, open(p, "w"))
+            self.assertEqual(e.impl_verified_by_address(p), {"0xabc": True, "0xdef": None}); self.assertEqual(e.impl_verified_by_address(os.path.join(d, "nope.json")), {})
+
+
+class TestDistributionFormats(unittest.TestCase):
+    """12/10: any README can show a contract's live score (shields endpoint badge on every contract page), the twins and an index exist at versioned paths, and every static page carries Open Graph and Twitter tags."""
+    HERE = os.path.dirname(__file__)
+
+    def path(self, name):
+        p = os.path.join(self.HERE, "..", "..", "..", name)
+        if not os.path.exists(p): self.skipTest(name + " is not beside the surveillance folder in this checkout")
+        return open(p, encoding="utf-8").read()
+
+    def test_badge_snippet_reads_the_published_badge_file_of_the_contract(self):
+        b = self.path("appliquer_oracle_site.py")
+        self.assertIn("def _badge_md(key, addr, name):", b); self.assertIn("img.shields.io/endpoint?url=", b); self.assertIn("watch/badge/%s/%s.json", b); self.assertIn("Show this score in your README", b)
+
+    def test_versioned_paths_carry_version_and_generated_at_and_are_documented(self):
+        b = self.path("appliquer_oracle_site.py"); self.assertIn('"version": "v1", "generatedAt": _gen', b); self.assertIn('"oracle", "v1"', b); self.assertIn("scores.json", b)
+        api = os.path.join(self.HERE, "..", "..", "watch", "API.md")
+        if os.path.exists(api): self.assertIn("| `version`, `generatedAt` |", open(api, encoding="utf-8").read())
+
+    def test_every_static_page_has_open_graph_and_twitter_tags(self):
+        root = os.path.join(self.HERE, "..", "..", ".."); self.path("construire_backtest.py"); sys.path.insert(0, root)
+        import construire_backtest
+        h = construire_backtest.shell("T", "D", "https://x.org/", "", "<p>b</p>")
+        for t in ('property="og:title"', 'property="og:description"', 'property="og:image"', 'property="og:url"', 'name="twitter:card" content="summary_large_image"', 'name="twitter:image"'): self.assertIn(t, h, t)
+
+
+class TestPerProtocolPrototype(unittest.TestCase):
+    """construire_protocole.py: the prototype of the per-protocol trust page (Aave V3 only for now), nothing written without the approval file."""
+    HERE = os.path.dirname(__file__)
+
+    def test_selftest_and_the_build_calls_it_and_only_aave_is_listed(self):
+        p = os.path.join(self.HERE, "..", "..", "..", "construire_protocole.py"); b = os.path.join(self.HERE, "..", "..", "..", "appliquer_oracle_site.py"); sl = os.path.join(self.HERE, "..", "..", "..", "protocole", "slugs.txt")
+        if not all(os.path.exists(x) for x in (p, b, sl)): self.skipTest("not beside the surveillance folder in this checkout")
+        r = subprocess.run([sys.executable, p, "--selftest"], capture_output=True, text=True); self.assertEqual(r.returncode, 0, r.stdout + r.stderr); self.assertIn("selftest ok", r.stdout)
+        bs = open(b, encoding="utf-8").read(); self.assertIn("construire_protocole", bs); self.assertIn("protocole/approved.txt", bs)
+        self.assertEqual([l.strip() for l in open(sl, encoding="utf-8") if l.strip()], ["aave-v3"])

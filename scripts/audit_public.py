@@ -17,7 +17,7 @@ What it checks, and prints as PASS / FAIL / NOTE:
      equal the published file, unless the oracle was pushed again since the run (then both are printed, as NOTE).
 Exit 0 when everything passes, 1 on any FAIL. A NOTE is information, not a failure.
 """
-import argparse, glob, hashlib, json, os, random, sys, tempfile, time, urllib.request
+import argparse, glob, hashlib, json, os, random, sys, tempfile, time, urllib.error, urllib.request
 
 RAW = "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/"
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -35,8 +35,16 @@ def fetch_watch(dest):
     """Download the published watch/ files named by the manifest (or, without one, the core files) into dest."""
     os.makedirs(dest, exist_ok=True); names = []
     try:
-        sig = json.loads(get(RAW + "watch/signature.json")); names = list(sig["manifest"]["files"]); open(os.path.join(dest, "signature.json"), "w").write(json.dumps(sig))
-    except Exception:
+        for attempt in (1, 2):                                        # a transient failure is not "this run predates signed manifests": try twice, then stop rather than audit less
+            try: sig = json.loads(get(RAW + "watch/signature.json")); break
+            except urllib.error.HTTPError as e:
+                if e.code == 404: raise
+                if attempt == 2: raise RuntimeError("signature.json could not be fetched (HTTP %d): the audit would silently check less" % e.code)
+            except (OSError, ValueError) as e:
+                if attempt == 2: raise RuntimeError("signature.json could not be fetched (%s): the audit would silently check less" % type(e).__name__)
+        names = list(sig["manifest"]["files"]); open(os.path.join(dest, "signature.json"), "w").write(json.dumps(sig))
+    except RuntimeError: raise
+    except Exception:                                                 # only a real 404 (or a manifest without files) falls back to the core files
         names = ["latest.json", "events.jsonl", "history.jsonl", "alerts.json", "pending_ops.json", "tvl.json", "methodology.json", "chain.json", "API.md"]
         try: names += ["scores/" + (o.get("slug") or __import__("re").sub(r"[^a-z0-9]+", "-", o["name"].lower()).strip("-")) + ".json" for o in json.loads(get(RAW + "watch/latest.json"))["oracles"]]
         except Exception: pass
@@ -61,7 +69,7 @@ def rpc(url, method, params):
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--watch", default=None); ap.add_argument("--sample", type=int, default=8); ap.add_argument("--seed", type=int, default=None)
     ap.add_argument("--ref", default=None, help="a git commit, tag or branch of this checkout: audit the watch/ folder as it was then (every run commits its signed manifest)")
-    a = ap.parse_args(); fails = 0
+    a = ap.parse_args(); fails = 0; incomplete = []
     if a.ref:   # past run: extract watch/ at that commit into a temporary folder and audit that
         import subprocess
         root = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=True, text=True).stdout.strip() or "."
@@ -76,7 +84,10 @@ def main():
     def NOTE(m): print("NOTE  " + m)
     watch = a.watch
     if not watch:
-        watch = os.path.join(tempfile.mkdtemp(prefix="aro-audit-"), "watch"); n = fetch_watch(watch); print("fetched %d published file(s) from %s into %s" % (n, RAW, watch))
+        watch = os.path.join(tempfile.mkdtemp(prefix="aro-audit-"), "watch")
+        try: n = fetch_watch(watch)
+        except RuntimeError as e: print("AUDIT INCOMPLETE: %s. Run it again." % e); sys.exit(3)
+        print("fetched %d published file(s) from %s into %s" % (n, RAW, watch))
     if not os.path.exists(os.path.join(watch, "latest.json")) and not glob.glob(os.path.join(watch, "scores", "*.json")):
         FAIL("nothing to audit: no latest.json and no scores file under %s (an empty folder proves nothing)" % watch)   # 11/10 review: an empty folder used to end on AUDIT PASSED
     # 1. chain
@@ -106,7 +117,7 @@ def main():
                 from nacl.signing import VerifyKey
                 VerifyKey(bytes.fromhex(s["public_key"])).verify(json.dumps(s["manifest"], sort_keys=True, separators=(",", ":")).encode(), bytes.fromhex(s["signature"]))
                 PASS("signature: valid Ed25519 signature by %s… (SELF-ATTESTED: the key is read from the same file, so this proves the files match what that key signed, not who holds it; compare the key with one you pinned yourself)" % s["public_key"][:16])
-            except ImportError: NOTE("signature present (key %s…), pynacl not installed here: pip install pynacl to verify it" % s["public_key"][:16])
+            except ImportError: NOTE("signature present (key %s…) but NOT VERIFIED: pynacl is not installed here (pip install pynacl, then run again); this audit is incomplete" % s["public_key"][:16]); incomplete.append("signature not verified")
             except Exception as e: FAIL("signature: INVALID (%s)" % e)
         else: NOTE("run unsigned (no signing key set by the maintainer at that run)")
     else: NOTE("no signature.json: this run predates signed manifests")
@@ -155,6 +166,7 @@ def main():
         if unread == len(sample): NOTE("on-chain sample NOT RUN: no read answered, so this check proves nothing (it is not a pass)")
         (NOTE if unread == len(sample) else FAIL if agree + later + unread != len(sample) else NOTE if unread else PASS)("on-chain sample: %d of %d re-read scores equal the published file, %d pushed again since, %d not read (RPC)" % (agree, len(sample), later, unread))
     else: NOTE("on-chain sample skipped: the scores files carry no oracle address and RPC (a run before 2026-10-07), nothing to re-read")
+    if incomplete and not fails: print("\nAUDIT INCOMPLETE: 0 failure(s), but %s (exit 3: not a pass)" % "; ".join(incomplete)); sys.exit(3)
     print("\n%s: %d failure(s)" % ("AUDIT PASSED" if not fails else "AUDIT FAILED", fails))
     sys.exit(1 if fails else 0)
 

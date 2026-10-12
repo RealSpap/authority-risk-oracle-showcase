@@ -747,7 +747,7 @@ def main():
         delays = [x for x in ((eff or {}).get("delay_seconds") if eff else (r_.get("delay_seconds") if k == "timelock" else None), r_.get("delay_seconds") if r_.get("kind") == "squads" else None, r_.get("self_delay_seconds")) if x]
         for m_ in r_.get("modules_detail") or []:
             if m_.get("kind") == "zodiac-delay" and m_.get("cooldown_seconds"): pass   # a module-routed delay does not bind the owners: not counted
-        hours = (min(delays) // 3600) if delays else 0
+        hours = (min(delays) // 3600) if delays else (0 if keys is not None else None)   # 0 = "no delay" is a finding about a holder that was read; a holder not read (no key count) has no hours at all, never a 0 (conformance review, 12/10)
         m_ = tvl.get(r_["chain"] + ":" + str(r_["target"]).lower()) if isinstance(tvl, dict) else None; money = float(m_.get("tvl") or 0) if (m_ and not r_.get("tvl_scope")) else None   # a retired or peripheral contract carries no money here
         h_ = held_map.get(r_["chain"] + ":" + str(r_["target"]).lower()) or {}; src = "protocol_tvl" if money else None
         if h_.get("held_usd") is not None: money, src = float(h_["held_usd"]), "contract"   # the contract's own balance beats the protocol figure: 10 vaults with no DefiLlama match carried $0 before (10/10)

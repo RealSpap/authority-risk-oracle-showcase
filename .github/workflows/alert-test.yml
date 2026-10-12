@@ -22,7 +22,7 @@ jobs:
         run: |
           python3 - <<'PY'
           import json, os, re, sys, urllib.error, urllib.request
-          ok_any, bad = False, False
+          bad = False
           def post(url, payload):
               req = urllib.request.Request(url, data=json.dumps(payload).encode(), headers={"Content-Type": "application/json", "User-Agent": "authority-risk-oracle-alert-test"}, method="POST")
               try:
@@ -36,15 +36,15 @@ jobs:
               elif not chat: print("Telegram: TELEGRAM_CHAT_ID is missing (the public channel name with its @)."); bad = True
               else:
                   st, body = post("https://api.telegram.org/bot%s/sendMessage" % tok, {"chat_id": chat, "text": "Authority Risk Oracle: alert test, the channel is connected."})
-                  if st == 200 and '"ok":true' in body: print("Telegram: message sent to %s." % chat); ok_any = True
+                  if st == 200 and '"ok":true' in body: print("Telegram: message sent to %s." % chat)
                   else:
                       d = (re.search(r'"description":"([^"]*)"', body) or [None, body[:120]])[1]; print("Telegram: FAILED (%s): %s" % (st, d)); bad = True
                       if "chat not found" in d: print("  -> the channel name is wrong or private, or the bot is not an administrator of it (channel > Administrators > add the bot, with the right to post).")
                       if st in (401, 404): print("  -> Telegram does not accept the token: revoke it in @BotFather and set the new one.")
           if hook:
               st, body = post(hook, {"content": "Authority Risk Oracle: alert test, the channel is connected."})
-              if 200 <= st < 300: print("Discord: message sent."); ok_any = True
+              if 200 <= st < 300: print("Discord: message sent.")
               else: print("Discord: FAILED (%s)" % st); bad = True
           if not (tok or chat or hook): print("No alert channel is configured (TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID, or DISCORD_WEBHOOK_URL)."); bad = True
-          sys.exit(1 if bad or not ok_any else 0)
+          sys.exit(int(bad))
           PY

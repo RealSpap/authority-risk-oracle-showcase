@@ -7,14 +7,14 @@
 
 Tools (each reads the files under watch/ of a clone, exactly as the command of the same name does): `tour` (what the watch knows, in thirty seconds), `dossier` (one contract in words),
 `find` (a question over all contracts: filters, sorted, a value not read excludes the row and is counted), `compare` (protocols side by side), `brief` (one protocol on every chain) and
-`whatif` (the arithmetic of the published formula for a changed sub-score). Every tool is read-only and returns text; a value the watch did not read is said so, never zero. The only input is
+`whatif` (the arithmetic of the published formula for a changed sub-score) and `check` (a verdict before an agent depends on a contract: ok, fail or unread, with the same rules as the CI gate scripts/authority_check.py). Every tool is read-only and returns text; a value the watch did not read is said so, never zero. The only input is
 what the client sends as tool arguments (chain, address, protocol names, numbers): no argument is ever used as a file path, and a result is cut at 60,000 characters (it says so). A reading of who can
 act and how fast on the tracked contracts, from public data: not an audit and not investment advice. Standard library only.
 """
 import argparse, json, os, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
-import brief, compare, dossier, find, tour, whatif  # noqa: E402
+import authority_check, brief, compare, dossier, find, tour, whatif  # noqa: E402
 
 PROTOCOL = "2025-06-18"; MAX_CHARS = 60000; MAX_ROWS = 200
 SUBS = {"admin": "a sub-score 0-100", "multisig": "a sub-score 0-100", "timelock": "a sub-score 0-100", "price-feed": "a sub-score 0-100", "shared": "a sub-score 0-100"}
@@ -34,6 +34,7 @@ TOOLS = [
              "paused": BOOL, "alert": BOOL, "unreadable": BOOL, "disagree": BOOL, "sort": {"type": "string", "enum": sorted(find.SORTS)}, "limit": {"type": "integer", "minimum": 1, "maximum": MAX_ROWS}})),
     ("compare", "Protocols side by side (or chains with chains=true); every figure says on how many contracts it was read.", schema({"protocols": {"type": "array", "items": STR, "minItems": 1, "maxItems": 8}, "chains": BOOL}, ("protocols",))),
     ("brief", "One protocol on every chain it is tracked on: the weakest deployment, the fewest keys, the money, what needs a person, what was not read.", schema({"protocol": STR}, ("protocol",))),
+    ("check", "Before depending on a contract: ok / fail / unread against a minimum score and a maximum drop (same rules as the CI gate). Not tracked, stale, under the minimum or falling is a fail; an unreadable score is unread, never a pass.", schema({"chain": STR, "address": STR, "min_score": {"type": "integer", "minimum": 0, "maximum": 100}, "max_drop": {"type": "integer", "minimum": 1, "maximum": 100}}, ("chain", "address"))),
     ("whatif", "What the published score formula gives if sub-scores changed (arithmetic, not a prediction that a change of the setup earns that sub-score).", schema(dict({"chain": STR, "address": STR}, **{k: {"type": "integer", "minimum": 0, "maximum": 100} for k in SUBS}), ("chain", "address"))),
 ]
 
@@ -78,6 +79,9 @@ def call_tool(W, name, a):
         lines, err = brief.build(W, a["protocol"])
         if err: raise ToolError(err)
         return "\n".join(lines)
+    if name == "check":
+        ck = authority_check.norm(a["chain"]); doc = authority_check.load(ck, os.path.join(W, "scores"))
+        return authority_check.check_one(ck, a["address"].strip(), a.get("min_score", 0), a.get("max_drop"), doc)[1]
     if name == "whatif":
         found = whatif.locate(W, a["chain"], a["address"])
         if not found: raise ToolError("not tracked: %s %s" % (a["chain"], a["address"]))

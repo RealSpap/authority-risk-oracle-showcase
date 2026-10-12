@@ -8,7 +8,7 @@ each such alert carries its evidence (timelock, tx, selector, when it executes).
 
     python3 scripts/evaluate_rules.py --rules rules.json --scores watch/scores --latest watch/latest.json --tvl watch/tvl.json --out watch/alerts.json
 """
-import argparse, ast, glob, json, os, sys, time, urllib.request
+import argparse, ast, glob, hashlib, hmac, json, os, sys, time, urllib.request
 from pending_ics import SELNAMES  # the same small selector-to-name table as the calendar and the page: an alert names the queued function when the event did not
 
 def _dump_json(obj, path, indent=None):
@@ -76,6 +76,48 @@ def post_json(url, payload):
         req = urllib.request.Request(url, data=json.dumps(payload).encode(), headers={"content-type": "application/json"}, method="POST")
         urllib.request.urlopen(req, timeout=20).read(); return True
     except Exception: return False
+
+# daily mode of the public Telegram channel (TELEGRAM_MODE=daily, off by default): one summary a day, plus these critical alerts live. Everything else (roles, signers, thresholds, delays, per-protocol detail) goes to the summary and to the paid offer.
+READY_FRESH_DAYS = 7   # a queued change ready for longer than this is "approved, not executed", not "ready to execute now"
+LIVE_ON_TELEGRAM = ("the contract's own balance fell by 70% or more", "the contract has been paused since the previous run", "an upgrade was executed")
+
+
+def impl_verified_by_address(path):
+    """watch/impl_sources.json (by_target: "chain:address" -> {verified}) reduced to address -> verified; a missing or unreadable file gives {}, which counts every upgrade as not verified (the cautious side: it is sent live)."""
+    try: bt = (json.load(open(path, encoding="utf-8")) or {}).get("by_target") or {}
+    except (OSError, ValueError): return {}
+    return {str(k).split(":", 1)[-1].lower(): (v or {}).get("verified") for k, v in bt.items()}
+
+
+def live_on_telegram(x, impl_sources=None):
+    """True for an alert that the public channel still carries in real time in daily mode: a drain (70% or more of the contract's own balance), a pause, and an executed upgrade whose new code is NOT verified
+    (an upgrade whose source is verified waits for the daily summary; an unknown state counts as not verified). Only high alerts: a rule renamed or downgraded drops out of the live set instead of leaking into it."""
+    if x.get("severity") != "high" or not str(x.get("rule", "")).startswith(LIVE_ON_TELEGRAM): return False
+    if str(x["rule"]).startswith("an upgrade was executed"):
+        return (impl_sources or {}).get(norm(x.get("target", ""))) is not True      # impl_sources: lower-cased address -> verified (True / False / None)
+    return True
+
+
+def signed_webhook(url, secret, payload, now=None):
+    """A webhook for a machine (12/10/2026): the JSON body is signed with HMAC-SHA256 over "<timestamp>.<body>" with a secret only the receiver and the workflow know, so the receiver can check that the alert is ours and
+    refuse a replay (the timestamp is in the signature). Headers: X-ARO-Timestamp, X-ARO-Signature: sha256=<hex>. Plain http is refused: the body and the signature must not cross the network in the clear.
+    Returns (headers, body) when it can be sent, None for a URL that is not https."""
+    if not url.startswith("https://") or not secret: return None
+    body = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode(); ts = str(int(time.time() if now is None else now))
+    return {"content-type": "application/json", "x-aro-timestamp": ts, "x-aro-signature": "sha256=" + hmac.new(secret.encode(), ts.encode() + b"." + body, hashlib.sha256).hexdigest(), "user-agent": "authority-risk-oracle-webhook/1"}, body
+
+
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, *a, **k): return None          # a 30x answer is a failure: following it could send the signed body to a plain-http address
+
+
+def post_signed(url, secret, payload):
+    r = signed_webhook(url, secret, payload)
+    if r is None: return False
+    try:
+        urllib.request.build_opener(_NoRedirect).open(urllib.request.Request(url, data=r[1], headers=r[0], method="POST"), timeout=20).read(); return True
+    except Exception: return False
+
 
 def bal_text(b):
     """The numbers behind a balance alert, in words: the rule says 30% or more, this says how much (since 2026-10-10)."""
@@ -204,6 +246,8 @@ def main():
                    "held_drop_usd": ((held_all[ka]["prev_amount"] - held_all[ka]["amount"]) * held_all[ka]["price_usd"] if (held_all.get(ka) or {}).get("amount_change_pct") is not None and held_all[ka].get("price_usd") and not held_all[ka].get("stale") else None),   # a stale record never fires, in dollars either (the shipped rules also test held_drop_pct, which already ignored it)
                    "second_opinion": so_status.get(ka), "admin_changed": ka in so_changed, "shared_admin": so_shared.get(ka), "dispute": disputes.get(ka), "upgraded": ka in so_upgraded, "admin_pending": ka in so_pending,
                    "age_days": ((now_s - int(t["lastUpdated"])) / 86400) if t.get("lastUpdated") else None,   # since the last push of this score; the oracles mark it stale at 9 days
+                   "ready_recent": any(op.get("ready_at") and op.get("state") != "expired" and 0 <= now_s - op["ready_at"] <= READY_FRESH_DAYS * 86400 for op in queued.get(ka, [])),   # ready for at most 7 days: urgent. Older: approved and never executed (or replaced), a fact worth showing, not an emergency (12/10: 5 of 6 Squads proposals "ready" were 1 to 3 months old)
+                   "ready_old": any(op.get("ready_at") and op.get("state") != "expired" and now_s - op["ready_at"] > READY_FRESH_DAYS * 86400 for op in queued.get(ka, [])),
                    "ready_in_hours": (min((op["ready_at"] - now_s) / 3600 for op in queued[ka] if op.get("ready_at") and op.get("state") != "expired") if any(op.get("ready_at") and op.get("state") != "expired" for op in queued.get(ka, [])) else None)}   # a Compound-style change past its grace window can no longer run: it is not "ready to execute now"
             evidence = sorted(queued.get(ka, []), key=lambda op: op.get("ready_at") or 0)[:3]
             for r, tree in compiled:
@@ -249,16 +293,19 @@ def main():
     hi = sum(1 for x in active if x["severity"] == "high")
     _dump_json({"schemaVersion": 1, "label": "authority alerts", "message": ("%d firing" % len(active)) + (", %d high" % hi if hi else "") if active else "none firing", "color": "e05d5d" if hi else ("dfb13a" if active else "3fbf8f")}, os.path.join(bd, "alerts.json"))
     new = [x for x in active if not x["notified"] and SEV.get(x["severity"], 0) >= SEV.get(rules.get("notify", {}).get("min_severity", "medium"), 1)]   # new, or not delivered last time
-    sent = []
+    sent = []; impl_src = impl_verified_by_address(os.path.join(os.path.dirname(a.out) or ".", "impl_sources.json"))   # Sourcify state of the code behind each proxy, for the daily mode
     if new and not a.no_send:
         text = "Authority Risk Oracle: %d new alert(s)\n" % len(new) + "\n".join("[%s] %s: %s (%s, score %d)%s" % (x["severity"], x["rule"], x["title"], x["chain"], x["score"], (" " + detail_text(x)) if detail_text(x) else "") for x in new[:10]) + "\nhttps://realspap.github.io/oracle/"
         if os.environ.get("DISCORD_WEBHOOK_URL") and post_json(os.environ["DISCORD_WEBHOOK_URL"], {"content": text[:1900], "allowed_mentions": {"parse": []}}): sent.append("discord")
-        if os.environ.get("TELEGRAM_BOT_TOKEN") and os.environ.get("TELEGRAM_CHAT_ID"):
+        if os.environ.get("ALERT_WEBHOOK_URL") and post_signed(os.environ["ALERT_WEBHOOK_URL"], os.environ.get("ALERT_WEBHOOK_SECRET", ""), {"event": "alerts", "version": 1, "sent_utc": now, "alerts": [{k: x.get(k) for k in ("rule", "severity", "chain", "target", "title", "score", "delta", "tvl_usd", "first_seen")} for x in new[:10]], "page": "https://realspap.github.io/oracle/"}): sent.append("webhook")
+        daily = os.environ.get("TELEGRAM_MODE") == "daily"; tg_new = [x for x in new if live_on_telegram(x, impl_src)] if daily else new   # daily mode (12/10, off by default): the public channel gets one summary a day (scripts/telegram_digest.py --daily) and only the critical alerts live
+        tg_text = text if not daily else ("Authority Risk Oracle: %d critical alert(s)\n" % len(tg_new) + "\n".join("[%s] %s: %s (%s, score %d)" % (x["severity"], x["rule"], x["title"], x["chain"], x["score"]) for x in tg_new[:10]) + "\nhttps://realspap.github.io/oracle/")
+        if os.environ.get("TELEGRAM_BOT_TOKEN") and os.environ.get("TELEGRAM_CHAT_ID") and tg_new:
             try:
                 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "lib")); import alerts
-                if alerts.send_telegram_alert(text if len(text) <= 4000 else text[:3900] + "\n... (cut at Telegram's limit of 4096 characters, the rest is on the alerts page)"): sent.append("telegram")
+                if alerts.send_telegram_alert(tg_text if len(tg_text) <= 4000 else tg_text[:3900] + "\n... (cut at Telegram's limit of 4096 characters, the rest is on the alerts page)"): sent.append("telegram")
             except Exception: pass
-    channels = bool(os.environ.get("DISCORD_WEBHOOK_URL") or (os.environ.get("TELEGRAM_BOT_TOKEN") and os.environ.get("TELEGRAM_CHAT_ID")))
+    channels = bool(os.environ.get("DISCORD_WEBHOOK_URL") or (os.environ.get("ALERT_WEBHOOK_URL") and os.environ.get("ALERT_WEBHOOK_SECRET")) or (os.environ.get("TELEGRAM_BOT_TOKEN") and os.environ.get("TELEGRAM_CHAT_ID") and (os.environ.get("TELEGRAM_MODE") != "daily" or any(live_on_telegram(x, impl_src) for x in new))))
     for i, x in enumerate(new): x["notified"] = (bool(sent) and i < 10) or not channels or a.no_send   # delivered (the message carries ten at most), or nobody to deliver to; a failed or unsent one is retried next run
     _dump_json(out, a.out, indent=1)   # written again with the delivery state
     # the alarm channel that needs no secret (since 2026-10-10): a HIGH alert that appeared this run (not one that stays) is written for the workflow, which opens an issue in the private repository.

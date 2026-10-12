@@ -1,0 +1,50 @@
+name: Authority Risk Check
+description: Fail your workflow when a contract you depend on has a weak, falling or stale authority score (who can move its funds).
+author: RealSpap
+branding:
+  icon: shield
+  color: blue
+
+inputs:
+  chain:
+    description: "One of robinhood, ethereum-l1, arbitrum, base, tempo, plasma, monad, hyperliquid, solana"
+    required: false
+  address:
+    description: "The contract address (a Solana address is case sensitive)"
+    required: false
+  targets:
+    description: "Several contracts, one per line: chain:address[:min-score]  (# comments allowed). Used together with chain and address when both are given."
+    required: false
+  min-score:
+    description: "Fail when the composite authority score is under this value (0 to 100). 0 checks only that the contract is tracked and its score is fresh."
+    required: false
+    default: "0"
+  max-drop:
+    description: "Fail when the score fell by this many points or more since the previous watch run. Empty means no check."
+    required: false
+    default: ""
+  allow-unread:
+    description: "true: a score file that cannot be read is a warning, not a failure (it is never a pass by itself)"
+    required: false
+    default: "false"
+
+runs:
+  using: composite
+  steps:
+    - name: Check the authority score
+      shell: bash
+      env:
+        IN_CHAIN: ${{ inputs.chain }}
+        IN_ADDRESS: ${{ inputs.address }}
+        IN_TARGETS: ${{ inputs.targets }}
+        IN_MIN: ${{ inputs.min-score }}
+        IN_DROP: ${{ inputs.max-drop }}
+        IN_UNREAD: ${{ inputs.allow-unread }}
+      run: |
+        # the inputs travel by environment, never spliced into the command line
+        args=(--min-score "${IN_MIN:-0}")
+        [ -n "$IN_CHAIN" ] && args+=(--chain "$IN_CHAIN" --address "$IN_ADDRESS")
+        [ -n "$IN_DROP" ] && args+=(--max-drop "$IN_DROP")
+        [ "$IN_UNREAD" = "true" ] && args+=(--allow-unread)
+        if [ -n "$IN_TARGETS" ]; then printf '%s\n' "$IN_TARGETS" > "$RUNNER_TEMP/authority-targets.txt"; args+=(--file "$RUNNER_TEMP/authority-targets.txt"); fi
+        python3 "$GITHUB_ACTION_PATH/scripts/authority_check.py" "${args[@]}"

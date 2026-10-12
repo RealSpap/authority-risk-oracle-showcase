@@ -4,7 +4,7 @@
 
 <h1 align="center">Authority Risk Oracle</h1>
 
-<p align="center"><b>Who can really move a DeFi protocol's funds? An on-chain oracle that answers, for 10 ecosystems, in one call any contract can make.</b><br><sub>9 on-chain oracles (8 EVM testnets and Solana devnet), plus Zcash Testnet as a hash commitment: 10 ecosystems, 197 tracked contracts. Composite = 40% admin key + 30% multisig + 30% timelock; price feed and shared control are published beside it. On the EVM oracles the call is <code>getScore(address)</code>; on Solana the score is an account (PDA, seeds <code>["score", target]</code>), read by account.</sub></p>
+<p align="center"><b>Who can really move a DeFi protocol's funds? An on-chain oracle that answers, on 8 EVM chains, in one call any contract can make (on Solana, by reading an account).</b><br><sub>9 on-chain oracles (8 EVM testnets and Solana devnet), plus Zcash Testnet as a hash commitment: 10 ecosystems, 197 tracked contracts. Composite = 40% admin key + 30% multisig + 30% timelock; price feed and shared control are published beside it. On the EVM oracles the call is <code>getScore(address)</code>; on Solana the score is an account (PDA, seeds <code>["score", target]</code>), read by account.</sub></p>
 
 <p align="center">
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue"></a>
@@ -26,7 +26,7 @@
   <a href="docs/OPERATIONS.md">Operate it</a>
 </p>
 
-<p align="center"><b>Live:</b> <a href="https://realspap.github.io/oracle/">overview</a> · <a href="https://realspap.github.io/oracle/dashboard.html">dashboard</a></p>
+<p align="center"><b>Live:</b> <a href="https://realspap.github.io/oracle/">live dashboard</a></p>
 
 Built for Colosseum's [Crypto World's Fair](https://colosseum.com/worldsfair) hackathon.
 
@@ -58,8 +58,8 @@ cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 \
 **2. Open the dashboard**: [realspap.github.io/oracle](https://realspap.github.io/oracle/), one table for the 197 tracked contracts on 9 chains
 (8 EVM testnets and Solana devnet), re-read from the oracles every 6 hours by a read-only job. It shows the money behind each
 setup, the timelock queue before a change applies, the alerts that fire on rules you can fork, why a score moved, and one static
-page per contract. Every score can be re-read from the chain in your browser ("verify all live"). The source is
-[`dashboard/index.html`](dashboard/index.html), a single file with no backend; the watch files are under [`watch/`](watch/API.md).
+page per contract. Every score can be re-read from the chain in your browser ("verify all live"). `/oracle/` is a generated build of the dashboard plus the site shell; its base,
+[`dashboard/index.html`](dashboard/index.html), is a single file with no backend; the watch files are under [`watch/`](watch/API.md).
 
 **3. Audit it yourself, then ask it questions.** Standard library only, no network unless a line says so.
 
@@ -71,6 +71,8 @@ page per contract. Every score can be re-read from the chain in your browser ("v
 - `python3 scripts/find.py --kind eoa --min-money 1e8` asks a question of every tracked contract at once. A value the watch did not read excludes the row and is counted, never matched as a zero; `--csv` gives the rows to a spreadsheet; `--watchlist mine.txt --alert --fail-if-any` is a gate for a cron job that exits 3 when a rule fires on one of your contracts.
 - `python3 scripts/compare.py morpho-blue aave-v3 lido` sets protocols side by side, or chains with `--chains`; every figure says on how many contracts it was read. Each protocol can show its own badge in its README (`watch/badge/protocol/<slug>.json`, its weakest tracked deployment).
 - `python3 scripts/whatif.py base 0x... --timelock 75` shows what the published formula gives if a sub-score changed (arithmetic, not a prediction).
+- `python3 scripts/authority_check.py --chain base --address 0x... --min-score 60` is a CI gate: it fails when a contract you depend on is not tracked, is stale, is under your minimum or is falling (`--max-drop 10`). As a GitHub Action: `uses: RealSpap/authority-risk-oracle-showcase@main` with `chain`, `address`, `min-score` (see [`action.yml`](action.yml)).
+- `python3 scripts/conformance.py <twin.json | folder>` checks any implementation's JSON labels against the open Authority Facts v0.1 format ([`watch/schema/label.schema.json`](watch/schema/label.schema.json)): fields, band, formula, and that an unread value is `null`, never 0. The local MCP server (`scripts/mcp_server.py`) has a `check` tool for an agent that must decide before depending on a contract.
 - `python3 scripts/mcp_server.py --watch watch` is the same data as a local, read-only MCP server for an AI agent (stdio, no account, no key, no network).
 - `python3 scripts/watch_age.py --max-hours 14` is a watchdog for a cron or an uptime monitor: exit 1 if the last run is too old, 2 if its age cannot be established.
 - `python3 scripts/mutate.py` replays the mutations listed in `scripts/tests/mutations.json` (break the code one way, see whether the tests notice) and counts a mutant that does not run as invalid, never as caught. The `Mutation` workflow replays them every week and turns red when one survives.
@@ -78,30 +80,13 @@ page per contract. Every score can be re-read from the chain in your browser ("v
 - One Atom feed per protocol (`watch/feed/protocol/<slug>.xml`) lets a team follow every chain of its protocol at once.
 - For programs and monitors: `watch/catalog.json` lists every published file with the question it answers, `watch/metrics.prom` is the run in the Prometheus text format (a stopped watch is `time() - aro_run_timestamp_seconds > 8 * 3600`), and the site publishes an `llms.txt`.
 
-**3. Audit it yourself, then ask it questions.** Standard library only, no network unless a line says so.
-
-- `python3 scripts/tour.py` is the thirty-second tour: run it first after cloning.
-- `python3 scripts/audit_public.py` checks the hash-chained event log, the signed manifest and the schemas, and re-reads scores from the oracles. `watch/status.json` is the run health in one record.
-- `python3 scripts/consistency.py` checks that the published files describe the same contracts and the same counts (each file passes its schema on its own; this is the check between them).
-- `python3 scripts/dossier.py base 0x...` prints everything the watch knows about one contract, in words, from a clone and with no network.
-- `python3 scripts/brief.py morpho-blue` writes a one-page brief for a protocol on all its chains: weakest deployment, fewest keys, shortest reaction, money counted once per chain, and what was not read.
-- `python3 scripts/find.py --kind eoa --min-money 1e8` asks a question of every tracked contract at once. A value the watch did not read excludes the row and is counted, never matched as a zero; `--csv` gives the rows to a spreadsheet; `--watchlist mine.txt --alert --fail-if-any` is a gate for a cron job that exits 3 when a rule fires on one of your contracts.
-- `python3 scripts/compare.py morpho-blue aave-v3 lido` sets protocols side by side, or chains with `--chains`; every figure says on how many contracts it was read. Each protocol can show its own badge in its README (`watch/badge/protocol/<slug>.json`, its weakest tracked deployment).
-- `python3 scripts/whatif.py base 0x... --timelock 75` shows what the published formula gives if a sub-score changed (arithmetic, not a prediction).
-- `python3 scripts/mcp_server.py --watch watch` is the same data as a local, read-only MCP server for an AI agent (stdio, no account, no key, no network).
-- `python3 scripts/watch_age.py --max-hours 14` is a watchdog for a cron or an uptime monitor: exit 1 if the last run is too old, 2 if its age cannot be established.
-- `python3 scripts/mutate.py` replays the mutations listed in `scripts/tests/mutations.json` (break the code one way, see whether the tests notice) and counts a mutant that does not run as invalid, never as caught. The `Mutation` workflow replays them every week and turns red when one survives.
-- `python3 scripts/demo.py` replays four invented events (a pause, a shorter delay announced, an idle admin Safe waking up, a balance collapse) on a copy of the data and runs the real scripts, so you can see the alerts, the review queue and the dossier react.
-- One Atom feed per protocol (`watch/feed/protocol/<slug>.xml`) lets a team follow every chain of its protocol at once.
-- For programs and monitors: `watch/catalog.json` lists every published file with the question it answers, `watch/metrics.prom` is the run in the Prometheus text format (a stopped watch is `time() - aro_run_timestamp_seconds > 8 * 3600`), and the site publishes an `llms.txt`.
-
-**3. Pull Robinhood Chain's table as JSON** (63 of the tracked targets; `python3 scripts/live_target_counts.py` counts every oracle), with the transaction that produced it so you can cross-check it:
+**4. Pull Robinhood Chain's table as JSON** (63 of the tracked targets; `python3 scripts/live_target_counts.py` counts every oracle), with the transaction that produced it so you can cross-check it:
 
 ```bash
 curl -s https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/api/scores.json | jq '.txHash, (.scores | length)'
 ```
 
-**4. Ask a question the score alone does not answer** (read-only, public RPC, no key):
+**5. Ask a question the score alone does not answer** (read-only, public RPC, no key):
 
 ```bash
 pip install -r scripts/requirements.txt
@@ -167,7 +152,7 @@ interface IAuthorityRiskOracle {
 // in your lending market
 IAuthorityRiskOracle.AuthorityScore memory s = oracle.getScore(collateralProtocol);
 require(!oracle.isStale(collateralProtocol), "authority score stale");   // an old score is no score
-uint256 factorBps = s.compositeScore < 20 ? 0 : (uint256(s.compositeScore) * maxFactorBps) / 100;
+uint256 factorBps = s.compositeScore < 60 ? 0 : 5000 + (uint256(s.compositeScore) - 60) * 3000 / 40;   // the rule of ExampleConsumer below: 0 under 60, then 50% at 60 rising to 80% at 100
 ```
 
 A fuller consumer, with its tests, is [`src/ExampleConsumer.sol`](src/ExampleConsumer.sol). Only an address holding `UPDATER_ROLE`
@@ -226,7 +211,7 @@ the risk is still sold as a closed service, paid by the protocol it rates. This 
 |---|---|---|
 | A lending market, a vault or a curator | `getScore` and `isStale` as a listing and exposure gate | Import the interface; [`src/ExampleConsumer.sol`](src/ExampleConsumer.sol) derives a collateral factor, freezes collateral behind a weak authority and refuses a stale or missing score outright |
 | A DAO risk committee or a delegate | The Watch: the timelock queue before a change applies, Safe changes, signer-kind changes, alerts on rules you can fork | The [dashboard](https://realspap.github.io/oracle/) and the [`watch/`](watch/API.md) files, refreshed every 6 hours; [dispute a score](https://github.com/RealSpap/authority-risk-oracle-showcase/issues/new?template=dispute.yml) and the dispute is recorded in the event log |
-| An auditor, an insurer or a researcher | Open data you can re-derive | [`api/scores.json`](api/scores.json), [`watch/API.md`](watch/API.md) and the dated notes in [`data/`](data/README.md): every number comes from public chain state read on two RPCs, with the method written down |
+| An auditor, an insurer or a researcher | Open data you can re-derive | [`api/scores.json`](api/scores.json), [`watch/API.md`](watch/API.md) and the dated notes in [`data/`](data/README.md): every number comes from public chain state read on public RPCs (one per chain, a second one for some Ethereum L1 reads), with the method written down |
 | A builder on another chain | A pattern, not a product | One scorer file per ecosystem ([`chains/`](chains/README.md)); add a target, pin its score with a test, push through the dry-run-first script |
 
 Where it goes next, stated plainly:
@@ -237,18 +222,11 @@ Where it goes next, stated plainly:
    insurer or institution was found paying for a continuous authority feed: this is a bet on latent demand, not a sold product.
 3. **A standard.** ERC-8241 (Protocol Control Disclosure) standardizes the raw facts of who controls what and leaves scoring to external layers.
    This oracle is built to be that layer.
-4. **More targets, one at a time.** The list is chosen by what people actually hold and lend against, and every addition is read twice and tested.
+4. **More targets, one at a time.** The list is chosen by what people actually hold and lend against, and every addition is read and tested.
 
 ## How it compares
 
-| | On-chain, composable | Independent of the rated protocol | Authority risk specifically |
-|---|---|---|---|
-| Hypernative, Blockaid | no, closed dashboard | yes | partial |
-| Gauntlet, Chaos Labs, LlamaRisk | LlamaGuard PT is on-chain, for collateral risk | no, paid by the protocol rated | no |
-| [SolGov](https://solgov.xyz) | no, a website | yes | yes, Solana only |
-| [Forta Risk Graph](https://github.com/forta-network/forta-risk-skills) | no, an OAuth-gated MCP server | yes | yes, Ethereum mainnet only, and deliberately no scores |
-| DeFiSafety, DeFiScan | no, static reports (DeFiScan stopped in 2026) | yes | partial |
-| **This project** | **yes, `getScore` / `isStale`** | **yes** | **yes, across 10 ecosystems** |
+Neighbouring tools, one row each (what each reads and what it does not, from its own pages): [realspap.github.io/oracle/compare](https://realspap.github.io/oracle/compare/). One source builds that page; this README does not repeat it.
 
 The longer comparison, including what SolGov and LlamaRisk do better and where this project is still thin, is in
 [`docs/LANDSCAPE.md`](docs/LANDSCAPE.md). The business case is in [`BUSINESS.md`](BUSINESS.md).

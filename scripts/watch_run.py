@@ -271,7 +271,7 @@ def write_feed(events):
     seen_ids = {}
     for e in items:
         k = e.get("kind")   # move (this watch), alarm (this watch), admin_change / admin_grew (the independent reader, appended after the run): only a move has field/before/after
-        if k == "move": title = f"{e['oracle']}: {e['label']} {e['field']} {e['before']} to {e['after']}"
+        if k == "move": title = f"{e['oracle']}: {e['label']} added at {e['after']}" if e["before"] is None else f"{e['oracle']}: {e['label']} {e['field']} {e['before']} to {e['after']}"
         elif k == "admin_change": title = f"ADMIN CHANGED {e.get('oracle')} {str(e.get('target'))[:10]}: {e.get('text')}"
         else: title = ("ALARM " if k == "alarm" else "") + str(e.get("text"))
         out += ["<entry>", f"<title>{escape(title)}</title>",

@@ -76,9 +76,9 @@ def main():
                     elif str(e.get("kind", "")).startswith("dispute_"):
                         es.append((e["run_utc"], entry(str(e.get("text"))[:140], "dispute:" + hashlib.sha1(json.dumps(e, sort_keys=True).encode()).hexdigest()[:16], e["run_utc"], str(e.get("text"))[:400], link)))
                     elif e.get("kind") == "move":
-                        es.append((e["run_utc"], entry("%s moved: %s %s -> %s" % (e.get("label") or addr[:10], e.get("field"), e.get("before"), e.get("after")),
+                        es.append((e["run_utc"], entry(("%s added at %s" % (e.get("label") or addr[:10], e.get("after"))) if e.get("before") is None else ("%s moved: %s %s -> %s" % (e.get("label") or addr[:10], e.get("field"), e.get("before"), e.get("after"))),
                                                         "move:" + hashlib.sha1(json.dumps(e, sort_keys=True).encode()).hexdigest()[:16], e["run_utc"],
-                                                        "%s on %s: %s went from %s to %s" % (e.get("label") or addr, name, e.get("field"), e.get("before"), e.get("after")), link)))
+                                                        ("%s on %s was added to the watch at %s" % (e.get("label") or addr, name, e.get("after"))) if e.get("before") is None else ("%s on %s: %s went from %s to %s" % (e.get("label") or addr, name, e.get("field"), e.get("before"), e.get("after"))), link)))
                     else:
                         es.append((e["run_utc"], entry("alarm", "alarm:" + hashlib.sha1(json.dumps(e, sort_keys=True).encode()).hexdigest()[:16], e["run_utc"], str(e.get("text"))[:400], link)))
             for x in alerts:

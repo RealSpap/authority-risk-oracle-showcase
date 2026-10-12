@@ -37,7 +37,7 @@ def main():
     if so and so.get("disagree"): reasons.append("%d second-opinion disagreement(s) to review" % so["disagree"]); worse("degraded")
     if dp and dp.get("open"): reasons.append("%d public dispute(s) open, review pending" % dp["open"]); worse("degraded")
     hi_rules = [x for x in ((rules_al or {}).get("active") or []) if x.get("severity") == "high"]   # since 2026-10-10: a drain, a pause, a change ready to execute, an upgrade: the rules' own high alerts count in the state
-    if hi_rules: reasons.append("%d high alert(s) from the rules firing now (%s)" % (len(hi_rules), "; ".join(sorted({str(x.get("rule"))[:60] for x in hi_rules})[:3]))); worse("degraded")
+    if hi_rules: reasons.append("%d high alert(s) from the rules firing now (%s)" % (len(hi_rules), "; ".join(sorted({str(x.get("rule"))[:100] for x in hi_rules})[:3]))); worse("degraded")
     if meth and meth.get("changes"): reasons.append("methodology changed on %d oracle(s): scores before this run are not comparable" % len(meth["changes"])); worse("degraded")
     if meth and meth.get("mixed"): reasons.append("methodology hashes mixed on %d oracle(s)" % len(meth["mixed"])); worse("degraded")
     rec = {"run_utc": (latest or {}).get("run_utc") or time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "state": state, "reasons": reasons,

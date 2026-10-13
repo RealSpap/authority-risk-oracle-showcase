@@ -1,18 +1,18 @@
 #!/usr/bin/env python3
-"""Niveau 0-5 (Technical Asset Listing Framework d'Aave) de chaque role lu en chaine,
-pour les reserves d'Aave V3 Ethereum Core. Lecture seule, bibliotheque standard seulement.
+"""Level 0-5 (Aave's Technical Asset Listing Framework) of every role read on chain,
+for the Aave V3 Ethereum Core reserves. Read-only, standard library only.
 
-Usage :
-  python3 2026-10-13-mesure-aave-niveaux.py --block 26159551 [--limit 25] [--no-extra] [--json sortie.json]
+Usage:
+  python3 mesure-aave-niveaux.py --block 26159551 [--limit 25] [--no-extra] [--json out.json]
 
-Grille : 0 = EOA sans delai ; 1 = multisig sous la majorite honnete (seuil <= n/2) ;
-2 = multisig a majorite honnete sans timelock ; 3 = multisig + timelock < 48 h ;
-4 = multisig + timelock >= 48 h ; 5 = gouvernance DAO on-chain avec timelock.
-Une erreur d'API n'est jamais un zero : elle est ecrite NON LU et listee a la fin.
+Grid: 0 = EOA with no delay; 1 = multisig below the honest majority (threshold <= n/2);
+2 = honest-majority multisig with no timelock; 3 = multisig + timelock < 48 h;
+4 = multisig + timelock >= 48 h; 5 = on-chain DAO governance with a timelock.
+An API error is never a zero: it is written NOT READ and listed at the end.
 """
 import argparse, base64, functools, http.client, json, os, sys, time, urllib.error, urllib.parse, urllib.request
 
-# ---------------------------------------------------------------- keccak256 (pur Python)
+# ---------------------------------------------------------------- keccak256 (pure Python)
 _RC = [0x0000000000000001, 0x0000000000008082, 0x800000000000808A, 0x8000000080008000,
        0x000000000000808B, 0x0000000080000001, 0x8000000080008081, 0x8000000000008009,
        0x000000000000008A, 0x0000000000000088, 0x0000000080008009, 0x000000008000000A,
@@ -44,7 +44,7 @@ def keccak(data):
         data = data.encode()
     rate = 136
     p = bytearray(data) + b"\x01" + b"\x00" * ((-len(data) - 2) % rate) + b"\x80"
-    if len(p) % rate:  # cas ou un seul octet de bourrage suffit
+    if len(p) % rate:  # case where a single padding byte is enough
         p = bytearray(data) + b"\x81"
     A = [[0] * 5 for _ in range(5)]
     for off in range(0, len(p), rate):
@@ -65,7 +65,7 @@ assert keccak("PAUSER_ROLE") == "0x65d7a28e3265b37a6474929f336521b332c1681b933f6
 assert sel("owner()") == "0x8da5cb5b" and sel("getThreshold()") == "0xe75235b8"
 assert keccak("RoleGranted(bytes32,address,address)") == "0x2f8788117e7eff1d82e926ec794901d17c78024a50270940304540a733656f0d"
 
-# ---------------------------------------------------------------- constantes
+# ---------------------------------------------------------------- constants
 POOL = "0x87870bca3f3fd6335c3f4ce8392d69350b4fa4e2"
 ENDPOINTS = ["https://mainnet.gateway.tenderly.co", "https://eth.llamarpc.com", "https://ethereum-rpc.publicnode.com"]
 COUNT = {}
@@ -89,15 +89,15 @@ T_ROLE_GRANTED = keccak("RoleGranted(bytes32,address,address)")
 T_RELY = keccak("Rely(address)")
 T_LOGNOTE_RELY = sel("rely(address)") + "00" * 28
 T_MINTER_CONF = keccak("MinterConfigured(address,uint256)")
-# DAO reconnues par adresse ; l'appartenance est recoupee en chaine (owner() de l'Executor = PayloadsController)
+# DAOs recognised by address; membership is cross-checked on chain (the Executor's owner() = PayloadsController)
 AAVE_EXECUTORS = {"0x5300a1a15135ea4dc7ad5a167152c01efc9b192a": "Aave Executor lvl1",
                   "0x17dd33ed0e3dd2a80e37489b8a63063161be6957": "Aave Executor lvl2"}
 AAVE_PAYLOADS_CONTROLLER = "0xdabad81af85554e9ae636395611c58f7ec1aaec5"
-# actifs hors des 25 premiers : 2 reserves listees plus loin, 2 actifs non listes avec fiche LlamaRisk
-EXTRA = [("0xb0f70c0bd6fd87dbeb7c10dc692a2a6106817072", "reserve Core hors des 25 (fiche LlamaRisk t/25652)"),
-         ("0x4c9edd5852cd905f086c759e8383e09bff1e68b3", "reserve Core hors des 25 (fiches USDe = autres chaines)"),
-         ("0x07041776f5007aca2a54844f50503a18a72a8b68", "USAT, non liste sur Core (fiche LlamaRisk t/25832)"),
-         ("0x6c6494fd9962eb98b94ffa48f6679058f820700e", "PAXGy, non liste sur Core (fiche LlamaRisk t/25831)")]
+# assets outside the first 25: 2 reserves listed further down, 2 unlisted assets with a LlamaRisk sheet
+EXTRA = [("0xb0f70c0bd6fd87dbeb7c10dc692a2a6106817072", "Core reserve outside the first 25 (LlamaRisk sheet t/25652)"),
+         ("0x4c9edd5852cd905f086c759e8383e09bff1e68b3", "Core reserve outside the first 25 (USDe sheets cover other chains)"),
+         ("0x07041776f5007aca2a54844f50503a18a72a8b68", "USAT, not listed on Core (LlamaRisk sheet t/25832)"),
+         ("0x6c6494fd9962eb98b94ffa48f6679058f820700e", "PAXGy, not listed on Core (LlamaRisk sheet t/25831)")]
 
 # ---------------------------------------------------------------- RPC
 BLOCK = None
@@ -112,7 +112,7 @@ class RpcError(Exception):
 
 
 def _connect(host):
-    """Connexion HTTPS gardee ouverte, a travers le proxy HTTPS de l'environnement s'il y en a un."""
+    """HTTPS connection kept open, through the environment's HTTPS proxy if there is one."""
     px = os.environ.get("HTTPS_PROXY") or os.environ.get("https_proxy")
     if not px:
         return http.client.HTTPSConnection(host, timeout=90)
@@ -120,7 +120,7 @@ def _connect(host):
     conn = http.client.HTTPSConnection(u.hostname, u.port or 443, timeout=90) if u.scheme == "https" else None
     if conn is None:
         conn = http.client.HTTPSConnection(u.hostname, u.port or 80, timeout=90)
-        conn._create_connection = __import__("socket").create_connection  # tunnel CONNECT en clair vers le proxy
+        conn._create_connection = __import__("socket").create_connection  # plain-text CONNECT tunnel to the proxy
     hdr = {}
     if u.username:
         cred = "%s:%s" % (urllib.parse.unquote(u.username), urllib.parse.unquote(u.password or ""))
@@ -137,7 +137,7 @@ def _post(url, method, params):
     host = url.split("/")[2]
     path = "/" + "/".join(url.split("/")[3:])
     body = json.dumps({"jsonrpc": "2.0", "id": 1, "method": method, "params": params})
-    for attempt in (0, 1):  # connexion gardee ouverte ; une reconnexion si le serveur l'a fermee
+    for attempt in (0, 1):  # connection kept open; one reconnect if the server closed it
         conn = _conns.get(host) or _connect(host)
         _conns[host] = conn
         try:
@@ -156,7 +156,7 @@ def _post(url, method, params):
 
 
 def rpc(method, params):
-    """Rend ('ok', resultat) | ('revert', msg) | ('err', msg). Jamais de zero invente."""
+    """Returns ('ok', result) | ('revert', msg) | ('err', msg). Never an invented zero."""
     key = json.dumps([method, params])
     if key in _cache:
         return _cache[key]
@@ -167,13 +167,13 @@ def rpc(method, params):
             try:
                 r = _post(url, method, params)
             except urllib.error.HTTPError as e:
-                last = "HTTP %s sur %s" % (e.code, url)
+                last = "HTTP %s on %s" % (e.code, url)
                 if e.code == 429:
                     time.sleep(0.5 * 2 ** k)
                     continue
                 break
-            except Exception as e:  # reseau, delai, JSON illisible
-                last = "%s sur %s" % (type(e).__name__, url)
+            except Exception as e:  # network, timeout, unreadable JSON
+                last = "%s on %s" % (type(e).__name__, url)
                 if k < 3:
                     time.sleep(1)
                     continue
@@ -184,8 +184,8 @@ def rpc(method, params):
                     out = ("revert", msg)
                     _cache[key] = out
                     return out
-                last = "%s sur %s" % (msg[:120], url)
-                if k < 3:  # erreur serveur : on retente avant de passer au point suivant
+                last = "%s on %s" % (msg[:120], url)
+                if k < 3:  # server error: retry before moving on to the next endpoint
                     time.sleep(0.5 * 2 ** k)
                     continue
                 break
@@ -209,14 +209,14 @@ def call(to, data, what=None):
 
 
 def word_addr(h):
-    """Un mot de 32 octets qui a la forme d'une adresse, sinon None."""
+    """A 32-byte word shaped like an address, otherwise None."""
     if not h or len(h) != 66 or h[2:26] != "0" * 24:
         return None
     return "0x" + h[26:]
 
 
 def get_addr(to, sig):
-    st, res = call(to, sel(sig), "%s sur %s" % (sig, to))
+    st, res = call(to, sel(sig), "%s on %s" % (sig, to))
     if st != "ok":
         return st, None
     a = word_addr(res)
@@ -224,7 +224,7 @@ def get_addr(to, sig):
 
 
 def get_uint(to, sig):
-    st, res = call(to, sel(sig), "%s sur %s" % (sig, to))
+    st, res = call(to, sel(sig), "%s on %s" % (sig, to))
     if st == "ok" and res and len(res) == 66:
         return "ok", int(res, 16)
     return (st if st != "ok" else "absent"), None
@@ -254,21 +254,21 @@ def logs(addr, topics, lo=0, hi=None):
     if hi - lo < 1000:
         note_err("eth_getLogs %s %s [%d-%d]" % (addr, topics[0][:10], lo, hi), res)
         return None
-    mid = (lo + hi) // 2  # trop large : on coupe en deux
+    mid = (lo + hi) // 2  # range too wide: split in two
     a, b = logs(addr, topics, lo, mid), logs(addr, topics, mid + 1, hi)
     return None if a is None or b is None else a + b
 
 
 def has_role(addr, role, acct):
     st, res = call(addr, sel("hasRole(bytes32,address)") + role[2:] + "0" * 24 + acct[2:],
-                   "hasRole(%s,%s) sur %s" % (ROLES.get(role, role[:10]), acct, addr))
+                   "hasRole(%s,%s) on %s" % (ROLES.get(role, role[:10]), acct, addr))
     if st != "ok" or len(res) != 66:
         return None
     return int(res, 16) == 1
 
 
 def role_holders(addr):
-    """Detenteurs actuels de chaque role AccessControl : evenements RoleGranted puis hasRole au bloc fige."""
+    """Current holders of each AccessControl role: RoleGranted events, then hasRole at the frozen block."""
     lg = logs(addr, [T_ROLE_GRANTED])
     if lg is None:
         return None
@@ -280,22 +280,22 @@ def role_holders(addr):
         seen.add((role, acct))
         h = has_role(addr, role, acct)
         if h is None:
-            out.append((role, acct, "NON LU"))
+            out.append((role, acct, "NOT READ"))
         elif h:
             out.append((role, acct, "ok"))
-    # recoupement par getRoleMemberCount quand le contrat est enumerable
+    # cross-check with getRoleMemberCount when the contract is enumerable
     for role in {r for r, _, _ in out}:
-        st, res = call(addr, sel("getRoleMemberCount(bytes32)") + role[2:], "getRoleMemberCount sur %s" % addr)
+        st, res = call(addr, sel("getRoleMemberCount(bytes32)") + role[2:], "getRoleMemberCount on %s" % addr)
         if st == "ok" and len(res) == 66:
             n = int(res, 16)
             k = sum(1 for r, _, s in out if r == role and s == "ok")
             if n != k:
-                note_err("ecart getRoleMemberCount(%s)=%d contre %d lus par evenements sur %s" % (ROLES.get(role, role[:10]), n, k, addr), "ecart")
+                note_err("mismatch getRoleMemberCount(%s)=%d against %d read from events on %s" % (ROLES.get(role, role[:10]), n, k, addr), "mismatch")
     return out
 
 
 def ward_holders(addr):
-    st, res = call(addr, sel("wards(address)") + "00" * 32, "wards(0) sur %s" % addr)
+    st, res = call(addr, sel("wards(address)") + "00" * 32, "wards(0) on %s" % addr)
     if st != "ok" or len(res) != 66:
         return []
     cands = set()
@@ -308,11 +308,11 @@ def ward_holders(addr):
                 cands.add("0x" + l["topics"][idx][-40:])
     out = []
     for c in sorted(cands):
-        st, res = call(addr, sel("wards(address)") + "0" * 24 + c[2:], "wards(%s) sur %s" % (c, addr))
+        st, res = call(addr, sel("wards(address)") + "0" * 24 + c[2:], "wards(%s) on %s" % (c, addr))
         if st == "ok" and len(res) == 66 and int(res, 16) == 1:
             out.append(("wards (rely)", c))
         elif st == "err":
-            out.append(("wards (rely) NON LU", c))
+            out.append(("wards (rely) NOT READ", c))
     return out
 
 
@@ -321,26 +321,26 @@ def fiat_minters(addr):
     if lg is None:
         return None
     out = []
-    # FiatToken : MinterConfigured(address indexed minter, uint256) ; repli sur data si non indexe
+    # FiatToken: MinterConfigured(address indexed minter, uint256); falls back to data if not indexed
     for c in sorted({"0x" + (l["topics"][1][-40:] if len(l["topics"]) > 1 else l["data"][26:66]) for l in lg}):
-        st, res = call(addr, sel("isMinter(address)") + "0" * 24 + c[2:], "isMinter(%s) sur %s" % (c, addr))
+        st, res = call(addr, sel("isMinter(address)") + "0" * 24 + c[2:], "isMinter(%s) on %s" % (c, addr))
         if st == "ok" and len(res) == 66 and int(res, 16) == 1:
             out.append(("minter (FiatToken)", c))
     return out
 
 
-# ---------------------------------------------------------------- controleurs d'un contrat
+# ---------------------------------------------------------------- controllers of a contract
 GETTERS = ["owner()", "admin()", "minter()", "controller()", "authority()", "masterMinter()", "pauser()", "blacklister()",
            "guardian()", "RISK_COUNCIL()"]
 
 
 def controllers(addr, with_minters=False):
-    """Liste (role, detenteur) lue sur un contrat : slots de proxy, getters, AccessControl, wards."""
+    """List of (role, holder) read on a contract: proxy slots, getters, AccessControl, wards."""
     out, proxy = [], []
     for name in ("admin1967", "zosAdmin", "beacon1967", "impl1967", "zosImpl"):
         st, a = storage(addr, SLOTS[name])
         if st == "err":
-            out.append(("slot %s NON LU" % name, None))
+            out.append(("slot %s NOT READ" % name, None))
         elif a:
             proxy.append(name)
             if name in ("admin1967", "zosAdmin"):
@@ -351,49 +351,49 @@ def controllers(addr, with_minters=False):
     for g in GETTERS:
         st, a = get_addr(addr, g)
         if st == "err":
-            out.append(("%s NON LU" % g, None))
+            out.append(("%s NOT READ" % g, None))
         elif st == "ok":
             if g == "masterMinter()":
                 fiat = True
             if int(a, 16) == 0:
-                out.append(("%s = 0x0 (renonce ou vide)" % g, "0x" + "0" * 40))
+                out.append(("%s = 0x0 (renounced or empty)" % g, "0x" + "0" * 40))
             elif a.lower() != addr.lower():
                 out.append((g, a))
     rh = role_holders(addr)
     if rh is None:
-        out.append(("RoleGranted NON LU", None))
+        out.append(("RoleGranted NOT READ", None))
     else:
         for role, acct, s in rh:
-            out.append((ROLES.get(role, "role " + role[:10]) + ("" if s == "ok" else " NON LU"), acct))
+            out.append((ROLES.get(role, "role " + role[:10]) + ("" if s == "ok" else " NOT READ"), acct))
     wh = ward_holders(addr)
     if wh is None:
-        out.append(("Rely NON LU", None))
+        out.append(("Rely NOT READ", None))
     else:
         out.extend(wh)
     if fiat and with_minters:
         fm = fiat_minters(addr)
-        out.extend(fm if fm is not None else [("MinterConfigured NON LU", None)])
+        out.extend(fm if fm is not None else [("MinterConfigured NOT READ", None)])
     return proxy, out
 
 
-# ---------------------------------------------------------------- classement d'un detenteur
+# ---------------------------------------------------------------- classifying a holder
 _class = {}
 
 
 def classify(addr, depth=0, stack=()):
-    """Rend (niveau ou None, description). None = non classe (NON LU, ou mecanisme hors grille)."""
+    """Returns (level or None, description). None = unclassified (NOT READ, or a mechanism outside the grid)."""
     addr = addr.lower()
     if addr in _class:
         return _class[addr]
     if addr in stack or depth > 5:
-        return (None, "boucle ou profondeur > 5")
+        return (None, "loop or depth > 5")
     code = get_code(addr)
     if code is None:
-        res = (None, "NON LU (eth_getCode)")
+        res = (None, "NOT READ (eth_getCode)")
     elif code in ("0x", ""):
         res = (0, "EOA")
     elif code.startswith("0xef0100"):
-        res = (0, "EOA deleguee EIP-7702 vers 0x%s" % code[8:48])
+        res = (0, "EOA delegated by EIP-7702 to 0x%s" % code[8:48])
     else:
         res = _classify_contract(addr, depth, stack + (addr,))
     _class[addr] = res
@@ -412,7 +412,7 @@ def _safe(addr):
         if st2 != "ok":
             return None if st != "err" and st2 != "err" else "err"
         kind = "MultiSigWallet"
-    st, res = call(addr, sel("getOwners()"), "getOwners() sur %s" % addr)
+    st, res = call(addr, sel("getOwners()"), "getOwners() on %s" % addr)
     if st != "ok":
         return "err"
     n = int(res[66:130], 16) if len(res) >= 130 else None
@@ -420,18 +420,18 @@ def _safe(addr):
         return "err"
     mods = ""
     if kind == "Safe":
-        st, res = call(addr, sel("getModulesPaginated(address,uint256)") + "0" * 63 + "1" + "%064x" % 10, "getModulesPaginated sur %s" % addr)
+        st, res = call(addr, sel("getModulesPaginated(address,uint256)") + "0" * 63 + "1" + "%064x" % 10, "getModulesPaginated on %s" % addr)
         if st == "ok" and len(res) >= 194:
             k = int(res[130:194], 16)
             mods = ", %d module(s)" % k if k else ""
         elif st == "err":
-            mods = ", modules NON LU"
+            mods = ", modules NOT READ"
     lvl = 2 if s * 2 > n else 1
     return (lvl, "%s %d/%d%s" % (kind, s, n, mods), s, n)
 
 
 def _is_dao(addr):
-    """Description commencant par 'DAO ' si le contrat est une gouvernance on-chain, sinon None."""
+    """Description starting with 'DAO ' if the contract is on-chain governance, otherwise None."""
     if addr in AAVE_EXECUTORS:
         st, o = get_addr(addr, "owner()")
         if st == "ok" and o == AAVE_PAYLOADS_CONTROLLER:
@@ -442,61 +442,61 @@ def _is_dao(addr):
         return "DAO Governor (votingPeriod %d)" % v
     st, a = get_addr(addr, "hat()")
     if st == "ok":
-        return "DAO DSChief (vote par jeton, hat %s)" % _short(a)
+        return "DAO DSChief (token vote, hat %s)" % _short(a)
     return None
 
 
 def _eff(cl, cd):
-    """Niveau d'un controleur place devant un timelock : une DAO compte 5."""
+    """Level of a controller placed in front of a timelock: a DAO counts as 5."""
     return 5 if cd.startswith("DAO ") else cl
 
 
 def _after_delay(eff, d):
-    """Niveau obtenu quand un controleur de niveau eff agit a travers un delai d."""
+    """Level obtained when a controller of level eff acts through a delay d."""
     if eff is None:
         return None
     if eff == 5:
         return 5
-    if eff >= 2:  # multisig a majorite honnete, ou deja derriere un timelock
+    if eff >= 2:  # honest-majority multisig, or already behind a timelock
         return max(eff, 2 if d == 0 else (4 if d >= 172800 else 3))
-    return eff  # EOA ou multisig minoritaire : le delai ne les fait pas monter (prudence)
+    return eff  # EOA or minority multisig: the delay does not raise them (conservative)
 
 
 def _brief(a, cl, cd):
-    """Description courte d'un controleur, sans deplier les contrats generiques."""
-    if cd.startswith("contrat"):
-        return "%s (contrat, niveau %s)" % (_short(a), fmt_lvl(cl))
+    """Short description of a controller, without unfolding generic contracts."""
+    if cd.startswith("contract"):
+        return "%s (contract, level %s)" % (_short(a), fmt_lvl(cl))
     return "%s %s" % (_short(a), cd)
 
 
 def _top(items, k=3):
-    """items = (niveau, texte) : les k plus faibles d'abord, puis le nombre restant."""
+    """items = (level, text): the k weakest first, then the remaining count."""
     items = sorted(items, key=lambda x: (99 if x[0] is None else x[0], 0 if " EOA" in x[1] else 1))
     out = " ; ".join(t for _, t in items[:k])
-    return out + (" ; + %d autre(s)" % (len(items) - k) if len(items) > k else "")
+    return out + (" ; + %d other(s)" % (len(items) - k) if len(items) > k else "")
 
 
 def _classify_contract(addr, depth, stack):
     dao = _is_dao(addr)
     if dao:
-        # un Executor Aave est deja derriere le delai du PayloadsController ; un Governor seul est hors grille
+        # an Aave Executor already sits behind the PayloadsController delay; a Governor alone is outside the grid
         return (5 if addr in AAVE_EXECUTORS else None, dao)
     sf = _safe(addr)
     if sf == "err":
-        return (None, "multisig NON LU")
+        return (None, "multisig NOT READ")
     if sf:
         return sf[0], sf[1]
     st, d = get_uint(addr, "getMinDelay()")
     if st == "ok":  # TimelockController OpenZeppelin
         rh = role_holders(addr)
         if rh is None:
-            return (None, "TimelockController %d s, RoleGranted NON LU" % d)
+            return (None, "TimelockController %d s, RoleGranted NOT READ" % d)
         by = {}
         for r, a, s_ in rh:
             by.setdefault(ROLES.get(r, r[:10]), []).append(a)
         execs = by.get("EXECUTOR_ROLE", [])
         open_exec = (not execs) or ("0x" + "0" * 40) in execs
-        ex_lvl, ex_desc = None, "executeur ouvert" if open_exec else ""
+        ex_lvl, ex_desc = None, "open executor" if open_exec else ""
         if not open_exec:
             el = [(a,) + classify(a, depth + 1, stack) for a in execs if a != addr]
             lv = [_eff(c, dsc) for _, c, dsc in el]
@@ -510,7 +510,7 @@ def _classify_contract(addr, depth, stack):
                 cl, cd = classify(a, depth + 1, stack)
                 e = _eff(cl, cd)
                 if role == "PROPOSER_ROLE" and not open_exec and e is not None:
-                    e = None if ex_lvl is None else max(e, ex_lvl)  # proposer ET executer sont requis
+                    e = None if ex_lvl is None else max(e, ex_lvl)  # proposer AND executor are both required
                 lv = _after_delay(e, d)
                 parts.append("%s %s" % (role.replace("_ROLE", ""), _brief(a, cl, cd)))
                 if lv is None:
@@ -518,11 +518,11 @@ def _classify_contract(addr, depth, stack):
                 else:
                     best = lv if best is None else min(best, lv)
         if not parts:
-            return (None, "TimelockController %d s sans proposeur ni admin lu" % d)
+            return (None, "TimelockController %d s with no proposer or admin read" % d)
         return (best, "TimelockController %d s (%.0f h) <- %s ; %s%s" % (
-            d, d / 3600, " ; ".join(parts), ex_desc, " [en partie non classe]" if unk else ""))
+            d, d / 3600, " ; ".join(parts), ex_desc, " [partly unclassified]" if unk else ""))
     st, d = get_uint(addr, "delay()")
-    if st == "ok":  # Compound Timelock ou DSPause : admin()/owner()/authority() agissent a travers le delai
+    if st == "ok":  # Compound Timelock or DSPause: admin()/owner()/authority() act through the delay
         best, parts, unk = None, [], False
         for g in ("admin()", "owner()", "authority()"):
             s2, a = get_addr(addr, g)
@@ -535,11 +535,11 @@ def _classify_contract(addr, depth, stack):
                 else:
                     best = lv if best is None else min(best, lv)
         if parts:
-            return (best, "Timelock delay() %d s (%.0f h) <- %s%s" % (d, d / 3600, " ; ".join(parts), " [en partie non classe]" if unk else ""))
+            return (best, "Timelock delay() %d s (%.0f h) <- %s%s" % (d, d / 3600, " ; ".join(parts), " [partly unclassified]" if unk else ""))
     st, k = get_addr(addr, "kernel()")
     if st == "ok":
-        return (None, "application Aragon (kernel %s), ACL non derivee" % _short(k))
-    _, cs = controllers(addr)  # contrat generique : on remonte a ses propres controleurs
+        return (None, "Aragon app (kernel %s), ACL not derived" % _short(k))
+    _, cs = controllers(addr)  # generic contract: go up to its own controllers
     seen, best, parts, unk = set(), None, [], False
     for r, a in cs:
         if a is None:
@@ -556,24 +556,24 @@ def _classify_contract(addr, depth, stack):
         else:
             best = cl if best is None else min(best, cl)
     if not parts:
-        return (None, "contrat sans controleur lu (immuable ou registre non lu)")
-    return (best, "contrat <- " + _top(parts) + (" [en partie non classe]" if unk else ""))
+        return (None, "contract with no controller read (immutable or registry not read)")
+    return (best, "contract <- " + _top(parts) + (" [partly unclassified]" if unk else ""))
 
 
-# ---------------------------------------------------------------- reserves et sortie
+# ---------------------------------------------------------------- reserves and output
 def reserves():
     st, res = call(POOL, sel("getReservesList()"), "getReservesList")
     if st != "ok":
-        sys.exit("getReservesList NON LU : %s" % res)
+        sys.exit("getReservesList NOT READ: %s" % res)
     h = res[2:]
     n = int(h[64:128], 16)
     return ["0x" + h[128 + 64 * i + 24:128 + 64 * (i + 1)] for i in range(n)]
 
 
 def symbol(a):
-    st, res = call(a, sel("symbol()"), "symbol() sur %s" % a)
+    st, res = call(a, sel("symbol()"), "symbol() on %s" % a)
     if st != "ok":
-        return "NON LU"
+        return "NOT READ"
     h = res[2:]
     if len(h) == 64:
         return bytes.fromhex(h).rstrip(b"\0").decode(errors="replace")
@@ -587,13 +587,13 @@ def fmt_lvl(l):
 
 def witnesses():
     out = []
-    st, res = call("0x000000000000000000000000000000000000dEaD", sel("getThreshold()"), "temoin getThreshold sur dEaD")
-    out.append(("getThreshold() sur 0x...dEaD", "%s %s" % (st, res), st == "ok" and res == "0x"))
-    rnd = keccak("aave-niveaux-temoin-2026-10-13")[:42]
+    st, res = call("0x000000000000000000000000000000000000dEaD", sel("getThreshold()"), "witness getThreshold on dEaD")
+    out.append(("getThreshold() on 0x...dEaD", "%s %s" % (st, res), st == "ok" and res == "0x"))
+    rnd = keccak("aave-levels-witness-2026-10-13")[:42]
     gho = "0x40d16fc0246ad3160ccc09b8d0d3a2cd28ae6c2f"
     fm = keccak("FACILITATOR_MANAGER_ROLE")
     h = has_role(gho, fm, rnd)
-    out.append(("hasRole(FACILITATOR_MANAGER_ROLE, %s) sur GHO" % rnd, str(h), h is False))
+    out.append(("hasRole(FACILITATOR_MANAGER_ROLE, %s) on GHO" % rnd, str(h), h is False))
     return out
 
 
@@ -604,11 +604,11 @@ def main():
     ap.add_argument("--limit", type=int, default=25)
     ap.add_argument("--no-extra", action="store_true")
     ap.add_argument("--json")
-    ap.add_argument("--compact", action="store_true", help="regroupe les detenteurs de meme role et meme type")
+    ap.add_argument("--compact", action="store_true", help="group holders of the same role and type")
     a = ap.parse_args()
     BLOCK = hex(a.block)
     lst = reserves()
-    print("# Bloc fige %d (%s), %d reserves sur le Pool Core, %d premieres lues\n" % (a.block, BLOCK, len(lst), min(a.limit, len(lst))))
+    print("# Frozen block %d (%s), %d reserves on the Core Pool, first %d read\n" % (a.block, BLOCK, len(lst), min(a.limit, len(lst))))
     assets = [(x, "reserve #%d" % i) for i, x in enumerate(lst[:a.limit])]
     if not a.no_extra:
         assets += EXTRA
@@ -620,28 +620,28 @@ def main():
         roles = []
         for r, h in cs:
             if h is None:
-                roles.append((r, "-", None, "NON LU"))
+                roles.append((r, "-", None, "NOT READ"))
             elif int(h, 16) == 0:
-                roles.append((r, "0x0", None, "aucun detenteur"))
+                roles.append((r, "0x0", None, "no holder"))
             else:
                 l, d = classify(h)
                 roles.append((r, h, l, d))
         held = [x for x in roles if x[1] not in ("-", "0x0")]
         known = [x[2] for x in held if x[2] is not None]
         unk = any(x[2] is None for x in held) or any(x[1] == "-" for x in roles)
-        alvl = (fmt_lvl(min(known)) + (" (+ non classe)" if unk else "")) if known else ("non classe" if unk else "")
+        alvl = (fmt_lvl(min(known)) + (" (+ unclassified)" if unk else "")) if known else ("unclassified" if unk else "")
         if not held and not unk:
-            alvl = "aucun role lu"
+            alvl = "no role read"
         summary.append((sym, addr, origin, alvl, min(known) if known else None))
-        px = "oui (%s)" % ",".join(proxy) if proxy else "non"
+        px = "yes (%s)" % ",".join(proxy) if proxy else "no"
         if not roles:
-            rows.append((sym, addr, px, "-", "-", "aucun role privilegie lu par les lectures standards", "-", alvl))
+            rows.append((sym, addr, px, "-", "-", "no privileged role read by the standard reads", "-", alvl))
         for r, h, l, d in roles:
             rows.append((sym, addr, px, r, h, d, fmt_lvl(l), alvl))
     if a.json:
         json.dump({"block": a.block, "rows": rows, "summary": summary, "non_lu": NON_LU}, open(a.json, "w"), indent=1)
     rows = [r[:4] + ((_short(r[4]) if r[4].startswith("0x") and len(r[4]) == 42 else r[4]),) + r[5:] for r in rows]
-    if a.compact:  # meme actif, meme role, meme type : une ligne avec le nombre de detenteurs
+    if a.compact:  # same asset, same role, same type: one line with the holder count
         grouped, order = {}, []
         for r in rows:
             k = (r[0], r[3], r[5], r[6])
@@ -651,22 +651,22 @@ def main():
                 grouped[k].append(1)
             else:
                 grouped[k][-1] += 1
-        rows = [tuple(g[:4]) + ((g[4] if g[-1] == 1 else "%d detenteurs" % g[-1]),) + tuple(g[5:8])
+        rows = [tuple(g[:4]) + ((g[4] if g[-1] == 1 else "%d holders" % g[-1]),) + tuple(g[5:8])
                 for g in (grouped[k] for k in order)]
-    print("| actif | adresse | proxy ? | role | detenteur | type | niveau | niveau de l'actif |")
+    print("| asset | address | proxy? | role | holder | type | level | asset level |")
     print("|---|---|---|---|---|---|---|---|")
     for r in rows:
         print("| " + " | ".join(str(c).replace("|", "/") for c in r) + " |")
-    print("\n## Niveau par actif\n")
+    print("\n## Level per asset\n")
     for s in summary:
         print("- %s %s (%s) : %s" % (s[0], s[1], s[2], s[3]))
-    print("\n## Temoins\n")
+    print("\n## Witnesses\n")
     for w in witnesses():
-        print("- %s -> %s : %s" % (w[0], w[1], "conforme" if w[2] else "NON CONFORME"))
-    print("\n## NON LU (%d)\n" % len(NON_LU))
+        print("- %s -> %s : %s" % (w[0], w[1], "as expected" if w[2] else "NOT AS EXPECTED"))
+    print("\n## NOT READ (%d)\n" % len(NON_LU))
     for w, m in NON_LU:
         print("- %s : %s" % (w, m))
-    print("appels RPC : %s" % COUNT, file=sys.stderr)
+    print("RPC calls: %s" % COUNT, file=sys.stderr)
 
 
 if __name__ == "__main__":

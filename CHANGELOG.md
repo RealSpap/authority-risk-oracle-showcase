@@ -61,6 +61,14 @@ Hashes read on 2026-10-12 from the public pages of the Watch (the Solana one was
 - A "ready to execute now" alert stays active after the proposal was executed (proposal 1004, executed 2026-10-13 13:07:37Z).
 - The alert carries the same score whatever the instruction in the queue does (a price-feed setting and a full replacement of the core program read the same).
 
+### Research folders
+
+- Aave levels measure: README and script now fully in English; same block, same levels.
+
+### Known gaps
+
+- Known gap (2026-10-13): the published Watch treats some old approved Squads operations as inactive. A correction is built and held back while affected teams are informed privately. Scores of Squads-based targets may not reflect such operations until it is published, and this entry will be updated then.
+
 ## Upcoming
 
 No dates are promised. "next" is the immediate queue, "planned" is decided and written down, "explored" is measured or verified but not yet decided. Everything here is read-only research until a build is announced in "Changes for readers".

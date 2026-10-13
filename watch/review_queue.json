@@ -1,8 +1,8 @@
 {
- "generated_utc": "2026-10-13T18:57:38Z",
- "total": 39,
+ "generated_utc": "2026-10-13T19:35:32Z",
+ "total": 37,
  "by_priority": {
-  "1": 16,
+  "1": 14,
   "2": 20,
   "3": 3
  },
@@ -85,37 +85,13 @@
   {
    "priority": 1,
    "kind": "queued operation executable within 48 h",
-   "chain": "arbitrum",
-   "target": "0x52Aa899454998Be5b000Ad077a46Bbe360F4e497",
-   "text": "parameter change: updateUserSupplyConfigs((address,address,uint8,uint256,uint256,uint256)[]) via arbitrum timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
-   "todo": "read the call before it lands",
-   "source": "pending_ops.json",
-   "first_seen": "2026-10-13T01:03:57Z",
-   "age_days": 0.7,
-   "overdue": false
-  },
-  {
-   "priority": 1,
-   "kind": "queued operation executable within 48 h",
-   "chain": "plasma",
-   "target": "0x52Aa899454998Be5b000Ad077a46Bbe360F4e497",
-   "text": "parameter change: updateUserBorrowConfigs((address,address,uint8,uint256,uint256,uint256,uint256)[]) via plasma timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
-   "todo": "read the call before it lands",
-   "source": "pending_ops.json",
-   "first_seen": "2026-10-13T01:03:57Z",
-   "age_days": 0.7,
-   "overdue": false
-  },
-  {
-   "priority": 1,
-   "kind": "queued operation executable within 48 h",
    "chain": "solana",
    "target": "3D6ojc8vBfDteLBDTTRznZbZRh7bkEGQaYqNkudoTCBQ",
    "text": "call: Squads proposal #210: call to 3D6ojc8vBfDteLBDTTRznZbZRh7bkEGQaYqNkudoTCBQ (not the tracked program) via Squads v4 multisig 51sm\u2026cjuH (3-of-5, time lock 36000 s), found by the independent reader (1 tracked program)",
    "todo": "read the call before it lands",
    "source": "pending_ops.json",
    "first_seen": "2026-10-13T13:00:09Z",
-   "age_days": 0.2,
+   "age_days": 0.3,
    "overdue": false
   },
   {
@@ -126,7 +102,19 @@
    "text": "0x9db4…1a53 designated (pendingOwner() on the contract (Ownable2Step), a contract)",
    "todo": "identify the designated admin; when it accepts, the admin read changes",
    "source": "second_opinion.json pending_admin",
-   "first_seen": "2026-10-13T18:57:38Z",
+   "first_seen": "2026-10-13T19:35:32Z",
+   "age_days": 0.0,
+   "overdue": false
+  },
+  {
+   "priority": 1,
+   "kind": "queued operation executable",
+   "chain": "arbitrum",
+   "target": "0x52Aa899454998Be5b000Ad077a46Bbe360F4e497",
+   "text": "parameter change: updateUserSupplyConfigs((address,address,uint8,uint256,uint256,uint256)[]) via arbitrum timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
+   "todo": "read the call before it lands",
+   "source": "pending_ops.json",
+   "first_seen": "2026-10-13T19:35:32Z",
    "age_days": 0.0,
    "overdue": false
   },
@@ -186,18 +174,6 @@
    "text": "call: Squads proposal #98: call to an address from a lookup table; call to an address from a lookup table via Squads v4 multisig BQsD\u2026iEjF (5-of-13, time lock 86400 s), found by the independent reader (1 tracked program)",
    "todo": "read the call before it lands",
    "source": "pending_ops.json",
-   "first_seen": "2026-10-13T18:57:38Z",
-   "age_days": 0.0,
-   "overdue": false
-  },
-  {
-   "priority": 1,
-   "kind": "upgrade executed",
-   "chain": "solana",
-   "target": "ExponentnaRg3CQbW6dqQNZKXp7gtZ9DGMp1cwC4HAS7",
-   "text": "program redeployed since the previous run: slot 419311653 -> 456483984 (2026-10-13T15:01:25Z); the score reads who may upgrade, this is an upgrade that happened",
-   "todo": "read what the new implementation does before trusting the score (the private pipeline's implementation check names selectors added and dropped); NO verified source on Sourcify for the new implementation: read the bytecode, or find a verified source on the chain's explorer",
-   "source": "second_opinion.json upgrades",
    "first_seen": "2026-10-13T18:57:38Z",
    "age_days": 0.0,
    "overdue": false
@@ -427,7 +403,7 @@
    "todo": "find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen",
    "source": "pending_ops.json",
    "first_seen": "2026-10-13T13:00:09Z",
-   "age_days": 0.2,
+   "age_days": 0.3,
    "overdue": false
   },
   {

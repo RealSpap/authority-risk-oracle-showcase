@@ -5,11 +5,20 @@
 
 One entry per method version, named `YYYY.MM.N` (`data/method_versions.json`). `N` counts, within the month, the changes of `METHODOLOGY.md` or of the scoring code that move a published score. The `methodologyHash` stays the machine identifier: it is a digest of the scoring code of one oracle (`scripts/lib/methodology.py`), not a hash of the text of `METHODOLOGY.md`, and each oracle has its own. The hashes of 2026.10.2 were read from `getScore()` on each oracle on 2026-10-13 (about 15:30Z); an earlier draft of this section had read older hashes from the public pages of the Watch, which lagged the chain, and called a correct hash a divergence. Versions before 2026.09.0 are not named: see the engineering log below.
 
+### Known gaps, dated and not corrected
+
+- 2026-10-13: the published Watch treats some old approved Squads operations as inactive. A correction is built and held back while affected teams are informed privately. Scores of Squads-based targets may not reflect such operations until it is published; this entry will be updated then.
+- The Watch alert on `Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo` was labelled with another protocol's name: the address is GMX-Solana's `gmsol_store` (the scorer labels it correctly).
+- `tvl_usd` is shown as 0 on the two Squads alerts when the value was not read (DefiLlama gives 78M USD and 27M USD for the two protocols on 2026-10-13).
+- A "ready to execute now" alert stays active after the proposal was executed (proposal 1004, executed 2026-10-13 13:07:37Z).
+- The alert carries the same score whatever the instruction in the queue does (a price-feed setting and a full replacement of the core program read the same).
+
 ### 2026.10.3 (code written on 2026-10-13, in the repository, not yet on the oracles: the next on-chain push carries it)
 
 - Covers: five more targets on Ethereum L1 (Arbitrum bridge 60, Pendle V2 43, Aave V4 53, Fluid Liquidity 77, Base bridge 56); one rule for nested Safe seats (a Safe whose owner is another Safe is counted on the EOA keys that must really sign, only when those keys are distinct and only upward); a Safe is recognised on its code (a published Safe proxy), not only on what `getOwners()` answers; the limit that Safe owners can write the Safe's storage is now stated (`METHODOLOGY.md`, Limitations).
 - The nested-seat rule for a Morpho vault curator Safe now applies on every chain (one shared module, `scripts/lib/curator_multisig.py`), after a live case on 2026-10-13: the curator of the Spark USDC Vault on Base was rewritten at 13:17:05Z (block 52554039, one Safe transaction) from a 3-of-5 into a 2-of-2 whose owners are a 3-of-5 Safe and a 1-of-2 Safe, so four keys must sign; read at the first level it looked like a 2-of-2 and the vault would have fallen from 63 to 44, on the keys that really sign it scores 65.
 - Moves a score once pushed: the USD AI OAdapter on Arbitrum (8 to 40: its Safe's Zodiac Delay module, analysed on 2026-10-12, no longer blocks the Safe); the Adpend USDC vault on Ethereum (2 to 19: the vault's own 14-day timelock counts, confirmed by a second independent reader); the Spark USDC Vault on Base (63 to 65, instead of the 44 a first-level reading gives); the Grove curator vault on Robinhood Chain (multisig 30 to 60, composite +9); the Monad Grove x Steakhouse vault (cross exposure 100 to 80, composite unchanged); a Uniswap V3 or Sky timelock delay under one day no longer scores as the confirmed two-day delay (the live delays are two days: no published score moves). Every oracle whose scorer imports a changed file gets a new `methodologyHash`; the hashes the next push should publish, computed from the scoring files of the commit that carries this registry, are in `data/method_versions.json` (`expected_hashes`) and are confirmed or corrected after the push.
+- Proposals refused after a second reader on 2026-10-13, so no score moves: Orvex V2 (46 proposed, 2 kept: the pair fee is uncapped), Gains Network (32 proposed, 4 kept: a 2-of-4 Safe can grant itself an allowance over the collateral). Kinetiq (4) and Orca (2) keep their scores with a note: a bounded-power reading is proposed in `METHODOLOGY.md` and not applied.
 
 ### 2026.10.2 (2026-10-12 and 2026-10-13, on the oracles today)
 
@@ -52,22 +61,9 @@ Hashes read on 2026-10-12 from the public pages of the Watch (the Solana one was
 - Covers: the entries older than the pushes above: one Ethena minting entry on Ethereum L1 (`0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167`, written 2026-09-23, retired, still on the oracle) and three HIP-3 dex entries on Hyperliquid (`0xfbf38ff91abf710728e2df3d5370bf18eeb2a9085168612fa03955b13cc958ad`, written 2026-09-24, rewritten by the push of 2026-10-12).
 - Moves a score: nothing today; they are old values under older code. Scores written under different hashes are not strictly comparable.
 
-- Proposals refused after a second reader on 2026-10-13, so no score moves: Orvex V2 (46 proposed, 2 kept: the pair fee is uncapped), Gains Network (32 proposed, 4 kept: a 2-of-4 Safe can grant itself an allowance over the collateral). Kinetiq (4) and Orca (2) keep their scores with a note: a bounded-power reading is proposed in `METHODOLOGY.md` and not applied.
+### Research
 
-### Known gaps found on 2026-10-13, dated and not corrected
-
-- The Watch alert on `Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo` was labelled Exponent: the address is GMX-Solana's `gmsol_store` (the scorer labels it correctly).
-- `tvl_usd` is shown as 0 on the two Squads alerts when the value was not read (DefiLlama gives 78M USD for Exponent and 27M USD for GMX Solana on 2026-10-13).
-- A "ready to execute now" alert stays active after the proposal was executed (proposal 1004, executed 2026-10-13 13:07:37Z).
-- The alert carries the same score whatever the instruction in the queue does (a price-feed setting and a full replacement of the core program read the same).
-
-### Research folders
-
-- Aave levels measure: README and script now fully in English; same block, same levels.
-
-### Known gaps
-
-- Known gap (2026-10-13): the published Watch treats some old approved Squads operations as inactive. A correction is built and held back while affected teams are informed privately. Scores of Squads-based targets may not reflect such operations until it is published, and this entry will be updated then.
+- Aave levels 0-5 per privileged role: 25 of the 67 Aave V3 Core reserves plus BTC.b and USDe, read at block 26,184,127, with the calls to rerun: `research/aave-levels-2026-10-13/`.
 
 ## Upcoming
 
@@ -75,14 +71,14 @@ No dates are promised. "next" is the immediate queue, "planned" is decided and w
 
 ### Next
 
-1. Aave levels 0-5 per privileged role, for every Aave V3 Core collateral, with the calls to rerun (measure under way, 2026-10-13).
+1. Aave levels 0-5 for the 40 Core reserves not yet read (27 of 67 are in `research/aave-levels-2026-10-13/`).
 2. An authority column under governance proposals: threshold, delay, simulated executor with a negative witness, PASS/WARN/INFO (first targets: Compound, Aave, Sky).
 3. The shared-signer contagion map on the front page: which other protocols a given key can move (739 multisigs, 401 protocol entries, 25 chains).
 4. A published backtest: 30 real incidents replayed by the scorer, stating which rules existed before each incident and whether they would have warned. (see note)
 5. A claims registry: a team states its control configuration, the Watch re-checks it every run, a broken statement is published the same day.
 6. An on-chain guard (Zodiac Roles ScoreCondition) on a testnet, refusing a deposit when the score is below a policy or stale, with a real refusal shown. (see note)
 7. An honest Compare page: this oracle next to Keyholder, OneKeyAway, solgov, L2BEAT and DeFiScan, criterion by criterion, with sources and "not read" where we do not know.
-8. Watch fixes recorded as known gaps on 2026-10-13: wrong label on a Solana target (GMX-Solana shown as Exponent), unread TVL shown as 0, a "ready to execute" alert not closed after execution, the same score for a parameter change and a full code replacement.
+8. Watch fixes recorded as known gaps on 2026-10-13: wrong label on a Solana target (a GMX-Solana address shown under another protocol's name), unread TVL shown as 0, a "ready to execute" alert not closed after execution, the same score for a parameter change and a full code replacement, and the Squads correction named in "Known gaps", published once affected teams are informed.
 9. A readable method version next to the method hash (the Watch publishes only hashes today). (see note)
 
 ### Planned: what a depositor asked for

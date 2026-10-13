@@ -2,6 +2,8 @@
 
 **Summary.** The Technical Asset Listing Framework adopted by Aave governance (July 2026) classes each privileged role of a listed asset from level 0 (single key, no delay) to level 5 (on-chain DAO governance with timelock); levels 0 and 1 are "weak". This folder reads those roles on chain for 25 of the 67 reserves of Aave V3 Core (Ethereum), plus BTC.b and USDe, at block 26,184,127, with a negative witness on every call. Read this way, five listed assets are at level 0 or 1: USDC and cbETH (single keys), USDT (MultiSigWallet 3 of 6), BTC.b (a single key, second pauser a Safe 2 of 11), USDe (single keys inside its minter contract; level 1 without it). Several assets expose no role through standard getters and six route their power through Aragon, the Vat or a registry: they are left unclassified, not called safe. Not read: 40 reserves, Aragon ACLs, the RolesAuthority of PAXGy, the freeze status of reserves. Rerun: `python3 mesure-aave-niveaux.py --block 26184127 --compact` (standard library, public RPC).
 
+**Status.** 27 of the 67 Core reserves are read here (the first 25 in list order, plus BTC.b and USDe) at block 26,184,127; the other 40 are not read yet.
+
 ---
 
 **Frozen block: 26184127 (0x18f89bf)**, read with `eth_blockNumber` on Tenderly on 2026-10-13 around 14:20 UTC. Every call (`eth_call`, `eth_getStorageAt`, `eth_getCode`, `eth_getLogs` up to that block) carries this block.
@@ -10,7 +12,7 @@ Volume of the final pass: 1,248 `eth_call`, 290 `eth_getStorageAt`, 135 `eth_get
 
 ## What was read
 
-- Core Pool `0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2`, `getReservesList()`: **67 reserves**. The **first 25** in list order are measured, as requested. That order is the order of listing: the first 25 are mostly the historical assets (WETH to KNC). The frozen or active status of each reserve was not read.
+- Core Pool `0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2`, `getReservesList()`: **67 reserves**. The **first 25** in list order are measured. That order is the order of listing: the first 25 are mostly the historical assets (WETH to KNC). The frozen or active status of each reserve was not read.
 - In addition, flagged as such in the table: **BTC.b** (reserve no. 63) and **USDe** (no. 30), listed on Core but outside the first 25, and **USAT** and **PAXGy**, not listed on Core, measured as method witnesses because they have a LlamaRisk sheet on Ethereum written under the framework.
 - For each token: EIP-1967 slots (implementation, admin, beacon), ZeppelinOS slots (admin, implementation), getters `owner()`, `admin()`, `minter()`, `controller()`, `authority()`, `masterMinter()`, `pauser()`, `blacklister()`, `guardian()`, `RISK_COUNCIL()`. For AccessControl: every `RoleGranted` event of the contract (block 0 to the frozen block), then `hasRole(role, account)` at the frozen block to keep current holders only, cross-checked with `getRoleMemberCount` when the contract exposes it (no mismatch). For Maker-style tokens: `wards` through `Rely` and `LogNote rely` events. For FiatTokens (USDC, cbETH): besides the named roles, the minters through `MinterConfigured` then `isMinter()`.
 - For each holder: `eth_getCode` (empty = EOA; prefix `0xef0100` = EOA delegated by EIP-7702, none met), `getThreshold()`/`getOwners()` (Safe) or `required()`/`getOwners()` (legacy MultiSigWallet, the one Tether uses), `getModulesPaginated` (no measured Safe has a module), `getMinDelay()` (OpenZeppelin TimelockController, then its PROPOSER, EXECUTOR and admin roles through `RoleGranted`), `delay()` + `admin()`/`owner()`/`authority()` (Compound Timelock or DSPause), `votingPeriod()` (Governor), `hat()` (DSChief), `kernel()` (Aragon app). A contract that is none of these is followed one step up through its own controllers, up to 5 steps.
@@ -165,7 +167,7 @@ Manual correction outside the script:
 - USDe: the MINTER_ROLE holders of the `minter()` contract (Ethena's mint contract, name not re-read on chain) submit orders bounded per block; level 0 is mechanical and does not measure those bounds.
 - The classification of a timelock (executor rule, conservative reading for an EOA behind a delay) is a reading choice of the grid, written above.
 - The frozen or active status of each reserve was not read.
-- Adoption of the framework: thread t/24988 announces the move to Snapshot on 2026-07-09; the adoption date (2026-07-13) comes from the brief, not re-read.
+- Adoption of the framework: thread t/24988 announces the move to Snapshot on 2026-07-09; the adoption date (2026-07-13) was given to me and was not re-read at the source.
 
 ## Witnesses
 
@@ -177,7 +179,7 @@ Manual correction outside the script:
 ## NOT READ
 
 Final pass: **0 calls in error**. Provider errors (Tenderly "rate limit exceeded" code -32005, HTTP 429) were absorbed by the script's retries before any classification.
-During development: a trial pass had `eth_getCode 0xca06411bd7a7296d7dbdd0050dfc846e95febeb7` (WBTC Controller) NOT READ (HTTP 525 on eth.llamarpc.com); the retry logic was fixed and the call re-read afterwards (contract, owner MultiSigWallet 6/10). A cross-check on a second provider failed: publicnode HTTP 403 and llamarpc HTTP 525 at the end of the session; the cross-checks cited above were therefore made with a separate `curl` on Tenderly, not on an independent provider.
+While building the script: a trial pass had `eth_getCode 0xca06411bd7a7296d7dbdd0050dfc846e95febeb7` (WBTC Controller) NOT READ (HTTP 525 on eth.llamarpc.com); the retry logic was fixed and the call re-read afterwards (contract, owner MultiSigWallet 6/10). A cross-check on a second provider failed: publicnode HTTP 403 and llamarpc HTTP 525 when this report was written; the cross-checks cited above were therefore made with a separate `curl` on Tenderly, not on an independent provider.
 
 ## Rerun
 

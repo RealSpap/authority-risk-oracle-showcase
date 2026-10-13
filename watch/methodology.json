@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-13T06:55:41Z",
+ "generated_utc": "2026-10-13T12:53:35Z",
  "hashes": {
   "0x51163f3cce4612011bca19a651e2c0b650d9c670559f9036a37acfadf0532f54": {
    "oracles": {
@@ -71,52 +71,6 @@
    }
   }
  ],
- "changes": [
-  {
-   "oracle": "arbitrum-sepolia",
-   "name": "Arbitrum (Sepolia)",
-   "chain": "arbitrum",
-   "from": "0xf178bca63c9d3257a306dd7cf6a4e5b3e3817a4ae59fd289ae3486d7bbc25374",
-   "to": "0x51163f3cce4612011bca19a651e2c0b650d9c670559f9036a37acfadf0532f54",
-   "targets": 13,
-   "run_utc": "2026-10-13T06:55:41Z"
-  },
-  {
-   "oracle": "ethereum-l1-sepolia",
-   "name": "Ethereum L1 (Sepolia)",
-   "chain": "ethereum-l1",
-   "from": "0xa39b4e35813b802d9f7b0daf2e685521ca2ffae61b210674e8ea97493c54f84b",
-   "to": "0x46a1a85b619e7db0f81e543674e8aa0a3a1afba36b7500fe2cb256e0024db645",
-   "targets": 33,
-   "run_utc": "2026-10-13T06:55:41Z"
-  },
-  {
-   "oracle": "robinhood-chain",
-   "name": "Robinhood Chain",
-   "chain": "robinhood",
-   "from": "0x795edc64fdbb202de7639a1c6c1148aee4788c27ffc66050f9aa6cf0e09614c5",
-   "to": "0x667dc486af9557a83488110fdb18fe653ba6d3be4773420590ee53b4a052fa45",
-   "targets": 63,
-   "run_utc": "2026-10-13T06:55:41Z"
-  },
-  {
-   "oracle": "solana-devnet",
-   "name": "Solana (Devnet)",
-   "chain": "solana",
-   "from": "0x79b73242ae50124e8d706211eb7f67dd3a891d87b9192fe3973da17fdc63b49d",
-   "to": "0x4f8c4019b9c9e75b1aaef679a3a699b9ec7926ee504c57696cc693641a2b3b3a",
-   "targets": 26,
-   "run_utc": "2026-10-13T06:55:41Z"
-  },
-  {
-   "oracle": "tempo-moderato",
-   "name": "Tempo (Moderato)",
-   "chain": "tempo",
-   "from": "0x134e33c2b59f03981c62fbafe19942062b82862cc2f79fa62d23294eeb97d268",
-   "to": "0x0a3df5ccf0492a8006278d8f559a8ee72202d8b3d3b01ff5561fa9729045c276",
-   "targets": 14,
-   "run_utc": "2026-10-13T06:55:41Z"
-  }
- ],
+ "changes": [],
  "what": "methodologyHash as read on each oracle (keccak256 of the scoring code and its version, set at the push): one hash per oracle is the normal state; a mix means a push half done or a target scored by an older method; a change (against the previous run) means every score of that oracle was produced by a new method: compare across it with care, the chained log keeps the date"
 }

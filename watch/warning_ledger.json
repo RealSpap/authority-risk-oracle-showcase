@@ -796,18 +796,28 @@
    "chain": "solana",
    "timelock": "Squads v4 multisig 51sm\u2026cjuH (3-of-5, time lock 36000 s), found by the independent reader (1 tracked program)",
    "what": "program upgrade"
+  },
+  "solana:51smh7pbdkjdgmvnvks3gmwapqffmq5s4fc223yhcjuh:squads:51smH7pBDKJDgmVnVks3gMWaPQFfmQ5s4Fc223yHcjuH:210": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-10-13T12:40:55Z",
+   "due_utc": "2026-10-13T20:49:53Z",
+   "notice_hours": 8.1,
+   "state": "queued",
+   "chain": "solana",
+   "timelock": "Squads v4 multisig 51sm\u2026cjuH (3-of-5, time lock 36000 s), found by the independent reader (1 tracked program)",
+   "what": "call"
   }
  },
- "updated_utc": "2026-10-13T06:39:46Z",
+ "updated_utc": "2026-10-13T12:40:55Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
-  "warned": 7,
+  "warned": 8,
   "seen_without_notice": 9,
   "missed": 2,
   "baseline": 77,
-  "warned_with_a_known_notice": 7,
+  "warned_with_a_known_notice": 8,
   "shortest_notice_hours": 5.2,
-  "median_notice_hours": 19.6,
+  "median_notice_hours": 19.0,
   "note": "warned: seen while queued and not yet executable (the notice is real); seen_without_notice: still queued but already executable when first seen; missed: queued after the ledger started and already applied when first seen (faster than the 6-hour cadence); baseline: applied before the ledger started, counted as neither."
  }
 }

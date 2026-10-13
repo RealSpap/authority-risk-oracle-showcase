@@ -4,7 +4,7 @@
     "version": "methodVersion",
     "date": "methodVersionDate"
   },
-  "after_each_push": "Fill `hashes` of the version that was local (read them from the oracles or from the push output), set its status to \"on-chain\", then add the next local version. scripts/lib/method_version.py reads this file.",
+  "after_each_push": "Fill `hashes` of the version that was pending (read them from the oracles or from the push output), set its status to \"on-chain\", then add the next pending version. scripts/lib/method_version.py reads this file.",
   "versions": [
     {
       "version": "2026.09.0",
@@ -59,7 +59,7 @@
       "version": "2026.10.2",
       "date": "2026-10-13",
       "status": "on-chain",
-      "note": "The push of 2026-10-12 / 2026-10-13, read from getScore() on each oracle on 2026-10-13 (about 15:30Z): Hyperliquid 2026-10-12 05:46Z, Base 23:32Z, Plasma 23:56Z, Monad 2026-10-13 00:12Z, Arbitrum 00:54Z, Ethereum L1 01:45Z, Tempo 01:57Z, Robinhood Chain 03:26Z. Solana was not re-read: its hash for this version is not listed.",
+      "note": "The push of 2026-10-12 / 2026-10-13, read from getScore() on each oracle on 2026-10-13 (about 15:30Z): Hyperliquid 2026-10-12 05:46Z, Base 23:32Z, Plasma 23:56Z, Monad 2026-10-13 00:12Z, Arbitrum 00:54Z, Ethereum L1 01:45Z, Tempo 01:57Z, Robinhood Chain 03:26Z. Solana was not re-read: its hash for this version is not listed. The Solana hash under computed_hashes is NOT read from the chain: it is the digest of the Solana scoring code at commit 06b3b21 (the commit whose code reproduces, to the byte, the eight EVM hashes above), listed so the Watch can name it; confirm it with a read of the Solana oracle.",
       "hashes": {
         "robinhood-chain": [
           "0x667dc486af9557a83488110fdb18fe653ba6d3be4773420590ee53b4a052fa45"
@@ -85,14 +85,48 @@
         "hyperliquid": [
           "0x36452ea42a84016f691a665855cc3482c3e8bb4d87155901b491b293457a4004"
         ]
+      },
+      "computed_hashes": {
+        "solana": [
+          "0x4f8c4019b9c9e75b1aaef679a3a699b9ec7926ee504c57696cc693641a2b3b3a"
+        ]
       }
     },
     {
       "version": "2026.10.3",
       "date": "2026-10-13",
-      "status": "local, not pushed",
-      "note": "Written on 2026-10-13 after that push, not on-chain: five more Ethereum L1 targets, one rule for nested Safe seats, the Safe proxy-code check, the Monad Steakhouse cross-exposure address match, timelock delay bands for Uniswap V3 and Sky, push-guard and push-script hardening.",
-      "hashes": null
+      "status": "pending: in the repository, not on the oracles yet",
+      "note": "Code written on 2026-10-13 after that push, in the repository, not yet on the oracles: five more Ethereum L1 targets, the USD AI OAdapter module registered as analysed (8 to 40), the Adpend USDC vault timelock counted (2 to 19), one rule for nested Safe seats, the Safe proxy-code check, the Monad Steakhouse cross-exposure address match, timelock delay bands for Uniswap V3 and Sky, push-guard and push-script hardening. expected_hashes are computed from the scoring files of the commit that carries this registry (HEAD of main when it is merged) (scripts/lib/methodology.py); a push made from files that differ from them publishes other hashes. After the push, move them to `hashes` after reading the oracles, and set the status to on-chain.",
+      "hashes": null,
+      "expected_hashes": {
+        "robinhood-chain": [
+          "0x35b0467ba741b3b246cee0d50a3fc68ef3ed22c55a6c79fb05b09eb1a0ee5a17"
+        ],
+        "ethereum-l1": [
+          "0x9a8584062d670659eba47b8999c5a430fb6f5d597fb77b0b0dd41398bf434cde"
+        ],
+        "arbitrum-ecosystem": [
+          "0xc2bbd887c90c46dc84ca5c2326f90b5c32e71c9f11eff4003eec6d2c27c99abd"
+        ],
+        "base-ecosystem": [
+          "0x065d538bc8e2cdacbeee9a4849c5ccc05b87a2b3671613afd8c7f127e138eb97"
+        ],
+        "plasma-ecosystem": [
+          "0xbf55b4767ecad834791cce90f59f2a7bdbe5da01454545df48419b3727863385"
+        ],
+        "monad": [
+          "0xdd3b825e25841cb400d64dfc4e6edd0ab4adf0058023534b1ded3b20f162ddc8"
+        ],
+        "hyperliquid": [
+          "0x9a516799ad1decf8d585f3f235ee7db57607559794785ee23bb29ae5fb308d70"
+        ],
+        "tempo": [
+          "0x548a5b4c6476362a0c7def19bd811d910ff87972710f1d3b6b5ed47d0d69f426"
+        ],
+        "solana": [
+          "0xa6219b489e26fbb046806c8b2ed3c144ce8ca9041d8e154c212237685be5fefc"
+        ]
+      }
     }
   ]
 }

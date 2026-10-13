@@ -1,6 +1,6 @@
 {
- "run_utc": "2026-10-13T00:43:48Z",
- "previous_run_utc": "2026-10-12T18:34:50Z",
+ "run_utc": "2026-10-13T06:39:46Z",
+ "previous_run_utc": "2026-10-13T00:43:48Z",
  "schedule": "every 6 hours (GitHub Actions, cron 17 */6 * * *)",
  "oracles": [
   {
@@ -9,10 +9,10 @@
    "kind": "evm",
    "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
    "read_ok": true,
-   "block": 133900968,
+   "block": 134089641,
    "targets": 63,
    "stale": 0,
-   "lastUpdated": 1791664867,
+   "lastUpdated": 1791862006,
    "maxStaleness": 777600,
    "self_watch": {
     "read": true,
@@ -37,10 +37,10 @@
    "kind": "evm",
    "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
    "read_ok": true,
-   "block": 11902559,
+   "block": 11904337,
    "targets": 34,
    "stale": 1,
-   "lastUpdated": 1791687028,
+   "lastUpdated": 1791855910,
    "maxStaleness": 777600,
    "self_watch": {
     "read": true,
@@ -65,10 +65,10 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 318584686,
+   "block": 318668449,
    "targets": 13,
    "stale": 0,
-   "lastUpdated": 1791658650,
+   "lastUpdated": 1791852875,
    "maxStaleness": 777600,
    "self_watch": {
     "read": true,
@@ -93,7 +93,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 48041974,
+   "block": 48052657,
    "targets": 13,
    "stale": 0,
    "lastUpdated": 1791847930,
@@ -121,10 +121,10 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 39342930,
+   "block": 39377869,
    "targets": 14,
    "stale": 0,
-   "lastUpdated": 1791662166,
+   "lastUpdated": 1791856659,
    "maxStaleness": 777600,
    "self_watch": {
     "read": true,
@@ -149,7 +149,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 36023025,
+   "block": 36044391,
    "targets": 9,
    "stale": 0,
    "lastUpdated": 1791849391,
@@ -177,7 +177,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 70543385,
+   "block": 70613466,
    "targets": 9,
    "stale": 0,
    "lastUpdated": 1791850329,
@@ -196,7 +196,7 @@
       "updater": false
      }
     },
-    "error": "getLogs: window of 72870 blocks needs more than 120 calls at 100 blocks each"
+    "error": "getLogs: window of 70081 blocks needs more than 120 calls at 100 blocks each"
    }
   },
   {
@@ -205,7 +205,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 66751173,
+   "block": 66772912,
    "targets": 16,
    "stale": 0,
    "lastUpdated": 1791783968,
@@ -236,14 +236,31 @@
    "block": null,
    "targets": 26,
    "stale": 0,
-   "lastUpdated": 1791662492,
+   "lastUpdated": 1791859674,
    "maxStaleness": 777600,
    "self_watch": null
   }
  ],
  "total_targets": 197,
  "stale_total": 1,
- "movers": [],
+ "movers": [
+  {
+   "oracle": "Solana (Devnet)",
+   "target": "7s1da8DduuBFqGra5bJBjpnvL5E9mGzCuMk1Qkh4or2Z",
+   "label": "7s1da8\u2026or2Z",
+   "field": "multisigScore",
+   "before": 83,
+   "after": 87
+  },
+  {
+   "oracle": "Solana (Devnet)",
+   "target": "7s1da8DduuBFqGra5bJBjpnvL5E9mGzCuMk1Qkh4or2Z",
+   "label": "7s1da8\u2026or2Z",
+   "field": "compositeScore",
+   "before": 55,
+   "after": 56
+  }
+ ],
  "alerts": [],
  "unread": [],
  "note": "The Zcash commitments are verified by the dashboard itself. An oracle in `unread` has unknown targets, not zero."

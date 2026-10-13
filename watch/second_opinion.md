@@ -1,6 +1,6 @@
-## Second opinion, 2026-10-13T00:52:20Z
+## Second opinion, 2026-10-13T06:50:02Z
 
-### 14 disagreement(s) with the published score
+### 15 disagreement(s) with the published score
 
 - **0xffa10065ce1d1c42fabc46e06b84ed8ffeb4bae5** on arbitrum: the multisig score says no real multisig (0), the live read finds a Safe 3-of-3 via owner()
 - **0xff162c694eaa571f685030649814282ea457f169** on arbitrum: the score says one key does everything (10), the live read finds a timelock (1209600s) via EIP-1967 admin -> ProxyAdmin owner(); the timelock score says no delay (0), the live read finds a timelock of 336 h in the admin path via EIP-1967 admin -> ProxyAdmin owner()
@@ -8,6 +8,7 @@
 - **0x55555815a5595991c3a0ff119b59aef6c8b55555** on ethereum-l1: the timelock score says no delay (0), the contract enforces its own timelock of 336 h (timelock())
 - **0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec** on hyperliquid: the score says one key does everything (10), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisig (0), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner()
 - **0x393d0b87ed38fc779fd9611144ae649ba6082109** on hyperliquid: the score says one key does everything (10), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisig (0), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner()
+- **0xffaa4a3d97fe9107cef8a3f48c069f577ff76cc1** on hyperliquid: the timelock score says no delay (0), the live read finds a timelock of 48 h in the admin path via EIP-1967 admin -> ProxyAdmin owner()
 - **0xa9c251f8304b1b3fc2b9e8fcae78d94eff82ac66** on plasma: the timelock score says no delay (0), the contract enforces its own timelock of 24 h (timelock())
 - **0x6695c0f8706c5ace3bdf8995073179cca47926dc** on plasma: the timelock score says no delay (0), the live read finds a timelock of 48 h in the admin path via EIP-1967 admin -> ProxyAdmin owner()
 - **0x14b107cf534239c59571b066cb6497a321da897c** on robinhood: the timelock score says no delay (0), the live read finds a timelock of 24 h in the admin path via DEFAULT_ADMIN_ROLE member 1 of 3 (AccessControl)

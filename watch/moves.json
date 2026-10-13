@@ -1,9 +1,33 @@
 {
- "generated_utc": "2026-10-13T00:57:20Z",
+ "generated_utc": "2026-10-13T06:55:42Z",
  "compared": 197,
- "new_this_run": 0,
+ "new_this_run": 1,
  "first_seen_oracles": [],
  "moves": [
+  {
+   "run_utc": "2026-10-13T06:55:42Z",
+   "oracle": "solana-devnet",
+   "target": "7s1da8DduuBFqGra5bJBjpnvL5E9mGzCuMk1Qkh4or2Z",
+   "composite": [
+    55,
+    56
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 83,
+     "to": 87,
+     "why": "more signatures are now required (83 \u2192 87)"
+    }
+   ],
+   "block": null,
+   "lastUpdated": [
+    1791662446,
+    1791859636
+   ]
+  },
   {
    "run_utc": "2026-10-11T06:49:05Z",
    "oracle": "ethereum-l1-sepolia",

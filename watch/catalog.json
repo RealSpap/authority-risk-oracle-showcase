@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-13T01:03:58Z",
+ "generated_utc": "2026-10-13T07:06:35Z",
  "repo": "RealSpap/authority-risk-oracle-showcase",
  "raw_base": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/",
  "pages": "https://realspap.github.io/oracle/",
@@ -24,7 +24,7 @@
   {
    "path": "admin_probe.json",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/admin_probe.json",
-   "bytes": 1278,
+   "bytes": 1047,
    "description": "who holds the admin role of a contract whose role holders cannot be listed (mechanism 91): for an AccessControl-style target the independent reader leaves `unreadable` (it answers `hasRole(0, address(0))` with a false\u2026",
    "schema": "schema/admin_probe.schema.json",
    "schema_url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/schema/admin_probe.schema.json"
@@ -32,7 +32,7 @@
   {
    "path": "alerts.json",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/alerts.json",
-   "bytes": 30296,
+   "bytes": 30789,
    "description": "rules of `../rules.json` firing now (`active`, each with its evidence: the queued operation, tx, when it executes; for the two balance rules, `balance`: symbol, from, to, change_pct, since; the same numbers are in the\u2026",
    "schema": "schema/alerts.schema.json",
    "schema_url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/schema/alerts.schema.json"
@@ -40,7 +40,7 @@
   {
    "path": "alerts.xml",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/alerts.xml",
-   "bytes": 14179,
+   "bytes": 14565,
    "description": "the same alerts as an Atom feed (one entry per rule \u00d7 target, updated when it fires again)",
    "schema": null,
    "schema_url": null
@@ -71,7 +71,7 @@
   {
    "path": "coverage.json",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/coverage.json",
-   "bytes": 10262,
+   "bytes": 10219,
    "description": "what this watch sees on each chain, from the files of the run: `targets`; `independent_read` (readable / unreadable / native); `proxies_fingerprinted` (an upgrade would be seen: the EIP-1967 implementation on EVM, the\u2026",
    "schema": "schema/coverage.schema.json",
    "schema_url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/schema/coverage.schema.json"
@@ -79,7 +79,7 @@
   {
    "path": "cross_chain.json",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/cross_chain.json",
-   "bytes": 13988,
+   "bytes": 13989,
    "description": "the same protocol on several chains, hand by hand: the tracked contracts grouped by DefiLlama protocol (`tvl.json`), kept when present on two chains or more; per chain the composite range, the admin kinds the\u2026",
    "schema": "schema/cross_chain.schema.json",
    "schema_url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/schema/cross_chain.schema.json"
@@ -87,7 +87,7 @@
   {
    "path": "digest.md",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/digest.md",
-   "bytes": 28927,
+   "bytes": 33844,
    "description": "the daily report (six read-only checks); since 2026-10-10 it opens with the review queue (what needs a person, from `review_queue.md`), or with a line saying the queue was not read: a missing list is never shown as an\u2026",
    "schema": null,
    "schema_url": null
@@ -103,7 +103,7 @@
   {
    "path": "events.jsonl",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/events.jsonl",
-   "bytes": 30008,
+   "bytes": 33424,
    "description": "one line per score move or alarm, and since 2026-10-10 per finding of the independent reader (`admin_change`, `admin_grew`), append-only and **hash-chained**: each line carries `seq` and `prev` = sha256 of the previous\u2026",
    "schema": null,
    "schema_url": null
@@ -118,7 +118,7 @@
   {
    "path": "feed.xml",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/feed.xml",
-   "bytes": 31041,
+   "bytes": 31517,
    "description": "Atom feed of moves and alarms, plus the independent reader's findings (`admin_change`, `admin_grew`), rebuilt after that reader ran",
    "schema": null,
    "schema_url": null
@@ -126,7 +126,7 @@
   {
    "path": "held_assets.json",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/held_assets.json",
-   "bytes": 13571,
+   "bytes": 13562,
    "description": "what each tracked contract holds by its own account: ERC-4626 `totalAssets()` in `asset()`, the asset's `decimals` and `symbol`, the price from coins.llama.fi (`price_usd`, `price_at`) and `held_usd`; `by_target` keyed\u2026",
    "schema": null,
    "schema_url": null
@@ -134,7 +134,7 @@
   {
    "path": "history.jsonl",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/history.jsonl",
-   "bytes": 3923,
+   "bytes": 4048,
    "description": "one line per run (append-only)",
    "schema": null,
    "schema_url": null
@@ -158,7 +158,7 @@
   {
    "path": "latest.json",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/latest.json",
-   "bytes": 5760,
+   "bytes": 6152,
    "description": "the last run: one line per oracle (read ok, block, targets, stale, and `self_watch`: the oracle watching itself, role events since the previous run, code hash), movers, alerts, sources not read",
    "schema": "schema/latest.schema.json",
    "schema_url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/schema/latest.schema.json"
@@ -166,7 +166,7 @@
   {
    "path": "methodology.json",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/methodology.json",
-   "bytes": 2996,
+   "bytes": 3680,
    "description": "the `methodologyHash` values read on the oracles right now: which oracles carry which hash and how many targets; `mixed` names an oracle whose targets carry two hashes (a push half done); `changes` (since 2026-10-10):\u2026",
    "schema": "schema/methodology.schema.json",
    "schema_url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/schema/methodology.schema.json"
@@ -174,7 +174,7 @@
   {
    "path": "methodology.md",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/methodology.md",
-   "bytes": 1263,
+   "bytes": 2121,
    "description": "",
    "schema": null,
    "schema_url": null
@@ -190,7 +190,7 @@
   {
    "path": "moves.json",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/moves.json",
-   "bytes": 24691,
+   "bytes": 25155,
    "description": "why each score moved: the five sub-scores against the previous run, axis by axis, with a plain sentence, and `methodology_changed` (true when the oracle's `methodologyHash` changed with the same push: part of the move\u2026",
    "schema": null,
    "schema_url": null
@@ -237,7 +237,7 @@
   {
    "path": "pending_ops.json",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/pending_ops.json",
-   "bytes": 86923,
+   "bytes": 80330,
    "description": "operations queued behind the watched timelocks (ready_at, state, selector, target, tx) and what cleared recently; since 2026-10-10 `results` also carries the timelocks the independent reader found in admin paths on\u2026",
    "schema": "schema/pending_ops.schema.json",
    "schema_url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/schema/pending_ops.schema.json"
@@ -245,7 +245,7 @@
   {
    "path": "review_queue.json",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/review_queue.json",
-   "bytes": 21478,
+   "bytes": 22338,
    "description": "what a person must look at, from the files of the run, ranked and deduplicated: priority 1, something happened (upgrade executed, admin read changed, transfer in flight, plain key as Safe module, Safe signer or\u2026",
    "schema": "schema/review_queue.schema.json",
    "schema_url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/schema/review_queue.schema.json"
@@ -253,7 +253,7 @@
   {
    "path": "review_queue.md",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/review_queue.md",
-   "bytes": 16406,
+   "bytes": 16923,
    "description": "what a person must look at, from the files of the run, ranked and deduplicated: priority 1, something happened (upgrade executed, admin read changed, transfer in flight, plain key as Safe module, Safe signer or\u2026",
    "schema": "schema/review_queue.schema.json",
    "schema_url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/schema/review_queue.schema.json"
@@ -261,7 +261,7 @@
   {
    "path": "risk_by_cause.json",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/risk_by_cause.json",
-   "bytes": 13966,
+   "bytes": 14026,
    "description": "money at risk by cause, from the independent reads of the run and DefiLlama: for each cause (`plain_key_admin`, `keys_only_multisig`, `no_delay`, `unverified_code`, `one_key_freezes`, `upgrade_executable`,\u2026",
    "schema": "schema/risk_by_cause.schema.json",
    "schema_url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/schema/risk_by_cause.schema.json"
@@ -269,7 +269,7 @@
   {
    "path": "safe_activity.json",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/safe_activity.json",
-   "bytes": 13596,
+   "bytes": 13930,
    "description": "did a Safe that governs tracked contracts wake up (mechanism 86, since 2026-10-10): the `nonce()` of every Safe that is the admin of a tracked contract (a Safe holder, or the Safe behind a bare-contract holder, from\u2026",
    "schema": "schema/safe_activity.schema.json",
    "schema_url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/schema/safe_activity.schema.json"
@@ -277,7 +277,7 @@
   {
    "path": "safe_changes.json",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/safe_changes.json",
-   "bytes": 1584,
+   "bytes": 1742,
    "description": "Safe signer, threshold, module and guard events over 7 days, per ecosystem, with the ones not read; since 2026-10-10 each ecosystem says `days_read` (a chain that serves only short log ranges gets a shorter, stated\u2026",
    "schema": null,
    "schema_url": null
@@ -285,7 +285,7 @@
   {
    "path": "score_series.json",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/score_series.json",
-   "bytes": 42089,
+   "bytes": 43965,
    "description": "`series`, keyed `<chain>:<address>`: every composite score over time, oldest first, `{t, composite, from}` (`push`: the on-chain value at its push time; `watch`: a move the watch recorded in the hash-chained\u2026",
    "schema": "schema/score_series.schema.json",
    "schema_url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/schema/score_series.schema.json"
@@ -300,7 +300,7 @@
   {
    "path": "second_opinion.json",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/second_opinion.json",
-   "bytes": 219208,
+   "bytes": 221089,
    "description": "an independent reader on every EVM target's real chain (EIP-1967 admin slot then the ProxyAdmin's owner(), else owner(), else admin(); since 2026-10-10, for a target with none of those, the roles path: AccessControl\u2026",
    "schema": "schema/second_opinion.schema.json",
    "schema_url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/schema/second_opinion.schema.json"
@@ -308,7 +308,7 @@
   {
    "path": "second_opinion.md",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/second_opinion.md",
-   "bytes": 3562,
+   "bytes": 3763,
    "description": "the same findings as `second_opinion.json` in words (the disagreements, the upgrades, the admin changes of the run), for a person or an issue body; signer addresses are shortened or redacted like every published file",
    "schema": null,
    "schema_url": null
@@ -356,7 +356,7 @@
   {
    "path": "trend.jsonl",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/trend.jsonl",
-   "bytes": 20628,
+   "bytes": 21774,
    "description": "one line per run, appended, never rewritten: the numbers the run measured (targets, stale, tracked TVL, money and contracts per cause, agree / disagree / unreadable / changed / upgrades of the independent reader, signer\u2026",
    "schema": null,
    "schema_url": null
@@ -364,7 +364,7 @@
   {
    "path": "tvl.json",
    "url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/tvl.json",
-   "bytes": 33306,
+   "bytes": 33320,
    "description": "DefiLlama TVL per target, matched by hand (`scripts/tvl_match.py`), with the scope of each number",
    "schema": "schema/tvl.schema.json",
    "schema_url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/schema/tvl.schema.json"

@@ -528,7 +528,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 4670270,
+   "window_blocks": 3952941,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -580,7 +580,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 4652307,
+   "window_blocks": 3952941,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -600,7 +600,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 4652307,
+   "window_blocks": 3952941,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -643,23 +643,6 @@
    "delay": 0,
    "governs": [
     "0x7bfa7c4f149e7415b73bdedfe609237e29cbf34a"
-   ]
-  },
-  {
-   "name": "hyperliquid timelock 0xc5de\u202623d2, found by the independent reader (1 tracked contract)",
-   "chain": "hyperliquid",
-   "address": "0xc5ded4f7f53919c714059a17d31371ae847e23d2",
-   "family": "oz",
-   "status": "UNREAD (Web3RPCError: {'code': -32005, 'message': 'rate limited'})",
-   "queued_events": null,
-   "latest_queued": null,
-   "pending": [],
-   "recent": [],
-   "discovered": true,
-   "log_rpc": "https://rpc.hyperliquid.xyz/evm",
-   "delay": 172800,
-   "governs": [
-    "0xffaa4a3d97fe9107cef8a3f48c069f577ff76cc1"
    ]
   },
   {
@@ -1089,7 +1072,7 @@
      "selector": null,
      "signature": "Squads proposal #211: Upgrade of program ExponentnaRg3CQbW6dqQNZKXp7gtZ9DGMp1cwC4HAS7",
      "ready_at": 1791871110,
-     "state": "waiting",
+     "state": "ready",
      "approved_at": 1791835110,
      "account": "6yTSqA2DKuafotwVCo1QfMb3rKPGSwRnpLsk4BWUFU4u",
      "undecoded": false,
@@ -1398,22 +1381,6 @@
    "pending": [],
    "recent": [
     {
-     "id": "squads:7qipzLR9j1JcvdxE1XJEFgvoyFmgBpgw5hMdHBMPcJtM:129",
-     "index": 129,
-     "target": "distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp",
-     "value": 0,
-     "selector": null,
-     "signature": "Squads proposal #129: call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; c (not the tracked program)",
-     "still_queued": false,
-     "queued_at": 1790646968,
-     "executed_at": 1790646968,
-     "account": "H3LDU8yv1WMB1GSh3qErLjVSz4GheicN5dkw3piWumnD",
-     "undecoded": false,
-     "decoded": "call",
-     "what": "call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp",
-     "touches_governed": false
-    },
-    {
      "id": "squads:7qipzLR9j1JcvdxE1XJEFgvoyFmgBpgw5hMdHBMPcJtM:130",
      "index": 130,
      "target": "rdemKHu2ueeKkhwmM2GfJFaqD3zsrj7s3oGMN3dQMJT",
@@ -1427,102 +1394,6 @@
      "undecoded": false,
      "decoded": "call",
      "what": "call to rdemKHu2ueeKkhwmM2GfJFaqD3zsrj7s3oGMN3dQMJT",
-     "touches_governed": false
-    },
-    {
-     "id": "squads:7qipzLR9j1JcvdxE1XJEFgvoyFmgBpgw5hMdHBMPcJtM:133",
-     "index": 133,
-     "target": "distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp",
-     "value": 0,
-     "selector": null,
-     "signature": "Squads proposal #133: call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; c (not the tracked program)",
-     "still_queued": false,
-     "queued_at": 1790659839,
-     "executed_at": 1790659839,
-     "account": "G9zkRL1oTv3Ajpiy5XzWiGcGfqLq1iWSKwn7YP8tbeBn",
-     "undecoded": false,
-     "decoded": "call",
-     "what": "call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp",
-     "touches_governed": false
-    },
-    {
-     "id": "squads:7qipzLR9j1JcvdxE1XJEFgvoyFmgBpgw5hMdHBMPcJtM:134",
-     "index": 134,
-     "target": "distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp",
-     "value": 0,
-     "selector": null,
-     "signature": "Squads proposal #134: call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; c (not the tracked program)",
-     "still_queued": false,
-     "queued_at": 1790659850,
-     "executed_at": 1790659850,
-     "account": "DDBLKXFuj4zSxHPWTJutokzGgSupEmmtbmot4AgPq5Jo",
-     "undecoded": false,
-     "decoded": "call",
-     "what": "call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp",
-     "touches_governed": false
-    },
-    {
-     "id": "squads:7qipzLR9j1JcvdxE1XJEFgvoyFmgBpgw5hMdHBMPcJtM:135",
-     "index": 135,
-     "target": "ProgM6JCCvbYkfKqJYHePx4xxSUSqJp7rh8Lyv7nk7S",
-     "value": 0,
-     "selector": null,
-     "signature": "Squads proposal #135: System transfer; call to ProgM6JCCvbYkfKqJYHePx4xxSUSqJp7rh8Lyv7nk7S; Upgrade of program rdemKHu2ueeKkhwmM2GfJFaqD3zsrj7s3oGMN3dQMJT (not the tracked program)",
-     "still_queued": false,
-     "queued_at": 1790646186,
-     "executed_at": 1790646186,
-     "account": "9KH7uRo4KjanKEyR5VebDoBCPMRuQPaiXruJJGzqFDHD",
-     "undecoded": false,
-     "decoded": "program upgrade",
-     "what": "System transfer; call to ProgM6JCCvbYkfKqJYHePx4xxSUSqJp7rh8Lyv7nk7S; Upgrade of program rdemKHu2ueeKkhwmM2GfJFaqD3zsrj7s3oGMN3dQMJT",
-     "touches_governed": false
-    },
-    {
-     "id": "squads:7qipzLR9j1JcvdxE1XJEFgvoyFmgBpgw5hMdHBMPcJtM:136",
-     "index": 136,
-     "target": "rdemKHu2ueeKkhwmM2GfJFaqD3zsrj7s3oGMN3dQMJT",
-     "value": 0,
-     "selector": null,
-     "signature": "Squads proposal #136: call to rdemKHu2ueeKkhwmM2GfJFaqD3zsrj7s3oGMN3dQMJT (not the tracked program)",
-     "still_queued": false,
-     "queued_at": 1790660708,
-     "executed_at": 1790660708,
-     "account": "DGZ4TRZn2voSfG6FA1YFkyCSDzSCDxE2YNi1TrYA96Xa",
-     "undecoded": false,
-     "decoded": "call",
-     "what": "call to rdemKHu2ueeKkhwmM2GfJFaqD3zsrj7s3oGMN3dQMJT",
-     "touches_governed": false
-    },
-    {
-     "id": "squads:7qipzLR9j1JcvdxE1XJEFgvoyFmgBpgw5hMdHBMPcJtM:137",
-     "index": 137,
-     "target": "distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp",
-     "value": 0,
-     "selector": null,
-     "signature": "Squads proposal #137: call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; Upgrade of program distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp (not the tracked program)",
-     "still_queued": false,
-     "queued_at": 1790646196,
-     "executed_at": 1790646196,
-     "account": "6oC4cTf4EjBd7eHmnjJ8GKAobSfCeDx9o1eRBae8oxT5",
-     "undecoded": false,
-     "decoded": "program upgrade",
-     "what": "call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; Upgrade of program distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp",
-     "touches_governed": false
-    },
-    {
-     "id": "squads:7qipzLR9j1JcvdxE1XJEFgvoyFmgBpgw5hMdHBMPcJtM:138",
-     "index": 138,
-     "target": "distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp",
-     "value": 0,
-     "selector": null,
-     "signature": "Squads proposal #138: call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; c (not the tracked program)",
-     "still_queued": false,
-     "queued_at": 1790660733,
-     "executed_at": 1790660733,
-     "account": "CB15E9zx9PKBg6JrfMfVJ6C2uUhX8ycCMZ6qP3bZmSiX",
-     "undecoded": false,
-     "decoded": "loader Close",
-     "what": "call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; Close of program 2L66DkQQyMvDmwt4hXwJ2421RD7FUR7VJmWYGwkGxkYu",
      "touches_governed": false
     },
     {
@@ -2317,15 +2188,18 @@
     {
      "id": "squads:tr8rgazUrZzgdkfc6Q622nVJHMMzh29trdBE2uBHb4u:46",
      "index": 46,
-     "target": "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+     "target": "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C",
      "value": 0,
      "selector": null,
-     "signature": "Squads proposal #46 executed",
+     "signature": "Squads proposal #46: Upgrade of program CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C (not the tracked program)",
      "still_queued": false,
      "queued_at": 1790881548,
      "executed_at": 1790881548,
      "account": "DGXF9hCxAeNurxFADtdRDc2sXUQkfd4Ss8Wr6zSUZ6pR",
-     "undecoded": true
+     "undecoded": false,
+     "decoded": "program upgrade",
+     "what": "Upgrade of program CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C",
+     "touches_governed": false
     },
     {
      "id": "squads:tr8rgazUrZzgdkfc6Q622nVJHMMzh29trdBE2uBHb4u:52",
@@ -2414,7 +2288,7 @@
    "transaction_index": 71
   }
  ],
- "discovered_utc": "2026-10-13T00:52:20Z",
- "discovered": 14,
- "squads_utc": "2026-10-13T00:56:58Z"
+ "discovered_utc": "2026-10-13T06:50:02Z",
+ "discovered": 13,
+ "squads_utc": "2026-10-13T06:55:25Z"
 }

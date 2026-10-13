@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-10-13T12:53:19Z",
- "tracked_tvl_usd": 120291201827,
+ "generated_utc": "2026-10-13T18:50:04Z",
+ "tracked_tvl_usd": 120455334259,
  "contracts": 197,
  "causes": {
   "side_role_plain_key": {
@@ -8,7 +8,7 @@
    "contracts": 4,
    "with_tvl": 3,
    "out_of_scope": 0,
-   "tvl_usd": 654828481,
+   "tvl_usd": 657638022,
    "share_of_tracked": 0.005,
    "targets": [
     "base:0xbeef010f9cb27031ad51e3333f9af9c6b1228183",
@@ -22,7 +22,7 @@
    "contracts": 16,
    "with_tvl": 12,
    "out_of_scope": 0,
-   "tvl_usd": 1942401674,
+   "tvl_usd": 1945393327,
    "share_of_tracked": 0.016,
    "targets": [
     "ethereum-l1:0x55555815a5595991c3a0ff119b59aef6c8b55555",
@@ -45,11 +45,11 @@
   },
   "keys_only_multisig": {
    "label": "the admin multisig is made of plain keys only",
-   "contracts": 57,
-   "with_tvl": 41,
+   "contracts": 58,
+   "with_tvl": 42,
    "out_of_scope": 1,
-   "tvl_usd": 12317413728,
-   "share_of_tracked": 0.102,
+   "tvl_usd": 13142889058,
+   "share_of_tracked": 0.109,
    "targets": [
     "arbitrum:0x1a3c9b1d2f0529d97f2afc5136cc23e58f1fd35b",
     "arbitrum:0x888888888889758f76e7103c6cbf23abbf58f946",
@@ -63,6 +63,7 @@
     "ethereum-l1:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
     "ethereum-l1:0xbeef047a543e45807105e51a8bbefcc5950fcfba",
     "ethereum-l1:0xc5f0f7b66764f6ec8c8dff7ba683102295e16409",
+    "hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109",
     "hyperliquid:0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec",
     "monad:0x32841a8511d5c2c5b253f45668780b99139e476d",
     "monad:0xd651346d7c789536ebf06dc72ae3c8502cd695cc",
@@ -112,11 +113,11 @@
   },
   "no_delay": {
    "label": "no delay on the admin path (no timelock, no Zodiac delay, no Squads time lock)",
-   "contracts": 64,
-   "with_tvl": 50,
+   "contracts": 65,
+   "with_tvl": 51,
    "out_of_scope": 1,
-   "tvl_usd": 14862367116,
-   "share_of_tracked": 0.124,
+   "tvl_usd": 15722736318,
+   "share_of_tracked": 0.131,
    "targets": [
     "arbitrum:0x1a3c9b1d2f0529d97f2afc5136cc23e58f1fd35b",
     "arbitrum:0x888888888889758f76e7103c6cbf23abbf58f946",
@@ -132,6 +133,7 @@
     "ethereum-l1:0xbeef0c075da5d01112ae5cf34d257074fb5ddb2f",
     "ethereum-l1:0xc139190f447e929f090edeb554d95abb8b18ac1c",
     "ethereum-l1:0xc5f0f7b66764f6ec8c8dff7ba683102295e16409",
+    "hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109",
     "hyperliquid:0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec",
     "monad:0x8271e06e5887fe5ba05234f5315c19f3ec90e8ad",
     "monad:0xd651346d7c789536ebf06dc72ae3c8502cd695cc",
@@ -186,14 +188,13 @@
   },
   "unverified_code": {
    "label": "the code behind the proxy has no verified source (Sourcify) or build (OtterSec)",
-   "contracts": 41,
-   "with_tvl": 28,
+   "contracts": 40,
+   "with_tvl": 27,
    "out_of_scope": 0,
-   "tvl_usd": 9222989344,
-   "share_of_tracked": 0.077,
+   "tvl_usd": 8165143006,
+   "share_of_tracked": 0.068,
    "targets": [
     "hyperliquid:0x8888888c43cbb7e1c4132542e46831bffd866ed3",
-    "monad:0x36878c6fca7e0e8a88f90dc410cfbbca5b695c95",
     "monad:0xd651346d7c789536ebf06dc72ae3c8502cd695cc",
     "monad:0xd691b0afed67f96cec28ab6308cbe5b2c103b7e9",
     "plasma:0x52aa899454998be5b000ad077a46bbe360f4e497",
@@ -240,7 +241,7 @@
    "contracts": 3,
    "with_tvl": 2,
    "out_of_scope": 0,
-   "tvl_usd": 66406008,
+   "tvl_usd": 65875851,
    "share_of_tracked": 0.001,
    "targets": [
     "arbitrum:0xffa10065ce1d1c42fabc46e06b84ed8ffeb4bae5",
@@ -250,14 +251,13 @@
   },
   "upgrade_executable": {
    "label": "an upgrade is approved and executable now",
-   "contracts": 4,
+   "contracts": 3,
    "with_tvl": 1,
    "out_of_scope": 0,
-   "tvl_usd": 755326498,
+   "tvl_usd": 757505502,
    "share_of_tracked": 0.006,
    "targets": [
     "solana:1oopbojg58dgkuvkkezkgyg9dvrmpgeem1avjohkf78",
-    "solana:exponentnarg3cqbw6dqqnzkxp7gtz9dgmp1cwc4has7",
     "solana:flash6lo6h3iasjkwds2f8tkw2ukf3s15c8pmguvfgbn",
     "solana:h4nd9ayttuvlfmnypzqljz52fyigvdeb45gmwnokejtj"
    ]

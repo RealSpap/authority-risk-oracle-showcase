@@ -2027,6 +2027,15 @@ class TestAuditPublic(unittest.TestCase):
                 time.tzset()
         return code, buf.getvalue()
 
+    def test_the_method_version_comes_from_the_registry_and_an_unknown_hash_is_never_given_one(self):
+        import methodology_check as mc
+        with tempfile.TemporaryDirectory() as t:
+            reg = os.path.join(t, "reg.json"); H1, H2, H3 = "0x" + "a1" * 32, "0x" + "b2" * 32, "0x" + "c3" * 32
+            json.dump({"versions": [{"version": "2026.09.0", "date": "2026-09-24", "hashes": {"x": [H1]}}, {"version": "2026.10.1", "date": "2026-10-10", "hashes": {"y": [H2.upper().replace("0X", "0x")]}}]}, open(reg, "w"))
+            r = mc.load_registry(reg)
+            self.assertEqual(r[H1], ("2026.09.0", "2026-09-24")); self.assertEqual(r[H2], ("2026.10.1", "2026-10-10")); self.assertNotIn(H3, r)   # the registry is read hash by hash, case-folded; an unlisted hash is absent
+            self.assertIsNone(mc.load_registry(os.path.join(t, "absent.json")))   # an unreadable registry claims no version for anything
+
     def test_an_entry_retired_by_design_keeps_its_old_hash_without_failing_the_methodology_check(self):
         # 11/10, found by an independent reader on a fresh clone: four entries retired on purpose (stale, last scored under the previous method) made "one hash per oracle" fail, so the one-command audit of the README came out FAILED. Live entries decide; stale ones are noted apart
         with tempfile.TemporaryDirectory() as tmp:
@@ -4715,6 +4724,19 @@ class TestBacktestPage(unittest.TestCase):
         """12/10, measured on the published pages at 375 px: roles, provenance and verify were 2927, 900 and 1675 px wide because a curl line in a pre pushed the whole page sideways. The shared stylesheet now scrolls the block itself."""
         p = self.path("construire_backtest.py"); s = open(p, encoding="utf-8").read()
         self.assertIn("pre{overflow-x:auto;max-width:100%", s); self.assertIn("overflow-wrap:anywhere", s)
+
+
+class TestMainHomePage(unittest.TestCase):
+    """construire_accueil.py (12/10): the main page of realspap.github.io, written only once its owner approved it, every figure written into the HTML (no counter computed in the browser), no inline script (the page's content policy allows only its own file)."""
+    HERE = os.path.dirname(__file__)
+
+    def test_selftest_and_the_page_has_its_own_script_and_no_inline_one(self):
+        p = os.path.join(self.HERE, "..", "..", "..", "construire_accueil.py")
+        if not os.path.exists(p): self.skipTest("construire_accueil.py is not beside the surveillance folder in this checkout")
+        r = subprocess.run([sys.executable, p, "--selftest"], capture_output=True, text=True); self.assertEqual(r.returncode, 0, r.stdout + r.stderr); self.assertIn("selftest ok", r.stdout)
+        js = open(os.path.join(self.HERE, "..", "..", "..", "accueil", "home.js"), encoding="utf-8").read()
+        self.assertNotIn("innerHTML = '<", js)   # nothing built from strings with markup: text nodes only
+        self.assertIn("prefers-reduced-motion", js); self.assertIn("setTimeout(function () { n.textContent = String(to); }", js)   # a hidden tab never keeps a wrong figure
 
 
 class TestProvenancePage(unittest.TestCase):

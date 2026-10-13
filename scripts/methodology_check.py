@@ -8,6 +8,10 @@ with the alarm, is appended to the hash-chained event log (kind methodology_chan
 for the alarm body. Read-only over watch/. Exit 0 always; a mix or a change is a finding, not a failure.
 
     python3 scripts/methodology_check.py --scores watch/scores --prev watch/prev --events watch/events.jsonl --out watch/methodology.json --md watch/methodology.md
+
+Readable name of the method (13/10/2026): data/method_versions.json (the registry kept with the scorer, YYYY.MM.N) maps a methodologyHash to a version and the date of the
+push that carried it. Each hash of methodology.json gets `method_version` and `method_version_date`; the top-level pair names the NEWEST registered version among the hashes
+read now. A hash the registry does not know is `method_version: null` and is listed in `unregistered`: a version is never guessed from a hash.
 """
 import argparse, glob, json, os, sys, time
 
@@ -23,8 +27,20 @@ def dominant(d):
     return seen, (max(seen, key=seen.get) if seen else None)
 
 
+def load_registry(path):
+    """{hash: (version, date)} from the registry, or None when it cannot be read (then no version is claimed for any hash)."""
+    try: reg = json.load(open(path, encoding="utf-8"))
+    except (OSError, ValueError): return None
+    out = {}
+    for v in reg.get("versions", []):
+        for hs in (v.get("hashes") or {}).values():
+            for h in hs:
+                if isinstance(h, str) and h.startswith("0x"): out[h.lower()] = (v.get("version"), v.get("date"))
+    return out
+
+
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument("--scores", default="watch/scores"); ap.add_argument("--prev", default="watch/prev")
+    ap = argparse.ArgumentParser(); ap.add_argument("--registry", default="data/method_versions.json"); ap.add_argument("--scores", default="watch/scores"); ap.add_argument("--prev", default="watch/prev")
     ap.add_argument("--events", default="watch/events.jsonl"); ap.add_argument("--out", default="watch/methodology.json"); ap.add_argument("--md", default="watch/methodology.md")
     a = ap.parse_args(); now = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     from evaluate_rules import WATCH_SLUGS
@@ -46,13 +62,21 @@ def main():
         from disputes import chain_append   # the same link rule as every writer of the log
         chain_append(a.events, [{"run_utc": now, "kind": "methodology_changed", "oracle": c["name"], "chain": c["chain"], "target": None, "label": None, "from": c["from"], "to": c["to"],
                                  "text": "methodology changed on %s: %s… -> %s… (%d target(s)); scores before this run are not comparable with scores after it" % (c["name"], c["from"][:10], c["to"][:10], c["targets"])} for c in changes])
-    out = {"generated_utc": now, "hashes": hashes, "mixed": mixed, "changes": changes,
+    reg = load_registry(a.registry); unregistered = []; known = []
+    for h, v in hashes.items():
+        ver, dt = reg.get(h, (None, None)) if reg is not None and h != "none" else (None, None)
+        v["method_version"], v["method_version_date"] = ver, dt
+        if ver: known.append((dt or "", ver))
+        elif h != "none": unregistered.append({"hash": h, "oracles": sorted(v["oracles"]), "targets": v["targets"]})
+    newest = max(known) if known else (None, None)
+    out = {"generated_utc": now, "method_version": newest[1], "method_version_date": newest[0] or None, "registry_read": reg is not None, "unregistered": unregistered, "hashes": hashes, "mixed": mixed, "changes": changes,
            "what": "methodologyHash as read on each oracle (keccak256 of the scoring code and its version, set at the push): one hash per oracle is the normal state; a mix means a push half done or a target scored by an older method; a change (against the previous run) means every score of that oracle was produced by a new method: compare across it with care, the chained log keeps the date"}
     tmp = a.out + ".tmp"; json.dump(out, open(tmp, "w"), indent=1); os.replace(tmp, a.out)
     if a.md:
         if changes:
             open(a.md, "w").write("## Methodology changed, %s\n\n" % now + "".join("- **%s**: `%s` -> `%s` on %d target(s). Every score of this oracle now comes from a new method: the series before this run is not comparable with the series after it. Expected after a release of the scorer; otherwise a push by a key that should not hold the updater role.\n" % (c["name"], c["from"], c["to"], c["targets"]) for c in changes))
         elif os.path.exists(a.md): os.remove(a.md)
+    print("method version %s (%s); %d hash(es) not in the registry%s" % (newest[1], newest[0] or "-", len(unregistered), "" if reg is not None else " (registry unreadable)"))
     print("%d methodology hash(es) over %d oracle(s), %d mixed, %d changed since the previous run" % (len(hashes), len({o for h in hashes.values() for o in h["oracles"]}), len(mixed), len(changes)))
     for m in mixed: print("  MIXED %s: %s" % (m["oracle"], m["hashes"]))
     for c in changes: print("  CHANGED %s: %s -> %s" % (c["oracle"], c["from"][:12], c["to"][:12]))

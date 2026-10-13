@@ -40,6 +40,7 @@ def main():
     if hi_rules: reasons.append("%d high alert(s) from the rules firing now (%s)" % (len(hi_rules), "; ".join(sorted({str(x.get("rule"))[:100] for x in hi_rules})[:3]))); worse("degraded")
     if meth and meth.get("changes"): reasons.append("methodology changed on %d oracle(s): scores before this run are not comparable" % len(meth["changes"])); worse("degraded")
     if meth and meth.get("mixed"): reasons.append("methodology hashes mixed on %d oracle(s)" % len(meth["mixed"])); worse("degraded")
+    if meth and meth.get("unregistered"): reasons.append("method hash not in registry on %d oracle(s): no version is shown for it (data/method_versions.json)" % len({o for u in meth["unregistered"] for o in u["oracles"]}))   # information: no change of state, a version is never invented
     rec = {"run_utc": (latest or {}).get("run_utc") or time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "state": state, "reasons": reasons,
            "checks": {"oracles_read": (len(latest.get("oracles", [])) - len(latest.get("unread", []))) if latest else None, "oracles": len(latest.get("oracles", [])) if latest else None,
                       "targets": (latest or {}).get("total_targets"), "stale": (latest or {}).get("stale_total"), "alarms": len((latest or {}).get("alerts", [])),

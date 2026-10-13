@@ -1,0 +1,98 @@
+{
+  "scheme": "YYYY.MM.N: N counts, within the month, the changes of METHODOLOGY.md or of the scoring code that move a published score. A version is named when it is pushed on-chain. methodVersionDate is the date of that push (UTC, ISO). The methodologyHash stays the machine identifier; this is the readable name next to it.",
+  "field_names": {
+    "version": "methodVersion",
+    "date": "methodVersionDate"
+  },
+  "after_each_push": "Fill `hashes` of the version that was local (read them from the oracles or from the push output), set its status to \"on-chain\", then add the next local version. scripts/lib/method_version.py reads this file.",
+  "versions": [
+    {
+      "version": "2026.09.0",
+      "date": "2026-09-24",
+      "status": "on-chain, entries not rewritten since",
+      "note": "Retroactive and not enumerated: the entries last written on 2026-09-23 (Ethena minting, retired) and 2026-09-24 (three HIP-3 dexes on Hyperliquid), under older versions of the scoring code. Earlier versions are in the engineering log of CHANGELOG.md.",
+      "hashes": {
+        "ethereum-l1": [
+          "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167"
+        ],
+        "hyperliquid": [
+          "0xfbf38ff91abf710728e2df3d5370bf18eeb2a9085168612fa03955b13cc958ad"
+        ]
+      }
+    },
+    {
+      "version": "2026.10.1",
+      "date": "2026-10-10",
+      "status": "superseded: replaced on the oracles between 2026-10-12 05:46Z and 2026-10-13 03:26Z",
+      "note": "The push of 2026-10-10 (Ethereum L1 on 2026-10-11 02:50Z). Hashes read on 2026-10-12 from the public pages of the Watch, which lagged the chain on at least Hyperliquid; the Solana hash was not re-read after that. Replaced by 2026.10.2 on eight oracles.",
+      "hashes": {
+        "robinhood-chain": [
+          "0x795edc64fdbb202de7639a1c6c1148aee4788c27ffc66050f9aa6cf0e09614c5"
+        ],
+        "ethereum-l1": [
+          "0xa39b4e35813b802d9f7b0daf2e685521ca2ffae61b210674e8ea97493c54f84b"
+        ],
+        "arbitrum-ecosystem": [
+          "0xf178bca63c9d3257a306dd7cf6a4e5b3e3817a4ae59fd289ae3486d7bbc25374"
+        ],
+        "base-ecosystem": [
+          "0x4fad7e994ac7045d9e23e7bda2f85c5c3f210b8ac57da920ea123896f807df9d"
+        ],
+        "plasma-ecosystem": [
+          "0x6a1d6a17504a5faeab692225b82e197898a47dbd96137e4c1a3cc17cf977e754"
+        ],
+        "monad": [
+          "0xc4646c69178e9032868eadce229305ce026b8a28cae49546218c82834f7e28a7"
+        ],
+        "hyperliquid": [
+          "0xf39ff2bfb9ca0b609b00f3f3058fc2ef40d3d8abbcb08228bfc8091235a5fbd4"
+        ],
+        "tempo": [
+          "0x134e33c2b59f03981c62fbafe19942062b82862cc2f79fa62d23294eeb97d268"
+        ],
+        "solana": [
+          "0x79b73242ae50124e8d706211eb7f67dd3a891d87b9192fe3973da17fdc63b49d"
+        ]
+      }
+    },
+    {
+      "version": "2026.10.2",
+      "date": "2026-10-13",
+      "status": "on-chain",
+      "note": "The push of 2026-10-12 / 2026-10-13, read from getScore() on each oracle on 2026-10-13 (about 15:30Z): Hyperliquid 2026-10-12 05:46Z, Base 23:32Z, Plasma 23:56Z, Monad 2026-10-13 00:12Z, Arbitrum 00:54Z, Ethereum L1 01:45Z, Tempo 01:57Z, Robinhood Chain 03:26Z. Solana was not re-read: its hash for this version is not listed.",
+      "hashes": {
+        "robinhood-chain": [
+          "0x667dc486af9557a83488110fdb18fe653ba6d3be4773420590ee53b4a052fa45"
+        ],
+        "ethereum-l1": [
+          "0x46a1a85b619e7db0f81e543674e8aa0a3a1afba36b7500fe2cb256e0024db645"
+        ],
+        "arbitrum-ecosystem": [
+          "0x51163f3cce4612011bca19a651e2c0b650d9c670559f9036a37acfadf0532f54"
+        ],
+        "base-ecosystem": [
+          "0x0ffe08e65a4a36a26b89b8257fca91ff5c4c558f13e367f9bf457231d6848c70"
+        ],
+        "plasma-ecosystem": [
+          "0x026c7c3b27bb926e395674381dba1df191de242b8b5a46f8fe3359fa6001ad1e"
+        ],
+        "monad": [
+          "0x4988d9ca0f32092144d3ced871e2c454f9e6d071f4d1ab71c97f6970a925ed4f"
+        ],
+        "tempo": [
+          "0x0a3df5ccf0492a8006278d8f559a8ee72202d8b3d3b01ff5561fa9729045c276"
+        ],
+        "hyperliquid": [
+          "0x36452ea42a84016f691a665855cc3482c3e8bb4d87155901b491b293457a4004"
+        ]
+      }
+    },
+    {
+      "version": "2026.10.3",
+      "date": "2026-10-13",
+      "status": "local, not pushed",
+      "note": "Written on 2026-10-13 after that push, not on-chain: five more Ethereum L1 targets, one rule for nested Safe seats, the Safe proxy-code check, the Monad Steakhouse cross-exposure address match, timelock delay bands for Uniswap V3 and Sky, push-guard and push-script hardening.",
+      "hashes": null
+    }
+  ]
+}

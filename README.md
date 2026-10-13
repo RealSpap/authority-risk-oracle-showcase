@@ -28,7 +28,7 @@
 
 <p align="center"><b>Live:</b> <a href="https://realspap.github.io/oracle/">live dashboard</a></p>
 
-Built for Colosseum's [Crypto World's Fair](https://colosseum.com/worldsfair) hackathon.
+Submitted to Colosseum's [Crypto World's Fair](https://colosseum.com/worldsfair) on 12 October 2026.
 
 Most DeFi exploits are not code bugs. They are one admin key, one thin multisig, or one missing timelock. Risk providers
 that look at this are paid by the protocols they rate, or sell a closed dashboard. This project computes the answer
@@ -245,14 +245,14 @@ The longer comparison, including what SolGov and LlamaRisk do better and where t
 - **A fresh Solana deployment must be initialised in the same transaction as the deploy.** `initialize` has no authority check, so on a new deployment whoever calls it first becomes admin and updater. The devnet registry was initialised by the operator.
 - **The Robinhood push script now refuses to send anywhere but Robinhood Chain testnet** (and to read anywhere but its mainnet), and `Deploy.s.sol` requires `EXPECTED_CHAIN_ID`: a wrong URL cannot write to a mainnet by accident.
 
-## Built during the hackathon, and what came before
+## How it was built, and what came before
 
 The repository started on 2026-09-15 as a private working repository; the public history here is a sequence of dated snapshots of that
 work (the earliest days are folded into the first snapshots, and a few findings still under responsible disclosure are left out). The scoring logic reuses
 classification code from two earlier research programs by the same author:
 [`multisig-overlap`](https://github.com/RealSpap/multisig-overlap-showcase) and
 [`defi-admin-key-risk`](https://github.com/RealSpap/defi-admin-key-risk-showcase). Everything in this repository (contract, ten
-ecosystems' scorers, updater, push guard, dashboard, tests) was built in the hackathon window.
+ecosystems' scorers, updater, push guard, dashboard, tests) was built from 2026-09-15 onwards.
 `methodologyHash` is derived from the bytes of the scorer files, so the digest of this public copy differs from hashes published by
 pushes made from the working repository; a push made from a commit of this repository publishes this repository's digest.
 

@@ -73,7 +73,7 @@ A real DEX with $6.3M chain TVL, governed through a centralized `AccessHub`
 confirmed by `owner()` reverting on the Factory/PoolDeployer and AccessHub's
 `AccessControl`-shaped interface responding instead. `hasRole(DEFAULT_ADMIN_ROLE, ·)`
 is true for both `RamsesTimelock` and an address labeled "Ramses Team Multisig"
-(`0x20D630cF1f5628285BfB91DfaC8C89eB9087BE1A`) -- traced one hop further rather than
+(`0x20D6…BE1A`) -- traced one hop further rather than
 trusting the label: `getOwners()` on that "multisig" returns **exactly one owner**,
 `getThreshold()` is **1**. A Safe wrapper around a single private key, that sole
 signer confirmed a bare EOA -- the same pattern already flagged on the NetNet Credit

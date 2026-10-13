@@ -3,7 +3,7 @@
 ## Needs a person, 2026-10-12T10:27:59Z: 34 item(s) (priority 1: 11, priority 2: 20, priority 3: 3); oldest 1.5 d
 
 ### Something happened: read before trusting the score (11)
-- **Safe AddedOwner** robinhood 0x20D630cF1f5628285BfB91DfaC8C89eB9087BE1A (1.5 d): AddedOwner 0xB3bf…1c9B (ramses). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** robinhood 0x20D6…BE1A (1.5 d): AddedOwner 0xB3bf…1c9B (ramses). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **queued operation executable** solana 1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78 (1.5 d): program upgrade: Squads proposal #1022: Upgrade of program 1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78 via Squads v4 multisig C4aw…SuPk (4-of-9, time lock 86400 s), found by the independent reader (1 tracked program). To do: read the call before it lands. (pending_ops.json)
 - **queued operation executable** solana 1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78 (1.5 d): program upgrade: Squads proposal #1026: Upgrade of program 1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78 via Squads v4 multisig C4aw…SuPk (4-of-9, time lock 86400 s), found by the independent reader (1 tracked program). To do: read the call before it lands. (pending_ops.json)
 - **queued operation executable** solana FLASH6Lo6h3iasJKWDs2F8TkW2UKf3s15C8PMGuVfgBn (1.5 d): loader ExtendProgram: Squads proposal #112: ExtendProgram of program FLASH6Lo6h3iasJKWDs2F8TkW2UKf3s15C8PMGuVfgBn via Squads v4 multisig Gb33…qyXF (3-of-7, time lock 0 s), found by the independent reader (1 tracked program). To do: read the call before it lands. (pending_ops.json)
@@ -54,7 +54,7 @@
 - Hyperliquid (HyperEVM): 16 targets, first entry turns stale in 211 h (2026-10-21 05:46 UTC); oldest update 2026-10-12 05:46 UTC
 
 ## Safe authority changes, last 7 days
-- robinhood: AddedOwner 0xB3bf…1c9B on 0x20D630cF1f5628285BfB91DfaC8C89eB9087BE1A (ramses), tx 6d4610f18f429737dbc1c8714b52a7adccc2494f344ca067afe4c9095f5714de
+- robinhood: AddedOwner 0xB3bf…1c9B on 0x20D6…BE1A (ramses), tx 6d4610f18f429737dbc1c8714b52a7adccc2494f344ca067afe4c9095f5714de
 - not attempted: tempo (public RPC returned no control events); monad (public RPC caps eth_getLogs near 100 blocks); hyperliquid (public RPC rate-limits the query)
 
 ## Timelock queue

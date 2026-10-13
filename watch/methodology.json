@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-12T18:50:41Z",
+ "generated_utc": "2026-10-13T00:57:18Z",
  "hashes": {
   "0xf178bca63c9d3257a306dd7cf6a4e5b3e3817a4ae59fd289ae3486d7bbc25374": {
    "oracles": {
@@ -7,7 +7,7 @@
    },
    "targets": 13
   },
-  "0x4fad7e994ac7045d9e23e7bda2f85c5c3f210b8ac57da920ea123896f807df9d": {
+  "0x0ffe08e65a4a36a26b89b8257fca91ff5c4c558f13e367f9bf457231d6848c70": {
    "oracles": {
     "base-sepolia": 13
    },
@@ -31,13 +31,13 @@
    },
    "targets": 16
   },
-  "0xc4646c69178e9032868eadce229305ce026b8a28cae49546218c82834f7e28a7": {
+  "0x4988d9ca0f32092144d3ced871e2c454f9e6d071f4d1ab71c97f6970a925ed4f": {
    "oracles": {
     "monad": 9
    },
    "targets": 9
   },
-  "0x6a1d6a17504a5faeab692225b82e197898a47dbd96137e4c1a3cc17cf977e754": {
+  "0x026c7c3b27bb926e395674381dba1df191de242b8b5a46f8fe3359fa6001ad1e": {
    "oracles": {
     "plasma": 9
    },
@@ -71,6 +71,34 @@
    }
   }
  ],
- "changes": [],
+ "changes": [
+  {
+   "oracle": "base-sepolia",
+   "name": "Base (Sepolia)",
+   "chain": "base",
+   "from": "0x4fad7e994ac7045d9e23e7bda2f85c5c3f210b8ac57da920ea123896f807df9d",
+   "to": "0x0ffe08e65a4a36a26b89b8257fca91ff5c4c558f13e367f9bf457231d6848c70",
+   "targets": 13,
+   "run_utc": "2026-10-13T00:57:18Z"
+  },
+  {
+   "oracle": "monad",
+   "name": "Monad",
+   "chain": "monad",
+   "from": "0xc4646c69178e9032868eadce229305ce026b8a28cae49546218c82834f7e28a7",
+   "to": "0x4988d9ca0f32092144d3ced871e2c454f9e6d071f4d1ab71c97f6970a925ed4f",
+   "targets": 9,
+   "run_utc": "2026-10-13T00:57:18Z"
+  },
+  {
+   "oracle": "plasma",
+   "name": "Plasma",
+   "chain": "plasma",
+   "from": "0x6a1d6a17504a5faeab692225b82e197898a47dbd96137e4c1a3cc17cf977e754",
+   "to": "0x026c7c3b27bb926e395674381dba1df191de242b8b5a46f8fe3359fa6001ad1e",
+   "targets": 9,
+   "run_utc": "2026-10-13T00:57:18Z"
+  }
+ ],
  "what": "methodologyHash as read on each oracle (keccak256 of the scoring code and its version, set at the push): one hash per oracle is the normal state; a mix means a push half done or a target scored by an older method; a change (against the previous run) means every score of that oracle was produced by a new method: compare across it with care, the chained log keeps the date"
 }

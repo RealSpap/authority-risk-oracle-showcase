@@ -766,18 +766,48 @@
    "chain": "solana",
    "timelock": "Squads v4 multisig 7FCP\u2026mvHk (7-of-15, time lock 0 s), found by the independent reader (1 tracked program)",
    "what": "program upgrade"
+  },
+  "arbitrum:0x4d6ce4f4498d59eed397bcbc687805a07f9b2346:0x314f235e0b39bc8c5d078368747597d9957804ff085eca875e24b44773ae195b": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-10-13T00:43:48Z",
+   "due_utc": "2026-10-13T19:06:21Z",
+   "notice_hours": 18.4,
+   "state": "queued",
+   "chain": "arbitrum",
+   "timelock": "arbitrum timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
+   "what": "parameter change"
+  },
+  "plasma:0x4d6ce4f4498d59eed397bcbc687805a07f9b2346:0xa98044b61f745afa65a2367fd8bc5fe554eea4c107a59c12d0d7858e712871a0": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-10-13T00:43:48Z",
+   "due_utc": "2026-10-13T19:08:59Z",
+   "notice_hours": 18.4,
+   "state": "queued",
+   "chain": "plasma",
+   "timelock": "plasma timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
+   "what": "parameter change"
+  },
+  "solana:51smh7pbdkjdgmvnvks3gmwapqffmq5s4fc223yhcjuh:squads:51smH7pBDKJDgmVnVks3gMWaPQFfmQ5s4Fc223yHcjuH:211": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-10-13T00:43:48Z",
+   "due_utc": "2026-10-13T05:58:30Z",
+   "notice_hours": 5.2,
+   "state": "queued",
+   "chain": "solana",
+   "timelock": "Squads v4 multisig 51sm\u2026cjuH (3-of-5, time lock 36000 s), found by the independent reader (1 tracked program)",
+   "what": "program upgrade"
   }
  },
- "updated_utc": "2026-10-12T18:34:50Z",
+ "updated_utc": "2026-10-13T00:43:48Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
-  "warned": 4,
+  "warned": 7,
   "seen_without_notice": 9,
   "missed": 2,
   "baseline": 77,
-  "warned_with_a_known_notice": 4,
-  "shortest_notice_hours": 19.6,
-  "median_notice_hours": 21.4,
+  "warned_with_a_known_notice": 7,
+  "shortest_notice_hours": 5.2,
+  "median_notice_hours": 19.6,
   "note": "warned: seen while queued and not yet executable (the notice is real); seen_without_notice: still queued but already executable when first seen; missed: queued after the ledger started and already applied when first seen (faster than the 6-hour cadence); baseline: applied before the ledger started, counted as neither."
  }
 }

@@ -5152,3 +5152,129 @@ class TestPerProtocolPrototype(unittest.TestCase):
         r = subprocess.run([sys.executable, p, "--selftest"], capture_output=True, text=True); self.assertEqual(r.returncode, 0, r.stdout + r.stderr); self.assertIn("selftest ok", r.stdout)
         bs = open(b, encoding="utf-8").read(); self.assertIn("construire_protocole", bs); self.assertIn("protocole/approved.txt", bs)
         self.assertEqual([l.strip() for l in open(sl, encoding="utf-8") if l.strip()], ["aave-v3"])
+
+
+class TestMainActivityKeepsTheScheduleAlive(unittest.TestCase):
+    """The age of the last commit on main: nothing under 45 days, one issue from 45, no second issue, closed when main has a recent commit, and a run that never fails for it."""
+    DAY = 86400
+    NOW = 1792000000
+
+    def bare_repo(self, tmp, age_days):
+        """A bare repository whose main holds one commit dated age_days before NOW."""
+        import subprocess as sp, tempfile
+        base = tempfile.mkdtemp(dir=tmp); work = os.path.join(base, "work"); os.makedirs(work); bare = os.path.join(base, "origin.git")
+        env = dict(os.environ, GIT_AUTHOR_DATE="%d +0000" % (self.NOW - age_days * self.DAY), GIT_COMMITTER_DATE="%d +0000" % (self.NOW - age_days * self.DAY))
+        g = ["git", "-c", "user.name=T", "-c", "user.email=t@example.org", "-c", "init.defaultBranch=main"]
+        sp.run(g + ["init", "-q"], cwd=work, check=True); open(os.path.join(work, "f"), "w").write("x\n"); sp.run(g + ["add", "-A"], cwd=work, check=True)
+        sp.run(g + ["commit", "-qm", "c"], cwd=work, check=True, env=env); sp.run(["git", "clone", "-q", "--bare", work, bare], check=True)
+        return bare
+
+    class FakeGh:
+        """gh with one repository's issues kept in memory."""
+        def __init__(self): self.issues = {}; self.next = 1; self.calls = []
+        def __call__(self, args):
+            self.calls.append(list(args)); a = list(args); verb = (a[0], a[1]) if a[0] in ("issue", "label") else (a[0],)
+            opt = lambda k: a[a.index(k) + 1] if k in a else None
+            if verb == ("issue", "list"): return 0, json.dumps([{"number": n} for n, i in sorted(self.issues.items()) if i["state"] == "open" and opt("--label") in i["labels"]])
+            if verb == ("issue", "create"): n = self.next; self.next += 1; self.issues[n] = {"state": "open", "title": opt("--title"), "body": opt("--body"), "labels": [opt("--label")]}; return 0, "url/%d" % n
+            if verb == ("issue", "edit"): i = self.issues[int(a[2])]; i["title"] = opt("--title"); i["body"] = opt("--body"); return 0, ""
+            if verb == ("issue", "comment"): self.issues[int(a[2])].setdefault("comments", []).append(opt("--body")); return 0, ""
+            if verb == ("issue", "close"): self.issues[int(a[2])]["state"] = "closed"; return 0, ""
+            return 0, ""   # label create
+
+    def collector(self, sent):
+        def send(text): sent.append(text); return True
+        return send
+
+    def go(self, tmp, age, gh, out=None, send=None):
+        import main_activity
+        return main_activity.run(self.bare_repo(tmp, age), "main", out, "OWNER/PRIVATE", "OWNER/PUBLIC", gh, self.NOW, send)
+
+    def test_thirty_days_old_does_nothing(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            gh = self.FakeGh(); rec, line = self.go(tmp, 30, gh)
+            self.assertEqual((rec["main_last_commit_age_days"], rec["level"]), (30, "ok")); self.assertEqual(gh.issues, {}); self.assertIn("issue none", line)
+
+    def test_forty_six_days_opens_one_issue_with_the_sentence_and_the_next_run_does_not_open_another(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            gh = self.FakeGh(); rec, line = self.go(tmp, 46, gh)
+            self.assertEqual((rec["main_last_commit_age_days"], rec["level"]), (46, "warn")); self.assertEqual(len(gh.issues), 1)
+            i = gh.issues[1]; self.assertEqual(i["title"], "Keep the schedule alive: main has had no commit for 46 days"); self.assertIn("push any small change to main before day 60 or GitHub will disable the scheduled Watch", i["body"]); self.assertIn("OWNER/PUBLIC", i["body"])
+            self.assertIn("issue created", line)
+            rec2, line2 = self.go(tmp, 47, gh)   # the next day: refreshed, not duplicated
+            self.assertEqual(len(gh.issues), 1); self.assertEqual(gh.issues[1]["title"], "Keep the schedule alive: main has had no commit for 47 days"); self.assertIn("issue updated", line2)
+            self.go(tmp, 47, gh); self.assertEqual(len(gh.issues), 1)   # the same day again: still one
+
+    def test_a_recent_commit_comments_and_closes_the_issue(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            gh = self.FakeGh(); self.go(tmp, 50, gh); rec, line = self.go(tmp, 1, gh)
+            self.assertEqual(gh.issues[1]["state"], "closed"); self.assertEqual(len(gh.issues[1]["comments"]), 1); self.assertIn("issue closed", line)
+
+    def test_exactly_forty_four_and_forty_five_days_are_either_side_of_the_line(self):
+        import tempfile, main_activity
+        for age, level in ((44, "ok"), (45, "warn")):
+            with tempfile.TemporaryDirectory() as tmp: self.assertEqual(self.go(tmp, age, self.FakeGh())[0]["level"], level, age)
+        self.assertEqual(main_activity.judge(None, self.NOW), (None, "unknown")); self.assertEqual(main_activity.judge(self.NOW + 5 * self.DAY, self.NOW), (None, "unknown"))   # a date ahead of the clock proves nothing
+
+    def test_the_file_is_written_and_run_status_and_watch_age_repeat_the_number(self):
+        import tempfile, run_status
+        with tempfile.TemporaryDirectory() as tmp:
+            w = os.path.join(tmp, "watch"); os.makedirs(w); rec, _ = self.go(tmp, 46, self.FakeGh(), os.path.join(w, "main_activity.json"))
+            self.assertEqual(json.load(open(os.path.join(w, "main_activity.json")))["main_last_commit_age_days"], 46)
+            json.dump({"run_utc": "2026-10-14T00:00:00Z", "oracles": [], "unread": [], "alerts": [], "total_targets": 0, "stale_total": 0}, open(os.path.join(w, "latest.json"), "w"))
+            r = subprocess.run([sys.executable, "-W", "ignore", os.path.join(os.path.dirname(run_status.__file__), "run_status.py"), "--watch", w], capture_output=True, text=True); self.assertEqual(r.returncode, 0, r.stderr)
+            st = json.load(open(os.path.join(w, "status.json"))); self.assertEqual(st["main_last_commit_age_days"], 46); self.assertTrue(any("main has had no commit for 46 days" in x for x in st["reasons"]))
+            self.assertEqual(watch_age.main_note(st)[0], "WARN"); self.assertEqual(watch_age.main_note({"main_last_commit_age_days": 12})[0], "NOTE"); self.assertIsNone(watch_age.main_note({})); self.assertIsNone(watch_age.main_note(None))
+            json.dump({"run_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}, open(os.path.join(w, "latest.json"), "w"))
+            r = subprocess.run([sys.executable, "-W", "ignore", os.path.join(os.path.dirname(watch_age.__file__), "watch_age.py"), "--file", os.path.join(w, "latest.json")], capture_output=True, text=True)
+            self.assertEqual(r.returncode, 0); self.assertIn("WARN: main has had no commit for 46 days", r.stdout)   # the exit code still says only whether the Watch ran
+
+    def test_telegram_goes_out_at_45_52_and_58_days_once_each_and_a_recent_commit_starts_over(self):
+        import tempfile
+        sent = []; send = self.collector(sent)
+        with tempfile.TemporaryDirectory() as tmp:
+            out = os.path.join(tmp, "main_activity.json")
+            for age, total in ((44, 0), (45, 1), (46, 1), (51, 1), (52, 2), (53, 2), (58, 3), (59, 3)):
+                self.go(tmp, age, None, out, send); self.assertEqual(len(sent), total, age)
+            self.assertEqual(json.load(open(out))["notified_tier"], 58)
+            self.assertEqual(sent[0], "Keep the schedule alive: main has had no commit for 45 days. Push any small change to main before day 60 or GitHub will disable the scheduled Watch.")
+            self.assertIn("for 52 days", sent[1]); self.assertIn("for 58 days", sent[2])
+            self.go(tmp, 2, None, out, send); self.assertEqual(json.load(open(out))["notified_tier"], 0); self.assertEqual(len(sent), 3)   # a recent commit: nothing sent, tiers reset
+            self.go(tmp, 47, None, out, send); self.assertEqual(len(sent), 4)   # and the next silence starts at 45 again
+            first = len(sent); self.go(tmp, 53, None, out, send); self.assertEqual(len(sent), first + 1)   # a run that first sees day 53 sends once, for the tier reached
+
+    def test_a_telegram_that_is_down_is_tried_again_and_never_fails_the_run(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            out = os.path.join(tmp, "main_activity.json"); calls = []
+            def down(text): calls.append(text); return False
+            def boom(text): calls.append(text); raise OSError("connection reset")
+            self.go(tmp, 46, None, out, down); self.assertEqual(json.load(open(out))["notified_tier"], 0)   # not delivered: not remembered
+            rec, line = self.go(tmp, 46, None, out, boom); self.assertEqual(json.load(open(out))["notified_tier"], 0); self.assertIn("will be tried again", line)
+            self.go(tmp, 46, None, out, self.collector([])); self.assertEqual(json.load(open(out))["notified_tier"], 45); self.assertEqual(len(calls), 2)
+            rec, line = self.go(tmp, 60, None, None, None); self.assertEqual(rec["notified_tier"], 0); self.assertIn("no Telegram secrets", line)   # no secrets, no message, no failure
+
+    def test_a_broken_state_file_is_read_as_nothing_notified_and_the_secrets_are_never_printed(self):
+        import tempfile, main_activity
+        with tempfile.TemporaryDirectory() as tmp:
+            out = os.path.join(tmp, "main_activity.json"); open(out, "w").write("{not json"); sent = []
+            rec, line = self.go(tmp, 46, None, out, self.collector(sent)); self.assertEqual((len(sent), rec["notified_tier"]), (1, 45))
+            for bad in ("x", True, 3, None, -1): json.dump({"notified_tier": bad}, open(out, "w")); self.assertEqual(main_activity.previous_tier(out), 0, bad)
+            r = subprocess.run([sys.executable, os.path.join(os.path.dirname(main_activity.__file__), "main_activity.py"), "--repo-dir", "/nonexistent", "--out", out], capture_output=True, text=True, env=dict(os.environ, TELEGRAM_BOT_TOKEN="SECRET-TOKEN-123", TELEGRAM_CHAT_ID="SECRET-CHAT-456"))
+            self.assertEqual(r.returncode, 0); self.assertNotIn("SECRET", r.stdout + r.stderr)
+
+    def test_a_failing_gh_or_a_missing_repository_never_fails_the_run(self):
+        import tempfile, main_activity
+        with tempfile.TemporaryDirectory() as tmp:
+            rec, line = main_activity.run(self.bare_repo(tmp, 60), "main", None, "OWNER/PRIVATE", "OWNER/PUBLIC", lambda a: (1, ""), self.NOW); self.assertIn("issue not synced", line); self.assertEqual(rec["level"], "warn")
+            rec, line = main_activity.run(os.path.join(tmp, "nowhere"), "main", None, None, None, None, self.NOW); self.assertEqual(rec["level"], "unknown")
+        r = subprocess.run([sys.executable, os.path.join(os.path.dirname(main_activity.__file__), "main_activity.py"), "--repo-dir", "/nonexistent", "--issue-repo", "O/R"], capture_output=True, text=True, env=dict(os.environ, GH_TOKEN="", GITHUB_TOKEN=""))
+        self.assertEqual(r.returncode, 0)
+
+    def test_the_workflow_runs_the_check_before_the_status_and_gives_it_the_issues_token(self):
+        wf = open(os.path.join(os.path.dirname(__file__), "..", "..", ".github", "workflows", "watch.yml"), encoding="utf-8").read()
+        self.assertLess(wf.index("scripts/main_activity.py"), wf.index("scripts/sign_run.py")); self.assertLess(wf.index("scripts/main_activity.py"), wf.index("scripts/run_status.py")); step = wf[wf.index("scripts/main_activity.py") - 600:wf.index("scripts/main_activity.py")]
+        for s in ("GH_TOKEN: ${{ secrets.ISSUES_TOKEN }}", "TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}", "TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}"): self.assertIn(s, step)

@@ -49,6 +49,10 @@ def main():
                       "signing_key": (sig or {}).get("public_key"), "second_opinion": ({k: so.get(k) for k in ("agree", "disagree", "acknowledged", "unreadable", "native")} if so else None),
                       "methodology_mixed": len(meth.get("mixed", [])) if meth else None, "disputes_open": dp.get("open") if dp else None, "review_items": rq.get("total") if rq else None},   # the review queue is information for the maintainer, it does not change the state
            "what": "the run's health in one record: ok / degraded / alarm with the reasons; written by scripts/run_status.py after every Watch run"}
+    ma = load(os.path.join(W, "main_activity.json"))   # since 2026-10-14: how old the last commit on main is (GitHub disables scheduled workflows after 60 days without repository activity)
+    if ma:
+        rec["main_last_commit_age_days"] = ma.get("main_last_commit_age_days")
+        if ma.get("level") == "warn": reasons.append("main has had no commit for %s days: GitHub disables the scheduled Watch after 60 days without repository activity (information, no change of state)" % ma.get("main_last_commit_age_days"))
     tmp = os.path.join(W, "status.json.tmp"); json.dump(rec, open(tmp, "w"), indent=1); os.replace(tmp, os.path.join(W, "status.json"))
     os.makedirs(os.path.join(W, "badge"), exist_ok=True)
     parts = [("signed" if rec["checks"]["signed"] else "unsigned"), ("chain intact" if rec["checks"]["chain_ok"] else ("chain broken" if chain else "chain unchecked"))]

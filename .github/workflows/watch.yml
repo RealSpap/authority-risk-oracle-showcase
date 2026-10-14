@@ -173,6 +173,13 @@ jobs:
       - name: "The files agree with each other: the same contracts in every file, the same counts (watch/consistency.txt; a disagreement is a warning in the run, the files stay valid on their own)"
         run: python3 scripts/consistency.py --watch watch > watch/consistency.txt 2>&1 || echo "::warning title=Watch files disagree::$(head -c 700 watch/consistency.txt | tr '\n' ' ')"
 
+      - name: "Age of the last commit on main (GitHub disables scheduled workflows after 60 days without repository activity): written to watch/main_activity.json, one Telegram message at 45, 52 and 58 days, one issue from day 45 when ISSUES_TOKEN is set, never fails the run"
+        env:
+          GH_TOKEN: ${{ secrets.ISSUES_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python3 scripts/main_activity.py --out watch/main_activity.json --issue-repo RealSpap/authority-risk-oracle --subject "${{ github.repository }}" > watch/main_activity.txt 2>&1 || echo "exit code $?" >> watch/main_activity.txt; cat watch/main_activity.txt
+
       - name: "Sign the run (a manifest of every published file and the chain head, Ed25519): with WATCH_SIGNING_KEY the files can be checked against a key GitHub does not hold; without it the manifest says unsigned"
         env:
           WATCH_SIGNING_KEY: ${{ secrets.WATCH_SIGNING_KEY }}

@@ -10,7 +10,7 @@ the files simply stop changing, and a dashboard that says "checked 11 min ago" i
 Exit codes: 0 the last run is younger than --max-hours (default 14: two missed runs of slack); 1 it is older; 2 the age could NOT be established (no network, an unreadable file, a date that is
 not a date, a date in the future): an unknown age is never reported as fresh. Standard library only.
 """
-import argparse, calendar, json, sys, time, urllib.request
+import argparse, calendar, json, os, sys, time, urllib.request
 
 from watch_location import RAW  # noqa: E402  -- the state of the Watch lives on the watch-data branch
 
@@ -36,14 +36,30 @@ def fetch(url, timeout=30):
     with urllib.request.urlopen(urllib.request.Request(url, headers={"user-agent": "watch_age/1"}), timeout=timeout) as r: return json.loads(r.read().decode())
 
 
+def main_note(status):
+    """(NOTE or WARN, sentence) about the last commit on main from status.json, or None when the record carries no such field. NOTE under 45 days, WARN from 45; never changes the exit code."""
+    d = status.get("main_last_commit_age_days") if isinstance(status, dict) else None
+    if not isinstance(d, int) or isinstance(d, bool) or d < 0: return None
+    if d >= 45: return "WARN", "main has had no commit for %d days: GitHub disables the scheduled Watch after 60 days without repository activity, push any small change to main" % d
+    return "NOTE", "the last commit on main is %d days old (GitHub disables scheduled workflows after 60 days without repository activity)" % d
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0]); ap.add_argument("--url", default=URL); ap.add_argument("--file"); ap.add_argument("--max-hours", type=float, default=14); ap.add_argument("--json", action="store_true"); a = ap.parse_args()
     try: doc = json.load(open(a.file)) if a.file else fetch(a.url)
     except Exception as e:  # noqa: BLE001 -- any failure to read is "unknown", never "fresh"
         code, age, msg = 2, None, "could not read the published file (%s): the age is unknown" % str(e)[:100]
     else: code, age, msg = judge(doc, time.time(), a.max_hours)
-    if a.json: print(json.dumps({"status": {0: "fresh", 1: "stale", 2: "unknown"}[code], "age_hours": None if age is None else round(age, 2), "max_hours": a.max_hours, "message": msg}))
-    else: print(msg)
+    try: st = json.load(open(os.path.join(os.path.dirname(a.file) or ".", "status.json"))) if a.file else fetch(a.url.rsplit("/", 1)[0] + "/status.json", 10)
+    except Exception: st = None  # noqa: BLE001 -- the note is advice: a missing status.json says nothing and changes nothing
+    note = main_note(st)
+    if a.json:
+        out = {"status": {0: "fresh", 1: "stale", 2: "unknown"}[code], "age_hours": None if age is None else round(age, 2), "max_hours": a.max_hours, "message": msg}
+        if note: out.update({"main_last_commit_age_days": st["main_last_commit_age_days"], "note_level": note[0], "note": note[1]})
+        print(json.dumps(out))
+    else:
+        print(msg)
+        if note: print("%s: %s" % note)
     return code
 
 

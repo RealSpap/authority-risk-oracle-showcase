@@ -1,7 +1,6 @@
 # Evaluation (2026-09-18): ERC-8241 "Protocol Control Disclosure" compatibility with authority-risk-oracle
 
-Requested by a tracked GitHub Projects item: "[backlog note]
-IProtocolSafetyCore pour authority-risk-oracle." Pure research --
+Evaluates the compatibility of `IProtocolSafetyCore` with authority-risk-oracle. Pure research --
 `src/AuthorityRiskOracle.sol` is unmodified by this evaluation. Sources
 checked directly rather than taken from a summary: the reference
 implementation repo (`github.com/chegecjay-rgb/protocol-control-

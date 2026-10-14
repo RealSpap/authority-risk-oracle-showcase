@@ -1,6 +1,6 @@
 # Aave V3 Ethereum Pool: role-holder discovery extended to the flagship target
 
-2026-09-25. Continues the "voit large" round 2 roadmap item 4 (extend the role-sweep pattern that
+2026-09-25. Continues the broad-review round 2 roadmap item 4 (extend the role-sweep pattern that
 already found 2 real bugs on Radiant and Aave V3 Monad). `score_aave_v3_pool` -- $14.77B TVL, this
 oracle's single largest tracked target by TVL -- had checked `isEmergencyAdmin` on exactly two
 hardcoded addresses (the DAO executor, `PROTOCOL_GUARDIAN`) since it was written, with no mechanism

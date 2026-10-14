@@ -1,7 +1,7 @@
 # Euler V2 (eVaultFactory) on Base: same 8-signer DAO Safe as Plasma and Monad
 
-2026-09-26. Closes the tracker board's open piste ("Euler V2 eVaultFactory `0x7F321498...9dDf8D0`,
-[backlog note]"). Unlike
+2026-09-26. Closes an open follow-up (Euler V2 eVaultFactory `0x7F321498...9dDf8D0`,
+permissionless vaults, immutable->DAO+timelock, actual split not read, ~16.6M$ TVL). Unlike
 Fluid (one CREATE2 address shared across chains), Euler V2 addresses are genuinely PER-CHAIN,
 sourced from Euler Labs' own official address book (`euler-xyz/euler-interfaces/addresses/<chainId>/`)
 -- Base's own directory (`8453`), never guessed from the tracker's truncated citation or copied from

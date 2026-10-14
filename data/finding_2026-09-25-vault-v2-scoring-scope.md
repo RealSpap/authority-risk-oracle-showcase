@@ -1,6 +1,6 @@
 # Morpho Vault V2 scoring: scoped, not built -- a real methodology decision, not a mechanical extension
 
-2026-09-25. Roadmap item 10 ("voit large" round 2), the last item on the ranked list, the one already
+2026-09-25. Roadmap item 10 (broad-review round 2), the last item on the ranked list, the one already
 flagged as the largest chantier. Investigated with the same "verify before building" discipline
 applied to items 2 and 3 today (both of which turned out to need no code change) -- this one is
 different: there IS a real, sizeable gap ($110M+ untracked on Monad alone, a chain this oracle already
@@ -22,7 +22,7 @@ Arc ($152M across 3 V2 vaults, per the same research) is explicitly OUT of scope
 methodology: Arc is not one of this oracle's 10 tracked ecosystems, and adding a new ecosystem is a
 separate decision this project has deliberately deferred until after the hackathon (see memory
 `feedback_oracle_depth_over_breadth.md`, `feedback_ecosystem_addition_5point_discovery_gate.md`) --
-"voit large" means going deeper on tracked ground, not adding new chains unilaterally.
+"broad review" means going deeper on tracked ground, not adding new chains unilaterally.
 
 ## Why this isn't a mechanical extension of the V1 pattern
 
@@ -62,7 +62,7 @@ Three real design questions, each a genuine calibration choice:
    (`data/finding_2026-09-25-nested-signers-formula-investigation.md`), now appearing again in a new
    context.
 
-None of these should be answered unilaterally the way "voit large" authorized reusing already-settled
+None of these should be answered unilaterally the way "broad review" authorized reusing already-settled
 conventions (the controller-concentration report, the Hyperliquid registry extension, the exit-capacity
 check) -- each of those reused a formula or pattern already decided elsewhere in the codebase; this one
 would be inventing the pattern itself.

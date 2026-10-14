@@ -1,8 +1,8 @@
 # Bounded-power timelockScore cap: investigated across 8 files, no unfixed gap found
 
-2026-09-25. Roadmap item 2 ("voit large" round 2), the second of the two items held back pending
+2026-09-25. Roadmap item 2 (broad-review round 2), the second of the two items held back pending
 Spap's explicit go (received 2026-09-25). The earlier competitor-research synthesis described this
-as the largest, most mechanical candidate: "dizaines d'occurrences" of a confirmed-bounded emergency
+as the largest, most mechanical candidate: "dozens of occurrences" of a confirmed-bounded emergency
 power (pause/freeze, not upgrade/fund-redirect) bypassing a real timelock, not yet capped the way
 `score_fluid_liquidity_arbitrum`/`score_compound_v3_comet_*` already are (a real 55/60 cap, applied
 2026-09-25 to Compound V3 Arbitrum/Base by commit `d6dca5e`).
@@ -57,7 +57,7 @@ something to resolve unilaterally by inventing a stacking convention. Flagged fo
 
 ## Conclusion
 
-No code changed. The "dizaines d'occurrences" framing significantly overstated what a careful,
+No code changed. The "dozens of occurrences" framing significantly overstated what a careful,
 function-by-function read actually supports -- the same lesson as the nested-signers investigation
 (`data/finding_2026-09-25-nested-signers-formula-investigation.md`): a research synthesis's summary
 is a starting point for verification, not a work order. Applying a blanket cap across "dozens" of

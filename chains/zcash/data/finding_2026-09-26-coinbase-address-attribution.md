@@ -1,7 +1,7 @@
 # Zcash coinbase payout addresses: real attempt at attribution, genuinely inconclusive
 
-2026-09-26. Investigates the tracker board's open piste ("rattacher les adresses coinbase sans texte
-[backlog note]"). Result: the addresses are real and
+2026-09-26. Investigates an open follow-up: attributing the two coinbase payout addresses that have no published
+label (t1MKn34 29.6%, t1SEgZ 7.7%) to entities through a primary source. Result: the addresses are real and
 persistent (confirmed live, current data below), but a genuine, multi-angle search found **no
 primary source that publicly identifies either address to a named mining entity**. Disclosed as an
 honest negative result, not guessed at -- fabricating an attribution here would be exactly the kind
@@ -49,7 +49,7 @@ noise, but that is a concentration fact, not an identity.
 ## What this is and isn't
 
 Pure investigation, no scorer change. `k50`/`multisigScore` are NOT recalculated or adjusted here --
-the card's own "[backlog note]" scenario requires knowing whether two
+the follow-up's own scenario (if it is a single entity, `k50` becomes 2) requires knowing whether two
 specific addresses share an operator, which this pass could not establish either way; asserting it
 either resolved or ruled out would be an unfalsifiable claim this project explicitly guards against.
 

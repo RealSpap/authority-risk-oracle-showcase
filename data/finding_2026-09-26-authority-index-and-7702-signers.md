@@ -7,7 +7,7 @@ one code path, and inverts it. Disclosed only: no score, no scorer, no on-chain 
 
 ## Why it is a gap, not decoration
 
-Every public risk product answers the forward question (protocol X: how risky is its admin?). Nobody
+The public risk products checked answer the forward question (protocol X: how risky is its admin?). None
 publishes the inverse, which is what an incident responder, a Safe signer or a listing committee
 actually asks the moment a key is suspected: **which protocols does this one address touch?**
 
@@ -64,7 +64,7 @@ what the scorer counts as k=1, n=1:
 
 ## Registry correction found while building it
 
-The backlog item "[backlog note]" was still partly true: Tempo's Morpho Blue core
+The open follow-up that `cross_ecosystem_overlap.py` was out of date was still partly true: Tempo's Morpho Blue core
 owner Safe `0x645890a0...0fbbc` was missing from `TEMPO_GROUPS`, although the Tempo scorer already
 folds its overlap into crossExposureScore. Re-read live 2026-09-26: 5-of-9 with exactly the 9 signers
 of the L1/Base/Robinhood Morpho Blue owner Safes (set equality against the dated snapshot). Added as

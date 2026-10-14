@@ -4,7 +4,7 @@ Two changes in this batch, both structural rather than "one more protocol":
 
 1. **A new 5th dimension, `crossExposureScore`**, added to every tracked target
    -- does the same real signer (root EOA, or Gnosis Safe owner) also control
-   ANOTHER tracked target? Requested directly by Spap after a genuine gap was
+   ANOTHER tracked target? Added after a genuine gap was
    pointed out: this oracle's own methodology citation names
    `defi-admin-key-risk` only, never `multisig-overlap` -- so cross-protocol
    signer concentration, exactly the failure mode multisig-overlap (343

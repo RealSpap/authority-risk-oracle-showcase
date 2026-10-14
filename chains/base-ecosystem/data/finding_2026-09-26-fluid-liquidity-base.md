@@ -1,7 +1,7 @@
 # Fluid (Instadapp) Liquidity on Base: same Timelock, same Avocado proposer as Plasma and Arbitrum
 
-2026-09-26. Closes the tracker board's open piste ("Fluid/Instadapp Liquidity `0x52Aa8994...360F4e497`,
-[backlog note]"). The "[backlog note]"
+2026-09-26. Closes an open follow-up (Fluid/Instadapp Liquidity `0x52Aa8994...360F4e497`,
+Timelock 24h, proposer 'Avocado' Instadapp not identified, ~22.1M$ TVL). The "Avocado not identified"
 concern is already answered -- `chains/plasma-ecosystem/scorers.py::score_fluid_liquidity_plasma()`
 decoded this exact structure in depth on 2026-09-20 (and cross-checked it against Arbitrum in the
 same pass). This finding independently re-verifies, LIVE on Base specifically, that the identical

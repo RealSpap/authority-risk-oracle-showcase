@@ -1,8 +1,8 @@
 # Extra Finance (Base): AddressRegistry owner is a real 3-of-6 Safe, NOT the 2-of-3 the tracker board cited
 
-2026-09-26. Investigates the tracker board's open piste ("Extra Finance Lending
-[backlog note]
-[backlog note]"). Pure investigation, no scorer built -- adding Extra Finance is a new
+2026-09-26. Investigates an open follow-up (Extra Finance Lending
+`0xbb505c54...05fc71cbd` + Safe 2-of-3 `0x750f7153...740C9bd40A` confirmed via the Safe API, no timelock
+documented, ~32.7 M$ TVL). Pure investigation, no scorer built -- adding Extra Finance is a new
 target on an already-tracked ecosystem, Spap's decision.
 
 ## `LendingPool.owner()` is a dead end for authority purposes -- a deployment factory, not governance
@@ -30,8 +30,8 @@ not force-fit to match a 4+-day-old citation with a different address.
 ## No timelock found on this path either -- matches the board's own disclosure
 
 No propose/execute pattern, no delay contract found between the Safe and `AddressRegistry`'s state --
-a 3-of-6 signature is immediate. Consistent with what the tracker board already flagged ("aucun
-[backlog note]").
+a 3-of-6 signature is immediate. Consistent with what the tracker board already flagged ("no
+timelock documented").
 
 ## What this is and isn't
 

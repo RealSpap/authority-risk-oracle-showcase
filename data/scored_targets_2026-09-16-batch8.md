@@ -1,8 +1,7 @@
 # Batch 8 -- 2026-09-16
 
-Triggered by a direct research question from Spap: "look at our postmortems
-(`onchain-postmortems`, 42 independently-reconstructed exploits) and tell me
-what's relevant for authority-risk-oracle." Three cross-cutting patterns came
+Prompted by a research question: what in our postmortems (`onchain-postmortems`, 42
+independently-reconstructed exploits) is relevant for authority-risk-oracle? Three cross-cutting patterns came
 out of that read, cross-checked against exactly what this project's own
 scorers do and don't verify, then checked for real, live candidates on
 Robinhood Chain before writing a single line of new scorer code -- consistent

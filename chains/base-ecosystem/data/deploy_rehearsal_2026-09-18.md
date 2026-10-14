@@ -19,12 +19,10 @@ rehearsals: re-run whenever the scorer changes, don't reuse a stale result.
 | `https://base-sepolia-rpc.publicnode.com` | 84532 | 0 |
 
 Deployer address: `0xA08a76457b758aFF9702dBf5b870679E1232B715`
-(`keys/evm-testnet-shared.json`; private key never printed, logged, or
+(a throwaway testnet key kept outside the repository; the private key was never printed, logged, or
 written to this repo -- checked mechanically below). Still 0 wei, unchanged
 since 2026-09-16. No faucet used (every listed Base Sepolia faucet requires
-a captcha or an account login, both done by hand; per this
-key's own file, funding is Spap's call to make manually, never requested
-autonomously).
+a captcha or an account login); funding the address is left to the maintainer.
 
 Base mainnet (read-only, never a deploy target) reconfirmed live as chain
 **8453** via `cast chain-id --rpc-url https://mainnet.base.org`.
@@ -70,7 +68,7 @@ confirmed free before and after the run -- the parallel Arbitrum agent's own
 fork this run used port 8548, no collision). Anvil's own well-known public
 default dev account (`0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266`) signed
 the fork-local deploy and push transactions -- **not**
-`keys/evm-testnet-shared.json`, which was never touched, read into a
+the throwaway testnet key, which was never touched, read into a
 variable, or referenced by this script at all.
 
 Steps and live results (see

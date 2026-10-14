@@ -1,6 +1,6 @@
 # A vault's timelock next to its actual exit capacity
 
-2026-09-25. Roadmap item 10 ("voit large" round 2), continued after Spap's go-ahead ("continue"). The
+2026-09-25. Roadmap item 10 (broad-review round 2), continued after the go-ahead. The
 research already existed in full (`data/finding_2026-09-20-competitor-gaps-and-morpho-vault-layer.md`,
 "eighth pass": `chains/ethereum-l1/scripts/sweep_exit_capacity.py`, a 167-vault, $5.95B market-wide
 sweep -- "no product was found that puts a DeFi vault's timelock next to its exit capacity") but was

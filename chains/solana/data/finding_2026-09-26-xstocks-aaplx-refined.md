@@ -1,8 +1,8 @@
 # xStocks AAPLx (Solana): re-verified live, power distribution more concentrated than "4 equal keys"
 
-2026-09-26. Re-verifies the tracker board's own already-confirmed piste ("xStocks/Backed Finance
-[backlog note]
-permanentDelegate/rebase, aucun multisig") -- the core finding holds, re-confirmed live via
+2026-09-26. Re-verifies an already-confirmed earlier entry (xStocks/Backed Finance
+AAPLx, mint `XsbEhLAtcf6HdfpFZ5xEMdqW8nfAvcsP5bdudRLJzJp`, 4 separate bare EOAs for mint/freeze/
+permanentDelegate/rebase, no multisig) -- the core finding holds, re-confirmed live via
 `getAccountInfo` with parsed encoding (not re-derived from a prior pass), but the actual power
 DISTRIBUTION across those 4 keys is more concentrated than "4 equal single-purpose authorities"
 implies.
@@ -13,7 +13,7 @@ implies.
 `spl-token-2022` owner). Four distinct authority addresses confirmed, each independently re-checked
 via `getAccountInfo` and confirmed to be a genuine **System Program account with zero data** (a bare
 EOA, not a program-derived account, not a Squads multisig, not any kind of smart contract) --
-matching the card's "aucun multisig" claim exactly:
+matching the card's "no multisig" claim exactly:
 
 | Authority address | Powers it actually holds (read from ALL 7 extensions, not just the named 4) |
 |---|---|

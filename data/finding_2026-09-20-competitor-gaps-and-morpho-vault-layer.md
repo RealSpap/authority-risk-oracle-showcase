@@ -1,6 +1,6 @@
 # Finding (2026-09-20): where competitors leave holes the oracle can fill, and one new territory found on the way
 
-Requested directly: "find the gaps at competitors that the Oracle could cover". This is not a
+Scope: find gaps at competitors that the Oracle could cover. This is not a
 repeat of `finding_2026-09-18-competitive-positioning-cross-chain-overlap.md` (SolGov, Hypernative, Blockaid, Gauntlet,
 Chaos Labs, LlamaRisk, DeFiSafety, ERC-8241, L2BEAT). It adds DeFiScan, Foreshock, Webacy, Exponential, Credora and
 B.Protocol, and corrects two claims made earlier in this pass. Pure research plus one read-only scouting script; no
@@ -12,8 +12,8 @@ scorer, contract or on-chain state is changed by this document.
   (`collateralFactorBps(target)`, `StaleScore(target)`), so it is not a gap and is dropped.
 - "No one ships contract-callable ratings" is too strong. Credora (acquired by RedStone) rates vaults and lending
   markets A+ to D and, per RedStone's announcement, flows the ratings through oracle infrastructure to Morpho and Spark
-  markets. That is on-chain delivery, for credit and market risk. The claim that survives is narrower: nobody was found
-  delivering AUTHORITY risk (thresholds, delays, signers) on-chain.
+  markets. That is on-chain delivery, for credit and market risk. The claim that survives is narrower: among the products checked, none was found
+  delivering AUTHORITY risk (thresholds, delays, signers) as a contract-callable score on EVM chains. (Added 2026-10-13: Keyholder offers an on-chain stage check on Solana, a different measure; this note does not claim to be alone in the field.)
 
 ## The market in three layers (what each source itself says)
 
@@ -381,7 +381,7 @@ the Safe{Wallet} app are not affected. I could not open Zodiac's own notice (the
 - Does it matter for those Safes? The verified source returns false before the call when the signer has no code, and every member of the nine
   modules is an EOA, so the disclosed condition (a contract account as member) does not hold today. This is not a claim that they are
   exposed or that they are safe, and nothing was exercised.
-- Why it matters for the oracle: nobody found tracks which module *implementations* are enabled where and matches them to advisories
+- Why it matters for the oracle: no tracker was found that records which module *implementations* are enabled where and matches them to advisories
   (novelty scan below). A registry keyed on implementation address or code hash (Roles pre-fix, Delay v1.1.0, SquidRouterModule, and
   whatever comes next), matched against every Safe the oracle reads, is cheap: `sweep_safe_config.py` already lists modules and resolves clones.
 
@@ -713,7 +713,7 @@ read as 0; the type is `(amount << 8) | decimals` with 8 trimmed decimals, and t
    module-drain risk enter the score instead of a hand-check warning. Small in dollars today ($49M of $9.13B), a class in
    2026 incidents, and dependent on a reproducible log source shared with the Horizon limit.
 9. **A registry of known-vulnerable module implementations**, matched by implementation address or code hash against every Safe read (Roles
-   pre-fix: 7 of 9 kpk modules today, $40.1M; Delay v1.1.0; SquidRouterModule; others as advisories appear). Cheap, unique, and it turns
+   pre-fix: 7 of 9 kpk modules today, $40.1M; Delay v1.1.0; SquidRouterModule; others as advisories appear). Cheap, and it turns
    the June 2026 Zodiac alert into a standing check.
 10. **Exit capacity beside the timelock** as a per-vault field (a "protection window"): 44 vaults, $1.9B, sit behind a 3-day timelock with under 20% instant liquidity.
 11. **Signer-group scoring**: merge Safes by shared signers, test role separation at vault level (85 vaults, $1.6B, where the shared signers alone reach both

@@ -93,9 +93,9 @@ and prints MATCH or MISMATCH. The methodology pin is checked with
 
 The key's private half was committed in clear in `40ca1a4` and stays readable in
 the private repo's history (`data/publisher_key_exposure_2026-09-19.md`). At the
-time of this run the out-of-repo key file (pipeline `keys/zcash-testnet.json`)
-carried a `send_guard_lifted` record: dated 2026-09-19, by Spap, "decision
-explicite in writing", risk accepted ("anyone who reads the private repo's
+time of this run the out-of-repo key file
+carried a `send_guard_lifted` record: dated 2026-09-19, by the maintainer, an explicit decision
+recorded in the chat, risk accepted ("anyone who reads the private repo's
 history can forge an ARO batch from this address; a signature by it proves
 'someone with access to the repo', not a specific publisher"), with the flag
 `exposed_in_git_history` set to false only so that `send` does not refuse and

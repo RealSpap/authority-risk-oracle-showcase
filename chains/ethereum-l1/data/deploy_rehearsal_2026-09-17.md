@@ -3,7 +3,7 @@
 ## Why a rehearsal instead of a real Sepolia deploy
 
 The shared throwaway deployer `0xA08a76457b758aFF9702dBf5b870679E1232B715`
-(`keys/evm-testnet-shared.json`) still has **0 ETH on real Sepolia**, confirmed
+(a throwaway testnet key kept outside the repository) still has **0 ETH on real Sepolia**, confirmed
 live on 2 independent RPCs at the start of this run:
 
 | RPC | Result |
@@ -15,12 +15,12 @@ live on 2 independent RPCs at the start of this run:
 returned an unrelated error -- "chain is not available on free plan" -- not a
 balance reading, so it was not counted as a confirmation either way.)
 
-This matches the run's known starting fact and the open "A faire" card asking
-Spap to fund the address via a faucet. A faucet needs a captcha or a login, so it is used by hand, so no
+This matches the run's known starting fact: the address is still to be funded
+via a faucet by the maintainer, so no
 transaction was attempted on real Sepolia this run. Per the phase brief, the
 alternative is a full, reproducible dress rehearsal against a local anvil
 fork of Sepolia -- proving the entire pipeline works end to end so the real
-deploy is a known-good, mechanical step once Spap funds the address.
+deploy is a known-good, mechanical step once the address is funded.
 
 ## What the rehearsal proves
 
@@ -75,12 +75,12 @@ not a new finding.
   real deploy path (`script/Deploy.s.sol`, `update_scores_ethereum_l1.py`
   non-dry-run branch) needed to change to make this pass.
 - Does not close: the real Sepolia deployment itself. That still requires
-  Spap to fund `0xA08a76457b758aFF9702dBf5b870679E1232B715` on Sepolia (see
-  the open "A faire" card) -- no faucet use by the tooling, no funds were moved,
+  funding `0xA08a76457b758aFF9702dBf5b870679E1232B715` on Sepolia -- no faucet
+  was used, no funds were moved,
   no mainnet or real-Sepolia transaction was sent this run.
 - All contract interaction above happened on an ephemeral local anvil fork,
   using anvil's own public, well-known default dev private key (never the
-  real throwaway key from `keys/evm-testnet-shared.json`, never printed here
+  real throwaway key, never printed here
   in full). Anvil was stopped at the end of the run; the fork oracle address
   above will not resolve on any real network.
 

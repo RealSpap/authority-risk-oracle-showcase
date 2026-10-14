@@ -177,7 +177,7 @@ reproduced here for convenience:
 | `methodologyHashSha256` | `b9a0c7bba90c1e42acb2c6c6804c71c29f1bd52f4d9b3efe596cc49c6536dff0` (SHA-256 of `chains/zcash/METHODOLOGY.md` as it stood immediately before this pass's own section 8/9 edits) |
 | Publisher pubkey (compressed, testnet-only, no value) | `0388e6af60fe4d0fe63248e3953165f6f13dd57f733ed7283d68f12f2acfb3b41f` |
 | Publisher Testnet address | `tmDvDRYD7meGJXFoeTqtjFcrNF5378ZzaBo` |
-| Publisher private key | **REMOVED 2026-09-19 (CORRECTION).** It was printed here in clear (commit 40ca1a4) and is now kept only outside the repo (pipeline `keys/zcash-testnet.json`, loaded by `chains/zcash/scripts/publisher_key.py`). It is still readable in git history, so it is treated as COMPROMISED: see the note below this table. Every value in this table stays verifiable without it (the signature verifies against the pubkey above). |
+| Publisher private key | **REMOVED 2026-09-19 (CORRECTION).** It was printed here in clear (commit 40ca1a4) and is now kept only outside the repo (loaded by `chains/zcash/scripts/publisher_key.py`). It is still readable in git history, so it is treated as COMPROMISED: see the note below this table. Every value in this table stays verifiable without it (the signature verifies against the pubkey above). |
 | `publishedAtUtc` | `2026-09-19T03:34:31Z` |
 | `attestationCommitBlake2b256` (the value anchored on-chain) | `d722a2f753e7d4538619085272d556c5a87a4e3c27a9d531dc21ca14d23c272d` |
 | `attestationSignatureDer` (ECDSA over the commit hash, by the publisher key above) | `3045022100e99f485f5927cb206ef6b62a761b27f6d09266d9df46d5b8b44999e7abf80b7a02206c4a2d7e8b1412c759c7795cb9856c3510c6b9a87120754b65c5cf1ba09b3feb` |

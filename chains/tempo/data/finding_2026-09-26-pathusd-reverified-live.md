@@ -1,8 +1,7 @@
-# Tempo pathUSD: re-verified live, composite 9 unchanged, tracker piste already covered
+# Tempo pathUSD: re-verified live, composite 9 unchanged, tracker item already covered
 
-2026-09-26. Closes the tracker board's open piste "Tempo pathUSD: `ISSUER_ROLE` est un proxy UUPS
-[backlog note]
-[backlog note]". It was already covered (`scored_targets_2026-09-18-controller-types.md` classifies the
+2026-09-26. Closes an open follow-up: the pathUSD `ISSUER_ROLE` is a UUPS proxy, upgradable by a single EOA
+that also holds `DEFAULT_ADMIN`, never reviewed since the committed score. It was already covered (`scored_targets_2026-09-18-controller-types.md` classifies the
 ISSUER_ROLE holder as an `AccessControlEnumerable` bridge controller resolved to the same single key;
 `scouted_targets_2026-09-17-run2.md` records the `upgradeToAndCall` probe). This pass re-runs the
 project's own `chains/tempo/scripts/methodology_test.py::score_token` against the live chain

@@ -1,11 +1,11 @@
 # Nested-signers multisig formula: investigated, no live bug found, not applied
 
-2026-09-25. Roadmap item 3 ("voit large" round 2), one of the two items deliberately held back
+2026-09-25. Roadmap item 3 (broad-review round 2), one of the two items deliberately held back
 pending the maintainer's explicit go (given 2026-09-25). The earlier
 competitor-research synthesis described this as a near-mechanical fix: "`scripts/lib/
 nested_signers.py` (`min_eoa_keys`) exists already, resulting `multisigScore` for 27 of 405 tracked
 signers is not corrected for a nested Safe being counted as one signer... overstates the real dispersion
-[backlog note]" Investigated
+(e.g. Aave's protocol guardian: 4 keys needed, 13 can contribute)." Investigated
 in full before writing any code -- it is not a mechanical fix, and applying it as described would
 have inflated scores based on a debatable reading of what "dispersion" should mean, not corrected a
 bug.

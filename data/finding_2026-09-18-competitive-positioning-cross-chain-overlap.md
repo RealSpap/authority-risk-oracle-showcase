@@ -1,7 +1,6 @@
 # Finding (2026-09-18): four targeted competitive checks, not a repeat of the general scan
 
-Requested directly: "cherche des nouveaux terrain que la concurrence couvre
-pas pour l'oracle" (find new territory competition doesn't cover), after two
+Scope: find new territory that the competition does not cover for the oracle, after two
 earlier, broader competitive scans this week already covered SolGov,
 Hypernative/Blockaid, Gauntlet/Chaos Labs/LlamaRisk, DeFiSafety, ERC-8241,
 RWA platforms, L2Beat's Stage rubric, Aave's internal governance levels,
@@ -31,7 +30,7 @@ admin-key/governance risk.
 
 **Conclusion**: the architectural pattern (on-chain, contract-callable risk
 score) is proven for adjacent metrics, so the idea itself isn't unclaimed --
-but no one has shipped it for authority/governance risk as a generalized
+but none was found shipping it for authority/governance risk as a generalized
 primitive third parties can integrate against. `ExampleConsumer.sol`
 demonstrates exactly that, in a real gap.
 
@@ -87,8 +86,8 @@ This project's own sister research, `multisig-overlap`
 ([GitHub](https://github.com/RealSpap/multisig-overlap-showcase)), already
 does same-chain and cross-L2 signer-identity overlap at real scale (75
 mainnet + 79 Superchain Safes, 6+ confirmed cross-protocol/cross-chain
-cases). Nothing comparable in scale or systematicity turned up anywhere
-else, for even the same-chain version of this check. Honest caveat: private
+cases). Nothing comparable in scale or systematicity turned up in the sources checked
+for this scan, for even the same-chain version of this check. Honest caveat: private
 tooling at firms like Chainalysis, TRM Labs, or Forta Enterprise could do
 this without public indexing -- not ruled out, just not found.
 

@@ -36,9 +36,7 @@ cast balance 0xA08a76457b758aFF9702dBf5b870679E1232B715 --rpc-url https://sepoli
 # -> 0
 ```
 
-Unchanged since 2026-09-16. No faucet was used or requested (agent policy --
-Spap funds manually per `keys/evm-testnet-shared.json`'s own
-`faucets_to_use_manually_if_funding_needed` field). This same shared
+Unchanged since 2026-09-16. No faucet was used or requested (the maintainer funds testnet addresses manually). This same shared
 throwaway key also blocks Arbitrum Sepolia and Base Sepolia deployment for
 those two other ecosystems in this pipeline -- funding it once would unblock
 all three at once.

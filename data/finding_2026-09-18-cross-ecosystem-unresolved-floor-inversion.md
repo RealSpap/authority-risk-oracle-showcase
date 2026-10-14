@@ -1,7 +1,7 @@
 # Finding (2026-09-18): the "unresolved authority" fallback score outranks a confirmed weak authority in most ecosystems -- Zcash already fixed it, Solana and Ethereum L1 have not
 
-Surfaced from a tracked GitHub Projects item ("le repli 20/20 pour un
-[backlog note]").
+Surfaced from an open follow-up: the 20/20 fallback for an unresolved threshold ranks an
+unknown above a known 1-of-N.
 Investigated via a dedicated Explore pass, cross-checked independently
 against the real source before writing this up. Pure investigation --
 **no scorer file is modified by this finding.** A fix touches published

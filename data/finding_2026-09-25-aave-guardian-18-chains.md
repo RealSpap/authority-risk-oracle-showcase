@@ -1,6 +1,6 @@
 # One 7-signer committee holds Aave V3's emergency-pause seat on 18 of ~19 real deployments
 
-2026-09-25. Roadmap item 9 ("voit large" round 2), continued after "continue". This project already
+2026-09-25. Roadmap item 9 (broad-review round 2), continued after the go-ahead. This project already
 tracked, on 5 chains it monitors (Ethereum L1, Arbitrum, Base, Plasma, Monad), that the SAME 7 signers
 hold Aave's `PROTOCOL_GUARDIAN`/`EMERGENCY_ADMIN` seat -- a different Safe address per chain, folded
 into `crossExposureScore` as a flat 80 since 2026-09-20. The open question the backlog item asked:

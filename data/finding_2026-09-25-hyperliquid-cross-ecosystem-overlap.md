@@ -1,6 +1,6 @@
 # Hyperliquid added to the cross-ecosystem signer-overlap registry
 
-2026-09-25. Roadmap item 5 ("voit large" round 2): `scripts/lib/cross_ecosystem_overlap.py`'s
+2026-09-25. Roadmap item 5 (broad-review round 2): `scripts/lib/cross_ecosystem_overlap.py`'s
 GROUPS-based registry (used by `check_cross_ecosystem_overlap.py`, `check_safe_modules_guards.py`
 and `check_nested_signers.py`) covered Robinhood Chain, Ethereum L1, Arbitrum, Base, Tempo, Plasma
 and Monad -- 7 ecosystems -- but never Hyperliquid. README.md already claims this exact capability

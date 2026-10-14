@@ -1,7 +1,7 @@
 # Aerodrome (Base): Voter/Minter authority traced -- 3 real Safes, no bare key found
 
-2026-09-26. Closes the tracker board's own open piste ("Aerodrome voter() 0x1661...480A5, racine
-[backlog note]") -- the root was found live before but never
+2026-09-26. Closes an open follow-up (Aerodrome voter() 0x1661...480A5: root of the
+AERO emissions confirmed live but not traced) -- the root was found live before but never
 followed further. Pure investigation, no scorer built (adding Aerodrome would be a new target on an
 already-tracked ecosystem, Spap's decision, not built unilaterally). `chains/base-ecosystem/
 scorers.py` has zero prior references to Aerodrome -- genuinely untouched ground before this pass.

@@ -1,6 +1,6 @@
 # Switchboard shut down entirely on 2026-09-25 -- confirmed live on-chain, Drift's AI16Z spot market still names the dead feed as its oracle today, not just a stale SDK file
 
-2026-09-30, same "voit large" session as the two findings above. This one is different in kind: not a new candidate, a possible
+2026-09-30, same broad-review session as the two findings above. This one is different in kind: not a new candidate, a possible
 inaccuracy in a score **already live in `scorers.py`**.
 
 ## The shutdown, confirmed independently of the earlier findings in this file

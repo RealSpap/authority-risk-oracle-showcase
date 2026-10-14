@@ -5,20 +5,20 @@
    "ecosystem": "robinhood",
    "safes": 25,
    "events": [],
-   "control": 88,
+   "control": 89,
    "status": "ok",
-   "fromBlock": 82494963,
-   "toBlock": 88389436,
+   "fromBlock": 82704395,
+   "toBlock": 88602245,
    "days_read": 7
   },
   {
    "ecosystem": "ethereum-l1",
    "safes": 15,
    "events": [],
-   "control": 7,
+   "control": 8,
    "status": "ok",
-   "fromBlock": 26140701,
-   "toBlock": 26190930,
+   "fromBlock": 26142476,
+   "toBlock": 26192708,
    "days_read": 7
   },
   {
@@ -27,18 +27,30 @@
    "events": [],
    "control": 4,
    "status": "ok",
-   "fromBlock": 512572488,
-   "toBlock": 514748518,
+   "fromBlock": 512653570,
+   "toBlock": 514830126,
    "days_read": 7
   },
   {
    "ecosystem": "base",
    "safes": 8,
-   "events": [],
-   "control": 13,
+   "events": [
+    {
+     "name": "AddedOwner",
+     "value": "0x9939\u202621ba",
+     "block": 52606110,
+     "tx": "a17926b75e972ebc2d02fb3ae95b96df5eaf7f27400f77928440452554858479",
+     "safe": "0x99249b10593fCa1Ae9DAE6D4819F1A6dae5C013D",
+     "groups": [
+      "aerodrome_emergency_council"
+     ],
+     "timestamp": 1792001567
+    }
+   ],
+   "control": 14,
    "status": "ok",
-   "fromBlock": 52294531,
-   "toBlock": 52596931,
+   "fromBlock": 52305222,
+   "toBlock": 52607621,
    "days_read": 7
   },
   {
@@ -46,11 +58,11 @@
    "safes": 4,
    "events": [],
    "control": 0,
-   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 56 execution(s) from other Safes on the window's tail)",
-   "fromBlock": 43030199,
-   "toBlock": 44107438,
+   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 60 execution(s) from other Safes on the window's tail)",
+   "fromBlock": 43068603,
+   "toBlock": 44145978,
    "days_read": 7,
-   "control_witness": 56
+   "control_witness": 60
   },
   {
    "ecosystem": "plasma",
@@ -58,8 +70,8 @@
    "events": [],
    "control": 7,
    "status": "ok",
-   "fromBlock": 34437227,
-   "toBlock": 35041925,
+   "fromBlock": 34458611,
+   "toBlock": 35063298,
    "days_read": 7
   },
   {
@@ -67,11 +79,11 @@
    "safes": 13,
    "events": [],
    "control": 0,
-   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 2 execution(s) from other Safes on the window's tail)",
-   "fromBlock": 113249525,
-   "toBlock": 113335384,
+   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 1 execution(s) from other Safes on the window's tail)",
+   "fromBlock": 113320281,
+   "toBlock": 113406130,
    "days_read": 0.3,
-   "control_witness": 2
+   "control_witness": 1
   },
   {
    "ecosystem": "hyperliquid",
@@ -79,8 +91,8 @@
    "events": [],
    "control": 7,
    "status": "ok",
-   "fromBlock": 48258942,
-   "toBlock": 48522462,
+   "fromBlock": 48280444,
+   "toBlock": 48543964,
    "days_read": 3.0
   }
  ]

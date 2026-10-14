@@ -192,21 +192,6 @@
    ],
    "recent": [
     {
-     "block": 26090850,
-     "tx": "0x891abcf34352f0e5ebad067d76515c1af7ea9136b7e455dce1d499dc4a719bc1",
-     "id": "0x4495ef96b1bd33349a5c2da1d4760f8aabfd9234111afbe7c56f93df83a74af6",
-     "index": 0,
-     "target": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-     "value": 0,
-     "eta": 1790950775,
-     "selector": "0x9f3ce55a",
-     "signature": "sendMessage(address,uint256,bytes)",
-     "calls": 1,
-     "still_queued": false,
-     "queued_at": 1790777975,
-     "decoded": "cross-chain message"
-    },
-    {
      "block": 26118948,
      "tx": "0x5a6e362ac2d75b2541908bfe2149d3964df8c3a4bc066ae6530605d126b6dfe0",
      "id": "0x4ccf952177acfb04925ebef2b590dd5872c6b1d1650a698dd136aaf3973e7b4e",
@@ -543,7 +528,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 4634482,
+   "window_blocks": 4351079,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -595,7 +580,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 4652307,
+   "window_blocks": 4366787,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -615,7 +600,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 4634482,
+   "window_blocks": 4366787,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -658,6 +643,23 @@
    "delay": 0,
    "governs": [
     "0x7bfa7c4f149e7415b73bdedfe609237e29cbf34a"
+   ]
+  },
+  {
+   "name": "hyperliquid timelock 0xc5de\u202623d2, found by the independent reader (1 tracked contract)",
+   "chain": "hyperliquid",
+   "address": "0xc5ded4f7f53919c714059a17d31371ae847e23d2",
+   "family": "oz",
+   "status": "UNREAD (Web3RPCError: {'code': -32005, 'message': 'rate limited'})",
+   "queued_events": null,
+   "latest_queued": null,
+   "pending": [],
+   "recent": [],
+   "discovered": true,
+   "log_rpc": "https://rpc.hyperliquid.xyz/evm",
+   "delay": 172800,
+   "governs": [
+    "0xffaa4a3d97fe9107cef8a3f48c069f577ff76cc1"
    ]
   },
   {
@@ -830,8 +832,8 @@
    "address": "0x0da180b14721ce46a83669b4816cb652caa1001d",
    "family": "oz",
    "status": "ok",
-   "queued_events": 1,
-   "latest_queued": 1791963318,
+   "queued_events": 4,
+   "latest_queued": 1792003966,
    "pending": [
     {
      "block": 88191828,
@@ -847,6 +849,21 @@
      "ready_at": 1792049718,
      "state": "waiting",
      "decoded": "unknown"
+    },
+    {
+     "block": 88596130,
+     "tx": "0xf721454ada8b60f6cb83064e223d57e2e49dd16619d92ea095031cdde217bda5",
+     "id": "0x3acb46238afbcb97a936c98234064172617c8522eec8dff852a18f645b1741e6",
+     "index": 0,
+     "target": "0x14b107CF534239c59571B066cB6497a321Da897C",
+     "value": 0,
+     "selector": "0x4f1ef286",
+     "delay": 86400,
+     "signature": "upgradeToAndCall(address,bytes)",
+     "calls": 3,
+     "ready_at": 1792090366,
+     "state": "waiting",
+     "decoded": "upgrade"
     }
    ],
    "recent": [
@@ -864,6 +881,21 @@
      "still_queued": true,
      "queued_at": 1791963318,
      "decoded": "unknown"
+    },
+    {
+     "block": 88596130,
+     "tx": "0xf721454ada8b60f6cb83064e223d57e2e49dd16619d92ea095031cdde217bda5",
+     "id": "0x3acb46238afbcb97a936c98234064172617c8522eec8dff852a18f645b1741e6",
+     "index": 0,
+     "target": "0x14b107CF534239c59571B066cB6497a321Da897C",
+     "value": 0,
+     "selector": "0x4f1ef286",
+     "delay": 86400,
+     "signature": "upgradeToAndCall(address,bytes)",
+     "calls": 3,
+     "still_queued": true,
+     "queued_at": 1792003966,
+     "decoded": "upgrade"
     }
    ],
    "discovered": true,
@@ -1242,8 +1274,41 @@
    ],
    "delay": 86400,
    "queued_events": 106,
-   "latest_queued": 1791924156,
-   "pending": [],
+   "latest_queued": 1791995664,
+   "pending": [
+    {
+     "id": "squads:6hhBGCtmg7tPWUSgp3LG6X2rsmYWAc4tNsA6G4CnfQbM:105",
+     "index": 105,
+     "target": "7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF",
+     "value": 0,
+     "selector": null,
+     "signature": "Squads proposal #105: Upgrade of program KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD",
+     "ready_at": 1792082062,
+     "state": "waiting",
+     "approved_at": 1791995662,
+     "account": "GcpHeNdxcmJpSx5AmXAScunt37snRmq6U7HV2sioVGkV",
+     "undecoded": false,
+     "decoded": "program upgrade",
+     "what": "Upgrade of program KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD",
+     "touches_governed": true
+    },
+    {
+     "id": "squads:6hhBGCtmg7tPWUSgp3LG6X2rsmYWAc4tNsA6G4CnfQbM:106",
+     "index": 106,
+     "target": "verifycLy8mB96wd9wqq3WDXQwM4oU6r42Th37Db9fC",
+     "value": 0,
+     "selector": null,
+     "signature": "Squads proposal #106: call to verifycLy8mB96wd9wqq3WDXQwM4oU6r42Th37Db9fC (not the tracked program)",
+     "ready_at": 1792082064,
+     "state": "waiting",
+     "approved_at": 1791995664,
+     "account": "4iyD2CuzavjuhsXEJqCLH9qa2AhEwqgqBEnQMGnuFFST",
+     "undecoded": false,
+     "decoded": "call",
+     "what": "call to verifycLy8mB96wd9wqq3WDXQwM4oU6r42Th37Db9fC",
+     "touches_governed": false
+    }
+   ],
    "recent": [
     {
      "id": "squads:6hhBGCtmg7tPWUSgp3LG6X2rsmYWAc4tNsA6G4CnfQbM:97",
@@ -1374,27 +1439,12 @@
      "touches_governed": false
     }
    ],
-   "active": [
-    {
-     "index": 105,
-     "approvals": 2,
-     "rejections": 0,
-     "since": 1791923987,
-     "account": "GcpHeNdxcmJpSx5AmXAScunt37snRmq6U7HV2sioVGkV"
-    },
-    {
-     "index": 106,
-     "approvals": 2,
-     "rejections": 0,
-     "since": 1791924156,
-     "account": "4iyD2CuzavjuhsXEJqCLH9qa2AhEwqgqBEnQMGnuFFST"
-    }
-   ],
+   "active": [],
    "stale_approved": 7,
    "proposals": {
     "executed": 88,
-    "approved": 7,
-    "active": 11
+    "approved": 9,
+    "active": 9
    },
    "stale_transaction_index": 85,
    "transaction_index": 106
@@ -1612,8 +1662,8 @@
     "H4ND9aYttUVLFmNypZqLjZ52FYiGvdEB45GmwNoKEjTj"
    ],
    "delay": 86400,
-   "queued_events": 22,
-   "latest_queued": 1790319743,
+   "queued_events": 23,
+   "latest_queued": 1791993999,
    "pending": [
     {
      "id": "squads:AxkJ8oH5aDu4ZRWfsujPtxdb6Vhq4gDehpoReBgrUUSm:20",
@@ -1633,15 +1683,23 @@
     }
    ],
    "recent": [],
-   "active": [],
+   "active": [
+    {
+     "index": 23,
+     "approvals": 1,
+     "rejections": 0,
+     "since": 1791993999,
+     "account": "CDSvWL1YWnApSvaUUCuhxgHcr3ZoWc9x6puP7zTJ8TEh"
+    }
+   ],
    "stale_approved": 1,
    "proposals": {
     "executed": 17,
     "approved": 2,
-    "active": 3
+    "active": 4
    },
    "stale_transaction_index": 17,
-   "transaction_index": 22
+   "transaction_index": 23
   },
   {
    "name": "Squads v4 multisig BQsD\u2026iEjF (5-of-13, time lock 86400 s), found by the independent reader (1 tracked program)",
@@ -1665,7 +1723,7 @@
      "selector": null,
      "signature": "Squads proposal #97: Upgrade of program whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
      "ready_at": 1792000170,
-     "state": "waiting",
+     "state": "ready",
      "approved_at": 1791913770,
      "account": "8hR6iYNAya5cKfFjE3LaHiekMH2355U4Ggv2sC5ZvEXU",
      "undecoded": false,
@@ -1681,7 +1739,7 @@
      "selector": null,
      "signature": "Squads proposal #98: call to an address from a lookup table; call to an address from a lookup table",
      "ready_at": 1791999786,
-     "state": "waiting",
+     "state": "ready",
      "approved_at": 1791913386,
      "account": "ZsVAvgvJRBQJD7XUXtvcDdy4wPuLr8VEHKdyJjwDCZs",
      "undecoded": false,
@@ -2343,7 +2401,7 @@
    "transaction_index": 71
   }
  ],
- "discovered_utc": "2026-10-14T13:00:13Z",
- "discovered": 13,
- "squads_utc": "2026-10-14T13:05:27Z"
+ "discovered_utc": "2026-10-14T18:57:55Z",
+ "discovered": 14,
+ "squads_utc": "2026-10-14T19:02:11Z"
 }

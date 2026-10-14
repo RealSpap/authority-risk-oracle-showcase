@@ -7,18 +7,15 @@ One entry per method version, named `YYYY.MM.N` (`data/method_versions.json`). `
 
 ### Known gaps, dated and not corrected
 
-- 2026-10-13: the published Watch treats some old approved Squads operations as inactive. A correction is built and held back while affected teams are informed privately. Scores of Squads-based targets may not reflect such operations until it is published; this entry will be updated then.
-- The Watch alert on `Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo` was labelled with another protocol's name: the address is GMX-Solana's `gmsol_store` (the scorer labels it correctly).
-- `tvl_usd` is shown as 0 on the two Squads alerts when the value was not read (DefiLlama gives 78M USD and 27M USD for the two protocols on 2026-10-13).
-- A "ready to execute now" alert stays active after the proposal was executed (proposal 1004, executed 2026-10-13 13:07:37Z).
-- The alert carries the same score whatever the instruction in the queue does (a price-feed setting and a full replacement of the core program read the same).
+- 2026-10-13: the Watch alert on `Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo` was labelled with another protocol's name: the address is GMX-Solana's `gmsol_store` (the scorer labels it correctly).
+- 2026-10-13: a Watch alert on a queued change carries the same score whatever the instruction in the queue does (a price-feed setting and a full replacement of the core program read the same).
 
 ### 2026.10.3 (code written on 2026-10-13, in the repository, not yet on the oracles: the next on-chain push carries it)
 
-- Covers: five more targets on Ethereum L1 (Arbitrum bridge 60, Pendle V2 43, Aave V4 53, Fluid Liquidity 77, Base bridge 56); one rule for nested Safe seats (a Safe whose owner is another Safe is counted on the EOA keys that must really sign, only when those keys are distinct and only upward); a Safe is recognised on its code (a published Safe proxy), not only on what `getOwners()` answers; the limit that Safe owners can write the Safe's storage is now stated (`METHODOLOGY.md`, Limitations).
-- The nested-seat rule for a Morpho vault curator Safe now applies on every chain (one shared module, `scripts/lib/curator_multisig.py`), after a live case on 2026-10-13: the curator of the Spark USDC Vault on Base was rewritten at 13:17:05Z (block 52554039, one Safe transaction) from a 3-of-5 into a 2-of-2 whose owners are a 3-of-5 Safe and a 1-of-2 Safe, so four keys must sign; read at the first level it looked like a 2-of-2 and the vault would have fallen from 63 to 44, on the keys that really sign it scores 65.
+- Covers: five more targets on Ethereum L1 (Arbitrum bridge 60, Pendle V2 43, Aave V4 53, Fluid Liquidity 77, Base bridge 56); one rule for nested Safe seats (a Safe whose owner is another Safe is counted on the EOA keys that must really sign, only when those keys are distinct and only upward); a Safe is recognised on its code (a published Safe proxy), not only on what `getOwners()` answers; the limit that Safe owners can write the Safe's storage is now recorded as a known limit.
+- The nested-seat rule for a Morpho vault curator Safe now applies on every chain (one shared module, `scripts/lib/curator_multisig.py`, in the working repository, not yet public), after a live case on 2026-10-13: the curator of the Spark USDC Vault on Base was rewritten at 13:17:05Z (block 52554039, one Safe transaction) from a 3-of-5 into a 2-of-2 whose owners are a 3-of-5 Safe and a 1-of-2 Safe, so four keys must sign; read at the first level it looked like a 2-of-2 and the vault would have fallen from 63 to 44, on the keys that really sign it scores 65.
 - Moves a score once pushed: the USD AI OAdapter on Arbitrum (8 to 40: its Safe's Zodiac Delay module, analysed on 2026-10-12, no longer blocks the Safe); the Adpend USDC vault on Ethereum (2 to 19: the vault's own 14-day timelock counts, confirmed by a second independent reader); the Spark USDC Vault on Base (63 to 65, instead of the 44 a first-level reading gives); the Grove curator vault on Robinhood Chain (multisig 30 to 60, composite +9); the Monad Grove x Steakhouse vault (cross exposure 100 to 80, composite unchanged); a Uniswap V3 or Sky timelock delay under one day no longer scores as the confirmed two-day delay (the live delays are two days: no published score moves). Every oracle whose scorer imports a changed file gets a new `methodologyHash`; the hashes the next push should publish, computed from the scoring files of the commit that carries this registry, are in `data/method_versions.json` (`expected_hashes`) and are confirmed or corrected after the push.
-- Proposals refused after a second reader on 2026-10-13, so no score moves: Orvex V2 (46 proposed, 2 kept: the pair fee is uncapped), Gains Network (32 proposed, 4 kept: a 2-of-4 Safe can grant itself an allowance over the collateral). Kinetiq (4) and Orca (2) keep their scores with a note: a bounded-power reading is proposed in `METHODOLOGY.md` and not applied.
+- Proposals refused after a second reader on 2026-10-13, so no score moves: Orvex V2 (46 proposed, 2 kept: the pair fee is uncapped), Gains Network (32 proposed, 4 kept: a 2-of-4 Safe can grant itself an allowance over the collateral). Kinetiq (4) keeps its score with a note: a bounded-power reading is under review and not applied.
 
 ### 2026.10.2 (2026-10-12 and 2026-10-13, on the oracles today)
 
@@ -33,7 +30,7 @@ One entry per method version, named `YYYY.MM.N` (`data/method_versions.json`). `
 | Hyperliquid | `0x36452ea42a84016f691a665855cc3482c3e8bb4d87155901b491b293457a4004` (16 targets) | 2026-10-12 05:46Z |
 | Tempo | `0x0a3df5ccf0492a8006278d8f559a8ee72202d8b3d3b01ff5561fa9729045c276` (14 targets) | 2026-10-13 01:57Z |
 
-- Covers: the push of 2026-10-12 / 2026-10-13 on the eight EVM oracles. Solana was not read from the chain: the registry lists a computed hash for it (the digest of the Solana scoring code at commit 06b3b21, the commit whose code reproduces the eight hashes above to the byte), to be confirmed with a read of the Solana oracle. `api/scores.json` (Robinhood oracle `0x9BF4...7f52`) carries `0x667dc486...fa45`, the hash the oracle holds since 2026-10-13 03:26Z.
+- Covers: the push of 2026-10-12 / 2026-10-13 on the eight EVM oracles. Solana was not read from the chain: the registry lists a computed hash for it (the digest of the Solana scoring code at commit 06b3b21, the commit whose code reproduces the eight hashes above to the byte), to be confirmed with a read of the Solana oracle. The Robinhood oracle (`0x9BF4...7f52`) holds `0x667dc486...fa45` since 2026-10-13 03:26Z (table above); the committed `api/scores.json` still carries `0x795edc64...14c5`, the hash of the push of 2026-10-10 (file generated 2026-10-10 20:41Z), and is regenerated at the next snapshot.
 - Moves a score: what each target's scorer read on that day; the detail per target is in the oracle itself.
 - Ethereum L1 keeps one entry under an older hash (the retired Ethena minting entry, 2026.09.0) because the push did not rewrite it.
 
@@ -61,11 +58,18 @@ Hashes read on 2026-10-12 from the public pages of the Watch (the Solana one was
 - Covers: the entries older than the pushes above: one Ethena minting entry on Ethereum L1 (`0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167`, written 2026-09-23, retired, still on the oracle) and three HIP-3 dex entries on Hyperliquid (`0xfbf38ff91abf710728e2df3d5370bf18eeb2a9085168612fa03955b13cc958ad`, written 2026-09-24, rewritten by the push of 2026-10-12).
 - Moves a score: nothing today; they are old values under older code. Scores written under different hashes are not strictly comparable.
 
+### Site
+
+- The Compare page lists the neighbouring tools one row each, what each reads and does not read, according to its own pages, read on 2026-10-12; no ranking. Built 2026-10-12, live since 2026-10-12. The two neighbours found after that reading are not on it yet (Upcoming 4).
+- The Backtest page reads 55 incidents from public postmortems against the six requirements the oracle publishes for every contract, and says which it could not apply: for the 7 that are about who controls a contract, the requirements flagged 2, missed 2 and could not be applied to 3 (figures read on the live page on 2026-10-14). Built 2026-10-12, live since 2026-10-12. It is not a replay by the scorer (Upcoming 8).
+- Each contract page shows an "Exit window" line, the time a user has to leave after a harmful change is queued, derived from the timelock sub-score (in the page code since 2026-10-11).
+
 ### Repository
 
-- `examples/gated-vault/` and `src/AuthorityGatedVault.sol`: an example consumer, a vault that refuses a deposit when the oracle's score for its target is too low, stale, too old, never set or unreadable, and never gates a withdrawal. Replay the refusals on a local fork with `bash examples/gated-vault/replay.sh fork`. It is an example, not deployed and not audited; it had one independent review.
+- `examples/gated-vault/` and `src/AuthorityGatedVault.sol` (in the working repository, not yet public): an example consumer, a vault that refuses a deposit when the oracle's score for its target is too low, stale, too old, never set or unreadable, and never gates a withdrawal. Replay the refusals on a local fork with `bash examples/gated-vault/replay.sh fork`. It is an example, not deployed and not audited; it had one independent review.
 - The Watch writes its generated files to the `watch-data` branch; `main` keeps the code, the documents and a "moved" notice at each old address under `watch/`.
 - The Watch checks the age of the last commit on main and warns at 45, 52 and 58 days: GitHub disables scheduled workflows after 60 days without repository activity.
+- authority-risk-mcp 0.1.0 is on PyPI, npm and the official MCP registry (io.github.RealSpap/authority-risk-mcp).
 
 ### Research
 
@@ -73,68 +77,71 @@ Hashes read on 2026-10-12 from the public pages of the Watch (the Solana one was
 
 ## Upcoming
 
-No dates are promised. "next" is the immediate queue, "planned" is decided and written down, "explored" is measured or verified but not yet decided. Everything here is read-only research until a build is announced in "Changes for readers".
+No dates are promised. "next" is the immediate queue, "planned" is decided and written down, "explored" is measured or verified but not yet decided. Everything here is read-only research until a build is announced in "Changes for readers". Read against the repository and the live site on 2026-10-14: what is built has moved to "Changes for readers", and a line marked "(partly built)" says what exists today and what is still missing.
 
 ### Next
 
-1. Aave levels 0-5 for the 40 Core reserves not yet read (27 of 67 are in `research/aave-levels-2026-10-13/`).
-2. An authority column under governance proposals: threshold, delay, simulated executor with a negative witness, PASS/WARN/INFO (first targets: Compound, Aave, Sky).
-3. The shared-signer contagion map on the front page: which other protocols a given key can move (739 multisigs, 401 protocol entries, 25 chains).
-4. A published backtest: 30 real incidents replayed by the scorer, stating which rules existed before each incident and whether they would have warned. (see note)
-5. A claims registry: a team states its control configuration, the Watch re-checks it every run, a broken statement is published the same day.
-6. An on-chain guard (Zodiac Roles ScoreCondition) on a testnet, refusing a deposit when the score is below a policy or stale, with a real refusal shown. (see note)
-7. An honest Compare page: this oracle next to Keyholder, OneKeyAway, solgov, L2BEAT and DeFiScan, criterion by criterion, with sources and "not read" where we do not know.
-8. Watch fixes recorded as known gaps on 2026-10-13: wrong label on a Solana target (a GMX-Solana address shown under another protocol's name), unread TVL shown as 0, a "ready to execute" alert not closed after execution, the same score for a parameter change and a full code replacement, and the Squads correction named in "Known gaps", published once affected teams are informed.
-9. A readable method version next to the method hash (the Watch publishes only hashes today). (see note)
+1. Readable method versions in the published files (partly built): the registry `data/method_versions.json` and the named versions above exist; the `methodVersion` and `methodVersionDate` fields appear in `api/scores.json` at the next generation of that file, and the Watch's `methodology.json` does not carry them yet. (see note)
+2. Watch fixes recorded as known gaps on 2026-10-13 (see "Known gaps"): a wrong label on a Solana target, and the same score for a parameter change and a full code replacement in a queue.
+3. Aave levels 0-5 for the Core reserves not yet read (the Status line of `research/aave-levels-2026-10-13/` says which are read).
+4. The Compare page, updated with the two neighbouring tools found after it was read on 2026-10-12 (Keyholder for Solana programs, OneKeyAway for EVM contracts), criterion by criterion, with sources and "not read" where we do not know. (see note)
+5. A trust page per protocol (partly built): a prototype for one protocol (Aave V3) exists in the working repository, not yet public and is not on the live site; the page shows the weakest score among the protocol's contracts, the table of its contracts, the method in plain words and how to contest a reading. Extending it to the tracked protocols is decided. (see note)
 
 ### Planned: what a depositor asked for
 
-10. Per-protocol, per-event alerts (queued timelock, rotated signer, granted role, executed freeze, changed implementation) on Telegram and Discord, driven by the 6-hour Watch.
-11. "My money": paste an address, see your positions on the tracked contracts and the three worst scores, read-only, no wallet connection (cheapest path measured: a static page over the Zerion positions API). (see note)
-12. The tokens you hold: can this stablecoin be frozen, by whom, how fast (44 stablecoin entries where every power sits behind one key are already extracted).
-13. Powers actually exercised: a per-contract history of upgrades, pauses, freezes, admin mints and role changes, read from logs, with a registry of non-standard upgrade paths (Lighter on Robinhood Chain emits no EIP-1967 event).
-14. A DAO proposal ready to paste from the score sliders.
-15. External audit, then mainnet (the oracle stays on testnets until then).
+6. A permission diff per governance proposal, and an authority column under it: for a proposal, the matrix "privileged function by holder, before and after", with the Safe threshold and the cumulated delay, each call simulated from each holder with a negative witness, shown as PASS/WARN/INFO (first targets: Compound, Aave, Sky). We compared with the Uniswap governance-seatbelt fork (its permission-diff check), read on 2026-10-13: it reads events and state diffs, and does not build this matrix across several DAOs with the multisig threshold, the delay and the simulated executor.
+7. The shared-signer contagion map on the front page: which other protocols a given key can move. The shared-control sub-score exists per contract; the map does not.
+8. A published backtest by the scorer (partly built): a backtest page is live (see "Changes for readers"); what is planned is the replay by the scorer of real incidents, stating which rules existed before each incident and whether they would have warned. (see note)
+9. A claims registry: a team states its control configuration, the Watch re-checks it every run, a broken statement is published the same day.
+10. Per-protocol, per-event alerts (queued timelock, rotated signer, granted role, executed freeze, changed implementation) on Telegram and Discord, driven by the 6-hour Watch, with a waiting list first (preparation files exist in the working repository, not yet public; the page is not live). The Watch itself stays free. (see note)
+11. An on-chain guard (Zodiac Roles ScoreCondition) on a testnet, refusing a deposit when the score is below a policy or stale, with a real refusal shown (partly built). (see note)
+12. "My money": paste an address, see your positions on the tracked contracts and the three worst scores, read-only, no wallet connection (cheapest path measured: a static page over the Zerion positions API). (see note)
+13. The tokens you hold: can this stablecoin be frozen, by whom, how fast (44 stablecoin entries where every power sits behind one key are already extracted).
+14. Powers actually exercised: a per-contract history of upgrades, pauses, freezes, admin mints and role changes, read from logs, with a registry of non-standard upgrade paths (Lighter on Robinhood Chain emits no EIP-1967 event).
+15. A DAO proposal ready to paste from the score sliders.
 16. Insurers and lenders as readers (Nexus Mutual, Chainproof, Munich Re DeFi Protect): a subscription file per protocol with replayable calls.
-17. A warning at signing time: a MetaMask Snap with scores embedded in the package (no allowlist needed for transaction-insight), later a Safe guard or an ERC-7579 hook "refuse if score below threshold". (see note)
+17. A warning at signing time (partly built): a MetaMask Snap with scores embedded in the package, later a Safe guard or an ERC-7579 hook "refuse if score below threshold". (see note)
 
 ### Planned: per-application cross-chain and real-world assets
 
-18. LayerZero and Hyperlane configuration per application (DVN set, owner, delegate, ISM), starting with the applications that hold the most value.
+18. LayerZero and Hyperlane configuration per application (DVN set, owner, delegate, ISM), starting with the applications that hold the most value. A delegate check exists (`scripts/lib/layerzero_delegate_risk.py`) and is not wired into the score.
 19. Tokenized funds and bonds (BUIDL, USDY, OUSG, Superstate, Centrifuge, Ondo GM): freeze, forced redemption, allowlist and upgrade powers per issuer, with Aave Horizon levels.
 20. Tokenized stocks on Solana (xStocks, Ondo GM): freeze authority and permanent delegate.
 21. Change-of-role and upgrade alerts on RWA tokens accepted as collateral, for curators and risk providers.
 
 ### Planned: tools around the oracle
 
-22. A Solidity package (interface, mock, consumer) on npm and Soldeer. (see note)
-23. JSON, CSV and OpenAPI exports, plus a public Dune feed, from the versioned /oracle/v1/ files.
-24. A read-only MCP server and an AgentKit action, listed in the public registries. (see note)
+22. A Solidity package (interface, mock, consumer) on npm and Soldeer (partly built). (see note)
+23. CSV and OpenAPI exports, plus a public Dune feed, next to the JSON data contract v1 that is already served (partly built, see "API" on the site).
+24. The AgentKit action and the LangChain tools published as packages and listed in their registries (partly built). (see note)
 25. A Telegram bot: /score address, /watch address.
 26. Signed receipts per answer, caps, and scores as EAS attestations (Base Sepolia first).
-27. A trust page per protocol: score, method, right of reply, badge, built from the per-holder call table of the Aave RISK_ADMIN report.
-28. A simple fixed-threshold grid next to the score, in the style of the L2BEAT rosette. (see note)
-29. A feed adapter for the defi-dna aggregator, and a dataset deposit (shared-signer set and incident cases) with a DOI.
-30. A check "threshold + delay + simulated executor" contributed next to check-permission-diff.ts in the Uniswap governance-seatbelt fork.
+27. A simple fixed-threshold grid next to the score, in the style of the L2BEAT rosette. (see note)
+28. A feed adapter for the defi-dna aggregator, and a dataset deposit (shared-signer set and incident cases) with a DOI.
+29. A check "threshold + delay + simulated executor" contributed next to check-permission-diff.ts in the Uniswap governance-seatbelt fork.
 
 ### Planned: method and standards
 
-31. Import of L2BEAT discovered.json as an external reader, closing the rollup gap.
-32. Exit window = update delay minus withdrawal delay, with L2BEAT thresholds (below 7 days bad, below 30 days warning) and the DeFiScan Security Council criterion.
-33. The "ultimate permission" model (chains of act calls with cumulative delays, a 1-of-N Safe counts as each signer acting alone), rewritten in Python.
-34. Receipt fields: JCS canonical JSON with a versioned prefix, per-fact coverage checked/partial/not_checked/unavailable, a refUID to the previous attestation.
-35. A batch canary: if a fifth of the proxies turn "non upgradeable" in one run, the node is lying and the batch is refused.
-36. A class for EIP-7702 delegated accounts: a delegated EOA is still one key. (see note)
-37. A date for the last change of threshold, timelock or config authority on every multisig (the Drift lesson: 2-of-5 and no timelock set five days before the loss).
-38. Solana depth: Realms parameters (hold-up, veto, council vs community) and authority recursion (transfer hook and price oracle programs behind a target).
-39. Sui and Aptos readings if those chains enter the oracle: UpgradeCap state and policy, upgrade_policy and upgrade_number, publisher key type.
-40. An on-chain verifiable Watch: a daily commitment of the Watch state (already anchored on Zcash for scores; extended to every run).
+30. Import of L2BEAT discovered.json as an external reader, closing the rollup gap.
+31. Exit window = update delay minus withdrawal delay, with L2BEAT thresholds (below 7 days bad, below 30 days warning) and the DeFiScan Security Council criterion (partly built). (see note)
+32. The "ultimate permission" model (chains of act calls with cumulative delays, a 1-of-N Safe counts as each signer acting alone), rewritten in Python.
+33. Receipt fields: JCS canonical JSON with a versioned prefix, per-fact coverage checked/partial/not_checked/unavailable, a refUID to the previous attestation.
+34. A batch canary: if a fifth of the proxies turn "non upgradeable" in one run, the node is lying and the batch is refused.
+35. A class for EIP-7702 delegated accounts: a delegated EOA is still one key (partly built). (see note)
+36. A date for the last change of threshold, timelock or config authority on every multisig (the Drift lesson: 2-of-5 and no timelock set five days before the loss).
+37. Solana depth: Realms parameters (hold-up, veto, council vs community) and authority recursion (transfer hook and price oracle programs behind a target), and a program owned by a loader other than the upgradeable one read as "unresolved", not "renounced".
+38. Sui and Aptos readings if those chains enter the oracle: UpgradeCap state and policy, upgrade_policy and upgrade_number, publisher key type.
+39. An on-chain verifiable Watch: a daily commitment of the Watch state (already anchored on Zcash for scores; extended to every run).
+
+### Planned: audit and mainnet
+
+40. External audit, then mainnet, if people find the oracle useful. The oracle stays on testnets until then. No dates are promised.
 
 ### Explored, not decided
 
 41. A verifier and an extension profile for ERC-8241 (Protocol Control Disclosure): chainId, contract, selector, holder, threshold, delay, signature.
 42. A verified compliance grid per page: Trail of Bits levels 1-4, the two EthTrust v3 requirements, SEAL thresholds; level 4 verified on chain as a "certificate of absence" of admin power.
-43. A state-mate YAML and a moesi manifest per contract, generated from the 197 readings.
+43. A state-mate YAML and a moesi manifest per contract, generated from the readings.
 44. A Slither plugin "authority" with RPC reads (owner or proxy admin as EOA or 7702, roles without delay, Aragon ANY_ADDR), SARIF output.
 45. A "control" evidence file in the sense of the FATF 2026 guidance, never presented as a legal qualification.
 46. "Under watch" and "outlook" statuses on queued actions that would move a score, with a published realization rate.
@@ -145,22 +152,27 @@ No dates are promised. "next" is the immediate queue, "planned" is decided and w
 51. Drift of configuration for SEAL-certified protocols, once a public list of certified protocols exists.
 52. A config "pin" reading on Stellar Soroban fleets (CAP-85 executable references, timelock, pin) if Stellar stays in scope.
 53. A per-position authority risk for a pasted address, once a positions API without a browser-exposed key is chosen.
+54. A score block on the pages where people vote (a Snapshot plugin, a governance front end), fed by the permission diff of item 6, once a third party accepts one.
 
 ### Not planned
 
 Selling single checks over x402 (eight sellers measured on chain in 2026, a few dollars each). Email alerts as a product (a Telegram channel exists). Any claim of being first, only or alone.
 
-### Notes on items marked "see note" (written 2026-10-13 from the code, not from the list)
+### Notes on items marked "see note" (re-read on 2026-10-14 from the repository, the live site and the public registries)
 
-- 4: a backtest page exists today with five EVM incidents re-read from the chain one block before each attack (`site/backtest`, `site/backtest/incidents.json`). The 30-case version with "rules that existed before the incident" is the planned one.
-- 6: a Safe transaction guard that refuses a call to a low or stale score exists as source, `src/SafeAuthorityGuardV2.sol`, tested locally and reviewed once; it is not deployed. The Zodiac Roles `ScoreCondition` is a different mechanism and does not exist yet.
-- 9: a version registry (`data/method_versions.json`, scheme YYYY.MM.N) and the `methodVersion` / `methodVersionDate` fields in `api/scores.json` are in the repository and appear at the next generation of that file; the Watch's `methodology.json` is produced by the Watch job and does not carry them yet.
-- 11: a "What do I hold?" panel exists on the dashboard for EVM wallets; the version in this item (a positions API, no wallet connection) is the planned one.
-- 17: the MetaMask Snap exists in `snap/authority-insight` and was hardened on 2026-10-13; it is not published in the Snaps directory and not installed in a real MetaMask. The Safe guard is the item 6 note.
+- 1: a version registry (`data/method_versions.json`, scheme YYYY.MM.N) is in the repository; the `methodVersion` and `methodVersionDate` fields are written by `scripts/update_scores.py` at the next generation of `api/scores.json`, and the file in the repository today does not carry them; the Watch's `methodology.json` is produced by the Watch job and does not carry them yet.
+- 4: the Compare page is live and lists the neighbouring tools it read on 2026-10-12; the two tools named here are not on it.
+- 5: the prototype builder (in the working repository, not yet public) writes the page only when the owner releases it with a marker file after reading it; the pages of the live site do not include it today.
+- 8: the live backtest page reads incidents from public postmortems against the six published requirements and says which it could not apply; it is not a replay by the scorer, and the "rules that existed before the incident" are not on it.
+- 10: `scripts/lib/alerts.py` posts a Telegram message when a score gets worse after a push; per-protocol, per-event alerts do not exist. The waiting-list files are in the working repository, not yet public and the page is not served.
+- 11: a Safe transaction guard that refuses a call to a low or stale score exists as source (in the working repository, not yet public), `src/SafeAuthorityGuardV2.sol`, tested locally and reviewed once; it is not deployed. `src/AuthorityGatedVault.sol` (in the working repository, not yet public) is an example consumer that refuses a deposit on a weak, stale or unscored target, with 32 passing tests and 1 skipped in a run on 2026-10-14; its refusals replay on a local fork, and the replay on the real testnet is not done yet. The Zodiac Roles `ScoreCondition` is a different mechanism and does not exist yet.
+- 12: a "What do I hold?" panel exists on the dashboard for EVM wallets; the version in this item (a positions API, no wallet connection) is the planned one.
+- 17: the MetaMask Snap exists in the working repository, not yet public (`snap/authority-insight`) and was hardened on 2026-10-13; it is not published in the Snaps directory and not installed in a real MetaMask. The Safe guard is the item 11 note.
 - 22: the contract sources and tests exist (`src/`, `test/`); no package is published.
-- 24: a read-only MCP server script exists in the Watch job (`scripts/mcp_server.py`); whether it is listed in a public registry was not checked.
-- 28: every page already shows six fixed requirements, each met, not met or not assessed; what is missing is the rosette-style grid.
-- 36: an account classifier that knows EIP-7702 exists (`scripts/lib/account_classification.py`) and Tempo treats a delegated account as an EOA, but the review of 2026-10-13 found most scorers still test `is_eoa()`, so the same key can score differently. The class is not applied everywhere.
+- 24: the read-only MCP server is published and is in "Changes for readers". The AgentKit action provider and the LangChain tools exist as source in `integrations/` of the public repository; neither is published as a package or listed in a registry (checked on 2026-10-14: no package of that kind on PyPI or npm under the names tried).
+- 27: every page already shows six fixed requirements, each met, not met or not assessed; what is missing is the rosette-style grid.
+- 31: each contract page shows an "Exit window" line derived from the timelock sub-score (live since 2026-10-11); the arithmetic with the withdrawal delay and the L2BEAT thresholds is not built.
+- 35: an account classifier that knows EIP-7702 exists (`scripts/lib/account_classification.py`) and Tempo treats a delegated account as an EOA, but the review of 2026-10-13 found most scorers still test `is_eoa()`, so the same key can score differently. The class is not applied everywhere.
 <!-- readers:end -->
 
 The dated engineering log of the scoring and deployment work, kept verbatim as evidence of what was checked, when, and what was left open. It reads as a working log on purpose: each entry says what that pass verified and what it did not. For the current state read the README; for the rules, METHODOLOGY.md; for the live numbers, the dashboard.

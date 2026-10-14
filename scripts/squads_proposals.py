@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """The Solana counterpart of the timelock queues: the proposals of every Squads v4 multisig the independent reader resolved
 (watch/second_opinion.json, kind "squads"). A proposal is a Proposal account of the multisig: active (awaiting votes), approved
-(the time lock runs from the approval, then any executor can execute it, at any time, until the multisig's stale index passes it),
-executed, rejected, cancelled. Approved-and-live proposals are the loaded guns; approved ones past the stale index are dead.
+(the time lock runs from the approval, then any executor can execute it),
+executed, rejected, cancelled. Approved-and-live proposals are the loaded guns. See watch/API.md for the fields.
 Merged into watch/pending_ops.json as records with family "squads" and "discovered": true, so the feeds, the rules, the calendar,
 the calibration, the review queue and the coverage see them like a timelock queue. Two RPC calls per multisig.
 
@@ -105,15 +105,15 @@ def main():
     now = int(time.time()); recent_from = now - a.recent_days * 86400; new = []
     for ms, info in sorted(by_ms.items()):
         rec = {"name": "Squads v4 multisig %s…%s (%d-of-%d, time lock %d s), found by the independent reader (%d tracked program%s)" % (ms[:4], ms[-4:], info["threshold"] or 0, info["owners"] or 0, info["delay"], len(info["targets"]), "s" if len(info["targets"]) > 1 else ""),
-               "chain": "solana", "address": ms, "family": "squads", "status": "ok", "discovered": True, "governs": info["targets"], "delay": info["delay"], "queued_events": None, "latest_queued": None, "pending": [], "recent": [], "active": [], "stale_approved": 0, "proposals": {}}
+               "chain": "solana", "address": ms, "family": "squads", "status": "ok", "discovered": True, "governs": info["targets"], "delay": info["delay"], "queued_events": None, "latest_queued": None, "pending": [], "recent": [], "active": [], "proposals": {}}
         idx = read_multisig_indexes(ms); time.sleep(0.3); props = read_proposals(ms); time.sleep(0.3)
         if idx is None or props is None: rec["status"] = "UNREAD (multisig account or proposals not answered)"; new.append(rec); continue
-        stale = idx["stale_transaction_index"]; rec["queued_events"] = len(props); rec["stale_transaction_index"] = stale; rec["transaction_index"] = idx["transaction_index"]
+        stale = idx["stale_transaction_index"]; rec["queued_events"] = len(props); rec["transaction_index"] = idx["transaction_index"]
         for p in props: rec["proposals"][p["status"]] = rec["proposals"].get(p["status"], 0) + 1
         for p in props:
             tgt = info["targets"][0]   # the operation hits the program the multisig governs (the vault transaction's own instructions are not decoded here)
             if p["status"] == "approved":
-                if p["index"] <= stale: rec["stale_approved"] += 1; continue
+                if p["index"] <= stale: continue
                 ready = (p["timestamp"] or now) + info["delay"]
                 rec["pending"].append({"id": "squads:%s:%d" % (ms, p["index"]), "index": p["index"], "target": tgt, "value": 0, "selector": None, "signature": "Squads proposal #%d (%d approval%s)" % (p["index"], p["approvals"], "" if p["approvals"] == 1 else "s"), "ready_at": ready, "state": "ready" if now >= ready else "waiting", "approved_at": p["timestamp"], "account": p["account"], "undecoded": True})   # undecoded: the vault transaction's instructions are not read; it may be a treasury transfer, not an action on the program
             elif p["status"] == "active" and p["index"] > stale:
@@ -128,7 +128,7 @@ def main():
                 op["signature"] = "Squads proposal #%d: %s%s" % (op["index"], d["text"][:160], "" if d["touches_governed"] else " (not the tracked program)")
         if props: rec["latest_queued"] = max((p["timestamp"] or 0) for p in props) or None
         new.append(rec)
-        print("%s: %d proposal(s) %s; %d approved and live (%d executable now), %d awaiting votes, %d approved but stale, %d executed in %d d" % (rec["name"][:46], len(props), rec["proposals"], len(rec["pending"]), sum(1 for p in rec["pending"] if p["state"] == "ready"), len(rec["active"]), rec["stale_approved"], len(rec["recent"]), a.recent_days))
+        print("%s: %d proposal(s) %s; %d approved and live (%d executable now), %d awaiting votes, %d executed in %d d" % (rec["name"][:46], len(props), rec["proposals"], len(rec["pending"]), sum(1 for p in rec["pending"] if p["state"] == "ready"), len(rec["active"]), len(rec["recent"]), a.recent_days))
     pend["results"] = kept + new; pend["squads_utc"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     tmp = a.pending + ".tmp"; json.dump(pend, open(tmp, "w"), indent=1); os.replace(tmp, a.pending)
     print("squads proposals: %d multisig(s), %d approved-and-live proposal(s) in all (%d executable now), %d transaction(s) decoded" % (len(new), sum(len(r["pending"]) for r in new), sum(1 for r in new for p in r["pending"] if p["state"] == "ready"), decoded))

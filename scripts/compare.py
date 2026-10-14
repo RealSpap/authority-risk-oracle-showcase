@@ -11,6 +11,7 @@ count says how many contracts it was read on, so a protocol with half of its con
 Exit code 2 when a name matches no protocol or several (the candidates are listed).
 """
 import argparse, json, os, sys
+from watch_location import NO_STATE_HINT  # the state is on the watch-data branch
 
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 from dossier import utf8_stdout, chain_key  # noqa: E402
@@ -68,7 +69,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0]); ap.add_argument("protocols", nargs="*", help="protocol slugs or names; with --chains, chain names"); ap.add_argument("--watch", default="watch"); ap.add_argument("--json", action="store_true")
     ap.add_argument("--chains", action="store_true", help="one column per chain instead of per protocol")
     a = ap.parse_args(); utf8_stdout(); rows = table(a.watch)
-    if not rows: print("no tracked contract in %s/scores" % a.watch); sys.exit(2)
+    if not rows: print("no tracked contract in %s/scores" % a.watch + NO_STATE_HINT); sys.exit(2)
     if not a.chains and not a.protocols: ap.error("name at least one protocol, or use --chains")
     sums, seen = [], set()
     if a.chains:

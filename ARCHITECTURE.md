@@ -11,7 +11,7 @@ script/      Deploy.s.sol, the Foundry deploy script (Foundry's convention is a 
 scripts/     Python: the updater, the push guard, the watch tools, the audit, shared libraries (scripts/lib/) and their tests
 chains/      one folder per ecosystem: its scorer, its deploy record and push script, dated audits (chains/README.md is the map)
 data/        dated notes behind every number or claim: findings, corrections, backtests, snapshots (data/README.md is the index)
-watch/       the files the Watch job rewrites every 6 hours (it reads, it never writes on-chain) (watch/API.md describes each file)
+watch/       the data contract and a note on the files; the files themselves are on the `watch-data` branch, rewritten every 6 hours (it reads, it never writes on-chain). watch/API.md describes each file
 rules.json   the alert rules, forkable
 docs/        landscape and operations notes
 research/    standalone dated measurements, each with the command to replay it
@@ -29,14 +29,14 @@ api/         the JSON snapshot of the last on-chain push
 
 ## How the Watch runs
 
-A GitHub Actions job (`.github/workflows/watch.yml`, cron `17 */6 * * *`, UTC) re-reads every deployed oracle, compares with the previous run, and rewrites the files in `watch/`: scores, the money behind each target, the queue of changes behind watched timelocks, the alerts that fire, why a score moved, an independent second reading, and a hash-chained event log with a signed manifest. It holds no key that can send a transaction. The job commits its output to `main`, so the generated data is in `watch/`, never in a separate store.
+A GitHub Actions job (`.github/workflows/watch.yml`, cron `17 */6 * * *`, UTC) re-reads every deployed oracle, compares with the previous run, and rewrites the files in `watch/`: scores, the money behind each target, the queue of changes behind watched timelocks, the alerts that fire, why a score moved, an independent second reading, and a hash-chained event log with a signed manifest. It holds no key that can send a transaction. The job commits its output to the `watch-data` branch, not to `main`, so the history of `main` is the history of the work and the generated data is read from the root of that branch (https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/watch-data/).
 
 ## Where to read a score
 
 | You want | Read |
 |---|---|
 | one score, from a contract | `cast call <oracle> "getScore(address)(...)" <target>`, see the README |
-| every score, as a file | `api/scores.json`, or `watch/scores/<oracle>.json` |
+| every score, as a file | `api/scores.json`, or `scores/<oracle>.json` on the `watch-data` branch |
 | the dashboard | https://realspap.github.io/oracle/ |
 | whether the published state is intact | `python3 scripts/audit_public.py` |
 | what changed in the method | `CHANGELOG.md`, section "Changes for readers" |

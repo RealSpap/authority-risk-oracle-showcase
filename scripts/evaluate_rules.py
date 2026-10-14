@@ -9,6 +9,7 @@ each such alert carries its evidence (timelock, tx, selector, when it executes).
     python3 scripts/evaluate_rules.py --rules rules.json --scores watch/scores --latest watch/latest.json --tvl watch/tvl.json --out watch/alerts.json
 """
 import argparse, ast, glob, hashlib, hmac, json, os, sys, time, urllib.request
+from watch_location import RAW  # the feeds live on the watch-data branch
 from pending_ics import SELNAMES  # the same small selector-to-name table as the calendar and the page: an alert names the queued function when the event did not
 
 def _dump_json(obj, path, indent=None):
@@ -279,7 +280,7 @@ def main():
     for x in active: x["notified"] = (x["rule"] + "|" + x["chain"] + ":" + norm(x["target"])) in was_notified and not x["new"]   # false = still to deliver (new, or not delivered last time)
     os.makedirs(os.path.dirname(a.out) or ".", exist_ok=True); _dump_json(out, a.out, indent=1)
     import html as _h
-    feed = ['<?xml version="1.0" encoding="utf-8"?>', '<feed xmlns="http://www.w3.org/2005/Atom">', '<title>Authority Risk Oracle: alerts</title>', '<author><name>Authority Risk Oracle</name></author>', '<link href="https://realspap.github.io/oracle/#alerts-fold"/>', '<link rel="self" href="https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/alerts.xml"/>', '<id>https://realspap.github.io/oracle/alerts</id>', '<updated>%s</updated>' % now]
+    feed = ['<?xml version="1.0" encoding="utf-8"?>', '<feed xmlns="http://www.w3.org/2005/Atom">', '<title>Authority Risk Oracle: alerts</title>', '<author><name>Authority Risk Oracle</name></author>', '<link href="https://realspap.github.io/oracle/#alerts-fold"/>', '<link rel="self" href="' + RAW + 'alerts.xml"/>', '<id>https://realspap.github.io/oracle/alerts</id>', '<updated>%s</updated>' % now]
     fn_of = {}   # the queued functions behind an active alert, named: a feed reader sees "setRateLimits on Ethena Timelock", not just the rule
     for x in active:
         names = sorted(set((e.get("signature") or "").split("(")[0] + " on " + str(e.get("timelock") or "") for e in x.get("evidence", []) if e.get("signature")))

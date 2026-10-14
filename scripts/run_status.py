@@ -10,6 +10,7 @@ oracle was not read, the run is unsigned, the chain could not be checked, a seco
 the chain is broken. The reasons are listed, so a monitor can alert on the state and a person can read why.
 """
 import argparse, json, os, time
+from watch_location import RAW  # noqa: E402
 
 
 def load(path):
@@ -41,7 +42,7 @@ def main():
     if meth and meth.get("changes"): reasons.append("methodology changed on %d oracle(s): scores before this run are not comparable" % len(meth["changes"])); worse("degraded")
     if meth and meth.get("mixed"): reasons.append("methodology hashes mixed on %d oracle(s)" % len(meth["mixed"])); worse("degraded")
     if meth and meth.get("unregistered"): reasons.append("method hash not in registry on %d oracle(s): no version is shown for it (data/method_versions.json)" % len({o for u in meth["unregistered"] for o in u["oracles"]}))   # information: no change of state, a version is never invented
-    rec = {"run_utc": (latest or {}).get("run_utc") or time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "state": state, "reasons": reasons,
+    rec = {"run_utc": (latest or {}).get("run_utc") or time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "state": state, "reasons": reasons, "data_location": RAW,   # where every file of the Watch is served (the watch-data branch): a page or a monitor reads this, not a constant of its own
            "checks": {"oracles_read": (len(latest.get("oracles", [])) - len(latest.get("unread", []))) if latest else None, "oracles": len(latest.get("oracles", [])) if latest else None,
                       "targets": (latest or {}).get("total_targets"), "stale": (latest or {}).get("stale_total"), "alarms": len((latest or {}).get("alerts", [])),
                       "chain_ok": chain.get("ok") if chain else None, "chain_entries": chain.get("lines") if chain else None, "signed": bool(sig and sig.get("signed")),

@@ -10,6 +10,7 @@ and a reading of who can act and how fast, not an audit and not investment advic
 Exit code 2 when no protocol matches or the name is ambiguous (the candidates are listed).
 """
 import argparse, os, sys
+from watch_location import NO_STATE_HINT  # the state is on the watch-data branch
 
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 from evaluate_rules import LABEL, lower_keys  # noqa: E402
@@ -54,7 +55,7 @@ def short(a): return a[:6] + "…" + a[-4:]
 def build(W, query):
     """(lines, error): the brief as lines, or (None, message) when nothing or several protocols match."""
     rows = table(W); hits = match(rows, query)
-    if not rows: return None, "no tracked contract in %s/scores" % W
+    if not rows: return None, "no tracked contract in %s/scores" % W + NO_STATE_HINT
     if not hits:
         top = sorted(protocols(rows).items(), key=lambda kv: -len(kv[1]["rows"]))[:8]
         return None, "no protocol matches %r. Most tracked: %s" % (query, ", ".join("%s (%d)" % (s, len(p["rows"])) for s, p in top))

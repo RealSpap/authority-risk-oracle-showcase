@@ -12,9 +12,9 @@
   <a href=".github/workflows/watch.yml"><img alt="Watch" src="https://github.com/RealSpap/authority-risk-oracle-showcase/actions/workflows/watch.yml/badge.svg"></a>
   <a href=".github/workflows/mutation.yml"><img alt="Mutation" src="https://github.com/RealSpap/authority-risk-oracle-showcase/actions/workflows/mutation.yml/badge.svg"></a>
   <img alt="Ecosystems" src="https://img.shields.io/badge/ecosystems-10-informational">
-  <a href="https://realspap.github.io/oracle/"><img alt="Targets read by the watch" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FRealSpap%2Fauthority-risk-oracle-showcase%2Fmain%2Fwatch%2Fbadge.json"></a>
+  <a href="https://realspap.github.io/oracle/"><img alt="Targets read by the watch" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FRealSpap%2Fauthority-risk-oracle-showcase%2Fwatch-data%2Fbadge.json"></a>
   <img alt="Network" src="https://img.shields.io/badge/deployed-testnets-orange">
-  <a href="watch/API.md"><img alt="Watch integrity" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FRealSpap%2Fauthority-risk-oracle-showcase%2Fmain%2Fwatch%2Fbadge%2Fintegrity.json"></a>
+  <a href="watch/API.md"><img alt="Watch integrity" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FRealSpap%2Fauthority-risk-oracle-showcase%2Fwatch-data%2Fbadge%2Fintegrity.json"></a>
 </p>
 
 <p align="center">
@@ -60,6 +60,8 @@ cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 \
 setup, the timelock queue before a change applies, the alerts that fire on rules you can fork, why a score moved, and one static
 page per contract. Every score can be re-read from the chain in your browser ("verify all live"). `/oracle/` is a generated build of the dashboard plus the site shell; its base,
 [`dashboard/index.html`](dashboard/index.html), is a single file with no backend; the watch files are under [`watch/`](watch/API.md).
+
+**Where the Watch's files are.** The Watch commits what it reads to the [`watch-data` branch](https://github.com/RealSpap/authority-risk-oracle-showcase/tree/watch-data), not to `main`, so that the history of `main` is the history of the work. The `watch/` folder named below is the root of that branch: `watch/status.json` here is `status.json` there, and `https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/watch-data/<file>` serves it. To run the commands below on the latest state after cloning, run `bash scripts/watch_branch.sh prepare`: it clones the branch into `watch/` (do not commit that folder). On `main`, `watch/` holds the documents and a short notice at each old address.
 
 **3. Audit it yourself, then ask it questions.** Standard library only, no network unless a line says so.
 

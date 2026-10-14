@@ -14,6 +14,7 @@ scripts/dossier.py, for one contract). A value the watch did not read is None in
 contract whose keys are unknown. The footer says how many rows had the filtered field unread, so the absence of a match is never read as the absence of the thing.
 """
 import argparse, csv, glob, io, json, os, sys
+from watch_location import NO_STATE_HINT  # the state is on the watch-data branch
 
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 from evaluate_rules import WATCH_SLUGS, LABEL, norm  # noqa: E402
@@ -130,7 +131,7 @@ def main():
     ap.add_argument("--fail-if-any", action="store_true", help="exit code 3 when at least one row is selected (for a cron job or a CI step); 2 stays for usage errors"); ap.add_argument("--csv", action="store_true", help="CSV on the standard output, an empty cell where the watch did not read the value")
     a = ap.parse_args(); utf8_stdout()
     rows = table(a.watch)
-    if not rows: print("no tracked contract in %s/scores" % a.watch); sys.exit(2)
+    if not rows: print("no tracked contract in %s/scores" % a.watch + NO_STATE_HINT); sys.exit(2)
     if a.chain and not chain_key(a.chain): print("unknown chain %r (chains: %s)" % (a.chain, ", ".join(sorted(LABEL)))); sys.exit(2)
     if a.watchlist:
         try: rows, lost = watchlist(rows, open(a.watchlist, encoding="utf-8").read().split("\n"))

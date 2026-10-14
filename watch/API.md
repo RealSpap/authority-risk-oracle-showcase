@@ -1,8 +1,10 @@
 # Data contract, v1
 
-Everything the dashboard shows from the watch is a file in this folder, rewritten by the `Watch` GitHub Action every 6 hours (`17 */6 * * *` UTC) and
-served raw from `https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/<file>`. No key, no rate limit beyond
-GitHub's. The on-chain source of truth stays the oracle contracts (`getScore(address)`): these files are a convenience read of them.
+Everything the dashboard shows from the watch is a file rewritten by the `Watch` GitHub Action every 6 hours (`17 */6 * * *` UTC), committed to the `watch-data` branch of this
+repository (the root of the branch is the folder that is called `watch/` in the scripts and in this document) and served raw from
+`https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/watch-data/<file>`. `main` holds the code and the documents written by hand (this one, the README and
+the schemas, copied into the branch at every run), so its history is the history of the work. Before the move the same files were committed to `main` under `watch/`; those commits stay,
+and the old links answer with a short notice that points here. `status.json` carries `data_location`, the base URL under which every file is served, so a page or a monitor does not need a constant of its own (the notice left on `main` carries it too). No key, no rate limit beyond GitHub's. The on-chain source of truth stays the oracle contracts (`getScore(address)`): these files are a convenience read of them.
 
 | File | What | Schema |
 |---|---|---|
@@ -63,7 +65,7 @@ Verifying the signature from your own service, without this repository's code (N
 
 ```js
 const crypto = require('crypto');
-const sig = await (await fetch('https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/signature.json')).json();
+const sig = await (await fetch('https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/watch-data/signature.json')).json();
 const canon = (v) => Array.isArray(v) ? '[' + v.map(canon).join(',') + ']' : (v && typeof v === 'object') ? '{' + Object.keys(v).sort().map(k => JSON.stringify(k) + ':' + canon(v[k])).join(',') + '}' : JSON.stringify(v);
 const key = crypto.createPublicKey({ key: Buffer.concat([Buffer.from('302a300506032b6570032100', 'hex'), Buffer.from(sig.public_key, 'hex')]), format: 'der', type: 'spki' });
 console.log(sig.signed && crypto.verify(null, Buffer.from(canon(sig.manifest)), key, Buffer.from(sig.signature, 'hex')));   // true: every file listed in sig.manifest.files hashes to what the key signed

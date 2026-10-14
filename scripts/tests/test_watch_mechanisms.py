@@ -1,7 +1,7 @@
 """Unit tests for the state-comparing mechanisms of the Watch (held_assets, pause_state, alarm_gate) and the words of their alerts.
 No network: the RPC and the price API are replaced. Each case is one that went wrong, or nearly, while the mechanism was built (10/10):
 a dead RPC emptying a file, a revert that vanished without a trace, a standing alarm opening an issue every run, a state read as 'no finding'."""
-import ast, re, contextlib, importlib.util, io, json, os, subprocess, sys, tempfile, time, unittest
+import shutil, ast, re, contextlib, importlib.util, io, json, os, subprocess, sys, tempfile, time, unittest
 import warnings
 
 warnings.simplefilter("ignore", ResourceWarning)   # the scripts read their JSON with a bare open(): not what these tests are about
@@ -42,6 +42,7 @@ import brief  # noqa: E402
 import feeds_per_target  # noqa: E402
 import safe_activity  # noqa: E402
 import redact_signers  # noqa: E402
+import run_status  # noqa: E402
 
 T1 = "0x" + "11" * 20
 ASSET = "0x" + "aa" * 20
@@ -547,6 +548,7 @@ class TestThePublishedStateKeepsItsContract(unittest.TestCase):
     def test_the_files_of_the_checkout_validate_against_their_schemas(self):
         w = os.path.join(os.path.dirname(__file__), "..", "..", "watch")
         if not os.path.isdir(os.path.join(w, "schema")) or not os.path.exists(os.path.join(w, "latest.json")): self.skipTest("no published state in this checkout")
+        if '"moved"' in open(os.path.join(w, "latest.json"), encoding="utf-8").read(400): self.skipTest("main holds notices in watch/: the state is on the watch-data branch (bash scripts/watch_branch.sh prepare fetches it)")
         old = sys.argv; sys.argv = ["validate_schemas.py", "--watch", w]
         try:
             with contextlib.redirect_stdout(io.StringIO()) as out:
@@ -897,7 +899,7 @@ class TestCatalog(unittest.TestCase):
             api = self.setup_dir(tmp, ["alerts.json", "a.json", "b.json", "orphan.json"], ["scores"]); c = catalog.build(tmp, api, now="2026-10-10T00:00:00Z")
         by = {f["path"]: f for f in c["files"]}
         self.assertIsNone(by["a.json"]["schema"]); self.assertIsNone(by["a.json"]["schema_url"])   # "(no schema)" is not a schema
-        self.assertEqual(by["alerts.json"]["schema"], "schema/alerts.schema.json"); self.assertTrue(by["alerts.json"]["schema_url"].endswith("/watch/schema/alerts.schema.json")); self.assertEqual(by["alerts.json"]["bytes"], 1)
+        self.assertEqual(by["alerts.json"]["schema"], "schema/alerts.schema.json"); self.assertEqual(by["alerts.json"]["schema_url"], catalog.RAW + "schema/alerts.schema.json"); self.assertEqual(by["alerts.json"]["bytes"], 1)
         self.assertTrue(by["a.json"]["description"].endswith("…") and len(by["a.json"]["description"]) <= 221); self.assertEqual(by["a.json"]["description"], by["b.json"]["description"])   # one row, two files; long text cut at a word
         self.assertEqual((by["scores/"]["count"], by["scores/"]["description"], by["scores/"]["schema"]), (1, "every target of one oracle", "schema/scores.schema.json"))   # a folder takes the row of the file pattern inside it
         self.assertEqual(c["undocumented"], ["orphan.json"]); self.assertEqual(by["orphan.json"]["description"], "")   # the gap is visible
@@ -1642,7 +1644,7 @@ class TestProtocolFeeds(unittest.TestCase):
         titles = [t for t in __import__("re").findall(r"<entry><title>([^<]*)</title>", x)]
         self.assertEqual(len(titles), 2); self.assertTrue(titles[0].startswith("[Arbitrum 0xbbbb…bbbb] ")); self.assertTrue(titles[1].startswith("[Base 0xaaaa…aaaa] "))   # newest first, each titled with its chain and shortened address
         self.assertIn("<title>Vault X: authority risk, 2 contract(s) on 2 chain(s)</title>", x); self.assertNotIn("someone else", x)   # another protocol's contract is not in it
-        self.assertIn("<subtitle>scores 40 to 55, 1 stale;", x); self.assertIn("<id>urn:aro:feed:protocol:vault-x</id>", x); self.assertIn("/watch/feed/protocol/vault-x.xml", x)
+        self.assertIn("<subtitle>scores 40 to 55, 1 stale;", x); self.assertIn("<id>urn:aro:feed:protocol:vault-x</id>", x); self.assertIn("/watch-data/feed/protocol/vault-x.xml", x)
         ids = __import__("re").findall(r"<entry>.*?<id>([^<]*)</id>", x); self.assertTrue(all(i.startswith("urn:aro:base:0x" + "aa") or i.startswith("urn:aro:arbitrum:0x" + "bb") for i in ids)); self.assertEqual(len(ids), len(set(ids)))
 
     def test_a_second_run_with_nothing_new_rewrites_nothing_and_per_contract_feeds_are_still_written(self):
@@ -3354,7 +3356,7 @@ class TestWatchAge(unittest.TestCase):
         self.assertEqual(old_json["status"], "stale"); self.assertIsNone(junk_json["age_hours"]); self.assertEqual(junk_json["status"], "unknown")
 
     def test_the_default_address_is_the_public_showcase_file(self):
-        self.assertEqual(watch_age.URL, "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/latest.json"); self.assertEqual(watch_age.parse_utc("2026-10-10T00:00:00Z"), 1791590400)
+        self.assertEqual(watch_age.URL, "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/watch-data/latest.json"); self.assertEqual(watch_age.parse_utc("2026-10-10T00:00:00Z"), 1791590400)
 
 
 class TestWhatIf(unittest.TestCase):
@@ -4910,7 +4912,7 @@ class TestDistributionFormats(unittest.TestCase):
 
     def test_badge_snippet_reads_the_published_badge_file_of_the_contract(self):
         b = self.path("appliquer_oracle_site.py")
-        self.assertIn("def _badge_md(key, addr, name):", b); self.assertIn("img.shields.io/endpoint?url=", b); self.assertIn("watch/badge/%s/%s.json", b); self.assertIn("Show this score in your README", b)
+        self.assertIn("def _badge_md(key, addr, name):", b); self.assertIn("img.shields.io/endpoint?url=", b); self.assertIn("watch-data/badge/%s/%s.json", b); self.assertIn("Show this score in your README", b)
 
     def test_versioned_paths_carry_version_and_generated_at_and_are_documented(self):
         b = self.path("appliquer_oracle_site.py"); self.assertIn('"version": "v1", "generatedAt": _gen', b); self.assertIn('"oracle", "v1"', b); self.assertIn("scores.json", b)
@@ -4922,6 +4924,222 @@ class TestDistributionFormats(unittest.TestCase):
         import construire_backtest
         h = construire_backtest.shell("T", "D", "https://x.org/", "", "<p>b</p>")
         for t in ('property="og:title"', 'property="og:description"', 'property="og:image"', 'property="og:url"', 'name="twitter:card" content="summary_large_image"', 'name="twitter:image"'): self.assertIn(t, h, t)
+
+
+class TestWatchStateLivesOnItsOwnBranch(unittest.TestCase):
+    """The state of the Watch is committed to the watch-data branch, never to main: the branch script, the workflow, the public URLs, the notices left on main and the audit of a past commit."""
+    ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+    SCRIPT = os.path.join(ROOT, "scripts", "watch_branch.sh")
+
+    STALE_PHRASES = ("commits its output to `main`", "commits its output to main", "the files the Watch job rewrites every 6 hours", "publishes its files in `watch/`")
+
+    def test_no_public_document_still_says_the_job_commits_to_main(self):
+        """After the move to the watch-data branch, no page or document may still say the Watch commits its output to main (the changelog keeps the history of what was true then)."""
+        found = []
+        for base, dirs, files in os.walk(self.ROOT):
+            dirs[:] = [d for d in dirs if d not in (".git", "node_modules", "lib", "cache", "out")]
+            for n in files:
+                if not n.endswith((".md", ".html")) or n == "CHANGELOG.md": continue
+                try: text = open(os.path.join(base, n), encoding="utf-8").read()
+                except (UnicodeDecodeError, OSError): continue
+                found += ["%s: %s" % (os.path.relpath(os.path.join(base, n), self.ROOT), p) for p in self.STALE_PHRASES if p in text]
+        self.assertEqual(found, [], "a public document describes the old layout of the Watch")
+
+    def git(self, cwd, *args, check=True):
+        r = subprocess.run(["git", "-c", "user.name=T", "-c", "user.email=t@example.org", "-c", "init.defaultBranch=main"] + list(args), cwd=cwd, capture_output=True, text=True)
+        if check and r.returncode: raise AssertionError("git %s: %s" % (" ".join(args), r.stderr))
+        return r.stdout.strip()
+
+    def world(self, tmp, seeded=False):
+        """A bare origin, and a checkout of main holding the script and the documents written by hand (and a notice at an old address)."""
+        origin = os.path.join(tmp, "origin.git"); subprocess.run(["git", "init", "-q", "--bare", "-b", "main", origin], check=True)
+        work = os.path.join(tmp, "work"); os.makedirs(os.path.join(work, "scripts")); os.makedirs(os.path.join(work, "watch", "schema"))
+        shutil.copy(self.SCRIPT, os.path.join(work, "scripts", "watch_branch.sh"))
+        for name, text in (("API.md", "# API v1\n"), ("README.md", "# watch/\n"), (".gitignore", "*.txt\n*.log\n"), ("names.json", "{}\n"), ("status.json", '{"moved": true}\n'), ("schema/latest.schema.json", "{}\n")): open(os.path.join(work, "watch", name), "w").write(text)
+        self.git(work, "init", "-q"); self.git(work, "add", "-A"); self.git(work, "commit", "-qm", "main"); self.git(work, "remote", "add", "origin", origin); self.git(work, "push", "-q", "origin", "main")
+        if seeded:
+            seed = os.path.join(tmp, "seed"); os.makedirs(seed); open(os.path.join(seed, "latest.json"), "w").write('{"run_utc": "2026-10-13T00:00:00Z"}\n'); open(os.path.join(seed, "events.jsonl"), "w").write("{}\n")
+            self.git(seed, "init", "-q", "-b", "watch-data"); self.git(seed, "add", "-A"); self.git(seed, "commit", "-qm", "seed"); self.git(seed, "push", "-q", origin, "watch-data")
+        return origin, work
+
+    def run_script(self, work, origin, *args, env=None):
+        e = dict(os.environ, WATCH_REMOTE=origin); e.pop("GITHUB_TOKEN", None); e.update(env or {})
+        return subprocess.run(["bash", "scripts/watch_branch.sh"] + list(args), cwd=work, env=e, capture_output=True, text=True)
+
+    def test_a_first_run_creates_the_branch_and_main_receives_nothing(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            origin, work = self.world(tmp); main_before = self.git(origin, "rev-parse", "main")
+            r = self.run_script(work, origin, "prepare"); self.assertEqual(r.returncode, 0, r.stderr)
+            self.assertFalse(os.path.exists(os.path.join(work, "watch", "status.json")))   # the notice of main is not part of the state
+            for d in ("API.md", "README.md", ".gitignore", "names.json", "schema/latest.schema.json"): self.assertTrue(os.path.exists(os.path.join(work, "watch", d)), d)
+            open(os.path.join(work, "watch", "latest.json"), "w").write("{}\n"); open(os.path.join(work, "watch", "run.txt"), "w").write("a job log\n")
+            r = self.run_script(work, origin, "record", "Watch 2026-10-14T00:17Z: first"); self.assertEqual(r.returncode, 0, r.stderr)
+            self.assertEqual(self.git(origin, "rev-parse", "main"), main_before)   # main did not move
+            files = self.git(origin, "ls-tree", "-r", "--name-only", "watch-data").split("\n")
+            self.assertIn("latest.json", files); self.assertIn("API.md", files); self.assertNotIn("run.txt", files); self.assertNotIn("status.json", files)   # the job log is ignored, the notice is not state
+
+    def test_the_next_run_starts_from_the_branch_and_an_unchanged_state_adds_no_commit(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            origin, work = self.world(tmp, seeded=True)
+            self.assertEqual(self.run_script(work, origin, "prepare").returncode, 0); self.assertEqual(open(os.path.join(work, "watch", "events.jsonl")).read(), "{}\n")   # the previous state is there
+            self.assertEqual(self.run_script(work, origin, "record", "documents copied in").returncode, 0)   # the first record commits the documents the branch did not have
+            n1 = int(self.git(origin, "rev-list", "--count", "watch-data"))
+            r = self.run_script(work, origin, "record", "nothing changed"); self.assertEqual(r.returncode, 0); self.assertIn("nothing to record", r.stdout)
+            self.assertEqual(int(self.git(origin, "rev-list", "--count", "watch-data")), n1)   # an unchanged state adds no empty commit
+            open(os.path.join(work, "watch", "events.jsonl"), "a").write('{"n": 2}\n'); self.assertEqual(self.run_script(work, origin, "record", "Watch: second").returncode, 0)
+            self.assertIn('{"n": 2}', self.git(origin, "show", "watch-data:events.jsonl"))
+            self.assertEqual(self.git(origin, "log", "-1", "--format=%an <%ae>|%s", "watch-data"), "Spap <335248717+RealSpap@users.noreply.github.com>|Watch: second")
+
+    def test_the_canonical_repository_refuses_a_cold_start(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            origin, work = self.world(tmp); r = self.run_script(work, origin, "prepare", env={"WATCH_REQUIRE_SEED": "1"})
+            self.assertEqual(r.returncode, 3); self.assertIn("chain of events", r.stderr); self.assertIn("migrer-watch-vers-branche.sh", r.stderr)
+            self.assertEqual(self.run_script(work, origin, "prepare").returncode, 0)   # a fork (no flag) starts empty
+
+    def test_documents_changed_on_main_reach_the_branch_at_the_next_run(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            origin, work = self.world(tmp, seeded=True); open(os.path.join(work, "watch", "API.md"), "w").write("# API v2\n")
+            self.assertEqual(self.run_script(work, origin, "prepare").returncode, 0); self.assertEqual(self.run_script(work, origin, "record", "docs").returncode, 0)
+            self.assertEqual(self.git(origin, "show", "watch-data:API.md"), "# API v2")
+
+    def test_a_push_that_raced_with_another_writer_is_rebased(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            origin, work = self.world(tmp, seeded=True); self.assertEqual(self.run_script(work, origin, "prepare").returncode, 0)
+            other = os.path.join(tmp, "other"); subprocess.run(["git", "clone", "-q", "-b", "watch-data", origin, other], check=True); open(os.path.join(other, "other.json"), "w").write("{}\n")
+            self.git(other, "add", "-A"); self.git(other, "commit", "-qm", "someone else"); self.git(other, "push", "-q", "origin", "watch-data")
+            open(os.path.join(work, "watch", "mine.json"), "w").write("{}\n"); r = self.run_script(work, origin, "record", "mine"); self.assertEqual(r.returncode, 0, r.stderr)
+            files = self.git(origin, "ls-tree", "-r", "--name-only", "watch-data").split("\n"); self.assertIn("other.json", files); self.assertIn("mine.json", files)
+
+    def test_the_workflow_writes_the_branch_and_never_main(self):
+        wf = os.path.join(self.ROOT, ".github", "workflows", "watch.yml")
+        if not os.path.exists(wf): self.skipTest("the workflow is not in this checkout")
+        t = open(wf, encoding="utf-8").read()
+        self.assertNotRegex(t, r"git [^\n]*\b(push|pull)\b", "the job must not push to or pull from main itself: the branch script does the only push")
+        self.assertEqual(t.count("watch_branch.sh prepare"), 1); self.assertEqual(t.count("watch_branch.sh record"), 2)   # the run, and the daily report
+        self.assertLess(t.index("watch_branch.sh prepare"), t.index("scripts/watch_run.py")); self.assertLess(t.index("watch_branch.sh prepare"), t.index("watch_branch.sh record"))
+        self.assertIn("WATCH_REQUIRE_SEED", t); self.assertIn("ref: main", t)
+
+    def test_every_public_url_of_the_state_points_at_the_branch(self):
+        import watch_location, catalog, authority_check
+        self.assertEqual(watch_location.RAW, "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/watch-data/")
+        self.assertEqual(watch_age.URL, watch_location.RAW + "latest.json"); self.assertEqual(catalog.RAW, watch_location.RAW); self.assertEqual(authority_check.BASE, watch_location.RAW + "scores/")
+        stale = []
+        for name in sorted(os.listdir(os.path.join(self.ROOT, "scripts"))):
+            if name.endswith((".py", ".sh")) and name != "watch_location.py":
+                src = open(os.path.join(self.ROOT, "scripts", name), encoding="utf-8").read()
+                if "authority-risk-oracle-showcase/main/watch" in src or "showcase/raw/main/watch" in src or "{REPO}/raw/main/watch" in src: stale.append(name)
+        self.assertEqual(stale, [], "scripts that still point at main/watch")
+        api = os.path.join(self.ROOT, "watch", "API.md")
+        if os.path.exists(api): self.assertNotIn("showcase/main/watch", open(api, encoding="utf-8").read())
+
+    def test_the_notices_left_on_main_say_where_the_live_files_are(self):
+        import watch_location
+        d = os.path.join(self.ROOT, "stubs-watch")
+        if not os.path.isdir(d): self.skipTest("no stubs in this checkout")
+        for name in ("status.json", "latest.json", "signature.json"):
+            j = json.load(open(os.path.join(d, name))); self.assertTrue(j["moved"]); self.assertEqual(j["moved_to"], watch_location.RAW + name); self.assertEqual(j["state"], "moved")
+        for name in ("badge.json", "badge/integrity.json"):
+            j = json.load(open(os.path.join(d, name))); self.assertEqual((j["schemaVersion"], j["label"]), (1, "watch")); self.assertIn("moved", j["message"])
+        import xml.etree.ElementTree as ET
+        for name in ("alerts.xml", "feed.xml"):
+            root = ET.parse(os.path.join(d, name)).getroot(); self.assertEqual(len(root.findall("{http://www.w3.org/2005/Atom}entry")), 1)
+            self.assertTrue(any(l.get("href", "").startswith(watch_location.RAW) for l in root.findall("{http://www.w3.org/2005/Atom}link")))
+        names = set(os.listdir(d)) | {"badge/integrity.json"}   # nothing else may look like state
+        self.assertEqual(sorted(names), sorted({"status.json", "latest.json", "signature.json", "badge.json", "alerts.xml", "feed.xml", "badge", "badge/integrity.json"}))
+
+    PROJECT = os.path.abspath(os.path.join(ROOT, ".."))
+
+    def test_the_readme_patch_moves_the_badges_and_says_where_the_files_are_once(self):
+        patch = os.path.join(self.PROJECT, "patch_readme_vitrine.py")
+        if not os.path.exists(patch): self.skipTest("the publication scripts are not beside the surveillance folder in this checkout")
+        text = ('<p>\n  <a href="https://realspap.github.io/oracle/"><img alt="Targets" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FRealSpap%2Fauthority-risk-oracle-showcase%2Fmain%2Fwatch%2Fbadge.json"></a>\n</p>\n\n'
+                '**3. Audit it yourself, then ask it questions.** Standard library only.\n')
+        with tempfile.TemporaryDirectory() as tmp:
+            p = os.path.join(tmp, "README.md"); open(p, "w").write(text); sizes = []
+            for _ in range(3):
+                subprocess.run([sys.executable, patch, p], capture_output=True, check=True); sizes.append(open(p).read())
+            out = sizes[0]; self.assertEqual(sizes[0], sizes[1]); self.assertEqual(sizes[1], sizes[2])   # idempotent
+            self.assertIn("watch-data%2Fbadge.json", out); self.assertNotIn("main%2Fwatch%2F", out); self.assertEqual(out.count("Where the Watch's files are"), 1); self.assertIn("scripts/watch_branch.sh prepare", out)
+
+    def test_the_site_builders_read_the_branch_and_a_second_pass_changes_nothing(self):
+        script = os.path.join(self.PROJECT, "appliquer_emplacement_donnees.py")
+        if not os.path.exists(script): self.skipTest("the publication scripts are not beside the surveillance folder in this checkout")
+        r = subprocess.run([sys.executable, script, "--check"], capture_output=True, text=True); self.assertEqual(r.returncode, 0, r.stdout + r.stderr)   # nothing left to rewrite
+        for name in ("module-all.js", "appliquer_oracle_site.py", "construire_page_oracle.py", "construire_lecture.py", "construire_backtest.py", "construire_protocole.py", os.path.join("claims", "claims.oracle.json")):
+            p = os.path.join(self.PROJECT, name)
+            if os.path.exists(p): self.assertNotRegex(open(p, encoding="utf-8").read(), r"authority-risk-oracle-showcase(/|@)main/watch/|%2Fmain%2Fwatch%2F|/tree/main/watch\b", name)
+
+    def chain_append(self, path, kinds):
+        """The same append as watch_run.py: seq += 1, prev = sha256 of the previous line's exact text."""
+        import hashlib
+        last, seq = "", 0
+        if os.path.exists(path):
+            for l in open(path):
+                if l.strip(): last, seq = l.rstrip("\n"), seq + 1
+        prev = hashlib.sha256(last.encode()).hexdigest() if last else ""
+        with open(path, "a") as f:
+            for k in kinds:
+                seq += 1; line = json.dumps({"run_utc": "2026-10-14T00:00:00Z", "kind": k, "seq": seq, "prev": prev}); f.write(line + "\n"); prev = hashlib.sha256(line.encode()).hexdigest()
+
+    def test_the_seed_is_the_state_as_it_was_and_the_next_run_continues_the_chain(self):
+        import verify_chain
+        with tempfile.TemporaryDirectory() as tmp:
+            origin, work = self.world(tmp); seedw = os.path.join(tmp, "seed"); os.makedirs(seedw)
+            # the state main held in watch/, as the migration script copies it: a chained event log, a signed manifest, previous scores, the queue state
+            os.makedirs(os.path.join(seedw, "prev")); os.makedirs(os.path.join(seedw, "scores"))
+            self.chain_append(os.path.join(seedw, "events.jsonl"), ["move", "move", "alarm"])
+            for name, text in (("signature.json", '{"signed": true, "public_key": "k"}\n'), ("alerts.json", '{"active": []}\n'), ("pending_ops.json", '{"results": []}\n'), ("prev/base.json", '{"targets": []}\n'), ("scores/base-sepolia.json", '{"targets": []}\n'), ("latest.json", '{"run_utc": "2026-10-13T18:59:15Z"}\n')): open(os.path.join(seedw, name), "w").write(text)
+            seed_copy = {n: open(os.path.join(seedw, n), "rb").read() for n in ("events.jsonl", "signature.json", "alerts.json", "pending_ops.json", "prev/base.json", "scores/base-sepolia.json")}
+            self.git(seedw, "init", "-q", "-b", "watch-data"); self.git(seedw, "add", "-A"); self.git(seedw, "commit", "-qm", "Seed"); self.git(seedw, "push", "-q", origin, "watch-data")
+            self.assertEqual(self.run_script(work, origin, "prepare", env={"WATCH_REQUIRE_SEED": "1"}).returncode, 0)
+            for n, b in seed_copy.items(): self.assertEqual(open(os.path.join(work, "watch", n), "rb").read(), b, n)   # the state arrives byte for byte, nothing reset
+            self.assertTrue(verify_chain.check(os.path.join(work, "watch", "events.jsonl"))["ok"])
+            self.chain_append(os.path.join(work, "watch", "events.jsonl"), ["move", "move"])   # the next run's events
+            self.assertEqual(self.run_script(work, origin, "record", "Watch: next run").returncode, 0)
+            check = verify_chain.check(os.path.join(work, "watch", "events.jsonl"))
+            self.assertTrue(check["ok"], check); self.assertEqual((check["chained"], check["lines"]), (5, 5))   # five links, none broken, none restarted
+            self.assertTrue(open(os.path.join(work, "watch", "events.jsonl"), "rb").read().startswith(seed_copy["events.jsonl"]))   # the seed's lines are untouched
+            self.assertEqual(self.git(origin, "show", "watch-data:signature.json"), open(os.path.join(work, "watch", "signature.json")).read().strip())
+
+    def test_a_fork_with_no_branch_works_over_two_runs_without_any_manual_step(self):
+        import verify_chain
+        with tempfile.TemporaryDirectory() as tmp:
+            origin, work = self.world(tmp)   # a fork: main has the code, the documents and the notices; there is no watch-data branch and the repository is not the canonical one
+            self.assertEqual(self.run_script(work, origin, "prepare").returncode, 0); self.chain_append(os.path.join(work, "watch", "events.jsonl"), ["move"]); self.assertEqual(self.run_script(work, origin, "record", "first run").returncode, 0)
+            self.assertEqual(self.run_script(work, origin, "prepare").returncode, 0); self.chain_append(os.path.join(work, "watch", "events.jsonl"), ["move"]); self.assertEqual(self.run_script(work, origin, "record", "second run").returncode, 0)
+            self.assertEqual(int(self.git(origin, "rev-list", "--count", "watch-data")), 2); self.assertEqual(self.git(origin, "rev-list", "--count", "main"), "1")
+            tmpf = os.path.join(tmp, "ev.jsonl"); open(tmpf, "w").write(self.git(origin, "show", "watch-data:events.jsonl") + "\n"); self.assertEqual(verify_chain.check(tmpf)["chained"], 2)
+
+    def test_the_status_names_where_the_files_are_and_the_notice_does_too(self):
+        import watch_location
+        with tempfile.TemporaryDirectory() as tmp:
+            json.dump({"run_utc": "2026-10-14T00:00:00Z", "alerts": [], "unread": []}, open(os.path.join(tmp, "latest.json"), "w")); run_main(run_status, ["--watch", tmp])
+            self.assertEqual(json.load(open(os.path.join(tmp, "status.json")))["data_location"], watch_location.RAW)
+        d = os.path.join(self.ROOT, "stubs-watch")
+        if os.path.isdir(d):
+            for name in ("status.json", "latest.json", "signature.json"): self.assertEqual(json.load(open(os.path.join(d, name)))["data_location"], watch_location.RAW)
+
+    def test_a_past_commit_is_audited_in_either_layout_and_a_notice_is_refused(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = os.path.join(tmp, "r"); os.makedirs(os.path.join(repo, "watch")); self.git(repo, "init", "-q")
+            open(os.path.join(repo, "watch", "latest.json"), "w").write('{"run_utc": "x"}'); self.git(repo, "add", "-A"); self.git(repo, "commit", "-qm", "old layout"); old = self.git(repo, "rev-parse", "HEAD")
+            shutil.rmtree(os.path.join(repo, "watch")); os.makedirs(os.path.join(repo, "watch")); open(os.path.join(repo, "watch", "latest.json"), "w").write('{"moved": true}'); self.git(repo, "add", "-A"); self.git(repo, "commit", "-qm", "notice"); notice = self.git(repo, "rev-parse", "HEAD")
+            self.git(repo, "checkout", "-q", "--orphan", "watch-data"); self.git(repo, "rm", "-rq", "--cached", "."); shutil.rmtree(os.path.join(repo, "watch")); open(os.path.join(repo, "latest.json"), "w").write('{"run_utc": "y"}'); self.git(repo, "add", "latest.json"); self.git(repo, "commit", "-qm", "branch"); new = self.git(repo, "rev-parse", "HEAD")
+            cwd = os.getcwd(); os.chdir(repo)
+            try:
+                w, _sha = audit_public.extract_ref(old); self.assertIn("x", open(os.path.join(w, "latest.json")).read())
+                w, _sha = audit_public.extract_ref(new); self.assertIn("y", open(os.path.join(w, "latest.json")).read())
+                with contextlib.redirect_stdout(io.StringIO()):
+                    with self.assertRaises(SystemExit): audit_public.extract_ref(notice)
+            finally: os.chdir(cwd)
+
+    def test_the_redaction_check_does_not_walk_into_the_branch_clones_git_folder(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            os.makedirs(os.path.join(tmp, "watch", ".git", "objects")); signer = "0x" + "ab" * 20
+            open(os.path.join(tmp, "idx.json"), "w").write(json.dumps({signer: [["x", "y", "signer"]]})); open(os.path.join(tmp, "watch", ".git", "leak.json"), "w").write(signer); open(os.path.join(tmp, "watch", "ok.json"), "w").write("{}")
+            os.makedirs(os.path.join(tmp, "scores"))
+            run_main_code = subprocess.run([sys.executable, os.path.join(self.ROOT, "scripts", "redact_signers.py"), "--index", os.path.join(tmp, "idx.json"), "--scores", os.path.join(tmp, "scores"), "--check", os.path.join(tmp, "watch")], capture_output=True, text=True).returncode
+            self.assertEqual(run_main_code, 0)
 
 
 class TestPerProtocolPrototype(unittest.TestCase):

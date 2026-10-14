@@ -12,7 +12,9 @@ not a date, a date in the future): an unknown age is never reported as fresh. St
 """
 import argparse, calendar, json, sys, time, urllib.request
 
-URL = "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/latest.json"
+from watch_location import RAW  # noqa: E402  -- the state of the Watch lives on the watch-data branch
+
+URL = RAW + "latest.json"
 
 
 def parse_utc(t):

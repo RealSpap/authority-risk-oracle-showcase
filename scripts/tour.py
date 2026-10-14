@@ -10,6 +10,7 @@ four commands with real arguments taken from this data, to go further (a dossier
 read is counted as unread, never as zero. It is a reading of who can act and how fast on the contracts the watch tracks, not an audit and not investment advice.
 """
 import argparse, os, sys
+from watch_location import NO_STATE_HINT  # the state is on the watch-data branch
 
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 from dossier import load, utf8_stdout, clean_lines  # noqa: E402
@@ -35,7 +36,7 @@ def weakest_with_money(W, rows, top=5, below=40):
 def build(W, top=5):
     """(lines, error)."""
     rows = table(W)
-    if not rows: return None, "no tracked contract in %s/scores" % W
+    if not rows: return None, "no tracked contract in %s/scores" % W + NO_STATE_HINT
     ps = protocols(rows); chains = sorted({r["chain"] for r in rows}); run = (load(os.path.join(W, "latest.json")) or {}).get("run_utc")
     out = ["What the watch knows (run of %s)" % (run or "an unknown run"), "", "%d tracked contracts on %d chains, %d of them attached to %d protocols (DefiLlama)." % (len(rows), len(chains), sum(len(p["rows"]) for p in ps.values()), len(ps)), ""]
     unread_admin = sum(1 for r in rows if r.get("kind") in (None, "unreadable", "native")); unread_keys = sum(1 for r in rows if r.get("keys_to_move") is None); unread_pause = sum(1 for r in rows if r.get("paused") is None)

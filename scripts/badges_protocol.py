@@ -3,7 +3,7 @@
 
     python3 scripts/badges_protocol.py --watch watch --out watch/badge/protocol
 
-    ![authority risk](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/badge/protocol/morpho-blue.json)
+    ![authority risk](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/watch-data/badge/protocol/morpho-blue.json)
 
 The badge says the WEAKEST tracked deployment of the protocol (the one an attacker would pick) and how many contracts that covers, with the colour bands of the per-contract badges
 (watch/badge/<oracle>/<address>.json): "weakest 55/100, 4 contracts". A weakest deployment whose score is stale says so. It is the oracle's reading of who can act and how fast on a

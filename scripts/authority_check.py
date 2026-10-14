@@ -16,7 +16,8 @@ Exit 0: every contract passes. Exit 1: at least one fails (below the minimum, fa
 """
 import argparse, http.client, json, os, sys, time, urllib.request
 
-BASE = "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/scores/"
+from watch_location import RAW  # noqa: E402
+BASE = RAW + "scores/"   # the published score files, on the watch-data branch
 FILES = {"robinhood": "robinhood-chain", "ethereum-l1": "ethereum-l1-sepolia", "arbitrum": "arbitrum-sepolia", "base": "base-sepolia", "tempo": "tempo-moderato",
          "plasma": "plasma", "monad": "monad", "hyperliquid": "hyperliquid-hyperevm", "solana": "solana-devnet"}
 

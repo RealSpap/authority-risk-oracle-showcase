@@ -19,9 +19,9 @@ Exit 0 when everything passes, 1 on any FAIL. A NOTE is information, not a failu
 """
 import argparse, glob, hashlib, json, os, random, sys, tempfile, time, urllib.error, urllib.request
 
-RAW = "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/"
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
+from watch_location import RAW  # noqa: E402  -- the root of the watch-data branch is the published watch/ folder
 SEL_SCORE = "0xd47875d0"
 
 
@@ -36,7 +36,7 @@ def fetch_watch(dest):
     os.makedirs(dest, exist_ok=True); names = []
     try:
         for attempt in (1, 2):                                        # a transient failure is not "this run predates signed manifests": try twice, then stop rather than audit less
-            try: sig = json.loads(get(RAW + "watch/signature.json")); break
+            try: sig = json.loads(get(RAW + "signature.json")); break
             except urllib.error.HTTPError as e:
                 if e.code == 404: raise
                 if attempt == 2: raise RuntimeError("signature.json could not be fetched (HTTP %d): the audit would silently check less" % e.code)
@@ -46,14 +46,14 @@ def fetch_watch(dest):
     except RuntimeError: raise
     except Exception:                                                 # only a real 404 (or a manifest without files) falls back to the core files
         names = ["latest.json", "events.jsonl", "history.jsonl", "alerts.json", "pending_ops.json", "tvl.json", "methodology.json", "chain.json", "API.md"]
-        try: names += ["scores/" + (o.get("slug") or __import__("re").sub(r"[^a-z0-9]+", "-", o["name"].lower()).strip("-")) + ".json" for o in json.loads(get(RAW + "watch/latest.json"))["oracles"]]
+        try: names += ["scores/" + (o.get("slug") or __import__("re").sub(r"[^a-z0-9]+", "-", o["name"].lower()).strip("-")) + ".json" for o in json.loads(get(RAW + "latest.json"))["oracles"]]
         except Exception: pass
         names += ["schema/" + n + ".schema.json" for n in ("latest", "scores", "alerts", "pending_ops", "tvl", "second_opinion", "disputes", "score_series", "methodology", "coverage", "review_queue", "cross_chain", "impl_sources", "risk_by_cause", "held_assets", "pause_state", "side_roles", "safe_activity", "admin_probe")]
     got = 0
     for n in names:
         if n.startswith("feed/") or n.startswith("badge/"): continue   # hundreds of small files: the manifest hashes cover them, the audit samples the rest
         try:
-            b = get(RAW + "watch/" + n, binary=True); p = os.path.join(dest, n); os.makedirs(os.path.dirname(p), exist_ok=True); open(p, "wb").write(b); got += 1
+            b = get(RAW + n, binary=True); p = os.path.join(dest, n); os.makedirs(os.path.dirname(p), exist_ok=True); open(p, "wb").write(b); got += 1
         except Exception: pass
     return got
 
@@ -66,18 +66,30 @@ def rpc(url, method, params):
     return d["result"]
 
 
+def extract_ref(ref):
+    """(folder, short sha): the state of the Watch at a git ref of this checkout, in a temporary folder. A commit of main from before the move holds it under watch/; a commit of the
+    watch-data branch holds it at the root of the tree. After the move, main's watch/ holds only documents and notices: the audit says so rather than auditing them."""
+    import subprocess
+    root = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=True, text=True).stdout.strip() or "."
+    dest = tempfile.mkdtemp(prefix="aro-audit-ref-"); os.makedirs(os.path.join(dest, "watch"))
+    tar = subprocess.run(["git", "-C", root, "archive", ref, "watch"], capture_output=True)   # a commit of main: the state is the watch/ folder
+    if tar.returncode == 0 and tar.stdout:
+        subprocess.run(["tar", "-x", "-C", dest], input=tar.stdout, check=True)
+        if not os.path.exists(os.path.join(dest, "watch", "latest.json")) or "moved" in open(os.path.join(dest, "watch", "latest.json")).read(300):
+            print("%s holds only documents and notices in watch/: the state moved to the watch-data branch, audit a commit of that branch" % ref); sys.exit(1)
+    else:   # a commit of the watch-data branch (or the branch itself): the state is the root of the tree
+        tar = subprocess.run(["git", "-C", root, "archive", ref], capture_output=True)
+        if tar.returncode: print("cannot read %s from this checkout: %s" % (ref, tar.stderr.decode()[:120])); sys.exit(1)
+        subprocess.run(["tar", "-x", "-C", os.path.join(dest, "watch")], input=tar.stdout, check=True)
+    return os.path.join(dest, "watch"), subprocess.run(["git", "-C", root, "rev-parse", "--short", ref], capture_output=True, text=True).stdout.strip()
+
+
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--watch", default=None); ap.add_argument("--sample", type=int, default=8); ap.add_argument("--seed", type=int, default=None)
-    ap.add_argument("--ref", default=None, help="a git commit, tag or branch of this checkout: audit the watch/ folder as it was then (every run commits its signed manifest)")
+    ap.add_argument("--ref", default=None, help="a git commit, tag or branch of this checkout: audit the state of the Watch as it was then, a commit of the watch-data branch (state at the root of the tree) or, before the move, of main (state in watch/); every run commits its signed manifest")
     a = ap.parse_args(); fails = 0; incomplete = []
-    if a.ref:   # past run: extract watch/ at that commit into a temporary folder and audit that
-        import subprocess
-        root = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=True, text=True).stdout.strip() or "."
-        dest = tempfile.mkdtemp(prefix="aro-audit-ref-"); tar = subprocess.run(["git", "-C", root, "archive", a.ref, "watch"], capture_output=True)
-        if tar.returncode: print("cannot read %s from this checkout: %s" % (a.ref, tar.stderr.decode()[:120])); sys.exit(1)
-        subprocess.run(["tar", "-x", "-C", dest], input=tar.stdout, check=True); a.watch = os.path.join(dest, "watch")
-        sha = subprocess.run(["git", "-C", root, "rev-parse", "--short", a.ref], capture_output=True, text=True).stdout.strip()
-        print("auditing watch/ as committed at %s (%s)" % (a.ref, sha))
+    if a.ref:   # past run: extract the state of the Watch at that commit into a temporary folder and audit that
+        a.watch, sha = extract_ref(a.ref); print("auditing the Watch state as committed at %s (%s)" % (a.ref, sha))
     def PASS(m): print("PASS  " + m)
     def FAIL(m):
         nonlocal fails; fails += 1; print("FAIL  " + m)

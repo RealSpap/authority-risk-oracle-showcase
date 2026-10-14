@@ -36,6 +36,7 @@ def main():
         allow = {m.group(0).lower() for l in (open(a.allow_file) if a.allow_file and os.path.exists(a.allow_file) else []) if not l.lstrip().startswith("#") for m in re.finditer(r"0x[0-9a-fA-F]{40}", l)}
         bad = []
         for root, _d, fs in os.walk(a.check):
+            _d[:] = [d for d in _d if d != ".git"]   # the branch clone's own git folder is not published content
             for f in sorted(fs):
                 if not f.endswith((".json", ".jsonl", ".md", ".xml", ".ics", ".csv", ".html", ".js", ".svg", ".webmanifest")) or any(fnmatch.fnmatch(f, q) for q in pats): continue   # job logs and the files the repository ignores are not published
                 path = os.path.join(root, f)

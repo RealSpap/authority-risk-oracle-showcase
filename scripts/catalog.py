@@ -12,7 +12,7 @@ A file with no row in API.md is listed with an empty description and named under
 """
 import argparse, glob, json, os, re, time
 
-RAW = "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/"
+from watch_location import RAW  # noqa: E402  -- the root of the watch-data branch (the old watch/ folder)
 PAGES = "https://realspap.github.io/oracle/"
 EXT = (".json", ".jsonl", ".xml", ".md", ".ics", ".csv", ".prom")
 SKIP = {"who_controls.json", "alarm.md", "alerts_high.md", "catalog.json"}   # the signer index is never published; the alarm text is a transient; the catalogue does not list itself

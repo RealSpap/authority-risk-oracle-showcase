@@ -7,8 +7,10 @@ contract sees only that contract. Written only when the content changes, so a ru
 """
 import argparse, glob, hashlib, html, json, os, re
 
-SITE = "https://realspap.github.io/oracle/"
-from evaluate_rules import detail_text, LABEL   # the numbers of a balance alert, in words (same text as the notification and the alerts feed)
+from watch_location import RAW   # the feeds live on the watch-data branch
+from evaluate_rules import detail_text, LABEL
+
+SITE = "https://realspap.github.io/oracle/"   # the numbers of a balance alert, in words (same text as the notification and the alerts feed)
 
 
 def norm(a): return (a or "").lower()
@@ -105,7 +107,7 @@ def main():
             updated = es[0][0] if es else (t.get("lastUpdated") and __import__("time").strftime("%Y-%m-%dT%H:%M:%SZ", __import__("time").gmtime(int(t["lastUpdated"]))))
             feed = ['<?xml version="1.0" encoding="utf-8"?>', '<feed xmlns="http://www.w3.org/2005/Atom">',
                     "<title>%s on %s: authority risk</title>" % (html.escape(addr), html.escape(name)), "<author><name>Authority Risk Oracle</name></author>",
-                    '<link href="%s"/>' % html.escape(link), '<link rel="self" href="https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/feed/%s/%s.xml"/>' % (slug, addr),
+                    '<link href="%s"/>' % html.escape(link), '<link rel="self" href="' + RAW + 'feed/%s/%s.xml"/>' % (slug, addr),
                     "<id>urn:aro:feed:%s:%s</id>" % (slug, n), "<updated>%s</updated>" % (updated or "1970-01-01T00:00:00Z"),
                     "<subtitle>score %s/100, stale %s; every move, alert and queued operation on this contract</subtitle>" % (t.get("compositeScore"), "yes" if t.get("stale") else "no")]
             feed += [e for _, e in es[:50]] + ["</feed>"]
@@ -115,7 +117,7 @@ def main():
     pw = pu = 0; pdir = os.path.join(a.out, "protocol"); os.makedirs(pdir, exist_ok=True)
     for pslug, g in sorted(groups.items()):
         fname = re.sub(r"[^a-z0-9._-]", "-", str(pslug).lower()) + ".xml"; path = os.path.join(pdir, fname)
-        text = protocol_feed(pslug, g["name"] or pslug, g["members"], "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/feed/protocol/" + fname)
+        text = protocol_feed(pslug, g["name"] or pslug, g["members"], RAW + "feed/protocol/" + fname)
         if os.path.exists(path) and open(path).read() == text: pu += 1; continue
         tmp = path + ".tmp"; open(tmp, "w").write(text); os.replace(tmp, path); pw += 1
     print("per-target feeds: %d written, %d unchanged; protocol feeds: %d written, %d unchanged" % (written, unchanged, pw, pu))

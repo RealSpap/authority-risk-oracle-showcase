@@ -43,6 +43,7 @@ def _dump_json(obj, path, indent=None):
 
 WATCH = os.path.join(ROOT, "watch")
 REPO = "https://github.com/RealSpap/authority-risk-oracle-showcase"
+from watch_location import RAW  # noqa: E402  -- the state lives on the watch-data branch
 PAGE = "https://realspap.github.io/oracle/"
 SEL_COUNT, SEL_TARGET, SEL_SCORE, SEL_STALE, SEL_MAX = "0x835e2172", "0x9481e5e0", "0xd47875d0", "0xf461f6e7", "0x87cf4696"
 # the oracle watches itself: any RoleGranted / RoleRevoked on the oracle contract since the previous run, a change of its code or of
@@ -266,7 +267,7 @@ def write_feed(events):
     items = events[-60:][::-1]
     updated = items[0]["run_utc"] if items else iso(time.time())
     out = ['<?xml version="1.0" encoding="utf-8"?>', '<feed xmlns="http://www.w3.org/2005/Atom">',
-           "<title>Authority Risk Oracle: what moved</title>", f'<link href="{PAGE}"/>', f'<link rel="self" href="{REPO}/raw/main/watch/feed.xml"/>',
+           "<title>Authority Risk Oracle: what moved</title>", f'<link href="{PAGE}"/>', f'<link rel="self" href="{RAW}feed.xml"/>',
            f"<id>{PAGE}feed</id>", f"<updated>{updated}</updated>", "<author><name>Spap</name></author>"]
     seen_ids = {}
     for e in items:

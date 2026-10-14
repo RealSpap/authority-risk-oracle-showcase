@@ -63,7 +63,9 @@ Hashes read on 2026-10-12 from the public pages of the Watch (the Solana one was
 
 ### Repository
 
+- `examples/gated-vault/` and `src/AuthorityGatedVault.sol`: an example consumer, a vault that refuses a deposit when the oracle's score for its target is too low, stale, too old, never set or unreadable, and never gates a withdrawal. Replay the refusals on a local fork with `bash examples/gated-vault/replay.sh fork`. It is an example, not deployed and not audited; it had one independent review.
 - The Watch writes its generated files to the `watch-data` branch; `main` keeps the code, the documents and a "moved" notice at each old address under `watch/`.
+- The Watch checks the age of the last commit on main and warns at 45, 52 and 58 days: GitHub disables scheduled workflows after 60 days without repository activity.
 
 ### Research
 

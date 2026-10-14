@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-10-14T07:07:36Z",
+ "run_utc": "2026-10-14T09:42:13Z",
  "targets": 197,
  "moves_recorded": 20,
  "series": {
@@ -1645,11 +1645,11 @@
  },
  "calibration": {
   "window_days": 14,
-  "actions": 24,
-  "under_40": 4,
+  "actions": 25,
+  "under_40": 5,
   "by_band": {
    "critical": 0,
-   "weak": 4,
+   "weak": 5,
    "moderate": 20,
    "decent": 0,
    "strong": 0
@@ -1870,6 +1870,15 @@
     "tx": null,
     "score_then": 51,
     "band_then": "moderate"
+   },
+   {
+    "kind": "timelock op queued (unknown)",
+    "key": "robinhood:0x14b107cf534239c59571b066cb6497a321da897c",
+    "t": "2026-10-14T07:35:18Z",
+    "via": "robinhood timelock 0x0da1\u2026001d, found by the independent reader (1 tracked contract)",
+    "tx": "0x52a81ed8e639f542dba2f060a71f7f4eb75d7735ea2b18a6fc127189a76778c1",
+    "score_then": 31,
+    "band_then": "weak"
    }
   ],
   "read_as": "every authority action the watch observed in the window (a timelock operation queued or executed against a tracked contract, an admin change read independently) and the composite score the contract carried at that moment. Small counts prove little; the file grows with every run and the chained log keeps every move"

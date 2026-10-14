@@ -1,8 +1,10 @@
 # Data contract, v1
 
-Everything the dashboard shows from the watch is a file in this folder, rewritten by the `Watch` GitHub Action every 6 hours (`17 */6 * * *` UTC) and
-served raw from `https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/<file>`. No key, no rate limit beyond
-GitHub's. The on-chain source of truth stays the oracle contracts (`getScore(address)`): these files are a convenience read of them.
+Everything the dashboard shows from the watch is a file rewritten by the `Watch` GitHub Action every 6 hours (`17 */6 * * *` UTC), committed to the `watch-data` branch of this
+repository (the root of the branch is the folder that is called `watch/` in the scripts and in this document) and served raw from
+`https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/watch-data/<file>`. `main` holds the code and the documents written by hand (this one, the README and
+the schemas, copied into the branch at every run), so its history is the history of the work. Before the move the same files were committed to `main` under `watch/`; those commits stay,
+and the old links answer with a short notice that points here. `status.json` carries `data_location`, the base URL under which every file is served, so a page or a monitor does not need a constant of its own (the notice left on `main` carries it too). No key, no rate limit beyond GitHub's. The on-chain source of truth stays the oracle contracts (`getScore(address)`): these files are a convenience read of them.
 
 | File | What | Schema |
 |---|---|---|
@@ -56,6 +58,7 @@ GitHub's. The on-chain source of truth stays the oracle contracts (`getScore(add
 | `badge/protocol/<defillama-slug>.json` | shields.io endpoint badge per protocol: its weakest tracked deployment and how many contracts that covers ("weakest 55/100 (stale), 4 contracts"), same colour bands as the per-contract badge | shields endpoint |
 | `badge/alerts.json` | shields.io endpoint badge: how many rules fire right now | shields endpoint |
 | `status.json` | the run's health in one record: `state` ok / degraded / alarm, the `reasons`, and the counters (oracles read, stale, alarms, chain, signed, second opinion); for a monitor that alerts on `state`; `checks.disputes_open`: open public disputes, a review pending counts as degraded | |
+| `main_activity.json` | how old the last commit on `main` is (`main_last_commit_age_days`, `level` ok / warn / unknown): GitHub disables the scheduled workflows of a public repository after 60 days without repository activity, and they run only on the default branch, so from 45 days the Watch sends one Telegram message (again at 52 and at 58 days, each once: `notified_tier` is the last tier sent) and, when a token that can write issues is set, opens one issue asking for a small commit on `main`; `status.json` repeats the number, `scripts/watch_age.py` prints it as a NOTE and, from 45 days, a WARN | |
 | `badge/integrity.json` | shields.io endpoint badge: signed or not, chain intact or broken, second opinion agrees or N to review; red / orange / green with the state | shields endpoint |
 | `feed.xml` | Atom feed of moves and alarms, plus the independent reader's findings (`admin_change`, `admin_grew`), rebuilt after that reader ran | Atom |
 
@@ -63,7 +66,7 @@ Verifying the signature from your own service, without this repository's code (N
 
 ```js
 const crypto = require('crypto');
-const sig = await (await fetch('https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/watch/signature.json')).json();
+const sig = await (await fetch('https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/watch-data/signature.json')).json();
 const canon = (v) => Array.isArray(v) ? '[' + v.map(canon).join(',') + ']' : (v && typeof v === 'object') ? '{' + Object.keys(v).sort().map(k => JSON.stringify(k) + ':' + canon(v[k])).join(',') + '}' : JSON.stringify(v);
 const key = crypto.createPublicKey({ key: Buffer.concat([Buffer.from('302a300506032b6570032100', 'hex'), Buffer.from(sig.public_key, 'hex')]), format: 'der', type: 'spki' });
 console.log(sig.signed && crypto.verify(null, Buffer.from(canon(sig.manifest)), key, Buffer.from(sig.signature, 'hex')));   // true: every file listed in sig.manifest.files hashes to what the key signed

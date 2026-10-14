@@ -859,18 +859,38 @@
    "chain": "solana",
    "timelock": "Squads v4 multisig BQsD\u2026iEjF (5-of-13, time lock 86400 s), found by the independent reader (1 tracked program)",
    "what": "call"
+  },
+  "robinhood:0x0da180b14721ce46a83669b4816cb652caa1001d:0x8d36d612e3cfd5b299a3be7003d4fbb82aaf6a587e88faf22f3ec4f4a0801a53": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-10-14T09:30:02Z",
+   "due_utc": "2026-10-15T07:35:18Z",
+   "notice_hours": 22.1,
+   "state": "queued",
+   "chain": "robinhood",
+   "timelock": "robinhood timelock 0x0da1\u2026001d, found by the independent reader (1 tracked contract)",
+   "what": "unknown"
+  },
+  "solana:cxnevpqqcya628tywzhgxej2jdvmbu51rnerat9xunp1:squads:CxnEVpQQcYa628TywzHGXeJ2jdVmbU51rnERat9xunP1:1005": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-10-14T09:30:02Z",
+   "due_utc": "2026-10-14T09:42:28Z",
+   "notice_hours": 0.2,
+   "state": "queued",
+   "chain": "solana",
+   "timelock": "Squads v4 multisig CxnE\u2026unP1 (4-of-7, time lock 600 s), found by the independent reader (1 tracked program)",
+   "what": "call to the governed program"
   }
  },
- "updated_utc": "2026-10-14T06:52:52Z",
+ "updated_utc": "2026-10-14T09:30:02Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
-  "warned": 12,
+  "warned": 14,
   "seen_without_notice": 9,
   "missed": 3,
   "baseline": 77,
-  "warned_with_a_known_notice": 12,
-  "shortest_notice_hours": 5.2,
-  "median_notice_hours": 21.4,
+  "warned_with_a_known_notice": 14,
+  "shortest_notice_hours": 0.2,
+  "median_notice_hours": 20.9,
   "note": "warned: seen while queued and not yet executable (the notice is real); seen_without_notice: still queued but already executable when first seen; missed: queued after the ledger started and already applied when first seen (faster than the 6-hour cadence); baseline: applied before the ledger started, counted as neither."
  }
 }

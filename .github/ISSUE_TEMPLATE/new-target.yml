@@ -1,0 +1,43 @@
+name: New target
+description: Propose a contract or Solana program that the oracle should read and score. It must be readable from public data.
+title: "New target: <protocol> on <chain>"
+labels: [target]
+body:
+  - type: input
+    id: chain
+    attributes:
+      label: Chain
+      placeholder: "Ethereum, Base, Arbitrum, Solana..."
+    validations:
+      required: true
+  - type: input
+    id: address
+    attributes:
+      label: Address
+      description: The contract (or the Solana program), exactly as an explorer shows it.
+    validations:
+      required: true
+  - type: input
+    id: protocol
+    attributes:
+      label: Protocol and role of the contract
+      description: What it holds or controls.
+    validations:
+      required: true
+  - type: textarea
+    id: roles
+    attributes:
+      label: Where its admin, owner or upgrade roles are documented
+      description: An explorer page, a verified source, a governance post. Leave empty if you do not know.
+  - type: textarea
+    id: why
+    attributes:
+      label: Why it should be tracked
+      description: What depends on it.
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Understood
+      options:
+        - label: A target is accepted when it can be read from public data alone. A score is never changed for a request; evidence is the sole reason.
+          required: true

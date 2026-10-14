@@ -1,0 +1,25 @@
+name: Reading error
+description: Something the oracle or the watch reads is wrong (a label, a field, a number that does not match its source). For a disputed score, use "Dispute a score" instead.
+title: "Reading error: <what> on <chain or file>"
+labels: [reading-error]
+body:
+  - type: input
+    id: where
+    attributes:
+      label: Where
+      description: The file, the page or the contract address and chain.
+    validations:
+      required: true
+  - type: textarea
+    id: published
+    attributes:
+      label: What is published
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you read instead, and how
+      description: The command, the block and the output anyone can re-run.
+    validations:
+      required: true

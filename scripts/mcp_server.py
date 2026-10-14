@@ -14,7 +14,7 @@ act and how fast on the tracked contracts, from public data: not an audit and no
 import argparse, json, os, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
-import authority_check, brief, compare, dossier, find, tour, whatif  # noqa: E402
+import agent_tools, authority_check, brief, compare, dossier, find, tour, whatif  # noqa: E402
 
 PROTOCOL = "2025-06-18"; MAX_CHARS = 60000; MAX_ROWS = 200
 SUBS = {"admin": "a sub-score 0-100", "multisig": "a sub-score 0-100", "timelock": "a sub-score 0-100", "price-feed": "a sub-score 0-100", "shared": "a sub-score 0-100"}
@@ -36,6 +36,15 @@ TOOLS = [
     ("brief", "One protocol on every chain it is tracked on: the weakest deployment, the fewest keys, the money, what needs a person, what was not read.", schema({"protocol": STR}, ("protocol",))),
     ("check", "Before depending on a contract: ok / fail / unread against a minimum score and a maximum drop (same rules as the CI gate). Not tracked, stale, under the minimum or falling is a fail; an unreadable score is unread, never a pass.", schema({"chain": STR, "address": STR, "min_score": {"type": "integer", "minimum": 0, "maximum": 100}, "max_drop": {"type": "integer", "minimum": 1, "maximum": 100}}, ("chain", "address"))),
     ("whatif", "What the published score formula gives if sub-scores changed (arithmetic, not a prediction that a change of the setup earns that sub-score).", schema(dict({"chain": STR, "address": STR}, **{k: {"type": "integer", "minimum": 0, "maximum": 100} for k in SUBS}), ("chain", "address"))),
+    # since 2026-10-14: four tools that answer in JSON, each with `status` (ok / not_tracked / not_read), what was not read, and for getScore a call to replay the reading (scripts/agent_tools.py)
+    ("getScore", "The score of one contract as JSON: composite and sub-scores, whether it is stale, when it was pushed and read, the oracle and block it was read at, and a `cast call` to replay the reading. A value not read is null and named in `not_read`, never 0.",
+     schema({"chain": STR, "address": STR}, ("chain", "address"))),
+    ("listTargets", "The tracked contracts that match a score filter, weakest first, as JSON. `score_not_read_so_not_filtered` counts the rows whose score was not read: they are not in the answer and they are not zero.",
+     schema({"chain": STR, "max_score": {"type": "integer", "minimum": 0, "maximum": 100}, "min_score": {"type": "integer", "minimum": 0, "maximum": 100}, "stale": BOOL, "limit": {"type": "integer", "minimum": 1, "maximum": MAX_ROWS}})),
+    ("whoControls", "Who can change one contract and how fast, as JSON: admin kind (EOA, Safe, timelock, ...), threshold and owners, keys needed to act, the delay, modules, a pending admin change, and what moving the money would take. status `not_read` when the admin could not be classified.",
+     schema({"chain": STR, "address": STR}, ("chain", "address"))),
+    ("checkProtocol", "A protocol on every chain it is tracked on, as JSON: its weakest contract, how many were read, stale or alerting contracts, and a verdict: ok / fail / unread_part (some contracts not read: not a pass) / unread.",
+     schema({"protocol": STR, "min_score": {"type": "integer", "minimum": 0, "maximum": 100}}, ("protocol",))),
 ]
 
 
@@ -82,6 +91,11 @@ def call_tool(W, name, a):
     if name == "check":
         ck = authority_check.norm(a["chain"]); doc = authority_check.load(ck, os.path.join(W, "scores"))
         return authority_check.check_one(ck, a["address"].strip(), a.get("min_score", 0), a.get("max_drop"), doc)[1]
+    if name in ("getScore", "listTargets", "whoControls", "checkProtocol"):
+        res = {"getScore": lambda: agent_tools.get_score(W, a["chain"], a["address"]), "whoControls": lambda: agent_tools.who_controls(W, a["chain"], a["address"]),
+               "listTargets": lambda: agent_tools.list_targets(W, a.get("chain"), a.get("max_score"), a.get("min_score"), a.get("stale"), a.get("limit", 25)),
+               "checkProtocol": lambda: agent_tools.check_protocol(W, a["protocol"], a.get("min_score", 0))}[name]()
+        return json.dumps(res, indent=1)
     if name == "whatif":
         found = whatif.locate(W, a["chain"], a["address"])
         if not found: raise ToolError("not tracked: %s %s" % (a["chain"], a["address"]))

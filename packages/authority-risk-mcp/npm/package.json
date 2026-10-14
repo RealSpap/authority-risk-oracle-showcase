@@ -1,0 +1,19 @@
+{
+  "name": "authority-risk-mcp",
+  "version": "0.1.0",
+  "description": "Read-only MCP server: who can change a smart contract, how fast, and how strong the setup is. Reads the signed files of the Authority Risk Oracle Watch. A thin launcher around the Python server (needs python3 3.9 or newer).",
+  "mcpName": "io.github.RealSpap/authority-risk-mcp",
+  "license": "MIT",
+  "author": "RealSpap",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RealSpap/authority-risk-oracle-showcase.git",
+    "directory": "packages/authority-risk-mcp/npm"
+  },
+  "homepage": "https://github.com/RealSpap/authority-risk-oracle-showcase",
+  "bugs": { "url": "https://github.com/RealSpap/authority-risk-oracle-showcase/issues" },
+  "bin": { "authority-risk-mcp": "bin/authority-risk-mcp.js" },
+  "files": ["bin", "python", "README.md", "LICENSE"],
+  "engines": { "node": ">=18" },
+  "keywords": ["mcp", "model-context-protocol", "smart-contracts", "security", "defi", "ai-agents"]
+}

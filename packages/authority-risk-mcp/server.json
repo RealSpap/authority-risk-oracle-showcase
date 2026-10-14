@@ -1,0 +1,25 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.RealSpap/authority-risk-mcp",
+  "description": "Read-only authority-risk tools for AI agents: who can change a smart contract, how fast, how strong the setup is. Files checked against a signed manifest. Testnet-published scores.",
+  "repository": {
+    "url": "https://github.com/RealSpap/authority-risk-oracle-showcase",
+    "source": "github",
+    "subfolder": "packages/authority-risk-mcp"
+  },
+  "version": "0.1.0",
+  "packages": [
+    {
+      "registryType": "pypi",
+      "identifier": "authority-risk-mcp",
+      "version": "0.1.0",
+      "transport": { "type": "stdio" }
+    },
+    {
+      "registryType": "npm",
+      "identifier": "authority-risk-mcp",
+      "version": "0.1.0",
+      "transport": { "type": "stdio" }
+    }
+  ]
+}

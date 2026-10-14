@@ -3429,7 +3429,7 @@ class TestMcpServer(unittest.TestCase):
             W = self.watch(tmp); r = self.rpc(W, "initialize", {"protocolVersion": "2024-11-05", "capabilities": {}, "clientInfo": {"name": "x"}})
             self.assertEqual((r["id"], r["result"]["protocolVersion"], r["result"]["serverInfo"]["name"]), (1, "2024-11-05", "authority-risk-oracle-watch")); self.assertIn("tools", r["result"]["capabilities"]); self.assertIn("not an audit", r["result"]["instructions"])
             self.assertEqual(self.rpc(W, "initialize", {})["result"]["protocolVersion"], mcp_server.PROTOCOL)   # no version asked: ours
-            tl = self.rpc(W, "tools/list")["result"]["tools"]; self.assertEqual([x["name"] for x in tl], ["tour", "dossier", "find", "compare", "brief", "check", "whatif"])
+            tl = self.rpc(W, "tools/list")["result"]["tools"]; self.assertEqual([x["name"] for x in tl], ["tour", "dossier", "find", "compare", "brief", "check", "whatif", "getScore", "listTargets", "whoControls", "checkProtocol"])
             self.assertTrue(all(x["annotations"]["readOnlyHint"] is True and x["inputSchema"]["type"] == "object" and x["description"] for x in tl))
             self.assertIsNone(mcp_server.handle({"jsonrpc": "2.0", "method": "notifications/initialized"}, W)); self.assertEqual(self.rpc(W, "ping")["result"], {})
 
@@ -3493,7 +3493,7 @@ class TestMcpServer(unittest.TestCase):
             W = self.watch(tmp); msgs = [{"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-06-18"}}, {"jsonrpc": "2.0", "method": "notifications/initialized"}, {"jsonrpc": "2.0", "id": 2, "method": "tools/list"}]
             r = subprocess.run([sys.executable, "-W", "ignore", os.path.join(os.path.dirname(mcp_server.__file__), "mcp_server.py"), "--watch", W], input="\n".join(json.dumps(m) for m in msgs) + "\nnot json\n\n", capture_output=True, text=True)
         out = [json.loads(l) for l in r.stdout.strip().split("\n")]; self.assertEqual(r.returncode, 0); self.assertEqual([o.get("id") for o in out], [1, 2, None]); self.assertEqual(out[2]["error"]["code"], -32700)   # the notification got no answer, the broken line a parse error
-        self.assertEqual(len(out[1]["result"]["tools"]), 7); self.assertEqual(r.stderr, "")
+        self.assertEqual(len(out[1]["result"]["tools"]), 11); self.assertEqual(r.stderr, "")
 
 
 class TestHostileNames(unittest.TestCase):

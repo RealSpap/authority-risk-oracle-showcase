@@ -589,7 +589,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 4599239,
+   "window_blocks": 4171034,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -641,7 +641,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 4599239,
+   "window_blocks": 4156701,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -661,7 +661,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 4599239,
+   "window_blocks": 4171034,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -764,7 +764,7 @@
      "signature": "updateUserBorrowConfigs((address,address,uint8,uint256,uint256,uint256,uint256)[])",
      "calls": 1,
      "ready_at": 1791918539,
-     "state": "waiting",
+     "state": "ready",
      "decoded": "parameter change"
     }
    ],
@@ -1166,7 +1166,7 @@
      "selector": null,
      "signature": "Squads proposal #210: call to 3D6ojc8vBfDteLBDTTRznZbZRh7bkEGQaYqNkudoTCBQ (not the tracked program)",
      "ready_at": 1791924593,
-     "state": "waiting",
+     "state": "ready",
      "approved_at": 1791888593,
      "account": "6iXg5hGsMM52s8pNcJzWFfQ1m6hqfa8FfDpB2i26nuFL",
      "undecoded": false,
@@ -1272,8 +1272,8 @@
     "7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF"
    ],
    "delay": 86400,
-   "queued_events": 104,
-   "latest_queued": 1791898621,
+   "queued_events": 106,
+   "latest_queued": 1791924156,
    "pending": [],
    "recent": [
     {
@@ -1405,15 +1405,30 @@
      "touches_governed": false
     }
    ],
-   "active": [],
+   "active": [
+    {
+     "index": 105,
+     "approvals": 1,
+     "rejections": 0,
+     "since": 1791923987,
+     "account": "GcpHeNdxcmJpSx5AmXAScunt37snRmq6U7HV2sioVGkV"
+    },
+    {
+     "index": 106,
+     "approvals": 1,
+     "rejections": 0,
+     "since": 1791924156,
+     "account": "4iyD2CuzavjuhsXEJqCLH9qa2AhEwqgqBEnQMGnuFFST"
+    }
+   ],
    "stale_approved": 7,
    "proposals": {
     "executed": 88,
     "approved": 7,
-    "active": 9
+    "active": 11
    },
    "stale_transaction_index": 85,
-   "transaction_index": 104
+   "transaction_index": 106
   },
   {
    "name": "Squads v4 multisig 7FCP\u2026mvHk (7-of-15, time lock 0 s), found by the independent reader (1 tracked program)",
@@ -2364,7 +2379,7 @@
    "transaction_index": 71
   }
  ],
- "discovered_utc": "2026-10-13T19:08:53Z",
+ "discovered_utc": "2026-10-14T01:02:49Z",
  "discovered": 14,
- "squads_utc": "2026-10-13T19:14:29Z"
+ "squads_utc": "2026-10-14T01:07:24Z"
 }

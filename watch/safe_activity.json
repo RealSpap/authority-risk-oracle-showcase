@@ -1,10 +1,42 @@
 {
- "generated_utc": "2026-10-13T19:13:00Z",
+ "generated_utc": "2026-10-14T01:06:08Z",
  "wake_days": 14,
  "safes": 40,
  "read": 40,
  "woke": [],
- "changes": [],
+ "changes": [
+  {
+   "delta": 1,
+   "idle_days": 1.2,
+   "woke": false,
+   "safe": "base:0xe6a4\u20262075",
+   "governs": [
+    "base:0x5e7bb104d84c7cb9b682aac2f3d509f5f406809a"
+   ],
+   "previous_run": "2026-10-13T19:13:00Z"
+  },
+  {
+   "delta": 1,
+   "idle_days": 0.7,
+   "woke": false,
+   "safe": "hyperliquid:0x18a8\u2026f8f1",
+   "governs": [
+    "hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109",
+    "hyperliquid:0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec"
+   ],
+   "previous_run": "2026-10-13T19:13:00Z"
+  },
+  {
+   "delta": 2,
+   "idle_days": 3.0,
+   "woke": false,
+   "safe": "robinhood:0x0eea\u2026dfd8",
+   "governs": [
+    "robinhood:0x1ac9db4a2608ba45d6127b1737949b51bb54b7f3"
+   ],
+   "previous_run": "2026-10-13T19:13:00Z"
+  }
+ ],
  "never_executed": [
   "robinhood:0x0605\u20269728",
   "tempo:0x6458\u2026fbbc"
@@ -84,10 +116,10 @@
    "never_executed": false
   },
   "base:813d4f2afbe04aad": {
-   "nonce": 2726,
+   "nonce": 2727,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-10-12T18:48:56Z",
-   "last_moved": "2026-10-12T18:48:56Z",
+   "idle_since": "2026-10-14T01:06:08Z",
+   "last_moved": "2026-10-14T01:06:08Z",
    "governs": [
     "base:0x5e7bb104d84c7cb9b682aac2f3d509f5f406809a"
    ],
@@ -150,10 +182,10 @@
    "never_executed": false
   },
   "hyperliquid:982ff508c289b3fd": {
-   "nonce": 74,
+   "nonce": 75,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-10-13T06:54:05Z",
-   "last_moved": "2026-10-13T06:54:05Z",
+   "idle_since": "2026-10-14T01:06:08Z",
+   "last_moved": "2026-10-14T01:06:08Z",
    "governs": [
     "hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109",
     "hyperliquid:0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec"
@@ -232,10 +264,10 @@
    "never_executed": false
   },
   "robinhood:e8bf689e4f96ba54": {
-   "nonce": 405,
+   "nonce": 407,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-10-10T22:48:04Z",
-   "last_moved": "2026-10-10T22:48:04Z",
+   "idle_since": "2026-10-14T01:06:08Z",
+   "last_moved": "2026-10-14T01:06:08Z",
    "governs": [
     "robinhood:0x1ac9db4a2608ba45d6127b1737949b51bb54b7f3"
    ],

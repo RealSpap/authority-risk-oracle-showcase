@@ -4,6 +4,8 @@
 
 **Status.** 27 of the 67 Core reserves are read here (the first 25 in list order, plus BTC.b and USDe) at block 26,184,127; the other 40 are not read yet.
 
+**Rendered page:** https://realspap.github.io/oracle/research/aave-levels/
+
 ---
 
 **Frozen block: 26184127 (0x18f89bf)**, read with `eth_blockNumber` on Tenderly on 2026-10-13 around 14:20 UTC. Every call (`eth_call`, `eth_getStorageAt`, `eth_getCode`, `eth_getLogs` up to that block) carries this block.

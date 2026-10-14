@@ -61,6 +61,10 @@ Hashes read on 2026-10-12 from the public pages of the Watch (the Solana one was
 - Covers: the entries older than the pushes above: one Ethena minting entry on Ethereum L1 (`0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167`, written 2026-09-23, retired, still on the oracle) and three HIP-3 dex entries on Hyperliquid (`0xfbf38ff91abf710728e2df3d5370bf18eeb2a9085168612fa03955b13cc958ad`, written 2026-09-24, rewritten by the push of 2026-10-12).
 - Moves a score: nothing today; they are old values under older code. Scores written under different hashes are not strictly comparable.
 
+### Repository
+
+- The Watch writes its generated files to the `watch-data` branch; `main` keeps the code, the documents and a "moved" notice at each old address under `watch/`.
+
 ### Research
 
 - Aave levels 0-5 per privileged role: 25 of the 67 Aave V3 Core reserves plus BTC.b and USDe, read at block 26,184,127, with the calls to rerun: `research/aave-levels-2026-10-13/`.

@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-10-14T01:07:43Z",
+ "run_utc": "2026-10-14T07:07:36Z",
  "targets": 197,
  "moves_recorded": 20,
  "series": {
@@ -1645,12 +1645,12 @@
  },
  "calibration": {
   "window_days": 14,
-  "actions": 25,
+  "actions": 24,
   "under_40": 4,
   "by_band": {
    "critical": 0,
    "weak": 4,
-   "moderate": 21,
+   "moderate": 20,
    "decent": 0,
    "strong": 0
   },
@@ -1769,15 +1769,6 @@
     "t": "2026-10-07T08:02:11Z",
     "via": "Ethena Timelock",
     "tx": "0x2fa0bb4d0d84907ce418fd123c1a7e785c3268fda3baa57bdd3cb3991db96ad1",
-    "score_then": 57,
-    "band_then": "moderate"
-   },
-   {
-    "kind": "timelock op queued (parameter change)",
-    "key": "plasma:0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34",
-    "t": "2026-10-07T08:05:55Z",
-    "via": "plasma timelock 0xabd3\u20265072, found by the independent reader (1 tracked contract)",
-    "tx": "0xbaeb4bc374d5fa8b1a5e60f66d63b76ea8545f60230bd8efd90e4c409a3fe6e4",
     "score_then": 57,
     "band_then": "moderate"
    },

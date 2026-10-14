@@ -589,7 +589,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 4171034,
+   "window_blocks": 4229370,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -641,7 +641,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 4156701,
+   "window_blocks": 4229370,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -661,7 +661,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 4171034,
+   "window_blocks": 4229370,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -821,26 +821,10 @@
    "address": "0xabd3645ba0bb60c238bede64378826e1206f5072",
    "family": "oz",
    "status": "ok",
-   "queued_events": 1,
-   "latest_queued": 1791360355,
+   "queued_events": 0,
+   "latest_queued": null,
    "pending": [],
-   "recent": [
-    {
-     "block": 34419096,
-     "tx": "0xbaeb4bc374d5fa8b1a5e60f66d63b76ea8545f60230bd8efd90e4c409a3fe6e4",
-     "id": "0xfd2d417d107a3e75cafe55dbbd57e36d799ff59b5e9b9d4d948f028073b47d36",
-     "index": 0,
-     "target": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
-     "value": 0,
-     "selector": "0x46f943e9",
-     "delay": 86400,
-     "signature": "setRateLimits((uint32,uint256,uint256)[])",
-     "calls": 1,
-     "still_queued": false,
-     "queued_at": 1791360355,
-     "decoded": "parameter change"
-    }
-   ],
+   "recent": [],
    "discovered": true,
    "log_rpc": "https://rpc.plasma.to",
    "delay": 86400,
@@ -1509,40 +1493,7 @@
    "queued_events": 141,
    "latest_queued": 1790736533,
    "pending": [],
-   "recent": [
-    {
-     "id": "squads:7qipzLR9j1JcvdxE1XJEFgvoyFmgBpgw5hMdHBMPcJtM:140",
-     "index": 140,
-     "target": "rdemKHu2ueeKkhwmM2GfJFaqD3zsrj7s3oGMN3dQMJT",
-     "value": 0,
-     "selector": null,
-     "signature": "Squads proposal #140: call to rdemKHu2ueeKkhwmM2GfJFaqD3zsrj7s3oGMN3dQMJT (not the tracked program)",
-     "still_queued": false,
-     "queued_at": 1790736308,
-     "executed_at": 1790736308,
-     "account": "84if5Y9fJQhB5y6N7ZsVBQkLqw3N9E8beiGLE1k5gmm8",
-     "undecoded": false,
-     "decoded": "call",
-     "what": "call to rdemKHu2ueeKkhwmM2GfJFaqD3zsrj7s3oGMN3dQMJT",
-     "touches_governed": false
-    },
-    {
-     "id": "squads:7qipzLR9j1JcvdxE1XJEFgvoyFmgBpgw5hMdHBMPcJtM:141",
-     "index": 141,
-     "target": "distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp",
-     "value": 0,
-     "selector": null,
-     "signature": "Squads proposal #141: call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; c (not the tracked program)",
-     "still_queued": false,
-     "queued_at": 1790736533,
-     "executed_at": 1790736533,
-     "account": "Hx7EN6SZ9kn8zY9WbEVeTQBZ5ZFkJ2HrhnQVrdcKFitP",
-     "undecoded": false,
-     "decoded": "call",
-     "what": "call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to distAitdwx9mDm3SaPMtGZRjpXMPUenLhmPwoySV3Hp; call to rdemKHu2ueeKkhwmM2GfJFaqD3zsrj7s3oGMN3dQMJT",
-     "touches_governed": false
-    }
-   ],
+   "recent": [],
    "active": [],
    "stale_approved": 3,
    "proposals": {
@@ -2032,7 +1983,7 @@
     },
     {
      "index": 1005,
-     "approvals": 2,
+     "approvals": 3,
      "rejections": 0,
      "since": 1791897158,
      "account": "Bh6PYEPWJqJhnJfqZJhX2rh7dVuruow1LqXogjidkdaM"
@@ -2379,7 +2330,7 @@
    "transaction_index": 71
   }
  ],
- "discovered_utc": "2026-10-14T01:02:49Z",
+ "discovered_utc": "2026-10-14T07:02:08Z",
  "discovered": 14,
- "squads_utc": "2026-10-14T01:07:24Z"
+ "squads_utc": "2026-10-14T07:07:16Z"
 }

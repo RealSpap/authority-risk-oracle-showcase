@@ -1,0 +1,65 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "watch/safe_activity.json v1",
+ "type": "object",
+ "required": [
+  "generated_utc",
+  "wake_days",
+  "safes",
+  "read",
+  "woke",
+  "changes",
+  "by_safe"
+ ],
+ "properties": {
+  "generated_utc": {
+   "type": "string"
+  },
+  "wake_days": {
+   "type": "integer",
+   "description": "idle stretch, in days of observed time, after which a move counts as a wake"
+  },
+  "safes": {
+   "type": "integer",
+   "description": "Safes that are the admin of a tracked contract (holder, or the Safe behind a bare-contract holder)"
+  },
+  "read": {
+   "type": "integer",
+   "description": "of those, how many answered nonce() this run"
+  },
+  "woke": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   },
+   "description": "<chain>:<shortened Safe address> labels of the Safes whose nonce moved after wake_days or more unchanged"
+  },
+  "changes": {
+   "type": "array",
+   "description": "every Safe whose nonce moved since the previous run: safe, delta (transactions executed), idle_days (observed idle time before the move), woke, regressed (the nonce went down: the Safe was replaced), governs (the <chain>:<contract> keys), previous_run"
+  },
+  "never_executed": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   },
+   "description": "<chain>:<shortened Safe address> labels of the Safes still at nonce 0: an admin path that has never been used"
+  },
+  "stale": {
+   "type": "integer"
+  },
+  "unread_chains": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  },
+  "by_safe": {
+   "type": "object",
+   "description": "<chain>:<hash of the Safe address> -> safe (the <chain>:<shortened address> label), nonce, observed_since, idle_since (first run that read this nonce), last_moved, never_executed, governs, stale / stale_since when the Safe did not answer this run"
+  },
+  "what": {
+   "type": "string"
+  }
+ }
+}

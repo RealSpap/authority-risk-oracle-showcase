@@ -1,0 +1,60 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "watch/methodology.json v1",
+ "type": "object",
+ "required": [
+  "generated_utc",
+  "hashes",
+  "mixed",
+  "changes"
+ ],
+ "properties": {
+  "generated_utc": {
+   "type": "string"
+  },
+  "hashes": {
+   "type": "object",
+   "additionalProperties": {
+    "type": "object",
+    "required": [
+     "oracles",
+     "targets"
+    ]
+   }
+  },
+  "mixed": {
+   "type": "array"
+  },
+  "changes": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "oracle",
+     "from",
+     "to",
+     "targets",
+     "run_utc"
+    ]
+   }
+  },
+  "method_version": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "method_version_date": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "registry_read": {
+   "type": "boolean"
+  },
+  "unregistered": {
+   "type": "array"
+  }
+ }
+}

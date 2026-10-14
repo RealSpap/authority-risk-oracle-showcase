@@ -1,0 +1,264 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "watch/alerts.json v1",
+ "type": "object",
+ "required": [
+  "evaluated_utc",
+  "rules",
+  "active",
+  "history"
+ ],
+ "properties": {
+  "evaluated_utc": {
+   "type": "string"
+  },
+  "run_utc": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "rules": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  },
+  "errors": {
+   "type": "array"
+  },
+  "active": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "rule",
+     "severity",
+     "chain",
+     "target",
+     "title",
+     "score",
+     "first_seen",
+     "new"
+    ],
+    "properties": {
+     "rule": {
+      "type": "string"
+     },
+     "severity": {
+      "enum": [
+       "info",
+       "medium",
+       "high"
+      ]
+     },
+     "chain": {
+      "type": "string"
+     },
+     "target": {
+      "type": "string"
+     },
+     "title": {
+      "type": "string"
+     },
+     "score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+     },
+     "delta": {
+      "type": [
+       "integer",
+       "null"
+      ]
+     },
+     "tvl_usd": {
+      "type": [
+       "number",
+       "null"
+      ]
+     },
+     "first_seen": {
+      "type": "string"
+     },
+     "new": {
+      "type": "boolean"
+     },
+     "evidence": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "timelock": {
+         "type": "string"
+        },
+        "chain": {
+         "type": "string"
+        },
+        "tx": {
+         "type": [
+          "string",
+          "null"
+         ]
+        },
+        "selector": {
+         "type": [
+          "string",
+          "null"
+         ]
+        },
+        "signature": {
+         "type": [
+          "string",
+          "null"
+         ]
+        },
+        "ready_at": {
+         "type": [
+          "integer",
+          "null"
+         ]
+        },
+        "state": {
+         "type": [
+          "string",
+          "null"
+         ]
+        },
+        "timelock_address": {
+         "type": [
+          "string",
+          "null"
+         ]
+        },
+        "family": {
+         "type": [
+          "string",
+          "null"
+         ]
+        },
+        "id": {
+         "type": [
+          "string",
+          "null"
+         ]
+        }
+       }
+      }
+     },
+     "previous_run": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "notified": {
+      "type": "boolean",
+      "description": "delivered to the configured channels, or no channel configured; false = sent again at the next run"
+     },
+     "balance": {
+      "type": "object",
+      "properties": {
+       "symbol": {
+        "type": [
+         "string",
+         "null"
+        ]
+       },
+       "from": {
+        "type": "number"
+       },
+       "to": {
+        "type": "number"
+       },
+       "change_pct": {
+        "type": "number"
+       },
+       "since": {
+        "type": [
+         "string",
+         "null"
+        ]
+       }
+      }
+     },
+     "pause": {
+      "type": "object"
+     },
+     "side_role": {
+      "type": "array"
+     },
+     "safe_wake": {
+      "type": "object",
+      "description": "the Safe that governs this contract, its shortened address, the transactions it executed (delta), the observed idle days before them and the previous run"
+     }
+    }
+   }
+  },
+  "history": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "key",
+     "rule",
+     "severity",
+     "first_seen",
+     "last_seen",
+     "times"
+    ],
+    "properties": {
+     "balance": {
+      "type": "object"
+     },
+     "pause": {
+      "type": "object"
+     },
+     "side_role": {
+      "type": "array"
+     },
+     "key": {
+      "type": "string"
+     },
+     "last_seen": {
+      "type": "string"
+     },
+     "times": {
+      "type": "integer"
+     },
+     "chain": {
+      "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "delta": {
+      "description": "(observed as number on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "first_seen": {
+      "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "rule": {
+      "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "score": {
+      "description": "(observed as number on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "severity": {
+      "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "target": {
+      "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "title": {
+      "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "tvl_usd": {
+      "description": "(observed as number on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "safe_wake": {
+      "type": "object",
+      "description": "the Safe that governs this contract, its shortened address, the transactions it executed (delta), the observed idle days before them and the previous run"
+     }
+    }
+   }
+  }
+ }
+}

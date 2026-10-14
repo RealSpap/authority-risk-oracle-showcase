@@ -1,0 +1,2687 @@
+{
+"docs": 112,
+"index": {
+"0x00000000000014aa86c5d3c41765bb24e11bd701": [
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index12.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 12, plus 1 new target (T3tris Finance WBTC vault)",
+"date": "2026-09-19",
+"kind": "rotation"
+},
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index8.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 8, plus 1 new target (Morpho Blue singleton)",
+"date": "2026-09-19",
+"kind": "rotation"
+},
+{
+"file": "data/scored_targets_2026-09-15-batch4.md",
+"title": "Scored targets - batch 4, 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+},
+{
+"file": "data/scored_targets_2026-09-15-batch5.md",
+"title": "Scored targets - batch 5, 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0x0000000000ac46824e664881581f0e105bb5e492": [
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index12.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 12, plus 1 new target (T3tris Finance WBTC vault)",
+"date": "2026-09-19",
+"kind": "rotation"
+}
+],
+"0x0000000000cc53b5fd649b80f08b05405779cc71": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0x000000007a1c8e570011eedf86a2a35593013cba": [
+{
+"file": "data/correction_2026-09-17-rollup-l1-testnet-oracle-sync.md",
+"title": "Correction (2026-09-17, evening run): testnet oracle still served the pre-revision L1 rollup authority score (60, not 57)",
+"date": "2026-09-17",
+"kind": "correction"
+},
+{
+"file": "data/correction_2026-09-17-uniswap-testnet-oracle-sync.md",
+"title": "Correction (2026-09-17): testnet oracle was still serving the pre-correction Uniswap score",
+"date": "2026-09-17",
+"kind": "correction"
+},
+{
+"file": "data/scored_targets_2026-09-15-batch3.md",
+"title": "Scored targets - batch 3, 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0x00000000efe302beaa2b3e6e1b18d08d69a9012a": [
+{
+"file": "data/finding_2026-09-27-five-custody-protocols-edgex-sodex-aera-valos-derive.md",
+"title": "Five more custody protocols traced: edgeX, SoDEX, Aera V3, Valos, Derive (investigation, nothing scored)",
+"date": "2026-09-27",
+"kind": "finding"
+},
+{
+"file": "data/finding_2026-09-26-issuer-power-tracked-assets.md",
+"title": "Issuer power on the 4 assets this oracle's own tracked vaults actually hold",
+"date": "2026-09-26",
+"kind": "finding"
+}
+],
+"0x00000006711dce34e37ec3e1b18f21a3d5399fbe": [
+{
+"file": "data/finding_2026-09-17-hyperliquid-hip3-evm-proxy-authority.md",
+"title": "Finding (2026-09-17): some HIP-3 dex deployer addresses are ALSO live, upgradeable EVM proxies -- the specific one checked turned out to be ",
+"date": "2026-09-17",
+"kind": "finding"
+}
+],
+"0x0000000c21e635b59edff54e70fe21315fa9b245": [
+{
+"file": "data/correction_2026-09-18-ventuals-vhype-staking-adversarial-review.md",
+"title": "Correction: adversarial review of Ventuals vHYPE staking (2026-09-18)",
+"date": "2026-09-18",
+"kind": "correction"
+}
+],
+"0x020cf83c8a007afaef0eadf7ecb271432c80f1ff": [
+{
+"file": "data/finding_2026-09-20-cross-exposure-convention-and-score-adjustments.md",
+"title": "Finding (2026-09-20): crossExposureScore now folds cross-ecosystem overlaps on every EVM ecosystem, and 11 scorer outputs moved",
+"date": "2026-09-20",
+"kind": "finding"
+},
+{
+"file": "data/finding_2026-09-19-base-morpho-blue-robinhood-overlap.md",
+"title": "Finding (2026-09-19): Base's Morpho Blue and Robinhood Chain's Morpho Blue share the identical governance committee -- found by sweeping alr",
+"date": "2026-09-19",
+"kind": "finding"
+},
+{
+"file": "data/finding_2026-09-19-monad-cross-ecosystem-overlap.md",
+"title": "Finding (2026-09-19): two real cross-chain signer/address overlaps, found by wiring Monad into `check_cross_ecosystem_overlap.py`",
+"date": "2026-09-19",
+"kind": "finding"
+}
+],
+"0x02a84c1b3bbd7401a5f7fa98a384ebc70bb5749e": [
+{
+"file": "data/scored_targets_2026-09-18-batch12.md",
+"title": "Batch 12 (2026-09-18): PancakeSwap AMM (V2) Factory, plus a crossExposure correction on PancakeSwap V3 Factory it exposed",
+"date": "2026-09-18",
+"kind": "scored"
+}
+],
+"0x02d9876a21af7545f8632c3af76ec90b5ad4b66d": [
+{
+"file": "data/scored_targets_2026-09-15-batch5.md",
+"title": "Scored targets - batch 5, 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0x03e8f708e9c85edceaa6ad7cd06824ceb82a7e68": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0x055e84e7fe8955e2781010b866f10ef6e1e77e59": [
+{
+"file": "data/finding_2026-09-26-aave-v3-pool-reserve-issuer-power.md",
+"title": "Issuer power extended to Aave V3 Ethereum Pool's 67 reserve assets ($14.77B TVL)",
+"date": "2026-09-26",
+"kind": "finding"
+}
+],
+"0x07320bc3542f279d9e0fcb7974211b0faaa3dc43": [
+{
+"file": "data/repush_2026-09-20-evening-all-oracles.md",
+"title": "Re-push of all nine oracles, 2026-09-20 evening",
+"date": "2026-09-20",
+"kind": "repush"
+}
+],
+"0x074377a78a9710a1d47244f89797718b4f491279": [
+{
+"file": "data/rotation_audit_2026-09-21-robinhood-chain-index17.md",
+"title": "Rotation audit (2026-09-21): Robinhood Chain, tracked target index 17",
+"date": "2026-09-21",
+"kind": "rotation"
+}
+],
+"0x0a06be16275b95a7d2567fbdae118b36c7da78f9": [
+{
+"file": "data/finding_2026-09-26-issuer-power-tracked-assets.md",
+"title": "Issuer power on the 4 assets this oracle's own tracked vaults actually hold",
+"date": "2026-09-26",
+"kind": "finding"
+}
+],
+"0x0afe5e054249b19ae29075540d9e6951c66e49b7": [
+{
+"file": "docs/LANDSCAPE.md",
+"title": "How this compares",
+"date": "",
+"kind": ""
+}
+],
+"0x0bfbcf9fa4f9c56b0f40a671ad40e0805a091865": [
+{
+"file": "data/scored_targets_2026-09-16-batch9.md",
+"title": "Batch 9 -- 2026-09-16 (automated pipeline run)",
+"date": "2026-09-16",
+"kind": "scored"
+}
+],
+"0x0d875bd6c833cedef7fca4fe154d023cdb8eb1cb": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0x0dc846db6a4ec7b5a3e542f7db88049e9add2541": [
+{
+"file": "data/scored_targets_2026-09-16-batch9.md",
+"title": "Batch 9 -- 2026-09-16 (automated pipeline run)",
+"date": "2026-09-16",
+"kind": "scored"
+}
+],
+"0x0e6d41855d42012f7f8c16db7eb1d90df163b047": [
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index11.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 11, plus 1 new target (Arcus Perps BridgeVault)",
+"date": "2026-09-19",
+"kind": "rotation"
+}
+],
+"0x0f04909e8ac81b8727ff7f0b2ef4e9f817033978": [
+{
+"file": "data/finding_2026-10-05-price-consumer-scope-study.md",
+"title": "Which other tracked targets read prices, how to score them, and what that needs decided first",
+"date": "2026-10-05",
+"kind": "finding"
+}
+],
+"0x0fc5c64074641e677fb86bce80303a2ee64344ac": [
+{
+"file": "data/scored_targets_2026-09-16-batch7.md",
+"title": "Batch 7 -- 2026-09-16",
+"date": "2026-09-16",
+"kind": "scored"
+}
+],
+"0x10f06cc409c34101fd589e605373fcf03c5e447e": [
+{
+"file": "data/scored_targets_2026-09-15.md",
+"title": "Scored targets - 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0x1111000000000000000000000000000000001111": [
+{
+"file": "data/correction_2026-09-17-uniswap-testnet-oracle-sync.md",
+"title": "Correction (2026-09-17): testnet oracle was still serving the pre-correction Uniswap score",
+"date": "2026-09-17",
+"kind": "correction"
+},
+{
+"file": "data/correction_2026-09-16-uniswap-bridge-alias.md",
+"title": "Correction (2026-09-16): Uniswap stack's \"vanity-ground bare EOA\" was wrong",
+"date": "2026-09-16",
+"kind": "correction"
+}
+],
+"0x1195c074f898b7644ba732407619c9804dfe6dce": [
+{
+"file": "data/scored_targets_2026-09-17-batch11.md",
+"title": "Batch 11 (2026-09-17, evening run): Snuggle (MaxFi Robinhood vault)",
+"date": "2026-09-17",
+"kind": "scored"
+}
+],
+"0x11da8ae234edd16b135edc47e5d9becc8717ecdc": [
+{
+"file": "data/finding_2026-09-25-governance-capture-quantified.md",
+"title": "Governance-capture concentration, quantified for the first time (Uniswap + Aave Governance V3 + Solend/Realms)",
+"date": "2026-09-25",
+"kind": "finding"
+}
+],
+"0x1232813bdd40aa9d53066a880de78a4be70b90fd": [
+{
+"file": "data/correction_2026-09-17-rollup-l1-testnet-oracle-sync.md",
+"title": "Correction (2026-09-17, evening run): testnet oracle still served the pre-revision L1 rollup authority score (60, not 57)",
+"date": "2026-09-17",
+"kind": "correction"
+}
+],
+"0x128a800cbc615cc110bff16e475865c67631603a": [
+{
+"file": "data/rotation_audit_2026-09-20-robinhood-chain-index16.md",
+"title": "Rotation audit (2026-09-20): Robinhood Chain, tracked target index 16, plus 4 new targets",
+"date": "2026-09-20",
+"kind": "rotation"
+},
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index10.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 10, plus 1 new target (UNCX Network V3 Locker)",
+"date": "2026-09-19",
+"kind": "rotation"
+},
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index13.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 13, plus 1 new target (up v3 Factory)",
+"date": "2026-09-19",
+"kind": "rotation"
+},
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index14.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 14, plus 1 new target (Alandale V3 Factory)",
+"date": "2026-09-19",
+"kind": "rotation"
+},
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index9.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 9, plus 1 new target (NOXA Fun Launch Locker)",
+"date": "2026-09-19",
+"kind": "rotation"
+}
+],
+"0x12f190a9f9d7d37a250758b26824b97ce941bf54": [
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index14.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 14, plus 1 new target (Alandale V3 Factory)",
+"date": "2026-09-19",
+"kind": "rotation"
+}
+],
+"0x14b0466ab52a7bf6cab54253cda92c73d52ca1b8": [
+{
+"file": "data/finding_2026-09-20-cross-exposure-convention-and-score-adjustments.md",
+"title": "Finding (2026-09-20): crossExposureScore now folds cross-ecosystem overlaps on every EVM ecosystem, and 11 scorer outputs moved",
+"date": "2026-09-20",
+"kind": "finding"
+},
+{
+"file": "data/finding_2026-09-20-ethena-live-minter.md",
+"title": "Finding (2026-09-20): the Ethena target was USDe's retired minter, and the live minter now scores 65/100/55",
+"date": "2026-09-20",
+"kind": "finding"
+},
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+},
+{
+"file": "data/finding_2026-09-19-aave-guardian-ethereum-l1-fifth-chain-and-verifier-corrections.md",
+"title": "Finding (2026-09-19): the Aave guardian committee is on 5 chains, not 4, plus a list of repo inaccuracies an independent verification pass f",
+"date": "2026-09-19",
+"kind": "finding"
+},
+{
+"file": "data/finding_2026-09-19-base-morpho-blue-robinhood-overlap.md",
+"title": "Finding (2026-09-19): Base's Morpho Blue and Robinhood Chain's Morpho Blue share the identical governance committee -- found by sweeping alr",
+"date": "2026-09-19",
+"kind": "finding"
+},
+{
+"file": "data/finding_2026-09-17-cross-ecosystem-aave-guardian-overlap.md",
+"title": "Cross-ecosystem finding (2026-09-17): Aave V3's emergency guardian is the SAME 9-person committee on Arbitrum and Base",
+"date": "2026-09-17",
+"kind": "finding"
+}
+],
+"0x14b0de5328b4c9ee6eb39081f9d41919eac61e67": [
+{
+"file": "data/rotation_audit_2026-09-18-robinhood-chain-index7.md",
+"title": "Rotation audit (2026-09-18): Robinhood Chain, tracked target index 7, plus 1 new target (Meridian Perps)",
+"date": "2026-09-18",
+"kind": "rotation"
+}
+],
+"0x159a113e012593d9b3cc63ad45e30f0467e13ef3": [
+{
+"file": "data/scored_targets_2026-09-17-batch10.md",
+"title": "Batch 10 (2026-09-17): Fables PoolRegistry, Beefy SPY-WETH vault",
+"date": "2026-09-17",
+"kind": "scored"
+}
+],
+"0x16494a80e08bcb9285d87b67149d7b01774d82f8": [
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index14.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 14, plus 1 new target (Alandale V3 Factory)",
+"date": "2026-09-19",
+"kind": "rotation"
+}
+],
+"0x1676b80edd36b18a3c3432c11ed25d37fde9c92a": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0x173db78bd97b89f94e7f6af6e9cf56055491412d": [
+{
+"file": "data/correction_2026-09-17-rollup-l1-testnet-oracle-sync.md",
+"title": "Correction (2026-09-17, evening run): testnet oracle still served the pre-revision L1 rollup authority score (60, not 57)",
+"date": "2026-09-17",
+"kind": "correction"
+},
+{
+"file": "data/scored_targets_2026-09-17-batch11.md",
+"title": "Batch 11 (2026-09-17, evening run): Snuggle (MaxFi Robinhood vault)",
+"date": "2026-09-17",
+"kind": "scored"
+}
+],
+"0x1836bb5e4928bb678e03d0cbd8abd1f6d6902189": [
+{
+"file": "data/scored_targets_2026-09-15-batch4.md",
+"title": "Scored targets - batch 4, 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0x192826e470bd65fdc2cb472edd834d096233049b": [
+{
+"file": "data/finding_2026-09-19-hyperliquid-khype-kmhype-identity.md",
+"title": "Finding (2026-09-19): Hyperliquid target #6 was mislabeled kHYPE, is actually kmHYPE",
+"date": "2026-09-19",
+"kind": "finding"
+}
+],
+"0x193110ce1542d7371e1515bd6a2e470fdefc310d": [
+{
+"file": "data/scored_targets_2026-09-15-batch6.md",
+"title": "Batch 6 -- 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0x1a07cc4bd17e0118bdb54d70990d2158abad7a2d": [
+{
+"file": "data/correction_2026-09-17-rollup-l1-testnet-oracle-sync.md",
+"title": "Correction (2026-09-17, evening run): testnet oracle still served the pre-revision L1 rollup authority score (60, not 57)",
+"date": "2026-09-17",
+"kind": "correction"
+}
+],
+"0x1ac9db4a2608ba45d6127b1737949b51bb54b7f3": [
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index13.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 13, plus 1 new target (up v3 Factory)",
+"date": "2026-09-19",
+"kind": "rotation"
+}
+],
+"0x1da522b35363c1eda4833bc121c8f3c67b2caa75": [
+{
+"file": "data/scored_targets_2026-09-16-batch9.md",
+"title": "Batch 9 -- 2026-09-16 (automated pipeline run)",
+"date": "2026-09-16",
+"kind": "scored"
+}
+],
+"0x1f2e3a640175d20ac31ed523b6733b977173e277": [
+{
+"file": "data/finding_2026-09-26-issuer-power-tracked-assets.md",
+"title": "Issuer power on the 4 assets this oracle's own tracked vaults actually hold",
+"date": "2026-09-26",
+"kind": "finding"
+}
+],
+"0x1f7d7550b1b028f7571e69a784071f0205fd2efa": [
+{
+"file": "data/correction_2026-09-17-uniswap-testnet-oracle-sync.md",
+"title": "Correction (2026-09-17): testnet oracle was still serving the pre-correction Uniswap score",
+"date": "2026-09-17",
+"kind": "correction"
+},
+{
+"file": "data/scored_targets_2026-09-15-batch2.md",
+"title": "Scored targets - batch 2, 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+},
+{
+"file": "data/scored_targets_2026-09-15.md",
+"title": "Scored targets - 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0x1f98431c8ad98523631ae4a59f267346ea31f984": [
+{
+"file": "data/scored_targets_2026-09-16-ethereum-l1.md",
+"title": "Ethereum L1 -- first 4 targets scored (2026-09-16)",
+"date": "2026-09-16",
+"kind": "scored"
+}
+],
+"0x20630c6ab4ba48a80eda46f77b9b6e987a8f32f5": [
+{
+"file": "data/finding_2026-09-19-monad-new-targets-scouting.md",
+"title": "Finding (2026-09-19, second pass): 2 new Monad mainnet targets added (Aave V3, Euler V2), 1 found and honestly discarded (Pendle V2)",
+"date": "2026-09-19",
+"kind": "finding"
+}
+],
+"0x2130457539612ae9838e0314cda1a8abbdb7cfbc": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+},
+{
+"file": "data/finding_2026-09-20-yuzu-authority-trace.md",
+"title": "Finding (2026-09-20): Yuzu Money's placeholder score rested on a false negative; the real authority chain is a 3-of-5 Safe with an instant p",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0x23a19d23e89166adedbdcb432518ab01e4272d94": [
+{
+"file": "data/correction_2026-09-17-rollup-l1-testnet-oracle-sync.md",
+"title": "Correction (2026-09-17, evening run): testnet oracle still served the pre-revision L1 rollup authority score (60, not 57)",
+"date": "2026-09-17",
+"kind": "correction"
+},
+{
+"file": "data/scored_targets_2026-09-15-batch4.md",
+"title": "Scored targets - batch 4, 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0x24b84023c8e4da635be228c380c09bfe5271bf9d": [
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index12.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 12, plus 1 new target (T3tris Finance WBTC vault)",
+"date": "2026-09-19",
+"kind": "rotation"
+},
+{
+"file": "data/rotation_audit_2026-09-18-robinhood-chain-index7.md",
+"title": "Rotation audit (2026-09-18): Robinhood Chain, tracked target index 7, plus 1 new target (Meridian Perps)",
+"date": "2026-09-18",
+"kind": "rotation"
+}
+],
+"0x2501756896f13956900699cf1d1af7a5149b21dd": [
+{
+"file": "data/repush_2026-09-20-evening-all-oracles.md",
+"title": "Re-push of all nine oracles, 2026-09-20 evening",
+"date": "2026-09-20",
+"kind": "repush"
+}
+],
+"0x26264514cd6018d6f944eb30b782aee2794b70b8": [
+{
+"file": "data/finding_2026-09-17-hyperliquid-hip3-evm-proxy-authority.md",
+"title": "Finding (2026-09-17): some HIP-3 dex deployer addresses are ALSO live, upgradeable EVM proxies -- the specific one checked turned out to be ",
+"date": "2026-09-17",
+"kind": "finding"
+}
+],
+"0x292fc50e4eb66c3f6514b9e402dbc25961824d62": [
+{
+"file": "data/scored_targets_2026-09-16-batch9.md",
+"title": "Batch 9 -- 2026-09-16 (automated pipeline run)",
+"date": "2026-09-16",
+"kind": "scored"
+}
+],
+"0x295df6b70f4ed2be704bd802a4d805fe700bd7e9": [
+{
+"file": "data/finding_2026-09-25-vault-v2-inventory.md",
+"title": "Vault V2 disclosed inventory: $2.87B across 27 vaults, none previously tracked",
+"date": "2026-09-25",
+"kind": "finding"
+}
+],
+"0x2aad6395bf90681108a03eb80928461a806bc190": [
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index14.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 14, plus 1 new target (Alandale V3 Factory)",
+"date": "2026-09-19",
+"kind": "rotation"
+}
+],
+"0x2ac03e14cfe755426daaee0a4994184ce81482f8": [
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index9.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 9, plus 1 new target (NOXA Fun Launch Locker)",
+"date": "2026-09-19",
+"kind": "rotation"
+}
+],
+"0x2ad631f72fb16d91c4953a7f4260a97c2fe2f31e": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+},
+{
+"file": "data/rotation_audit_2026-09-18-robinhood-chain-index6-batch13.md",
+"title": "Rotation audit (2026-09-18): Robinhood Chain, tracked target index 6, plus batch 13",
+"date": "2026-09-18",
+"kind": "rotation"
+},
+{
+"file": "data/scored_targets_2026-09-15-batch6.md",
+"title": "Batch 6 -- 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0x2cc440b721d2cafd6d64908d6d8c4acc57f8afc3": [
+{
+"file": "data/finding_2026-09-20-cross-exposure-convention-and-score-adjustments.md",
+"title": "Finding (2026-09-20): crossExposureScore now folds cross-ecosystem overlaps on every EVM ecosystem, and 11 scorer outputs moved",
+"date": "2026-09-20",
+"kind": "finding"
+},
+{
+"file": "data/finding_2026-09-20-ethena-live-minter.md",
+"title": "Finding (2026-09-20): the Ethena target was USDe's retired minter, and the live minter now scores 65/100/55",
+"date": "2026-09-20",
+"kind": "finding"
+},
+{
+"file": "data/scored_targets_2026-09-16-ethereum-l1.md",
+"title": "Ethereum L1 -- first 4 targets scored (2026-09-16)",
+"date": "2026-09-16",
+"kind": "scored"
+}
+],
+"0x2efff88747eb5a3ff00d4d8d0f0800e306c0426b": [
+{
+"file": "data/finding_2026-09-26-l1-custody-authority-traces.md",
+"title": "Six large Ethereum L1 custody contracts: who can move them (investigation, nothing scored)",
+"date": "2026-09-26",
+"kind": "finding"
+}
+],
+"0x2f39d218133afab8f2b819b1066c7e434ad94e9e": [
+{
+"file": "data/scored_targets_2026-09-16-ethereum-l1.md",
+"title": "Ethereum L1 -- first 4 targets scored (2026-09-16)",
+"date": "2026-09-16",
+"kind": "scored"
+}
+],
+"0x3075f58821329f6ac9716006486bd3fef24282e3": [
+{
+"file": "data/repush_2026-09-20-evening-all-oracles.md",
+"title": "Re-push of all nine oracles, 2026-09-20 evening",
+"date": "2026-09-20",
+"kind": "repush"
+}
+],
+"0x308ad2c8fa527a0e5c30139b6b154ff48462cd04": [
+{
+"file": "data/finding_2026-09-20-cross-exposure-convention-and-score-adjustments.md",
+"title": "Finding (2026-09-20): crossExposureScore now folds cross-ecosystem overlaps on every EVM ecosystem, and 11 scorer outputs moved",
+"date": "2026-09-20",
+"kind": "finding"
+},
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0x322f0929c4625ed5bad873c95208d54e1c003b2d": [
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index13.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 13, plus 1 new target (up v3 Factory)",
+"date": "2026-09-19",
+"kind": "rotation"
+}
+],
+"0x326a88dfbd5b31660a319bb5732d97db8eded872": [
+{
+"file": "data/scored_targets_2026-09-15-batch2.md",
+"title": "Scored targets - batch 2, 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0x3300f198988e4c9c63f75df86de36421f06af8c4": [
+{
+"file": "data/finding_2026-09-26-sentora-spark-rlusd-subproxy-resolved.md",
+"title": "Sentora x Spark RLUSD's $250M SubProxy owner: resolved, not a mystery",
+"date": "2026-09-26",
+"kind": "finding"
+},
+{
+"file": "data/finding_2026-09-25-vault-v2-inventory.md",
+"title": "Vault V2 disclosed inventory: $2.87B across 27 vaults, none previously tracked",
+"date": "2026-09-25",
+"kind": "finding"
+},
+{
+"file": "data/rotation_audit_2026-09-18-robinhood-chain-index5.md",
+"title": "Rotation audit (2026-09-18): Robinhood Chain, tracked target index 5",
+"date": "2026-09-18",
+"kind": "rotation"
+},
+{
+"file": "data/rotation_audit_2026-09-18-robinhood-chain-index6-batch13.md",
+"title": "Rotation audit (2026-09-18): Robinhood Chain, tracked target index 6, plus batch 13",
+"date": "2026-09-18",
+"kind": "rotation"
+},
+{
+"file": "data/scored_targets_2026-09-15-batch6.md",
+"title": "Batch 6 -- 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0x3333333333333333333333333333333333333333": [
+{
+"file": "data/finding_2026-09-17-hyperliquid-hip3-evm-proxy-authority.md",
+"title": "Finding (2026-09-17): some HIP-3 dex deployer addresses are ALSO live, upgradeable EVM proxies -- the specific one checked turned out to be ",
+"date": "2026-09-17",
+"kind": "finding"
+}
+],
+"0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0x360894a13ba1a3210667c828492db98dca3e2076": [
+{
+"file": "data/finding_2026-09-17-hyperliquid-hip3-evm-proxy-authority.md",
+"title": "Finding (2026-09-17): some HIP-3 dex deployer addresses are ALSO live, upgradeable EVM proxies -- the specific one checked turned out to be ",
+"date": "2026-09-17",
+"kind": "finding"
+}
+],
+"0x360c140e5344a1a0593d44b4ea6fc7c3daf0c473": [
+{
+"file": "data/finding_2026-09-19-hyperliquid-khype-kmhype-identity.md",
+"title": "Finding (2026-09-19): Hyperliquid target #6 was mislabeled kHYPE, is actually kmHYPE",
+"date": "2026-09-19",
+"kind": "finding"
+}
+],
+"0x393d0b87ed38fc779fd9611144ae649ba6082109": [
+{
+"file": "data/finding_2026-09-19-hyperliquid-khype-kmhype-identity.md",
+"title": "Finding (2026-09-19): Hyperliquid target #6 was mislabeled kHYPE, is actually kmHYPE",
+"date": "2026-09-19",
+"kind": "finding"
+}
+],
+"0x3abd6f64a422225e61e435bae41db12096106df7": [
+{
+"file": "data/finding_2026-09-26-issuer-power-tracked-assets.md",
+"title": "Issuer power on the 4 assets this oracle's own tracked vaults actually hold",
+"date": "2026-09-26",
+"kind": "finding"
+}
+],
+"0x3c3d99fd298f679dbc2cecd132b4ec4d0f5e6e72": [
+{
+"file": "data/correction_2026-09-20-arbitrum-oracle-scores-csv-stale-gmx.md",
+"title": "Correction (2026-09-20) -- the Arbitrum score record published for 2026-09-20 was stale for index 0",
+"date": "2026-09-20",
+"kind": "correction"
+},
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0x3d59ce9ef8582dd226f5d12bb1a7c34cca250846": [
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index8.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 8, plus 1 new target (Morpho Blue singleton)",
+"date": "2026-09-19",
+"kind": "rotation"
+}
+],
+"0x3e487139b6e5e7b22350b04d01a8157952e6498f": [
+{
+"file": "data/scored_targets_2026-09-16-batch9.md",
+"title": "Batch 9 -- 2026-09-16 (automated pipeline run)",
+"date": "2026-09-16",
+"kind": "scored"
+}
+],
+"0x408ed6354d4973f66138c91495f2f2fcbd8724c3": [
+{
+"file": "data/finding_2026-09-25-governance-capture-quantified.md",
+"title": "Governance-capture concentration, quantified for the first time (Uniswap + Aave Governance V3 + Solend/Realms)",
+"date": "2026-09-25",
+"kind": "finding"
+},
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index9.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 9, plus 1 new target (NOXA Fun Launch Locker)",
+"date": "2026-09-19",
+"kind": "rotation"
+},
+{
+"file": "data/correction_2026-09-17-uniswap-testnet-oracle-sync.md",
+"title": "Correction (2026-09-17): testnet oracle was still serving the pre-correction Uniswap score",
+"date": "2026-09-17",
+"kind": "correction"
+}
+],
+"0x409b98f767c485c533a3fba9d1a108d7e3238440": [
+{
+"file": "data/rotation_audit_2026-09-20-robinhood-chain-index15.md",
+"title": "Rotation audit (2026-09-19/20): Robinhood Chain, tracked target index 15, plus 1 new target (Saffron Vaults factory)",
+"date": "2026-09-20",
+"kind": "rotation"
+}
+],
+"0x413ca90d38d964546c2fe03cb103df57372630f6": [
+{
+"file": "data/scored_targets_2026-09-17-batch11.md",
+"title": "Batch 11 (2026-09-17, evening run): Snuggle (MaxFi Robinhood vault)",
+"date": "2026-09-17",
+"kind": "scored"
+}
+],
+"0x4208d6e27538189bb48e603d6123a94b8abe0a0b": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+},
+{
+"file": "data/scored_targets_2026-09-16-batch8.md",
+"title": "Batch 8 -- 2026-09-16",
+"date": "2026-09-16",
+"kind": "scored"
+}
+],
+"0x4459872f33d7e3b61238a6edc7611463c25d82fa": [
+{
+"file": "data/correction_2026-09-17-kinetiq-staking-manager-adversarial-review.md",
+"title": "Correction: adversarial review of Kinetiq HIP3StakingManager (2026-09-17)",
+"date": "2026-09-17",
+"kind": "correction"
+}
+],
+"0x4472c69d299382f8847ebce4fc6ed8e295510e3e": [
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index12.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 12, plus 1 new target (T3tris Finance WBTC vault)",
+"date": "2026-09-19",
+"kind": "rotation"
+}
+],
+"0x454a8daf74b24037ee2fa073ce1be9277ed6160a": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0x490f5bb8ec6c6a436bfde4aee358928e24b8ac55": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+},
+{
+"file": "data/finding_2026-09-20-yuzu-authority-trace.md",
+"title": "Finding (2026-09-20): Yuzu Money's placeholder score rested on a false negative; the real authority chain is a 3-of-5 Safe with an instant p",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0x4914f61d25e5c567143774b76edbf4d5109a8566": [
+{
+"file": "data/finding_2026-09-26-issuer-power-tracked-assets.md",
+"title": "Issuer power on the 4 assets this oracle's own tracked vaults actually hold",
+"date": "2026-09-26",
+"kind": "finding"
+}
+],
+"0x4bd1cdaab4254fc43ef6424653ca2375b4c94c0e": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0x4d1863d22d0ed8579f8999388bcc833cb057c2d6": [
+{
+"file": "data/finding_2026-09-25-governance-capture-quantified.md",
+"title": "Governance-capture concentration, quantified for the first time (Uniswap + Aave Governance V3 + Solend/Realms)",
+"date": "2026-09-25",
+"kind": "finding"
+}
+],
+"0x4d7bd498bb24098ca281c05519629c605407f71d": [
+{
+"file": "data/finding_2026-09-25-vault-v2-inventory.md",
+"title": "Vault V2 disclosed inventory: $2.87B across 27 vaults, none previously tracked",
+"date": "2026-09-25",
+"kind": "finding"
+}
+],
+"0x4daf1f9e777386a822bfcfcc3d0bea3906b6b3dc": [
+{
+"file": "data/repush_2026-09-20-evening-all-oracles.md",
+"title": "Re-push of all nine oracles, 2026-09-20 evening",
+"date": "2026-09-20",
+"kind": "repush"
+}
+],
+"0x4fc7850364958d97b4d3f5a08f79db2493f8ca44": [
+{
+"file": "data/finding_2026-09-26-issuer-power-tracked-assets.md",
+"title": "Issuer power on the 4 assets this oracle's own tracked vaults actually hold",
+"date": "2026-09-26",
+"kind": "finding"
+}
+],
+"0x50840a7667baea9d05ad4ae3dceb384724b58720": [
+{
+"file": "data/finding_2026-09-27-posture-drift-sweep-and-hyperliquid-false-positive.md",
+"title": "Full posture-drift sweep (27/09): one real drift explained, one tool false-positive found and fixed",
+"date": "2026-09-27",
+"kind": "finding"
+},
+{
+"file": "data/correction_2026-09-20-arbitrum-oracle-scores-csv-stale-gmx.md",
+"title": "Correction (2026-09-20) -- the Arbitrum score record published for 2026-09-20 was stale for index 0",
+"date": "2026-09-20",
+"kind": "correction"
+},
+{
+"file": "data/finding_2026-09-19-base-morpho-blue-robinhood-overlap.md",
+"title": "Finding (2026-09-19): Base's Morpho Blue and Robinhood Chain's Morpho Blue share the identical governance committee -- found by sweeping alr",
+"date": "2026-09-19",
+"kind": "finding"
+}
+],
+"0x52ccd2e50a663dc04e38da498f251f1dfb914936": [
+{
+"file": "data/correction_2026-09-17-uniswap-testnet-oracle-sync.md",
+"title": "Correction (2026-09-17): testnet oracle was still serving the pre-correction Uniswap score",
+"date": "2026-09-17",
+"kind": "correction"
+}
+],
+"0x543ada9eaba5d8c2b1097c3540ac970dcdbf1c2a": [
+{
+"file": "data/scored_targets_2026-09-16-batch9.md",
+"title": "Batch 9 -- 2026-09-16 (automated pipeline run)",
+"date": "2026-09-16",
+"kind": "scored"
+}
+],
+"0x544bf81c855ae84c1e8b65d5e38770898d01eee2": [
+{
+"file": "data/rotation_audit_2026-09-18-robinhood-chain-index6-batch13.md",
+"title": "Rotation audit (2026-09-18): Robinhood Chain, tracked target index 6, plus batch 13",
+"date": "2026-09-18",
+"kind": "rotation"
+},
+{
+"file": "data/scored_targets_2026-09-15-batch6.md",
+"title": "Batch 6 -- 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0x552603b4bc1f5e896af2854548d6380f45f1b4bf": [
+{
+"file": "data/correction_2026-09-17-rollup-l1-testnet-oracle-sync.md",
+"title": "Correction (2026-09-17, evening run): testnet oracle still served the pre-revision L1 rollup authority score (60, not 57)",
+"date": "2026-09-17",
+"kind": "correction"
+},
+{
+"file": "data/scored_targets_2026-09-15-batch4.md",
+"title": "Scored targets - batch 4, 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0x5642bcd50fc751ff2d04f155423e4d0e25c2a744": [
+{
+"file": "data/scored_targets_2026-09-15.md",
+"title": "Scored targets - 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0x58daec3116aae6d93017baaea7749052e8a04fa7": [
+{
+"file": "data/rotation_audit_2026-09-20-robinhood-chain-index16.md",
+"title": "Rotation audit (2026-09-20): Robinhood Chain, tracked target index 16, plus 4 new targets",
+"date": "2026-09-20",
+"kind": "rotation"
+}
+],
+"0x5a7fc11397e9a8ad41bf10bf13f22b0a63f96f6d": [
+{
+"file": "data/scored_targets_2026-09-17-batch10.md",
+"title": "Batch 10 (2026-09-17): Fables PoolRegistry, Beefy SPY-WETH vault",
+"date": "2026-09-17",
+"kind": "scored"
+}
+],
+"0x5c629f8c0b5368f523c85bfe79d2a8efb64fb0c8": [
+{
+"file": "data/backtest_2026-09-17-wasabi-protocol.md",
+"title": "Retroactive backtest: Wasabi Protocol ($5.9M, 2026-04-30)",
+"date": "2026-09-17",
+"kind": "backtest"
+}
+],
+"0x5c98b2d892b37c9a1d3b69472bddc172a64cdc09": [
+{
+"file": "data/rotation_audit_2026-09-20-robinhood-chain-index16.md",
+"title": "Rotation audit (2026-09-20): Robinhood Chain, tracked target index 16, plus 4 new targets",
+"date": "2026-09-20",
+"kind": "rotation"
+}
+],
+"0x5f3d29ef17700f8658c566dac7fbd76e0d86b78c": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+},
+{
+"file": "data/finding_2026-09-20-yuzu-authority-trace.md",
+"title": "Finding (2026-09-20): Yuzu Money's placeholder score rested on a false negative; the real authority chain is a 3-of-5 Safe with an instant p",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0x5fc5360d0400a0fd4f2af552add042d716f1d168": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0x6147bf6bddb12fe42b6f8e03d5daf72221a17b1c": [
+{
+"file": "data/scored_targets_2026-09-16-batch9.md",
+"title": "Batch 9 -- 2026-09-16 (automated pipeline run)",
+"date": "2026-09-16",
+"kind": "scored"
+}
+],
+"0x6181cb542015490dd2985043f9ff119896ca92d0": [
+{
+"file": "data/finding_2026-09-17-hyperliquid-hip3-evm-proxy-authority.md",
+"title": "Finding (2026-09-17): some HIP-3 dex deployer addresses are ALSO live, upgradeable EVM proxies -- the specific one checked turned out to be ",
+"date": "2026-09-17",
+"kind": "finding"
+}
+],
+"0x63c0c19a282a1b52b07dd5a65b58948a07dae32b": [
+{
+"file": "data/rotation_audit_2026-09-20-robinhood-chain-index15.md",
+"title": "Rotation audit (2026-09-19/20): Robinhood Chain, tracked target index 15, plus 1 new target (Saffron Vaults factory)",
+"date": "2026-09-20",
+"kind": "rotation"
+}
+],
+"0x646968c33d8f6d5a343b68a6f8b1ce52f13414ba": [
+{
+"file": "data/rotation_audit_2026-09-20-robinhood-chain-index16.md",
+"title": "Rotation audit (2026-09-20): Robinhood Chain, tracked target index 16, plus 4 new targets",
+"date": "2026-09-20",
+"kind": "rotation"
+},
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index10.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 10, plus 1 new target (UNCX Network V3 Locker)",
+"date": "2026-09-19",
+"kind": "rotation"
+},
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index11.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 11, plus 1 new target (Arcus Perps BridgeVault)",
+"date": "2026-09-19",
+"kind": "rotation"
+},
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index12.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 12, plus 1 new target (T3tris Finance WBTC vault)",
+"date": "2026-09-19",
+"kind": "rotation"
+},
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index13.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 13, plus 1 new target (up v3 Factory)",
+"date": "2026-09-19",
+"kind": "rotation"
+},
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index14.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 14, plus 1 new target (Alandale V3 Factory)",
+"date": "2026-09-19",
+"kind": "rotation"
+},
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index8.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 8, plus 1 new target (Morpho Blue singleton)",
+"date": "2026-09-19",
+"kind": "rotation"
+},
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index9.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 9, plus 1 new target (NOXA Fun Launch Locker)",
+"date": "2026-09-19",
+"kind": "rotation"
+},
+{
+"file": "data/rotation_audit_2026-09-18-robinhood-chain-index6-batch13.md",
+"title": "Rotation audit (2026-09-18): Robinhood Chain, tracked target index 6, plus batch 13",
+"date": "2026-09-18",
+"kind": "rotation"
+},
+{
+"file": "data/rotation_audit_2026-09-18-robinhood-chain-index7.md",
+"title": "Rotation audit (2026-09-18): Robinhood Chain, tracked target index 7, plus 1 new target (Meridian Perps)",
+"date": "2026-09-18",
+"kind": "rotation"
+}
+],
+"0x64bd77698ab7c3fd0a1f54497b228ed7a02098e3": [
+{
+"file": "data/correction_2026-09-17-kinetiq-staking-manager-adversarial-review.md",
+"title": "Correction: adversarial review of Kinetiq HIP3StakingManager (2026-09-17)",
+"date": "2026-09-17",
+"kind": "correction"
+}
+],
+"0x6695c0f8706c5ace3bdf8995073179cca47926dc": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+},
+{
+"file": "data/finding_2026-09-20-yuzu-authority-trace.md",
+"title": "Finding (2026-09-20): Yuzu Money's placeholder score rested on a false negative; the real authority chain is a 3-of-5 Safe with an instant p",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0x66b3bf9d8187227799809065bf7d1e2b8b784607": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0x68898b77ebf7b55dca8a2e62d6fd74959a2930e2": [
+{
+"file": "data/finding_2026-09-26-issuer-power-tracked-assets.md",
+"title": "Issuer power on the 4 assets this oracle's own tracked vaults actually hold",
+"date": "2026-09-26",
+"kind": "finding"
+}
+],
+"0x6c1fdd40002dcb440c7fff6a84171404d279ccb0": [
+{
+"file": "data/rotation_audit_2026-09-20-robinhood-chain-index16.md",
+"title": "Rotation audit (2026-09-20): Robinhood Chain, tracked target index 16, plus 4 new targets",
+"date": "2026-09-20",
+"kind": "rotation"
+}
+],
+"0x6f475642a6e85809b1c36fa62763669b1b48dd5b": [
+{
+"file": "data/scored_targets_2026-09-16-batch8.md",
+"title": "Batch 8 -- 2026-09-16",
+"date": "2026-09-16",
+"kind": "scored"
+}
+],
+"0x70546d1c92f8c2132ae23a23f5177aa852635605": [
+{
+"file": "data/rotation_audit_2026-09-18-robinhood-chain-index6-batch13.md",
+"title": "Rotation audit (2026-09-18): Robinhood Chain, tracked target index 6, plus batch 13",
+"date": "2026-09-18",
+"kind": "rotation"
+}
+],
+"0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec": [
+{
+"file": "data/finding_2026-09-19-hyperliquid-khype-kmhype-identity.md",
+"title": "Finding (2026-09-19): Hyperliquid target #6 was mislabeled kHYPE, is actually kmHYPE",
+"date": "2026-09-19",
+"kind": "finding"
+},
+{
+"file": "data/finding_2026-09-17-hyperliquid-hip3-evm-proxy-authority.md",
+"title": "Finding (2026-09-17): some HIP-3 dex deployer addresses are ALSO live, upgradeable EVM proxies -- the specific one checked turned out to be ",
+"date": "2026-09-17",
+"kind": "finding"
+}
+],
+"0x73991a25c818bf1f1128deaab1492d45638de0d3": [
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index9.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 9, plus 1 new target (NOXA Fun Launch Locker)",
+"date": "2026-09-19",
+"kind": "rotation"
+},
+{
+"file": "data/scored_targets_2026-09-17-batch11.md",
+"title": "Batch 11 (2026-09-17, evening run): Snuggle (MaxFi Robinhood vault)",
+"date": "2026-09-17",
+"kind": "scored"
+}
+],
+"0x74323cd0db2fd826cadcc90153995f1e2b1d0801": [
+{
+"file": "data/finding_2026-09-19-hyperliquid-khype-kmhype-identity.md",
+"title": "Finding (2026-09-19): Hyperliquid target #6 was mislabeled kHYPE, is actually kmHYPE",
+"date": "2026-09-19",
+"kind": "finding"
+}
+],
+"0x76faff60799021b301b45dc1bbede53f261f9961": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0x7701172a790129fdfdb802b091bedc4a6bc877de": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0x7ad12522933f6ea821ef44689fa4ab0a0b338115": [
+{
+"file": "data/scored_targets_2026-09-15-batch6.md",
+"title": "Batch 6 -- 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0x7ae50886c7ea0394613aa7dcc287a5c9650784b6": [
+{
+"file": "data/scored_targets_2026-09-16-batch7.md",
+"title": "Batch 7 -- 2026-09-16",
+"date": "2026-09-16",
+"kind": "scored"
+}
+],
+"0x7b7ed211e327dcc7940aea129398a96e36d15706": [
+{
+"file": "data/finding_2026-09-19-base-morpho-blue-robinhood-overlap.md",
+"title": "Finding (2026-09-19): Base's Morpho Blue and Robinhood Chain's Morpho Blue share the identical governance committee -- found by sweeping alr",
+"date": "2026-09-19",
+"kind": "finding"
+}
+],
+"0x7cfe99c15537753682def016d17d4b29a7cab4ee": [
+{
+"file": "data/finding_2026-09-26-wbeth-and-ssv-authority.md",
+"title": "The two largest untracked Ethereum protocols by TVL: one is a single-key token, the other is a 5-of-9 Safe (investigation, nothing scored)",
+"date": "2026-09-26",
+"kind": "finding"
+}
+],
+"0x7f03effbd7ceb22a3f80dd468f67ef27826acd85": [
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index9.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 9, plus 1 new target (NOXA Fun Launch Locker)",
+"date": "2026-09-19",
+"kind": "rotation"
+},
+{
+"file": "data/rotation_audit_2026-09-18-robinhood-chain-index7.md",
+"title": "Rotation audit (2026-09-18): Robinhood Chain, tracked target index 7, plus 1 new target (Meridian Perps)",
+"date": "2026-09-18",
+"kind": "rotation"
+}
+],
+"0x826aeaeee9233fa8ba199518dd8621a5962b1d02": [
+{
+"file": "data/rotation_audit_2026-09-18-robinhood-chain-index6-batch13.md",
+"title": "Rotation audit (2026-09-18): Robinhood Chain, tracked target index 6, plus batch 13",
+"date": "2026-09-18",
+"kind": "rotation"
+},
+{
+"file": "data/scored_targets_2026-09-15-batch3.md",
+"title": "Scored targets - batch 3, 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+},
+{
+"file": "data/scored_targets_2026-09-15-batch6.md",
+"title": "Batch 6 -- 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0x8271e06e5887fe5ba05234f5315c19f3ec90e8ad": [
+{
+"file": "data/finding_2026-09-19-monad-cross-ecosystem-overlap.md",
+"title": "Finding (2026-09-19): two real cross-chain signer/address overlaps, found by wiring Monad into `check_cross_ecosystem_overlap.py`",
+"date": "2026-09-19",
+"kind": "finding"
+},
+{
+"file": "data/rotation_audit_2026-09-18-robinhood-chain-index7.md",
+"title": "Rotation audit (2026-09-18): Robinhood Chain, tracked target index 7, plus 1 new target (Meridian Perps)",
+"date": "2026-09-18",
+"kind": "rotation"
+},
+{
+"file": "data/scored_targets_2026-09-15-batch6.md",
+"title": "Batch 6 -- 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0x83341f891f898cb5e0cacc8a70501bba83d9cecf": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+},
+{
+"file": "data/scored_targets_2026-09-15-batch4.md",
+"title": "Scored targets - batch 4, 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0x833589fcd6edb6e08f4c7c32d4f71b54bda02913": [
+{
+"file": "data/finding_2026-09-26-issuer-power-tracked-assets.md",
+"title": "Issuer power on the 4 assets this oracle's own tracked vaults actually hold",
+"date": "2026-09-26",
+"kind": "finding"
+}
+],
+"0x8366a39cc670b4001a1121b8f6a443a643e40951": [
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index12.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 12, plus 1 new target (T3tris Finance WBTC vault)",
+"date": "2026-09-19",
+"kind": "rotation"
+},
+{
+"file": "data/correction_2026-09-17-uniswap-testnet-oracle-sync.md",
+"title": "Correction (2026-09-17): testnet oracle was still serving the pre-correction Uniswap score",
+"date": "2026-09-17",
+"kind": "correction"
+},
+{
+"file": "data/scored_targets_2026-09-15-batch2.md",
+"title": "Scored targets - batch 2, 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+},
+{
+"file": "data/scored_targets_2026-09-15.md",
+"title": "Scored targets - 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0x85af328ca8dd848a128ca6b89dd0d76e6255ddd3": [
+{
+"file": "data/scored_targets_2026-09-15-batch6.md",
+"title": "Batch 6 -- 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0x86923f96303d656e4aa86d9d42d1e57ad2023fdc": [
+{
+"file": "data/rotation_audit_2026-09-21-robinhood-chain-index17.md",
+"title": "Rotation audit (2026-09-21): Robinhood Chain, tracked target index 17",
+"date": "2026-09-21",
+"kind": "rotation"
+}
+],
+"0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62": [
+{
+"file": "data/scored_targets_2026-09-17-batch10.md",
+"title": "Batch 10 (2026-09-17): Fables PoolRegistry, Beefy SPY-WETH vault",
+"date": "2026-09-17",
+"kind": "scored"
+}
+],
+"0x888888888889758f76e7103c6cbf23abbf58f946": [
+{
+"file": "data/finding_2026-09-19-monad-new-targets-scouting.md",
+"title": "Finding (2026-09-19, second pass): 2 new Monad mainnet targets added (Aave V3, Euler V2), 1 found and honestly discarded (Pendle V2)",
+"date": "2026-09-19",
+"kind": "finding"
+}
+],
+"0x8888888c43cbb7e1c4132542e46831bffd866ed3": [
+{
+"file": "data/finding_2026-09-17-hyperliquid-hip3-evm-proxy-authority.md",
+"title": "Finding (2026-09-17): some HIP-3 dex deployer addresses are ALSO live, upgradeable EVM proxies -- the specific one checked turned out to be ",
+"date": "2026-09-17",
+"kind": "finding"
+}
+],
+"0x894e1ec2d74ffe5aef8dc8a9e84686accb964f2a": [
+{
+"file": "data/rotation_audit_2026-09-20-robinhood-chain-index15.md",
+"title": "Rotation audit (2026-09-19/20): Robinhood Chain, tracked target index 15, plus 1 new target (Saffron Vaults factory)",
+"date": "2026-09-20",
+"kind": "rotation"
+}
+],
+"0x8bceaa40b9acdfaedf85adf4ff01f5ad6517937f": [
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index9.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 9, plus 1 new target (NOXA Fun Launch Locker)",
+"date": "2026-09-19",
+"kind": "rotation"
+},
+{
+"file": "data/correction_2026-09-17-uniswap-testnet-oracle-sync.md",
+"title": "Correction (2026-09-17): testnet oracle was still serving the pre-correction Uniswap score",
+"date": "2026-09-17",
+"kind": "correction"
+},
+{
+"file": "data/scored_targets_2026-09-15-batch4.md",
+"title": "Scored targets - batch 4, 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0x8d2b4a82284960dbf0834cc39e5c3e209377a035": [
+{
+"file": "data/scored_targets_2026-09-15-batch5.md",
+"title": "Scored targets - batch 5, 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0x8f69a4b491c7d3a296bf12a6be2569388b9d34b5": [
+{
+"file": "data/repush_2026-09-20-evening-all-oracles.md",
+"title": "Re-push of all nine oracles, 2026-09-20 evening",
+"date": "2026-09-20",
+"kind": "repush"
+}
+],
+"0x925f92f055edb79c42b5d45e64a1b74143b90ea0": [
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index11.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 11, plus 1 new target (Arcus Perps BridgeVault)",
+"date": "2026-09-19",
+"kind": "rotation"
+}
+],
+"0x939ca204c892932aa91810eee50253a0427dd33d": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0x945dcbd3c139d819785c529766a9e2d5e8c352aa": [
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index10.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 10, plus 1 new target (UNCX Network V3 Locker)",
+"date": "2026-09-19",
+"kind": "rotation"
+}
+],
+"0x94bab9693ba2f6358507effcbd372b0660afff9d": [
+{
+"file": "data/correction_2026-09-17-rollup-l1-testnet-oracle-sync.md",
+"title": "Correction (2026-09-17, evening run): testnet oracle still served the pre-revision L1 rollup authority score (60, not 57)",
+"date": "2026-09-17",
+"kind": "correction"
+},
+{
+"file": "data/scored_targets_2026-09-15-batch2.md",
+"title": "Scored targets - batch 2, 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+},
+{
+"file": "data/scored_targets_2026-09-15.md",
+"title": "Scored targets - 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0x992592e073aa9b98daed79ee05c4af832e1d0abe": [
+{
+"file": "data/finding_2026-09-25-vault-v2-inventory.md",
+"title": "Vault V2 disclosed inventory: $2.87B across 27 vaults, none previously tracked",
+"date": "2026-09-25",
+"kind": "finding"
+}
+],
+"0x99347d5f70d3838763f6bddcf80304c8aa953b57": [
+{
+"file": "data/finding_2026-09-18-morpho-generic-1of1-safe-treatment.md",
+"title": "Finding (2026-09-18): should `score_morpho_vault_generic` treat a 1-of-1 Safe as EOA-equivalent? Evidence for the decision, not a fix",
+"date": "2026-09-18",
+"kind": "finding"
+}
+],
+"0x9aee0b04504cef83a65ac3f0e838d0593bcb2bc7": [
+{
+"file": "data/finding_2026-09-25-governance-capture-quantified.md",
+"title": "Governance-capture concentration, quantified for the first time (Uniswap + Aave Governance V3 + Solend/Realms)",
+"date": "2026-09-25",
+"kind": "finding"
+}
+],
+"0x9b3ceb22cab2f1b9ace4cd3132c8a123552eda2c": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0x9bf45734d09bc7ca39238e767b2af9aac62a7f52": [
+{
+"file": "data/rotation_audit_2026-09-20-robinhood-chain-index16.md",
+"title": "Rotation audit (2026-09-20): Robinhood Chain, tracked target index 16, plus 4 new targets",
+"date": "2026-09-20",
+"kind": "rotation"
+},
+{
+"file": "data/correction_2026-09-17-rollup-l1-testnet-oracle-sync.md",
+"title": "Correction (2026-09-17, evening run): testnet oracle still served the pre-revision L1 rollup authority score (60, not 57)",
+"date": "2026-09-17",
+"kind": "correction"
+},
+{
+"file": "data/correction_2026-09-17-uniswap-testnet-oracle-sync.md",
+"title": "Correction (2026-09-17): testnet oracle was still serving the pre-correction Uniswap score",
+"date": "2026-09-17",
+"kind": "correction"
+},
+{
+"file": "docs/OPERATIONS.md",
+"title": "Operating the oracle",
+"date": "",
+"kind": ""
+}
+],
+"0x9c3663fa9ab976e67b42939486ec4966cb41a0bb": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+},
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index10.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 10, plus 1 new target (UNCX Network V3 Locker)",
+"date": "2026-09-19",
+"kind": "rotation"
+},
+{
+"file": "data/scored_targets_2026-09-15-batch2.md",
+"title": "Scored targets - batch 2, 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+},
+{
+"file": "data/scored_targets_2026-09-15.md",
+"title": "Scored targets - 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0x9d39a5de30e57443bff2a8307a4256c8797a3497": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0x9d53d5e3bd5e8d4cbfa6db1ca238aea02e651010": [
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index8.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 8, plus 1 new target (Morpho Blue singleton)",
+"date": "2026-09-19",
+"kind": "rotation"
+}
+],
+"0x9e396de3312d373b87f9bd8763fb48184b42aac0": [
+{
+"file": "data/finding_2026-09-25-vault-v2-inventory.md",
+"title": "Vault V2 disclosed inventory: $2.87B across 27 vaults, none previously tracked",
+"date": "2026-09-25",
+"kind": "finding"
+}
+],
+"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": [
+{
+"file": "data/finding_2026-09-26-issuer-power-tracked-assets.md",
+"title": "Issuer power on the 4 assets this oracle's own tracked vaults actually hold",
+"date": "2026-09-26",
+"kind": "finding"
+}
+],
+"0xa28c08f165116587d4f3e708743b4dee155c5e64": [
+{
+"file": "data/scored_targets_2026-09-15-batch6.md",
+"title": "Batch 6 -- 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0xa2e8f4f12ccbe3740734bccfa5ee9cf4c20018f5": [
+{
+"file": "data/finding_2026-09-20-cross-exposure-convention-and-score-adjustments.md",
+"title": "Finding (2026-09-20): crossExposureScore now folds cross-ecosystem overlaps on every EVM ecosystem, and 11 scorer outputs moved",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0xa362d98b33a7bb5b5e2180a05f995a70fb404f30": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+},
+{
+"file": "data/scored_targets_2026-09-17-batch10.md",
+"title": "Batch 10 (2026-09-17): Fables PoolRegistry, Beefy SPY-WETH vault",
+"date": "2026-09-17",
+"kind": "scored"
+}
+],
+"0xa49f317086368da903ea40a286ad675664c9e123": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0xa72636cbcaa8f5ff95b2cc47f3cdee83f3294a0b": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0xa860355f0ccfdc823f7332ac108317b2a1509c06": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0xa9006ffe1e51ac4338ac0a8a4e2026b69dbb589f": [
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index12.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 12, plus 1 new target (T3tris Finance WBTC vault)",
+"date": "2026-09-19",
+"kind": "rotation"
+}
+],
+"0xa93596300b689383572880cd4de76ee2fc7bce68": [
+{
+"file": "data/finding_2026-09-20-cross-exposure-convention-and-score-adjustments.md",
+"title": "Finding (2026-09-20): crossExposureScore now folds cross-ecosystem overlaps on every EVM ecosystem, and 11 scorer outputs moved",
+"date": "2026-09-20",
+"kind": "finding"
+},
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0xa9c251f8304b1b3fc2b9e8fcae78d94eff82ac66": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0xab0d57f0df537bb25e80245ef7748fa62353808c": [
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index13.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 13, plus 1 new target (up v3 Factory)",
+"date": "2026-09-19",
+"kind": "rotation"
+}
+],
+"0xabd3645ba0bb60c238bede64378826e1206f5072": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0xad221259d4a1f2d7376dc1012c561bc86640f009": [
+{
+"file": "data/rotation_audit_2026-09-18-robinhood-chain-index7.md",
+"title": "Rotation audit (2026-09-18): Robinhood Chain, tracked target index 7, plus 1 new target (Meridian Perps)",
+"date": "2026-09-18",
+"kind": "rotation"
+}
+],
+"0xaea9f5de56e6c20383a1fcc2c3629dca0a92ce41": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0xb05a6449f383a1a43a172970858b97394fecdad6": [
+{
+"file": "data/finding_2026-09-26-wbeth-and-ssv-authority.md",
+"title": "The two largest untracked Ethereum protocols by TVL: one is a single-key token, the other is a 5-of-9 Safe (investigation, nothing scored)",
+"date": "2026-09-26",
+"kind": "finding"
+}
+],
+"0xb0908404de2984f1eb60e92d9e062dc634bc24a5": [
+{
+"file": "data/scored_targets_2026-09-15-batch3.md",
+"title": "Scored targets - batch 3, 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0xb24b143ad6bb5be9559ccc75f34a2261b7456904": [
+{
+"file": "data/rotation_audit_2026-09-20-robinhood-chain-index15.md",
+"title": "Rotation audit (2026-09-19/20): Robinhood Chain, tracked target index 15, plus 1 new target (Saffron Vaults factory)",
+"date": "2026-09-20",
+"kind": "rotation"
+}
+],
+"0xb30b5b27cb23356de1d3100e0e120d481da97b1f": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0xb328bd52b61768dd525cf209ab6c1ac688dcc547": [
+{
+"file": "data/scored_targets_2026-09-15-batch6.md",
+"title": "Batch 6 -- 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0xb35490d6f9163de4f80d88dc75c3516eb64c5ae2": [
+{
+"file": "data/rotation_audit_2026-09-21-robinhood-chain-index17.md",
+"title": "Rotation audit (2026-09-21): Robinhood Chain, tracked target index 17",
+"date": "2026-09-21",
+"kind": "rotation"
+},
+{
+"file": "data/rotation_audit_2026-09-20-robinhood-chain-index16.md",
+"title": "Rotation audit (2026-09-20): Robinhood Chain, tracked target index 16, plus 4 new targets",
+"date": "2026-09-20",
+"kind": "rotation"
+}
+],
+"0xb53127684a568b3173ae13b9f8a6016e243e63b6": [
+{
+"file": "data/finding_2026-09-17-hyperliquid-hip3-evm-proxy-authority.md",
+"title": "Finding (2026-09-17): some HIP-3 dex deployer addresses are ALSO live, upgradeable EVM proxies -- the specific one checked turned out to be ",
+"date": "2026-09-17",
+"kind": "finding"
+}
+],
+"0xb668382cf44038a3e8140e789060f6a809787cda": [
+{
+"file": "data/rotation_audit_2026-09-20-robinhood-chain-index16.md",
+"title": "Rotation audit (2026-09-20): Robinhood Chain, tracked target index 16, plus 4 new targets",
+"date": "2026-09-20",
+"kind": "rotation"
+},
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index14.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 14, plus 1 new target (Alandale V3 Factory)",
+"date": "2026-09-19",
+"kind": "rotation"
+}
+],
+"0xb6f8474ccc71af477c31c2df663b3942ddfbf906": [
+{
+"file": "data/finding_2026-09-20-cross-exposure-convention-and-score-adjustments.md",
+"title": "Finding (2026-09-20): crossExposureScore now folds cross-ecosystem overlaps on every EVM ecosystem, and 11 scorer outputs moved",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0xb8e138887d0aa13bab447e82de9d5c1777041ecd": [
+{
+"file": "data/finding_2026-09-25-governance-capture-quantified.md",
+"title": "Governance-capture concentration, quantified for the first time (Uniswap + Aave Governance V3 + Solend/Realms)",
+"date": "2026-09-25",
+"kind": "finding"
+}
+],
+"0xb8fcc66d613e5f54ee6a425ddbf4a2fdbe4dedee": [
+{
+"file": "data/finding_2026-09-26-issuer-power-tracked-assets.md",
+"title": "Issuer power on the 4 assets this oracle's own tracked vaults actually hold",
+"date": "2026-09-26",
+"kind": "finding"
+}
+],
+"0xbd0d173eeb87d57a09521c24388a12789f33ba96": [
+{
+"file": "data/correction_2026-09-17-rollup-l1-testnet-oracle-sync.md",
+"title": "Correction (2026-09-17, evening run): testnet oracle still served the pre-revision L1 rollup authority score (60, not 57)",
+"date": "2026-09-17",
+"kind": "correction"
+}
+],
+"0xbe286431454714f511008713973d3b053a2d38f3": [
+{
+"file": "data/scored_targets_2026-09-16-ethereum-l1.md",
+"title": "Ethereum L1 -- first 4 targets scored (2026-09-16)",
+"date": "2026-09-16",
+"kind": "scored"
+}
+],
+"0xbeeff033f34c046626b8d0a041844c5d1a5409dd": [
+{
+"file": "data/scored_targets_2026-09-15.md",
+"title": "Scored targets - 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0xbeeff039907422219fb367e525954ddc092854d9": [
+{
+"file": "data/rotation_audit_2026-09-18-robinhood-chain-index6-batch13.md",
+"title": "Rotation audit (2026-09-18): Robinhood Chain, tracked target index 6, plus batch 13",
+"date": "2026-09-18",
+"kind": "rotation"
+}
+],
+"0xbeefff136e3684273e6aa75a1669b784b373a4fd": [
+{
+"file": "data/rotation_audit_2026-09-18-robinhood-chain-index6-batch13.md",
+"title": "Rotation audit (2026-09-18): Robinhood Chain, tracked target index 6, plus batch 13",
+"date": "2026-09-18",
+"kind": "rotation"
+}
+],
+"0xbfc2b53552513174a0b006d4799b39871fe0ca1d": [
+{
+"file": "data/scored_targets_2026-09-16-batch8.md",
+"title": "Batch 8 -- 2026-09-16",
+"date": "2026-09-16",
+"kind": "scored"
+}
+],
+"0xc1273815a5a9f8be595170f697734e3f0b8fc07d": [
+{
+"file": "data/scored_targets_2026-09-16-batch9.md",
+"title": "Batch 9 -- 2026-09-16 (automated pipeline run)",
+"date": "2026-09-16",
+"kind": "scored"
+}
+],
+"0xc12b1e59c5e337d5acd2b4f0a9a27d9e5d7387e8": [
+{
+"file": "data/rotation_audit_2026-09-18-robinhood-chain-index6-batch13.md",
+"title": "Rotation audit (2026-09-18): Robinhood Chain, tracked target index 6, plus batch 13",
+"date": "2026-09-18",
+"kind": "rotation"
+},
+{
+"file": "data/scored_targets_2026-09-15-batch6.md",
+"title": "Batch 6 -- 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0xc139190f447e929f090edeb554d95abb8b18ac1c": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0xc54368c9af4390bff723587ab9ddaa3d530e5c2d": [
+{
+"file": "data/repush_2026-09-20-evening-all-oracles.md",
+"title": "Re-push of all nine oracles, 2026-09-20 evening",
+"date": "2026-09-20",
+"kind": "repush"
+}
+],
+"0xc6cde7c39eb2f0f0095f41570af89efc2c1ea828": [
+{
+"file": "data/finding_2026-09-26-issuer-power-tracked-assets.md",
+"title": "Issuer power on the 4 assets this oracle's own tracked vaults actually hold",
+"date": "2026-09-26",
+"kind": "finding"
+}
+],
+"0xc8a8df9b210243c55d31c73090f06787ad0a1bf6": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+},
+{
+"file": "data/finding_2026-09-20-yuzu-authority-trace.md",
+"title": "Finding (2026-09-20): Yuzu Money's placeholder score rested on a false negative; the real authority chain is a 3-of-5 Safe with an instant p",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0xc93fcb228114021080695da0de95dd69ea7a1dcd": [
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index9.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 9, plus 1 new target (NOXA Fun Launch Locker)",
+"date": "2026-09-19",
+"kind": "rotation"
+}
+],
+"0xca50d23f1c18c1dfaff5d3cae3aa4b9dc5c8db73": [
+{
+"file": "data/scored_targets_2026-09-15.md",
+"title": "Scored targets - 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0xca76ebd8617a03126b6fb84f9b1c1a0fb71c2633": [
+{
+"file": "data/correction_2026-09-16-aave-emergency-admin-identified.md",
+"title": "Correction: Aave V3 Ethereum's EMERGENCY_ADMIN_ROLE holder identified (2026-09-16)",
+"date": "2026-09-16",
+"kind": "correction"
+}
+],
+"0xcc4ee7d9785de7ae6ca6dc5cd13f7848fc1a6ce3": [
+{
+"file": "data/repush_2026-09-20-evening-all-oracles.md",
+"title": "Re-push of all nine oracles, 2026-09-20 evening",
+"date": "2026-09-20",
+"kind": "repush"
+}
+],
+"0xccac755fda315d253f51629cd13af85c9a6d9e4b": [
+{
+"file": "data/scored_targets_2026-09-16-batch9.md",
+"title": "Batch 9 -- 2026-09-16 (automated pipeline run)",
+"date": "2026-09-16",
+"kind": "scored"
+}
+],
+"0xcdc3cc092d5e641de9407484a929ab40732799e0": [
+{
+"file": "data/finding_2026-09-20-cross-exposure-convention-and-score-adjustments.md",
+"title": "Finding (2026-09-20): crossExposureScore now folds cross-ecosystem overlaps on every EVM ecosystem, and 11 scorer outputs moved",
+"date": "2026-09-20",
+"kind": "finding"
+},
+{
+"file": "data/finding_2026-09-19-base-morpho-blue-robinhood-overlap.md",
+"title": "Finding (2026-09-19): Base's Morpho Blue and Robinhood Chain's Morpho Blue share the identical governance committee -- found by sweeping alr",
+"date": "2026-09-19",
+"kind": "finding"
+}
+],
+"0xcf8d58a6eef2a1cae2ce69bc463b1178fb76ba1e": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0xcfa0388f5ddf905fdc08c45c716c15dc10a14c6f": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0xd01c774d4a66408326bc65728ac5ae5aaf004032": [
+{
+"file": "data/rotation_audit_2026-09-20-robinhood-chain-index16.md",
+"title": "Rotation audit (2026-09-20): Robinhood Chain, tracked target index 16, plus 4 new targets",
+"date": "2026-09-20",
+"kind": "rotation"
+}
+],
+"0xd0437c358c6eb0a6e1b21ad13c433172ec4ccf9a": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0xd3571b3bc51cecff49194ad67afffc648d5e07b4": [
+{
+"file": "data/finding_2026-09-26-issuer-power-tracked-assets.md",
+"title": "Issuer power on the 4 assets this oracle's own tracked vaults actually hold",
+"date": "2026-09-26",
+"kind": "finding"
+}
+],
+"0xd37eb2e6de40a33ba68bad94427723b66c954ea9": [
+{
+"file": "data/scored_targets_2026-09-15-batch6.md",
+"title": "Batch 6 -- 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0xd540f47f214dc7d6d244e62a6ae7e06b586ef44a": [
+{
+"file": "data/rotation_audit_2026-09-18-robinhood-chain-index7.md",
+"title": "Rotation audit (2026-09-18): Robinhood Chain, tracked target index 7, plus 1 new target (Meridian Perps)",
+"date": "2026-09-18",
+"kind": "rotation"
+}
+],
+"0xd5c6c79692715145098a65d1eb1f2a10c524f8e8": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+},
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index12.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 12, plus 1 new target (T3tris Finance WBTC vault)",
+"date": "2026-09-19",
+"kind": "rotation"
+}
+],
+"0xdac17f958d2ee523a2206206994597c13d831ec7": [
+{
+"file": "data/finding_2026-09-26-issuer-power-tracked-assets.md",
+"title": "Issuer power on the 4 assets this oracle's own tracked vaults actually hold",
+"date": "2026-09-26",
+"kind": "finding"
+}
+],
+"0xde770c84fe66e063336b31737cfe9790f18c4087": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+},
+{
+"file": "data/rotation_audit_2026-09-18-robinhood-chain-index5.md",
+"title": "Rotation audit (2026-09-18): Robinhood Chain, tracked target index 5",
+"date": "2026-09-18",
+"kind": "rotation"
+},
+{
+"file": "data/scored_targets_2026-09-15-batch6.md",
+"title": "Batch 6 -- 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0xdf8755334ce7a73ccf6b581c02ea649ae3e864b3": [
+{
+"file": "data/correction_2026-09-17-rollup-l1-testnet-oracle-sync.md",
+"title": "Correction (2026-09-17, evening run): testnet oracle still served the pre-revision L1 rollup authority score (60, not 57)",
+"date": "2026-09-17",
+"kind": "correction"
+}
+],
+"0xe0444ef8bf4ed74f74fd73686e2ddf4c1c5591e8": [
+{
+"file": "data/rotation_audit_2026-09-20-robinhood-chain-index16.md",
+"title": "Rotation audit (2026-09-20): Robinhood Chain, tracked target index 16, plus 4 new targets",
+"date": "2026-09-20",
+"kind": "rotation"
+}
+],
+"0xe10b6f6b275de231345c20d14ab812db62151b00": [
+{
+"file": "data/rotation_audit_2026-09-21-robinhood-chain-index17.md",
+"title": "Rotation audit (2026-09-21): Robinhood Chain, tracked target index 17",
+"date": "2026-09-21",
+"kind": "rotation"
+},
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+},
+{
+"file": "data/rotation_audit_2026-09-20-robinhood-chain-index15.md",
+"title": "Rotation audit (2026-09-19/20): Robinhood Chain, tracked target index 15, plus 1 new target (Saffron Vaults factory)",
+"date": "2026-09-20",
+"kind": "rotation"
+},
+{
+"file": "data/rotation_audit_2026-09-20-robinhood-chain-index16.md",
+"title": "Rotation audit (2026-09-20): Robinhood Chain, tracked target index 16, plus 4 new targets",
+"date": "2026-09-20",
+"kind": "rotation"
+},
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index13.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 13, plus 1 new target (up v3 Factory)",
+"date": "2026-09-19",
+"kind": "rotation"
+},
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index14.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 14, plus 1 new target (Alandale V3 Factory)",
+"date": "2026-09-19",
+"kind": "rotation"
+},
+{
+"file": "data/scored_targets_2026-09-15-batch3.md",
+"title": "Scored targets - batch 3, 2026-09-15",
+"date": "2026-09-15",
+"kind": "scored"
+}
+],
+"0xe1e825d15192457d05a251715c3e2cab0f8cf465": [
+{
+"file": "data/scored_targets_2026-09-16-batch8.md",
+"title": "Batch 8 -- 2026-09-16",
+"date": "2026-09-16",
+"kind": "scored"
+}
+],
+"0xe3490297a08d6fc8da46edb7b6142e4f461b62d3": [
+{
+"file": "data/finding_2026-09-20-cross-exposure-convention-and-score-adjustments.md",
+"title": "Finding (2026-09-20): crossExposureScore now folds cross-ecosystem overlaps on every EVM ecosystem, and 11 scorer outputs moved",
+"date": "2026-09-20",
+"kind": "finding"
+},
+{
+"file": "data/finding_2026-09-20-ethena-live-minter.md",
+"title": "Finding (2026-09-20): the Ethena target was USDe's retired minter, and the live minter now scores 65/100/55",
+"date": "2026-09-20",
+"kind": "finding"
+},
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0xe41c07ccd69a0f19a2186f3ad30409bd585436ce": [
+{
+"file": "data/scored_targets_2026-09-16-batch8.md",
+"title": "Batch 8 -- 2026-09-16",
+"date": "2026-09-16",
+"kind": "scored"
+}
+],
+"0xe468f1da5b22b0d9a832de14a8f6158cd721b102": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0xe4c0172679a2475e7de25bf1b933f774641388f4": [
+{
+"file": "data/scored_targets_2026-09-18-batch12.md",
+"title": "Batch 12 (2026-09-18): PancakeSwap AMM (V2) Factory, plus a crossExposure correction on PancakeSwap V3 Factory it exposed",
+"date": "2026-09-18",
+"kind": "scored"
+}
+],
+"0xe51960f1b45f1c9fb6d166e6a884f866fc70433b": [
+{
+"file": "data/scored_targets_2026-09-16-batch9.md",
+"title": "Batch 9 -- 2026-09-16 (automated pipeline run)",
+"date": "2026-09-16",
+"kind": "scored"
+}
+],
+"0xe5c6318456a7cb6f74f93b4eee4616db5fcef699": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0xe7bfff2ab721264887230037940490351700a068": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0xe7f15597b7594e1516952001f57d022ba799b479": [
+{
+"file": "data/finding_2026-09-18-competitive-positioning-cross-chain-overlap.md",
+"title": "Finding (2026-09-18): four targeted competitive checks, not a repeat of the general scan",
+"date": "2026-09-18",
+"kind": "finding"
+}
+],
+"0xe8c9c99ecad0686a14a00d8521c572281e938008": [
+{
+"file": "data/finding_2026-09-25-vault-v2-inventory.md",
+"title": "Vault V2 disclosed inventory: $2.87B across 27 vaults, none previously tracked",
+"date": "2026-09-25",
+"kind": "finding"
+}
+],
+"0xe8dc0fab349ea169283c48ccfd09d797e6db7c94": [
+{
+"file": "data/finding_2026-09-20-ethena-live-minter.md",
+"title": "Finding (2026-09-20): the Ethena target was USDe's retired minter, and the live minter now scores 65/100/55",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0xeab5d37ea9f16645c2638da19cc36cea332925ba": [
+{
+"file": "data/scored_targets_2026-09-18-batch12.md",
+"title": "Batch 12 (2026-09-18): PancakeSwap AMM (V2) Factory, plus a crossExposure correction on PancakeSwap V3 Factory it exposed",
+"date": "2026-09-18",
+"kind": "scored"
+}
+],
+"0xebfc8c2fe73c431ef2a371aea9132110aab50dca": [
+{
+"file": "data/finding_2026-09-20-unscored-role-sweep.md",
+"title": "Finding (2026-09-20): an unscored-role sweep of every EVM ecosystem, and a second Aave committee on five chains",
+"date": "2026-09-20",
+"kind": "finding"
+},
+{
+"file": "data/finding_2026-09-20-yuzu-authority-trace.md",
+"title": "Finding (2026-09-20): Yuzu Money's placeholder score rested on a false negative; the real authority chain is a 3-of-5 Safe with an instant p",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"0xee1ae9863868566f6c16567f9256c5deadf437b8": [
+{
+"file": "data/correction_2026-09-17-uniswap-testnet-oracle-sync.md",
+"title": "Correction (2026-09-17): testnet oracle was still serving the pre-correction Uniswap score",
+"date": "2026-09-17",
+"kind": "correction"
+}
+],
+"0xee27d5ae494300902d90454e8630a3f1c68c9c52": [
+{
+"file": "data/scored_targets_2026-09-16-batch8.md",
+"title": "Batch 8 -- 2026-09-16",
+"date": "2026-09-16",
+"kind": "scored"
+}
+],
+"0xee3163ea420d0ee5797f6083a7e41ebb31b63048": [
+{
+"file": "data/rotation_audit_2026-09-18-robinhood-chain-index6-batch13.md",
+"title": "Rotation audit (2026-09-18): Robinhood Chain, tracked target index 6, plus batch 13",
+"date": "2026-09-18",
+"kind": "rotation"
+}
+],
+"0xefbce7a940274e58cbce5ebcd0d11014048f5239": [
+{
+"file": "data/scored_targets_2026-09-16-batch9.md",
+"title": "Batch 9 -- 2026-09-16 (automated pipeline run)",
+"date": "2026-09-16",
+"kind": "scored"
+}
+],
+"0xf0ce991ea4a0d2400a4ab49b20ae333f6dce3de9": [
+{
+"file": "data/correction_2026-09-17-rollup-l1-testnet-oracle-sync.md",
+"title": "Correction (2026-09-17, evening run): testnet oracle still served the pre-revision L1 rollup authority score (60, not 57)",
+"date": "2026-09-17",
+"kind": "correction"
+}
+],
+"0xf0eef247585b184836915e80f984246d981c55c4": [
+{
+"file": "data/scored_targets_2026-09-16-batch8.md",
+"title": "Batch 8 -- 2026-09-16",
+"date": "2026-09-16",
+"kind": "scored"
+}
+],
+"0xf1f413ab4ef210f2aee5cdb998362b743a9e4fa2": [
+{
+"file": "data/scored_targets_2026-09-17-batch11.md",
+"title": "Batch 11 (2026-09-17, evening run): Snuggle (MaxFi Robinhood vault)",
+"date": "2026-09-17",
+"kind": "scored"
+}
+],
+"0xf2606acddcba40931e80d6e2a5a45ff06a0788ef": [
+{
+"file": "data/rotation_audit_2026-09-20-robinhood-chain-index16.md",
+"title": "Rotation audit (2026-09-20): Robinhood Chain, tracked target index 16, plus 4 new targets",
+"date": "2026-09-20",
+"kind": "rotation"
+}
+],
+"0xf28704c691290547924e2129d407da36bda8ce0f": [
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index10.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 10, plus 1 new target (UNCX Network V3 Locker)",
+"date": "2026-09-19",
+"kind": "rotation"
+},
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index9.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 9, plus 1 new target (NOXA Fun Launch Locker)",
+"date": "2026-09-19",
+"kind": "rotation"
+}
+],
+"0xf39d9a9abb98593ceac395d7a37c572da48fcfd5": [
+{
+"file": "data/scored_targets_2026-09-16-batch9.md",
+"title": "Batch 9 -- 2026-09-16 (automated pipeline run)",
+"date": "2026-09-16",
+"kind": "scored"
+}
+],
+"0xf62c201e9a28f6a57c4262004dd2e8b8e95bb1ec": [
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index12.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 12, plus 1 new target (T3tris Finance WBTC vault)",
+"date": "2026-09-19",
+"kind": "rotation"
+}
+],
+"0xfaa53839b3f8a0383e71a310c987f2c759d135ae": [
+{
+"file": "data/rotation_audit_2026-09-19-robinhood-chain-index13.md",
+"title": "Rotation audit (2026-09-19): Robinhood Chain, tracked target index 13, plus 1 new target (up v3 Factory)",
+"date": "2026-09-19",
+"kind": "rotation"
+}
+],
+"0xfcb19e6a322b27c06842a71e8c725399f049ae3a": [
+{
+"file": "data/finding_2026-09-26-issuer-power-tracked-assets.md",
+"title": "Issuer power on the 4 assets this oracle's own tracked vaults actually hold",
+"date": "2026-09-26",
+"kind": "finding"
+}
+],
+"0xfd2fd4b046136b540a56c11c75ac679ae7d1db24": [
+{
+"file": "data/rotation_audit_2026-09-18-robinhood-chain-index6-batch13.md",
+"title": "Rotation audit (2026-09-18): Robinhood Chain, tracked target index 6, plus batch 13",
+"date": "2026-09-18",
+"kind": "rotation"
+},
+{
+"file": "data/scored_targets_2026-09-18-batch12.md",
+"title": "Batch 12 (2026-09-18): PancakeSwap AMM (V2) Factory, plus a crossExposure correction on PancakeSwap V3 Factory it exposed",
+"date": "2026-09-18",
+"kind": "scored"
+}
+],
+"0xfd739d4e423301ce9385c1fb8850539d657c296d": [
+{
+"file": "data/finding_2026-09-19-hyperliquid-khype-kmhype-identity.md",
+"title": "Finding (2026-09-19): Hyperliquid target #6 was mislabeled kHYPE, is actually kmHYPE",
+"date": "2026-09-19",
+"kind": "finding"
+}
+],
+"0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d": [
+{
+"file": "data/rotation_audit_2026-09-20-robinhood-chain-index16.md",
+"title": "Rotation audit (2026-09-20): Robinhood Chain, tracked target index 16, plus 4 new targets",
+"date": "2026-09-20",
+"kind": "rotation"
+}
+],
+"2LW6PSEjp81xSEttWwXDB6Etb1eKdhYPbFEojYbyhx88": [
+{
+"file": "data/backtest_2026-09-17-drift-protocol-security-council-compromise.md",
+"title": "Retroactive backtest: Drift Protocol's $285M Security Council compromise (2026-04-01)",
+"date": "2026-09-17",
+"kind": "backtest"
+}
+],
+"2r7VSeKzyepHbdGUsZir94fpZgxBRG2xqgaMnbEALL6r": [
+{
+"file": "data/finding_2026-09-17-spl-governance-shared-instance-controller.md",
+"title": "Finding (2026-09-17): who actually controls the SPL Governance shared default instance",
+"date": "2026-09-17",
+"kind": "finding"
+}
+],
+"39JyWrdbVdRqjzw9yyEjxNtTbTKcTPLdtdCgbz7C7Aq8": [
+{
+"file": "data/backtest_2026-09-17-drift-protocol-security-council-compromise.md",
+"title": "Retroactive backtest: Drift Protocol's $285M Security Council compromise (2026-04-01)",
+"date": "2026-09-17",
+"kind": "backtest"
+}
+],
+"3geE5P3D7VJRaNNDVfZciGsXgwGiao1hSNpRM6jWNa5A": [
+{
+"file": "data/backtest_2026-09-17-solend-governance-emergency-powers.md",
+"title": "Retroactive backtest: Solend DAO \"emergency powers\" governance incident (2022-06-19/20)",
+"date": "2026-09-17",
+"kind": "backtest"
+}
+],
+"4AxRDMShhYgoP7vVsZ1oDzQQaVw3WBPUoFvonYxJXTpc": [
+{
+"file": "data/backtest_2026-09-17-solend-governance-emergency-powers.md",
+"title": "Retroactive backtest: Solend DAO \"emergency powers\" governance incident (2022-06-19/20)",
+"date": "2026-09-17",
+"kind": "backtest"
+}
+],
+"6EpduYmguTXpJMtEKjYXvrmuusBFrTy2stPNzbDZrqUT": [
+{
+"file": "data/correction_2026-09-17-solend-governance-adversarial-review.md",
+"title": "Correction: adversarial review of Solend DAO governance (2026-09-17)",
+"date": "2026-09-17",
+"kind": "correction"
+}
+],
+"6rFUnQik5dhUsxJaxN2dKGJRD3cX8kQM3cyLD1kbaoCF": [
+{
+"file": "data/finding_2026-09-17-spl-governance-shared-instance-controller.md",
+"title": "Finding (2026-09-17): who actually controls the SPL Governance shared default instance",
+"date": "2026-09-17",
+"kind": "finding"
+}
+],
+"7qipzLR9j1JcvdxE1XJEFgvoyFmgBpgw5hMdHBMPcJtM": [
+{
+"file": "data/backtest_2026-09-17-drift-protocol-security-council-compromise.md",
+"title": "Retroactive backtest: Drift Protocol's $285M Security Council compromise (2026-04-01)",
+"date": "2026-09-17",
+"kind": "backtest"
+}
+],
+"7sf3tcWm58vhtkJMwuw2P3T6UBX7UE5VKxPMnXJUZ1Hn": [
+{
+"file": "data/backtest_2026-09-17-solend-governance-emergency-powers.md",
+"title": "Retroactive backtest: Solend DAO \"emergency powers\" governance incident (2022-06-19/20)",
+"date": "2026-09-17",
+"kind": "backtest"
+}
+],
+"A1eC8n2tQBHPodn8sZHsc5XWciunZy9B1VgmcHgK1xhP": [
+{
+"file": "data/backtest_2026-09-17-drift-protocol-security-council-compromise.md",
+"title": "Retroactive backtest: Drift Protocol's $285M Security Council compromise (2026-04-01)",
+"date": "2026-09-17",
+"kind": "backtest"
+}
+],
+"A7kmu2kUcnQwAVn8B4znQmGJeUrsJ1WEhYVMtmiBLkEr": [
+{
+"file": "data/finding_2026-09-25-governance-capture-quantified.md",
+"title": "Governance-capture concentration, quantified for the first time (Uniswap + Aave Governance V3 + Solend/Realms)",
+"date": "2026-09-25",
+"kind": "finding"
+},
+{
+"file": "data/backtest_2026-09-17-solend-governance-emergency-powers.md",
+"title": "Retroactive backtest: Solend DAO \"emergency powers\" governance incident (2022-06-19/20)",
+"date": "2026-09-17",
+"kind": "backtest"
+},
+{
+"file": "data/correction_2026-09-17-solend-governance-adversarial-review.md",
+"title": "Correction: adversarial review of Solend DAO governance (2026-09-17)",
+"date": "2026-09-17",
+"kind": "correction"
+},
+{
+"file": "data/finding_2026-09-17-spl-governance-shared-instance-controller.md",
+"title": "Finding (2026-09-17): who actually controls the SPL Governance shared default instance",
+"date": "2026-09-17",
+"kind": "finding"
+}
+],
+"ACVqan3WMg6CuE99sn5bNsqpcywg88EhNBAjRftvy7hd": [
+{
+"file": "data/finding_2026-09-17-spl-governance-shared-instance-controller.md",
+"title": "Finding (2026-09-17): who actually controls the SPL Governance shared default instance",
+"date": "2026-09-17",
+"kind": "finding"
+}
+],
+"AiLGdNitMjv8n5HMS7HAdV2kaeJZZFd4jdfn5xp1PKrW": [
+{
+"file": "data/backtest_2026-09-17-drift-protocol-security-council-compromise.md",
+"title": "Retroactive backtest: Drift Protocol's $285M Security Council compromise (2026-04-01)",
+"date": "2026-09-17",
+"kind": "backtest"
+}
+],
+"BPFLoaderUpgradeab1e11111111111111111111111": [
+{
+"file": "data/finding_2026-09-17-spl-governance-shared-instance-controller.md",
+"title": "Finding (2026-09-17): who actually controls the SPL Governance shared default instance",
+"date": "2026-09-17",
+"kind": "finding"
+}
+],
+"EoKpGErCsD4UEbbY6LX4MLWBUjmoAxqKdU4fdtLuzK6M": [
+{
+"file": "data/finding_2026-09-17-spl-governance-shared-instance-controller.md",
+"title": "Finding (2026-09-17): who actually controls the SPL Governance shared default instance",
+"date": "2026-09-17",
+"kind": "finding"
+}
+],
+"GoVERLMGbGF8kwAwhyNgF1BQ2uyQPawHCWbnFRmLZCf": [
+{
+"file": "data/finding_2026-09-17-spl-governance-shared-instance-controller.md",
+"title": "Finding (2026-09-17): who actually controls the SPL Governance shared default instance",
+"date": "2026-09-17",
+"kind": "finding"
+}
+],
+"GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw": [
+{
+"file": "data/backtest_2026-09-17-solend-governance-emergency-powers.md",
+"title": "Retroactive backtest: Solend DAO \"emergency powers\" governance incident (2022-06-19/20)",
+"date": "2026-09-17",
+"kind": "backtest"
+},
+{
+"file": "data/finding_2026-09-17-spl-governance-shared-instance-controller.md",
+"title": "Finding (2026-09-17): who actually controls the SPL Governance shared default instance",
+"date": "2026-09-17",
+"kind": "finding"
+}
+],
+"H7PiGqqUaanBovwKgEtreJbKmQe6dbq6VTrw6guy7ZgL": [
+{
+"file": "data/backtest_2026-09-17-drift-protocol-security-council-compromise.md",
+"title": "Retroactive backtest: Drift Protocol's $285M Security Council compromise (2026-04-01)",
+"date": "2026-09-17",
+"kind": "backtest"
+}
+],
+"HF7gCq7BMB6cFfhharTGGm31sqDdpmvLTgF4WEoW8y9n": [
+{
+"file": "data/finding_2026-09-17-spl-governance-shared-instance-controller.md",
+"title": "Finding (2026-09-17): who actually controls the SPL Governance shared default instance",
+"date": "2026-09-17",
+"kind": "finding"
+}
+],
+"HVx4oW785bu8QDQ8AwSVfD7H4iuH51ttakc2G5f9XTX8": [
+{
+"file": "data/finding_2026-09-17-spl-governance-shared-instance-controller.md",
+"title": "Finding (2026-09-17): who actually controls the SPL Governance shared default instance",
+"date": "2026-09-17",
+"kind": "finding"
+}
+],
+"HuaL6cDtuNtfnJgvwMnYiZDHVCoLAuDtVFgJD8kYChJ4": [
+{
+"file": "data/backtest_2026-09-17-solend-governance-emergency-powers.md",
+"title": "Retroactive backtest: Solend DAO \"emergency powers\" governance incident (2022-06-19/20)",
+"date": "2026-09-17",
+"kind": "backtest"
+}
+],
+"SLNDpmoWTVADgEdndyvWzroNL7zSi1dF9PC3xHGtPwp": [
+{
+"file": "data/backtest_2026-09-17-solend-governance-emergency-powers.md",
+"title": "Retroactive backtest: Solend DAO \"emergency powers\" governance incident (2022-06-19/20)",
+"date": "2026-09-17",
+"kind": "backtest"
+}
+],
+"SMPLVC8MxZ5Bf5EfF7PaMiTCxoBAcmkbM2vkrvMK8ho": [
+{
+"file": "data/finding_2026-09-17-spl-governance-shared-instance-controller.md",
+"title": "Finding (2026-09-17): who actually controls the SPL Governance shared default instance",
+"date": "2026-09-17",
+"kind": "finding"
+}
+],
+"SQDS4ep65T869zMMBKyuUq6aD6EgTu8psMjkvj52pCf": [
+{
+"file": "data/backtest_2026-09-17-drift-protocol-security-council-compromise.md",
+"title": "Retroactive backtest: Drift Protocol's $285M Security Council compromise (2026-04-01)",
+"date": "2026-09-17",
+"kind": "backtest"
+}
+],
+"TestScoreMeridianExchangeGateway": [
+{
+"file": "data/rotation_audit_2026-09-18-robinhood-chain-index7.md",
+"title": "Rotation audit (2026-09-18): Robinhood Chain, tracked target index 7, plus 1 new target (Meridian Perps)",
+"date": "2026-09-18",
+"kind": "rotation"
+}
+],
+"dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH": [
+{
+"file": "data/backtest_2026-09-17-drift-protocol-security-council-compromise.md",
+"title": "Retroactive backtest: Drift Protocol's $285M Security Council compromise (2026-04-01)",
+"date": "2026-09-17",
+"kind": "backtest"
+}
+],
+"pytGY6tWRgGinSCvRLnSv4fHfBTMoiDGiCsesmHWM6U": [
+{
+"file": "data/finding_2026-09-17-spl-governance-shared-instance-controller.md",
+"title": "Finding (2026-09-17): who actually controls the SPL Governance shared default instance",
+"date": "2026-09-17",
+"kind": "finding"
+}
+],
+"pytS9TjG1qyAZypk7n8rw8gfW9sUaqqYyMhJQ4E7JCQ": [
+{
+"file": "data/finding_2026-09-17-spl-governance-shared-instance-controller.md",
+"title": "Finding (2026-09-17): who actually controls the SPL Governance shared default instance",
+"date": "2026-09-17",
+"kind": "finding"
+}
+],
+"t3ev37Q2uL1sfTsiJQJiWJoFzQpDhmnUwYo": [
+{
+"file": "data/finding_2026-09-20-scorer-test-audit.md",
+"title": "Scorer test audit, 2026-09-20: what executing the untested scorer bodies found",
+"date": "2026-09-20",
+"kind": "finding"
+}
+],
+"v36Pdq4kjUhrUBnYzZLa4HReBXpyVRCwxQ9Bkk2i8YC": [
+{
+"file": "data/finding_2026-09-25-governance-capture-quantified.md",
+"title": "Governance-capture concentration, quantified for the first time (Uniswap + Aave Governance V3 + Solend/Realms)",
+"date": "2026-09-25",
+"kind": "finding"
+}
+]
+}
+}

@@ -1,0 +1,29 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Authority Facts v0.1: the JSON twin of one label",
+ "description": "The fields every label must carry (specification section 2). A line that cannot be read is null, never 0. Extra fields are allowed.",
+ "type": "object",
+ "required": ["chain", "address", "composite", "band", "keys_to_move", "react_hours", "money_per_key_usd", "sub", "requirements", "last_pushed", "stale", "methodology_hash", "block", "license"],
+ "properties": {
+  "name": {"type": "string"},
+  "chain": {"type": "string"},
+  "address": {"type": "string"},
+  "composite": {"type": "integer"},
+  "band": {"enum": ["critical", "weak", "moderate", "decent", "strong"]},
+  "keys_to_move": {"type": ["integer", "null"]},
+  "react_hours": {"type": ["integer", "null"]},
+  "money_per_key_usd": {"type": ["number", "null"]},
+  "sub": {
+   "type": "object",
+   "required": ["adminKeyScore", "multisigScore", "timelockScore"],
+   "properties": {"adminKeyScore": {"type": "integer"}, "multisigScore": {"type": "integer"}, "timelockScore": {"type": "integer"}}
+  },
+  "requirements": {"type": "array", "items": {"type": "object", "required": ["label", "met"], "properties": {"label": {"type": "string"}, "met": {"type": "boolean"}}}},
+  "independent_read": {"type": ["object", "null"]},
+  "last_pushed": {"type": ["integer", "null"]},
+  "stale": {"type": "boolean"},
+  "methodology_hash": {"type": "string"},
+  "block": {"type": ["integer", "null"]},
+  "license": {"type": "string"}
+ }
+}

@@ -1,0 +1,107 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "watch/score_series.json v1",
+ "type": "object",
+ "required": [
+  "run_utc",
+  "targets",
+  "moves_recorded",
+  "series",
+  "calibration"
+ ],
+ "properties": {
+  "run_utc": {
+   "type": "string"
+  },
+  "targets": {
+   "type": "integer"
+  },
+  "moves_recorded": {
+   "type": "integer"
+  },
+  "methodology_changes": {
+   "type": "object"
+  },
+  "series": {
+   "type": "object",
+   "additionalProperties": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "required": [
+      "t",
+      "composite",
+      "from"
+     ],
+     "properties": {
+      "t": {
+       "type": "string"
+      },
+      "composite": {
+       "type": "integer",
+       "minimum": 0,
+       "maximum": 100
+      },
+      "from": {
+       "type": "string",
+       "enum": [
+        "push",
+        "watch",
+        "first"
+       ]
+      }
+     }
+    }
+   }
+  },
+  "calibration": {
+   "type": "object",
+   "required": [
+    "window_days",
+    "actions",
+    "under_40",
+    "by_band",
+    "list"
+   ],
+   "properties": {
+    "window_days": {
+     "type": "integer"
+    },
+    "actions": {
+     "type": "integer"
+    },
+    "under_40": {
+     "type": "integer"
+    },
+    "by_band": {
+     "type": "object"
+    },
+    "list": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "required": [
+       "kind",
+       "key",
+       "t"
+      ],
+      "properties": {
+       "score_then": {
+        "type": [
+         "integer",
+         "null"
+        ]
+       },
+       "band_then": {
+        "type": [
+         "string",
+         "null"
+        ]
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

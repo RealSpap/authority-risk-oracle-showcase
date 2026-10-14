@@ -1,0 +1,19 @@
+{
+ "what": "selector -> function name, from the public signature database (openchain), cached; written by scripts/classify_ops.py",
+ "selectors": {
+  "0x3dbb202b": "sendMessage(address,bytes,uint32)",
+  "0x6dbd9f90": "setConfig(address,address,(uint32,uint32,bytes)[])",
+  "0x46f943e9": "setRateLimits((uint32,uint256,uint256)[])",
+  "0x76ef8453": "sendMessage(address[],uint256[],bytes[],address,uint16)",
+  "0x7ab56403": "setWormholePeer(uint16,bytes32)",
+  "0x87acd009": "setWithdrawCooldown(uint40)",
+  "0x7c918634": "setPeer(uint16,bytes32,uint8,uint256)",
+  "0x920ed706": "setIsSentinel(address,bool)",
+  "0x9f3ce55a": "sendMessage(address,uint256,bytes)",
+  "0xadbab6c3": "setWithdrawExpiration(uint40)",
+  "0x02c6bb6a": "updateUserSupplyConfigs((address,address,uint8,uint256,uint256,uint256)[])",
+  "0x01b88f86": "updateUserBorrowConfigs((address,address,uint8,uint256,uint256,uint256,uint256)[])",
+  "0x095ea7b3": "approve(address,uint256)",
+  "0x96f4e9f9": "ccipSend(uint64,(bytes,bytes,(address,uint256)[],address,bytes))"
+ }
+}

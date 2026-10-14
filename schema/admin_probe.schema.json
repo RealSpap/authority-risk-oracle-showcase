@@ -1,0 +1,39 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "watch/admin_probe.json v1",
+ "type": "object",
+ "required": [
+  "generated_utc",
+  "unreadable_targets",
+  "probed_targets",
+  "with_holder",
+  "by_target"
+ ],
+ "properties": {
+  "generated_utc": {
+   "type": "string"
+  },
+  "unreadable_targets": {
+   "type": "integer",
+   "description": "targets of the independent reader that stayed unreadable, on the chains this probe covers"
+  },
+  "probed_targets": {
+   "type": "integer",
+   "description": "of those, AccessControl-style contracts where at least one candidate answered"
+  },
+  "with_holder": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   },
+   "description": "<chain>:<target> keys where a known contract holds DEFAULT_ADMIN_ROLE"
+  },
+  "by_target": {
+   "type": "object",
+   "description": "<chain>:<target> -> role, method, probed (candidates asked), answered (candidates that answered), holders [{holder, kind, threshold, owners, delay_seconds}], complete (always false: absence proves nothing)"
+  },
+  "what": {
+   "type": "string"
+  }
+ }
+}

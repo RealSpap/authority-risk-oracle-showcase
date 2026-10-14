@@ -1,0 +1,192 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "watch/side_roles.json v1",
+ "type": "object",
+ "required": [
+  "generated_utc",
+  "asked",
+  "count",
+  "plain_key_roles",
+  "changes",
+  "by_target"
+ ],
+ "properties": {
+  "generated_utc": {
+   "type": "string"
+  },
+  "asked": {
+   "type": "integer"
+  },
+  "count": {
+   "type": "integer"
+  },
+  "plain_key_roles": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  },
+  "previous_run": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "stale": {
+   "type": "integer"
+  },
+  "unread_chains": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  },
+  "changes": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "target",
+     "role",
+     "change"
+    ],
+    "properties": {
+     "target": {
+      "type": "string"
+     },
+     "role": {
+      "type": "string"
+     },
+     "change": {
+      "enum": [
+       "changed",
+       "added",
+       "cleared",
+       "announced"
+      ]
+     },
+     "from": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "from_kind": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "to": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "to_kind": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "valid_at": {
+      "type": [
+       "integer",
+       "null"
+      ]
+     },
+     "from_seconds": {
+      "type": [
+       "integer",
+       "null"
+      ]
+     },
+     "to_seconds": {
+      "type": [
+       "integer",
+       "null"
+      ]
+     },
+     "shorter": {
+      "type": [
+       "boolean",
+       "null"
+      ]
+     }
+    }
+   }
+  },
+  "by_target": {
+   "type": "object",
+   "additionalProperties": {
+    "type": "object",
+    "required": [],
+    "properties": {
+     "roles": {
+      "type": "object",
+      "additionalProperties": {
+       "type": "object",
+       "required": [
+        "kind",
+        "holder"
+       ],
+       "properties": {
+        "kind": {
+         "enum": [
+          "eoa",
+          "safe",
+          "timelock",
+          "contract",
+          "unread"
+         ]
+        },
+        "holder": {
+         "type": "string"
+        },
+        "threshold": {
+         "type": "integer"
+        },
+        "owners": {
+         "type": "integer"
+        },
+        "delay_seconds": {
+         "type": "integer"
+        },
+        "self": {
+         "type": "boolean"
+        },
+        "stale": {
+         "type": "boolean"
+        },
+        "delegated_to": {
+         "type": "string",
+         "description": "an EIP-7702 delegation: the plain key runs the code of this address"
+        }
+       }
+      }
+     },
+     "pending": {
+      "type": "object",
+      "properties": {
+       "guardian": {
+        "type": "object"
+       },
+       "timelock": {
+        "type": "object"
+       }
+      }
+     }
+    }
+   }
+  },
+  "what": {
+   "type": "string"
+  },
+  "pending": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  }
+ }
+}

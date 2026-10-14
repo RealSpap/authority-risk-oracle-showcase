@@ -1,0 +1,1215 @@
+{
+ "generated_utc": "2026-10-14T07:07:37Z",
+ "compared": 197,
+ "new_this_run": 0,
+ "first_seen_oracles": [],
+ "moves": [
+  {
+   "run_utc": "2026-10-13T06:55:42Z",
+   "oracle": "solana-devnet",
+   "target": "7s1da8DduuBFqGra5bJBjpnvL5E9mGzCuMk1Qkh4or2Z",
+   "composite": [
+    55,
+    56
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 83,
+     "to": 87,
+     "why": "more signatures are now required (83 \u2192 87)"
+    }
+   ],
+   "block": null,
+   "lastUpdated": [
+    1791662446,
+    1791859636
+   ]
+  },
+  {
+   "run_utc": "2026-10-11T06:49:05Z",
+   "oracle": "ethereum-l1-sepolia",
+   "target": "0xbe286431454714f511008713973d3b053a2d38f3",
+   "composite": [
+    81,
+    81
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 40,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 40)"
+    }
+   ],
+   "block": 11889950,
+   "lastUpdated": [
+    1791661565,
+    1791687028
+   ]
+  },
+  {
+   "run_utc": "2026-10-11T06:49:05Z",
+   "oracle": "ethereum-l1-sepolia",
+   "target": "0x02c3ea4e34c0cbd694d2adfa2c690eecbc1793ee",
+   "composite": [
+    78,
+    78
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 40,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 40)"
+    }
+   ],
+   "block": 11889950,
+   "lastUpdated": [
+    1791661565,
+    1791687028
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "arbitrum-sepolia",
+   "target": "0x3c3d99fd298f679dbc2cecd132b4ec4d0f5e6e72",
+   "composite": [
+    19,
+    19
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 52,
+     "why": "the price feed moved under fewer hands (100 \u2192 52)"
+    }
+   ],
+   "block": 317855207,
+   "lastUpdated": [
+    1790407252,
+    1791658650
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "arbitrum-sepolia",
+   "target": "0xe23b4ae3624fb6f7cdef29bc8ead912f1ede6886",
+   "composite": [
+    55,
+    55
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 52,
+     "why": "the price feed moved under fewer hands (100 \u2192 52)"
+    }
+   ],
+   "block": 317855207,
+   "lastUpdated": [
+    1790407252,
+    1791658650
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "arbitrum-sepolia",
+   "target": "0xa97684ead0e402dc232d5a977953df7ecbab3cdb",
+   "composite": [
+    71,
+    71
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 52,
+     "why": "the price feed moved under fewer hands (100 \u2192 52)"
+    }
+   ],
+   "block": 317855207,
+   "lastUpdated": [
+    1790407252,
+    1791658650
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "arbitrum-sepolia",
+   "target": "0x9c4ec768c28520b50860ea7a15bd7213a9ff58bf",
+   "composite": [
+    78,
+    78
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 52,
+     "why": "the price feed moved under fewer hands (100 \u2192 52)"
+    }
+   ],
+   "block": 317855207,
+   "lastUpdated": [
+    1790407252,
+    1791658650
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "arbitrum-sepolia",
+   "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
+   "composite": [
+    59,
+    59
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 20,
+     "why": "the price feed moved under fewer hands (100 \u2192 20)"
+    }
+   ],
+   "block": 317855207,
+   "lastUpdated": [
+    1790407252,
+    1791658650
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "arbitrum-sepolia",
+   "target": "0x489ee077994b6658eafa855c308275ead8097c4a",
+   "composite": [
+    57,
+    57
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 2,
+     "why": "the price feed moved under fewer hands (100 \u2192 2)"
+    }
+   ],
+   "block": 317855207,
+   "lastUpdated": [
+    1790407252,
+    1791658650
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "arbitrum-sepolia",
+   "target": "0x6bd780e7fdf01d77e4d475c821f1e7ae05409072",
+   "composite": [
+    40,
+    40
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 20,
+     "why": "the price feed moved under fewer hands (100 \u2192 20)"
+    }
+   ],
+   "block": 317855207,
+   "lastUpdated": [
+    1790407252,
+    1791658650
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "base-sepolia",
+   "target": "0xe20fcbdbffc4dd138ce8b2e6fbb6cb49777ad64d",
+   "composite": [
+    71,
+    71
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 52,
+     "why": "the price feed moved under fewer hands (100 \u2192 52)"
+    }
+   ],
+   "block": 47948906,
+   "lastUpdated": [
+    1790407192,
+    1791653885
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "base-sepolia",
+   "target": "0xb125e6687d4313864e53df431d5425969c15eb2f",
+   "composite": [
+    78,
+    78
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 52,
+     "why": "the price feed moved under fewer hands (100 \u2192 52)"
+    }
+   ],
+   "block": 47948906,
+   "lastUpdated": [
+    1790407192,
+    1791653885
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "base-sepolia",
+   "target": "0xfbb21d0380bee3312b33c4353c8936a0f13ef26c",
+   "composite": [
+    71,
+    71
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 52,
+     "why": "the price feed moved under fewer hands (100 \u2192 52)"
+    }
+   ],
+   "block": 47948906,
+   "lastUpdated": [
+    1790407192,
+    1791653885
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "base-sepolia",
+   "target": "0xee8f4ec5672f09119b96ab6fb59c27e1b7e44b61",
+   "composite": [
+    60,
+    66
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "timelockScore",
+     "label": "timelock",
+     "from": 55,
+     "to": 75,
+     "why": "the delay before changes apply was lengthened (55 \u2192 75)"
+    },
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 52,
+     "why": "the price feed moved under fewer hands (100 \u2192 52)"
+    }
+   ],
+   "block": 47948906,
+   "lastUpdated": [
+    1790407192,
+    1791653885
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "base-sepolia",
+   "target": "0x7bfa7c4f149e7415b73bdedfe609237e29cbf34a",
+   "composite": [
+    63,
+    63
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 52,
+     "why": "the price feed moved under fewer hands (100 \u2192 52)"
+    }
+   ],
+   "block": 47948906,
+   "lastUpdated": [
+    1790407192,
+    1791653885
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "base-sepolia",
+   "target": "0xbeef010f9cb27031ad51e3333f9af9c6b1228183",
+   "composite": [
+    66,
+    73
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 50,
+     "to": 75,
+     "why": "more signatures are now required (50 \u2192 75)"
+    },
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 52,
+     "why": "the price feed moved under fewer hands (100 \u2192 52)"
+    }
+   ],
+   "block": 47948906,
+   "lastUpdated": [
+    1790407192,
+    1791653885
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "base-sepolia",
+   "target": "0xbeef2d50b428675a1921bc6bbf4bfb9d8cf1461a",
+   "composite": [
+    66,
+    73
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 50,
+     "to": 75,
+     "why": "more signatures are now required (50 \u2192 75)"
+    },
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 52,
+     "why": "the price feed moved under fewer hands (100 \u2192 52)"
+    }
+   ],
+   "block": 47948906,
+   "lastUpdated": [
+    1790407192,
+    1791653885
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "ethereum-l1-sepolia",
+   "target": "0x2f39d218133afab8f2b819b1066c7e434ad94e9e",
+   "composite": [
+    78,
+    78
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 52,
+     "why": "the price feed moved under fewer hands (100 \u2192 52)"
+    }
+   ],
+   "block": 11887090,
+   "lastUpdated": [
+    1790407330,
+    1791661565
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "ethereum-l1-sepolia",
+   "target": "0xc3d688b66703497daa19211eedff47f25384cdc3",
+   "composite": [
+    79,
+    79
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 52,
+     "why": "the price feed moved under fewer hands (100 \u2192 52)"
+    }
+   ],
+   "block": 11887090,
+   "lastUpdated": [
+    1790407330,
+    1791661565
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "ethereum-l1-sepolia",
+   "target": "0x02c3ea4e34c0cbd694d2adfa2c690eecbc1793ee",
+   "composite": [
+    78,
+    78
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 20,
+     "why": "the price feed moved under fewer hands (100 \u2192 20)"
+    }
+   ],
+   "block": 11887090,
+   "lastUpdated": [
+    1790407330,
+    1791661565
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "ethereum-l1-sepolia",
+   "target": "0x5d39e06b825c1f2b80bf2756a73e28efaa128ba0",
+   "composite": [
+    47,
+    47
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 52,
+     "why": "the price feed moved under fewer hands (100 \u2192 52)"
+    }
+   ],
+   "block": 11887090,
+   "lastUpdated": [
+    1790407330,
+    1791661565
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "ethereum-l1-sepolia",
+   "target": "0x55555815a5595991c3a0ff119b59aef6c8b55555",
+   "composite": [
+    2,
+    2
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 31,
+     "why": "the price feed moved under fewer hands (100 \u2192 31)"
+    }
+   ],
+   "block": 11887090,
+   "lastUpdated": [
+    1790407330,
+    1791661565
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "ethereum-l1-sepolia",
+   "target": "0x94643e86aa5e38ddac6c7791c1297f4e40cd96c1",
+   "composite": [
+    2,
+    2
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 31,
+     "why": "the price feed moved under fewer hands (100 \u2192 31)"
+    }
+   ],
+   "block": 11887090,
+   "lastUpdated": [
+    1790407330,
+    1791661565
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "ethereum-l1-sepolia",
+   "target": "0xbeef047a543e45807105e51a8bbefcc5950fcfba",
+   "composite": [
+    67,
+    73
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 55,
+     "to": 75,
+     "why": "more signatures are now required (55 \u2192 75)"
+    },
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 52,
+     "why": "the price feed moved under fewer hands (100 \u2192 52)"
+    },
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 40,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 40)"
+    }
+   ],
+   "block": 11887090,
+   "lastUpdated": [
+    1790407330,
+    1791661565
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "ethereum-l1-sepolia",
+   "target": "0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+   "composite": [
+    67,
+    73
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 55,
+     "to": 75,
+     "why": "more signatures are now required (55 \u2192 75)"
+    },
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 52,
+     "why": "the price feed moved under fewer hands (100 \u2192 52)"
+    },
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 40,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 40)"
+    }
+   ],
+   "block": 11887090,
+   "lastUpdated": [
+    1790407330,
+    1791661565
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "monad",
+   "target": "0x32841a8511d5c2c5b253f45668780b99139e476d",
+   "composite": [
+    61,
+    67
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 55,
+     "to": 75,
+     "why": "more signatures are now required (55 \u2192 75)"
+    },
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 20,
+     "why": "the price feed moved under fewer hands (100 \u2192 20)"
+    },
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 100,
+     "why": "a shared key was removed (80 \u2192 100)"
+    }
+   ],
+   "block": 69927331,
+   "lastUpdated": [
+    1790270419,
+    1791656126
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "monad",
+   "target": "0x34793fb9935f7bb5e5ae920fb963f39063e7a615",
+   "composite": [
+    49,
+    49
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 52,
+     "why": "the price feed moved under fewer hands (100 \u2192 52)"
+    }
+   ],
+   "block": 69927331,
+   "lastUpdated": [
+    1790270419,
+    1791656126
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "monad",
+   "target": "0xba4dd672062de8feedb665dd4410658864483f1e",
+   "composite": [
+    64,
+    64
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 2,
+     "why": "the price feed moved under fewer hands (100 \u2192 2)"
+    }
+   ],
+   "block": 69927331,
+   "lastUpdated": [
+    1790270419,
+    1791656126
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "plasma",
+   "target": "0x061d8e131f26512348ee5fa42e2df1ba9d6505e9",
+   "composite": [
+    71,
+    71
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 52,
+     "why": "the price feed moved under fewer hands (100 \u2192 52)"
+    }
+   ],
+   "block": 35836873,
+   "lastUpdated": [
+    1789933100,
+    1791655425
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "plasma",
+   "target": "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34",
+   "composite": [
+    52,
+    57
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "timelockScore",
+     "label": "timelock",
+     "from": 0,
+     "to": 15,
+     "why": "a delay before changes apply was added (0 \u2192 15)"
+    }
+   ],
+   "block": 35836873,
+   "lastUpdated": [
+    1789933100,
+    1791655425
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "plasma",
+   "target": "0x42388213c6f56d7e1477632b58ae6bba9adeeea3",
+   "composite": [
+    72,
+    72
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 2,
+     "why": "the price feed moved under fewer hands (100 \u2192 2)"
+    }
+   ],
+   "block": 35836873,
+   "lastUpdated": [
+    1789933100,
+    1791655425
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "plasma",
+   "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
+   "composite": [
+    59,
+    59
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 52,
+     "why": "the price feed moved under fewer hands (100 \u2192 52)"
+    }
+   ],
+   "block": 35836873,
+   "lastUpdated": [
+    1789933100,
+    1791655425
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "plasma",
+   "target": "0xa9c251f8304b1b3fc2b9e8fcae78d94eff82ac66",
+   "composite": [
+    30,
+    30
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 34,
+     "why": "the price feed moved under fewer hands (100 \u2192 34)"
+    }
+   ],
+   "block": 35836873,
+   "lastUpdated": [
+    1789933100,
+    1791655425
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "robinhood-chain",
+   "target": "0xbeeff033f34c046626b8d0a041844c5d1a5409dd",
+   "composite": [
+    19,
+    44
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "adminKeyScore",
+     "label": "admin key",
+     "from": 10,
+     "to": 5,
+     "why": "admin power moved to a smaller group or a bare key (10 \u2192 5)"
+    },
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 35,
+     "to": 65,
+     "why": "more signatures are now required (35 \u2192 65)"
+    },
+    {
+     "axis": "timelockScore",
+     "label": "timelock",
+     "from": 15,
+     "to": 75,
+     "why": "the delay before changes apply was lengthened (15 \u2192 75)"
+    },
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 2,
+     "why": "the price feed moved under fewer hands (100 \u2192 2)"
+    }
+   ],
+   "block": 132526413,
+   "lastUpdated": [
+    1790408560,
+    1791664867
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "robinhood-chain",
+   "target": "0x99347d5f70d3838763f6bddcf80304c8aa953b57",
+   "composite": [
+    22,
+    25
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "adminKeyScore",
+     "label": "admin key",
+     "from": 36,
+     "to": 5,
+     "why": "admin power moved to a smaller group or a bare key (36 \u2192 5)"
+    },
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 16,
+     "to": 15,
+     "why": "fewer signatures are now required (16 \u2192 15)"
+    },
+    {
+     "axis": "timelockScore",
+     "label": "timelock",
+     "from": 10,
+     "to": 60,
+     "why": "the delay before changes apply was lengthened (10 \u2192 60)"
+    },
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 2,
+     "why": "the price feed moved under fewer hands (100 \u2192 2)"
+    }
+   ],
+   "block": 132526413,
+   "lastUpdated": [
+    1790408560,
+    1791664867
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "robinhood-chain",
+   "target": "0x37788ff0c1d4e45a7fe06bc7e71e0cc00121d0a8",
+   "composite": [
+    37,
+    63
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "adminKeyScore",
+     "label": "admin key",
+     "from": 48,
+     "to": 60,
+     "why": "admin power moved to a larger group (48 \u2192 60)"
+    },
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 48,
+     "to": 55,
+     "why": "more signatures are now required (48 \u2192 55)"
+    },
+    {
+     "axis": "timelockScore",
+     "label": "timelock",
+     "from": 10,
+     "to": 75,
+     "why": "the delay before changes apply was lengthened (10 \u2192 75)"
+    },
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 50,
+     "why": "the price feed moved under fewer hands (100 \u2192 50)"
+    }
+   ],
+   "block": 132526413,
+   "lastUpdated": [
+    1790408560,
+    1791664867
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "robinhood-chain",
+   "target": "0xbeeff0fb1dc19344a87b8479dab60a2e16160737",
+   "composite": [
+    46,
+    70
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "adminKeyScore",
+     "label": "admin key",
+     "from": 60,
+     "to": 70,
+     "why": "admin power moved to a larger group (60 \u2192 70)"
+    },
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 64,
+     "to": 65,
+     "why": "more signatures are now required (64 \u2192 65)"
+    },
+    {
+     "axis": "timelockScore",
+     "label": "timelock",
+     "from": 10,
+     "to": 75,
+     "why": "the delay before changes apply was lengthened (10 \u2192 75)"
+    }
+   ],
+   "block": 132526413,
+   "lastUpdated": [
+    1790408560,
+    1791664867
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "robinhood-chain",
+   "target": "0xee27d5ae494300902d90454e8630a3f1c68c9c52",
+   "composite": [
+    52,
+    52
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 52,
+     "why": "the price feed moved under fewer hands (100 \u2192 52)"
+    }
+   ],
+   "block": 132526413,
+   "lastUpdated": [
+    1790408560,
+    1791664867
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "robinhood-chain",
+   "target": "0xbeeff039907422219fb367e525954ddc092854d9",
+   "composite": [
+    44,
+    40
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "adminKeyScore",
+     "label": "admin key",
+     "from": 60,
+     "to": 20,
+     "why": "admin power moved to a smaller group or a bare key (60 \u2192 20)"
+    },
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 56,
+     "to": 30,
+     "why": "fewer signatures are now required (56 \u2192 30)"
+    },
+    {
+     "axis": "timelockScore",
+     "label": "timelock",
+     "from": 10,
+     "to": 75,
+     "why": "the delay before changes apply was lengthened (10 \u2192 75)"
+    }
+   ],
+   "block": 132526413,
+   "lastUpdated": [
+    1790408560,
+    1791664867
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "robinhood-chain",
+   "target": "0xbeefff136e3684273e6aa75a1669b784b373a4fd",
+   "composite": [
+    46,
+    66
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "adminKeyScore",
+     "label": "admin key",
+     "from": 60,
+     "to": 70,
+     "why": "admin power moved to a larger group (60 \u2192 70)"
+    },
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 64,
+     "to": 65,
+     "why": "more signatures are now required (64 \u2192 65)"
+    },
+    {
+     "axis": "timelockScore",
+     "label": "timelock",
+     "from": 10,
+     "to": 60,
+     "why": "the delay before changes apply was lengthened (10 \u2192 60)"
+    },
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 52,
+     "why": "the price feed moved under fewer hands (100 \u2192 52)"
+    }
+   ],
+   "block": 132526413,
+   "lastUpdated": [
+    1790408560,
+    1791664867
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "robinhood-chain",
+   "target": "0xd540f47f214dc7d6d244e62a6ae7e06b586ef44a",
+   "composite": [
+    1,
+    16
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "adminKeyScore",
+     "label": "admin key",
+     "from": 2,
+     "to": 40,
+     "why": "admin power moved to a larger group (2 \u2192 40)"
+    }
+   ],
+   "block": 132526413,
+   "lastUpdated": [
+    1790408560,
+    1791664867
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "solana-devnet",
+   "target": "GKnHiWh3RRrE1zsNzWxRkomymHc374TvJPSTv2wPeYdB",
+   "composite": [
+    54,
+    54
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 45,
+     "why": "the price feed moved under fewer hands (100 \u2192 45)"
+    }
+   ],
+   "block": null,
+   "lastUpdated": [
+    1790407127,
+    1791662444
+   ]
+  },
+  {
+   "run_utc": "2026-10-10T21:14:28Z",
+   "oracle": "solana-devnet",
+   "target": "7s1da8DduuBFqGra5bJBjpnvL5E9mGzCuMk1Qkh4or2Z",
+   "composite": [
+    55,
+    55
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 100,
+     "to": 20,
+     "why": "the price feed moved under fewer hands (100 \u2192 20)"
+    }
+   ],
+   "block": null,
+   "lastUpdated": [
+    1790407130,
+    1791662446
+   ]
+  }
+ ]
+}

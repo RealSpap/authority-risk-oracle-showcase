@@ -1,0 +1,317 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "watch/second_opinion.json v1",
+ "type": "object",
+ "required": [
+  "generated_utc",
+  "checked",
+  "agree",
+  "disagree",
+  "unreadable",
+  "native",
+  "disagreements",
+  "changed",
+  "upgrades",
+  "results"
+ ],
+ "properties": {
+  "generated_utc": {
+   "type": "string"
+  },
+  "checked": {
+   "type": "integer"
+  },
+  "agree": {
+   "type": "integer"
+  },
+  "disagree": {
+   "type": "integer"
+  },
+  "unreadable": {
+   "type": "integer"
+  },
+  "native": {
+   "type": "integer"
+  },
+  "acknowledged": {
+   "type": "integer"
+  },
+  "clusters": {
+   "type": "array"
+  },
+  "concentration": {
+   "type": [
+    "object",
+    "null"
+   ]
+  },
+  "cluster_changes": {
+   "type": "array"
+  },
+  "disagreements": {
+   "type": "array"
+  },
+  "acknowledged_disagreements": {
+   "type": "array"
+  },
+  "changed": {
+   "type": "array"
+  },
+  "upgrades": {
+   "type": "array"
+  },
+  "previous_utc": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "results": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "chain",
+     "target",
+     "kind"
+    ],
+    "properties": {
+     "chain": {
+      "type": "string"
+     },
+     "target": {
+      "type": "string"
+     },
+     "kind": {
+      "type": "string",
+      "enum": [
+       "eoa",
+       "safe",
+       "timelock",
+       "contract",
+       "unreadable",
+       "native",
+       "pda",
+       "squads",
+       "immutable",
+       "program"
+      ]
+     },
+     "holder": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "path": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "threshold": {
+      "type": [
+       "integer",
+       "null"
+      ]
+     },
+     "owners": {
+      "type": [
+       "integer",
+       "null"
+      ]
+     },
+     "delay_seconds": {
+      "type": [
+       "integer",
+       "null"
+      ]
+     },
+     "impl": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "impl_via": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "modules": {
+      "type": [
+       "array",
+       "null"
+      ],
+      "items": {
+       "type": "string"
+      }
+     },
+     "guard": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "modules_detail": {
+      "type": "array"
+     },
+     "guard_detail": {
+      "type": [
+       "object",
+       "null"
+      ]
+     },
+     "disagree": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "acknowledged": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "changed": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "upgraded": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "since": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "shares_admin_with": {
+      "type": "array"
+     },
+     "nested": {
+      "type": "boolean"
+     },
+     "oracle_self": {
+      "type": "boolean"
+     },
+     "access_control": {
+      "description": "the admin was read through an enumerable AccessControl role, not owner() (observed as boolean on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "adminKeyScore": {
+      "description": "(observed as number on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "alias_of": {
+      "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "behind": {
+      "description": "a bare contract holder whose own owner() is the effective hand: address, kind, threshold, owners, delay_seconds (observed as object on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "block_end": {
+      "description": "(observed as number on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "block_start": {
+      "description": "(observed as number on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "cluster": {
+      "description": "the cluster of the contract, when it shares an admin with others (observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "cluster_tvl_usd": {
+      "description": "(observed as number on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "config_authority": {
+      "description": "(observed as  on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "delegated_to": {
+      "description": "since 2026-10-10: the admin or holder is a plain key whose account carries an EIP-7702 delegation to this code (observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "deployed_at": {
+      "description": "Solana: the date of that slot (observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "deployed_slot": {
+      "description": "Solana: the slot of the last deployment of the program (ProgramData) (observed as number on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "effective": {
+      "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "executors": {
+      "description": "(observed as number on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "exposure": {
+      "description": "the attacker's question: keys_to_move, react_hours, tvl_usd, money_per_key_usd, money_source (contract or protocol_tvl) (observed as object on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "former_members_in_account": {
+      "description": "(observed as number on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "holder_tx_count": {
+      "description": "transactions sent by a plain-key holder: a hot operational key or one that never acted (observed as number on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "initiators": {
+      "description": "(observed as number on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "keys_lost_to_freeze": {
+      "description": "how many lost keys would freeze the multisig for ever (observed as number on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "keys_to_act": {
+      "description": "how many keys must collude for the multisig to act (observed as number on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "multisig": {
+      "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "multisigScore": {
+      "description": "(observed as number on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "multisig_program": {
+      "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "owners_detail": {
+      "description": "(observed as array on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "owners_kinds": {
+      "description": "what the signers of a Safe or Squads multisig are, counts only (eoa, safe, timelock, contract, unread) (observed as object on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "pending_admin": {
+      "description": "a new admin designated and not yet accepted (pendingOwner / pendingAdmin) (observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "pending_via": {
+      "description": "which getter named the pending admin (observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "posture": {
+      "description": "the whole finding in one sentence: who holds the admin, the delay, what is in flight (observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "programdata": {
+      "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "self_delay_seconds": {
+      "description": "the contract's own timelock(), when it exposes one (observed as number on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "timelockScore": {
+      "description": "(observed as number on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "timelock_family": {
+      "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "tvl_scope": {
+      "description": "retired or peripheral: the protocol TVL does not sit behind this contract (data/tvl_scope.json) (observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "via_program": {
+      "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "voters": {
+      "description": "(observed as number on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "why": {
+      "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     }
+    }
+   }
+  }
+ }
+}

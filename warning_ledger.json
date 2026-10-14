@@ -737,20 +737,22 @@
    "first_seen_utc": "2026-10-12T18:34:50Z",
    "due_utc": "2026-10-13T14:13:35Z",
    "notice_hours": 19.6,
-   "state": "queued",
+   "state": "resolved",
    "chain": "ethereum",
    "timelock": "Ethena Timelock",
-   "what": "parameter change"
+   "what": "parameter change",
+   "resolved_seen_utc": "2026-10-14T12:50:56Z"
   },
   "ethereum:0xe8dc0fab349ea169283c48ccfd09d797e6db7c94:0xbc377680ab28d2ab3db247e33c1571da3b86a9d0619b4ca6fa21c0d6dc992c2a": {
    "outcome": "warned",
    "first_seen_utc": "2026-10-12T18:34:50Z",
    "due_utc": "2026-10-13T14:18:35Z",
    "notice_hours": 19.7,
-   "state": "queued",
+   "state": "resolved",
    "chain": "ethereum",
    "timelock": "Ethena Timelock",
-   "what": "parameter change"
+   "what": "parameter change",
+   "resolved_seen_utc": "2026-10-14T12:50:56Z"
   },
   "solana:2ymoqqqrtbhq3nq3wfoqqawws65qcquxcwheyha4rshw:squads:2yMoQqQrtbhq3nQ3wFoQQawWS65qcqUXcwHEYha4rshW:152": {
    "outcome": "missed",
@@ -875,22 +877,52 @@
    "first_seen_utc": "2026-10-14T09:30:02Z",
    "due_utc": "2026-10-14T09:42:28Z",
    "notice_hours": 0.2,
-   "state": "queued",
+   "state": "resolved",
    "chain": "solana",
    "timelock": "Squads v4 multisig CxnE\u2026unP1 (4-of-7, time lock 600 s), found by the independent reader (1 tracked program)",
-   "what": "call to the governed program"
+   "what": "call to the governed program",
+   "resolved_seen_utc": "2026-10-14T12:50:56Z"
+  },
+  "plasma:0xabd3645ba0bb60c238bede64378826e1206f5072:0xb79c1800685f7d52e1d620fc4c876a96d66fd81cb3da529c9fa887a3601aa58f": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-10-14T12:50:56Z",
+   "due_utc": "2026-10-15T09:56:00Z",
+   "notice_hours": 21.1,
+   "state": "queued",
+   "chain": "plasma",
+   "timelock": "plasma timelock 0xabd3\u20265072, found by the independent reader (1 tracked contract)",
+   "what": "parameter change"
+  },
+  "solana:7fcpipjwvbpbdhymvt1gjywkciakkjz5gahdqysemvhk:squads:7FCPipJWVbPbdHymVt1gJYwKciakkJz5GahdQySemvHk:128": {
+   "outcome": "seen_without_notice",
+   "first_seen_utc": "2026-10-14T12:50:56Z",
+   "due_utc": "2026-10-14T11:48:07Z",
+   "notice_hours": null,
+   "state": "queued",
+   "chain": "solana",
+   "timelock": "Squads v4 multisig 7FCP\u2026mvHk (7-of-15, time lock 0 s), found by the independent reader (1 tracked program)",
+   "what": "call"
+  },
+  "solana:7fcpipjwvbpbdhymvt1gjywkciakkjz5gahdqysemvhk:squads:7FCPipJWVbPbdHymVt1gJYwKciakkJz5GahdQySemvHk:127": {
+   "outcome": "missed",
+   "first_seen_utc": "2026-10-14T12:50:56Z",
+   "queued_utc": "2026-10-14T11:52:49Z",
+   "state": "resolved",
+   "chain": "solana",
+   "timelock": "Squads v4 multisig 7FCP\u2026mvHk (7-of-15, time lock 0 s), found by the independent reader (1 tracked program)",
+   "what": "call"
   }
  },
- "updated_utc": "2026-10-14T09:30:02Z",
+ "updated_utc": "2026-10-14T12:50:56Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
-  "warned": 14,
-  "seen_without_notice": 9,
-  "missed": 3,
+  "warned": 15,
+  "seen_without_notice": 10,
+  "missed": 4,
   "baseline": 77,
-  "warned_with_a_known_notice": 14,
+  "warned_with_a_known_notice": 15,
   "shortest_notice_hours": 0.2,
-  "median_notice_hours": 20.9,
+  "median_notice_hours": 21.1,
   "note": "warned: seen while queued and not yet executable (the notice is real); seen_without_notice: still queued but already executable when first seen; missed: queued after the ledger started and already applied when first seen (faster than the 6-hour cadence); baseline: applied before the ledger started, counted as neither."
  }
 }

@@ -1,6 +1,6 @@
 """Tests of authority-risk-mcp: the signature check, the integrity of what is read (a local HTTP server stands for the network), the protocol, and parity with the repository's own tools.
 
-    python3 -m unittest discover -s tests            # fast, no network (needs the repository around it, and `python3 build.py` run once)
+    python3 -m unittest discover -s tests            # fast, no network (needs the repository around it, and `python3 vendor_tools.py` run once)
     AUTHORITY_RISK_SLOW=1 python3 -m unittest tests.test_install      # builds the wheel and the npm tarball in throwaway environments
 """
 import hashlib, http.server, importlib.util, io, json, os, socket, subprocess, sys, tempfile, threading, unittest
@@ -208,13 +208,27 @@ class TestServerAndParity(Base):
 
 
 class TestBuild(unittest.TestCase):
+    def test_no_file_in_the_package_root_hides_a_module_that_the_build_tools_run(self):
+        """`python -m build` run in this folder once ran a file called build.py found here instead of the PyPA module, and the first release failed. No top-level .py file may carry the name of a module the build chain runs or imports."""
+        hidden = {"build", "pip", "twine", "setuptools", "wheel", "venv", "ensurepip", "unittest", "json", "os", "sys", "re", "test", "site", "pkg_resources", "distutils", "packaging", "importlib"}
+        mine = {os.path.splitext(n)[0] for n in os.listdir(PKG) if n.endswith(".py")}
+        self.assertEqual(sorted(mine & hidden), [])
+
+    def test_the_publish_workflow_and_the_build_check_run_the_same_build_file(self):
+        wf = os.path.join(PKG, "..", "..", ".github", "workflows")
+        for name in ("publish-mcp.yml", "package-build.yml"):
+            p = os.path.join(wf, name)
+            if not os.path.exists(p): self.skipTest(name + " is not beside the package")
+            text = open(p, encoding="utf-8").read(); self.assertIn("bash build_packages.sh", text, name); self.assertNotIn("python3 -m build", text, name)   # the commands live in one file
+        self.assertTrue(os.path.exists(os.path.join(PKG, "build_packages.sh")))
+
     def test_the_vendored_modules_are_the_repositorys_scripts_byte_for_byte(self):
         if not os.path.exists(FIXTURE): self.skipTest("the repository's scripts are not beside the package")
-        r = subprocess.run([sys.executable, os.path.join(PKG, "build.py"), "--check"], capture_output=True, text=True); self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        r = subprocess.run([sys.executable, os.path.join(PKG, "vendor_tools.py"), "--check"], capture_output=True, text=True); self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
 
     def test_no_vendored_module_that_can_send_anything_is_in_the_package(self):
         v = os.path.join(PKG, "src", "authority_risk_mcp", "_vendor")
-        if not os.path.isdir(v): self.skipTest("run build.py first")
+        if not os.path.isdir(v): self.skipTest("run vendor_tools.py first")
         src = "".join(open(os.path.join(v, n), encoding="utf-8").read() for n in os.listdir(v) if n.endswith(".py"))
         for word in ("urlopen", "send_telegram", "send_discord", "smtplib", "socket.", "subprocess", "requests."): self.assertNotIn(word, src, word)
         store_src = open(os.path.join(PKG, "src", "authority_risk_mcp", "store.py"), encoding="utf-8").read(); self.assertEqual(store_src.count("urlopen") + store_src.count("self._opener.open"), 1)   # the one place that reads the network

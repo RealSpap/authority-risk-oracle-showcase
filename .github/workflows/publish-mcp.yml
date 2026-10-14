@@ -60,18 +60,11 @@ jobs:
 
       - name: Tests (the signature check, the integrity cases, the protocol, the parity with the repository tools)
         run: |
-          python3 build.py
+          python3 vendor_tools.py
           python3 -m unittest discover -s tests -v
 
-      - name: Build the wheel and the source distribution, and the npm tarball
-        run: |
-          python3 -m pip install --quiet build twine
-          python3 -m build --outdir dist
-          python3 -m twine check dist/*
-          python3 build.py --npm
-          mkdir -p dist-npm
-          (cd npm && npm pack --silent --pack-destination ../dist-npm)
-          ls -l dist dist-npm
+      - name: Build the wheel, the source distribution and the npm tarball (the same file the build check runs on every push; it publishes nothing)
+        run: bash build_packages.sh
 
       - name: The built packages start, answer the four tools and refuse an altered folder (installed in throwaway environments)
         env:

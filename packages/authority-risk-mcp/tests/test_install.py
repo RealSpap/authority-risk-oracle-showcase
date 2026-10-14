@@ -32,16 +32,20 @@ class TestInstalled(unittest.TestCase):
     def setUpClass(cls):
         if not os.path.exists(tp.FIXTURE): raise unittest.SkipTest("the repository's scripts/tests are not beside the package")
         cls.tmp = tempfile.TemporaryDirectory(); t = cls.tmp.name
-        subprocess.run([sys.executable, os.path.join(PKG, "build.py"), "--npm"], check=True, capture_output=True)
+        subprocess.run([sys.executable, os.path.join(PKG, "vendor_tools.py"), "--npm"], check=True, capture_output=True)
         cls.src = os.path.join(t, "pkg"); shutil.copytree(PKG, cls.src, ignore=shutil.ignore_patterns("tests", "__pycache__", "dist", "build", "*.egg-info", "node_modules", "*.tgz"))
         cls.fx = tp.load_fixture(); cls.data = os.path.join(t, "data"); cls.fx.build(cls.data); tp.sign_dir(cls.data)
         # Python: a wheel built from the copy, installed into a fresh virtual environment
         cls.venv = os.path.join(t, "venv"); subprocess.run([sys.executable, "-m", "venv", cls.venv], check=True)
         pip = os.path.join(cls.venv, "bin", "pip")
-        subprocess.run([pip, "wheel", "--no-deps", "-q", "-w", os.path.join(t, "dist"), cls.src], check=True, capture_output=True)
-        cls.wheel = glob.glob(os.path.join(t, "dist", "*.whl"))[0]; subprocess.run([pip, "install", "-q", cls.wheel], check=True, capture_output=True)
-        # npm: a tarball from the copy, installed into a fresh project
-        r = subprocess.run(["npm", "pack", "--silent"], cwd=os.path.join(cls.src, "npm"), capture_output=True, text=True, check=True); cls.tgz = os.path.join(cls.src, "npm", r.stdout.strip().splitlines()[-1])
+        # The files that will be published, when build_packages.sh has run (the workflows run it first); otherwise a wheel and a tarball built from the copy.
+        built_wheels = glob.glob(os.path.join(PKG, "dist", "*.whl")); built_tgz = glob.glob(os.path.join(PKG, "dist-npm", "*.tgz"))
+        if built_wheels and built_tgz: cls.wheel, cls.tgz, cls.used_built = built_wheels[0], built_tgz[0], True
+        else:
+            subprocess.run([pip, "wheel", "--no-deps", "-q", "-w", os.path.join(t, "dist"), cls.src], check=True, capture_output=True)
+            cls.wheel = glob.glob(os.path.join(t, "dist", "*.whl"))[0]
+            r = subprocess.run(["npm", "pack", "--silent"], cwd=os.path.join(cls.src, "npm"), capture_output=True, text=True, check=True); cls.tgz = os.path.join(cls.src, "npm", r.stdout.strip().splitlines()[-1]); cls.used_built = False
+        subprocess.run([pip, "install", "-q", cls.wheel], check=True, capture_output=True)
         cls.proj = os.path.join(t, "proj"); os.makedirs(cls.proj); subprocess.run(["npm", "init", "-y", "--silent"], cwd=cls.proj, capture_output=True, check=True)
         subprocess.run(["npm", "install", "--silent", "--no-audit", "--no-fund", cls.tgz], cwd=cls.proj, check=True, capture_output=True)
 

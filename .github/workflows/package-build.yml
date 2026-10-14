@@ -1,0 +1,61 @@
+name: Package build check
+
+# Builds both packages of packages/authority-risk-mcp exactly as the publish workflow does (the same file, build_packages.sh) and runs their tests, on every change that can break them. It publishes nothing
+# and has no secret. A defect in the build is found here, before a release tag.
+on:
+  push:
+    paths:
+      - "packages/authority-risk-mcp/**"
+      - "scripts/agent_tools.py"
+      - "scripts/dossier.py"
+      - "scripts/find.py"
+      - "scripts/compare.py"
+      - "scripts/brief.py"
+      - "scripts/risk_by_cause.py"
+      - "scripts/badges_req.py"
+      - "scripts/watch_location.py"
+      - "scripts/evaluate_rules.py"
+      - ".github/workflows/publish-mcp.yml"
+      - ".github/workflows/package-build.yml"
+  pull_request:
+    paths:
+      - "packages/authority-risk-mcp/**"
+      - ".github/workflows/publish-mcp.yml"
+      - ".github/workflows/package-build.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: packages/authority-risk-mcp
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262   # v4.4.0, pinned to its commit
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065   # v5.6.0, pinned to its commit
+        with:
+          python-version: "3.11"
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1   # v7.1.0, pinned to its commit
+        with:
+          node-version: "24"
+
+      - name: Tests (the signature check, the integrity cases, the protocol, the parity with the repository tools)
+        run: |
+          python3 vendor_tools.py
+          python3 -m unittest discover -s tests -v
+
+      - name: Build the wheel, the source distribution and the npm tarball
+        run: bash build_packages.sh
+
+      - name: The built packages start, answer the four tools and refuse an altered folder (installed in throwaway environments)
+        env:
+          AUTHORITY_RISK_SLOW: "1"
+        run: python3 -m unittest tests.test_install -v

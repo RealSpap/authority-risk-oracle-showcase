@@ -1,8 +1,8 @@
-## Second opinion, 2026-10-15T07:01:04Z
+## Second opinion, 2026-10-15T13:02:22Z
 
-### 1 upgrade(s) executed since the previous run (2026-10-15T00:59:04Z)
+### 1 upgrade(s) executed since the previous run (2026-10-15T07:01:04Z)
 
-- **cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG** on solana: program redeployed since the previous run: slot 445230614 -> 457080014 (2026-10-15T03:00:13Z); the score reads who may upgrade, this is an upgrade that happened
+- **2LecshUwdy9xi7meFgHtFJQNSKk4KdTrcpvaB56dP2NQ** on solana: program redeployed since the previous run: slot 440170207 -> 457152296 (2026-10-15T07:22:05Z); the score reads who may upgrade, this is an upgrade that happened
 
 The code behind a tracked proxy changed: read what the new implementation does before trusting the score (the private pipeline's implementation check names the selectors added and dropped).
 

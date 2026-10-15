@@ -847,20 +847,22 @@
    "first_seen_utc": "2026-10-13T18:38:19Z",
    "due_utc": "2026-10-14T17:49:30Z",
    "notice_hours": 23.2,
-   "state": "queued",
+   "state": "resolved",
    "chain": "solana",
    "timelock": "Squads v4 multisig BQsD\u2026iEjF (5-of-13, time lock 86400 s), found by the independent reader (1 tracked program)",
-   "what": "program upgrade"
+   "what": "program upgrade",
+   "resolved_seen_utc": "2026-10-15T12:53:40Z"
   },
   "solana:bqsdwkl417u4tve2sdnpks469pkdm6yzfgkh77doiejf:squads:BQsDWkL417U4tVE2sDnPks469pKdm6YzFgKH77doiEjF:98": {
    "outcome": "warned",
    "first_seen_utc": "2026-10-13T18:38:19Z",
    "due_utc": "2026-10-14T17:43:06Z",
    "notice_hours": 23.1,
-   "state": "queued",
+   "state": "resolved",
    "chain": "solana",
    "timelock": "Squads v4 multisig BQsD\u2026iEjF (5-of-13, time lock 86400 s), found by the independent reader (1 tracked program)",
-   "what": "call"
+   "what": "call",
+   "resolved_seen_utc": "2026-10-15T12:53:40Z"
   },
   "robinhood:0x0da180b14721ce46a83669b4816cb652caa1001d:0x8d36d612e3cfd5b299a3be7003d4fbb82aaf6a587e88faf22f3ec4f4a0801a53": {
    "outcome": "warned",
@@ -943,7 +945,7 @@
    "what": "call"
   }
  },
- "updated_utc": "2026-10-15T06:52:34Z",
+ "updated_utc": "2026-10-15T12:53:40Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
   "warned": 18,

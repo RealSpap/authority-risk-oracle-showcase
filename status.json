@@ -1,10 +1,10 @@
 {
- "run_utc": "2026-10-14T20:26:06Z",
+ "run_utc": "2026-10-15T00:51:02Z",
  "state": "degraded",
  "reasons": [
   "1 of 197 targets stale on the oracles",
   "15 second-opinion disagreement(s) to review",
-  "3 high alert(s) from the rules firing now (a queued change against this contract is ready to execute now)",
+  "4 high alert(s) from the rules firing now (a queued change against this contract is ready to execute now; the contract's own balance fell by 70% or more since the previous run (totalAssets(), token units, $)",
   "methodology hashes mixed on 1 oracle(s)",
   "method hash not in registry on 1 oracle(s): no version is shown for it (data/method_versions.json)"
  ],

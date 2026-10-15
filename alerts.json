@@ -8,7 +8,6 @@
   "delay removed: timelock score fell to 0",
   "a queued change against this contract executes within 48 h",
   "a queued change against this contract is ready to execute now",
-  "a queued change against this contract was approved and has not been executed for more than 7 days, and is still executable today",
   "the live admin of this contract changed since the previous run (independent read)",
   "the independent reader disagrees with the admin-key score, with money behind it",
   "score pushed more than 7 days ago (the oracle marks it stale at 9)",
@@ -258,34 +257,6 @@
    "notified": true
   },
   {
-   "rule": "a queued change against this contract was approved and has not been executed for more than 7 days, and is still executable today",
-   "severity": "medium",
-   "chain": "Solana",
-   "target": "H4ND9aYttUVLFmNypZqLjZ52FYiGvdEB45GmwNoKEjTj",
-   "title": "Jupiter Perpetual Exchange",
-   "score": 46,
-   "delta": 0,
-   "tvl_usd": 750475243.558133,
-   "first_seen": "2026-10-12T08:47:32Z",
-   "new": false,
-   "evidence": [
-    {
-     "timelock": "Squads v4 multisig AxkJ\u2026UUSm (4-of-8, time lock 86400 s), found by the independent reader (1 tracked program)",
-     "timelock_address": "AxkJ8oH5aDu4ZRWfsujPtxdb6Vhq4gDehpoReBgrUUSm",
-     "family": "squads",
-     "id": "squads:AxkJ8oH5aDu4ZRWfsujPtxdb6Vhq4gDehpoReBgrUUSm:20",
-     "chain": "solana",
-     "tx": null,
-     "selector": null,
-     "signature": "Squads proposal #20: Upgrade of program PERPHjGBqRHArX4DySjwM6UJHiR3sWAatqfdBS2qQJu",
-     "ready_at": 1786184864,
-     "state": "ready"
-    }
-   ],
-   "previous_run": "2026-10-15T12:53:40Z",
-   "notified": true
-  },
-  {
    "rule": "the independent reader disagrees with the admin-key score, with money behind it",
    "severity": "medium",
    "chain": "Solana",
@@ -312,86 +283,6 @@
    "first_seen": "2026-10-10T21:14:27Z",
    "new": false,
    "evidence": [],
-   "previous_run": "2026-10-15T12:53:40Z",
-   "notified": true
-  },
-  {
-   "rule": "a queued change against this contract was approved and has not been executed for more than 7 days, and is still executable today",
-   "severity": "medium",
-   "chain": "Solana",
-   "target": "1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78",
-   "title": "1oopBo\u2026kF78",
-   "score": 70,
-   "delta": 0,
-   "tvl_usd": null,
-   "first_seen": "2026-10-12T08:47:32Z",
-   "new": false,
-   "evidence": [
-    {
-     "timelock": "Squads v4 multisig C4aw\u2026SuPk (4-of-9, time lock 86400 s), found by the independent reader (1 tracked program)",
-     "timelock_address": "C4awuufiuL8DNT5wMDP27HneKKqbgynrsbCa4XYGSuPk",
-     "family": "squads",
-     "id": "squads:C4awuufiuL8DNT5wMDP27HneKKqbgynrsbCa4XYGSuPk:1022",
-     "chain": "solana",
-     "tx": null,
-     "selector": null,
-     "signature": "Squads proposal #1022: Upgrade of program 1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78",
-     "ready_at": 1785594656,
-     "state": "ready"
-    },
-    {
-     "timelock": "Squads v4 multisig C4aw\u2026SuPk (4-of-9, time lock 86400 s), found by the independent reader (1 tracked program)",
-     "timelock_address": "C4awuufiuL8DNT5wMDP27HneKKqbgynrsbCa4XYGSuPk",
-     "family": "squads",
-     "id": "squads:C4awuufiuL8DNT5wMDP27HneKKqbgynrsbCa4XYGSuPk:1026",
-     "chain": "solana",
-     "tx": null,
-     "selector": null,
-     "signature": "Squads proposal #1026: Upgrade of program 1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78",
-     "ready_at": 1787085981,
-     "state": "ready"
-    }
-   ],
-   "previous_run": "2026-10-15T12:53:40Z",
-   "notified": true
-  },
-  {
-   "rule": "a queued change against this contract was approved and has not been executed for more than 7 days, and is still executable today",
-   "severity": "medium",
-   "chain": "Solana",
-   "target": "FLASH6Lo6h3iasJKWDs2F8TkW2UKf3s15C8PMGuVfgBn",
-   "title": "FLASH6\u2026fgBn",
-   "score": 39,
-   "delta": 0,
-   "tvl_usd": null,
-   "first_seen": "2026-10-12T08:47:32Z",
-   "new": false,
-   "evidence": [
-    {
-     "timelock": "Squads v4 multisig Gb33\u2026qyXF (3-of-7, time lock 0 s), found by the independent reader (1 tracked program)",
-     "timelock_address": "Gb33UeQNnQ4XDuobtGq9M6PVKRVfoH77p8d6JXsgqyXF",
-     "family": "squads",
-     "id": "squads:Gb33UeQNnQ4XDuobtGq9M6PVKRVfoH77p8d6JXsgqyXF:112",
-     "chain": "solana",
-     "tx": null,
-     "selector": null,
-     "signature": "Squads proposal #112: ExtendProgram of program FLASH6Lo6h3iasJKWDs2F8TkW2UKf3s15C8PMGuVfgBn",
-     "ready_at": 1783520837,
-     "state": "ready"
-    },
-    {
-     "timelock": "Squads v4 multisig Gb33\u2026qyXF (3-of-7, time lock 0 s), found by the independent reader (1 tracked program)",
-     "timelock_address": "Gb33UeQNnQ4XDuobtGq9M6PVKRVfoH77p8d6JXsgqyXF",
-     "family": "squads",
-     "id": "squads:Gb33UeQNnQ4XDuobtGq9M6PVKRVfoH77p8d6JXsgqyXF:128",
-     "chain": "solana",
-     "tx": null,
-     "selector": null,
-     "signature": "Squads proposal #128: Upgrade of program FLASH6Lo6h3iasJKWDs2F8TkW2UKf3s15C8PMGuVfgBn",
-     "ready_at": 1784681108,
-     "state": "ready"
-    }
-   ],
    "previous_run": "2026-10-15T12:53:40Z",
    "notified": true
   }
@@ -508,48 +399,6 @@
    "score": 2,
    "delta": 0,
    "tvl_usd": 300436737.36501133
-  },
-  {
-   "key": "a queued change against this contract was approved and has not been executed for more than 7 days, and is still executable today|solana:H4ND9aYttUVLFmNypZqLjZ52FYiGvdEB45GmwNoKEjTj",
-   "rule": "a queued change against this contract was approved and has not been executed for more than 7 days, and is still executable today",
-   "severity": "medium",
-   "chain": "Solana",
-   "target": "H4ND9aYttUVLFmNypZqLjZ52FYiGvdEB45GmwNoKEjTj",
-   "title": "Jupiter Perpetual Exchange",
-   "first_seen": "2026-10-12T08:47:32Z",
-   "last_seen": "2026-10-15T19:04:17Z",
-   "times": 19,
-   "score": 46,
-   "delta": 0,
-   "tvl_usd": 750475243.558133
-  },
-  {
-   "key": "a queued change against this contract was approved and has not been executed for more than 7 days, and is still executable today|solana:1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78",
-   "rule": "a queued change against this contract was approved and has not been executed for more than 7 days, and is still executable today",
-   "severity": "medium",
-   "chain": "Solana",
-   "target": "1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78",
-   "title": "1oopBo\u2026kF78",
-   "first_seen": "2026-10-12T08:47:32Z",
-   "last_seen": "2026-10-15T19:04:17Z",
-   "times": 19,
-   "score": 70,
-   "delta": 0,
-   "tvl_usd": null
-  },
-  {
-   "key": "a queued change against this contract was approved and has not been executed for more than 7 days, and is still executable today|solana:FLASH6Lo6h3iasJKWDs2F8TkW2UKf3s15C8PMGuVfgBn",
-   "rule": "a queued change against this contract was approved and has not been executed for more than 7 days, and is still executable today",
-   "severity": "medium",
-   "chain": "Solana",
-   "target": "FLASH6Lo6h3iasJKWDs2F8TkW2UKf3s15C8PMGuVfgBn",
-   "title": "FLASH6\u2026fgBn",
-   "first_seen": "2026-10-12T08:47:32Z",
-   "last_seen": "2026-10-15T19:04:17Z",
-   "times": 19,
-   "score": 39,
-   "delta": 0,
-   "tvl_usd": null
   },
   {
    "key": "the independent reader disagrees with the admin-key score, with money behind it|hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109",

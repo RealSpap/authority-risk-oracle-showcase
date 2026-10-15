@@ -54,7 +54,7 @@ aro_signed 1
 # HELP aro_alerts_active Alerts firing now, by severity
 # TYPE aro_alerts_active gauge
 aro_alerts_active{severity="high"} 5
-aro_alerts_active{severity="medium"} 12
+aro_alerts_active{severity="medium"} 9
 aro_alerts_active{severity="info"} 0
 # HELP aro_second_opinion Targets by verdict of the independent reader
 # TYPE aro_second_opinion gauge

@@ -33,11 +33,6 @@
    "severity": "high"
   },
   {
-   "name": "a queued change against this contract was approved and has not been executed for more than 7 days, and is still executable today",
-   "when": "queued_ops > 0 and ready_old",
-   "severity": "medium"
-  },
-  {
    "name": "the live admin of this contract changed since the previous run (independent read)",
    "when": "admin_changed",
    "severity": "high"

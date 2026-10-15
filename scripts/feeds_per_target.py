@@ -41,6 +41,9 @@ def protocol_feed(pslug, name, members, self_url):
     return "\n".join(feed + [x for _w, x in allx[:50]] + ["</feed>"]) + "\n"
 
 
+from lib.fresh_ops import fresh_enough, due_at  # noqa: E402
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--scores", default="watch/scores"); ap.add_argument("--events", default="watch/events.jsonl")
@@ -58,6 +61,7 @@ def main():
     ops = []
     for r in (pend.get("results") or []):
         for op in r.get("pending", []) + r.get("recent", []):
+            if (op.get("state") or op.get("still_queued")) and not fresh_enough(op.get("state"), due_at(op), __import__("time").time()): continue   # executable for more than 7 days: not listed (lib/fresh_ops.py)
             ops.append(dict(op, _chain=PENDING_CHAIN.get(r.get("chain"), r.get("chain"))))
     def chain_key(slug): return max([k for k in PENDING_CHAIN.values() if slug.startswith(k)], key=len, default=slug)   # "ethereum-l1-sepolia" -> "ethereum-l1"
     written = unchanged = 0

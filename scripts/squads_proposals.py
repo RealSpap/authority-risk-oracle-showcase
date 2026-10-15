@@ -12,6 +12,12 @@ import argparse, base64, hashlib, json, os, struct, sys, time
 
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 from second_opinion import sol_rpc, b58encode, b58decode, on_curve_bytes, SQUADS_V4  # noqa: E402
+from lib.fresh_ops import fresh_enough  # noqa: E402
+
+
+def listed(p, stale, delay, now):
+    """An approved proposal is published when it is past neither the stale index nor the 7 days (lib/fresh_ops.py) and says when it was approved; every count below describes what is published."""
+    return p["index"] > stale and bool(p.get("timestamp")) and fresh_enough("ready", p["timestamp"] + delay, now)
 
 PROPOSAL_DISC = b58encode(hashlib.sha256(b"account:Proposal").digest()[:8])
 STATUS = {0: "draft", 1: "active", 2: "rejected", 3: "approved", 4: "executing", 5: "executed", 6: "cancelled"}
@@ -108,7 +114,8 @@ def main():
                "chain": "solana", "address": ms, "family": "squads", "status": "ok", "discovered": True, "governs": info["targets"], "delay": info["delay"], "queued_events": None, "latest_queued": None, "pending": [], "recent": [], "active": [], "proposals": {}}
         idx = read_multisig_indexes(ms); time.sleep(0.3); props = read_proposals(ms); time.sleep(0.3)
         if idx is None or props is None: rec["status"] = "UNREAD (multisig account or proposals not answered)"; new.append(rec); continue
-        stale = idx["stale_transaction_index"]; rec["queued_events"] = len(props); rec["transaction_index"] = idx["transaction_index"]
+        stale = idx["stale_transaction_index"]; props = [p for p in props if p["status"] != "approved" or listed(p, stale, info["delay"], now)]
+        rec["queued_events"] = len(props); rec["transaction_index"] = idx["transaction_index"]
         for p in props: rec["proposals"][p["status"]] = rec["proposals"].get(p["status"], 0) + 1
         for p in props:
             tgt = info["targets"][0]   # the operation hits the program the multisig governs (the vault transaction's own instructions are not decoded here)

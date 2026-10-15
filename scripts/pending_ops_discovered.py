@@ -14,6 +14,7 @@ import argparse, json, os, sys, time
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE); sys.path.insert(0, os.path.join(HERE, "lib"))
 from web3 import Web3  # noqa: E402
 from lib.pending_ops import QUEUE_TOPICS, decode_scheduled, dedupe_ops, status  # noqa: E402
+from lib.fresh_ops import fresh_enough  # noqa: E402
 from lib.web3_utils import get_w3  # noqa: E402
 from second_opinion import MAINNET, short  # noqa: E402  -- the call RPC per chain key, the one the reader used; short(): a watchlist address may already be shortened by the redaction (a timelock that is also a root signer)
 from evaluate_rules import PENDING_CHAIN  # noqa: E402
@@ -57,8 +58,9 @@ def read_queue(name, key, address, family, days, recent_days):
                 ready = int.from_bytes(_call(calls_w3, address, "getTimestamp(bytes32)", _b32(op["id"])), "big") if still else None; grace = None
             else:
                 still = bool(int.from_bytes(_call(calls_w3, address, "queuedTransactions(bytes32)", _b32(op["id"])), "big")); ready, grace = op["eta"], out["grace"]
-            if still: out["pending"].append({**op, "ready_at": ready, "state": status(now, ready, grace)})
-            if op["block"] >= recent_from: out["recent"].append({**op, "still_queued": still, "queued_at": logs_w3.eth.get_block(op["block"])["timestamp"]})
+            hidden = still and not fresh_enough(status(now, ready, grace), ready, now)   # same filter as check_pending_ops.py: in neither list
+            if still and not hidden: out["pending"].append({**op, "ready_at": ready, "state": status(now, ready, grace)})
+            if op["block"] >= recent_from and not hidden: out["recent"].append({**op, "still_queued": still, "queued_at": logs_w3.eth.get_block(op["block"])["timestamp"]})
     except Exception as e:  # noqa: BLE001 -- any unread part makes the whole timelock UNREAD, never "nothing pending"
         out["status"] = "UNREAD (%s: %s)" % (type(e).__name__, str(e)[:120])
     return out

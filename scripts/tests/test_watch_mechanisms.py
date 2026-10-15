@@ -2526,19 +2526,88 @@ class TestAlertEngine(unittest.TestCase):
         self.assertEqual(self.fired(d), sorted((r["name"], "a") for r in rules))   # all seven fire on A, none on B (delta +2, 80, fresh, no tvl)
         ready = [x for x in d["active"] if x["rule"] == "ready"][0]; self.assertEqual([e["id"] for e in ready["evidence"]], ["1", "0", "2"])   # three at most, the earliest ready first
 
-    def test_a_change_ready_for_weeks_is_not_an_emergency(self):
-        """12/10: 5 of the 6 Squads proposals shown as "ready to execute now" (HIGH) had been ready for 1 to 3 months. Ready for at most 7 days stays high; older is a medium "approved, not executed, still executable" with its date in the evidence; an expired one fires neither."""
+    def test_a_change_executable_for_more_than_a_week_is_not_published(self):
+        """A queued change is listed while it waits or has been executable for at most 7 days (lib/fresh_ops.py). One executable for longer is not listed, whatever its state (an expired one included): no rule, no evidence cites it."""
         import evaluate_rules as e
+        from lib.fresh_ops import fresh_enough
+        t0 = 2_000_000_000
+        self.assertTrue(fresh_enough("waiting", t0 + 3600, t0)); self.assertTrue(fresh_enough("ready", t0 - 3 * 86400, t0)); self.assertTrue(fresh_enough("expired", t0 - 3 * 86400, t0)); self.assertFalse(fresh_enough("expired", t0 - 40 * 86400, t0))
+        self.assertFalse(fresh_enough("ready", t0 - 10 * 86400, t0)); self.assertFalse(fresh_enough(None, t0 - 10 * 86400, t0)); self.assertTrue(fresh_enough("ready", None, t0))
         docs = {"pending": {"results": [{"chain": "base", "name": "TL", "address": "0x1", "family": "oz", "pending": [
-            {"target": self.A, "id": "new", "ready_at": self.now - 2 * 86400, "selector": "0x12345678"},
-            {"target": self.B, "id": "old", "ready_at": self.now - 40 * 86400, "selector": "0x12345678"},
+            {"target": self.A, "id": "new", "ready_at": self.now - 3 * 86400, "state": "ready", "selector": "0x12345678"},
+            {"target": self.A, "id": "old", "ready_at": self.now - 10 * 86400, "state": "ready", "selector": "0x12345678"},
+            {"target": self.B, "id": "older", "ready_at": self.now - 40 * 86400, "selector": "0x12345678"},
             {"target": self.B, "id": "gone", "ready_at": self.now - 40 * 86400, "state": "expired", "selector": "0x12345678"}]}]}}
         rules = json.load(open(os.path.join(os.path.dirname(e.__file__), "..", "rules.json")))["rules"]
         with tempfile.TemporaryDirectory() as tmp: d = self.go(tmp, rules, docs, extra=["--no-send"])
-        urgent = "a queued change against this contract is ready to execute now"; old = "a queued change against this contract was approved and has not been executed for more than 7 days, and is still executable today"
-        got = sorted((x["rule"], x["severity"], x["target"][2]) for x in d["active"] if x["rule"] in (urgent, old))
-        self.assertEqual(got, [(urgent, "high", "a"), (old, "medium", "b")], got)
-        oldev = [ev for x in d["active"] if x["rule"] == old for ev in x["evidence"]]; self.assertTrue(oldev and all(ev.get("ready_at") for ev in oldev))   # the evidence keeps the date from which each queued change has been ready
+        urgent = "a queued change against this contract is ready to execute now"
+        self.assertEqual(sorted((x["rule"], x["severity"], x["target"][2]) for x in d["active"] if x["rule"] == urgent), [(urgent, "high", "a")])
+        self.assertEqual([x for x in d["active"] if "has not been executed" in x["rule"]], [])
+        self.assertTrue(all("ready_" + "old" not in r["when"] for r in rules))
+        evid = sorted(ev["id"] for x in d["active"] for ev in x["evidence"]); self.assertNotIn("old", evid); self.assertNotIn("older", evid); self.assertIn("new", evid)   # the evidence never cites a change executable for more than 7 days
+        # the history of a rule that no longer exists is not carried from the previous file
+        with tempfile.TemporaryDirectory() as tmp:
+            args = self.build(tmp, rules, docs)
+            json.dump({"active": [], "history": [{"key": "gone rule|base:" + self.A, "rule": "a rule that was removed", "severity": "medium", "chain": "Base", "target": self.A, "title": "x", "first_seen": "2026-10-01T00:00:00Z", "last_seen": "2026-10-02T00:00:00Z", "times": 3}]}, open(os.path.join(tmp, "alerts.json"), "w"))
+            run_main(evaluate_rules, args + ["--no-send"])
+            self.assertEqual([h for h in json.load(open(os.path.join(tmp, "alerts.json")))["history"] if h["rule"] == "a rule that was removed"], [])
+
+    def test_the_squads_queue_lists_and_counts_only_changes_executable_for_at_most_a_week(self):
+        """The writer of the Solana queue applies the same filter, and EVERY count it publishes describes what is listed: an approved proposal executable for 10 days, one past the stale index and one without a time are neither listed nor counted
+        (a gap between 'approved' and 'listed' would give the hidden ones away)."""
+        import squads_proposals as sp
+        tm = time.time(); sp.time.sleep = lambda *_: None
+        sp.read_multisig_indexes = lambda ms: {"transaction_index": 12, "stale_transaction_index": 2}
+        sp.read_proposals = lambda ms: [
+            {"index": 1, "status": "approved", "timestamp": int(tm - 1 * 86400), "approvals": 2, "rejections": 0, "account": "AcctDead"},      # past the stale index
+            {"index": 5, "status": "approved", "timestamp": int(tm - 10 * 86400), "approvals": 2, "rejections": 0, "account": "AcctOld"},
+            {"index": 6, "status": "approved", "timestamp": int(tm - 3 * 86400), "approvals": 2, "rejections": 0, "account": "AcctRecent"},
+            {"index": 7, "status": "approved", "timestamp": int(tm + 3600), "approvals": 2, "rejections": 0, "account": "AcctWaiting"},
+            {"index": 8, "status": "approved", "timestamp": None, "approvals": 2, "rejections": 0, "account": "AcctNoTime"},                    # no time: its age is unknown, it is not published
+            {"index": 9, "status": "active", "timestamp": int(tm - 86400), "approvals": 1, "rejections": 0, "account": "AcctOpen"}]
+        sp.decode_transaction = lambda *a, **k: None
+        with tempfile.TemporaryDirectory() as tmp:
+            so = os.path.join(tmp, "so.json"); pend = os.path.join(tmp, "pending_ops.json")
+            json.dump({"results": [{"kind": "squads", "multisig": "FakeMultisig1111111111", "target": "FakeTarget1111111111", "delay_seconds": 0, "threshold": 2, "owners": 3}]}, open(so, "w"))
+            old_argv = sys.argv; sys.argv = ["squads_proposals.py", "--so", so, "--pending", pend]
+            try:
+                with contextlib.redirect_stdout(io.StringIO()) as buf: sp.main()
+            finally: sys.argv = old_argv
+            rec = [r for r in json.load(open(pend))["results"] if r.get("family") == "squads"][0]
+        self.assertEqual(sorted(o["index"] for o in rec["pending"]), [6, 7])
+        self.assertEqual(rec["proposals"], {"approved": 2, "active": 1}); self.assertEqual(rec["queued_events"], 3)   # what is listed, nothing else: no subtraction gives the hidden ones away
+
+    def test_the_warning_ledger_does_not_keep_an_operation_that_stayed_executable_for_more_than_a_week(self):
+        """An operation first listed while it waited, then left the files: if it was executable for more than 7 days when it left, the ledger does not keep it (the queue file does not list it either); one that left sooner is kept as before."""
+        import warning_ledger as wl
+        t0 = 1_800_000_000; H = 3600
+        def po(*ops): return {"results": [{"chain": "ethereum", "name": "TL", "address": "0xAA", "status": "ok", "pending": list(ops), "recent": []}]}
+        l1 = wl.update(None, po({"id": "old", "ready_at": t0 + 5 * H, "state": "waiting"}, {"id": "soon", "ready_at": t0 + 5 * H, "state": "waiting"}), t0)
+        self.assertEqual(sorted(l1["entries"]), ["ethereum:0xaa:old", "ethereum:0xaa:soon"])
+        l2 = wl.update(l1, po(), t0 + 5 * H + 3 * 86400)    # both left the files 3 days after they could run: kept, said to have left
+        self.assertEqual(sorted(k for k, e in l2["entries"].items() if e.get("left_the_files")), ["ethereum:0xaa:old", "ethereum:0xaa:soon"])
+        l1b = wl.update(None, po({"id": "old", "ready_at": t0 + 5 * H, "state": "waiting"}), t0)
+        l2b = wl.update(l1b, po(), t0 + 5 * H + 9 * 86400)  # left 9 days after it could run: not kept
+        self.assertEqual(l2b["entries"], {})
+
+    def test_the_feed_of_a_contract_does_not_list_an_operation_still_queued_for_more_than_a_week(self):
+        """The per-target feeds read the queue file's 'pending' and 'recent' lists: a row still queued whose time is more than 7 days old is skipped even if the file carries it."""
+        import feeds_per_target as ft
+        A = "0x" + "aa" * 20; tm = time.time()
+        with tempfile.TemporaryDirectory() as tmp:
+            os.makedirs(os.path.join(tmp, "scores")); json.dump({"name": "Fake", "targets": [{"target": A, "compositeScore": 50, "lastUpdated": int(tm)}]}, open(os.path.join(tmp, "scores", "base-sepolia.json"), "w"))
+            ops = [{"target": A, "id": "0xold", "index": 0, "selector": "0x12345678", "state": "ready", "ready_at": int(tm - 10 * 86400)},
+                   {"target": A, "id": "0xnew", "index": 0, "selector": "0x12345678", "state": "ready", "ready_at": int(tm - 3 * 86400)}]
+            recent = [{"target": A, "id": "0xstill", "index": 0, "selector": "0x12345678", "still_queued": True, "queued_at": int(tm - 20 * 86400), "delay": 5 * 86400},
+                      {"target": A, "id": "0xdone", "index": 0, "selector": "0x12345678", "still_queued": False, "queued_at": int(tm - 20 * 86400), "delay": 5 * 86400}]
+            json.dump({"results": [{"chain": "base", "name": "TL", "address": "0x1", "status": "ok", "pending": ops, "recent": recent}]}, open(os.path.join(tmp, "pending_ops.json"), "w"))
+            for n, v in (("events.jsonl", ""), ("alerts.json", json.dumps({"history": []}))): open(os.path.join(tmp, n), "w").write(v)
+            old_argv = sys.argv; sys.argv = ["feeds_per_target.py", "--scores", os.path.join(tmp, "scores"), "--events", os.path.join(tmp, "events.jsonl"), "--alerts", os.path.join(tmp, "alerts.json"), "--pending", os.path.join(tmp, "pending_ops.json"), "--out", os.path.join(tmp, "feed"), "--tvl", os.path.join(tmp, "none.json")]
+            try:
+                with contextlib.redirect_stdout(io.StringIO()): ft.main()
+            finally: sys.argv = old_argv
+            txt = open(os.path.join(tmp, "feed", "base-sepolia", A + ".xml")).read()
+        self.assertIn("0xnew", txt); self.assertIn("0xdone", txt); self.assertNotIn("0xold", txt); self.assertNotIn("0xstill", txt)
 
     def test_a_balance_drop_a_pause_a_role_change_and_a_wake_each_reach_their_own_rule(self):
         ka = "base:" + self.A; t = int(self.now)
@@ -2583,7 +2652,7 @@ class TestAlertEngine(unittest.TestCase):
 
     def test_the_history_is_capped_at_500_newest_first(self):
         with tempfile.TemporaryDirectory() as tmp:
-            old = {"active": [], "history": [{"key": "r%d|base:0x%d" % (i, i), "rule": "r%d" % i, "severity": "info", "chain": "Base", "target": "0x%d" % i, "title": "t", "first_seen": "2026-01-01T00:00:00Z", "last_seen": "2026-01-%02dT00:00:00Z" % (1 + i % 28), "times": 1} for i in range(505)]}
+            old = {"active": [], "history": [{"key": "low|base:0x%d" % i, "rule": "low", "severity": "info", "chain": "Base", "target": "0x%d" % i, "title": "t", "first_seen": "2026-01-01T00:00:00Z", "last_seen": "2026-01-%02dT00:00:00Z" % (1 + i % 28), "times": 1} for i in range(505)]}
             json.dump(old, open(os.path.join(tmp, "alerts.json"), "w")); d = self.go(tmp, [self.R("low", "score < 50")], extra=["--no-send"])
         self.assertEqual(len(d["history"]), 500); self.assertEqual(d["history"][0]["rule"], "low")   # the fresh sighting is the newest, so it is kept and first
 

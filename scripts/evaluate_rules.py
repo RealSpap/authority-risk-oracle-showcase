@@ -10,6 +10,7 @@ each such alert carries its evidence (timelock, tx, selector, when it executes).
 """
 import argparse, ast, glob, hashlib, hmac, json, os, sys, time, urllib.request
 from watch_location import RAW  # the feeds live on the watch-data branch
+from lib.fresh_ops import fresh_enough  # one filter for the queue everywhere: an operation executable for more than 7 days is not listed
 from pending_ics import SELNAMES  # the same small selector-to-name table as the calendar and the page: an alert names the queued function when the event did not
 
 def _dump_json(obj, path, indent=None):
@@ -79,7 +80,7 @@ def post_json(url, payload):
     except Exception: return False
 
 # daily mode of the public Telegram channel (TELEGRAM_MODE=daily, off by default): one summary a day, plus these critical alerts live. Everything else (roles, signers, thresholds, delays, per-protocol detail) goes to the summary and to the paid offer.
-READY_FRESH_DAYS = 7   # a queued change ready for longer than this is "approved, not executed", not "ready to execute now"
+READY_FRESH_DAYS = 7   # a queued change ready for longer than this is not listed (lib/fresh_ops.py)
 LIVE_ON_TELEGRAM = ("the contract's own balance fell by 70% or more", "the contract has been paused since the previous run", "an upgrade was executed")
 
 
@@ -216,7 +217,7 @@ def main():
     queued, recent = {}, {}
     if os.path.exists(a.pending):
         for tl in json.load(open(a.pending)).get("results", []):
-            for op in tl.get("pending", []): queued.setdefault(PENDING_CHAIN.get(tl["chain"], tl["chain"]) + ":" + norm(op["target"]), []).append({"timelock": tl["name"], "timelock_address": tl.get("address"), "family": tl.get("family"), "id": op.get("id"), "chain": tl["chain"], "tx": op.get("tx"), "selector": op.get("selector"), "signature": op.get("signature") or SELNAMES.get(str(op.get("selector") or "").lower()), "ready_at": op.get("ready_at"), "state": op.get("state")})
+            for op in (o for o in tl.get("pending", []) if fresh_enough(o.get("state"), o.get("ready_at"), time.time())): queued.setdefault(PENDING_CHAIN.get(tl["chain"], tl["chain"]) + ":" + norm(op["target"]), []).append({"timelock": tl["name"], "timelock_address": tl.get("address"), "family": tl.get("family"), "id": op.get("id"), "chain": tl["chain"], "tx": op.get("tx"), "selector": op.get("selector"), "signature": op.get("signature") or SELNAMES.get(str(op.get("selector") or "").lower()), "ready_at": op.get("ready_at"), "state": op.get("state")})
             for op in (o for o in tl.get("recent", []) if not o.get("still_queued")): recent.setdefault(PENDING_CHAIN.get(tl["chain"], tl["chain"]) + ":" + norm(op["target"]), []).append({"timelock": tl["name"], "tx": op.get("tx"), "queued_at": op.get("queued_at")})
     now_s = time.time()
     prev = json.load(open(a.out)) if os.path.exists(a.out) else {"active": [], "history": []}
@@ -225,7 +226,7 @@ def main():
     prevsub = {}
     for f in glob.glob(os.path.join(a.prev, "*.json")):
         for t in json.load(open(f))["targets"]: prevsub[os.path.basename(f)[:-5] + ":" + norm(t["target"])] = t
-    seen = {h["key"]: h for h in prev.get("history", [])}
+    seen = {h["key"]: h for h in prev.get("history", []) if h.get("rule") in {r_["name"] for r_ in rules["rules"]}}   # the history of a rule that no longer exists is not carried
     now = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()); active = []; errors = []
     for f in sorted(glob.glob(os.path.join(a.scores, "*.json"))):
         key = WATCH_SLUGS.get(os.path.basename(f)[:-5])
@@ -247,8 +248,7 @@ def main():
                    "held_drop_usd": ((held_all[ka]["prev_amount"] - held_all[ka]["amount"]) * held_all[ka]["price_usd"] if (held_all.get(ka) or {}).get("amount_change_pct") is not None and held_all[ka].get("price_usd") and not held_all[ka].get("stale") else None),   # a stale record never fires, in dollars either (the shipped rules also test held_drop_pct, which already ignored it)
                    "second_opinion": so_status.get(ka), "admin_changed": ka in so_changed, "shared_admin": so_shared.get(ka), "dispute": disputes.get(ka), "upgraded": ka in so_upgraded, "admin_pending": ka in so_pending,
                    "age_days": ((now_s - int(t["lastUpdated"])) / 86400) if t.get("lastUpdated") else None,   # since the last push of this score; the oracles mark it stale at 9 days
-                   "ready_recent": any(op.get("ready_at") and op.get("state") != "expired" and 0 <= now_s - op["ready_at"] <= READY_FRESH_DAYS * 86400 for op in queued.get(ka, [])),   # ready for at most 7 days: urgent. Older: approved and never executed (or replaced), a fact worth showing, not an emergency (12/10: 5 of 6 Squads proposals "ready" were 1 to 3 months old)
-                   "ready_old": any(op.get("ready_at") and op.get("state") != "expired" and now_s - op["ready_at"] > READY_FRESH_DAYS * 86400 for op in queued.get(ka, [])),
+                   "ready_recent": any(op.get("ready_at") and op.get("state") != "expired" and 0 <= now_s - op["ready_at"] <= READY_FRESH_DAYS * 86400 for op in queued.get(ka, [])),   # ready for at most 7 days: urgent (older ones are not listed, lib/fresh_ops.py)
                    "ready_in_hours": (min((op["ready_at"] - now_s) / 3600 for op in queued[ka] if op.get("ready_at") and op.get("state") != "expired") if any(op.get("ready_at") and op.get("state") != "expired" for op in queued.get(ka, [])) else None)}   # a Compound-style change past its grace window can no longer run: it is not "ready to execute now"
             evidence = sorted(queued.get(ka, []), key=lambda op: op.get("ready_at") or 0)[:3]
             for r, tree in compiled:

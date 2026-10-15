@@ -30,6 +30,7 @@ sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(HERE, "lib"))
 from lib import code_review  # noqa: E402
 from lib.pending_ops import QUEUE_TOPICS, decode_scheduled, dedupe_ops, status  # noqa: E402
+from lib.fresh_ops import fresh_enough  # noqa: E402
 from lib.web3_utils import get_w3  # noqa: E402
 
 TENDERLY = {"ethereum": "https://gateway.tenderly.co/public/mainnet", "arbitrum": "https://gateway.tenderly.co/public/arbitrum"}
@@ -81,9 +82,11 @@ def check_timelock(name, chain, address, family, days, recent_days=14):
             else:
                 still = bool(int.from_bytes(_call(calls_w3, address, "queuedTransactions(bytes32)", _b32(op["id"])), "big"))
                 ready, grace = op["eta"], out["grace"]
-            if still:
-                out["pending"].append({**op, "ready_at": ready, "state": status(now, ready, grace)})
-            if op["block"] >= recent_from:
+            st = status(now, ready, grace) if still else None
+            hidden = still and not fresh_enough(st, ready, now)   # executable for more than 7 days: not listed, in neither list (lib/fresh_ops.py)
+            if still and not hidden:
+                out["pending"].append({**op, "ready_at": ready, "state": st})
+            if op["block"] >= recent_from and not hidden:
                 out["recent"].append({**op, "still_queued": still, "queued_at": logs_w3.eth.get_block(op["block"])["timestamp"]})
     except Exception as e:  # noqa: BLE001 -- any unread part makes the whole timelock UNREAD, never "nothing pending"
         out["status"] = f"UNREAD ({type(e).__name__}: {str(e)[:120]})"

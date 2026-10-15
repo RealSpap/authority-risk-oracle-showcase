@@ -12,7 +12,6 @@ Standard library only; the message stays under Telegram's 4096-character limit.
 """
 import argparse, json, os, sys, time, urllib.error, urllib.request
 
-OLD_READY = "a queued change against this contract was approved and has not been executed"   # medium alert of evaluate_rules.py: ready for more than 7 days, counted apart from the urgent ones
 PAGE = "https://realspap.github.io/oracle/"
 
 
@@ -63,8 +62,7 @@ def build(watch, now=None):
         groups = {}
         for x in act: groups.setdefault((x.get("severity"), str(x.get("rule"))[:110]), []).append(str(x.get("chain")))
         hi = sum(1 for x in act if x.get("severity") == "high"); me = sum(1 for x in act if x.get("severity") == "medium")
-        old = sum(1 for x in act if str(x.get("rule", "")).startswith(OLD_READY))
-        lines += ["", "Alerts active now: %d high, %d medium." % (hi, me) + (" Counted apart: %d approved change(s) not executed for more than 7 days." % old if old else "")]
+        lines += ["", "Alerts active now: %d high, %d medium." % (hi, me)]
         order = sorted(groups.items(), key=lambda kv: (0 if kv[0][0] == "high" else 1, -len(kv[1])))
         for (sev, rule), chains in order[:5]: lines.append("- %s x%d (%s): %s" % (str(sev).upper(), len(chains), ", ".join(sorted(set(chains))), rule))
         if len(order) > 5: lines.append("... and %d more kinds of alert on the dashboard." % (len(order) - 5))
@@ -87,8 +85,7 @@ def build_daily(watch, now=None):
         lines.append("In the last 24 hours the signed event log recorded: %s." % (", ".join("%d %s" % (n, names.get(k, k)) for k, n in sorted(kinds.items(), key=lambda x: -x[1])) if kinds else "nothing new"))
     al = read_json(os.path.join(watch, "alerts.json")); act = (al or {}).get("active") if isinstance(al, dict) else None
     if isinstance(act, list):
-        old = sum(1 for x in act if str(x.get("rule", "")).startswith(OLD_READY))
-        lines.append("Alerts active now: %d high, %d medium." % (sum(1 for x in act if x.get("severity") == "high"), sum(1 for x in act if x.get("severity") == "medium")) + (" Counted apart: %d approved change(s) not executed for more than 7 days." % old if old else ""))
+        lines.append("Alerts active now: %d high, %d medium." % (sum(1 for x in act if x.get("severity") == "high"), sum(1 for x in act if x.get("severity") == "medium")))
     else: lines.append("The alerts file could not be read: no count today.")
     lines += ["", "Every alert, with its evidence: " + PAGE]
     return "\n".join(lines)[:3900]
@@ -128,8 +125,6 @@ def selftest():
         assert "recorded nothing new" in build(d, now)
         json.dump({"active": [{"severity": "high", "chain": "Solana", "rule": "a queued change is ready to execute now"}, {"severity": "medium", "chain": "Base", "rule": "r2"}] + [{"severity": "medium", "chain": "X", "rule": "r"}] * 6}, open(os.path.join(d, "alerts.json"), "w"))
         t = build(d, now); assert "1 high, 7 medium" in t and "- HIGH x1 (Solana)" in t and "- MEDIUM x6 (X)" in t and len(t) < 4096 and "—" not in t, t
-        json.dump({"active": [{"severity": "high", "chain": "Solana", "rule": "a queued change against this contract is ready to execute now"}, {"severity": "medium", "chain": "Solana", "rule": OLD_READY + " for more than 7 days, and is still executable today"}] * 2}, open(os.path.join(d, "alerts.json"), "w"))
-        t = build(d, now); assert "2 high, 2 medium. Counted apart: 2 approved change(s) not executed for more than 7 days." in t, t   # the old ones are counted apart, never as urgent
         os.remove(os.path.join(d, "alerts.json")); assert "alerts file could not be read" in build(d, now)                          # an unreadable alerts file is said, not shown as a quiet week
         json.dump({"active": []}, open(os.path.join(d, "alerts.json"), "w"))
         json.dump({"summary": {"since_utc": "2026-10-12T00:00:00Z", "warned": 2, "missed": 1, "seen_without_notice": 0, "median_notice_hours": 30.0}}, open(os.path.join(d, "warning_ledger.json"), "w"))

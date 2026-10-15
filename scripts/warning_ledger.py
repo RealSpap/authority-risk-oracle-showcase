@@ -13,6 +13,9 @@ The summary counts them, with the shortest and the median notice. A watch that o
 """
 import argparse, calendar, json, os, sys, time
 
+HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
+from lib.fresh_ops import FRESH_READY_DAYS  # noqa: E402
+
 KEEP = 2000
 
 
@@ -54,8 +57,11 @@ def update(prev, po, now):
             E[key].update({"chain": r.get("chain"), "timelock": r.get("name"), "what": o.get("decoded") or o.get("signature")})
         elif E[key]["state"] == "queued" and not queued:
             E[key]["state"] = "resolved"; E[key]["resolved_seen_utc"] = iso(now)
-    for key, e in E.items():                                                  # a queued operation that left both lists was applied, cancelled or fell out of the window: said, not guessed
-        if e["state"] == "queued" and key not in seen: e["state"] = "resolved"; e["resolved_seen_utc"] = iso(now); e["left_the_files"] = True
+    for key in list(E):                                                       # a queued operation that left both lists was applied, cancelled or fell out of the window: said, not guessed
+        e = E[key]
+        if e["state"] == "queued" and key not in seen:
+            if e.get("due_utc") and now - secs(e["due_utc"]) > FRESH_READY_DAYS * 86400: del E[key]; continue   # executable for more than 7 days when it left: the queue file does not list it, so the ledger does not keep it (lib/fresh_ops.py)
+            e["state"] = "resolved"; e["resolved_seen_utc"] = iso(now); e["left_the_files"] = True
     if len(E) > KEEP: led["entries"] = dict(sorted(E.items(), key=lambda kv: kv[1]["first_seen_utc"])[-KEEP:])
     led["updated_utc"] = iso(now); led["summary"] = summarize(led["entries"], led["started_utc"]); return led
 

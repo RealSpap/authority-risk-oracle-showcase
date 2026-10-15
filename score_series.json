@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-10-15T01:03:32Z",
+ "run_utc": "2026-10-15T07:06:05Z",
  "targets": 197,
  "moves_recorded": 20,
  "series": {
@@ -1645,10 +1645,10 @@
  },
  "calibration": {
   "window_days": 14,
-  "actions": 26,
-  "under_40": 6,
+  "actions": 27,
+  "under_40": 7,
   "by_band": {
-   "critical": 0,
+   "critical": 1,
    "weak": 6,
    "moderate": 20,
    "decent": 0,
@@ -1888,6 +1888,15 @@
     "tx": "0xf721454ada8b60f6cb83064e223d57e2e49dd16619d92ea095031cdde217bda5",
     "score_then": 31,
     "band_then": "weak"
+   },
+   {
+    "kind": "upgrade executed",
+    "key": "solana:cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG",
+    "t": "2026-10-15T07:01:04Z",
+    "via": "slot 457080014",
+    "tx": null,
+    "score_then": 2,
+    "band_then": "critical"
    }
   ],
   "read_as": "every authority action the watch observed in the window (a timelock operation queued or executed against a tracked contract, an admin change read independently) and the composite score the contract carried at that moment. Small counts prove little; the file grows with every run and the chained log keeps every move"

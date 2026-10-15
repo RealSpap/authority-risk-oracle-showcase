@@ -1,6 +1,6 @@
 {
- "evaluated_utc": "2026-10-15T19:04:17Z",
- "run_utc": "2026-10-15T18:49:42Z",
+ "evaluated_utc": "2026-10-15T21:24:22Z",
+ "run_utc": "2026-10-15T21:08:26Z",
  "rules": [
   "score dropped by 10 or more",
   "score fell under 40",
@@ -32,7 +32,7 @@
    "title": "Fluid Lending",
    "score": 59,
    "delta": 0,
-   "tvl_usd": 135273840.18429643,
+   "tvl_usd": 135271197.11891407,
    "first_seen": "2026-10-13T19:14:45Z",
    "new": false,
    "evidence": [
@@ -49,7 +49,7 @@
      "state": "ready"
     }
    ],
-   "previous_run": "2026-10-15T12:53:40Z",
+   "previous_run": "2026-10-15T18:49:42Z",
    "notified": true
   },
   {
@@ -60,11 +60,11 @@
    "title": "0x5555\u20265555",
    "score": 2,
    "delta": 0,
-   "tvl_usd": 560727789.835969,
+   "tvl_usd": 561925343.0156586,
    "first_seen": "2026-10-10T21:14:27Z",
    "new": false,
    "evidence": [],
-   "previous_run": "2026-10-15T12:53:40Z",
+   "previous_run": "2026-10-15T18:49:42Z",
    "notified": true
   },
   {
@@ -75,11 +75,11 @@
    "title": "Kinetiq kmHYPE",
    "score": 4,
    "delta": 0,
-   "tvl_usd": 42307282.6884402,
+   "tvl_usd": 42639555.58689725,
    "first_seen": "2026-10-10T21:14:27Z",
    "new": false,
    "evidence": [],
-   "previous_run": "2026-10-15T12:53:40Z",
+   "previous_run": "2026-10-15T18:49:42Z",
    "notified": true
   },
   {
@@ -90,11 +90,11 @@
    "title": "Kinetiq kHYPE",
    "score": 4,
    "delta": 0,
-   "tvl_usd": 876441998.7393465,
+   "tvl_usd": 880226488.0435399,
    "first_seen": "2026-10-13T18:50:24Z",
    "new": false,
    "evidence": [],
-   "previous_run": "2026-10-15T12:53:40Z",
+   "previous_run": "2026-10-15T18:49:42Z",
    "notified": true
   },
   {
@@ -105,7 +105,7 @@
    "title": "Fluid Lending",
    "score": 59,
    "delta": 0,
-   "tvl_usd": 34785632.21022435,
+   "tvl_usd": 34883502.433021456,
    "first_seen": "2026-10-13T19:14:45Z",
    "new": false,
    "evidence": [
@@ -122,7 +122,7 @@
      "state": "ready"
     }
    ],
-   "previous_run": "2026-10-15T12:53:40Z",
+   "previous_run": "2026-10-15T18:49:42Z",
    "notified": true
   },
   {
@@ -133,39 +133,11 @@
    "title": "Yuzu Money",
    "score": 43,
    "delta": 0,
-   "tvl_usd": 65877558.508110575,
+   "tvl_usd": 65881936.53384983,
    "first_seen": "2026-10-10T21:14:27Z",
    "new": false,
    "evidence": [],
-   "previous_run": "2026-10-15T12:53:40Z",
-   "notified": true
-  },
-  {
-   "rule": "a queued change against this contract is ready to execute now",
-   "severity": "high",
-   "chain": "Robinhood Chain",
-   "target": "0x14b107cf534239c59571b066cb6497a321da897c",
-   "title": "Arcus Perps",
-   "score": 31,
-   "delta": 0,
-   "tvl_usd": 58015375.730413884,
-   "first_seen": "2026-10-15T13:07:12Z",
-   "new": false,
-   "evidence": [
-    {
-     "timelock": "robinhood timelock 0x0da1\u2026001d, found by the independent reader (1 tracked contract)",
-     "timelock_address": "0x0da180b14721ce46a83669b4816cb652caa1001d",
-     "family": "oz",
-     "id": "0x8d36d612e3cfd5b299a3be7003d4fbb82aaf6a587e88faf22f3ec4f4a0801a53",
-     "chain": "robinhood",
-     "tx": "0x52a81ed8e639f542dba2f060a71f7f4eb75d7735ea2b18a6fc127189a76778c1",
-     "selector": "0xd86fac1b",
-     "signature": null,
-     "ready_at": 1792049718,
-     "state": "ready"
-    }
-   ],
-   "previous_run": "2026-10-15T12:53:40Z",
+   "previous_run": "2026-10-15T18:49:42Z",
    "notified": true
   },
   {
@@ -176,26 +148,11 @@
    "title": "Arcus Perps",
    "score": 31,
    "delta": 0,
-   "tvl_usd": 58015375.730413884,
+   "tvl_usd": 58149738.07896964,
    "first_seen": "2026-10-10T21:14:27Z",
    "new": false,
    "evidence": [],
-   "previous_run": "2026-10-15T12:53:40Z",
-   "notified": true
-  },
-  {
-   "rule": "an upgrade was executed: the implementation behind this contract changed since the previous run",
-   "severity": "high",
-   "chain": "Robinhood Chain",
-   "target": "0x14b107cf534239c59571b066cb6497a321da897c",
-   "title": "Arcus Perps",
-   "score": 31,
-   "delta": 0,
-   "tvl_usd": 58015375.730413884,
-   "first_seen": "2026-10-15T19:04:17Z",
-   "new": true,
-   "evidence": [],
-   "previous_run": "2026-10-15T12:53:40Z",
+   "previous_run": "2026-10-15T18:49:42Z",
    "notified": true
   },
   {
@@ -210,7 +167,7 @@
    "first_seen": "2026-10-10T21:14:27Z",
    "new": false,
    "evidence": [],
-   "previous_run": "2026-10-15T12:53:40Z",
+   "previous_run": "2026-10-15T18:49:42Z",
    "notified": true
   },
   {
@@ -221,9 +178,9 @@
    "title": "Kamino Lend",
    "score": 56,
    "delta": 0,
-   "tvl_usd": 1315098377.9464905,
+   "tvl_usd": 1324425276.681538,
    "first_seen": "2026-10-15T19:04:17Z",
-   "new": true,
+   "new": false,
    "evidence": [
     {
      "timelock": "Squads v4 multisig 6hhB\u2026fQbM (5-of-10, time lock 86400 s), found by the independent reader (1 tracked program)",
@@ -238,7 +195,7 @@
      "state": "ready"
     }
    ],
-   "previous_run": "2026-10-15T12:53:40Z",
+   "previous_run": "2026-10-15T18:49:42Z",
    "notified": true
   },
   {
@@ -249,11 +206,11 @@
    "title": "Kamino Liquidity",
    "score": 54,
    "delta": 0,
-   "tvl_usd": 72253884.63016728,
+   "tvl_usd": 72325322.09115909,
    "first_seen": "2026-10-10T21:14:27Z",
    "new": false,
    "evidence": [],
-   "previous_run": "2026-10-15T12:53:40Z",
+   "previous_run": "2026-10-15T18:49:42Z",
    "notified": true
   },
   {
@@ -264,11 +221,11 @@
    "title": "Jupiter Perpetual Exchange",
    "score": 46,
    "delta": 0,
-   "tvl_usd": 750475243.558133,
+   "tvl_usd": 749328471.4801327,
    "first_seen": "2026-10-10T21:14:27Z",
    "new": false,
    "evidence": [],
-   "previous_run": "2026-10-15T12:53:40Z",
+   "previous_run": "2026-10-15T18:49:42Z",
    "notified": true
   },
   {
@@ -279,11 +236,11 @@
    "title": "Orca DEX",
    "score": 2,
    "delta": 0,
-   "tvl_usd": 300436737.36501133,
+   "tvl_usd": 302647131.7760961,
    "first_seen": "2026-10-10T21:14:27Z",
    "new": false,
    "evidence": [],
-   "previous_run": "2026-10-15T12:53:40Z",
+   "previous_run": "2026-10-15T18:49:42Z",
    "notified": true
   }
  ],
@@ -296,11 +253,11 @@
    "target": "0x55555815a5595991c3a0ff119b59aef6c8b55555",
    "title": "0x5555\u20265555",
    "first_seen": "2026-10-10T21:14:27Z",
-   "last_seen": "2026-10-15T19:04:17Z",
-   "times": 32,
+   "last_seen": "2026-10-15T21:24:22Z",
+   "times": 33,
    "score": 2,
    "delta": 0,
-   "tvl_usd": 560727789.835969
+   "tvl_usd": 561925343.0156586
   },
   {
    "key": "the independent reader disagrees with the admin-key score, with money behind it|hyperliquid:0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec",
@@ -310,11 +267,11 @@
    "target": "0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec",
    "title": "Kinetiq kmHYPE",
    "first_seen": "2026-10-10T21:14:27Z",
-   "last_seen": "2026-10-15T19:04:17Z",
-   "times": 32,
+   "last_seen": "2026-10-15T21:24:22Z",
+   "times": 33,
    "score": 4,
    "delta": 0,
-   "tvl_usd": 42307282.6884402
+   "tvl_usd": 42639555.58689725
   },
   {
    "key": "the independent reader disagrees with the admin-key score, with money behind it|plasma:0x6695c0f8706c5ace3bdf8995073179cca47926dc",
@@ -324,11 +281,11 @@
    "target": "0x6695c0f8706c5ace3bdf8995073179cca47926dc",
    "title": "Yuzu Money",
    "first_seen": "2026-10-10T21:14:27Z",
-   "last_seen": "2026-10-15T19:04:17Z",
-   "times": 32,
+   "last_seen": "2026-10-15T21:24:22Z",
+   "times": 33,
    "score": 43,
    "delta": 0,
-   "tvl_usd": 65877558.508110575
+   "tvl_usd": 65881936.53384983
   },
   {
    "key": "the independent reader disagrees with the admin-key score, with money behind it|robinhood:0x14b107cf534239c59571b066cb6497a321da897c",
@@ -338,11 +295,11 @@
    "target": "0x14b107cf534239c59571b066cb6497a321da897c",
    "title": "Arcus Perps",
    "first_seen": "2026-10-10T21:14:27Z",
-   "last_seen": "2026-10-15T19:04:17Z",
-   "times": 32,
+   "last_seen": "2026-10-15T21:24:22Z",
+   "times": 33,
    "score": 31,
    "delta": 0,
-   "tvl_usd": 58015375.730413884
+   "tvl_usd": 58149738.07896964
   },
   {
    "key": "an admin transfer is in flight: a new owner or admin is designated and has not accepted yet (pendingOwner / pendingAdmin)|robinhood:0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d",
@@ -352,8 +309,8 @@
    "target": "0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d",
    "title": "0xfe7e\u20269b0d",
    "first_seen": "2026-10-10T21:14:27Z",
-   "last_seen": "2026-10-15T19:04:17Z",
-   "times": 32,
+   "last_seen": "2026-10-15T21:24:22Z",
+   "times": 33,
    "score": 1,
    "delta": 0,
    "tvl_usd": null
@@ -366,11 +323,11 @@
    "target": "GKnHiWh3RRrE1zsNzWxRkomymHc374TvJPSTv2wPeYdB",
    "title": "Kamino Liquidity",
    "first_seen": "2026-10-10T21:14:27Z",
-   "last_seen": "2026-10-15T19:04:17Z",
-   "times": 32,
+   "last_seen": "2026-10-15T21:24:22Z",
+   "times": 33,
    "score": 54,
    "delta": 0,
-   "tvl_usd": 72253884.63016728
+   "tvl_usd": 72325322.09115909
   },
   {
    "key": "the independent reader disagrees with the admin-key score, with money behind it|solana:H4ND9aYttUVLFmNypZqLjZ52FYiGvdEB45GmwNoKEjTj",
@@ -380,11 +337,11 @@
    "target": "H4ND9aYttUVLFmNypZqLjZ52FYiGvdEB45GmwNoKEjTj",
    "title": "Jupiter Perpetual Exchange",
    "first_seen": "2026-10-10T21:14:27Z",
-   "last_seen": "2026-10-15T19:04:17Z",
-   "times": 32,
+   "last_seen": "2026-10-15T21:24:22Z",
+   "times": 33,
    "score": 46,
    "delta": 0,
-   "tvl_usd": 750475243.558133
+   "tvl_usd": 749328471.4801327
   },
   {
    "key": "the independent reader disagrees with the admin-key score, with money behind it|solana:2LecshUwdy9xi7meFgHtFJQNSKk4KdTrcpvaB56dP2NQ",
@@ -394,11 +351,11 @@
    "target": "2LecshUwdy9xi7meFgHtFJQNSKk4KdTrcpvaB56dP2NQ",
    "title": "Orca DEX",
    "first_seen": "2026-10-10T21:14:27Z",
-   "last_seen": "2026-10-15T19:04:17Z",
-   "times": 32,
+   "last_seen": "2026-10-15T21:24:22Z",
+   "times": 33,
    "score": 2,
    "delta": 0,
-   "tvl_usd": 300436737.36501133
+   "tvl_usd": 302647131.7760961
   },
   {
    "key": "the independent reader disagrees with the admin-key score, with money behind it|hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109",
@@ -408,11 +365,11 @@
    "target": "0x393d0b87ed38fc779fd9611144ae649ba6082109",
    "title": "Kinetiq kHYPE",
    "first_seen": "2026-10-13T18:50:24Z",
-   "last_seen": "2026-10-15T19:04:17Z",
-   "times": 31,
+   "last_seen": "2026-10-15T21:24:22Z",
+   "times": 32,
    "score": 4,
    "delta": 0,
-   "tvl_usd": 876441998.7393465
+   "tvl_usd": 880226488.0435399
   },
   {
    "key": "a queued change against this contract is ready to execute now|arbitrum:0x52aa899454998be5b000ad077a46bbe360f4e497",
@@ -422,11 +379,11 @@
    "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
    "title": "Fluid Lending",
    "first_seen": "2026-10-13T19:14:45Z",
-   "last_seen": "2026-10-15T19:04:17Z",
-   "times": 11,
+   "last_seen": "2026-10-15T21:24:22Z",
+   "times": 12,
    "score": 59,
    "delta": 0,
-   "tvl_usd": 135273840.18429643
+   "tvl_usd": 135271197.11891407
   },
   {
    "key": "a queued change against this contract is ready to execute now|plasma:0x52aa899454998be5b000ad077a46bbe360f4e497",
@@ -436,11 +393,25 @@
    "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
    "title": "Fluid Lending",
    "first_seen": "2026-10-13T19:14:45Z",
-   "last_seen": "2026-10-15T19:04:17Z",
-   "times": 11,
+   "last_seen": "2026-10-15T21:24:22Z",
+   "times": 12,
    "score": 59,
    "delta": 0,
-   "tvl_usd": 34785632.21022435
+   "tvl_usd": 34883502.433021456
+  },
+  {
+   "key": "a queued change against this contract is ready to execute now|solana:7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF",
+   "rule": "a queued change against this contract is ready to execute now",
+   "severity": "high",
+   "chain": "Solana",
+   "target": "7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF",
+   "title": "Kamino Lend",
+   "first_seen": "2026-10-15T19:04:17Z",
+   "last_seen": "2026-10-15T21:24:22Z",
+   "times": 2,
+   "score": 56,
+   "delta": 0,
+   "tvl_usd": 1324425276.681538
   },
   {
    "key": "a queued change against this contract is ready to execute now|robinhood:0x14b107cf534239c59571b066cb6497a321da897c",
@@ -469,20 +440,6 @@
    "score": 31,
    "delta": 0,
    "tvl_usd": 58015375.730413884
-  },
-  {
-   "key": "a queued change against this contract is ready to execute now|solana:7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF",
-   "rule": "a queued change against this contract is ready to execute now",
-   "severity": "high",
-   "chain": "Solana",
-   "target": "7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF",
-   "title": "Kamino Lend",
-   "first_seen": "2026-10-15T19:04:17Z",
-   "last_seen": "2026-10-15T19:04:17Z",
-   "times": 1,
-   "score": 56,
-   "delta": 0,
-   "tvl_usd": 1315098377.9464905
   },
   {
    "key": "a queued change against this contract executes within 48 h|solana:7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF",

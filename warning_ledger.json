@@ -758,20 +758,22 @@
    "first_seen_utc": "2026-10-13T18:38:19Z",
    "due_utc": "2026-10-15T18:34:47Z",
    "notice_hours": 47.9,
-   "state": "queued",
+   "state": "resolved",
    "chain": "ethereum",
    "timelock": "Compound Governance Timelock",
-   "what": "parameter change"
+   "what": "parameter change",
+   "resolved_seen_utc": "2026-10-15T21:08:26Z"
   },
   "ethereum:0x6d903f6003cca6255d85cca4d3b5e5146dc33925:0x847b18057baa6487d290a47f753cc1bf472003eb7731c7c7de3e031c1609bd5f": {
    "outcome": "warned",
    "first_seen_utc": "2026-10-13T18:38:19Z",
    "due_utc": "2026-10-15T18:34:47Z",
    "notice_hours": 47.9,
-   "state": "queued",
+   "state": "resolved",
    "chain": "ethereum",
    "timelock": "Compound Governance Timelock",
-   "what": "parameter change"
+   "what": "parameter change",
+   "resolved_seen_utc": "2026-10-15T21:08:26Z"
   },
   "solana:2ymoqqqrtbhq3nq3wfoqqawws65qcquxcwheyha4rshw:squads:2yMoQqQrtbhq3nQ3wFoQQawWS65qcqUXcwHEYha4rshW:153": {
    "outcome": "missed",
@@ -809,10 +811,11 @@
    "first_seen_utc": "2026-10-14T09:30:02Z",
    "due_utc": "2026-10-15T07:35:18Z",
    "notice_hours": 22.1,
-   "state": "queued",
+   "state": "resolved",
    "chain": "robinhood",
    "timelock": "robinhood timelock 0x0da1\u2026001d, found by the independent reader (1 tracked contract)",
-   "what": "unknown"
+   "what": "unknown",
+   "resolved_seen_utc": "2026-10-15T21:08:26Z"
   },
   "solana:cxnevpqqcya628tywzhgxej2jdvmbu51rnerat9xunp1:squads:CxnEVpQQcYa628TywzHGXeJ2jdVmbU51rnERat9xunP1:1005": {
    "outcome": "warned",
@@ -886,7 +889,7 @@
    "what": "call"
   }
  },
- "updated_utc": "2026-10-15T18:49:42Z",
+ "updated_utc": "2026-10-15T21:08:26Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
   "warned": 18,

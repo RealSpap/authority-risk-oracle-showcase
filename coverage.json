@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-16T13:13:53Z",
+ "generated_utc": "2026-10-16T19:11:55Z",
  "chains": {
   "arbitrum": {
    "oracle": "Arbitrum (Sepolia)",
@@ -20,7 +20,7 @@
     "status": "ok",
     "why": null
    },
-   "tvl_matched": 10,
+   "tvl_matched": 8,
    "held_read": 0,
    "pause_answered": 1,
    "roles_read": 1,
@@ -30,7 +30,7 @@
     "3 contract(s) where no admin slot, owner() or admin() answers: the independent reader cannot classify their admin",
     "paused() or isPaused() answered by 1 of 13 contracts: a pause on the other 12 is not seen, and 'nothing paused' says nothing about them",
     "no pauser, guardian or curator getter answers on 12 of 13 contracts: a change of those hands is not seen there",
-    "no money figure for 3 of 13 contracts (no DefiLlama protocol, no totalAssets() answered): money at risk not computed for them"
+    "no money figure for 5 of 13 contracts (no DefiLlama protocol, no totalAssets() answered): money at risk not computed for them"
    ]
   },
   "base": {
@@ -100,14 +100,14 @@
    "oracle": "Hyperliquid (HyperEVM)",
    "targets": 16,
    "independent_read": {
-    "readable": 4,
-    "unreadable": 2,
+    "readable": 2,
+    "unreadable": 4,
     "native": 10
    },
    "proxies_fingerprinted": 5,
    "safes": 2,
    "safes_modules_read": 2,
-   "timelocks_in_admin_path": 1,
+   "timelocks_in_admin_path": 0,
    "timelock_queues_watched": 1,
    "safe_events": {
     "safes": 5,
@@ -120,11 +120,12 @@
    "pause_answered": 0,
    "roles_read": 0,
    "admin_safes_nonce_read": 1,
-   "admin_role_probed": 0,
+   "admin_role_probed": 1,
    "blind_spots": [
-    "2 contract(s) where no admin slot, owner() or admin() answers: the independent reader cannot classify their admin",
+    "4 contract(s) where no admin slot, owner() or admin() answers: the independent reader cannot classify their admin",
     "paused() or isPaused() answered by 0 of 16 contracts: a pause on the other 16 is not seen, and 'nothing paused' says nothing about them",
     "no pauser, guardian or curator getter answers on 16 of 16 contracts: a change of those hands is not seen there",
+    "of the unreadable contracts, 1 are AccessControl contracts asked who holds the admin role among the holders already known: a yes proves one holder, never the full list",
     "10 native identifier(s) (no code at the address): outside the independent reader's reach, scored by the methodology alone",
     "no money figure for 6 of 16 contracts (no DefiLlama protocol, no totalAssets() answered): money at risk not computed for them"
    ]

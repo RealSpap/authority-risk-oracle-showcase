@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-10-16T01:05:20Z",
+ "run_utc": "2026-10-16T07:08:12Z",
  "targets": 197,
  "moves_recorded": 20,
  "series": {
@@ -1658,15 +1658,6 @@
    {
     "kind": "Squads proposal executed",
     "key": "solana:Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
-    "t": "2026-10-02T02:44:26Z",
-    "via": "Squads v4 multisig CxnE\u2026unP1 (4-of-7, time lock 600 s), found by the independent reader (1 tracked program)",
-    "tx": "6BTaxodGNk6grtyi7VjHoAcnEykhQaZuLgZ73k2izK6e",
-    "score_then": 51,
-    "band_then": "moderate"
-   },
-   {
-    "kind": "Squads proposal executed",
-    "key": "solana:Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
     "t": "2026-10-02T15:02:12Z",
     "via": "Squads v4 multisig CxnE\u2026unP1 (4-of-7, time lock 600 s), found by the independent reader (1 tracked program)",
     "tx": "EQ7joyxzTLiToscAzTyArFPQnNuZwboiF1uPhRusTfGb",
@@ -1933,6 +1924,15 @@
     "tx": null,
     "score_then": 31,
     "band_then": "weak"
+   },
+   {
+    "kind": "Squads proposal executed",
+    "key": "solana:Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
+    "t": "2026-10-16T04:10:54Z",
+    "via": "Squads v4 multisig CxnE\u2026unP1 (4-of-7, time lock 600 s), found by the independent reader (1 tracked program)",
+    "tx": "J9d6poWJvYuDWK6Ef82TAGojbs5V2mT5DKRJG1JQg9S3",
+    "score_then": 51,
+    "band_then": "moderate"
    }
   ],
   "read_as": "every authority action the watch observed in the window (a timelock operation queued or executed against a tracked contract, an admin change read independently) and the composite score the contract carried at that moment. Small counts prove little; the file grows with every run and the chained log keeps every move"

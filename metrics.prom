@@ -1,6 +1,6 @@
 # HELP aro_run_timestamp_seconds UTC time of the last Watch run (Unix seconds)
 # TYPE aro_run_timestamp_seconds gauge
-aro_run_timestamp_seconds 1792098506
+aro_run_timestamp_seconds 1792111843
 # HELP aro_oracle_read 1 when the oracle was read at the last run, 0 when it was not (its targets are then unknown, not zero)
 # TYPE aro_oracle_read gauge
 aro_oracle_read{oracle="Robinhood Chain"} 1
@@ -59,8 +59,8 @@ aro_alerts_active{severity="info"} 0
 # HELP aro_second_opinion Targets by verdict of the independent reader
 # TYPE aro_second_opinion gauge
 aro_second_opinion{result="agree"} 128
-aro_second_opinion{result="disagree"} 15
-aro_second_opinion{result="unreadable"} 38
+aro_second_opinion{result="disagree"} 14
+aro_second_opinion{result="unreadable"} 39
 aro_second_opinion{result="native"} 16
 # HELP aro_contracts_paused Tracked contracts that answer paused() true now
 # TYPE aro_contracts_paused gauge

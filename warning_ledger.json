@@ -833,10 +833,11 @@
    "first_seen_utc": "2026-10-14T12:50:56Z",
    "due_utc": "2026-10-15T09:56:00Z",
    "notice_hours": 21.1,
-   "state": "queued",
+   "state": "resolved",
    "chain": "plasma",
    "timelock": "plasma timelock 0xabd3\u20265072, found by the independent reader (1 tracked contract)",
-   "what": "parameter change"
+   "what": "parameter change",
+   "resolved_seen_utc": "2026-10-16T12:52:22Z"
   },
   "solana:7fcpipjwvbpbdhymvt1gjywkciakkjz5gahdqysemvhk:squads:7FCPipJWVbPbdHymVt1gJYwKciakkJz5GahdQySemvHk:128": {
    "outcome": "seen_without_notice",
@@ -898,7 +899,7 @@
    "what": "call to the governed program"
   }
  },
- "updated_utc": "2026-10-16T06:52:41Z",
+ "updated_utc": "2026-10-16T12:52:22Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
   "warned": 18,

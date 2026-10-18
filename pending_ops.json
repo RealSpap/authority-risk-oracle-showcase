@@ -25,36 +25,6 @@
    "pending": [],
    "recent": [
     {
-     "block": 26118948,
-     "tx": "0x5a6e362ac2d75b2541908bfe2149d3964df8c3a4bc066ae6530605d126b6dfe0",
-     "id": "0x4ccf952177acfb04925ebef2b590dd5872c6b1d1650a698dd136aaf3973e7b4e",
-     "index": 0,
-     "target": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-     "value": 0,
-     "eta": 1791289199,
-     "selector": "0x9f3ce55a",
-     "signature": "sendMessage(address,uint256,bytes)",
-     "calls": 1,
-     "still_queued": false,
-     "queued_at": 1791116399,
-     "decoded": "cross-chain message"
-    },
-    {
-     "block": 26118948,
-     "tx": "0x5a6e362ac2d75b2541908bfe2149d3964df8c3a4bc066ae6530605d126b6dfe0",
-     "id": "0x0942e636d710ede43ae6137197a47e45806519b210a1df9365c7393ede2a1fa1",
-     "index": 0,
-     "target": "0x676A795fe6E43C17c668de16730c3F690FEB7120",
-     "value": 0,
-     "eta": 1791289199,
-     "selector": "0x3dbb202b",
-     "signature": "sendMessage(address,bytes,uint32)",
-     "calls": 1,
-     "still_queued": false,
-     "queued_at": 1791116399,
-     "decoded": "cross-chain message"
-    },
-    {
      "block": 26139146,
      "tx": "0x33b5b5a664c3356949559c590f055178bda6dc8bc44ee44be56968e7fd1d01d3",
      "id": "0x8164f25df530647937b8c42d62379aacd6c147dc948e43c411259c5858b9d0af",
@@ -361,7 +331,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 4463468,
+   "window_blocks": 4229370,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -397,7 +367,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 4480000,
+   "window_blocks": 4229370,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -417,7 +387,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 4480000,
+   "window_blocks": 4229370,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -1214,22 +1184,6 @@
      "decoded": "multisig config",
      "what": "multisig configuration: add member",
      "touches_governed": true
-    },
-    {
-     "id": "squads:AEb1u8FK8EuXLcPtprCy8s4NkqBNoP5mfbuEEop2dJGf:252",
-     "index": 252,
-     "target": "USXyiSTsPEWz55pSK7sZoUL79ntoVGQbaTDT57tH6bx",
-     "value": 0,
-     "selector": null,
-     "signature": "Squads proposal #252: call to the governed program USXyiSTsPEWz55pSK7sZoUL79ntoVGQbaTDT57tH6bx",
-     "still_queued": false,
-     "queued_at": 1791120768,
-     "executed_at": 1791120768,
-     "account": "24zRfUSBtc29bcLUKPKUgVeqDaeRevNZXxpJvkN3pEUh",
-     "undecoded": false,
-     "decoded": "call to the governed program",
-     "what": "call to the governed program USXyiSTsPEWz55pSK7sZoUL79ntoVGQbaTDT57tH6bx",
-     "touches_governed": true
     }
    ],
    "active": [],
@@ -1816,7 +1770,7 @@
    "transaction_index": 71
   }
  ],
- "discovered_utc": "2026-10-18T12:53:42Z",
+ "discovered_utc": "2026-10-18T18:48:27Z",
  "discovered": 14,
- "squads_utc": "2026-10-18T12:58:33Z"
+ "squads_utc": "2026-10-18T18:52:51Z"
 }

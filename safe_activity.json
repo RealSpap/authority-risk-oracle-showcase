@@ -1,20 +1,19 @@
 {
- "generated_utc": "2026-10-18T07:01:24Z",
+ "generated_utc": "2026-10-18T12:57:22Z",
  "wake_days": 14,
- "safes": 39,
- "read": 39,
+ "safes": 40,
+ "read": 40,
  "woke": [],
  "changes": [
   {
-   "delta": 17,
-   "idle_days": 1.2,
+   "delta": 2,
+   "idle_days": 1.0,
    "woke": false,
-   "safe": "robinhood:0x20d6\u2026be1a",
+   "safe": "monad:0x8b73\u2026788b",
    "governs": [
-    "robinhood:0x83341f891f898cb5e0cacc8a70501bba83d9cecf",
-    "robinhood:0xa203a21dccb461e415daa342e8e635b6cee0ccb3"
+    "monad:0xd651346d7c789536ebf06dc72ae3c8502cd695cc"
    ],
-   "previous_run": "2026-10-18T01:07:01Z"
+   "previous_run": "2026-10-18T07:01:24Z"
   }
  ],
  "never_executed": [
@@ -163,6 +162,17 @@
    "safe": "ethereum-l1:0xfa77\u20266a66",
    "never_executed": false
   },
+  "hyperliquid:982ff508c289b3fd": {
+   "nonce": 75,
+   "observed_since": "2026-10-18T12:57:22Z",
+   "idle_since": "2026-10-18T12:57:22Z",
+   "governs": [
+    "hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109",
+    "hyperliquid:0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec"
+   ],
+   "safe": "hyperliquid:0x18a8\u2026f8f1",
+   "never_executed": false
+  },
   "monad:31e3ad0247904d1a": {
    "nonce": 16,
    "observed_since": "2026-10-10T21:12:49Z",
@@ -175,10 +185,10 @@
    "never_executed": false
   },
   "monad:d104c354d63359d9": {
-   "nonce": 72,
+   "nonce": 74,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-10-17T12:57:01Z",
-   "last_moved": "2026-10-17T12:57:01Z",
+   "idle_since": "2026-10-18T12:57:22Z",
+   "last_moved": "2026-10-18T12:57:22Z",
    "governs": [
     "monad:0xd651346d7c789536ebf06dc72ae3c8502cd695cc"
    ],

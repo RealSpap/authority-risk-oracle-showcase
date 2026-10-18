@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-10-17T18:54:44Z",
+ "run_utc": "2026-10-18T01:08:39Z",
  "targets": 197,
  "moves_recorded": 20,
  "series": {
@@ -1645,11 +1645,11 @@
  },
  "calibration": {
   "window_days": 14,
-  "actions": 28,
-  "under_40": 11,
+  "actions": 27,
+  "under_40": 10,
   "by_band": {
    "critical": 4,
-   "weak": 7,
+   "weak": 6,
    "moderate": 17,
    "decent": 0,
    "strong": 0
@@ -1825,15 +1825,6 @@
     "tx": null,
     "score_then": 51,
     "band_then": "moderate"
-   },
-   {
-    "kind": "timelock op queued (unknown)",
-    "key": "robinhood:0x14b107cf534239c59571b066cb6497a321da897c",
-    "t": "2026-10-14T07:35:18Z",
-    "via": "robinhood timelock 0x0da1\u2026001d, found by the independent reader (1 tracked contract)",
-    "tx": "0x52a81ed8e639f542dba2f060a71f7f4eb75d7735ea2b18a6fc127189a76778c1",
-    "score_then": 31,
-    "band_then": "weak"
    },
    {
     "kind": "Squads proposal executed",

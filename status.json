@@ -1,9 +1,9 @@
 {
- "run_utc": "2026-10-19T00:53:41Z",
+ "run_utc": "2026-10-19T06:56:11Z",
  "state": "degraded",
  "reasons": [
   "1 of 197 targets stale on the oracles",
-  "14 second-opinion disagreement(s) to review",
+  "15 second-opinion disagreement(s) to review",
   "1 high alert(s) from the rules firing now (a queued change against this contract is ready to execute now)",
   "methodology hashes mixed on 1 oracle(s)",
   "method hash not in registry on 1 oracle(s): no version is shown for it (data/method_versions.json)"
@@ -20,10 +20,10 @@
   "signed": true,
   "signing_key": "11baca3ef6a69de4901c185f6cbbd3f93318fbb74f9961a8d39aead841adf409",
   "second_opinion": {
-   "agree": 127,
-   "disagree": 14,
+   "agree": 128,
+   "disagree": 15,
    "acknowledged": 0,
-   "unreadable": 40,
+   "unreadable": 38,
    "native": 16
   },
   "methodology_mixed": 1,

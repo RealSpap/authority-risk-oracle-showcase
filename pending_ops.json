@@ -169,40 +169,26 @@
    "address": "0xE8Dc0Fab349EA169283C48Ccfd09d797E6DB7c94",
    "family": "oz",
    "status": "ok",
-   "queued_events": 287,
-   "latest_queued": 1791814715,
-   "pending": [],
+   "queued_events": 289,
+   "latest_queued": 1792400999,
+   "pending": [
+    {
+     "block": 26225635,
+     "tx": "0x2d3eaac640c34d436e67d19c610654ecdaf5b31f2f9e471ec1238eb5930fe687",
+     "id": "0x27f04700501faa91938f1458d5568d3ef776d06f4d343d639da29d6040db7a8e",
+     "index": 0,
+     "target": "0x1a44076050125825900e736c501f859c50fE728c",
+     "value": 0,
+     "selector": "0x6dbd9f90",
+     "delay": 86400,
+     "signature": "setConfig(address,address,(uint32,uint32,bytes)[])",
+     "calls": 2,
+     "ready_at": 1792487399,
+     "state": "waiting",
+     "decoded": "parameter change"
+    }
+   ],
    "recent": [
-    {
-     "block": 26125013,
-     "tx": "0xe095dbd993b8bb54e1fdbaff1d6abdf9dd351d0d0fc4dfbaac9de36c665dbf06",
-     "id": "0xa3a7682cda2891cee16e0ae0402e55b586fc4434d341fc1baee070704d85b1aa",
-     "index": 0,
-     "target": "0x1a44076050125825900e736c501f859c50fE728c",
-     "value": 0,
-     "selector": "0x6dbd9f90",
-     "delay": 86400,
-     "signature": "setConfig(address,address,(uint32,uint32,bytes)[])",
-     "calls": 16,
-     "still_queued": false,
-     "queued_at": 1791189383,
-     "decoded": "parameter change"
-    },
-    {
-     "block": 26125039,
-     "tx": "0x48934c8bda5e8595df8663cd1835bfd407e9bf6bfa0097094843bb08bd13a437",
-     "id": "0xd3d6cbe3189b6e2bdd1d0cbf5d7e18fa290177ef011a5b3333f19395e12eeb99",
-     "index": 0,
-     "target": "0x1a44076050125825900e736c501f859c50fE728c",
-     "value": 0,
-     "selector": "0x6dbd9f90",
-     "delay": 86400,
-     "signature": "setConfig(address,address,(uint32,uint32,bytes)[])",
-     "calls": 68,
-     "still_queued": false,
-     "queued_at": 1791189695,
-     "decoded": "parameter change"
-    },
     {
      "block": 26133937,
      "tx": "0xea2df92d10ee60b8ac60bdcaeccab9afac664b13f1078dd131f2af501c1a3bda",
@@ -277,6 +263,21 @@
      "still_queued": false,
      "queued_at": 1791814715,
      "decoded": "parameter change"
+    },
+    {
+     "block": 26225635,
+     "tx": "0x2d3eaac640c34d436e67d19c610654ecdaf5b31f2f9e471ec1238eb5930fe687",
+     "id": "0x27f04700501faa91938f1458d5568d3ef776d06f4d343d639da29d6040db7a8e",
+     "index": 0,
+     "target": "0x1a44076050125825900e736c501f859c50fE728c",
+     "value": 0,
+     "selector": "0x6dbd9f90",
+     "delay": 86400,
+     "signature": "setConfig(address,address,(uint32,uint32,bytes)[])",
+     "calls": 2,
+     "still_queued": true,
+     "queued_at": 1792400999,
+     "decoded": "parameter change"
     }
    ],
    "delay": 86400
@@ -331,7 +332,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 4259154,
+   "window_blocks": 4581818,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -367,7 +368,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 4259154,
+   "window_blocks": 4581818,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -387,7 +388,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 4259154,
+   "window_blocks": 4599239,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -427,6 +428,23 @@
    "delay": 0,
    "governs": [
     "0x7bfa7c4f149e7415b73bdedfe609237e29cbf34a"
+   ]
+  },
+  {
+   "name": "hyperliquid timelock 0xc5de\u202623d2, found by the independent reader (1 tracked contract)",
+   "chain": "hyperliquid",
+   "address": "0xc5ded4f7f53919c714059a17d31371ae847e23d2",
+   "family": "oz",
+   "status": "UNREAD (Web3RPCError: {'code': -32005, 'message': 'rate limited'})",
+   "queued_events": null,
+   "latest_queued": null,
+   "pending": [],
+   "recent": [],
+   "discovered": true,
+   "log_rpc": "https://rpc.hyperliquid.xyz/evm",
+   "delay": 172800,
+   "governs": [
+    "0xffaa4a3d97fe9107cef8a3f48c069f577ff76cc1"
    ]
   },
   {
@@ -575,7 +593,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 86400,
    "window_blocks": 3000000,
-   "window_days_est": 3.6,
+   "window_days_est": 3.5,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x14b107cf534239c59571b066cb6497a321da897c"
@@ -1322,38 +1340,6 @@
    "pending": [],
    "recent": [
     {
-     "id": "squads:CxnEVpQQcYa628TywzHGXeJ2jdVmbU51rnERat9xunP1:1000",
-     "index": 1000,
-     "target": "Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
-     "value": 0,
-     "selector": null,
-     "signature": "Squads proposal #1000: call to the governed program Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo; call to the governed program Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo; call to th",
-     "still_queued": false,
-     "queued_at": 1791190752,
-     "executed_at": 1791190752,
-     "account": "HqVcsGDFtPvHKkvsrZQpMMiRncn5to1dj4CZcH7CH6CT",
-     "undecoded": false,
-     "decoded": "call to the governed program",
-     "what": "call to the governed program Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo; call to the governed program Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo; call to the governed program Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo; call to the governed program Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo; call to the governed program Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo; call to the governed program Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo; call to the governed program Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo; call to the governed program Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo; call to the governed program Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo; call to the governed program Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
-     "touches_governed": true
-    },
-    {
-     "id": "squads:CxnEVpQQcYa628TywzHGXeJ2jdVmbU51rnERat9xunP1:1001",
-     "index": 1001,
-     "target": "Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
-     "value": 0,
-     "selector": null,
-     "signature": "Squads proposal #1001: call to the governed program Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo; call to the governed program Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
-     "still_queued": false,
-     "queued_at": 1791202897,
-     "executed_at": 1791202897,
-     "account": "EEtG6JrRGQUDbqJswc7DezvXECsxXc2njCAaHuoVf6ML",
-     "undecoded": false,
-     "decoded": "call to the governed program",
-     "what": "call to the governed program Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo; call to the governed program Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
-     "touches_governed": true
-    },
-    {
      "id": "squads:CxnEVpQQcYa628TywzHGXeJ2jdVmbU51rnERat9xunP1:1002",
      "index": 1002,
      "target": "Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
@@ -1753,7 +1739,7 @@
    "transaction_index": 71
   }
  ],
- "discovered_utc": "2026-10-19T07:03:56Z",
- "discovered": 13,
- "squads_utc": "2026-10-19T07:08:04Z"
+ "discovered_utc": "2026-10-19T13:03:14Z",
+ "discovered": 14,
+ "squads_utc": "2026-10-19T13:08:58Z"
 }

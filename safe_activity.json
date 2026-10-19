@@ -1,19 +1,40 @@
 {
- "generated_utc": "2026-10-19T13:07:35Z",
+ "generated_utc": "2026-10-19T19:05:04Z",
  "wake_days": 14,
  "safes": 40,
  "read": 40,
  "woke": [],
  "changes": [
   {
-   "delta": 3,
-   "idle_days": 3.0,
+   "delta": 2,
+   "idle_days": 2.7,
    "woke": false,
-   "safe": "ethereum-l1:0x3b0a\u20261862",
+   "safe": "base:0xe6a4\u20262075",
    "governs": [
-    "ethereum-l1:0x2cc440b721d2cafd6d64908d6d8c4acc57f8afc3"
+    "base:0x5e7bb104d84c7cb9b682aac2f3d509f5f406809a"
    ],
-   "previous_run": "2026-10-19T07:07:05Z"
+   "previous_run": "2026-10-19T13:07:35Z"
+  },
+  {
+   "delta": 4,
+   "idle_days": 4.0,
+   "woke": false,
+   "safe": "robinhood:0x0eea\u2026dfd8",
+   "governs": [
+    "robinhood:0x1ac9db4a2608ba45d6127b1737949b51bb54b7f3"
+   ],
+   "previous_run": "2026-10-19T13:07:35Z"
+  },
+  {
+   "delta": 1,
+   "idle_days": 4.7,
+   "woke": false,
+   "safe": "robinhood:0x31c4\u20269693",
+   "governs": [
+    "robinhood:0x128a800cbc615cc110bff16e475865c67631603a",
+    "robinhood:0xf28704c691290547924e2129d407da36bda8ce0f"
+   ],
+   "previous_run": "2026-10-19T13:07:35Z"
   }
  ],
  "never_executed": [
@@ -97,10 +118,10 @@
    "never_executed": false
   },
   "base:813d4f2afbe04aad": {
-   "nonce": 2734,
+   "nonce": 2736,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-10-17T01:05:43Z",
-   "last_moved": "2026-10-17T01:05:43Z",
+   "idle_since": "2026-10-19T19:05:04Z",
+   "last_moved": "2026-10-19T19:05:04Z",
    "governs": [
     "base:0x5e7bb104d84c7cb9b682aac2f3d509f5f406809a"
    ],
@@ -247,10 +268,10 @@
    "never_executed": false
   },
   "robinhood:e8bf689e4f96ba54": {
-   "nonce": 435,
+   "nonce": 439,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-10-15T19:02:41Z",
-   "last_moved": "2026-10-15T19:02:41Z",
+   "idle_since": "2026-10-19T19:05:04Z",
+   "last_moved": "2026-10-19T19:05:04Z",
    "governs": [
     "robinhood:0x1ac9db4a2608ba45d6127b1737949b51bb54b7f3"
    ],
@@ -281,10 +302,10 @@
    "never_executed": false
   },
   "robinhood:e783f5ca68909703": {
-   "nonce": 10,
+   "nonce": 11,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-10-15T01:02:08Z",
-   "last_moved": "2026-10-15T01:02:08Z",
+   "idle_since": "2026-10-19T19:05:04Z",
+   "last_moved": "2026-10-19T19:05:04Z",
    "governs": [
     "robinhood:0x128a800cbc615cc110bff16e475865c67631603a",
     "robinhood:0xf28704c691290547924e2129d407da36bda8ce0f"

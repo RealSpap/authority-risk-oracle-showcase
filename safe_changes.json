@@ -5,10 +5,10 @@
    "ecosystem": "robinhood",
    "safes": 25,
    "events": [],
-   "control": 105,
+   "control": 104,
    "status": "ok",
-   "fromBlock": 86058012,
-   "toBlock": 91997058,
+   "fromBlock": 86277344,
+   "toBlock": 92218628,
    "days_read": 7
   },
   {
@@ -17,8 +17,8 @@
    "events": [],
    "control": 9,
    "status": "ok",
-   "fromBlock": 26171131,
-   "toBlock": 26221367,
+   "fromBlock": 26173005,
+   "toBlock": 26223243,
    "days_read": 7
   },
   {
@@ -27,8 +27,8 @@
    "events": [],
    "control": 6,
    "status": "ok",
-   "fromBlock": 513900277,
-   "toBlock": 516055617,
+   "fromBlock": 513975008,
+   "toBlock": 516138924,
    "days_read": 7
   },
   {
@@ -60,8 +60,8 @@
    ],
    "control": 13,
    "status": "ok",
-   "fromBlock": 52477740,
-   "toBlock": 52780140,
+   "fromBlock": 52489019,
+   "toBlock": 52791418,
    "days_read": 7
   },
   {
@@ -70,8 +70,8 @@
    "events": [],
    "control": 0,
    "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 46 execution(s) from other Safes on the window's tail)",
-   "fromBlock": 43678275,
-   "toBlock": 44767577,
+   "fromBlock": 43718854,
+   "toBlock": 44808248,
    "days_read": 7,
    "control_witness": 46
   },
@@ -81,19 +81,20 @@
    "events": [],
    "control": 9,
    "status": "ok",
-   "fromBlock": 34803565,
-   "toBlock": 35408311,
+   "fromBlock": 34826125,
+   "toBlock": 35430871,
    "days_read": 7
   },
   {
    "ecosystem": "monad",
    "safes": 13,
    "events": [],
-   "control": 2,
-   "status": "ok",
-   "fromBlock": 114461084,
-   "toBlock": 114546881,
-   "days_read": 0.3
+   "control": 0,
+   "status": "UNREAD (control returned 0 ExecutionSuccess events on the tracked Safes and none from any Safe on the window's tail: the RPC may be truncating, not the Safes being idle)",
+   "fromBlock": 114535871,
+   "toBlock": 114621434,
+   "days_read": 0.3,
+   "control_witness": 0
   },
   {
    "ecosystem": "hyperliquid",
@@ -101,8 +102,8 @@
    "events": [],
    "control": 2,
    "status": "ok",
-   "fromBlock": 48631198,
-   "toBlock": 48894718,
+   "fromBlock": 48654377,
+   "toBlock": 48917896,
    "days_read": 3.0
   }
  ]

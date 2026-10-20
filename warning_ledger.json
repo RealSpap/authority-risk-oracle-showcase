@@ -957,14 +957,23 @@
    "chain": "solana",
    "timelock": "Squads v4 multisig AEb1\u2026dJGf (3-of-7, time lock 86400 s), found by the independent reader (1 tracked program)",
    "what": "call to the governed program"
+  },
+  "solana:8sr4rqjl2aqt3el97mbrk1t9vmw4pcs2mxmpp2qbzhqq:squads:8Sr4rQJL2aQT3EL97mbrk1T9VMw4pCS2mxMPp2QBzHQq:160": {
+   "outcome": "missed",
+   "first_seen_utc": "2026-10-20T18:47:37Z",
+   "queued_utc": "2026-10-20T15:39:48Z",
+   "state": "resolved",
+   "chain": "solana",
+   "timelock": "Squads v4 multisig 8Sr4\u2026zHQq (3-of-8, time lock 0 s), found by the independent reader (1 tracked program)",
+   "what": "program upgrade"
   }
  },
- "updated_utc": "2026-10-20T12:52:44Z",
+ "updated_utc": "2026-10-20T18:47:37Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
   "warned": 20,
   "seen_without_notice": 4,
-  "missed": 9,
+  "missed": 10,
   "baseline": 77,
   "warned_with_a_known_notice": 20,
   "shortest_notice_hours": 0.2,

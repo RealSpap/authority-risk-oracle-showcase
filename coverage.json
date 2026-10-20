@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-20T07:10:30Z",
+ "generated_utc": "2026-10-20T13:12:37Z",
  "chains": {
   "arbitrum": {
    "oracle": "Arbitrum (Sepolia)",
@@ -100,8 +100,8 @@
    "oracle": "Hyperliquid (HyperEVM)",
    "targets": 16,
    "independent_read": {
-    "readable": 4,
-    "unreadable": 2,
+    "readable": 3,
+    "unreadable": 3,
     "native": 10
    },
    "proxies_fingerprinted": 5,
@@ -122,7 +122,7 @@
    "admin_safes_nonce_read": 1,
    "admin_role_probed": 0,
    "blind_spots": [
-    "2 contract(s) where no admin slot, owner() or admin() answers: the independent reader cannot classify their admin",
+    "3 contract(s) where no admin slot, owner() or admin() answers: the independent reader cannot classify their admin",
     "paused() or isPaused() answered by 0 of 16 contracts: a pause on the other 16 is not seen, and 'nothing paused' says nothing about them",
     "no pauser, guardian or curator getter answers on 16 of 16 contracts: a change of those hands is not seen there",
     "10 native identifier(s) (no code at the address): outside the independent reader's reach, scored by the methodology alone",

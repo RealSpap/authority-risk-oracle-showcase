@@ -1,4 +1,10 @@
-## Second opinion, 2026-10-20T01:03:28Z
+## Second opinion, 2026-10-20T06:59:16Z
+
+### 1 admin change(s) since the previous run (2026-10-20T01:03:28Z)
+
+- **0xd540f47f214dc7d6d244e62a6ae7e06b586ef44a** on robinhood: admin read changed since the previous run: safe 0xf8067d8ca90b8510ce8ade1eec24b7260eafa5f7 2-of-3 [signers: 3 eoa] -> safe 0xf8067d8ca90b8510ce8ade1eec24b7260eafa5f7 2-of-5 (via owner()); signer composition changed since the previous run: 3 eoa -> 5 eoa
+
+The live admin of a tracked contract moved between two watch runs: the published score may be out of date before the next push. Read the case now.
 
 ### 13 disagreement(s) with the published score
 

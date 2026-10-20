@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-20T01:15:30Z",
+ "generated_utc": "2026-10-20T07:10:30Z",
  "chains": {
   "arbitrum": {
    "oracle": "Arbitrum (Sepolia)",
@@ -76,7 +76,7 @@
    "safes": 8,
    "safes_modules_read": 8,
    "timelocks_in_admin_path": 8,
-   "timelock_queues_watched": 4,
+   "timelock_queues_watched": 5,
    "safe_events": {
     "safes": 15,
     "days": 7,
@@ -145,8 +145,8 @@
    "safe_events": {
     "safes": 13,
     "days": 0.3,
-    "status": "unread",
-    "why": "UNREAD (control returned 0 ExecutionSuccess events on the tracked Safes and none from any Safe on the window's tail: the RPC may be truncating, not the Safes be"
+    "status": "ok",
+    "why": null
    },
    "tvl_matched": 8,
    "held_read": 0,
@@ -159,7 +159,6 @@
     "paused() or isPaused() answered by 2 of 9 contracts: a pause on the other 7 is not seen, and 'nothing paused' says nothing about them",
     "no pauser, guardian or curator getter answers on 7 of 9 contracts: a change of those hands is not seen there",
     "of the unreadable contracts, 1 are AccessControl contracts asked who holds the admin role among the holders already known: a yes proves one holder, never the full list",
-    "Safe events not read this run (UNREAD (control returned 0 ExecutionSuccess events on the tracked Safes and none from any Safe on the window's tail: the RPC may be truncating, not the Safes be)",
     "no money figure for 1 of 9 contracts (no DefiLlama protocol, no totalAssets() answered): money at risk not computed for them"
    ]
   },

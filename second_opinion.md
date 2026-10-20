@@ -1,18 +1,9 @@
-## Second opinion, 2026-10-19T19:00:48Z
+## Second opinion, 2026-10-20T01:03:28Z
 
-### 2 upgrade(s) executed since the previous run (2026-10-19T13:03:15Z)
+### 13 disagreement(s) with the published score
 
-- **7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF** on solana: program redeployed since the previous run: slot 440486775 -> 458858791 (2026-10-19T14:00:16Z); the score reads who may upgrade, this is an upgrade that happened
-- **ADyA8hdefvWN2dbGGWFotbzWxrAvLW83WG6QCVXvJKqw** on solana: program redeployed since the previous run: slot 454596406 -> 458921517 (2026-10-19T17:47:20Z); the score reads who may upgrade, this is an upgrade that happened
-
-The code behind a tracked proxy changed: read what the new implementation does before trusting the score (the private pipeline's implementation check names the selectors added and dropped).
-
-### 15 disagreement(s) with the published score
-
-- **0xffa10065ce1d1c42fabc46e06b84ed8ffeb4bae5** on arbitrum: the multisig score says no real multisig (0), the live read finds a Safe 3-of-3 via owner()
 - **0xff162c694eaa571f685030649814282ea457f169** on arbitrum: the score says one key does everything (10), the live read finds a timelock (1209600s) via EIP-1967 admin -> ProxyAdmin owner(); the timelock score says no delay (0), the live read finds a timelock of 336 h in the admin path via EIP-1967 admin -> ProxyAdmin owner()
 - **0xe23b4ae3624fb6f7cdef29bc8ead912f1ede6886** on arbitrum: the timelock score says no delay (0), the holder's owner is a timelock of 72 h
-- **0x55555815a5595991c3a0ff119b59aef6c8b55555** on ethereum-l1: the timelock score says no delay (0), the contract enforces its own timelock of 336 h (timelock())
 - **0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec** on hyperliquid: the score says one key does everything (10), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisig (0), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner()
 - **0x393d0b87ed38fc779fd9611144ae649ba6082109** on hyperliquid: the score says one key does everything (10), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisig (0), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner()
 - **0xffaa4a3d97fe9107cef8a3f48c069f577ff76cc1** on hyperliquid: the timelock score says no delay (0), the live read finds a timelock of 48 h in the admin path via EIP-1967 admin -> ProxyAdmin owner()

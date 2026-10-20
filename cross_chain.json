@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-19T19:06:19Z",
+ "generated_utc": "2026-10-20T01:08:19Z",
  "protocols": 11,
  "differing": 6,
  "items": [
@@ -18,7 +18,7 @@
      "postures": [
       "contract"
      ],
-     "tvl_usd": 1134781673.502496
+     "tvl_usd": 1135729020.9518669
     },
     "monad": {
      "chain": "Monad",
@@ -31,7 +31,7 @@
      "postures": [
       "plain key"
      ],
-     "tvl_usd": 9880849.410750216
+     "tvl_usd": 9893561.360765737
     },
     "robinhood": {
      "chain": "Robinhood Chain",
@@ -44,7 +44,7 @@
      "postures": [
       "plain key"
      ],
-     "tvl_usd": 595728.0910894773
+     "tvl_usd": 596561.3417055495
     }
    },
    "weakest_chain": "robinhood",
@@ -70,7 +70,7 @@
      "postures": [
       "contract"
      ],
-     "tvl_usd": 536816457.1451174
+     "tvl_usd": 539615878.5872004
     },
     "base": {
      "chain": "Base",
@@ -83,7 +83,7 @@
      "postures": [
       "contract"
      ],
-     "tvl_usd": 548916754.5253297
+     "tvl_usd": 549792004.1241577
     },
     "ethereum-l1": {
      "chain": "Ethereum L1",
@@ -96,7 +96,7 @@
      "postures": [
       "contract"
      ],
-     "tvl_usd": 14029320440.11542
+     "tvl_usd": 13920275968.087305
     },
     "monad": {
      "chain": "Monad",
@@ -109,7 +109,7 @@
      "postures": [
       "contract"
      ],
-     "tvl_usd": 374219365.476727
+     "tvl_usd": 373851401.7117544
     },
     "plasma": {
      "chain": "Plasma",
@@ -122,7 +122,7 @@
      "postures": [
       "contract"
      ],
-     "tvl_usd": 483353947.9773769
+     "tvl_usd": 483440742.80496275
     }
    },
    "weakest_chain": "monad",
@@ -148,12 +148,12 @@
      "postures": [
       "Safe 5-of-10 (10 plain keys) + contract timelock 336 h"
      ],
-     "tvl_usd": 28005386.8392209
+     "tvl_usd": 28050139.63142348
     },
     "robinhood": {
      "chain": "Robinhood Chain",
      "contracts": 4,
-     "composite_min": 40,
+     "composite_min": 44,
      "composite_max": 70,
      "admin_kinds": {
       "contract": 3,
@@ -164,16 +164,16 @@
       "contract owned by a Safe 5-of-10",
       "timelock 24 h"
      ],
-     "tvl_usd": 532070743.5341768
+     "tvl_usd": 532699749.134617
     }
    },
    "weakest_chain": "robinhood",
-   "weakest_composite": 40,
+   "weakest_composite": 44,
    "strongest_chain": "monad",
    "strongest_composite": 67,
-   "spread": 27,
+   "spread": 23,
    "postures_differ": true,
-   "text": "Steakhouse Financial: Robinhood Chain contract owned by a plain key / contract owned by a Safe 5-of-10 / timelock 24 h (composite 40 to 70); Monad Safe 5-of-10 (10 plain keys) + contract timelock 336 h (composite 67)"
+   "text": "Steakhouse Financial: Robinhood Chain contract owned by a plain key / contract owned by a Safe 5-of-10 / timelock 24 h (composite 44 to 70); Monad Safe 5-of-10 (10 plain keys) + contract timelock 336 h (composite 67)"
   },
   {
    "slug": "ethena-usde",
@@ -192,7 +192,7 @@
       "Safe 5-of-10 (10 plain keys)",
       "timelock 24 h"
      ],
-     "tvl_usd": 4678876107.956213
+     "tvl_usd": 4676386034.756135
     },
     "plasma": {
      "chain": "Plasma",
@@ -231,7 +231,7 @@
      "postures": [
       "contract"
      ],
-     "tvl_usd": 98728550.3336799
+     "tvl_usd": 99067979.15016665
     },
     "ethereum-l1": {
      "chain": "Ethereum L1",
@@ -244,7 +244,7 @@
      "postures": [
       "timelock 48 h"
      ],
-     "tvl_usd": 798071891.2410022
+     "tvl_usd": 794554409.9994822
     },
     "monad": {
      "chain": "Monad",
@@ -257,7 +257,7 @@
      "postures": [
       "contract"
      ],
-     "tvl_usd": 26860193.065047864
+     "tvl_usd": 26612506.488100808
     }
    },
    "weakest_chain": "monad",
@@ -283,7 +283,7 @@
      "postures": [
       "contract owned by a timelock 48 h"
      ],
-     "tvl_usd": 132576994.43713307
+     "tvl_usd": 132487295.50236557
     },
     "base": {
      "chain": "Base",
@@ -296,7 +296,7 @@
      "postures": [
       "contract"
      ],
-     "tvl_usd": 307814082.5910483
+     "tvl_usd": 308716584.9853501
     },
     "ethereum-l1": {
      "chain": "Ethereum L1",
@@ -309,7 +309,7 @@
      "postures": [
       "contract owned by a timelock 48 h"
      ],
-     "tvl_usd": 881421512.7882624
+     "tvl_usd": 884740335.2234848
     },
     "robinhood": {
      "chain": "Robinhood Chain",
@@ -326,7 +326,7 @@
       "timelock 48 h",
       "not read"
      ],
-     "tvl_usd": 101054504.48709106
+     "tvl_usd": 101485775.17076793
     }
    },
    "weakest_chain": "arbitrum",
@@ -352,7 +352,7 @@
      "postures": [
       "not read"
      ],
-     "tvl_usd": 207929550.37500596
+     "tvl_usd": 208123745.4331075
     },
     "plasma": {
      "chain": "Plasma",
@@ -367,7 +367,7 @@
       "not read",
       "timelock 48 h"
      ],
-     "tvl_usd": 1885311.7405449226
+     "tvl_usd": 1885236.463545453
     }
    },
    "weakest_chain": "monad",
@@ -393,7 +393,7 @@
      "postures": [
       "timelock 24 h"
      ],
-     "tvl_usd": 66668797.10383737
+     "tvl_usd": 66750685.07127612
     },
     "base": {
      "chain": "Base",
@@ -406,7 +406,7 @@
      "postures": [
       "timelock 24 h"
      ],
-     "tvl_usd": 25223665.254770912
+     "tvl_usd": 25293575.360952433
     },
     "ethereum-l1": {
      "chain": "Ethereum L1",
@@ -419,7 +419,7 @@
      "postures": [
       "timelock 48 h"
      ],
-     "tvl_usd": 1288382126.1604767
+     "tvl_usd": 1291216171.6126704
     }
    },
    "weakest_chain": "arbitrum",
@@ -445,7 +445,7 @@
      "postures": [
       "Safe 5-of-9 (9 plain keys)"
      ],
-     "tvl_usd": 4438555344.300635
+     "tvl_usd": 4446690286.48293
     },
     "ethereum-l1": {
      "chain": "Ethereum L1",
@@ -458,7 +458,7 @@
      "postures": [
       "Safe 6-of-10 (9 plain keys, 1 Safe)"
      ],
-     "tvl_usd": 5051689351.802002
+     "tvl_usd": 5057414985.52937
     },
     "robinhood": {
      "chain": "Robinhood Chain",
@@ -471,7 +471,7 @@
      "postures": [
       "Safe 5-of-9 (9 plain keys)"
      ],
-     "tvl_usd": 602350294.7071224
+     "tvl_usd": 604603231.4998775
     },
     "tempo": {
      "chain": "Tempo",
@@ -484,7 +484,7 @@
      "postures": [
       "Safe 5-of-9 (9 plain keys)"
      ],
-     "tvl_usd": 66002857.00647829
+     "tvl_usd": 65967117.51403947
     }
    },
    "weakest_chain": "base",
@@ -510,7 +510,7 @@
      "postures": [
       "Safe 3-of-5 (5 plain keys)"
      ],
-     "tvl_usd": 52657954.579808466
+     "tvl_usd": 52687883.496577896
     },
     "plasma": {
      "chain": "Plasma",
@@ -523,7 +523,7 @@
      "postures": [
       "Safe 3-of-5 (5 plain keys)"
      ],
-     "tvl_usd": 32078346.529113535
+     "tvl_usd": 32075457.165037014
     },
     "robinhood": {
      "chain": "Robinhood Chain",
@@ -536,7 +536,7 @@
      "postures": [
       "Safe 3-of-5 (5 plain keys)"
      ],
-     "tvl_usd": 441596.8050878757
+     "tvl_usd": 431887.05236741115
     }
    },
    "weakest_chain": "robinhood",
@@ -562,7 +562,7 @@
      "postures": [
       "timelock 24 h"
      ],
-     "tvl_usd": 136160184.4988608
+     "tvl_usd": 136281088.11628535
     },
     "plasma": {
      "chain": "Plasma",
@@ -575,7 +575,7 @@
      "postures": [
       "timelock 24 h"
      ],
-     "tvl_usd": 37737929.928244434
+     "tvl_usd": 37773727.18368702
     }
    },
    "weakest_chain": "arbitrum",

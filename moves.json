@@ -1,9 +1,256 @@
 {
- "generated_utc": "2026-10-19T19:06:41Z",
+ "generated_utc": "2026-10-20T01:08:41Z",
  "compared": 197,
- "new_this_run": 0,
+ "new_this_run": 10,
  "first_seen_oracles": [],
  "moves": [
+  {
+   "run_utc": "2026-10-20T01:08:41Z",
+   "oracle": "arbitrum-sepolia",
+   "target": "0xffa10065ce1d1c42fabc46e06b84ed8ffeb4bae5",
+   "composite": [
+    8,
+    40
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "adminKeyScore",
+     "label": "admin key",
+     "from": 20,
+     "to": 65,
+     "why": "admin power moved to a larger group (20 \u2192 65)"
+    },
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 0,
+     "to": 45,
+     "why": "more signatures are now required (0 \u2192 45)"
+    }
+   ],
+   "block": 320896807,
+   "lastUpdated": [
+    1791852875,
+    1792449233
+   ]
+  },
+  {
+   "run_utc": "2026-10-20T01:08:41Z",
+   "oracle": "base-sepolia",
+   "target": "0x7bfa7c4f149e7415b73bdedfe609237e29cbf34a",
+   "composite": [
+    63,
+    65
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 55,
+     "to": 60,
+     "why": "more signatures are now required (55 \u2192 60)"
+    }
+   ],
+   "block": 48344692,
+   "lastUpdated": [
+    1791847930,
+    1792445925
+   ]
+  },
+  {
+   "run_utc": "2026-10-20T01:08:41Z",
+   "oracle": "ethereum-l1-sepolia",
+   "target": "0x2f39d218133afab8f2b819b1066c7e434ad94e9e",
+   "composite": [
+    78,
+    78
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 60,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 60)"
+    }
+   ],
+   "block": 11951851,
+   "lastUpdated": [
+    1791855910,
+    1792454859
+   ]
+  },
+  {
+   "run_utc": "2026-10-20T01:08:41Z",
+   "oracle": "ethereum-l1-sepolia",
+   "target": "0x5d39e06b825c1f2b80bf2756a73e28efaa128ba0",
+   "composite": [
+    47,
+    47
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 60,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 60)"
+    }
+   ],
+   "block": 11951851,
+   "lastUpdated": [
+    1791855910,
+    1792454859
+   ]
+  },
+  {
+   "run_utc": "2026-10-20T01:08:41Z",
+   "oracle": "ethereum-l1-sepolia",
+   "target": "0x55555815a5595991c3a0ff119b59aef6c8b55555",
+   "composite": [
+    2,
+    19
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "timelockScore",
+     "label": "timelock",
+     "from": 0,
+     "to": 55,
+     "why": "a delay before changes apply was added (0 \u2192 55)"
+    }
+   ],
+   "block": 11951851,
+   "lastUpdated": [
+    1791855910,
+    1792454859
+   ]
+  },
+  {
+   "run_utc": "2026-10-20T01:08:41Z",
+   "oracle": "monad",
+   "target": "0x32841a8511d5c2c5b253f45668780b99139e476d",
+   "composite": [
+    67,
+    67
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 100,
+     "to": 80,
+     "why": "a key is now shared with another tracked protocol (100 \u2192 80)"
+    }
+   ],
+   "block": 72534786,
+   "lastUpdated": [
+    1791850329,
+    1792446167
+   ]
+  },
+  {
+   "run_utc": "2026-10-20T01:08:41Z",
+   "oracle": "robinhood-chain",
+   "target": "0xde770c84fe66e063336b31737cfe9790f18c4087",
+   "composite": [
+    32,
+    29
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "timelockScore",
+     "label": "timelock",
+     "from": 10,
+     "to": 0,
+     "why": "the delay before changes apply was removed (10 \u2192 0)"
+    }
+   ],
+   "block": 139065531,
+   "lastUpdated": [
+    1791862006,
+    1792448928
+   ]
+  },
+  {
+   "run_utc": "2026-10-20T01:08:41Z",
+   "oracle": "robinhood-chain",
+   "target": "0xbeeff039907422219fb367e525954ddc092854d9",
+   "composite": [
+    40,
+    49
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 30,
+     "to": 60,
+     "why": "more signatures are now required (30 \u2192 60)"
+    }
+   ],
+   "block": 139065531,
+   "lastUpdated": [
+    1791862006,
+    1792448928
+   ]
+  },
+  {
+   "run_utc": "2026-10-20T01:08:41Z",
+   "oracle": "robinhood-chain",
+   "target": "0xfd2fd4b046136b540a56c11c75ac679ae7d1db24",
+   "composite": [
+    32,
+    29
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "timelockScore",
+     "label": "timelock",
+     "from": 10,
+     "to": 0,
+     "why": "the delay before changes apply was removed (10 \u2192 0)"
+    }
+   ],
+   "block": 139065531,
+   "lastUpdated": [
+    1791862006,
+    1792448928
+   ]
+  },
+  {
+   "run_utc": "2026-10-20T01:08:41Z",
+   "oracle": "solana-devnet",
+   "target": "7s1da8DduuBFqGra5bJBjpnvL5E9mGzCuMk1Qkh4or2Z",
+   "composite": [
+    56,
+    55
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 87,
+     "to": 83,
+     "why": "fewer signatures are now required (87 \u2192 83)"
+    }
+   ],
+   "block": null,
+   "lastUpdated": [
+    1791859636,
+    1792445234
+   ]
+  },
   {
    "run_utc": "2026-10-13T06:55:42Z",
    "oracle": "solana-devnet",

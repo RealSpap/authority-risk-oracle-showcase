@@ -1,14 +1,14 @@
 {
- "generated_utc": "2026-10-19T19:06:20Z",
- "tracked_tvl_usd": 116549265369,
- "contracts": 197,
+ "generated_utc": "2026-10-20T01:08:19Z",
+ "tracked_tvl_usd": 116804232621,
+ "contracts": 202,
  "causes": {
   "side_role_plain_key": {
    "label": "a secondary role (curator, guardian, pauser) is held by a plain key",
    "contracts": 4,
    "with_tvl": 3,
    "out_of_scope": 0,
-   "tvl_usd": 731648400,
+   "tvl_usd": 735019892,
    "share_of_tracked": 0.006,
    "targets": [
     "base:0xbeef010f9cb27031ad51e3333f9af9c6b1228183",
@@ -22,7 +22,7 @@
    "contracts": 16,
    "with_tvl": 12,
    "out_of_scope": 0,
-   "tvl_usd": 2052291830,
+   "tvl_usd": 2058834526,
    "share_of_tracked": 0.018,
    "targets": [
     "ethereum-l1:0x55555815a5595991c3a0ff119b59aef6c8b55555",
@@ -45,10 +45,10 @@
   },
   "keys_only_multisig": {
    "label": "the admin multisig is made of plain keys only",
-   "contracts": 56,
+   "contracts": 57,
    "with_tvl": 40,
    "out_of_scope": 1,
-   "tvl_usd": 11874076846,
+   "tvl_usd": 11924569661,
    "share_of_tracked": 0.102,
    "targets": [
     "arbitrum:0x1a3c9b1d2f0529d97f2afc5136cc23e58f1fd35b",
@@ -60,6 +60,7 @@
     "base:0xbeef2d50b428675a1921bc6bbf4bfb9d8cf1461a",
     "base:0xee8f4ec5672f09119b96ab6fb59c27e1b7e44b61",
     "ethereum-l1:0x2cc440b721d2cafd6d64908d6d8c4acc57f8afc3",
+    "ethereum-l1:0x888888888889758f76e7103c6cbf23abbf58f946",
     "ethereum-l1:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
     "ethereum-l1:0xbeef047a543e45807105e51a8bbefcc5950fcfba",
     "ethereum-l1:0xc5f0f7b66764f6ec8c8dff7ba683102295e16409",
@@ -111,10 +112,10 @@
   },
   "no_delay": {
    "label": "no delay on the admin path (no timelock, no Zodiac delay, no Squads time lock)",
-   "contracts": 65,
+   "contracts": 67,
    "with_tvl": 51,
    "out_of_scope": 1,
-   "tvl_usd": 15386882831,
+   "tvl_usd": 15437190982,
    "share_of_tracked": 0.132,
    "targets": [
     "arbitrum:0x1a3c9b1d2f0529d97f2afc5136cc23e58f1fd35b",
@@ -123,7 +124,9 @@
     "base:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",
     "base:0xfbb21d0380bee3312b33c4353c8936a0f13ef26c",
     "ethereum-l1:0x2cc440b721d2cafd6d64908d6d8c4acc57f8afc3",
+    "ethereum-l1:0x49048044d57e1c92a77f79988d21fa8faf74e97e",
     "ethereum-l1:0x6c3ea9036406852006290770bedfcaba0e23a0e8",
+    "ethereum-l1:0x888888888889758f76e7103c6cbf23abbf58f946",
     "ethereum-l1:0x94643e86aa5e38ddac6c7791c1297f4e40cd96c1",
     "ethereum-l1:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
     "ethereum-l1:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",
@@ -189,8 +192,8 @@
    "contracts": 39,
    "with_tvl": 26,
    "out_of_scope": 0,
-   "tvl_usd": 7945782259,
-   "share_of_tracked": 0.068,
+   "tvl_usd": 8006858577,
+   "share_of_tracked": 0.069,
    "targets": [
     "hyperliquid:0x8888888c43cbb7e1c4132542e46831bffd866ed3",
     "monad:0xd651346d7c789536ebf06dc72ae3c8502cd695cc",
@@ -235,13 +238,14 @@
   },
   "one_key_freezes": {
    "label": "one lost key freezes the admin multisig",
-   "contracts": 3,
+   "contracts": 4,
    "with_tvl": 2,
    "out_of_scope": 0,
-   "tvl_usd": 66784318,
+   "tvl_usd": 66743128,
    "share_of_tracked": 0.001,
    "targets": [
     "arbitrum:0xffa10065ce1d1c42fabc46e06b84ed8ffeb4bae5",
+    "ethereum-l1:0x49048044d57e1c92a77f79988d21fa8faf74e97e",
     "robinhood:0x99347d5f70d3838763f6bddcf80304c8aa953b57",
     "tempo:0x9a044ae05e5e6290dcf56afd69548565e957a626"
    ]

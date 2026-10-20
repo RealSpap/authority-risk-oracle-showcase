@@ -1,7 +1,7 @@
 {
- "run_utc": "2026-10-19T19:05:47Z",
- "checked": 67,
- "verified": 28,
+ "run_utc": "2026-10-20T01:07:50Z",
+ "checked": 70,
+ "verified": 31,
  "unverified": 39,
  "not_answered": 0,
  "chains_not_on_sourcify": [],
@@ -95,6 +95,33 @@
    "name": "StablecoinV2",
    "compiler": "0.8.14+commit.80d49f37",
    "verified_at": "2026-03-20T01:31:16Z"
+  },
+  "ethereum-l1:0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a": {
+   "impl": "0xfe4749061fb052c354aac65b9fb0ccd7e20d2418",
+   "via": "EIP-1967 implementation slot",
+   "verified": true,
+   "match": "match",
+   "name": "Bridge",
+   "compiler": "0.8.17+commit.8df45f5f",
+   "verified_at": "2026-05-24T17:53:16Z"
+  },
+  "ethereum-l1:0x52aa899454998be5b000ad077a46bbe360f4e497": {
+   "impl": "0xcc331daf69752bece3dc98dbc63eacd5092266a2",
+   "via": "EIP-1967 implementation slot",
+   "verified": true,
+   "match": "exact_match",
+   "name": "FluidLiquidityDummyImpl",
+   "compiler": "0.8.29+commit.ab55807c",
+   "verified_at": "2026-04-01T13:56:24Z"
+  },
+  "ethereum-l1:0x49048044d57e1c92a77f79988d21fa8faf74e97e": {
+   "impl": "0x03863ab7f64b733cff85c8ff44a86601c568ca70",
+   "via": "EIP-1967 implementation slot",
+   "verified": true,
+   "match": "match",
+   "name": "OptimismPortal2",
+   "compiler": "0.8.15+commit.e14f2714",
+   "verified_at": "2026-10-06T06:24:52Z"
   },
   "hyperliquid:0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec": {
    "impl": "0x26264514cd6018d6f944eb30b782aee2794b70b8",

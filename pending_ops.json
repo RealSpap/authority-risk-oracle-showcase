@@ -20,9 +20,25 @@
    "address": "0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
    "family": "compound",
    "status": "ok",
-   "queued_events": 71,
-   "latest_queued": 1791916487,
-   "pending": [],
+   "queued_events": 72,
+   "latest_queued": 1792543571,
+   "pending": [
+    {
+     "block": 26237471,
+     "tx": "0xec40a2b366682121bdf44df91e57930a9385468947b2521cb3f2c87fecf2cf6d",
+     "id": "0xe0df357eb17dd1f2a03a74c37c7b2c2ab9d9df5350d80a60bd761a8150293b09",
+     "index": 0,
+     "target": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
+     "value": 50000000000000000,
+     "eta": 1792716371,
+     "selector": "0xb2267a7b",
+     "signature": "sendMessage(address,uint256,bytes,uint256)",
+     "calls": 1,
+     "ready_at": 1792716371,
+     "state": "waiting",
+     "decoded": "cross-chain message"
+    }
+   ],
    "recent": [
     {
      "block": 26139146,
@@ -158,6 +174,21 @@
      "still_queued": false,
      "queued_at": 1791916487,
      "decoded": "parameter change"
+    },
+    {
+     "block": 26237471,
+     "tx": "0xec40a2b366682121bdf44df91e57930a9385468947b2521cb3f2c87fecf2cf6d",
+     "id": "0xe0df357eb17dd1f2a03a74c37c7b2c2ab9d9df5350d80a60bd761a8150293b09",
+     "index": 0,
+     "target": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
+     "value": 50000000000000000,
+     "eta": 1792716371,
+     "selector": "0xb2267a7b",
+     "signature": "sendMessage(address,uint256,bytes,uint256)",
+     "calls": 1,
+     "still_queued": true,
+     "queued_at": 1792543571,
+     "decoded": "cross-chain message"
     }
    ],
    "delay": 172800,
@@ -302,7 +333,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 4688372,
+   "window_blocks": 4496654,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -338,7 +369,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 4688372,
+   "window_blocks": 4513432,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -358,7 +389,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 4670270,
+   "window_blocks": 4513432,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -414,7 +445,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/mainnet",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 100198,
+   "window_blocks": 100398,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -548,7 +579,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 0,
    "window_blocks": 3000000,
-   "window_days_est": 3.5,
+   "window_days_est": 3.6,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62"
@@ -568,7 +599,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 86400,
    "window_blocks": 3000000,
-   "window_days_est": 3.5,
+   "window_days_est": 3.7,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x14b107cf534239c59571b066cb6497a321da897c"
@@ -804,26 +835,9 @@
     "ExponentnaRg3CQbW6dqQNZKXp7gtZ9DGMp1cwC4HAS7"
    ],
    "delay": 36000,
-   "queued_events": 206,
+   "queued_events": 205,
    "latest_queued": 1791903685,
-   "pending": [
-    {
-     "id": "squads:51smH7pBDKJDgmVnVks3gMWaPQFfmQ5s4Fc223yHcjuH:210",
-     "index": 210,
-     "target": "3D6ojc8vBfDteLBDTTRznZbZRh7bkEGQaYqNkudoTCBQ",
-     "value": 0,
-     "selector": null,
-     "signature": "Squads proposal #210: call to 3D6ojc8vBfDteLBDTTRznZbZRh7bkEGQaYqNkudoTCBQ (not the tracked program)",
-     "ready_at": 1791924593,
-     "state": "ready",
-     "approved_at": 1791888593,
-     "account": "6iXg5hGsMM52s8pNcJzWFfQ1m6hqfa8FfDpB2i26nuFL",
-     "undecoded": false,
-     "decoded": "call",
-     "what": "call to 3D6ojc8vBfDteLBDTTRznZbZRh7bkEGQaYqNkudoTCBQ",
-     "touches_governed": false
-    }
-   ],
+   "pending": [],
    "recent": [
     {
      "id": "squads:51smH7pBDKJDgmVnVks3gMWaPQFfmQ5s4Fc223yHcjuH:209",
@@ -862,8 +876,7 @@
    "proposals": {
     "executed": 180,
     "cancelled": 11,
-    "active": 14,
-    "approved": 1
+    "active": 14
    },
    "transaction_index": 211
   },
@@ -1540,9 +1553,58 @@
     "7s1da8DduuBFqGra5bJBjpnvL5E9mGzCuMk1Qkh4or2Z"
    ],
    "delay": 43200,
-   "queued_events": 56,
-   "latest_queued": 1791827885,
-   "pending": [],
+   "queued_events": 59,
+   "latest_queued": 1792541975,
+   "pending": [
+    {
+     "id": "squads:J3mJ3wz6xkVUk3T8qHnuAYNxsRH3ixHsryYNZAU2vG8P:61",
+     "index": 61,
+     "target": "jupnw4B6Eqs7ft6rxpzYLJZYSnrpRgPcr589n5Kv4oc",
+     "value": 0,
+     "selector": null,
+     "signature": "Squads proposal #61: Upgrade of program jupnw4B6Eqs7ft6rxpzYLJZYSnrpRgPcr589n5Kv4oc (not the tracked program)",
+     "ready_at": 1792585175,
+     "state": "waiting",
+     "approved_at": 1792541975,
+     "account": "8HLxkG1wFPadzjppZ8pzDY1Qmh8NPbYDoAH3F1ceL8Mf",
+     "undecoded": false,
+     "decoded": "program upgrade",
+     "what": "Upgrade of program jupnw4B6Eqs7ft6rxpzYLJZYSnrpRgPcr589n5Kv4oc",
+     "touches_governed": false
+    },
+    {
+     "id": "squads:J3mJ3wz6xkVUk3T8qHnuAYNxsRH3ixHsryYNZAU2vG8P:62",
+     "index": 62,
+     "target": "jupr81YtYssSyPt8jbnGuiWon5f6x9TcDEFxYe3Bdzi",
+     "value": 0,
+     "selector": null,
+     "signature": "Squads proposal #62: Upgrade of program jupr81YtYssSyPt8jbnGuiWon5f6x9TcDEFxYe3Bdzi (not the tracked program)",
+     "ready_at": 1792584324,
+     "state": "waiting",
+     "approved_at": 1792541124,
+     "account": "AkjS5jAt1kSjUrPUwBnDSeqtFiXcLWUKv1bG73WpDCHc",
+     "undecoded": false,
+     "decoded": "program upgrade",
+     "what": "Upgrade of program jupr81YtYssSyPt8jbnGuiWon5f6x9TcDEFxYe3Bdzi",
+     "touches_governed": false
+    },
+    {
+     "id": "squads:J3mJ3wz6xkVUk3T8qHnuAYNxsRH3ixHsryYNZAU2vG8P:63",
+     "index": 63,
+     "target": "jupZ4m2GqUCJ5iueMfzQf8khFfH31d4XAQt3RzCT9Vd",
+     "value": 0,
+     "selector": null,
+     "signature": "Squads proposal #63: Upgrade of program jupZ4m2GqUCJ5iueMfzQf8khFfH31d4XAQt3RzCT9Vd (not the tracked program)",
+     "ready_at": 1792584393,
+     "state": "waiting",
+     "approved_at": 1792541193,
+     "account": "4KyE23CXa3nqYDZ1jwY746BEBirvt9xSU5k6UZ3SBXBB",
+     "undecoded": false,
+     "decoded": "program upgrade",
+     "what": "Upgrade of program jupZ4m2GqUCJ5iueMfzQf8khFfH31d4XAQt3RzCT9Vd",
+     "touches_governed": false
+    }
+   ],
    "recent": [
     {
      "id": "squads:J3mJ3wz6xkVUk3T8qHnuAYNxsRH3ixHsryYNZAU2vG8P:59",
@@ -1580,9 +1642,10 @@
    "active": [],
    "proposals": {
     "executed": 55,
-    "active": 1
+    "active": 1,
+    "approved": 3
    },
-   "transaction_index": 60
+   "transaction_index": 63
   },
   {
    "name": "Squads v4 multisig tr8r\u2026Hb4u (3-of-4, time lock 0 s), found by the independent reader (1 tracked program)",
@@ -1681,7 +1744,7 @@
    "transaction_index": 71
   }
  ],
- "discovered_utc": "2026-10-20T18:58:45Z",
+ "discovered_utc": "2026-10-21T01:04:01Z",
  "discovered": 15,
- "squads_utc": "2026-10-20T19:03:56Z"
+ "squads_utc": "2026-10-21T01:09:20Z"
 }

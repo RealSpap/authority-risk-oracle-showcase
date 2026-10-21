@@ -1,11 +1,19 @@
 {
- "generated_utc": "2026-10-20T19:02:35Z",
- "unreadable_targets": 30,
- "probed_targets": 2,
+ "generated_utc": "2026-10-21T01:08:01Z",
+ "unreadable_targets": 31,
+ "probed_targets": 3,
  "with_holder": [
   "robinhood:0xfd2fd4b046136b540a56c11c75ac679ae7d1db24"
  ],
  "by_target": {
+  "hyperliquid:0xffaa4a3d97fe9107cef8a3f48c069f577ff76cc1": {
+   "role": "DEFAULT_ADMIN_ROLE",
+   "method": "hasRole(DEFAULT_ADMIN_ROLE, known holder)",
+   "probed": 2,
+   "answered": 2,
+   "holders": [],
+   "complete": false
+  },
   "monad:0xd691b0afed67f96cec28ab6308cbe5b2c103b7e9": {
    "role": "DEFAULT_ADMIN_ROLE",
    "method": "hasRole(DEFAULT_ADMIN_ROLE, known holder)",

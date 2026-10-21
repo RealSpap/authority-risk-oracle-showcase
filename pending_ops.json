@@ -333,7 +333,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 4496654,
+   "window_blocks": 4530337,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -369,7 +369,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 4513432,
+   "window_blocks": 4530337,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -389,7 +389,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 4513432,
+   "window_blocks": 4547368,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -445,28 +445,11 @@
    "log_rpc": "https://gateway.tenderly.co/public/mainnet",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 100398,
+   "window_blocks": 100598,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
     "0x52aa899454998be5b000ad077a46bbe360f4e497"
-   ]
-  },
-  {
-   "name": "hyperliquid timelock 0xc5de\u202623d2, found by the independent reader (1 tracked contract)",
-   "chain": "hyperliquid",
-   "address": "0xc5ded4f7f53919c714059a17d31371ae847e23d2",
-   "family": "oz",
-   "status": "UNREAD (Web3RPCError: {'code': -32005, 'message': 'rate limited'})",
-   "queued_events": null,
-   "latest_queued": null,
-   "pending": [],
-   "recent": [],
-   "discovered": true,
-   "log_rpc": "https://rpc.hyperliquid.xyz/evm",
-   "delay": 172800,
-   "governs": [
-    "0xffaa4a3d97fe9107cef8a3f48c069f577ff76cc1"
    ]
   },
   {
@@ -579,7 +562,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 0,
    "window_blocks": 3000000,
-   "window_days_est": 3.6,
+   "window_days_est": 3.5,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62"
@@ -599,7 +582,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 86400,
    "window_blocks": 3000000,
-   "window_days_est": 3.7,
+   "window_days_est": 3.5,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x14b107cf534239c59571b066cb6497a321da897c"
@@ -1370,8 +1353,8 @@
     "Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo"
    ],
    "delay": 600,
-   "queued_events": 21,
-   "latest_queued": 1792123854,
+   "queued_events": 22,
+   "latest_queued": 1792565778,
    "pending": [],
    "recent": [
     {
@@ -1465,14 +1448,21 @@
      "rejections": 3,
      "since": 1771834386,
      "account": "8PpT2GmwaEXZbwRZbUZi59DVtyEagArjxh4uDfqG4Rw3"
+    },
+    {
+     "index": 1007,
+     "approvals": 2,
+     "rejections": 0,
+     "since": 1792565778,
+     "account": "FFFnjjAPYmkJoG2MQJddL3B3ijeaCzYtsdwsE7RM6DRS"
     }
    ],
    "proposals": {
     "draft": 1,
-    "active": 6,
+    "active": 7,
     "executed": 14
    },
-   "transaction_index": 1006
+   "transaction_index": 1007
   },
   {
    "name": "Squads v4 multisig E799\u2026kb2b (5-of-7, time lock 86400 s), found by the independent reader (1 tracked program)",
@@ -1658,8 +1648,8 @@
     "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK"
    ],
    "delay": 0,
-   "queued_events": 54,
-   "latest_queued": 1791440014,
+   "queued_events": 55,
+   "latest_queued": 1792564735,
    "pending": [],
    "recent": [
     {
@@ -1711,13 +1701,22 @@
      "touches_governed": false
     }
    ],
-   "active": [],
+   "active": [
+    {
+     "index": 55,
+     "approvals": 2,
+     "rejections": 0,
+     "since": 1792564735,
+     "account": "6zxqZxBAuGtpoHPSAvLFZdNdjesVpHbuuF6hjMGwm8fX"
+    }
+   ],
    "proposals": {
     "executed": 51,
     "rejected": 2,
-    "cancelled": 1
+    "cancelled": 1,
+    "active": 1
    },
-   "transaction_index": 54
+   "transaction_index": 55
   },
   {
    "name": "Squads v4 multisig uGLh\u2026r7gX (5-of-9, time lock 43200 s), found by the independent reader (1 tracked program)",
@@ -1744,7 +1743,7 @@
    "transaction_index": 71
   }
  ],
- "discovered_utc": "2026-10-21T01:04:01Z",
- "discovered": 15,
- "squads_utc": "2026-10-21T01:09:20Z"
+ "discovered_utc": "2026-10-21T07:03:22Z",
+ "discovered": 14,
+ "squads_utc": "2026-10-21T07:08:54Z"
 }

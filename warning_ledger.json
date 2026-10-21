@@ -831,16 +831,6 @@
    "what": "parameter change",
    "resolved_seen_utc": "2026-10-16T12:52:22Z"
   },
-  "solana:7fcpipjwvbpbdhymvt1gjywkciakkjz5gahdqysemvhk:squads:7FCPipJWVbPbdHymVt1gJYwKciakkJz5GahdQySemvHk:128": {
-   "outcome": "seen_without_notice",
-   "first_seen_utc": "2026-10-14T12:50:56Z",
-   "due_utc": "2026-10-14T11:48:07Z",
-   "notice_hours": null,
-   "state": "queued",
-   "chain": "solana",
-   "timelock": "Squads v4 multisig 7FCP\u2026mvHk (7-of-15, time lock 0 s), found by the independent reader (1 tracked program)",
-   "what": "call"
-  },
   "solana:7fcpipjwvbpbdhymvt1gjywkciakkjz5gahdqysemvhk:squads:7FCPipJWVbPbdHymVt1gJYwKciakkJz5GahdQySemvHk:127": {
    "outcome": "missed",
    "first_seen_utc": "2026-10-14T12:50:56Z",
@@ -943,10 +933,11 @@
    "first_seen_utc": "2026-10-19T18:51:04Z",
    "due_utc": "2026-10-20T18:33:09Z",
    "notice_hours": 23.7,
-   "state": "queued",
+   "state": "resolved",
    "chain": "solana",
    "timelock": "Squads v4 multisig AEb1\u2026dJGf (3-of-7, time lock 86400 s), found by the independent reader (1 tracked program)",
-   "what": "call to the governed program"
+   "what": "call to the governed program",
+   "resolved_seen_utc": "2026-10-21T12:52:12Z"
   },
   "solana:8sr4rqjl2aqt3el97mbrk1t9vmw4pcs2mxmpp2qbzhqq:squads:8Sr4rQJL2aQT3EL97mbrk1T9VMw4pCS2mxMPp2QBzHQq:160": {
    "outcome": "missed",
@@ -996,14 +987,32 @@
    "chain": "solana",
    "timelock": "Squads v4 multisig J3mJ\u2026vG8P (4-of-6, time lock 43200 s), found by the independent reader (1 tracked program)",
    "what": "program upgrade"
+  },
+  "solana:cxnevpqqcya628tywzhgxej2jdvmbu51rnerat9xunp1:squads:CxnEVpQQcYa628TywzHGXeJ2jdVmbU51rnERat9xunP1:1008": {
+   "outcome": "missed",
+   "first_seen_utc": "2026-10-21T12:52:12Z",
+   "queued_utc": "2026-10-21T08:30:50Z",
+   "state": "resolved",
+   "chain": "solana",
+   "timelock": "Squads v4 multisig CxnE\u2026unP1 (4-of-7, time lock 600 s), found by the independent reader (1 tracked program)",
+   "what": "call to the governed program"
+  },
+  "solana:cxnevpqqcya628tywzhgxej2jdvmbu51rnerat9xunp1:squads:CxnEVpQQcYa628TywzHGXeJ2jdVmbU51rnERat9xunP1:1009": {
+   "outcome": "missed",
+   "first_seen_utc": "2026-10-21T12:52:12Z",
+   "queued_utc": "2026-10-21T08:30:34Z",
+   "state": "resolved",
+   "chain": "solana",
+   "timelock": "Squads v4 multisig CxnE\u2026unP1 (4-of-7, time lock 600 s), found by the independent reader (1 tracked program)",
+   "what": "call"
   }
  },
- "updated_utc": "2026-10-21T06:52:38Z",
+ "updated_utc": "2026-10-21T12:52:12Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
   "warned": 23,
-  "seen_without_notice": 4,
-  "missed": 10,
+  "seen_without_notice": 3,
+  "missed": 12,
   "baseline": 77,
   "warned_with_a_known_notice": 23,
   "shortest_notice_hours": 0.2,

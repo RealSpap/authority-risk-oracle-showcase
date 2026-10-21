@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-10-21T07:09:10Z",
+ "run_utc": "2026-10-21T13:05:21Z",
  "targets": 202,
  "moves_recorded": 32,
  "series": {
@@ -1756,24 +1756,15 @@
  "calibration": {
   "window_days": 14,
   "actions": 26,
-  "under_40": 8,
+  "under_40": 9,
   "by_band": {
    "critical": 5,
-   "weak": 3,
-   "moderate": 18,
+   "weak": 4,
+   "moderate": 17,
    "decent": 0,
    "strong": 0
   },
   "list": [
-   {
-    "kind": "timelock op queued (parameter change)",
-    "key": "ethereum-l1:0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34",
-    "t": "2026-10-07T08:02:11Z",
-    "via": "Ethena Timelock",
-    "tx": "0x2fa0bb4d0d84907ce418fd123c1a7e785c3268fda3baa57bdd3cb3991db96ad1",
-    "score_then": 57,
-    "band_then": "moderate"
-   },
    {
     "kind": "upgrade executed (Squads proposal)",
     "key": "solana:ADyA8hdefvWN2dbGGWFotbzWxrAvLW83WG6QCVXvJKqw",
@@ -1838,15 +1829,6 @@
     "band_then": "moderate"
    },
    {
-    "kind": "Squads proposal executed",
-    "key": "solana:Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
-    "t": "2026-10-13T13:07:37Z",
-    "via": "Squads v4 multisig CxnE\u2026unP1 (4-of-7, time lock 600 s), found by the independent reader (1 tracked program)",
-    "tx": "23g3H6cVEYvUpn5QNaFnDLAhA8kHzZauxzctCjxw2y57",
-    "score_then": 51,
-    "band_then": "moderate"
-   },
-   {
     "kind": "upgrade executed (Squads proposal)",
     "key": "solana:ExponentnaRg3CQbW6dqQNZKXp7gtZ9DGMp1cwC4HAS7",
     "t": "2026-10-13T15:01:25Z",
@@ -1861,15 +1843,6 @@
     "t": "2026-10-13T18:46:07Z",
     "via": "slot 456483984",
     "tx": null,
-    "score_then": 51,
-    "band_then": "moderate"
-   },
-   {
-    "kind": "Squads proposal executed",
-    "key": "solana:Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
-    "t": "2026-10-14T09:43:05Z",
-    "via": "Squads v4 multisig CxnE\u2026unP1 (4-of-7, time lock 600 s), found by the independent reader (1 tracked program)",
-    "tx": "Bh6PYEPWJqJhnJfqZJhX2rh7dVuruow1LqXogjidkdaM",
     "score_then": 51,
     "band_then": "moderate"
    },
@@ -1917,15 +1890,6 @@
     "tx": null,
     "score_then": 31,
     "band_then": "weak"
-   },
-   {
-    "kind": "Squads proposal executed",
-    "key": "solana:Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
-    "t": "2026-10-16T04:10:54Z",
-    "via": "Squads v4 multisig CxnE\u2026unP1 (4-of-7, time lock 600 s), found by the independent reader (1 tracked program)",
-    "tx": "J9d6poWJvYuDWK6Ef82TAGojbs5V2mT5DKRJG1JQg9S3",
-    "score_then": 51,
-    "band_then": "moderate"
    },
    {
     "kind": "upgrade executed (Squads proposal)",
@@ -1995,6 +1959,42 @@
     "key": "solana:Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
     "t": "2026-10-21T07:03:23Z",
     "via": "slot 459537822",
+    "tx": null,
+    "score_then": 51,
+    "band_then": "moderate"
+   },
+   {
+    "kind": "Squads proposal executed",
+    "key": "solana:Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
+    "t": "2026-10-21T08:30:34Z",
+    "via": "Squads v4 multisig CxnE\u2026unP1 (4-of-7, time lock 600 s), found by the independent reader (1 tracked program)",
+    "tx": "5w61mZgLbkkDwbvX7QAc7fmLwfEfhCjGLD5uHFshv4rD",
+    "score_then": 51,
+    "band_then": "moderate"
+   },
+   {
+    "kind": "Squads proposal executed",
+    "key": "solana:Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
+    "t": "2026-10-21T08:30:50Z",
+    "via": "Squads v4 multisig CxnE\u2026unP1 (4-of-7, time lock 600 s), found by the independent reader (1 tracked program)",
+    "tx": "8TianVJJ3xh1xWsmRsRTC6ZdzTMpM63NtkByeiuF1kAs",
+    "score_then": 51,
+    "band_then": "moderate"
+   },
+   {
+    "kind": "Squads proposal executed",
+    "key": "solana:USXyiSTsPEWz55pSK7sZoUL79ntoVGQbaTDT57tH6bx",
+    "t": "2026-10-21T09:56:48Z",
+    "via": "Squads v4 multisig AEb1\u2026dJGf (3-of-7, time lock 86400 s), found by the independent reader (1 tracked program)",
+    "tx": "GUjCmaFw3xSSpRBPi9xVXJapH2x9hRGZvRksUrHUBp5b",
+    "score_then": 35,
+    "band_then": "weak"
+   },
+   {
+    "kind": "upgrade executed",
+    "key": "solana:Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
+    "t": "2026-10-21T13:00:50Z",
+    "via": "slot 459556802",
     "tx": null,
     "score_then": 51,
     "band_then": "moderate"

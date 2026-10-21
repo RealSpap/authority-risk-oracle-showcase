@@ -1,10 +1,21 @@
 {
- "generated_utc": "2026-10-21T07:07:30Z",
+ "generated_utc": "2026-10-21T13:03:56Z",
  "wake_days": 14,
  "safes": 42,
  "read": 42,
  "woke": [],
- "changes": [],
+ "changes": [
+  {
+   "delta": 1,
+   "idle_days": 3.0,
+   "woke": false,
+   "safe": "monad:0x8b73\u2026788b",
+   "governs": [
+    "monad:0xd651346d7c789536ebf06dc72ae3c8502cd695cc"
+   ],
+   "previous_run": "2026-10-21T07:07:30Z"
+  }
+ ],
  "never_executed": [
   "robinhood:0x0605\u20269728",
   "tempo:0x6458\u2026fbbc"
@@ -177,7 +188,6 @@
    "observed_since": "2026-10-18T12:57:22Z",
    "idle_since": "2026-10-18T12:57:22Z",
    "governs": [
-    "hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109",
     "hyperliquid:0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec"
    ],
    "safe": "hyperliquid:0x18a8\u2026f8f1",
@@ -195,10 +205,10 @@
    "never_executed": false
   },
   "monad:d104c354d63359d9": {
-   "nonce": 74,
+   "nonce": 75,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-10-18T12:57:22Z",
-   "last_moved": "2026-10-18T12:57:22Z",
+   "idle_since": "2026-10-21T13:03:56Z",
+   "last_moved": "2026-10-21T13:03:56Z",
    "governs": [
     "monad:0xd651346d7c789536ebf06dc72ae3c8502cd695cc"
    ],

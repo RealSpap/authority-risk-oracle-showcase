@@ -1,11 +1,9 @@
 {
- "run_utc": "2026-10-21T12:52:12Z",
- "state": "alarm",
+ "run_utc": "2026-10-21T18:49:06Z",
+ "state": "degraded",
  "reasons": [
   "1 of 202 targets stale on the oracles",
-  "1 upgrade(s) executed on tracked contracts since the previous run",
-  "12 second-opinion disagreement(s) to review",
-  "1 high alert(s) from the rules firing now (an upgrade was executed: the implementation behind this contract changed since the previous run)",
+  "13 second-opinion disagreement(s) to review",
   "methodology hashes mixed on 1 oracle(s)",
   "method hash not in registry on 9 oracle(s): no version is shown for it (data/method_versions.json)"
  ],
@@ -22,9 +20,9 @@
   "signing_key": "11baca3ef6a69de4901c185f6cbbd3f93318fbb74f9961a8d39aead841adf409",
   "second_opinion": {
    "agree": 134,
-   "disagree": 12,
+   "disagree": 13,
    "acknowledged": 0,
-   "unreadable": 40,
+   "unreadable": 39,
    "native": 16
   },
   "methodology_mixed": 1,

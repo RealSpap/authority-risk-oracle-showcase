@@ -1,16 +1,11 @@
-## Second opinion, 2026-10-21T13:00:50Z
+## Second opinion, 2026-10-21T18:57:59Z
 
-### 1 upgrade(s) executed since the previous run (2026-10-21T07:03:23Z)
-
-- **Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo** on solana: program redeployed since the previous run: slot 459537822 -> 459556802 (2026-10-21T08:08:01Z); the score reads who may upgrade, this is an upgrade that happened
-
-The code behind a tracked proxy changed: read what the new implementation does before trusting the score (the private pipeline's implementation check names the selectors added and dropped).
-
-### 12 disagreement(s) with the published score
+### 13 disagreement(s) with the published score
 
 - **0xff162c694eaa571f685030649814282ea457f169** on arbitrum: the score says one key does everything (10), the live read finds a timelock (1209600s) via EIP-1967 admin -> ProxyAdmin owner(); the timelock score says no delay (0), the live read finds a timelock of 336 h in the admin path via EIP-1967 admin -> ProxyAdmin owner()
 - **0xe23b4ae3624fb6f7cdef29bc8ead912f1ede6886** on arbitrum: the timelock score says no delay (0), the holder's owner is a timelock of 72 h
 - **0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec** on hyperliquid: the score says one key does everything (10), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisig (0), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner()
+- **0x393d0b87ed38fc779fd9611144ae649ba6082109** on hyperliquid: the score says one key does everything (10), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisig (0), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner()
 - **0xffaa4a3d97fe9107cef8a3f48c069f577ff76cc1** on hyperliquid: the timelock score says no delay (0), the live read finds a timelock of 48 h in the admin path via EIP-1967 admin -> ProxyAdmin owner()
 - **0xa9c251f8304b1b3fc2b9e8fcae78d94eff82ac66** on plasma: the timelock score says no delay (0), the contract enforces its own timelock of 24 h (timelock())
 - **0x6695c0f8706c5ace3bdf8995073179cca47926dc** on plasma: the timelock score says no delay (0), the live read finds a timelock of 48 h in the admin path via EIP-1967 admin -> ProxyAdmin owner()

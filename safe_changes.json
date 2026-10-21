@@ -5,47 +5,36 @@
    "ecosystem": "robinhood",
    "safes": 25,
    "events": [],
-   "control": 100,
+   "control": 99,
    "status": "ok",
-   "fromBlock": 88389048,
-   "toBlock": 94304083,
+   "fromBlock": 88602815,
+   "toBlock": 94511759,
    "days_read": 7
   },
   {
    "ecosystem": "ethereum-l1",
    "safes": 15,
    "events": [],
-   "control": 11,
+   "control": 14,
    "status": "ok",
-   "fromBlock": 26190928,
-   "toBlock": 26241162,
+   "fromBlock": 26192716,
+   "toBlock": 26242952,
    "days_read": 7
   },
   {
    "ecosystem": "arbitrum",
    "safes": 14,
    "events": [],
-   "control": 3,
+   "control": 5,
    "status": "ok",
-   "fromBlock": 514748353,
-   "toBlock": 516920778,
+   "fromBlock": 514830417,
+   "toBlock": 517003488,
    "days_read": 7
   },
   {
    "ecosystem": "base",
    "safes": 8,
    "events": [
-    {
-     "name": "AddedOwner",
-     "value": "0x9939\u202621ba",
-     "block": 52606110,
-     "tx": "a17926b75e972ebc2d02fb3ae95b96df5eaf7f27400f77928440452554858479",
-     "safe": "0x99249b10593fCa1Ae9DAE6D4819F1A6dae5C013D",
-     "groups": [
-      "aerodrome_emergency_council"
-     ],
-     "timestamp": 1792001567
-    },
     {
      "name": "AddedOwner",
      "value": "0xba75\u20264520",
@@ -60,8 +49,8 @@
    ],
    "control": 13,
    "status": "ok",
-   "fromBlock": 52596909,
-   "toBlock": 52899308,
+   "fromBlock": 52607662,
+   "toBlock": 52910061,
    "days_read": 7
   },
   {
@@ -70,8 +59,8 @@
    "events": [],
    "control": 3,
    "status": "ok",
-   "fromBlock": 44107330,
-   "toBlock": 45192160,
+   "fromBlock": 44146100,
+   "toBlock": 45231210,
    "days_read": 7
   },
   {
@@ -80,30 +69,31 @@
    "events": [],
    "control": 8,
    "status": "ok",
-   "fromBlock": 35041854,
-   "toBlock": 35646626,
+   "fromBlock": 35063371,
+   "toBlock": 35668154,
    "days_read": 7
   },
   {
    "ecosystem": "monad",
    "safes": 13,
    "events": [],
-   "control": 1,
-   "status": "ok",
-   "fromBlock": 115248418,
-   "toBlock": 115334261,
-   "days_read": 0.3
+   "control": 0,
+   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 13 execution(s) from other Safes on the window's tail)",
+   "fromBlock": 115319723,
+   "toBlock": 115405550,
+   "days_read": 0.3,
+   "control_witness": 13
   },
   {
    "ecosystem": "hyperliquid",
    "safes": 5,
    "events": [],
    "control": 0,
-   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 21 execution(s) from other Safes on the window's tail)",
-   "fromBlock": 48873493,
-   "toBlock": 49137013,
+   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 39 execution(s) from other Safes on the window's tail)",
+   "fromBlock": 48895393,
+   "toBlock": 49158912,
    "days_read": 3.0,
-   "control_witness": 21
+   "control_witness": 39
   }
  ]
 }

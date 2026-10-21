@@ -1,19 +1,39 @@
 {
- "generated_utc": "2026-10-21T13:03:56Z",
+ "generated_utc": "2026-10-21T19:01:11Z",
  "wake_days": 14,
  "safes": 42,
  "read": 42,
  "woke": [],
  "changes": [
   {
-   "delta": 1,
-   "idle_days": 3.0,
+   "delta": 2,
+   "idle_days": 1.2,
    "woke": false,
-   "safe": "monad:0x8b73\u2026788b",
+   "safe": "arbitrum:0x5f0b\u2026841f",
    "governs": [
-    "monad:0xd651346d7c789536ebf06dc72ae3c8502cd695cc"
+    "arbitrum:0xffa10065ce1d1c42fabc46e06b84ed8ffeb4bae5"
    ],
-   "previous_run": "2026-10-21T07:07:30Z"
+   "previous_run": "2026-10-21T13:03:56Z"
+  },
+  {
+   "delta": 1,
+   "idle_days": 1.9,
+   "woke": false,
+   "safe": "base:0xe6a4\u20262075",
+   "governs": [
+    "base:0x5e7bb104d84c7cb9b682aac2f3d509f5f406809a"
+   ],
+   "previous_run": "2026-10-21T13:03:56Z"
+  },
+  {
+   "delta": 2,
+   "idle_days": 1.2,
+   "woke": false,
+   "safe": "ethereum-l1:0x3b0a\u20261862",
+   "governs": [
+    "ethereum-l1:0x2cc440b721d2cafd6d64908d6d8c4acc57f8afc3"
+   ],
+   "previous_run": "2026-10-21T13:03:56Z"
   }
  ],
  "never_executed": [
@@ -24,10 +44,10 @@
  "unread_chains": [],
  "by_safe": {
   "arbitrum:569110bd097c8358": {
-   "nonce": 106,
+   "nonce": 108,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-10-20T13:04:45Z",
-   "last_moved": "2026-10-20T13:04:45Z",
+   "idle_since": "2026-10-21T19:01:11Z",
+   "last_moved": "2026-10-21T19:01:11Z",
    "governs": [
     "arbitrum:0xffa10065ce1d1c42fabc46e06b84ed8ffeb4bae5"
    ],
@@ -97,10 +117,10 @@
    "never_executed": false
   },
   "base:813d4f2afbe04aad": {
-   "nonce": 2736,
+   "nonce": 2737,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-10-19T19:05:04Z",
-   "last_moved": "2026-10-19T19:05:04Z",
+   "idle_since": "2026-10-21T19:01:11Z",
+   "last_moved": "2026-10-21T19:01:11Z",
    "governs": [
     "base:0x5e7bb104d84c7cb9b682aac2f3d509f5f406809a"
    ],
@@ -132,10 +152,10 @@
    "never_executed": false
   },
   "ethereum-l1:9f957a8d13d777f4": {
-   "nonce": 750,
+   "nonce": 752,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-10-20T13:04:45Z",
-   "last_moved": "2026-10-20T13:04:45Z",
+   "idle_since": "2026-10-21T19:01:11Z",
+   "last_moved": "2026-10-21T19:01:11Z",
    "governs": [
     "ethereum-l1:0x2cc440b721d2cafd6d64908d6d8c4acc57f8afc3"
    ],
@@ -188,6 +208,7 @@
    "observed_since": "2026-10-18T12:57:22Z",
    "idle_since": "2026-10-18T12:57:22Z",
    "governs": [
+    "hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109",
     "hyperliquid:0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec"
    ],
    "safe": "hyperliquid:0x18a8\u2026f8f1",

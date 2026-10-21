@@ -228,7 +228,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 4581818,
+   "window_blocks": 4564528,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -264,7 +264,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 4564528,
+   "window_blocks": 4581818,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -340,7 +340,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/mainnet",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 100598,
+   "window_blocks": 100800,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -458,7 +458,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 0,
    "window_blocks": 3000000,
-   "window_days_est": 3.5,
+   "window_days_est": 3.6,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62"
@@ -792,9 +792,42 @@
     "7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF"
    ],
    "delay": 86400,
-   "queued_events": 101,
-   "latest_queued": 1792440829,
-   "pending": [],
+   "queued_events": 103,
+   "latest_queued": 1792596172,
+   "pending": [
+    {
+     "id": "squads:6hhBGCtmg7tPWUSgp3LG6X2rsmYWAc4tNsA6G4CnfQbM:107",
+     "index": 107,
+     "target": "KvauGMspG5k6rtzrqqn7WNn3oZdyKqLKwK2XWQ8FLjd",
+     "value": 0,
+     "selector": null,
+     "signature": "Squads proposal #107: Upgrade of program KvauGMspG5k6rtzrqqn7WNn3oZdyKqLKwK2XWQ8FLjd (not the tracked program)",
+     "ready_at": 1792679676,
+     "state": "waiting",
+     "approved_at": 1792593276,
+     "account": "2FqUjkBkYuNg86TvVcJkxLNVkGdXDYZozewPeY5WaE4s",
+     "undecoded": false,
+     "decoded": "program upgrade",
+     "what": "Upgrade of program KvauGMspG5k6rtzrqqn7WNn3oZdyKqLKwK2XWQ8FLjd",
+     "touches_governed": false
+    },
+    {
+     "id": "squads:6hhBGCtmg7tPWUSgp3LG6X2rsmYWAc4tNsA6G4CnfQbM:108",
+     "index": 108,
+     "target": "verifycLy8mB96wd9wqq3WDXQwM4oU6r42Th37Db9fC",
+     "value": 0,
+     "selector": null,
+     "signature": "Squads proposal #108: call to verifycLy8mB96wd9wqq3WDXQwM4oU6r42Th37Db9fC (not the tracked program)",
+     "ready_at": 1792679723,
+     "state": "waiting",
+     "approved_at": 1792593323,
+     "account": "FLFYgoVP1xxJGZPaF27sbFYSmUEySoyq6Ke5tiQwMCZC",
+     "undecoded": false,
+     "decoded": "call",
+     "what": "call to verifycLy8mB96wd9wqq3WDXQwM4oU6r42Th37Db9fC",
+     "touches_governed": false
+    }
+   ],
    "recent": [
     {
      "id": "squads:6hhBGCtmg7tPWUSgp3LG6X2rsmYWAc4tNsA6G4CnfQbM:101",
@@ -895,25 +928,26 @@
    ],
    "active": [
     {
-     "index": 107,
-     "approvals": 4,
+     "index": 109,
+     "approvals": 1,
      "rejections": 0,
-     "since": 1792440729,
-     "account": "2FqUjkBkYuNg86TvVcJkxLNVkGdXDYZozewPeY5WaE4s"
+     "since": 1792595872,
+     "account": "7HsbszYYeE5wGVNaUPJtzbrareWzCAr8ZxP78Jn52zSZ"
     },
     {
-     "index": 108,
-     "approvals": 4,
+     "index": 110,
+     "approvals": 1,
      "rejections": 0,
-     "since": 1792440829,
-     "account": "FLFYgoVP1xxJGZPaF27sbFYSmUEySoyq6Ke5tiQwMCZC"
+     "since": 1792596172,
+     "account": "3cjgnQtSTsLscp9sCb7XnvwPAHkweGToxe7Zvj5zNyDS"
     }
    ],
    "proposals": {
     "executed": 90,
-    "active": 11
+    "active": 11,
+    "approved": 2
    },
-   "transaction_index": 108
+   "transaction_index": 110
   },
   {
    "name": "Squads v4 multisig 7FCP\u2026mvHk (7-of-15, time lock 0 s), found by the independent reader (1 tracked program)",
@@ -1486,7 +1520,7 @@
    "active": [
     {
      "index": 64,
-     "approvals": 2,
+     "approvals": 3,
      "rejections": 0,
      "since": 1792582472,
      "account": "EKFg7FivG1mRC1Xnh6pCHVpqbTxgb5nR5rdU8ULiMCJd"
@@ -1605,7 +1639,7 @@
    "transaction_index": 71
   }
  ],
- "discovered_utc": "2026-10-21T13:00:50Z",
+ "discovered_utc": "2026-10-21T18:57:58Z",
  "discovered": 15,
- "squads_utc": "2026-10-21T13:05:00Z"
+ "squads_utc": "2026-10-21T19:02:21Z"
 }

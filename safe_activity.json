@@ -1,29 +1,29 @@
 {
- "generated_utc": "2026-10-22T13:03:40Z",
+ "generated_utc": "2026-10-22T19:01:48Z",
  "wake_days": 14,
  "safes": 42,
  "read": 42,
  "woke": [],
  "changes": [
   {
-   "delta": 1,
-   "idle_days": 11.6,
+   "delta": 4,
+   "idle_days": 0.4,
    "woke": false,
-   "safe": "plasma:0x7d07\u2026dcd8",
+   "safe": "base:0xe6a4\u20262075",
    "governs": [
-    "plasma:0xa9c251f8304b1b3fc2b9e8fcae78d94eff82ac66"
+    "base:0x5e7bb104d84c7cb9b682aac2f3d509f5f406809a"
    ],
-   "previous_run": "2026-10-22T07:05:11Z"
+   "previous_run": "2026-10-22T13:03:40Z"
   },
   {
-   "delta": 1,
-   "idle_days": 1.9,
+   "delta": 3,
+   "idle_days": 2.4,
    "woke": false,
-   "safe": "tempo:0xdc65\u2026ca33",
+   "safe": "robinhood:0xfa20\u20266047",
    "governs": [
-    "tempo:0xcccccccc00000000000000000000000000000001"
+    "robinhood:0x0bfbcf9fa4f9c56b0f40a671ad40e0805a091865"
    ],
-   "previous_run": "2026-10-22T07:05:11Z"
+   "previous_run": "2026-10-22T13:03:40Z"
   }
  ],
  "never_executed": [
@@ -107,10 +107,10 @@
    "never_executed": false
   },
   "base:813d4f2afbe04aad": {
-   "nonce": 2744,
+   "nonce": 2748,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-10-22T07:05:11Z",
-   "last_moved": "2026-10-22T07:05:11Z",
+   "idle_since": "2026-10-22T19:01:48Z",
+   "last_moved": "2026-10-22T19:01:48Z",
    "governs": [
     "base:0x5e7bb104d84c7cb9b682aac2f3d509f5f406809a"
    ],
@@ -434,10 +434,10 @@
    "never_executed": false
   },
   "robinhood:d2822dd3a9cf19ee": {
-   "nonce": 44,
+   "nonce": 47,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-10-20T07:02:13Z",
-   "last_moved": "2026-10-20T07:02:13Z",
+   "idle_since": "2026-10-22T19:01:48Z",
+   "last_moved": "2026-10-22T19:01:48Z",
    "governs": [
     "robinhood:0x0bfbcf9fa4f9c56b0f40a671ad40e0805a091865"
    ],

@@ -11,7 +11,10 @@ Priorities: 1 = something happened (upgrade, admin change, transfer in flight, s
 change): read it before trusting the score; 2 = the reader disagrees with the score or cannot classify something (disagreement,
 module or guard to identify, open dispute, timelock queue unread, a delay or a guardian announced, an admin Safe that woke up): decide; 3 = coverage you may want to extend.\nSince 2026-10-10 the queue also reads the state files: a paused contract and a secondary role that changed hands are priority 1 (something happened).
 """
-import argparse, json, os, time
+import argparse, json, os, sys, time
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from lib.fresh_ops import fresh_enough  # noqa: E402
 
 
 def load(p):
@@ -90,6 +93,7 @@ def main():
     for tl in po.get("results", []):
         if str(tl.get("status", "ok")) != "ok": add(2 if tl.get("discovered") else 1, "timelock queue unread", tl.get("chain"), tl.get("address"), "%s: %s" % (tl.get("name"), str(tl.get("status"))[:120]), "find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen", "pending_ops.json")
         for op in tl.get("pending", []):
+            if not fresh_enough(op.get("state"), op.get("ready_at"), now): continue   # executable for more than 7 days: not listed here either (lib/fresh_ops.py), whatever wrote the file
             kind_ = op.get("decoded") or ""; what_ = ((kind_ + ": ") if kind_ and kind_ not in ("unknown",) else "") + (op.get("signature") or op.get("selector") or "a call")
             if op.get("state") == "ready" or (op.get("ready_at") and op["ready_at"] - now < 48 * 3600 and op["ready_at"] > now): add(1, "queued operation executable" + ("" if op.get("state") == "ready" else " within 48 h"), tl.get("chain"), op.get("target"), "%s via %s" % (what_, tl.get("name")), "read the call before it lands", "pending_ops.json")
             elif kind_ in ("upgrade", "authority change", "pause"): add(2, "queued %s waiting" % kind_, tl.get("chain"), op.get("target"), "%s via %s, executable %s" % (what_, tl.get("name"), time.strftime("%Y-%m-%d", time.gmtime(op["ready_at"])) if op.get("ready_at") else "later"), "an authority change sits in the queue: read it before its day", "pending_ops.json")
@@ -122,6 +126,12 @@ def main():
             sel = [x for x in items if x["priority"] == p]
             if sel: md += ["### %s (%d)" % (title, len(sel))] + ["- **%s** %s %s (%.1f d): %s. To do: %s. (%s)" % (x["kind"], x["chain"] or "", x["target"] or "", x["age_days"], x["text"], x["todo"], x["source"]) for x in sel] + [""]
         open(a.md, "w").write("\n".join(md))
+    try:   # the daily report is written once a day: drop from it, at every run, the lines of operations the queue no longer lists (lib/prune_digest.py); a failure here never stops the run
+        from lib.prune_digest import prune_digest
+        done = prune_digest(W)
+        if done: print("daily report: lines of operations no longer listed dropped from " + ", ".join(done))
+    except Exception as e:  # noqa: BLE001
+        print("daily report not pruned (%s)" % type(e).__name__)
     print("review queue: %d item(s): %s; oldest %.1f d; %d overdue (priority 1 for more than %g d)" % (len(items), ", ".join("priority %s: %s" % kv for kv in counts.items()), oldest, len(overdue), a.overdue_days))
     for x in items[:12]: print("  [%d] %s %s %s: %s" % (x["priority"], x["kind"], x["chain"] or "", (x["target"] or "")[:10], x["text"][:90]))
 

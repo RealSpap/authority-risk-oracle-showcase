@@ -31,6 +31,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(HERE, "lib"))
 import check_pending_ops  # noqa: E402
+from lib.fresh_ops import fresh_enough  # noqa: E402
 import check_safe_changes  # noqa: E402
 from check_cross_ecosystem_overlap import REGISTRIES  # noqa: E402
 from lib import code_review  # noqa: E402
@@ -95,7 +96,7 @@ def discovered_from_file(path="watch/pending_ops.json"):
     pending and recent operations join the digest without a second scan."""
     try: rs = [r for r in json.load(open(path)).get("results", []) if r.get("discovered")]
     except Exception: return [], [], []  # noqa: BLE001 -- no file, nothing to add
-    act = [(r["name"], p) for r in rs if r.get("status") == "ok" for p in r.get("pending", []) if p.get("state") != "expired"]
+    act = [(r["name"], p) for r in rs if r.get("status") == "ok" for p in r.get("pending", []) if p.get("state") != "expired" and fresh_enough(p.get("state"), p.get("ready_at"), time.time())]   # executable for more than 7 days: not listed (lib/fresh_ops.py)
     recent = [(r["name"], p) for r in rs if r.get("status") == "ok" for p in r.get("recent", [])]
     unread = [f"Timelock queue, {r['name']}: {r['status']}" for r in rs if r.get("status") != "ok"]
     return act, recent, unread
@@ -108,7 +109,7 @@ def pending(recent_days):
         if r["status"].startswith("UNREAD"):
             unread.append(f"Timelock queue, {r['name']}: {r['status']}")
             continue
-        act += [(r["name"], p) for p in r["pending"] if p["state"] != "expired"]
+        act += [(r["name"], p) for p in r["pending"] if p["state"] != "expired" and fresh_enough(p["state"], p.get("ready_at"), time.time())]
         recent += [(r["name"], p) for p in r["recent"]]
     a2, r2, u2 = discovered_from_file(); act += a2; recent += r2; unread += u2
     return act, recent, unread

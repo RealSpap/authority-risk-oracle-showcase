@@ -94,39 +94,46 @@
     },
     {
       "version": "2026.10.3",
-      "date": "2026-10-13",
-      "status": "pending: in the repository, not on the oracles yet",
-      "note": "Code written on 2026-10-13 after that push, in the repository, not yet on the oracles: five more Ethereum L1 targets, the USD AI OAdapter module registered as analysed (8 to 40), the Adpend USDC vault timelock counted (2 to 19), one rule for nested Safe seats, the Safe proxy-code check, the Monad Steakhouse cross-exposure address match, timelock delay bands for Uniswap V3 and Sky, push-guard and push-script hardening. expected_hashes are computed from the scoring files of the commit that carries this registry (HEAD of main when it is merged) (scripts/lib/methodology.py); a push made from files that differ from them publishes other hashes. After the push, move them to `hashes` after reading the oracles, and set the status to on-chain.",
-      "hashes": null,
-      "expected_hashes": {
+      "date": "2026-10-19",
+      "status": "on-chain",
+      "note": "The push of 2026-10-19 / 2026-10-20 from commit 4d21558f789725be539996e1dc1ca9747a3b19fb, read from getScore() on each EVM oracle and from the Solana accounts on 2026-10-20 (about 16:50Z): Solana 2026-10-19 21:26Z, Tempo 21:31Z, Hyperliquid 21:34Z, Base 21:38Z, Monad 21:42Z, Plasma 22:01Z, Robinhood Chain 22:28Z, Arbitrum 22:33Z, Ethereum L1 2026-10-20 00:07Z. It carries the code written on 2026-10-13 (five more Ethereum L1 targets, the USD AI OAdapter module registered as analysed, the Adpend USDC vault timelock counted, one rule for nested Safe seats, the Safe proxy-code check, the Monad Steakhouse cross-exposure address match, timelock delay bands for Uniswap V3 and Sky, push-guard and push-script hardening) and the changes of 2026-10-15 (the Spark executor-delay rule, a Safe at a threshold of 1 adds nothing for its owner count, an EIP-7702 delegated key counts as one key, the Tempo reader waits and retries when the public RPC says rate limited). The hashes were computed from the scoring files of that commit before the push and match the ones read on the oracles. The Ethereum L1 oracle keeps one entry under an older hash (the retired Ethena minting entry, 2026.09.0).",
+      "hashes": {
         "robinhood-chain": [
-          "0x35b0467ba741b3b246cee0d50a3fc68ef3ed22c55a6c79fb05b09eb1a0ee5a17"
+          "0x7a8280d6128fcfffdfcab3e45d617360c4caa1a521e1ecf4f002e4762b4b3606"
         ],
         "ethereum-l1": [
-          "0x9a8584062d670659eba47b8999c5a430fb6f5d597fb77b0b0dd41398bf434cde"
+          "0x0e0dadb9b93f111850c6149be1a61b089f1e14e39d9a2acc56a7e0d4d88ef32b"
         ],
         "arbitrum-ecosystem": [
-          "0xc2bbd887c90c46dc84ca5c2326f90b5c32e71c9f11eff4003eec6d2c27c99abd"
+          "0x42f5ef04fd9a03dfddc9044d63bef7e44548ac53b0a3cc84940339d79638c7ae"
         ],
         "base-ecosystem": [
-          "0x065d538bc8e2cdacbeee9a4849c5ccc05b87a2b3671613afd8c7f127e138eb97"
+          "0xb55a2d7d5c9f1c87b278a0c86beeca7d03a2540019f031930109b54b653d3b74"
         ],
         "plasma-ecosystem": [
-          "0xbf55b4767ecad834791cce90f59f2a7bdbe5da01454545df48419b3727863385"
+          "0xc1d1ba0a9ddfabd18ba1ec3ed1f66dce9babca05f05eaa76acd37cc1d671034c"
         ],
         "monad": [
-          "0xdd3b825e25841cb400d64dfc4e6edd0ab4adf0058023534b1ded3b20f162ddc8"
-        ],
-        "hyperliquid": [
-          "0x9a516799ad1decf8d585f3f235ee7db57607559794785ee23bb29ae5fb308d70"
+          "0xf4a5c40caa27b1952c9235737d4bcc6b134faaea8d54c2db3a963aacf896a904"
         ],
         "tempo": [
-          "0x548a5b4c6476362a0c7def19bd811d910ff87972710f1d3b6b5ed47d0d69f426"
+          "0xe267de1a8e2c7ace54eac7fd4376bfbd66cb87cba7b39e30d883e4cda7ab787a"
+        ],
+        "hyperliquid": [
+          "0xc06d60184165fe36f356e6196dac10f0adf5963726a5d1574b5ab896fbc8c365"
         ],
         "solana": [
-          "0xa6219b489e26fbb046806c8b2ed3c144ce8ca9041d8e154c212237685be5fefc"
+          "0x58be578c4ad50dbee98dc0666a228ec6d0b36c7dc71bb1506393477156219fa5"
         ]
       }
+    },
+    {
+      "version": "2026.10.4",
+      "date": "2026-10-20",
+      "status": "pending: in the repository, not on the oracles yet",
+      "note": "Opened on 2026-10-20 after the push of 2026.10.3. Nothing is decided yet: no scoring code is written for this version. Fill expected_hashes only when a commit carries a change that moves a published score.",
+      "hashes": null,
+      "expected_hashes": {}
     }
   ]
 }

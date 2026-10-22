@@ -34,15 +34,14 @@ rotation, insurance fund, treasury segmentation) are a concrete signal list this
 
 ## Closest governance precedent: Aave x LlamaRisk
 
-Chaos Labs stepped down from Aave risk management in April 2026. LlamaRisk has since run Aave's PT oracle and, in June 2026, got
-a binding four-layer risk framework adopted that governs every asset listing, review and deprecation across Aave V3, V4 and
-Aave Horizon. Two parts matter here: Layer 1 makes **undisclosed signer composition a hard-block condition** for listing an asset,
-and Layer 3 requires "monitoring and automated risk-oracle systems ... codified as standing protocol infrastructure, not
-optional tooling".
+Chaos Labs stepped down from Aave risk management in April 2026. LlamaRisk has since run Aave's PT oracle and, in June 2026, proposed
+a four-layer risk framework to Aave governance (announced 9 June) for asset listing, review and deprecation across Aave V3, V4 and
+Aave Horizon. Press coverage lists two parts that matter here: undisclosed signer structures among the Layer 1 hard blocks,
+and a Layer 3 that, per Unchained, covers monitoring and automated risk oracle systems (the original text was not checked).
 
-A major protocol's own risk manager arrived independently at close to this project's thesis. What it is not: Layer 3 names no
-vendor or tool, and by LlamaRisk's own reporting the oracle is run manually, not as a live, on-chain, cross-protocol feed that
-anyone can compose with. That gap, a governance-mandated checklist item enforced by votes and a paid risk manager versus a
+A major protocol's own risk manager arrived independently at close to this project's thesis. What it is not: the automated parts named in the coverage (a
+freeze guardian and a supply and borrow cap oracle, built on Chainlink CRE and owned by the Aave DAO) act, in what was read, on market parameters, not as a live, on-chain, cross-protocol feed that
+anyone can compose with. That gap, a proposed governance checklist applied by a paid risk manager versus a
 permissionless score any contract can read, is where this project sits. If LlamaRisk or anyone turns that process into a named,
 live, on-chain authority-risk oracle, that is a direct competitor; nothing found as of 2026-10-05 does.
 

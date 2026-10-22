@@ -194,13 +194,11 @@ vaults' own figures (API for Morpho, DefiLlama-priced `totalAssets` for Euler), 
 
 ### Demand signals and the agent-side competitor (second pass)
 
-- **An explicit demand from a governance framework.** Aave's four-layer risk framework, prepared by LlamaRisk in June 2026
-  and binding across V3, V4 and Horizon, is reported by
-  [The Defiant](https://thedefiant.io/news/defi/aave-proposes-protocol-wide-risk-framework-after-kelpdao-exploit),
-  [Unchained](https://unchainedcrypto.com/aave-proposes-binding-new-risk-framework-following-the-292-million-kelpdao-exploit/)
-  and [The Block](https://www.theblock.co/post/404136/new-aave-risk-framework-proposed-following-kelpdao-exploit). Undisclosed signer
-  structures and no timelocks on critical upgrade paths are hard-block conditions, and Layer 3 covers "monitoring and
-  automated risk oracle systems". This is the closest thing found to a written requirement for what this oracle does.
+- **A demand signal from a governance framework.** Aave's four-layer risk framework, prepared by LlamaRisk and proposed in
+  June 2026 for V3, V4 and Horizon (announced 9 June; date and scope per
+  [Unchained](https://unchainedcrypto.com/aave-proposes-binding-new-risk-framework-following-the-292-million-kelpdao-exploit/)).
+  CoinCentral and Bitget list undisclosed signer structures as a hard-block condition (the original text was not checked), and
+  Unchained describes Layer 3 as covering monitoring and automated risk oracle systems. This is the closest thing found to a proposed requirement for what this oracle does.
 - **An agent-side tool exists and is shallow.** VaultPilot MCP (`agenthill/vaultpilot-mcp`, 4 stars and 2 forks when read)
   exposes `check_permission_risks` and `get_protocol_risk_score` to AI agents. Read from its source on main:
   `checkPermissionRisks` reads `owner()` only, classifies the holder as EOA or contract, sets `isMultisig` from
@@ -224,14 +222,14 @@ vaults' own figures (API for Morpho, DefiLlama-priced `totalAssets` for Euler), 
   read the Listing Policy text itself.
 - **Euler and Spark were not checked.** Whether they impose signer disclosure is unknown.
 - **Aave.** The Horizon onboarding update requires a business case, a LlamaRisk risk assessment and an Aave Labs technical
-  assessment; the extract mentions no admin-key or signer disclosure (that requirement sits in the June 2026 framework above).
+  assessment; the extract mentions no admin-key or signer disclosure (that requirement appears in the framework proposed in June 2026, above).
 - **The paid market is real, and its scope is market risk.** The Aave governance thread renewing LlamaRisk as risk service
   provider (epoch 4, submitted April 2025) lists, by an extraction I did not cross-check, $3.5M for one year ($1.5M in GHO
   up front, $1.5M in GHO streamed, 5,000 AAVE streamed). The scope named there is risk-managed price feeds, parameter
   automation, Risk Steward co-ownership, oracle design, payload review, monitoring and "Guardian signer duties"; it does not
   enumerate a signer or multisig verification deliverable. An earlier renewal (proposal 185) was $400,000 for six months.
   Chaos Labs reportedly left a $5M retention in April 2026 (bex.co headline, not re-read).
-- **Reading, as a hypothesis.** Authority risk is a hard-block condition in the framework but does not appear as a priced
+- **Reading, as a hypothesis.** Authority risk is listed as a hard-block condition in the proposed framework but does not appear as a priced
   deliverable in the extract, so the plausible buyer is a risk provider that needs an independent, continuously updated
   input for its listing due diligence, more than a DAO buying a dashboard. Nobody was asked.
 

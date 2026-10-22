@@ -1,3 +1,5 @@
+> **Correction note, 2026-10-22.** The sentence below says that LlamaRisk holds a "scoped Updater role". LlamaRisk's own page on LlamaGuard PT (read on 22 October 2026) describes a bounded role that tunes published methodology parameters, without changing the code or stopping the feed without the agreement of the DAO; the word "Updater" is not on that page. The text below is kept as written on 2026-09-17.
+
 # Contract review against the LlamaGuard PT pattern (2026-09-17)
 
 Item 9 of the after-hackathon roadmap: "the entire pitch is 'we flag who has

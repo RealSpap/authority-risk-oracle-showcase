@@ -1,6 +1,6 @@
 {
- "evaluated_utc": "2026-10-22T01:06:25Z",
- "run_utc": "2026-10-22T00:53:44Z",
+ "evaluated_utc": "2026-10-22T07:06:40Z",
+ "run_utc": "2026-10-22T06:52:50Z",
  "rules": [
   "score dropped by 10 or more",
   "score fell under 40",
@@ -32,11 +32,11 @@
    "title": "Kinetiq kmHYPE",
    "score": 4,
    "delta": 0,
-   "tvl_usd": 40196608.78334411,
+   "tvl_usd": 39259529.46231625,
    "first_seen": "2026-10-18T12:58:45Z",
    "new": false,
    "evidence": [],
-   "previous_run": "2026-10-21T18:49:06Z",
+   "previous_run": "2026-10-22T00:53:44Z",
    "notified": true
   },
   {
@@ -47,11 +47,11 @@
    "title": "Kinetiq kHYPE",
    "score": 4,
    "delta": 0,
-   "tvl_usd": 856219144.6452082,
+   "tvl_usd": 835174507.0311731,
    "first_seen": "2026-10-21T19:02:42Z",
    "new": false,
    "evidence": [],
-   "previous_run": "2026-10-21T18:49:06Z",
+   "previous_run": "2026-10-22T00:53:44Z",
    "notified": true
   },
   {
@@ -62,26 +62,11 @@
    "title": "Yuzu Money",
    "score": 43,
    "delta": 0,
-   "tvl_usd": 64958266.40258107,
+   "tvl_usd": 64949326.88910167,
    "first_seen": "2026-10-10T21:14:27Z",
    "new": false,
    "evidence": [],
-   "previous_run": "2026-10-21T18:49:06Z",
-   "notified": true
-  },
-  {
-   "rule": "an upgrade was executed: the implementation behind this contract changed since the previous run",
-   "severity": "high",
-   "chain": "Robinhood Chain",
-   "target": "0x83341f891f898cb5e0cacc8a70501bba83d9cecf",
-   "title": "Ramses CL V2",
-   "score": 8,
-   "delta": 0,
-   "tvl_usd": 5480923.7873335695,
-   "first_seen": "2026-10-22T01:06:25Z",
-   "new": true,
-   "evidence": [],
-   "previous_run": "2026-10-21T18:49:06Z",
+   "previous_run": "2026-10-22T00:53:44Z",
    "notified": true
   },
   {
@@ -92,11 +77,11 @@
    "title": "Arcus Perps",
    "score": 31,
    "delta": 0,
-   "tvl_usd": 64303269.67011889,
+   "tvl_usd": 63874604.63980979,
    "first_seen": "2026-10-10T21:14:27Z",
    "new": false,
    "evidence": [],
-   "previous_run": "2026-10-21T18:49:06Z",
+   "previous_run": "2026-10-22T00:53:44Z",
    "notified": true
   },
   {
@@ -111,7 +96,22 @@
    "first_seen": "2026-10-10T21:14:27Z",
    "new": false,
    "evidence": [],
-   "previous_run": "2026-10-21T18:49:06Z",
+   "previous_run": "2026-10-22T00:53:44Z",
+   "notified": true
+  },
+  {
+   "rule": "an upgrade was executed: the implementation behind this contract changed since the previous run",
+   "severity": "high",
+   "chain": "Solana",
+   "target": "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+   "title": "Raydium AMM",
+   "score": 14,
+   "delta": 0,
+   "tvl_usd": 1193323210.7838585,
+   "first_seen": "2026-10-22T07:06:40Z",
+   "new": true,
+   "evidence": [],
+   "previous_run": "2026-10-22T00:53:44Z",
    "notified": true
   },
   {
@@ -122,11 +122,11 @@
    "title": "Kamino Liquidity",
    "score": 54,
    "delta": 0,
-   "tvl_usd": 73165803.71566959,
+   "tvl_usd": 72681563.07975085,
    "first_seen": "2026-10-10T21:14:27Z",
    "new": false,
    "evidence": [],
-   "previous_run": "2026-10-21T18:49:06Z",
+   "previous_run": "2026-10-22T00:53:44Z",
    "notified": true
   },
   {
@@ -137,11 +137,11 @@
    "title": "Jupiter Perpetual Exchange",
    "score": 46,
    "delta": 0,
-   "tvl_usd": 746672098.1051489,
+   "tvl_usd": 737537646.7245677,
    "first_seen": "2026-10-10T21:14:27Z",
    "new": false,
    "evidence": [],
-   "previous_run": "2026-10-21T18:49:06Z",
+   "previous_run": "2026-10-22T00:53:44Z",
    "notified": true
   },
   {
@@ -152,11 +152,11 @@
    "title": "Orca DEX",
    "score": 2,
    "delta": 0,
-   "tvl_usd": 309850263.6538811,
+   "tvl_usd": 308375251.79767865,
    "first_seen": "2026-10-10T21:14:27Z",
    "new": false,
    "evidence": [],
-   "previous_run": "2026-10-21T18:49:06Z",
+   "previous_run": "2026-10-22T00:53:44Z",
    "notified": true
   }
  ],
@@ -169,11 +169,11 @@
    "target": "0x6695c0f8706c5ace3bdf8995073179cca47926dc",
    "title": "Yuzu Money",
    "first_seen": "2026-10-10T21:14:27Z",
-   "last_seen": "2026-10-22T01:06:25Z",
-   "times": 58,
+   "last_seen": "2026-10-22T07:06:40Z",
+   "times": 59,
    "score": 43,
    "delta": 0,
-   "tvl_usd": 64958266.40258107
+   "tvl_usd": 64949326.88910167
   },
   {
    "key": "the independent reader disagrees with the admin-key score, with money behind it|robinhood:0x14b107cf534239c59571b066cb6497a321da897c",
@@ -183,11 +183,11 @@
    "target": "0x14b107cf534239c59571b066cb6497a321da897c",
    "title": "Arcus Perps",
    "first_seen": "2026-10-10T21:14:27Z",
-   "last_seen": "2026-10-22T01:06:25Z",
-   "times": 58,
+   "last_seen": "2026-10-22T07:06:40Z",
+   "times": 59,
    "score": 31,
    "delta": 0,
-   "tvl_usd": 64303269.67011889
+   "tvl_usd": 63874604.63980979
   },
   {
    "key": "an admin transfer is in flight: a new owner or admin is designated and has not accepted yet (pendingOwner / pendingAdmin)|robinhood:0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d",
@@ -197,8 +197,8 @@
    "target": "0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d",
    "title": "0xfe7e\u20269b0d",
    "first_seen": "2026-10-10T21:14:27Z",
-   "last_seen": "2026-10-22T01:06:25Z",
-   "times": 58,
+   "last_seen": "2026-10-22T07:06:40Z",
+   "times": 59,
    "score": 1,
    "delta": 0,
    "tvl_usd": null
@@ -211,11 +211,11 @@
    "target": "GKnHiWh3RRrE1zsNzWxRkomymHc374TvJPSTv2wPeYdB",
    "title": "Kamino Liquidity",
    "first_seen": "2026-10-10T21:14:27Z",
-   "last_seen": "2026-10-22T01:06:25Z",
-   "times": 58,
+   "last_seen": "2026-10-22T07:06:40Z",
+   "times": 59,
    "score": 54,
    "delta": 0,
-   "tvl_usd": 73165803.71566959
+   "tvl_usd": 72681563.07975085
   },
   {
    "key": "the independent reader disagrees with the admin-key score, with money behind it|solana:H4ND9aYttUVLFmNypZqLjZ52FYiGvdEB45GmwNoKEjTj",
@@ -225,11 +225,11 @@
    "target": "H4ND9aYttUVLFmNypZqLjZ52FYiGvdEB45GmwNoKEjTj",
    "title": "Jupiter Perpetual Exchange",
    "first_seen": "2026-10-10T21:14:27Z",
-   "last_seen": "2026-10-22T01:06:25Z",
-   "times": 58,
+   "last_seen": "2026-10-22T07:06:40Z",
+   "times": 59,
    "score": 46,
    "delta": 0,
-   "tvl_usd": 746672098.1051489
+   "tvl_usd": 737537646.7245677
   },
   {
    "key": "the independent reader disagrees with the admin-key score, with money behind it|solana:2LecshUwdy9xi7meFgHtFJQNSKk4KdTrcpvaB56dP2NQ",
@@ -239,11 +239,11 @@
    "target": "2LecshUwdy9xi7meFgHtFJQNSKk4KdTrcpvaB56dP2NQ",
    "title": "Orca DEX",
    "first_seen": "2026-10-10T21:14:27Z",
-   "last_seen": "2026-10-22T01:06:25Z",
-   "times": 58,
+   "last_seen": "2026-10-22T07:06:40Z",
+   "times": 59,
    "score": 2,
    "delta": 0,
-   "tvl_usd": 309850263.6538811
+   "tvl_usd": 308375251.79767865
   },
   {
    "key": "the independent reader disagrees with the admin-key score, with money behind it|hyperliquid:0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec",
@@ -253,11 +253,11 @@
    "target": "0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec",
    "title": "Kinetiq kmHYPE",
    "first_seen": "2026-10-18T12:58:45Z",
-   "last_seen": "2026-10-22T01:06:25Z",
-   "times": 57,
+   "last_seen": "2026-10-22T07:06:40Z",
+   "times": 58,
    "score": 4,
    "delta": 0,
-   "tvl_usd": 40196608.78334411
+   "tvl_usd": 39259529.46231625
   },
   {
    "key": "the independent reader disagrees with the admin-key score, with money behind it|hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109",
@@ -267,11 +267,25 @@
    "target": "0x393d0b87ed38fc779fd9611144ae649ba6082109",
    "title": "Kinetiq kHYPE",
    "first_seen": "2026-10-21T19:02:42Z",
-   "last_seen": "2026-10-22T01:06:25Z",
-   "times": 55,
+   "last_seen": "2026-10-22T07:06:40Z",
+   "times": 56,
    "score": 4,
    "delta": 0,
-   "tvl_usd": 856219144.6452082
+   "tvl_usd": 835174507.0311731
+  },
+  {
+   "key": "an upgrade was executed: the implementation behind this contract changed since the previous run|solana:CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+   "rule": "an upgrade was executed: the implementation behind this contract changed since the previous run",
+   "severity": "high",
+   "chain": "Solana",
+   "target": "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+   "title": "Raydium AMM",
+   "first_seen": "2026-10-22T07:06:40Z",
+   "last_seen": "2026-10-22T07:06:40Z",
+   "times": 1,
+   "score": 14,
+   "delta": 0,
+   "tvl_usd": 1193323210.7838585
   },
   {
    "key": "an upgrade was executed: the implementation behind this contract changed since the previous run|robinhood:0x83341f891f898cb5e0cacc8a70501bba83d9cecf",

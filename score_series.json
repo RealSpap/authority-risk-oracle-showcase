@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-10-22T01:06:25Z",
+ "run_utc": "2026-10-22T07:06:40Z",
  "targets": 202,
  "moves_recorded": 32,
  "series": {
@@ -1755,10 +1755,10 @@
  },
  "calibration": {
   "window_days": 14,
-  "actions": 27,
-  "under_40": 10,
+  "actions": 29,
+  "under_40": 12,
   "by_band": {
-   "critical": 6,
+   "critical": 8,
    "weak": 4,
    "moderate": 17,
    "decent": 0,
@@ -2006,6 +2006,24 @@
     "via": "0x4c1b0b2ce0f5bf38a56695894ee29fc0cc8326d7",
     "tx": null,
     "score_then": 8,
+    "band_then": "critical"
+   },
+   {
+    "kind": "upgrade executed (Squads proposal)",
+    "key": "solana:CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "t": "2026-10-22T06:24:28Z",
+    "via": "Squads v4 multisig tr8r\u2026Hb4u (3-of-4, time lock 0 s), found by the independent reader (1 tracked program)",
+    "tx": "6zxqZxBAuGtpoHPSAvLFZdNdjesVpHbuuF6hjMGwm8fX",
+    "score_then": 14,
+    "band_then": "critical"
+   },
+   {
+    "kind": "upgrade executed",
+    "key": "solana:CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "t": "2026-10-22T07:01:59Z",
+    "via": "slot 459932378",
+    "tx": null,
+    "score_then": 14,
     "band_then": "critical"
    }
   ],

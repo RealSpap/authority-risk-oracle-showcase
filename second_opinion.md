@@ -1,8 +1,8 @@
-## Second opinion, 2026-10-22T01:01:55Z
+## Second opinion, 2026-10-22T07:01:59Z
 
-### 1 upgrade(s) executed since the previous run (2026-10-21T18:57:59Z)
+### 1 upgrade(s) executed since the previous run (2026-10-22T01:01:55Z)
 
-- **0x83341f891f898cb5e0cacc8a70501bba83d9cecf** on robinhood: implementation changed since the previous run: 0xcc61f2a4ecc33e861c0bd4377a929f4ce6876efb -> 0x4c1b0b2ce0f5bf38a56695894ee29fc0cc8326d7 (EIP-1967 implementation slot); the score reads who may upgrade, this is an upgrade that happened
+- **CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK** on solana: program redeployed since the previous run: slot 451479902 -> 459932378 (2026-10-22T06:24:28Z); the score reads who may upgrade, this is an upgrade that happened
 
 The code behind a tracked proxy changed: read what the new implementation does before trusting the score (the private pipeline's implementation check names the selectors added and dropped).
 

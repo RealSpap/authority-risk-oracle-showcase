@@ -1,11 +1,9 @@
 {
- "run_utc": "2026-10-22T06:52:50Z",
- "state": "alarm",
+ "run_utc": "2026-10-22T12:51:51Z",
+ "state": "degraded",
  "reasons": [
   "1 of 202 targets stale on the oracles",
-  "1 upgrade(s) executed on tracked contracts since the previous run",
   "13 second-opinion disagreement(s) to review",
-  "1 high alert(s) from the rules firing now (an upgrade was executed: the implementation behind this contract changed since the previous run)",
   "methodology hashes mixed on 1 oracle(s)",
   "method hash not in registry on 9 oracle(s): no version is shown for it (data/method_versions.json)"
  ],
@@ -29,7 +27,7 @@
   },
   "methodology_mixed": 1,
   "disputes_open": 0,
-  "review_items": 32
+  "review_items": 31
  },
  "what": "the run's health in one record: ok / degraded / alarm with the reasons; written by scripts/run_status.py after every Watch run",
  "main_last_commit_age_days": 6

@@ -1,9 +1,10 @@
 {
- "run_utc": "2026-10-23T12:50:44Z",
+ "run_utc": "2026-10-23T18:48:46Z",
  "state": "degraded",
  "reasons": [
   "1 of 202 targets stale on the oracles",
   "13 second-opinion disagreement(s) to review",
+  "1 high alert(s) from the rules firing now (the live admin of this contract changed since the previous run (independent read))",
   "methodology hashes mixed on 1 oracle(s)"
  ],
  "data_location": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/watch-data/",
@@ -14,7 +15,7 @@
   "stale": 1,
   "alarms": 0,
   "chain_ok": true,
-  "chain_entries": 134,
+  "chain_entries": 135,
   "signed": true,
   "signing_key": "11baca3ef6a69de4901c185f6cbbd3f93318fbb74f9961a8d39aead841adf409",
   "second_opinion": {
@@ -26,7 +27,7 @@
   },
   "methodology_mixed": 1,
   "disputes_open": 0,
-  "review_items": 32
+  "review_items": 33
  },
  "what": "the run's health in one record: ok / degraded / alarm with the reasons; written by scripts/run_status.py after every Watch run",
  "main_last_commit_age_days": 0

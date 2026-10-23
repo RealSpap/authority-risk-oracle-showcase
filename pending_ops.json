@@ -35,7 +35,7 @@
      "signature": "sendMessage(address,uint256,bytes,uint256)",
      "calls": 1,
      "ready_at": 1792716371,
-     "state": "waiting",
+     "state": "ready",
      "decoded": "cross-chain message"
     }
    ],
@@ -197,7 +197,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 4185467,
+   "window_blocks": 4800000,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -233,7 +233,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 4185467,
+   "window_blocks": 4800000,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -253,7 +253,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 4171034,
+   "window_blocks": 4800000,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -309,7 +309,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/mainnet",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 100498,
+   "window_blocks": 100398,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -427,7 +427,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 0,
    "window_blocks": 3000000,
-   "window_days_est": 3.8,
+   "window_days_est": 3.5,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62"
@@ -439,15 +439,47 @@
    "address": "0x0da180b14721ce46a83669b4816cb652caa1001d",
    "family": "oz",
    "status": "ok",
-   "queued_events": 0,
-   "latest_queued": null,
-   "pending": [],
-   "recent": [],
+   "queued_events": 1,
+   "latest_queued": 1792702415,
+   "pending": [
+    {
+     "block": 95403197,
+     "tx": "0x5f3a3ad9de7ef1f37b06a5fa292d6a180853ba03bf9d8f61a7a7e6a54c689835",
+     "id": "0xf3f2018df895d3a6f06ee76bca1bdd906f2b1fc74459050c4795ef590f57f325",
+     "index": 0,
+     "target": "0x14b107CF534239c59571B066cB6497a321Da897C",
+     "value": 0,
+     "selector": "0x2f2ff15d",
+     "delay": 86400,
+     "signature": "grantRole(bytes32,address)",
+     "calls": 1,
+     "ready_at": 1792788815,
+     "state": "waiting",
+     "decoded": "authority change"
+    }
+   ],
+   "recent": [
+    {
+     "block": 95403197,
+     "tx": "0x5f3a3ad9de7ef1f37b06a5fa292d6a180853ba03bf9d8f61a7a7e6a54c689835",
+     "id": "0xf3f2018df895d3a6f06ee76bca1bdd906f2b1fc74459050c4795ef590f57f325",
+     "index": 0,
+     "target": "0x14b107CF534239c59571B066cB6497a321Da897C",
+     "value": 0,
+     "selector": "0x2f2ff15d",
+     "delay": 86400,
+     "signature": "grantRole(bytes32,address)",
+     "calls": 1,
+     "still_queued": true,
+     "queued_at": 1792702415,
+     "decoded": "authority change"
+    }
+   ],
    "discovered": true,
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 86400,
    "window_blocks": 3000000,
-   "window_days_est": 3.8,
+   "window_days_est": 3.7,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x14b107cf534239c59571b066cb6497a321da897c"
@@ -1471,7 +1503,7 @@
    "transaction_index": 71
   }
  ],
- "discovered_utc": "2026-10-22T18:58:12Z",
+ "discovered_utc": "2026-10-23T01:06:32Z",
  "discovered": 15,
- "squads_utc": "2026-10-22T19:03:04Z"
+ "squads_utc": "2026-10-23T01:11:31Z"
 }

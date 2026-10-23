@@ -1035,18 +1035,28 @@
    "chain": "solana",
    "timelock": "Squads v4 multisig tr8r\u2026Hb4u (3-of-4, time lock 0 s), found by the independent reader (1 tracked program)",
    "what": "program upgrade"
+  },
+  "robinhood:0x0da180b14721ce46a83669b4816cb652caa1001d:0xf3f2018df895d3a6f06ee76bca1bdd906f2b1fc74459050c4795ef590f57f325": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-10-23T00:56:06Z",
+   "due_utc": "2026-10-23T20:53:35Z",
+   "notice_hours": 20.0,
+   "state": "queued",
+   "chain": "robinhood",
+   "timelock": "robinhood timelock 0x0da1\u2026001d, found by the independent reader (1 tracked contract)",
+   "what": "authority change"
   }
  },
- "updated_utc": "2026-10-22T18:48:33Z",
+ "updated_utc": "2026-10-23T00:56:06Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
-  "warned": 25,
+  "warned": 26,
   "seen_without_notice": 3,
   "missed": 13,
   "baseline": 77,
-  "warned_with_a_known_notice": 25,
+  "warned_with_a_known_notice": 26,
   "shortest_notice_hours": 0.2,
-  "median_notice_hours": 21.1,
+  "median_notice_hours": 20.7,
   "note": "warned: seen while queued and not yet executable (the notice is real); seen_without_notice: still queued but already executable when first seen; missed: queued after the ledger started and already applied when first seen (faster than the 6-hour cadence); baseline: applied before the ledger started, counted as neither."
  }
 }

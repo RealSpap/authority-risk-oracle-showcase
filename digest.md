@@ -1,13 +1,12 @@
 # Authority risk digest, 2026-10-22 01:13 UTC
 
-## Needs a person, 2026-10-22T01:13:15Z: 32 item(s) (priority 1: 10, priority 2: 19, priority 3: 3); oldest 11.2 d
+## Needs a person, 2026-10-22T01:13:15Z: 31 item(s) (priority 1: 9, priority 2: 19, priority 3: 3); oldest 11.2 d
 
 ### Overdue: 1 priority-1 item(s) waiting for more than 2 day(s), back in the alarm
 - **Safe AddedOwner** base 0x99249b10593fCa1Ae9DAE6D4819F1A6dae5C013D (3.8 d): AddedOwner 0xba75…4520 (aerodrome_emergency_council)
 
-### Something happened: read before trusting the score (10)
+### Something happened: read before trusting the score (9)
 - **Safe AddedOwner** base 0x99249b10593fCa1Ae9DAE6D4819F1A6dae5C013D (3.8 d): AddedOwner 0xba75…4520 (aerodrome_emergency_council). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **queued operation executable** ethereum 0x1a44076050125825900e736c501f859c50fE728c (1.5 d): parameter change: setConfig(address,address,(uint32,uint32,bytes)[]) via Ethena Timelock. To do: read the call before it lands. (pending_ops.json)
 - **queued operation executable within 48 h** ethereum 0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367 (1.0 d): cross-chain message: sendMessage(address,uint256,bytes,uint256) via Compound Governance Timelock. To do: read the call before it lands. (pending_ops.json)
 - **queued operation executable** solana jupZ4m2GqUCJ5iueMfzQf8khFfH31d4XAQt3RzCT9Vd (0.5 d): program upgrade: Squads proposal #63: Upgrade of program jupZ4m2GqUCJ5iueMfzQf8khFfH31d4XAQt3RzCT9Vd (not the tracked program) via Squads v4 multisig J3mJ…vG8P (4-of-6, time lock 43200 s), found by the independent reader (1 tracked program). To do: read the call before it lands. (pending_ops.json)
 - **queued operation executable** solana jupnw4B6Eqs7ft6rxpzYLJZYSnrpRgPcr589n5Kv4oc (0.5 d): program upgrade: Squads proposal #61: Upgrade of program jupnw4B6Eqs7ft6rxpzYLJZYSnrpRgPcr589n5Kv4oc (not the tracked program) via Squads v4 multisig J3mJ…vG8P (4-of-6, time lock 43200 s), found by the independent reader (1 tracked program). To do: read the call before it lands. (pending_ops.json)

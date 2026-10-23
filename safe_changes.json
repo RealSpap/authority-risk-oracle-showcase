@@ -5,10 +5,10 @@
    "ecosystem": "robinhood",
    "safes": 25,
    "events": [],
-   "control": 74,
+   "control": 81,
    "status": "ok",
-   "fromBlock": 89460198,
-   "toBlock": 95339955,
+   "fromBlock": 89678581,
+   "toBlock": 95551836,
    "days_read": 7
   },
   {
@@ -17,18 +17,18 @@
    "events": [],
    "control": 14,
    "status": "ok",
-   "fromBlock": 26199891,
-   "toBlock": 26250128,
+   "fromBlock": 26201726,
+   "toBlock": 26251962,
    "days_read": 7
   },
   {
    "ecosystem": "arbitrum",
    "safes": 14,
    "events": [],
-   "control": 8,
+   "control": 7,
    "status": "ok",
-   "fromBlock": 515149194,
-   "toBlock": 517311080,
+   "fromBlock": 515228563,
+   "toBlock": 517389680,
    "days_read": 7
   },
   {
@@ -47,10 +47,10 @@
      "timestamp": 1792288893
     }
    ],
-   "control": 23,
+   "control": 21,
    "status": "ok",
-   "fromBlock": 52650853,
-   "toBlock": 52953253,
+   "fromBlock": 52661904,
+   "toBlock": 52964303,
    "days_read": 7
   },
   {
@@ -59,8 +59,8 @@
    "events": [],
    "control": 3,
    "status": "ok",
-   "fromBlock": 44301354,
-   "toBlock": 45388212,
+   "fromBlock": 44341126,
+   "toBlock": 45428582,
    "days_read": 7
   },
   {
@@ -69,30 +69,31 @@
    "events": [],
    "control": 12,
    "status": "ok",
-   "fromBlock": 35149733,
-   "toBlock": 35754511,
+   "fromBlock": 35171830,
+   "toBlock": 35776607,
    "days_read": 7
   },
   {
    "ecosystem": "monad",
    "safes": 13,
    "events": [],
-   "control": 1,
-   "status": "ok",
-   "fromBlock": 115605165,
-   "toBlock": 115690802,
-   "days_read": 0.3
+   "control": 0,
+   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 1 execution(s) from other Safes on the window's tail)",
+   "fromBlock": 115678185,
+   "toBlock": 115763966,
+   "days_read": 0.3,
+   "control_witness": 1
   },
   {
    "ecosystem": "hyperliquid",
    "safes": 5,
    "events": [],
    "control": 0,
-   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 28 execution(s) from other Safes on the window's tail)",
-   "fromBlock": 48983207,
-   "toBlock": 49246726,
+   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 3 execution(s) from other Safes on the window's tail)",
+   "fromBlock": 49005912,
+   "toBlock": 49269432,
    "days_read": 3.0,
-   "control_witness": 28
+   "control_witness": 3
   }
  ]
 }

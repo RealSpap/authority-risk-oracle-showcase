@@ -19,6 +19,8 @@
 
 A DeFi contract that can be upgraded or reconfigured has someone who can do it: a key, a multisig, a vote. This project reads from public chain state who that is, how fast they can act and what stands in the way (keys, a multisig, a timelock), and publishes the answer as a score that any contract can read on-chain, so a lending market, a DAO or a wallet does not have to trust anyone's website. It measures exposure, not the chance of an attack: we read 55 incident write-ups, 7 were about who controls a contract, and our published requirements flagged 2 of them ([what the score says and does not say](docs/WHAT-THE-SCORE-SAYS.md)). Live on testnets today. Not an audit, not investment advice.
 
+**Don't trust us. Redo it.** Command 1 below re-reads the chain and compares it with what we publish: no key, public RPCs, about ten seconds. The output shown is the run of 22 October 2026; the readings of the day may have moved. A difference is useful, see [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## Three commands
 
 **1. Check our numbers against the chain** (no key, public RPCs, about ten seconds). The script reads the chain with its own code, separate from the Watch's, so a difference is worth checking. Output of the run of 22 October 2026:

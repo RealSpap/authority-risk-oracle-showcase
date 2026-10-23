@@ -48,11 +48,15 @@ python3 -m unittest discover -s scripts/tests
 
 The continuous integration also runs the tests under `chains/base-ecosystem`, `chains/ethereum-l1`, `chains/tempo` and `chains/hyperliquid` (`python3 -m unittest discover -s chains/<ecosystem>/tests`). None of them needs a live RPC.
 
-## Out of scope
+## What we do not accept
 
 - A pull request that changes a score by hand. Scores come from the scorers and are pushed by the maintainer; a change of method is written in [`CHANGELOG.md`](CHANGELOG.md) with its date.
 - Requests to raise or lower a score for any reason other than evidence.
 - Anything that sends a transaction on a real network from this repository. It is a testnet project and says so.
+- Anything that includes a private key, a seed phrase, a password or private data.
+- Statements about the character or intent of a named person.
+- Requests to soften or remove a finding without evidence.
+- Promotional additions.
 
 ## Pull requests
 

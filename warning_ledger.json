@@ -1046,18 +1046,38 @@
    "chain": "robinhood",
    "timelock": "robinhood timelock 0x0da1\u2026001d, found by the independent reader (1 tracked contract)",
    "what": "authority change"
+  },
+  "solana:6hhbgctmg7tpwusgp3lg6x2rsmywac4tnsa6g4cnfqbm:squads:6hhBGCtmg7tPWUSgp3LG6X2rsmYWAc4tNsA6G4CnfQbM:109": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-10-23T12:50:44Z",
+   "due_utc": "2026-10-24T11:08:01Z",
+   "notice_hours": 22.3,
+   "state": "queued",
+   "chain": "solana",
+   "timelock": "Squads v4 multisig 6hhB\u2026fQbM (5-of-10, time lock 86400 s), found by the independent reader (1 tracked program)",
+   "what": "program upgrade"
+  },
+  "solana:6hhbgctmg7tpwusgp3lg6x2rsmywac4tnsa6g4cnfqbm:squads:6hhBGCtmg7tPWUSgp3LG6X2rsmYWAc4tNsA6G4CnfQbM:110": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-10-23T12:50:44Z",
+   "due_utc": "2026-10-24T11:08:28Z",
+   "notice_hours": 22.3,
+   "state": "queued",
+   "chain": "solana",
+   "timelock": "Squads v4 multisig 6hhB\u2026fQbM (5-of-10, time lock 86400 s), found by the independent reader (1 tracked program)",
+   "what": "call"
   }
  },
- "updated_utc": "2026-10-23T06:51:50Z",
+ "updated_utc": "2026-10-23T12:50:44Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
-  "warned": 26,
+  "warned": 28,
   "seen_without_notice": 3,
   "missed": 13,
   "baseline": 77,
-  "warned_with_a_known_notice": 26,
+  "warned_with_a_known_notice": 28,
   "shortest_notice_hours": 0.2,
-  "median_notice_hours": 20.7,
+  "median_notice_hours": 21.4,
   "note": "warned: seen while queued and not yet executable (the notice is real); seen_without_notice: still queued but already executable when first seen; missed: queued after the ledger started and already applied when first seen (faster than the 6-hour cadence); baseline: applied before the ledger started, counted as neither."
  }
 }

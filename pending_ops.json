@@ -22,23 +22,7 @@
    "status": "ok",
    "queued_events": 72,
    "latest_queued": 1792543571,
-   "pending": [
-    {
-     "block": 26237471,
-     "tx": "0xec40a2b366682121bdf44df91e57930a9385468947b2521cb3f2c87fecf2cf6d",
-     "id": "0xe0df357eb17dd1f2a03a74c37c7b2c2ab9d9df5350d80a60bd761a8150293b09",
-     "index": 0,
-     "target": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-     "value": 50000000000000000,
-     "eta": 1792716371,
-     "selector": "0xb2267a7b",
-     "signature": "sendMessage(address,uint256,bytes,uint256)",
-     "calls": 1,
-     "ready_at": 1792716371,
-     "state": "ready",
-     "decoded": "cross-chain message"
-    }
-   ],
+   "pending": [],
    "recent": [
     {
      "block": 26185395,
@@ -81,7 +65,7 @@
      "selector": "0xb2267a7b",
      "signature": "sendMessage(address,uint256,bytes,uint256)",
      "calls": 1,
-     "still_queued": true,
+     "still_queued": false,
      "queued_at": 1792543571,
      "decoded": "cross-chain message"
     }
@@ -197,7 +181,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 4800000,
+   "window_blocks": 4171034,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -233,7 +217,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 4800000,
+   "window_blocks": 4171034,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -253,7 +237,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 4800000,
+   "window_blocks": 4171034,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -309,28 +293,11 @@
    "log_rpc": "https://gateway.tenderly.co/public/mainnet",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 100398,
+   "window_blocks": 100298,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
     "0x52aa899454998be5b000ad077a46bbe360f4e497"
-   ]
-  },
-  {
-   "name": "hyperliquid timelock 0xc5de\u202623d2, found by the independent reader (1 tracked contract)",
-   "chain": "hyperliquid",
-   "address": "0xc5ded4f7f53919c714059a17d31371ae847e23d2",
-   "family": "oz",
-   "status": "UNREAD (Web3RPCError: {'code': -32005, 'message': 'rate limited'})",
-   "queued_events": null,
-   "latest_queued": null,
-   "pending": [],
-   "recent": [],
-   "discovered": true,
-   "log_rpc": "https://rpc.hyperliquid.xyz/evm",
-   "delay": 172800,
-   "governs": [
-    "0xffaa4a3d97fe9107cef8a3f48c069f577ff76cc1"
    ]
   },
   {
@@ -427,7 +394,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 0,
    "window_blocks": 3000000,
-   "window_days_est": 3.5,
+   "window_days_est": 3.6,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62"
@@ -1503,7 +1470,7 @@
    "transaction_index": 71
   }
  ],
- "discovered_utc": "2026-10-23T01:06:32Z",
- "discovered": 15,
- "squads_utc": "2026-10-23T01:11:31Z"
+ "discovered_utc": "2026-10-23T06:59:53Z",
+ "discovered": 14,
+ "squads_utc": "2026-10-23T07:04:08Z"
 }

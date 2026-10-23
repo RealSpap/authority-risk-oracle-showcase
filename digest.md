@@ -1,11 +1,11 @@
 # Authority risk digest, 2026-10-23 01:22 UTC
 
-## Needs a person, 2026-10-23T01:22:28Z: 30 item(s) (priority 1: 9, priority 2: 18, priority 3: 3); oldest 12.2 d
+## Needs a person, 2026-10-23T01:22:28Z: 29 item(s) (priority 1: 8, priority 2: 18, priority 3: 3); oldest 12.2 d
 
 ### Overdue: 1 priority-1 item(s) waiting for more than 2 day(s), back in the alarm
 - **Safe AddedOwner** base 0x99249b10593fCa1Ae9DAE6D4819F1A6dae5C013D (4.8 d): AddedOwner 0xba75…4520 (aerodrome_emergency_council)
 
-### Something happened: read before trusting the score (9)
+### Something happened: read before trusting the score (8)
 - **Safe AddedOwner** base 0x99249b10593fCa1Ae9DAE6D4819F1A6dae5C013D (4.8 d): AddedOwner 0xba75…4520 (aerodrome_emergency_council). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **queued operation executable** solana jupZ4m2GqUCJ5iueMfzQf8khFfH31d4XAQt3RzCT9Vd (1.5 d): program upgrade: Squads proposal #63: Upgrade of program jupZ4m2GqUCJ5iueMfzQf8khFfH31d4XAQt3RzCT9Vd (not the tracked program) via Squads v4 multisig J3mJ…vG8P (4-of-6, time lock 43200 s), found by the independent reader (1 tracked program). To do: read the call before it lands. (pending_ops.json)
 - **queued operation executable** solana jupnw4B6Eqs7ft6rxpzYLJZYSnrpRgPcr589n5Kv4oc (1.5 d): program upgrade: Squads proposal #61: Upgrade of program jupnw4B6Eqs7ft6rxpzYLJZYSnrpRgPcr589n5Kv4oc (not the tracked program) via Squads v4 multisig J3mJ…vG8P (4-of-6, time lock 43200 s), found by the independent reader (1 tracked program). To do: read the call before it lands. (pending_ops.json)
@@ -13,7 +13,6 @@
 - **queued operation executable** solana KvauGMspG5k6rtzrqqn7WNn3oZdyKqLKwK2XWQ8FLjd (0.3 d): program upgrade: Squads proposal #107: Upgrade of program KvauGMspG5k6rtzrqqn7WNn3oZdyKqLKwK2XWQ8FLjd (not the tracked program) via Squads v4 multisig 6hhB…fQbM (5-of-10, time lock 86400 s), found by the independent reader (1 tracked program). To do: read the call before it lands. (pending_ops.json)
 - **queued operation executable** solana verifycLy8mB96wd9wqq3WDXQwM4oU6r42Th37Db9fC (0.3 d): call: Squads proposal #108: call to verifycLy8mB96wd9wqq3WDXQwM4oU6r42Th37Db9fC (not the tracked program) via Squads v4 multisig 6hhB…fQbM (5-of-10, time lock 86400 s), found by the independent reader (1 tracked program). To do: read the call before it lands. (pending_ops.json)
 - **admin transfer in flight** robinhood 0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d (0.0 d): 0x9db4…1a53 designated (pendingOwner() on the contract (Ownable2Step), a contract). To do: identify the designated admin; when it accepts, the admin read changes. (second_opinion.json pending_admin)
-- **queued operation executable** ethereum 0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367 (0.0 d): cross-chain message: sendMessage(address,uint256,bytes,uint256) via Compound Governance Timelock. To do: read the call before it lands. (pending_ops.json)
 - **queued operation executable within 48 h** robinhood 0x14b107CF534239c59571B066cB6497a321Da897C (0.0 d): authority change: grantRole(bytes32,address) via robinhood timelock 0x0da1…001d, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
 
 ### Decide (18)
@@ -33,7 +32,7 @@
 - **timelock queue unread** robinhood 0x826aeaeee9233fa8ba199518dd8621a5962b1d02 (12.2 d): robinhood timelock 0x826a…1d02, found by the independent reader (1 tracked contract): UNREAD (ContractLogicError: ('execution reverted', '0x')). To do: find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen. (pending_ops.json)
 - **timelock queue unread** base 0xcc3e7c85bb0ee4f09380e041fee95a0caedd4a02 (5.3 d): base timelock 0xcc3e…4a02, found by the independent reader (1 tracked contract): UNREAD (RetryError: HTTPSConnectionPool(host='base.rpc.sentio.xyz', port=443): Max retries exceeded with url: / (Caused . To do: find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen. (pending_ops.json)
 - **second opinion disagrees** hyperliquid 0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec (4.5 d): the score says one key does everything (10), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisig (0), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(). To do: review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json. (second_opinion.json disagreements)
-- **timelock queue unread** hyperliquid 0xc5ded4f7f53919c714059a17d31371ae847e23d2 (1.5 d): hyperliquid timelock 0xc5de…23d2, found by the independent reader (1 tracked contract): UNREAD (Web3RPCError: {'code': -32005, 'message': 'rate limited'}). To do: find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen. (pending_ops.json)
+- **timelock queue unread** hyperliquid 0xc5de…23d2 (1.5 d): hyperliquid timelock 0xc5de…23d2, found by the independent reader (1 tracked contract): UNREAD (Web3RPCError: {'code': -32005, 'message': 'rate limited'}). To do: find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen. (pending_ops.json)
 - **second opinion disagrees** hyperliquid 0x393d0b87ed38fc779fd9611144ae649ba6082109 (1.3 d): the score says one key does everything (10), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisig (0), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(). To do: review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json. (second_opinion.json disagreements)
 
 ### Coverage to extend (3)

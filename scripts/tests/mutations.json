@@ -2013,13 +2013,13 @@
   },
   {
    "file": "scripts/badges_protocol.py",
-   "old": "if not b or not SLUG.match(slug): skipped += 1; continue",
+   "old": "if not b or not SLUG.fullmatch(slug): skipped += 1; continue",
    "new": "if not b: skipped += 1; continue",
    "why": "a slug that is not a plain slug is written as a file name"
   },
   {
    "file": "scripts/badges_protocol.py",
-   "old": "SLUG = re.compile(r\"[a-z0-9][a-z0-9._-]{0,79}$\")",
+   "old": "SLUG = re.compile(r\"[a-z0-9][a-z0-9._-]{0,79}\")",
    "new": "SLUG = re.compile(r\"[a-z0-9./_-]{1,80}$\")",
    "why": "the slug check lets a path through"
   },

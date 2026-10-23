@@ -49,7 +49,7 @@ of Arbitrum-native ones.
 | HyperEVM Mainnet (read-only, for the scorer -- never a deploy target) | chain **999** (`0x3e7`) -- also confirmed live this run |
 | Public RPC (official) | `https://rpc.hyperliquid-testnet.xyz/evm` |
 | Public RPC, mainnet (read-only) | `https://rpc.hyperliquid.xyz/evm` |
-| Explorer | https://testnet.purrsec.com (per Hyperliquid docs; not independently checked this pass) |
+| Explorer | not listed: the explorer link given in the Hyperliquid docs returned 404 (not found) on 23 October 2026 |
 | Faucet | Hyperliquid's testnet faucet **requires a prior mainnet deposit from the same address** (METHODOLOGY.md section 2) -- a real blocker for the shared throwaway key, disclosed, not chased around |
 
 Both chain IDs were re-confirmed live again on 2026-09-18 (second

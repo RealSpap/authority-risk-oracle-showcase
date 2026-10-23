@@ -10,7 +10,7 @@ the files simply stop changing, and a dashboard that says "checked 11 min ago" i
 Exit codes: 0 the last run is younger than --max-hours (default 14: two missed runs of slack); 1 it is older; 2 the age could NOT be established (no network, an unreadable file, a date that is
 not a date, a date in the future): an unknown age is never reported as fresh. Standard library only.
 """
-import argparse, calendar, json, os, sys, time, urllib.request
+import argparse, calendar, json, math, os, sys, time, urllib.request
 
 from watch_location import RAW  # noqa: E402  -- the state of the Watch lives on the watch-data branch
 
@@ -24,6 +24,7 @@ def parse_utc(t):
 
 def judge(doc, now, max_hours):
     """(code, age in hours or None, sentence). 0 fresh, 1 stale, 2 unknown."""
+    if not isinstance(max_hours, (int, float)) or isinstance(max_hours, bool) or not math.isfinite(max_hours) or max_hours <= 0: return 2, None, "the limit %r is not a finite number of hours above 0: the age cannot be judged against it" % (max_hours,)   # nan made every comparison false and a 51-day-old run came out fresh
     run = parse_utc((doc or {}).get("run_utc") if isinstance(doc, dict) else None)
     if run is None: return 2, None, "the published file has no readable run_utc: the age is unknown"
     age = (now - run) / 3600
@@ -44,8 +45,16 @@ def main_note(status):
     return "NOTE", "the last commit on main is %d days old (GitHub disables scheduled workflows after 60 days without repository activity)" % d
 
 
+def hours(v):
+    """A finite number of hours above 0 (nan, inf, 0 and negative limits are refused: they would make every run look fresh)."""
+    try: f = float(v)
+    except (TypeError, ValueError): raise argparse.ArgumentTypeError("%r is not a number of hours" % v)
+    if not math.isfinite(f) or f <= 0: raise argparse.ArgumentTypeError("%r is not a finite number of hours above 0" % v)
+    return f
+
+
 def main():
-    ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0]); ap.add_argument("--url", default=URL); ap.add_argument("--file"); ap.add_argument("--max-hours", type=float, default=14); ap.add_argument("--json", action="store_true"); a = ap.parse_args()
+    ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0]); ap.add_argument("--url", default=URL); ap.add_argument("--file"); ap.add_argument("--max-hours", type=hours, default=14); ap.add_argument("--json", action="store_true"); a = ap.parse_args()
     try: doc = json.load(open(a.file)) if a.file else fetch(a.url)
     except Exception as e:  # noqa: BLE001 -- any failure to read is "unknown", never "fresh"
         code, age, msg = 2, None, "could not read the published file (%s): the age is unknown" % str(e)[:100]

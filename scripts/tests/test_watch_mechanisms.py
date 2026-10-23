@@ -1512,8 +1512,8 @@ class TestBrief(unittest.TestCase):
 
     def watch(self, tmp):
         os.makedirs(os.path.join(tmp, "scores"), exist_ok=True)
-        json.dump({"name": "Base (Sepolia)", "targets": [{"target": self.A, "compositeScore": 40, "stale": True}, {"target": self.B, "compositeScore": 40, "stale": False}, {"target": self.E, "compositeScore": 90}]}, open(os.path.join(tmp, "scores", "base-sepolia.json"), "w"))
-        json.dump({"name": "Arbitrum (Sepolia)", "targets": [{"target": self.C, "compositeScore": 70, "stale": False}, {"target": self.D, "compositeScore": 20, "stale": False}]}, open(os.path.join(tmp, "scores", "arbitrum-sepolia.json"), "w"))
+        json.dump({"name": "Base (Sepolia)", "readAt": int(time.time()), "targets": [{"target": self.A, "compositeScore": 40, "stale": True}, {"target": self.B, "compositeScore": 40, "stale": False}, {"target": self.E, "compositeScore": 90}]}, open(os.path.join(tmp, "scores", "base-sepolia.json"), "w"))
+        json.dump({"name": "Arbitrum (Sepolia)", "readAt": int(time.time()), "targets": [{"target": self.C, "compositeScore": 70, "stale": False}, {"target": self.D, "compositeScore": 20, "stale": False}]}, open(os.path.join(tmp, "scores", "arbitrum-sepolia.json"), "w"))
         m = lambda slug, name, tvl, scope, chain=None: {"slug": slug, "name": name, "tvl": tvl, "scope": scope, "chain": chain}   # `chain` is the DefiLlama chain name, as in the real tvl.json: the rule keys one figure per protocol and chain on it
         json.dump({"matched": {"base:" + self.A: m("big-vault", "Big Vault", 3e9, "chain", "Base"), "base:" + self.B: m("big-vault", "Big Vault", 3e9, "chain", "Base"), "arbitrum:" + self.C: m("big-vault", "Big Vault", 1e9, "chain", "Arbitrum"), "arbitrum:" + self.D: m("big-vault", "Big Vault", 9e9, "total"),
                                   "base:" + self.E: m("big-farm", "Big Farm", 5e7, "total")}}, open(os.path.join(tmp, "tvl.json"), "w"))
@@ -1956,7 +1956,7 @@ class TestSignRun(unittest.TestCase):
             open(os.path.join(w, "a.json"), "w").write('{"a": 2}'); code, out = self.run_cli("--watch", w, "--verify"); self.assertEqual(code, 1); self.assertIn("CHANGED  a.json", out)   # a changed file
             open(os.path.join(w, "a.json"), "w").write('{"a": 1}'); open(os.path.join(w, "events.jsonl"), "a").write("e4\n"); code, out = self.run_cli("--watch", w, "--verify"); self.assertEqual(code, 1); self.assertIn("CHANGED  events.jsonl (chain head)", out)   # a log that grew or was rewritten
             self.run_cli("--watch", w); open(os.path.join(tmp, "repo", "scripts", "x.py"), "w").write("print(2)\n"); code, out = self.run_cli("--watch", w, "--verify"); self.assertEqual(code, 1); self.assertIn("scripts/x.py (code that produced the run differs", out)   # the code that made the run
-            self.run_cli("--watch", w); open(os.path.join(w, "new.json"), "w").write("{}"); code, out = self.run_cli("--watch", w, "--verify"); self.assertEqual(code, 0); self.assertIn("1 file(s) not covered: new.json", out)   # an added file is said, it does not fail
+            self.run_cli("--watch", w); open(os.path.join(w, "new.json"), "w").write("{}"); code, out = self.run_cli("--watch", w, "--verify"); self.assertEqual(code, 1); self.assertIn("1 file(s) not covered: new.json", out)   # an added file nobody signed fails the verification (22/10/2026)
             os.remove(os.path.join(w, "signature.json")); self.assertEqual(self.run_cli("--watch", w, "--verify")[0], 1)   # no signature at all
 
     def test_a_signed_run_verifies_and_a_tampered_manifest_or_wrong_key_is_invalid(self):
@@ -2015,7 +2015,9 @@ class TestAuditPublic(unittest.TestCase):
         return w
 
     def audit(self, w, *extra, tz=None):
-        old, oldtz, buf = sys.argv, os.environ.get("TZ"), io.StringIO(); sys.argv = ["audit_public.py", "--watch", w, "--sample", "0", *extra]
+        try: from nacl.signing import SigningKey; pin = ["--pin", SigningKey(bytes.fromhex(self.KEY)).verify_key.encode().hex()]   # the audit trusts only a key it pins: the test key is pinned here
+        except ImportError: pin = []
+        old, oldtz, buf = sys.argv, os.environ.get("TZ"), io.StringIO(); sys.argv = ["audit_public.py", "--watch", w, "--sample", "0", *pin, *extra]
         if tz: os.environ["TZ"] = tz; time.tzset()
         try:
             with contextlib.redirect_stdout(buf):

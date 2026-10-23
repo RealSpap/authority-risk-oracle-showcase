@@ -32,8 +32,15 @@ def main():
         if latest.get("stale_total"): reasons.append("%d of %d targets stale on the oracles" % (latest["stale_total"], latest.get("total_targets", 0)))
     if chain is None: reasons.append("event-log chain not checked"); worse("degraded")
     elif not chain.get("ok"): reasons.append("event-log chain broken: " + str(chain.get("reason"))); worse("alarm")
-    if sig is None: reasons.append("no signed manifest"); worse("degraded")
-    elif not sig.get("signed"): reasons.append("run unsigned (no signing key set)"); worse("degraded")
+    sig_status = "missing" if sig is None else ("signed" if sig.get("signed") else "unsigned")
+    refused = False
+    try: refused = "REFUSED TO SIGN" in open(os.path.join(W, "signature.txt"), encoding="utf-8", errors="replace").read() or open(os.path.join(W, "signature.txt"), encoding="utf-8", errors="replace").read().rstrip().rsplit("\n", 1)[-1].startswith("exit code")
+    except OSError: pass
+    older = bool(sig and latest and isinstance(sig.get("run_utc"), str) and isinstance(latest.get("run_utc"), str) and sig["run_utc"] < latest["run_utc"])   # the signature file is from an EARLIER run: this run was not signed
+    if sig is not None and (refused or older): sig_status = "stale"   # N55bis: a refused signing leaves the previous signature.json in place; it must not be shown as "signed"
+    if sig_status == "missing": reasons.append("no signed manifest"); worse("degraded")
+    elif sig_status == "unsigned": reasons.append("run unsigned (no signing key set)"); worse("degraded")
+    elif sig_status == "stale": reasons.append("signature STALE: this run could not be signed (%s); signature.json is the one of an earlier run" % ("signing refused, see signature.txt" if refused else "its run time is older than latest.json")); worse("alarm")
     if so and so.get("upgrades"): reasons.append("%d upgrade(s) executed on tracked contracts since the previous run" % len(so["upgrades"])); worse("alarm")
     if so and so.get("disagree"): reasons.append("%d second-opinion disagreement(s) to review" % so["disagree"]); worse("degraded")
     if dp and dp.get("open"): reasons.append("%d public dispute(s) open, review pending" % dp["open"]); worse("degraded")
@@ -45,7 +52,7 @@ def main():
     rec = {"run_utc": (latest or {}).get("run_utc") or time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "state": state, "reasons": reasons, "data_location": RAW,   # where every file of the Watch is served (the watch-data branch): a page or a monitor reads this, not a constant of its own
            "checks": {"oracles_read": (len(latest.get("oracles", [])) - len(latest.get("unread", []))) if latest else None, "oracles": len(latest.get("oracles", [])) if latest else None,
                       "targets": (latest or {}).get("total_targets"), "stale": (latest or {}).get("stale_total"), "alarms": len((latest or {}).get("alerts", [])),
-                      "chain_ok": chain.get("ok") if chain else None, "chain_entries": chain.get("lines") if chain else None, "signed": bool(sig and sig.get("signed")),
+                      "chain_ok": chain.get("ok") if chain else None, "chain_entries": chain.get("lines") if chain else None, "signed": bool(sig and sig.get("signed")) and sig_status != "stale", "signature_status": sig_status,
                       "signing_key": (sig or {}).get("public_key"), "second_opinion": ({k: so.get(k) for k in ("agree", "disagree", "acknowledged", "unreadable", "native")} if so else None),
                       "methodology_mixed": len(meth.get("mixed", [])) if meth else None, "disputes_open": dp.get("open") if dp else None, "review_items": rq.get("total") if rq else None},   # the review queue is information for the maintainer, it does not change the state
            "what": "the run's health in one record: ok / degraded / alarm with the reasons; written by scripts/run_status.py after every Watch run"}
@@ -55,7 +62,7 @@ def main():
         if ma.get("level") == "warn": reasons.append("main has had no commit for %s days: GitHub disables the scheduled Watch after 60 days without repository activity (information, no change of state)" % ma.get("main_last_commit_age_days"))
     tmp = os.path.join(W, "status.json.tmp"); json.dump(rec, open(tmp, "w"), indent=1); os.replace(tmp, os.path.join(W, "status.json"))
     os.makedirs(os.path.join(W, "badge"), exist_ok=True)
-    parts = [("signed" if rec["checks"]["signed"] else "unsigned"), ("chain intact" if rec["checks"]["chain_ok"] else ("chain broken" if chain else "chain unchecked"))]
+    parts = [("signature stale" if sig_status == "stale" else "signed" if rec["checks"]["signed"] else "unsigned"), ("chain intact" if rec["checks"]["chain_ok"] else ("chain broken" if chain else "chain unchecked"))]
     if so: parts.append("2nd opinion %s" % ("%d to review" % so["disagree"] if so.get("disagree") else "agrees"))
     badge = {"schemaVersion": 1, "label": "watch integrity", "message": " · ".join(parts), "color": {"ok": "brightgreen", "degraded": "orange", "alarm": "red"}[state]}
     tmp = os.path.join(W, "badge", "integrity.json.tmp"); json.dump(badge, open(tmp, "w"), indent=1); os.replace(tmp, os.path.join(W, "badge", "integrity.json"))

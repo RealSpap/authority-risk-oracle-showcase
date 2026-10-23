@@ -15,8 +15,9 @@ import argparse, json, os, re, sys
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 from find import table  # noqa: E402
 from brief import protocols  # noqa: E402
+from audit_public import safe_name  # noqa: E402
 
-SLUG = re.compile(r"[a-z0-9][a-z0-9._-]{0,79}$")
+SLUG = re.compile(r"[a-z0-9][a-z0-9._-]{0,79}")   # used with fullmatch: a `$` would let "foo\n" through
 
 
 def color(v): return "red" if v < 20 else "orange" if v < 40 else "yellow" if v < 60 else "green" if v < 80 else "brightgreen"   # the bands of watch_run.py's per-contract badges
@@ -35,7 +36,9 @@ def main():
     ps = protocols(table(a.watch)); os.makedirs(a.out, exist_ok=True); written = skipped = same = 0
     for slug, p in sorted(ps.items()):
         b = badge(p["rows"])
-        if not b or not SLUG.match(slug): skipped += 1; continue
+        if not b or not SLUG.fullmatch(slug): skipped += 1; continue
+        if not safe_name(slug + ".json"): slug += "-card"   # a slug such as con, nul or com1 is a device name on Windows and the audit refuses it: the badge gets a suffix (N55bis)
+        if not safe_name(slug + ".json"): skipped += 1; continue
         path = os.path.join(a.out, slug + ".json")
         try: old = json.load(open(path))
         except Exception: old = None  # noqa: BLE001

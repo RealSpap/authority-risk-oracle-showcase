@@ -7,7 +7,7 @@
 <p align="center"><b>Who can really move a DeFi protocol's funds? Read the answer on-chain, and check it yourself.</b></p>
 
 <p align="center">
-  <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue"></a>
+  <a href="LICENSE"><img alt="License: code MIT, data CC BY 4.0" src="https://img.shields.io/badge/license-code%20MIT%20%C2%B7%20data%20CC%20BY%204.0-blue"></a>
   <a href=".github/workflows/test.yml"><img alt="Tests" src="https://github.com/RealSpap/authority-risk-oracle-showcase/actions/workflows/test.yml/badge.svg"></a>
   <a href=".github/workflows/watch.yml"><img alt="Watch" src="https://github.com/RealSpap/authority-risk-oracle-showcase/actions/workflows/watch.yml/badge.svg"></a>
   <a href=".github/workflows/mutation.yml"><img alt="Mutation" src="https://github.com/RealSpap/authority-risk-oracle-showcase/actions/workflows/mutation.yml/badge.svg"></a>
@@ -71,4 +71,19 @@ python3 integrations/authority_facts_gate.py https://realspap.github.io/oracle/p
 
 [Reference](docs/REFERENCE.md) (what it scores, deployed oracles, how it works, limits) · [All the tools](docs/TOOLS.md) · [Methodology](METHODOLOGY.md) · [How it compares](docs/LANDSCAPE.md) · [Operate it](docs/OPERATIONS.md) · [What a score says and does not say](docs/WHAT-THE-SCORE-SAYS.md)
 
-The score reads **exposure**, how much one compromise can do. It does not predict who gets hit. Submitted to Colosseum's [Crypto World's Fair](https://colosseum.com/worldsfair) on 12 October 2026. MIT licence.
+The score reads **exposure**, how much one compromise can do. It does not predict who gets hit. Submitted to Colosseum's [Crypto World's Fair](https://colosseum.com/worldsfair) on 12 October 2026. Code MIT, data and text CC BY 4.0: see Licences below.
+
+
+## Licences
+
+| What | Licence | File |
+|---|---|---|
+| Code: `scripts/`, `chains/`, `src/`, tests and workflows | MIT | [LICENSE-CODE](LICENSE-CODE) |
+| The MCP package (`packages/authority-risk-mcp`) | MIT, with its own license file | [packages/authority-risk-mcp/LICENSE](packages/authority-risk-mcp/LICENSE) |
+| The Watch files (`watch/`, the `watch-data` branch) | CC BY 4.0 | [LICENSE](LICENSE) |
+| The share pages and their JSON twins (`/oracle/p/`) | CC BY 4.0 | [LICENSE](LICENSE) |
+| Notes, METHODOLOGY and the other texts | CC BY 4.0 | [LICENSE](LICENSE) |
+| Datasets (`data/`, the score history) | CC BY 4.0 | [LICENSE](LICENSE) |
+| The specification text in `docs/` | CC0, as the document itself says | the document |
+
+Attribution for data and text: "Authority Risk Oracle, realspap.github.io/oracle" with a link. Earlier copies were released under the MIT licence.

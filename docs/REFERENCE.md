@@ -253,4 +253,4 @@ Report a vulnerability as described in [`SECURITY.md`](../SECURITY.md).
 
 ## License
 
-Code: [MIT](../LICENSE). Data (the files under `watch/`, the share pages and their JSON twins): CC BY 4.0, attribution "Authority Risk Oracle, realspap.github.io/oracle" with a link.
+Code: MIT ([LICENSE-CODE](../LICENSE-CODE)). Data and text (the files under `watch/`, the share pages and their JSON twins, the notes): CC BY 4.0 ([LICENSE](../LICENSE)), attribution "Authority Risk Oracle, realspap.github.io/oracle" with a link.

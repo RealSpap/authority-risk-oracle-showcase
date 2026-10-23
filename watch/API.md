@@ -91,7 +91,7 @@ Subscribing: every run commits to `watch/`, so a GitHub webhook on this reposito
 
 Versioning: fields are only added, never renamed or removed, within v1. A breaking change becomes `watch/v2/` with this file updated first
 and v1 kept for at least 90 days. Attribution when you reuse the data: "Authority Risk Oracle, realspap.github.io/oracle" with a link;
-the code is MIT (repository LICENSE), the data CC BY 4.0, as stated in the repository README.
+the code is MIT (repository LICENSE-CODE), the data and text CC BY 4.0 (repository LICENSE), as stated in the repository README.
 
 Signer addresses: every root-signer address is shortened (except a tracked contract that also signs elsewhere) (`0x1234…abcd`) in these files by `scripts/redact_signers.py`; the index of who can reach what is never published.
 

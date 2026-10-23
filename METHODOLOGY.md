@@ -851,9 +851,8 @@ edges, not just its claims.
     disclosed gap, not a confirmed clean result for those.
 - **A live re-derivation only proves the state at the block it was read,
   not that nothing changes before the next scheduled run.** Robinhood
-  Chain's scores are re-derived and pushed weekly; a signer rotation the day
-  after a push would not surface until the following week's run (or a
-  manual `--dry-run`/push) picks it up.
+  Chain's scores are pushed by hand, at the latest every nine days (the staleness limit); the Watch re-reads the tracked contracts every 6 hours
+  and its independent reader flags a changed admin, but the on-chain score changes at the next push (or a manual `--dry-run`/push picks it up).
 - **This oracle scores authority *structure*, not authority *intent*.** A
   well-governed DAO with a real timelock can still vote to do something
   harmful; a bare EOA can belong to a careful, trustworthy operator. The
@@ -875,7 +874,7 @@ for r in score_all(get_w3('https://rpc.mainnet.chain.robinhood.com')):
 
 Every number printed is re-derived from live chain state in that run - never
 replayed from a cached value. See `scripts/update_scores.py --dry-run` for
-the same re-derivation against the exact code path a real push runs (pushes are run by hand, at the latest every nine days, the staleness limit; the weekly workflow `update_scores.yml` only pushes Robinhood Chain testnet and stops at the same guards, so a held or missing target fails it instead of being sent).
+the same re-derivation against the exact code path a real push runs (pushes are run by hand, at the latest every nine days, the staleness limit; the workflow `update_scores.yml` of the working repository, which pushes Robinhood Chain testnet and stops at the same guards, so a held or missing target fails it instead of being sent, is switched off).
 
 To check which code produced a published score, check out the commit recorded with the
 push (`methodologyCommit` in `api/scores.json` for Robinhood Chain, in the push record

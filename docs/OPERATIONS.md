@@ -14,8 +14,8 @@ A real push is guarded before it is sent:
   before scoring; a real push refuses to run if the digest differs from the one computed from the HEAD commit;
 - every sub-score is range-checked again on-chain (`ScoreOutOfRange`).
 
-Mainnet target: [Robinhood Chain](https://docs.robinhood.com/chain) (Arbitrum Orbit rollup, mainnet since 2026-07-01). The next step is
-moving the stack there and the updater key to a multisig instead of the single deploy key used for testnet validation.
+Mainnet reference: [Robinhood Chain](https://docs.robinhood.com/chain) (Arbitrum Orbit rollup, mainnet since 2026-07-01). External audit, then mainnet, if people find the oracle useful. The oracle stays on testnets until then. No dates are promised. A mainnet deployment would also move
+the updater key to a multisig instead of the single deploy key used for testnet validation.
 
 ## Consuming it off-chain
 

@@ -218,8 +218,8 @@ the risk is still sold as a closed service, paid by the protocol it rates. This 
 
 Where it goes next, stated plainly:
 
-1. **Mainnet.** The oracles run on testnets today. A mainnet release needs the updater key behind a multisig, timestamps taken from the chain
-   (see Limitations below) and an external audit of the contract.
+1. **Mainnet.** External audit, then mainnet, if people find the oracle useful. The oracle stays on testnets until then. No dates are promised. A mainnet release would also need the updater key behind a multisig and timestamps taken from the chain
+   (see Limitations below).
 2. **A standing mandate.** DAOs already pay for live risk monitoring ([`BUSINESS.md`](BUSINESS.md)), and none of it covers authority risk. No
    insurer or institution was found paying for a continuous authority feed: this is a bet on latent demand, not a sold product.
 3. **A standard.** ERC-8241 (Protocol Control Disclosure) standardizes the raw facts of who controls what and leaves scoring to external layers.

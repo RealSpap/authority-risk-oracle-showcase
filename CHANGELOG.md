@@ -3,18 +3,33 @@
 <!-- readers:begin -->
 ## Changes for readers
 
-One entry per method version, named `YYYY.MM.N` (`data/method_versions.json`). `N` counts, within the month, the changes of `METHODOLOGY.md` or of the scoring code that move a published score. The `methodologyHash` stays the machine identifier: it is a digest of the scoring code of one oracle (`scripts/lib/methodology.py`), not a hash of the text of `METHODOLOGY.md`, and each oracle has its own. The hashes of 2026.10.2 were read from `getScore()` on each oracle on 2026-10-13 (about 15:30Z); an earlier draft of this section had read older hashes from the public pages of the Watch, which lagged the chain, and called a correct hash a divergence. Versions before 2026.09.0 are not named: see the engineering log below.
+One entry per method version, named `YYYY.MM.N` (`data/method_versions.json`). `N` counts, within the month, the changes of `METHODOLOGY.md` or of the scoring code that move a published score. The `methodologyHash` stays the machine identifier: it is a digest of the scoring code of one oracle (`scripts/lib/methodology.py`), not a hash of the text of `METHODOLOGY.md`, and each oracle has its own. The hashes of 2026.10.2 were read from `getScore()` on each oracle on 2026-10-13 (about 15:30Z); an earlier draft of this section had read older hashes from the public pages of the Watch, which lagged the chain, and called a correct hash a divergence. The hashes of 2026.10.3 were read from `getScore()` on each EVM oracle and from the Solana accounts on 2026-10-20 (about 16:50Z). Versions before 2026.09.0 are not named: see the engineering log below.
 
 ### Known gaps, dated and not corrected
 
 - 2026-10-13: the Watch alert on `Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo` was labelled with another protocol's name: the address is GMX-Solana's `gmsol_store` (the scorer labels it correctly).
 - 2026-10-13: a Watch alert on a queued change carries the same score whatever the instruction in the queue does (a price-feed setting and a full replacement of the core program read the same).
 
-### 2026.10.3 (code written on 2026-10-13, in the repository, not yet on the oracles: the next on-chain push carries it)
+### 2026.10.3 (2026-10-19 and 2026-10-20, on the oracles today)
+
+| Oracle | methodologyHash | Pushed |
+|---|---|---|
+| Robinhood Chain | `0x7a8280d6128fcfffdfcab3e45d617360c4caa1a521e1ecf4f002e4762b4b3606` (63 targets) | 2026-10-19 22:28Z |
+| Ethereum L1 | `0x0e0dadb9b93f111850c6149be1a61b089f1e14e39d9a2acc56a7e0d4d88ef32b` (38 targets) | 2026-10-20 00:07Z |
+| Arbitrum | `0x42f5ef04fd9a03dfddc9044d63bef7e44548ac53b0a3cc84940339d79638c7ae` (13 targets) | 2026-10-19 22:33Z |
+| Base | `0xb55a2d7d5c9f1c87b278a0c86beeca7d03a2540019f031930109b54b653d3b74` (13 targets) | 2026-10-19 21:38Z |
+| Plasma | `0xc1d1ba0a9ddfabd18ba1ec3ed1f66dce9babca05f05eaa76acd37cc1d671034c` (9 targets) | 2026-10-19 22:01Z |
+| Monad | `0xf4a5c40caa27b1952c9235737d4bcc6b134faaea8d54c2db3a963aacf896a904` (9 targets) | 2026-10-19 21:42Z |
+| Hyperliquid | `0xc06d60184165fe36f356e6196dac10f0adf5963726a5d1574b5ab896fbc8c365` (16 targets) | 2026-10-19 21:34Z |
+| Tempo | `0xe267de1a8e2c7ace54eac7fd4376bfbd66cb87cba7b39e30d883e4cda7ab787a` (14 targets) | 2026-10-19 21:31Z |
+| Solana | `0x58be578c4ad50dbee98dc0666a228ec6d0b36c7dc71bb1506393477156219fa5` (26 targets) | 2026-10-19 21:26Z |
+
+- Pushed from commit `4d21558f789725be539996e1dc1ca9747a3b19fb`; the hashes were computed from the scoring files of that commit before the push and match the ones read on the oracles. 202 targets are tracked across the nine oracles; every score was read back from the oracles after the push and equals the value computed before it. The Ethereum L1 oracle keeps one entry under an older hash (the retired Ethena minting entry, 2026.09.0). The Tempo hash also covers a change of its log reader (it waits and retries when the public RPC says rate limited; no score is computed differently).
 
 - Covers: five more targets on Ethereum L1 (Arbitrum bridge 60, Pendle V2 43, Aave V4 53, Fluid Liquidity 77, Base bridge 56); one rule for nested Safe seats (a Safe whose owner is another Safe is counted on the EOA keys that must really sign, only when those keys are distinct and only upward); a Safe is recognised on its code (a published Safe proxy), not only on what `getOwners()` answers; the limit that Safe owners can write the Safe's storage is now recorded as a known limit.
 - The nested-seat rule for a Morpho vault curator Safe now applies on every chain (one shared module, `scripts/lib/curator_multisig.py`, in the working repository, not yet public), after a live case on 2026-10-13: the curator of the Spark USDC Vault on Base was rewritten at 13:17:05Z (block 52554039, one Safe transaction) from a 3-of-5 into a 2-of-2 whose owners are a 3-of-5 Safe and a 1-of-2 Safe, so four keys must sign; read at the first level it looked like a 2-of-2 and the vault would have fallen from 63 to 44, on the keys that really sign it scores 65.
-- Moves a score once pushed: the USD AI OAdapter on Arbitrum (8 to 40: its Safe's Zodiac Delay module, analysed on 2026-10-12, no longer blocks the Safe); the Adpend USDC vault on Ethereum (2 to 19: the vault's own 14-day timelock counts, confirmed by a second independent reader); the Spark USDC Vault on Base (63 to 65, instead of the 44 a first-level reading gives); the Grove curator vault on Robinhood Chain (multisig 30 to 60, composite +9); the Monad Grove x Steakhouse vault (cross exposure 100 to 80, composite unchanged); a Uniswap V3 or Sky timelock delay under one day no longer scores as the confirmed two-day delay (the live delays are two days: no published score moves). Every oracle whose scorer imports a changed file gets a new `methodologyHash`; the hashes the next push should publish, computed from the scoring files of the commit that carries this registry, are in `data/method_versions.json` (`expected_hashes`) and are confirmed or corrected after the push.
+- Moved a score on that push (read back from the oracles): a tracked adapter on Arbitrum (8 to 40: the Zodiac Delay module of its Safe, analysed on 2026-10-12, no longer blocks the Safe); a tracked vault on Ethereum (2 to 19: the vault's own 14-day timelock counts, confirmed by a second script that uses only the standard library, written by the same author and reading the same public RPC); a tracked vault on Base (63 to 65, instead of the 44 a first-level reading gives); a tracked curator vault on Robinhood Chain (multisig 30 to 60, composite 40 to 49); a tracked vault on Monad (cross exposure 100 to 80, composite unchanged); two tracked lending pools on Ethereum L1 (cross exposure 80 to 60: a new access-control contract in this push shares their root authority); two tracked contracts on Robinhood Chain (composite 32 to 29: an executor delay read as 0 now scores 0, a positive delay under one day 40, one day or more 60); a tracked lending program on Solana (multisig 87 to 83, composite 56 to 55: what the scorer read that day, the same value with the previous code). The five new Ethereum L1 targets carry their first scores. Two other changes of this version moved no score read on the oracles: a Safe at a threshold of 1 no longer adds its owner count to `multisigScore`, and an EIP-7702 delegated key counts as one key in three scorers. A timelock delay under one day no longer scores as the confirmed two-day delay, on two tracked timelock families (the live delays are two days: no published score moves).
+- api/scores.json remains the raw public data, with the names it has always carried.
 - Proposals refused after a second reader on 2026-10-13, so no score moves: Orvex V2 (46 proposed, 2 kept: the pair fee is uncapped), Gains Network (32 proposed, 4 kept: a 2-of-4 Safe can grant itself an allowance over the collateral). Kinetiq (4) keeps its score with a note: a bounded-power reading is under review and not applied.
 
 ### 2026.10.2 (2026-10-12 and 2026-10-13, on the oracles today)
@@ -78,6 +93,10 @@ Hashes read on 2026-10-12 from the public pages of the Watch (the Solana one was
 ## Upcoming
 
 No dates are promised. "next" is the immediate queue, "planned" is decided and written down, "explored" is measured or verified but not yet decided. Everything here is read-only research until a build is announced in "Changes for readers". Read against the repository and the live site on 2026-10-14: what is built has moved to "Changes for readers", and a line marked "(partly built)" says what exists today and what is still missing.
+
+### 2026.10.4 (in preparation, not on the oracles)
+
+- Nothing is decided yet and no scoring code is written for this version; the next push that carries a change moving a published score will be named here first.
 
 ### Next
 

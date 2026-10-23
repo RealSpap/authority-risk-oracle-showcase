@@ -2,11 +2,13 @@
   "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
   "chainId": 46630,
   "methodologyVersion": "authority-risk-oracle-v3",
-  "methodologyHash": "0x795edc64fdbb202de7639a1c6c1148aee4788c27ffc66050f9aa6cf0e09614c5",
-  "methodologyCommit": "55b3f1a4c67ad7c1269272a37f9de5ee6ca847ca",
-  "generatedAt": 1791664867,
-  "txHash": "4dc4cdcb4ac07bd4a26c664e19b1dea09fe130695118d864ff8606df257f145f",
-  "blockNumber": 132517705,
+  "methodologyHash": "0x7a8280d6128fcfffdfcab3e45d617360c4caa1a521e1ecf4f002e4762b4b3606",
+  "methodVersion": "2026.10.3",
+  "methodVersionDate": "2026-10-19",
+  "methodologyCommit": "4d21558f789725be539996e1dc1ca9747a3b19fb",
+  "generatedAt": 1792448928,
+  "txHash": "a52530fd0714cbf3f06bad0358f2a9984676a516e2830668bc1e6bd90e3636fb",
+  "blockNumber": 139001300,
   "scores": [
     {
       "target": "0xBeEff033F34C046626B8D0A041844C5d1A5409dd",
@@ -68,22 +70,22 @@
       "label": "Spark Savings USDG (spUSDG)",
       "adminKeyScore": 50,
       "multisigScore": 30,
-      "timelockScore": 10,
+      "timelockScore": 0,
       "oracleAuthorityScore": 100,
       "crossExposureScore": 100,
-      "compositeScore": 32,
-      "l1CappedComposite": 32
+      "compositeScore": 29,
+      "l1CappedComposite": 29
     },
     {
       "target": "0xfD2fD4B046136B540A56C11c75ac679AE7d1dB24",
       "label": "Spark Liquidity Layer (ALMProxy)",
       "adminKeyScore": 50,
       "multisigScore": 30,
-      "timelockScore": 10,
+      "timelockScore": 0,
       "oracleAuthorityScore": 100,
       "crossExposureScore": 100,
-      "compositeScore": 32,
-      "l1CappedComposite": 32
+      "compositeScore": 29,
+      "l1CappedComposite": 29
     },
     {
       "target": "0x544BF81c855AE84c1e8b65d5E38770898D01EeE2",
@@ -507,12 +509,12 @@
       "target": "0xBEEff039907422219Fb367e525954DDC092854d9",
       "label": "Morpho Grove x Steakhouse USDG vault",
       "adminKeyScore": 20,
-      "multisigScore": 30,
+      "multisigScore": 60,
       "timelockScore": 75,
       "oracleAuthorityScore": 100,
       "crossExposureScore": 40,
-      "compositeScore": 40,
-      "l1CappedComposite": 40
+      "compositeScore": 49,
+      "l1CappedComposite": 49
     },
     {
       "target": "0xbeEfFF136E3684273e6aA75A1669B784B373A4FD",

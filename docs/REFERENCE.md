@@ -30,6 +30,8 @@ and act on it without trusting anyone's website.
 | `oracleAuthorityScore` | Who can change the prices the target reports or reads? | one price key |
 | `crossExposureScore` | Does the same committee also control another tracked protocol? | shared across chains |
 
+**The composite is computed on three of the five sub-scores** (admin key, multisig, timelock). Read all five, not only the composite.
+
 `compositeScore = floor(0.4 * admin + 0.3 * multisig + 0.3 * timelock + 0.5)`. The last two scores are published next to the
 composite and deliberately not folded into it: a consumer may weigh them differently. Full derivation, inputs and
 limits: [`METHODOLOGY.md`](../METHODOLOGY.md).

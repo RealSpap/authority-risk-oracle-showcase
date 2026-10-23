@@ -31,6 +31,8 @@ not a per-target choice.
 
 ### Aggregation
 
+**The composite is computed on three of the five sub-scores**: admin key (40 percent), multisig (30) and timelock (30). The price-path score (`oracleAuthorityScore`) and the shared-control score (`crossExposureScore`) are published beside it and do not change it, so a target can read a high composite and a low value on either of them. For example, on 21 October 2026 the oracle on Ethereum L1 (Sepolia) holds a composite of 81 and a shared-control score of 40 for `0x6b17...1d0f`. Read all five, not only the composite.
+
 ```
 compositeScore = floor(0.4 * adminKeyScore + 0.3 * multisigScore + 0.3 * timelockScore + 0.5)
 ```

@@ -1067,18 +1067,28 @@
    "chain": "solana",
    "timelock": "Squads v4 multisig 6hhB\u2026fQbM (5-of-10, time lock 86400 s), found by the independent reader (1 tracked program)",
    "what": "call"
+  },
+  "ethereum:0x6d903f6003cca6255d85cca4d3b5e5146dc33925:0x065dcd5b59cd328d6662eedabc8b3fc70ca0daa0d4b126ee3a07f8c22e251ee0": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-10-24T18:42:17Z",
+   "due_utc": "2026-10-26T14:09:59Z",
+   "notice_hours": 43.5,
+   "state": "queued",
+   "chain": "ethereum",
+   "timelock": "Compound Governance Timelock",
+   "what": "cross-chain message"
   }
  },
- "updated_utc": "2026-10-24T12:47:53Z",
+ "updated_utc": "2026-10-24T18:42:17Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
-  "warned": 28,
+  "warned": 29,
   "seen_without_notice": 3,
   "missed": 13,
   "baseline": 77,
-  "warned_with_a_known_notice": 28,
+  "warned_with_a_known_notice": 29,
   "shortest_notice_hours": 0.2,
-  "median_notice_hours": 21.4,
+  "median_notice_hours": 21.7,
   "note": "warned: seen while queued and not yet executable (the notice is real); seen_without_notice: still queued but already executable when first seen; missed: queued after the ledger started and already applied when first seen (faster than the 6-hour cadence); baseline: applied before the ledger started, counted as neither."
  }
 }

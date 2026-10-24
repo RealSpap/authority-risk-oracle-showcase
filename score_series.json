@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-10-24T13:03:42Z",
+ "run_utc": "2026-10-24T19:08:21Z",
  "targets": 202,
  "moves_recorded": 32,
  "series": {
@@ -1755,12 +1755,12 @@
  },
  "calibration": {
   "window_days": 14,
-  "actions": 29,
+  "actions": 30,
   "under_40": 13,
   "by_band": {
    "critical": 8,
    "weak": 5,
-   "moderate": 15,
+   "moderate": 16,
    "decent": 1,
    "strong": 0
   },
@@ -2025,6 +2025,15 @@
     "tx": null,
     "score_then": 66,
     "band_then": "decent"
+   },
+   {
+    "kind": "admin changed (independent read)",
+    "key": "robinhood:0x0bfbcf9fa4f9c56b0f40a671ad40e0805a091865",
+    "t": "2026-10-24T19:00:10Z",
+    "via": null,
+    "tx": null,
+    "score_then": 44,
+    "band_then": "moderate"
    }
   ],
   "read_as": "every authority action the watch observed in the window (a timelock operation queued or executed against a tracked contract, an admin change read independently) and the composite score the contract carried at that moment. Small counts prove little; the file grows with every run and the chained log keeps every move"

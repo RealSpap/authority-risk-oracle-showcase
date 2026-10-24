@@ -1,11 +1,11 @@
 # Authority risk digest, 2026-10-23 01:22 UTC
 
-## Needs a person, 2026-10-23T01:22:28Z: 29 item(s) (priority 1: 8, priority 2: 18, priority 3: 3); oldest 12.2 d
+## Needs a person, 2026-10-23T01:22:28Z: 28 item(s) (priority 1: 7, priority 2: 18, priority 3: 3); oldest 12.2 d
 
 ### Overdue: 1 priority-1 item(s) waiting for more than 2 day(s), back in the alarm
 - **Safe AddedOwner** base 0x99249b10593fCa1Ae9DAE6D4819F1A6dae5C013D (4.8 d): AddedOwner 0xba75…4520 (aerodrome_emergency_council)
 
-### Something happened: read before trusting the score (8)
+### Something happened: read before trusting the score (7)
 - **Safe AddedOwner** base 0x99249b10593fCa1Ae9DAE6D4819F1A6dae5C013D (4.8 d): AddedOwner 0xba75…4520 (aerodrome_emergency_council). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **queued operation executable** solana jupZ4m2GqUCJ5iueMfzQf8khFfH31d4XAQt3RzCT9Vd (1.5 d): program upgrade: Squads proposal #63: Upgrade of program jupZ4m2GqUCJ5iueMfzQf8khFfH31d4XAQt3RzCT9Vd (not the tracked program) via Squads v4 multisig J3mJ…vG8P (4-of-6, time lock 43200 s), found by the independent reader (1 tracked program). To do: read the call before it lands. (pending_ops.json)
 - **queued operation executable** solana jupnw4B6Eqs7ft6rxpzYLJZYSnrpRgPcr589n5Kv4oc (1.5 d): program upgrade: Squads proposal #61: Upgrade of program jupnw4B6Eqs7ft6rxpzYLJZYSnrpRgPcr589n5Kv4oc (not the tracked program) via Squads v4 multisig J3mJ…vG8P (4-of-6, time lock 43200 s), found by the independent reader (1 tracked program). To do: read the call before it lands. (pending_ops.json)
@@ -13,7 +13,6 @@
 - **queued operation executable** solana KvauGMspG5k6rtzrqqn7WNn3oZdyKqLKwK2XWQ8FLjd (0.3 d): program upgrade: Squads proposal #107: Upgrade of program KvauGMspG5k6rtzrqqn7WNn3oZdyKqLKwK2XWQ8FLjd (not the tracked program) via Squads v4 multisig 6hhB…fQbM (5-of-10, time lock 86400 s), found by the independent reader (1 tracked program). To do: read the call before it lands. (pending_ops.json)
 - **queued operation executable** solana verifycLy8mB96wd9wqq3WDXQwM4oU6r42Th37Db9fC (0.3 d): call: Squads proposal #108: call to verifycLy8mB96wd9wqq3WDXQwM4oU6r42Th37Db9fC (not the tracked program) via Squads v4 multisig 6hhB…fQbM (5-of-10, time lock 86400 s), found by the independent reader (1 tracked program). To do: read the call before it lands. (pending_ops.json)
 - **admin transfer in flight** robinhood 0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d (0.0 d): 0x9db4…1a53 designated (pendingOwner() on the contract (Ownable2Step), a contract). To do: identify the designated admin; when it accepts, the admin read changes. (second_opinion.json pending_admin)
-- **queued operation executable within 48 h** robinhood 0x14b107CF534239c59571B066cB6497a321Da897C (0.0 d): authority change: grantRole(bytes32,address) via robinhood timelock 0x0da1…001d, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
 
 ### Decide (18)
 - **Safe guard to identify** ethereum-l1 0x2cc440b721d2cafd6d64908d6d8c4acc57f8afc3 (12.2 d): 0x74ab…8d29: contract, owned by 0xa075…c344. To do: say what this guard checks and who can change it. (second_opinion.json guard_detail)

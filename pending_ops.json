@@ -181,7 +181,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 4045484,
+   "window_blocks": 4244210,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -217,7 +217,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 4059060,
+   "window_blocks": 4244210,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -237,7 +237,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 4059060,
+   "window_blocks": 4244210,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -293,7 +293,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/mainnet",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 100498,
+   "window_blocks": 100398,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -425,23 +425,7 @@
    "status": "ok",
    "queued_events": 1,
    "latest_queued": 1792702415,
-   "pending": [
-    {
-     "block": 95403197,
-     "tx": "0x5f3a3ad9de7ef1f37b06a5fa292d6a180853ba03bf9d8f61a7a7e6a54c689835",
-     "id": "0xf3f2018df895d3a6f06ee76bca1bdd906f2b1fc74459050c4795ef590f57f325",
-     "index": 0,
-     "target": "0x14b107CF534239c59571B066cB6497a321Da897C",
-     "value": 0,
-     "selector": "0x2f2ff15d",
-     "delay": 86400,
-     "signature": "grantRole(bytes32,address)",
-     "calls": 1,
-     "ready_at": 1792788815,
-     "state": "waiting",
-     "decoded": "authority change"
-    }
-   ],
+   "pending": [],
    "recent": [
     {
      "block": 95403197,
@@ -454,7 +438,7 @@
      "delay": 86400,
      "signature": "grantRole(bytes32,address)",
      "calls": 1,
-     "still_queued": true,
+     "still_queued": false,
      "queued_at": 1792702415,
      "decoded": "authority change"
     }
@@ -1488,7 +1472,7 @@
    "transaction_index": 71
   }
  ],
- "discovered_utc": "2026-10-23T18:57:31Z",
+ "discovered_utc": "2026-10-24T01:06:54Z",
  "discovered": 15,
- "squads_utc": "2026-10-23T19:01:46Z"
+ "squads_utc": "2026-10-24T01:11:20Z"
 }

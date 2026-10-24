@@ -7,7 +7,7 @@
    "address": "0x1a9C8182C09F50c8318d769245bEA52c32BE35BC",
    "family": "compound",
    "status": "ok",
-   "queued_events": 27,
+   "queued_events": 18,
    "latest_queued": 1791028775,
    "pending": [],
    "recent": [],
@@ -181,7 +181,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 4086486,
+   "window_blocks": 4496654,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -217,7 +217,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 4086486,
+   "window_blocks": 4496654,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -237,7 +237,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 4086486,
+   "window_blocks": 4496654,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -411,7 +411,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 0,
    "window_blocks": 3000000,
-   "window_days_est": 4.0,
+   "window_days_est": 3.5,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62"
@@ -447,7 +447,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 86400,
    "window_blocks": 3000000,
-   "window_days_est": 3.8,
+   "window_days_est": 3.7,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x14b107cf534239c59571b066cb6497a321da897c"
@@ -740,7 +740,7 @@
      "selector": null,
      "signature": "Squads proposal #109: Upgrade of program KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD",
      "ready_at": 1792840081,
-     "state": "waiting",
+     "state": "ready",
      "approved_at": 1792753681,
      "account": "7HsbszYYeE5wGVNaUPJtzbrareWzCAr8ZxP78Jn52zSZ",
      "undecoded": false,
@@ -756,7 +756,7 @@
      "selector": null,
      "signature": "Squads proposal #110: call to verifycLy8mB96wd9wqq3WDXQwM4oU6r42Th37Db9fC (not the tracked program)",
      "ready_at": 1792840108,
-     "state": "waiting",
+     "state": "ready",
      "approved_at": 1792753708,
      "account": "3cjgnQtSTsLscp9sCb7XnvwPAHkweGToxe7Zvj5zNyDS",
      "undecoded": false,
@@ -1472,7 +1472,7 @@
    "transaction_index": 71
   }
  ],
- "discovered_utc": "2026-10-24T07:00:14Z",
+ "discovered_utc": "2026-10-24T12:58:36Z",
  "discovered": 15,
- "squads_utc": "2026-10-24T07:05:19Z"
+ "squads_utc": "2026-10-24T13:03:21Z"
 }

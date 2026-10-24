@@ -1,9 +1,10 @@
 {
- "run_utc": "2026-10-24T06:49:13Z",
+ "run_utc": "2026-10-24T12:47:53Z",
  "state": "degraded",
  "reasons": [
   "1 of 202 targets stale on the oracles",
   "13 second-opinion disagreement(s) to review",
+  "1 high alert(s) from the rules firing now (a queued change against this contract is ready to execute now)",
   "methodology hashes mixed on 1 oracle(s)"
  ],
  "data_location": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/watch-data/",
@@ -19,10 +20,10 @@
   "signature_status": "signed",
   "signing_key": "11baca3ef6a69de4901c185f6cbbd3f93318fbb74f9961a8d39aead841adf409",
   "second_opinion": {
-   "agree": 133,
+   "agree": 134,
    "disagree": 13,
    "acknowledged": 0,
-   "unreadable": 40,
+   "unreadable": 39,
    "native": 16
   },
   "methodology_mixed": 1,

@@ -7,28 +7,28 @@
    "events": [],
    "control": 91,
    "status": "ok",
-   "fromBlock": 91581672,
-   "toBlock": 97403480,
+   "fromBlock": 91790453,
+   "toBlock": 97606470,
    "days_read": 7
   },
   {
    "ecosystem": "ethereum-l1",
    "safes": 15,
    "events": [],
-   "control": 14,
+   "control": 15,
    "status": "ok",
-   "fromBlock": 26217842,
-   "toBlock": 26268086,
+   "fromBlock": 26219629,
+   "toBlock": 26269871,
    "days_read": 7
   },
   {
    "ecosystem": "arbitrum",
    "safes": 14,
    "events": [],
-   "control": 14,
+   "control": 15,
    "status": "ok",
-   "fromBlock": 515903705,
-   "toBlock": 518074113,
+   "fromBlock": 515980116,
+   "toBlock": 518147901,
    "days_read": 7
   },
   {
@@ -37,8 +37,8 @@
    "events": [],
    "control": 19,
    "status": "ok",
-   "fromBlock": 52758920,
-   "toBlock": 53061319,
+   "fromBlock": 52769656,
+   "toBlock": 53072056,
    "days_read": 7
   },
   {
@@ -47,8 +47,8 @@
    "events": [],
    "control": 3,
    "status": "ok",
-   "fromBlock": 44691048,
-   "toBlock": 45783837,
+   "fromBlock": 44729775,
+   "toBlock": 45823162,
    "days_read": 7
   },
   {
@@ -57,8 +57,8 @@
    "events": [],
    "control": 11,
    "status": "ok",
-   "fromBlock": 35365874,
-   "toBlock": 35970653,
+   "fromBlock": 35387342,
+   "toBlock": 35992122,
    "days_read": 7
   },
   {
@@ -66,22 +66,18 @@
    "safes": 13,
    "events": [],
    "control": 0,
-   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 3 execution(s) from other Safes on the window's tail)",
-   "fromBlock": 116320457,
-   "toBlock": 116406323,
+   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 1 execution(s) from other Safes on the window's tail)",
+   "fromBlock": 116391567,
+   "toBlock": 116477409,
    "days_read": 0.3,
-   "control_witness": 3
+   "control_witness": 1
   },
   {
    "ecosystem": "hyperliquid",
    "safes": 5,
    "events": [],
-   "control": 0,
-   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 3 execution(s) from other Safes on the window's tail)",
-   "fromBlock": 49203189,
-   "toBlock": 49466709,
-   "days_read": 3.0,
-   "control_witness": 3
+   "control": null,
+   "status": "UNREAD (cannot locate the window start: Web3RPCError: {'code': -32603, 'message': 'invalid block height: 49483463'})"
   }
  ]
 }

@@ -1,9 +1,9 @@
 {
- "run_utc": "2026-10-25T12:47:11Z",
+ "run_utc": "2026-10-25T18:42:53Z",
  "state": "degraded",
  "reasons": [
   "1 of 202 targets stale on the oracles",
-  "11 second-opinion disagreement(s) to review",
+  "13 second-opinion disagreement(s) to review",
   "1 high alert(s) from the rules firing now (a queued change against this contract is ready to execute now)",
   "methodology hashes mixed on 1 oracle(s)"
  ],
@@ -21,15 +21,15 @@
   "signing_key": "11baca3ef6a69de4901c185f6cbbd3f93318fbb74f9961a8d39aead841adf409",
   "second_opinion": {
    "agree": 134,
-   "disagree": 11,
+   "disagree": 13,
    "acknowledged": 0,
-   "unreadable": 41,
+   "unreadable": 39,
    "native": 16
   },
   "methodology_mixed": 1,
   "disputes_open": 0,
-  "review_items": 32
+  "review_items": 31
  },
  "what": "the run's health in one record: ok / degraded / alarm with the reasons; written by scripts/run_status.py after every Watch run",
- "main_last_commit_age_days": 0
+ "main_last_commit_age_days": 1
 }

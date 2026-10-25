@@ -7,8 +7,8 @@
    "events": [],
    "control": 91,
    "status": "ok",
-   "fromBlock": 91790453,
-   "toBlock": 97606470,
+   "fromBlock": 92000343,
+   "toBlock": 97811683,
    "days_read": 7
   },
   {
@@ -17,8 +17,8 @@
    "events": [],
    "control": 15,
    "status": "ok",
-   "fromBlock": 26219629,
-   "toBlock": 26269871,
+   "fromBlock": 26221396,
+   "toBlock": 26271639,
    "days_read": 7
   },
   {
@@ -27,8 +27,8 @@
    "events": [],
    "control": 15,
    "status": "ok",
-   "fromBlock": 515980116,
-   "toBlock": 518147901,
+   "fromBlock": 516056763,
+   "toBlock": 518222399,
    "days_read": 7
   },
   {
@@ -37,8 +37,8 @@
    "events": [],
    "control": 19,
    "status": "ok",
-   "fromBlock": 52769656,
-   "toBlock": 53072056,
+   "fromBlock": 52780312,
+   "toBlock": 53082711,
    "days_read": 7
   },
   {
@@ -47,8 +47,8 @@
    "events": [],
    "control": 3,
    "status": "ok",
-   "fromBlock": 44729775,
-   "toBlock": 45823162,
+   "fromBlock": 44768202,
+   "toBlock": 45862205,
    "days_read": 7
   },
   {
@@ -57,27 +57,29 @@
    "events": [],
    "control": 11,
    "status": "ok",
-   "fromBlock": 35387342,
-   "toBlock": 35992122,
+   "fromBlock": 35408654,
+   "toBlock": 36013434,
    "days_read": 7
   },
   {
    "ecosystem": "monad",
    "safes": 13,
    "events": [],
-   "control": 0,
-   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 1 execution(s) from other Safes on the window's tail)",
-   "fromBlock": 116391567,
-   "toBlock": 116477409,
-   "days_read": 0.3,
-   "control_witness": 1
+   "control": 1,
+   "status": "ok",
+   "fromBlock": 116462139,
+   "toBlock": 116547995,
+   "days_read": 0.3
   },
   {
    "ecosystem": "hyperliquid",
    "safes": 5,
    "events": [],
    "control": null,
-   "status": "UNREAD (cannot locate the window start: Web3RPCError: {'code': -32603, 'message': 'invalid block height: 49483463'})"
+   "status": "UNREAD (Web3RPCError: {'code': -32602, 'message': 'invalid block range'})",
+   "fromBlock": 49246644,
+   "toBlock": 49510109,
+   "days_read": 3.0
   }
  ]
 }

@@ -3,7 +3,7 @@
 ## Needs a person, 2026-10-25T01:09:46Z: 32 item(s) (priority 1: 10, priority 2: 17, priority 3: 5); oldest 14.2 d
 
 ### Overdue: 6 priority-1 item(s) waiting for more than 2 day(s), back in the alarm
-- **Safe AddedOwner** base 0x99249b10593fCa1Ae9DAE6D4819F1A6dae5C013D (6.7 d): AddedOwner 0xba75…4520 (aerodrome_emergency_council)
+- **Safe AddedOwner** base 0x9924…013D (6.7 d): AddedOwner 0xba75…4520 (aerodrome_emergency_council)
 - **queued operation executable** solana jupZ4m2GqUCJ5iueMfzQf8khFfH31d4XAQt3RzCT9Vd (3.5 d): program upgrade: Squads proposal #63: Upgrade of program jupZ4m2GqUCJ5iueMfzQf8khFfH31d4XAQt3RzCT9Vd (not the tracked program) via Squads v4 multisig J3mJ…vG8P (4-of-6, time lock 43200 s), found by the independent reader (1 tracked program)
 - **queued operation executable** solana jupnw4B6Eqs7ft6rxpzYLJZYSnrpRgPcr589n5Kv4oc (3.5 d): program upgrade: Squads proposal #61: Upgrade of program jupnw4B6Eqs7ft6rxpzYLJZYSnrpRgPcr589n5Kv4oc (not the tracked program) via Squads v4 multisig J3mJ…vG8P (4-of-6, time lock 43200 s), found by the independent reader (1 tracked program)
 - **queued operation executable** solana jupr81YtYssSyPt8jbnGuiWon5f6x9TcDEFxYe3Bdzi (3.5 d): program upgrade: Squads proposal #62: Upgrade of program jupr81YtYssSyPt8jbnGuiWon5f6x9TcDEFxYe3Bdzi (not the tracked program) via Squads v4 multisig J3mJ…vG8P (4-of-6, time lock 43200 s), found by the independent reader (1 tracked program)
@@ -11,7 +11,7 @@
 - **queued operation executable** solana verifycLy8mB96wd9wqq3WDXQwM4oU6r42Th37Db9fC (2.2 d): call: Squads proposal #108: call to verifycLy8mB96wd9wqq3WDXQwM4oU6r42Th37Db9fC (not the tracked program) via Squads v4 multisig 6hhB…fQbM (5-of-10, time lock 86400 s), found by the independent reader (1 tracked program)
 
 ### Something happened: read before trusting the score (10)
-- **Safe AddedOwner** base 0x99249b10593fCa1Ae9DAE6D4819F1A6dae5C013D (6.7 d): AddedOwner 0xba75…4520 (aerodrome_emergency_council). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** base 0x9924…013D (6.7 d): AddedOwner 0xba75…4520 (aerodrome_emergency_council). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **queued operation executable** solana jupZ4m2GqUCJ5iueMfzQf8khFfH31d4XAQt3RzCT9Vd (3.5 d): program upgrade: Squads proposal #63: Upgrade of program jupZ4m2GqUCJ5iueMfzQf8khFfH31d4XAQt3RzCT9Vd (not the tracked program) via Squads v4 multisig J3mJ…vG8P (4-of-6, time lock 43200 s), found by the independent reader (1 tracked program). To do: read the call before it lands. (pending_ops.json)
 - **queued operation executable** solana jupnw4B6Eqs7ft6rxpzYLJZYSnrpRgPcr589n5Kv4oc (3.5 d): program upgrade: Squads proposal #61: Upgrade of program jupnw4B6Eqs7ft6rxpzYLJZYSnrpRgPcr589n5Kv4oc (not the tracked program) via Squads v4 multisig J3mJ…vG8P (4-of-6, time lock 43200 s), found by the independent reader (1 tracked program). To do: read the call before it lands. (pending_ops.json)
 - **queued operation executable** solana jupr81YtYssSyPt8jbnGuiWon5f6x9TcDEFxYe3Bdzi (3.5 d): program upgrade: Squads proposal #62: Upgrade of program jupr81YtYssSyPt8jbnGuiWon5f6x9TcDEFxYe3Bdzi (not the tracked program) via Squads v4 multisig J3mJ…vG8P (4-of-6, time lock 43200 s), found by the independent reader (1 tracked program). To do: read the call before it lands. (pending_ops.json)
@@ -39,7 +39,7 @@
 - **timelock queue unread** robinhood 0x826aeaeee9233fa8ba199518dd8621a5962b1d02 (14.2 d): robinhood timelock 0x826a…1d02, found by the independent reader (1 tracked contract): UNREAD (ContractLogicError: ('execution reverted', '0x')). To do: find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen. (pending_ops.json)
 - **timelock queue unread** base 0xcc3e7c85bb0ee4f09380e041fee95a0caedd4a02 (7.3 d): base timelock 0xcc3e…4a02, found by the independent reader (1 tracked contract): UNREAD (RetryError: HTTPSConnectionPool(host='base.rpc.sentio.xyz', port=443): Max retries exceeded with url: / (Caused . To do: find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen. (pending_ops.json)
 - **second opinion disagrees** hyperliquid 0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec (6.5 d): the score says one key does everything (10), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisig (0), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(). To do: review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json. (second_opinion.json disagreements)
-- **timelock queue unread** hyperliquid 0xc5ded4f7f53919c714059a17d31371ae847e23d2 (1.5 d): hyperliquid timelock 0xc5de…23d2, found by the independent reader (1 tracked contract): UNREAD (Web3RPCError: {'code': -32005, 'message': 'rate limited'}). To do: find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen. (pending_ops.json)
+- **timelock queue unread** hyperliquid 0xc5de…23d2 (1.5 d): hyperliquid timelock 0xc5de…23d2, found by the independent reader (1 tracked contract): UNREAD (Web3RPCError: {'code': -32005, 'message': 'rate limited'}). To do: find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen. (pending_ops.json)
 
 ### Coverage to extend (5)
 - **admin Safe never used** robinhood 0x9d53d5e3bd5e8d4cbfa6db1ca238aea02e651010 (14.2 d): robinhood:0x0605…9728 has executed no transaction (nonce 0). To do: an admin path nobody has exercised: confirm the signers can still act. (safe_activity.json)
@@ -60,7 +60,7 @@
 - **ACT NOW** Arbitrum (Sepolia): 13 targets, first entry turns stale in 93 h (2026-10-28 22:33 UTC); oldest update 2026-10-19 22:33 UTC
 
 ## Safe authority changes, last 7 days
-- base: AddedOwner 0xba75…4520 on 0x99249b10593fCa1Ae9DAE6D4819F1A6dae5C013D (aerodrome_emergency_council), tx 2732bf9a1f99524320df784986cf6998f5e30213eec88bd3100da699abe7afcc
+- base: AddedOwner 0xba75…4520 on 0x9924…013D (aerodrome_emergency_council), tx 2732bf9a1f99524320df784986cf6998f5e30213eec88bd3100da699abe7afcc
 - not attempted: tempo (public RPC returned no control events); monad (public RPC caps eth_getLogs near 100 blocks); hyperliquid (public RPC rate-limits the query)
 
 ## Timelock queue

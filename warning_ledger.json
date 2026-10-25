@@ -1077,18 +1077,28 @@
    "chain": "ethereum",
    "timelock": "Compound Governance Timelock",
    "what": "cross-chain message"
+  },
+  "ethereum:0x2386dc45added673317ef068992f19421b481f4c:0x2f84567a219ae4847ff318731574c22745b847ca24d183566db1ed994c21a34f": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-10-25T06:49:36Z",
+   "due_utc": "2026-10-26T01:44:35Z",
+   "notice_hours": 18.9,
+   "state": "queued",
+   "chain": "ethereum",
+   "timelock": "ethereum-l1 timelock 0x2386\u20261f4c, found by the independent reader (1 tracked contract)",
+   "what": "nested timelock"
   }
  },
- "updated_utc": "2026-10-25T00:49:51Z",
+ "updated_utc": "2026-10-25T06:49:36Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
-  "warned": 29,
+  "warned": 30,
   "seen_without_notice": 3,
   "missed": 13,
   "baseline": 77,
-  "warned_with_a_known_notice": 29,
+  "warned_with_a_known_notice": 30,
   "shortest_notice_hours": 0.2,
-  "median_notice_hours": 21.7,
+  "median_notice_hours": 21.4,
   "note": "warned: seen while queued and not yet executable (the notice is real); seen_without_notice: still queued but already executable when first seen; missed: queued after the ledger started and already applied when first seen (faster than the 6-hour cadence); baseline: applied before the ledger started, counted as neither."
  }
 }

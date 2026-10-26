@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-26T01:19:59Z",
+ "generated_utc": "2026-10-26T07:14:44Z",
  "wake_days": 14,
  "safes": 42,
  "read": 42,
@@ -7,13 +7,24 @@
  "changes": [
   {
    "delta": 1,
-   "idle_days": 5.0,
+   "idle_days": 5.7,
    "woke": false,
-   "safe": "robinhood:0x8c45\u2026f5d5",
+   "safe": "ethereum-l1:0xfa77\u20266a66",
    "governs": [
-    "robinhood:0x0dc846db6a4ec7b5a3e542f7db88049e9add2541"
+    "ethereum-l1:0xc5f0f7b66764f6ec8c8dff7ba683102295e16409"
    ],
-   "previous_run": "2026-10-25T18:57:02Z"
+   "previous_run": "2026-10-26T01:19:59Z"
+  },
+  {
+   "delta": 4,
+   "idle_days": 0.5,
+   "woke": false,
+   "safe": "robinhood:0x20d6\u2026be1a",
+   "governs": [
+    "robinhood:0x83341f891f898cb5e0cacc8a70501bba83d9cecf",
+    "robinhood:0xa203a21dccb461e415daa342e8e635b6cee0ccb3"
+   ],
+   "previous_run": "2026-10-26T01:19:59Z"
   }
  ],
  "never_executed": [
@@ -176,10 +187,10 @@
    "never_executed": false
   },
   "ethereum-l1:701af90d53a786de": {
-   "nonce": 2189,
+   "nonce": 2190,
    "observed_since": "2026-10-11T06:47:22Z",
-   "idle_since": "2026-10-20T13:04:45Z",
-   "last_moved": "2026-10-20T13:04:45Z",
+   "idle_since": "2026-10-26T07:14:44Z",
+   "last_moved": "2026-10-26T07:14:44Z",
    "governs": [
     "ethereum-l1:0xc5f0f7b66764f6ec8c8dff7ba683102295e16409"
    ],
@@ -191,7 +202,8 @@
    "observed_since": "2026-10-18T12:57:22Z",
    "idle_since": "2026-10-18T12:57:22Z",
    "governs": [
-    "hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109"
+    "hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109",
+    "hyperliquid:0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec"
    ],
    "safe": "hyperliquid:0x18a8\u2026f8f1",
    "never_executed": false
@@ -282,10 +294,10 @@
    "never_executed": false
   },
   "robinhood:3cb8c359ff7f85fd": {
-   "nonce": 613,
+   "nonce": 617,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-10-25T18:57:02Z",
-   "last_moved": "2026-10-25T18:57:02Z",
+   "idle_since": "2026-10-26T07:14:44Z",
+   "last_moved": "2026-10-26T07:14:44Z",
    "governs": [
     "robinhood:0x83341f891f898cb5e0cacc8a70501bba83d9cecf",
     "robinhood:0xa203a21dccb461e415daa342e8e635b6cee0ccb3"

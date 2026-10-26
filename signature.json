@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-10-26T01:34:00Z",
+ "run_utc": "2026-10-26T01:45:34Z",
  "manifest": {
   "files": {
    "API.md": "d30f3f0a8e9d93513f7e5287dcacde8561579881f1d5cec5c62bf29388f28ad5",
@@ -11,7 +11,7 @@
    "chain.json": "f73399f458973a550a483b141b2777af5e55190921320eedf829f95a31f78838",
    "coverage.json": "4294940f7094b9c9e0b6b39fe1a7519f459c8f476e02360db7c33bb4dc6233fe",
    "cross_chain.json": "9234d393b0bae08faa6b7369089ca4dfb61f3a3e372b6a0e5e60731f3faeaca8",
-   "digest.md": "494a6c9338d2df0df1a42c43bbb191fe2fa4a22ea25abaa69dfb20ef1cc45eea",
+   "digest.md": "ac6f7c54e100aa1de021ea01a7c9519da8803f8fa82544e310551e3e8e405879",
    "disputes.json": "64ea7c9d8383869740a5598331ef9c04de9bdbb1795133644cd5a43e76def11b",
    "events.jsonl": "bbff5a07c09790aff4cbb1eed9b7965c3ba99d5ec59b650dfea12dbe8afe9673",
    "feed.xml": "9478680e2a0ea1b1641fbe5daaae449c831f9189b2293d645b2cc98bcfa807c4",
@@ -1149,5 +1149,5 @@
  "signed": true,
  "what": "sha256 of every published watch file and the head of the event-log chain; Ed25519 over the canonical JSON of `manifest` (sort_keys, no spaces). Verify: python3 scripts/sign_run.py --watch watch --verify",
  "public_key": "11baca3ef6a69de4901c185f6cbbd3f93318fbb74f9961a8d39aead841adf409",
- "signature": "607f2854aff813f07c89e3abb036b2ade30538e6fe74e6ec90fc93ef04e434cfa486306206394b769e32a323015827e662a6120069bd3d73a62b8811df17da0d"
+ "signature": "47f5fa5234d77b0c8ffe8cdef4f10db0ac0d2471c34de3625a38697c8b96bc1907820425cd3b4e63f5e56590b9603e07fecf6c670f96273ecbd0fe9809f73a01"
 }

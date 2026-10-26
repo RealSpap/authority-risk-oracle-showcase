@@ -366,6 +366,22 @@ class TestThirdPass(unittest.TestCase):
                 self.assertEqual(sorted(os.listdir(os.path.join(tmp, "o"))), ["ok.json"], out)
         finally: badges_protocol.table, badges_protocol.protocols = old
 
+    def test_the_slug_check_holds_on_its_own_not_only_through_safe_name(self):
+        """Since the safe_name guard was added (N55bis) "foo\\n" is refused twice, so removing or loosening SLUG no longer failed any test (a local replay of
+        scripts/mutate.py found two mutants that survive for this reason). These slugs pass safe_name and only SLUG refuses them: a slash, a capital, an at sign, an empty slug, a leading dot, two dots, a leading dash, 81 characters."""
+        import badges_protocol
+        BAD = ("foo/bar", "Foo", "foo@bar", "", ".hidden", "..", "-x", "a" * 81)   # a slash, a capital, an at sign, empty, a leading dot, two dots, a leading dash, 81 characters (the limit is 80)
+        for bad in BAD:
+            self.assertTrue(audit_public.safe_name(bad + ".json"), bad)   # the second guard would let it through
+            self.assertIsNone(badges_protocol.SLUG.fullmatch(bad), bad)
+        rows = [{"score": 40, "chain": "base", "target": "0x1", "stale": False}]; old = (badges_protocol.table, badges_protocol.protocols)
+        try:
+            badges_protocol.table = lambda w: []; badges_protocol.protocols = lambda t: dict([(x, {"rows": rows}) for x in BAD] + [("ok", {"rows": rows})])
+            with tempfile.TemporaryDirectory() as tmp:
+                code, out = run_main(badges_protocol, ["--watch", tmp, "--out", os.path.join(tmp, "o")])
+                self.assertEqual(sorted(os.listdir(os.path.join(tmp, "o"))), ["ok.json"], out)
+        finally: badges_protocol.table, badges_protocol.protocols = old
+
 
 class TestFourthPass(unittest.TestCase):
     """N55bis (priv): a refused signing must not look like a signed run; slugs that are device names; the signer under python3 -I."""

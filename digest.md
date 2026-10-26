@@ -1,18 +1,8 @@
 # Authority risk digest, 2026-10-26 01:34 UTC
 
-## Needs a person, 2026-10-26T01:33:59Z: 28 item(s) (priority 1: 7, priority 2: 17, priority 3: 4); oldest 15.2 d
+## Needs a person, 2026-10-26T01:33:59Z: 23 item(s) (priority 1: 2, priority 2: 17, priority 3: 4); oldest 15.2 d
 
-### Overdue: 3 priority-1 item(s) waiting for more than 2 day(s), back in the alarm
-- **queued operation executable** solana jupZ4m2GqUCJ5iueMfzQf8khFfH31d4XAQt3RzCT9Vd (4.5 d): program upgrade: Squads proposal #63: Upgrade of program jupZ4m2GqUCJ5iueMfzQf8khFfH31d4XAQt3RzCT9Vd (not the tracked program) via Squads v4 multisig J3mJ…vG8P (4-of-6, time lock 43200 s), found by the independent reader (1 tracked program)
-- **queued operation executable** solana jupnw4B6Eqs7ft6rxpzYLJZYSnrpRgPcr589n5Kv4oc (4.5 d): program upgrade: Squads proposal #61: Upgrade of program jupnw4B6Eqs7ft6rxpzYLJZYSnrpRgPcr589n5Kv4oc (not the tracked program) via Squads v4 multisig J3mJ…vG8P (4-of-6, time lock 43200 s), found by the independent reader (1 tracked program)
-- **queued operation executable** solana jupr81YtYssSyPt8jbnGuiWon5f6x9TcDEFxYe3Bdzi (4.5 d): program upgrade: Squads proposal #62: Upgrade of program jupr81YtYssSyPt8jbnGuiWon5f6x9TcDEFxYe3Bdzi (not the tracked program) via Squads v4 multisig J3mJ…vG8P (4-of-6, time lock 43200 s), found by the independent reader (1 tracked program)
-
-### Something happened: read before trusting the score (7)
-- **queued operation executable** solana jupZ4m2GqUCJ5iueMfzQf8khFfH31d4XAQt3RzCT9Vd (4.5 d): program upgrade: Squads proposal #63: Upgrade of program jupZ4m2GqUCJ5iueMfzQf8khFfH31d4XAQt3RzCT9Vd (not the tracked program) via Squads v4 multisig J3mJ…vG8P (4-of-6, time lock 43200 s), found by the independent reader (1 tracked program). To do: read the call before it lands. (pending_ops.json)
-- **queued operation executable** solana jupnw4B6Eqs7ft6rxpzYLJZYSnrpRgPcr589n5Kv4oc (4.5 d): program upgrade: Squads proposal #61: Upgrade of program jupnw4B6Eqs7ft6rxpzYLJZYSnrpRgPcr589n5Kv4oc (not the tracked program) via Squads v4 multisig J3mJ…vG8P (4-of-6, time lock 43200 s), found by the independent reader (1 tracked program). To do: read the call before it lands. (pending_ops.json)
-- **queued operation executable** solana jupr81YtYssSyPt8jbnGuiWon5f6x9TcDEFxYe3Bdzi (4.5 d): program upgrade: Squads proposal #62: Upgrade of program jupr81YtYssSyPt8jbnGuiWon5f6x9TcDEFxYe3Bdzi (not the tracked program) via Squads v4 multisig J3mJ…vG8P (4-of-6, time lock 43200 s), found by the independent reader (1 tracked program). To do: read the call before it lands. (pending_ops.json)
-- **queued operation executable** solana 7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF (1.5 d): program upgrade: Squads proposal #109: Upgrade of program KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD via Squads v4 multisig 6hhB…fQbM (5-of-10, time lock 86400 s), found by the independent reader (1 tracked program). To do: read the call before it lands. (pending_ops.json)
-- **queued operation executable** solana verifycLy8mB96wd9wqq3WDXQwM4oU6r42Th37Db9fC (1.5 d): call: Squads proposal #110: call to verifycLy8mB96wd9wqq3WDXQwM4oU6r42Th37Db9fC (not the tracked program) via Squads v4 multisig 6hhB…fQbM (5-of-10, time lock 86400 s), found by the independent reader (1 tracked program). To do: read the call before it lands. (pending_ops.json)
+### Something happened: read before trusting the score (2)
 - **queued operation executable within 48 h** ethereum 0x2386DC45AdDed673317eF068992F19421B481F4c (0.8 d): nested timelock: executePayload(address,string,bytes) via ethereum-l1 timelock 0x2386…1f4c, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
 - **admin transfer in flight** robinhood 0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d (0.0 d): 0x9db4…1a53 designated (pendingOwner() on the contract (Ownable2Step), a contract). To do: identify the designated admin; when it accepts, the admin read changes. (second_opinion.json pending_admin)
 

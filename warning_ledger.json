@@ -965,30 +965,36 @@
    "first_seen_utc": "2026-10-21T00:53:30Z",
    "due_utc": "2026-10-21T12:19:35Z",
    "notice_hours": 11.4,
-   "state": "queued",
+   "state": "resolved",
    "chain": "solana",
    "timelock": "Squads v4 multisig J3mJ\u2026vG8P (4-of-6, time lock 43200 s), found by the independent reader (1 tracked program)",
-   "what": "program upgrade"
+   "what": "program upgrade",
+   "resolved_seen_utc": "2026-10-26T18:55:57Z",
+   "left_the_files": true
   },
   "solana:j3mj3wz6xkvuk3t8qhnuaynxsrh3ixhsryynzau2vg8p:squads:J3mJ3wz6xkVUk3T8qHnuAYNxsRH3ixHsryYNZAU2vG8P:62": {
    "outcome": "warned",
    "first_seen_utc": "2026-10-21T00:53:30Z",
    "due_utc": "2026-10-21T12:05:24Z",
    "notice_hours": 11.2,
-   "state": "queued",
+   "state": "resolved",
    "chain": "solana",
    "timelock": "Squads v4 multisig J3mJ\u2026vG8P (4-of-6, time lock 43200 s), found by the independent reader (1 tracked program)",
-   "what": "program upgrade"
+   "what": "program upgrade",
+   "resolved_seen_utc": "2026-10-26T18:55:57Z",
+   "left_the_files": true
   },
   "solana:j3mj3wz6xkvuk3t8qhnuaynxsrh3ixhsryynzau2vg8p:squads:J3mJ3wz6xkVUk3T8qHnuAYNxsRH3ixHsryYNZAU2vG8P:63": {
    "outcome": "warned",
    "first_seen_utc": "2026-10-21T00:53:30Z",
    "due_utc": "2026-10-21T12:06:33Z",
    "notice_hours": 11.2,
-   "state": "queued",
+   "state": "resolved",
    "chain": "solana",
    "timelock": "Squads v4 multisig J3mJ\u2026vG8P (4-of-6, time lock 43200 s), found by the independent reader (1 tracked program)",
-   "what": "program upgrade"
+   "what": "program upgrade",
+   "resolved_seen_utc": "2026-10-26T18:55:57Z",
+   "left_the_files": true
   },
   "solana:cxnevpqqcya628tywzhgxej2jdvmbu51rnerat9xunp1:squads:CxnEVpQQcYa628TywzHGXeJ2jdVmbU51rnERat9xunP1:1008": {
    "outcome": "missed",
@@ -1055,20 +1061,22 @@
    "first_seen_utc": "2026-10-23T12:50:44Z",
    "due_utc": "2026-10-24T11:08:01Z",
    "notice_hours": 22.3,
-   "state": "queued",
+   "state": "resolved",
    "chain": "solana",
    "timelock": "Squads v4 multisig 6hhB\u2026fQbM (5-of-10, time lock 86400 s), found by the independent reader (1 tracked program)",
-   "what": "program upgrade"
+   "what": "program upgrade",
+   "resolved_seen_utc": "2026-10-26T18:55:57Z"
   },
   "solana:6hhbgctmg7tpwusgp3lg6x2rsmywac4tnsa6g4cnfqbm:squads:6hhBGCtmg7tPWUSgp3LG6X2rsmYWAc4tNsA6G4CnfQbM:110": {
    "outcome": "warned",
    "first_seen_utc": "2026-10-23T12:50:44Z",
    "due_utc": "2026-10-24T11:08:28Z",
    "notice_hours": 22.3,
-   "state": "queued",
+   "state": "resolved",
    "chain": "solana",
    "timelock": "Squads v4 multisig 6hhB\u2026fQbM (5-of-10, time lock 86400 s), found by the independent reader (1 tracked program)",
-   "what": "call"
+   "what": "call",
+   "resolved_seen_utc": "2026-10-26T18:55:57Z"
   },
   "ethereum:0x6d903f6003cca6255d85cca4d3b5e5146dc33925:0x065dcd5b59cd328d6662eedabc8b3fc70ca0daa0d4b126ee3a07f8c22e251ee0": {
    "outcome": "warned",
@@ -1090,18 +1098,28 @@
    "chain": "ethereum",
    "timelock": "ethereum-l1 timelock 0x2386\u20261f4c, found by the independent reader (1 tracked contract)",
    "what": "nested timelock"
+  },
+  "solana:j3mj3wz6xkvuk3t8qhnuaynxsrh3ixhsryynzau2vg8p:squads:J3mJ3wz6xkVUk3T8qHnuAYNxsRH3ixHsryYNZAU2vG8P:64": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-10-26T18:55:57Z",
+   "due_utc": "2026-10-27T06:35:20Z",
+   "notice_hours": 11.7,
+   "state": "queued",
+   "chain": "solana",
+   "timelock": "Squads v4 multisig J3mJ\u2026vG8P (4-of-6, time lock 43200 s), found by the independent reader (1 tracked program)",
+   "what": "loader Close"
   }
  },
- "updated_utc": "2026-10-26T14:53:42Z",
+ "updated_utc": "2026-10-26T18:55:57Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
-  "warned": 30,
+  "warned": 31,
   "seen_without_notice": 3,
   "missed": 13,
   "baseline": 77,
-  "warned_with_a_known_notice": 30,
+  "warned_with_a_known_notice": 31,
   "shortest_notice_hours": 0.2,
-  "median_notice_hours": 21.4,
+  "median_notice_hours": 21.1,
   "note": "warned: seen while queued and not yet executable (the notice is real); seen_without_notice: still queued but already executable when first seen; missed: queued after the ledger started and already applied when first seen (faster than the 6-hour cadence); baseline: applied before the ledger started, counted as neither."
  }
 }

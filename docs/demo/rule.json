@@ -1,0 +1,13 @@
+{
+  "id": "demo-rule/0.2",
+  "text": [
+    "R1 NOT READ: if any of the three numbers cannot be read, the answer is CANNOT KNOW. It is neither allowed nor refused: the rule cannot answer, and the answer says what is missing. An error is not a zero and a missing reading is not a pass.",
+    "R2 SMALL MULTISIG: if fewer than 3 signers must agree, or there are fewer than 5 owners, REFUSE.",
+    "R3 NO NOTICE: if the notice period read is shorter than 48 hours, REFUSE.",
+    "A target that passes R1 to R3 is ALLOWED BY THE RULE. That is all it means: it does not say the target is safe."
+  ],
+  "min_threshold": 3,
+  "min_owners": 5,
+  "min_delay_seconds": 172800,
+  "note": "An example rule written for this demo. The thresholds (3 of 5, 48 hours) are an example, not a standard and not a score."
+}

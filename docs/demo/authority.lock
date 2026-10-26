@@ -1,0 +1,17 @@
+{
+  "format": "authority.lock/0.1-example",
+  "note": "EXAMPLE for a local demo. It records what the lock's owner expects; it says nothing about whether any contract is safe.",
+  "entries": [
+    {
+      "label": "Contract A (made up)",
+      "chain": "anvil-local",
+      "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "expect": {
+        "state": "read",
+        "threshold": 3,
+        "owners": 5,
+        "delay_hours": 48.0
+      }
+    }
+  ]
+}

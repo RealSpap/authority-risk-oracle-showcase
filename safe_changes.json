@@ -5,10 +5,10 @@
    "ecosystem": "robinhood",
    "safes": 25,
    "events": [],
-   "control": 91,
+   "control": 88,
    "status": "ok",
-   "fromBlock": 92000343,
-   "toBlock": 97811683,
+   "fromBlock": 92226233,
+   "toBlock": 98032649,
    "days_read": 7
   },
   {
@@ -17,8 +17,8 @@
    "events": [],
    "control": 15,
    "status": "ok",
-   "fromBlock": 26221396,
-   "toBlock": 26271639,
+   "fromBlock": 26223317,
+   "toBlock": 26273555,
    "days_read": 7
   },
   {
@@ -27,8 +27,8 @@
    "events": [],
    "control": 15,
    "status": "ok",
-   "fromBlock": 516056763,
-   "toBlock": 518222399,
+   "fromBlock": 516142331,
+   "toBlock": 518299746,
    "days_read": 7
   },
   {
@@ -37,8 +37,8 @@
    "events": [],
    "control": 19,
    "status": "ok",
-   "fromBlock": 52780312,
-   "toBlock": 53082711,
+   "fromBlock": 52791863,
+   "toBlock": 53094263,
    "days_read": 7
   },
   {
@@ -47,8 +47,8 @@
    "events": [],
    "control": 3,
    "status": "ok",
-   "fromBlock": 44768202,
-   "toBlock": 45862205,
+   "fromBlock": 44809858,
+   "toBlock": 45904514,
    "days_read": 7
   },
   {
@@ -57,19 +57,20 @@
    "events": [],
    "control": 11,
    "status": "ok",
-   "fromBlock": 35408654,
-   "toBlock": 36013434,
+   "fromBlock": 35431755,
+   "toBlock": 36036534,
    "days_read": 7
   },
   {
    "ecosystem": "monad",
    "safes": 13,
    "events": [],
-   "control": 1,
-   "status": "ok",
-   "fromBlock": 116462139,
-   "toBlock": 116547995,
-   "days_read": 0.3
+   "control": 0,
+   "status": "UNREAD (control returned 0 ExecutionSuccess events on the tracked Safes and none from any Safe on the window's tail: the RPC may be truncating, not the Safes being idle)",
+   "fromBlock": 116538688,
+   "toBlock": 116624538,
+   "days_read": 0.3,
+   "control_witness": 0
   },
   {
    "ecosystem": "hyperliquid",
@@ -77,8 +78,8 @@
    "events": [],
    "control": null,
    "status": "UNREAD (Web3RPCError: {'code': -32602, 'message': 'invalid block range'})",
-   "fromBlock": 49246644,
-   "toBlock": 49510109,
+   "fromBlock": 49270179,
+   "toBlock": 49533644,
    "days_read": 3.0
   }
  ]

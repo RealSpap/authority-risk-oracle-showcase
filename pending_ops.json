@@ -94,7 +94,7 @@
    "address": "0xE8Dc0Fab349EA169283C48Ccfd09d797E6DB7c94",
    "family": "oz",
    "status": "ok",
-   "queued_events": 284,
+   "queued_events": 277,
    "latest_queued": 1792400999,
    "pending": [],
    "recent": [
@@ -166,7 +166,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 3952941,
+   "window_blocks": 3965901,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -186,7 +186,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 3952941,
+   "window_blocks": 3965901,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -206,7 +206,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 3965901,
+   "window_blocks": 3978947,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -294,7 +294,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/mainnet",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 100699,
+   "window_blocks": 100498,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -412,7 +412,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 0,
    "window_blocks": 3000000,
-   "window_days_est": 3.8,
+   "window_days_est": 3.6,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62"
@@ -432,7 +432,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 86400,
    "window_blocks": 3000000,
-   "window_days_est": 3.8,
+   "window_days_est": 3.5,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x14b107cf534239c59571b066cb6497a321da897c"
@@ -1267,7 +1267,7 @@
      "selector": null,
      "signature": "Squads proposal #64: Close of program GBZnPvzLWHjmCgkE3hYB8MmyMjmoq2HAyuseNBwtxFTg; Close of program vcxZRPheWRgCbEmot2szRBnXQ1usSTCh1eJdxAYxdZA; Close of program 8xzSSjxcQu13h6oPTS (not the tracked program)",
      "ready_at": 1793082920,
-     "state": "waiting",
+     "state": "ready",
      "approved_at": 1793039720,
      "account": "EKFg7FivG1mRC1Xnh6pCHVpqbTxgb5nR5rdU8ULiMCJd",
      "undecoded": false,
@@ -1351,7 +1351,7 @@
    "transaction_index": 71
   }
  ],
- "discovered_utc": "2026-10-27T01:05:05Z",
+ "discovered_utc": "2026-10-27T07:00:31Z",
  "discovered": 15,
- "squads_utc": "2026-10-27T01:09:22Z"
+ "squads_utc": "2026-10-27T07:04:45Z"
 }

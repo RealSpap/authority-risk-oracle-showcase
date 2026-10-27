@@ -1,27 +1,15 @@
 {
- "generated_utc": "2026-10-27T13:19:27Z",
- "total": 25,
+ "generated_utc": "2026-10-27T19:21:25Z",
+ "total": 24,
  "by_priority": {
-  "1": 3,
+  "1": 2,
   "2": 19,
   "3": 3
  },
  "overdue": 0,
  "overdue_days": 2.0,
- "oldest_days": 16.7,
+ "oldest_days": 16.9,
  "items": [
-  {
-   "priority": 1,
-   "kind": "queued operation executable",
-   "chain": "ethereum",
-   "target": "0x2386DC45AdDed673317eF068992F19421B481F4c",
-   "text": "nested timelock: executePayload(address,string,bytes) via ethereum-l1 timelock 0x2386\u20261f4c, found by the independent reader (1 tracked contract)",
-   "todo": "read the call before it lands",
-   "source": "pending_ops.json",
-   "first_seen": "2026-10-26T07:23:05Z",
-   "age_days": 1.2,
-   "overdue": false
-  },
   {
    "priority": 1,
    "kind": "queued operation executable",
@@ -31,7 +19,7 @@
    "todo": "read the call before it lands",
    "source": "pending_ops.json",
    "first_seen": "2026-10-27T07:10:15Z",
-   "age_days": 0.3,
+   "age_days": 0.5,
    "overdue": false
   },
   {
@@ -42,7 +30,7 @@
    "text": "0x9db4…1a53 designated (pendingOwner() on the contract (Ownable2Step), a contract)",
    "todo": "identify the designated admin; when it accepts, the admin read changes",
    "source": "second_opinion.json pending_admin",
-   "first_seen": "2026-10-27T13:19:27Z",
+   "first_seen": "2026-10-27T19:21:25Z",
    "age_days": 0.0,
    "overdue": false
   },
@@ -55,7 +43,7 @@
    "todo": "say what this guard checks and who can change it",
    "source": "second_opinion.json guard_detail",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.7,
+   "age_days": 16.9,
    "overdue": false
   },
   {
@@ -67,7 +55,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.7,
+   "age_days": 16.9,
    "overdue": false
   },
   {
@@ -79,7 +67,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.7,
+   "age_days": 16.9,
    "overdue": false
   },
   {
@@ -91,7 +79,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.7,
+   "age_days": 16.9,
    "overdue": false
   },
   {
@@ -103,7 +91,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.7,
+   "age_days": 16.9,
    "overdue": false
   },
   {
@@ -115,7 +103,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.7,
+   "age_days": 16.9,
    "overdue": false
   },
   {
@@ -127,7 +115,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.7,
+   "age_days": 16.9,
    "overdue": false
   },
   {
@@ -139,7 +127,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.7,
+   "age_days": 16.9,
    "overdue": false
   },
   {
@@ -151,7 +139,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.7,
+   "age_days": 16.9,
    "overdue": false
   },
   {
@@ -163,7 +151,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.7,
+   "age_days": 16.9,
    "overdue": false
   },
   {
@@ -175,7 +163,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.7,
+   "age_days": 16.9,
    "overdue": false
   },
   {
@@ -187,7 +175,7 @@
    "todo": "find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen",
    "source": "pending_ops.json",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.7,
+   "age_days": 16.9,
    "overdue": false
   },
   {
@@ -199,7 +187,7 @@
    "todo": "find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen",
    "source": "pending_ops.json",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.7,
+   "age_days": 16.9,
    "overdue": false
   },
   {
@@ -211,7 +199,7 @@
    "todo": "find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen",
    "source": "pending_ops.json",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.7,
+   "age_days": 16.9,
    "overdue": false
   },
   {
@@ -223,7 +211,7 @@
    "todo": "find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen",
    "source": "pending_ops.json",
    "first_seen": "2026-10-17T19:07:19Z",
-   "age_days": 9.8,
+   "age_days": 10.0,
    "overdue": false
   },
   {
@@ -235,7 +223,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-26T07:23:05Z",
-   "age_days": 1.2,
+   "age_days": 1.5,
    "overdue": false
   },
   {
@@ -247,7 +235,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-26T07:23:05Z",
-   "age_days": 1.2,
+   "age_days": 1.5,
    "overdue": false
   },
   {
@@ -259,7 +247,7 @@
    "todo": "find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen",
    "source": "pending_ops.json",
    "first_seen": "2026-10-26T15:24:06Z",
-   "age_days": 0.9,
+   "age_days": 1.2,
    "overdue": false
   },
   {
@@ -271,7 +259,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-27T13:19:27Z",
-   "age_days": 0.0,
+   "age_days": 0.3,
    "overdue": false
   },
   {
@@ -283,7 +271,7 @@
    "todo": "an admin path nobody has exercised: confirm the signers can still act",
    "source": "safe_activity.json",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.7,
+   "age_days": 16.9,
    "overdue": false
   },
   {
@@ -295,7 +283,7 @@
    "todo": "an admin path nobody has exercised: confirm the signers can still act",
    "source": "safe_activity.json",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.7,
+   "age_days": 16.9,
    "overdue": false
   },
   {
@@ -307,7 +295,7 @@
    "todo": "compare with the published admin-key score; holders cannot be listed on this contract",
    "source": "admin_probe.json",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.7,
+   "age_days": 16.9,
    "overdue": false
   }
  ],

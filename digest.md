@@ -1,9 +1,8 @@
 # Authority risk digest, 2026-10-27 01:15 UTC
 
-## Needs a person, 2026-10-27T01:15:36Z: 26 item(s) (priority 1: 4, priority 2: 19, priority 3: 3); oldest 16.2 d
+## Needs a person, 2026-10-27T01:15:36Z: 25 item(s) (priority 1: 3, priority 2: 19, priority 3: 3); oldest 16.2 d
 
-### Something happened: read before trusting the score (4)
-- **queued operation executable** ethereum 0x2386DC45AdDed673317eF068992F19421B481F4c (0.7 d): nested timelock: executePayload(address,string,bytes) via ethereum-l1 timelock 0x2386…1f4c, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
+### Something happened: read before trusting the score (3)
 - **queued operation executable within 48 h** solana GBZnPvzLWHjmCgkE3hYB8MmyMjmoq2HAyuseNBwtxFTg (0.2 d): loader Close: Squads proposal #64: Close of program GBZnPvzLWHjmCgkE3hYB8MmyMjmoq2HAyuseNBwtxFTg; Close of program vcxZRPheWRgCbEmot2szRBnXQ1usSTCh1eJdxAYxdZA; Close of program 8xzSSjxcQu13h6oPTS (not the tracked program) via Squads v4 multisig J3mJ…vG8P (4-of-6, time lock 43200 s), found by the ind. To do: read the call before it lands. (pending_ops.json)
 - **admin transfer in flight** robinhood 0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d (0.0 d): 0x9db4…1a53 designated (pendingOwner() on the contract (Ownable2Step), a contract). To do: identify the designated admin; when it accepts, the admin read changes. (second_opinion.json pending_admin)
 - **secondary role changed hands** base 0xfbb21d0380bee3312b33c4353c8936a0f13ef26c (0.0 d): pauseGuardian(): changed. To do: read who holds it now; in a vault a guardian can revoke a pending change, a curator allocates funds. (side_roles.json changes)

@@ -1094,10 +1094,11 @@
    "first_seen_utc": "2026-10-25T06:49:36Z",
    "due_utc": "2026-10-26T01:44:35Z",
    "notice_hours": 18.9,
-   "state": "queued",
+   "state": "resolved",
    "chain": "ethereum",
    "timelock": "ethereum-l1 timelock 0x2386\u20261f4c, found by the independent reader (1 tracked contract)",
-   "what": "nested timelock"
+   "what": "nested timelock",
+   "resolved_seen_utc": "2026-10-27T18:52:25Z"
   },
   "solana:j3mj3wz6xkvuk3t8qhnuaynxsrh3ixhsryynzau2vg8p:squads:J3mJ3wz6xkVUk3T8qHnuAYNxsRH3ixHsryYNZAU2vG8P:64": {
    "outcome": "warned",
@@ -1110,7 +1111,7 @@
    "what": "loader Close"
   }
  },
- "updated_utc": "2026-10-27T12:54:08Z",
+ "updated_utc": "2026-10-27T18:52:25Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
   "warned": 31,

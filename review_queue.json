@@ -1,14 +1,14 @@
 {
- "generated_utc": "2026-10-27T19:21:25Z",
- "total": 24,
+ "generated_utc": "2026-10-28T01:27:43Z",
+ "total": 33,
  "by_priority": {
-  "1": 2,
+  "1": 11,
   "2": 19,
   "3": 3
  },
  "overdue": 0,
  "overdue_days": 2.0,
- "oldest_days": 16.9,
+ "oldest_days": 17.2,
  "items": [
   {
    "priority": 1,
@@ -19,7 +19,7 @@
    "todo": "read the call before it lands",
    "source": "pending_ops.json",
    "first_seen": "2026-10-27T07:10:15Z",
-   "age_days": 0.5,
+   "age_days": 0.8,
    "overdue": false
   },
   {
@@ -30,7 +30,115 @@
    "text": "0x9db4…1a53 designated (pendingOwner() on the contract (Ownable2Step), a contract)",
    "todo": "identify the designated admin; when it accepts, the admin read changes",
    "source": "second_opinion.json pending_admin",
-   "first_seen": "2026-10-27T19:21:25Z",
+   "first_seen": "2026-10-28T01:27:43Z",
+   "age_days": 0.0,
+   "overdue": false
+  },
+  {
+   "priority": 1,
+   "kind": "methodology changed",
+   "chain": "arbitrum",
+   "target": null,
+   "text": "Arbitrum (Sepolia): 0x42f5ef04fd -> 0x149f7eccbc on 13 target(s)",
+   "todo": "expected after a release of the scorer; otherwise a push by a key that should not hold the updater role",
+   "source": "methodology.json",
+   "first_seen": "2026-10-28T01:27:43Z",
+   "age_days": 0.0,
+   "overdue": false
+  },
+  {
+   "priority": 1,
+   "kind": "methodology changed",
+   "chain": "base",
+   "target": null,
+   "text": "Base (Sepolia): 0xb55a2d7d5c -> 0xe0d0de7c9b on 13 target(s)",
+   "todo": "expected after a release of the scorer; otherwise a push by a key that should not hold the updater role",
+   "source": "methodology.json",
+   "first_seen": "2026-10-28T01:27:43Z",
+   "age_days": 0.0,
+   "overdue": false
+  },
+  {
+   "priority": 1,
+   "kind": "methodology changed",
+   "chain": "ethereum-l1",
+   "target": null,
+   "text": "Ethereum L1 (Sepolia): 0x0e0dadb9b9 -> 0xf1bcef2ca2 on 38 target(s)",
+   "todo": "expected after a release of the scorer; otherwise a push by a key that should not hold the updater role",
+   "source": "methodology.json",
+   "first_seen": "2026-10-28T01:27:43Z",
+   "age_days": 0.0,
+   "overdue": false
+  },
+  {
+   "priority": 1,
+   "kind": "methodology changed",
+   "chain": "hyperliquid",
+   "target": null,
+   "text": "Hyperliquid (HyperEVM): 0xc06d601841 -> 0xc2c56961f2 on 16 target(s)",
+   "todo": "expected after a release of the scorer; otherwise a push by a key that should not hold the updater role",
+   "source": "methodology.json",
+   "first_seen": "2026-10-28T01:27:43Z",
+   "age_days": 0.0,
+   "overdue": false
+  },
+  {
+   "priority": 1,
+   "kind": "methodology changed",
+   "chain": "monad",
+   "target": null,
+   "text": "Monad: 0xf4a5c40caa -> 0xbcc2bb8378 on 9 target(s)",
+   "todo": "expected after a release of the scorer; otherwise a push by a key that should not hold the updater role",
+   "source": "methodology.json",
+   "first_seen": "2026-10-28T01:27:43Z",
+   "age_days": 0.0,
+   "overdue": false
+  },
+  {
+   "priority": 1,
+   "kind": "methodology changed",
+   "chain": "plasma",
+   "target": null,
+   "text": "Plasma: 0xc1d1ba0a9d -> 0xfc81e047bf on 9 target(s)",
+   "todo": "expected after a release of the scorer; otherwise a push by a key that should not hold the updater role",
+   "source": "methodology.json",
+   "first_seen": "2026-10-28T01:27:43Z",
+   "age_days": 0.0,
+   "overdue": false
+  },
+  {
+   "priority": 1,
+   "kind": "methodology changed",
+   "chain": "robinhood",
+   "target": null,
+   "text": "Robinhood Chain: 0x7a8280d612 -> 0x05ae8b2527 on 63 target(s)",
+   "todo": "expected after a release of the scorer; otherwise a push by a key that should not hold the updater role",
+   "source": "methodology.json",
+   "first_seen": "2026-10-28T01:27:43Z",
+   "age_days": 0.0,
+   "overdue": false
+  },
+  {
+   "priority": 1,
+   "kind": "methodology changed",
+   "chain": "solana",
+   "target": null,
+   "text": "Solana (Devnet): 0x58be578c4a -> 0x0b14b26691 on 26 target(s)",
+   "todo": "expected after a release of the scorer; otherwise a push by a key that should not hold the updater role",
+   "source": "methodology.json",
+   "first_seen": "2026-10-28T01:27:43Z",
+   "age_days": 0.0,
+   "overdue": false
+  },
+  {
+   "priority": 1,
+   "kind": "methodology changed",
+   "chain": "tempo",
+   "target": null,
+   "text": "Tempo (Moderato): 0xe267de1a8e -> 0x5e0583b136 on 14 target(s)",
+   "todo": "expected after a release of the scorer; otherwise a push by a key that should not hold the updater role",
+   "source": "methodology.json",
+   "first_seen": "2026-10-28T01:27:43Z",
    "age_days": 0.0,
    "overdue": false
   },
@@ -43,7 +151,7 @@
    "todo": "say what this guard checks and who can change it",
    "source": "second_opinion.json guard_detail",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.9,
+   "age_days": 17.2,
    "overdue": false
   },
   {
@@ -55,7 +163,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.9,
+   "age_days": 17.2,
    "overdue": false
   },
   {
@@ -67,7 +175,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.9,
+   "age_days": 17.2,
    "overdue": false
   },
   {
@@ -79,7 +187,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.9,
+   "age_days": 17.2,
    "overdue": false
   },
   {
@@ -91,7 +199,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.9,
+   "age_days": 17.2,
    "overdue": false
   },
   {
@@ -103,7 +211,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.9,
+   "age_days": 17.2,
    "overdue": false
   },
   {
@@ -115,7 +223,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.9,
+   "age_days": 17.2,
    "overdue": false
   },
   {
@@ -127,7 +235,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.9,
+   "age_days": 17.2,
    "overdue": false
   },
   {
@@ -139,7 +247,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.9,
+   "age_days": 17.2,
    "overdue": false
   },
   {
@@ -151,7 +259,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.9,
+   "age_days": 17.2,
    "overdue": false
   },
   {
@@ -163,7 +271,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.9,
+   "age_days": 17.2,
    "overdue": false
   },
   {
@@ -175,7 +283,7 @@
    "todo": "find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen",
    "source": "pending_ops.json",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.9,
+   "age_days": 17.2,
    "overdue": false
   },
   {
@@ -187,7 +295,7 @@
    "todo": "find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen",
    "source": "pending_ops.json",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.9,
+   "age_days": 17.2,
    "overdue": false
   },
   {
@@ -199,7 +307,7 @@
    "todo": "find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen",
    "source": "pending_ops.json",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.9,
+   "age_days": 17.2,
    "overdue": false
   },
   {
@@ -211,7 +319,7 @@
    "todo": "find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen",
    "source": "pending_ops.json",
    "first_seen": "2026-10-17T19:07:19Z",
-   "age_days": 10.0,
+   "age_days": 10.3,
    "overdue": false
   },
   {
@@ -223,7 +331,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-26T07:23:05Z",
-   "age_days": 1.5,
+   "age_days": 1.8,
    "overdue": false
   },
   {
@@ -235,7 +343,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-26T07:23:05Z",
-   "age_days": 1.5,
+   "age_days": 1.8,
    "overdue": false
   },
   {
@@ -247,7 +355,7 @@
    "todo": "find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen",
    "source": "pending_ops.json",
    "first_seen": "2026-10-26T15:24:06Z",
-   "age_days": 1.2,
+   "age_days": 1.4,
    "overdue": false
   },
   {
@@ -259,7 +367,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-27T13:19:27Z",
-   "age_days": 0.3,
+   "age_days": 0.5,
    "overdue": false
   },
   {
@@ -271,7 +379,7 @@
    "todo": "an admin path nobody has exercised: confirm the signers can still act",
    "source": "safe_activity.json",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.9,
+   "age_days": 17.2,
    "overdue": false
   },
   {
@@ -283,7 +391,7 @@
    "todo": "an admin path nobody has exercised: confirm the signers can still act",
    "source": "safe_activity.json",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.9,
+   "age_days": 17.2,
    "overdue": false
   },
   {
@@ -295,7 +403,7 @@
    "todo": "compare with the published admin-key score; holders cannot be listed on this contract",
    "source": "admin_probe.json",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 16.9,
+   "age_days": 17.2,
    "overdue": false
   }
  ],

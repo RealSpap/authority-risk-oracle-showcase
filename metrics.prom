@@ -1,6 +1,6 @@
 # HELP aro_run_timestamp_seconds UTC time of the last Watch run (Unix seconds)
 # TYPE aro_run_timestamp_seconds gauge
-aro_run_timestamp_seconds 1793127145
+aro_run_timestamp_seconds 1793149606
 # HELP aro_oracle_read 1 when the oracle was read at the last run, 0 when it was not (its targets are then unknown, not zero)
 # TYPE aro_oracle_read gauge
 aro_oracle_read{oracle="Robinhood Chain"} 1
@@ -53,9 +53,9 @@ aro_chain_ok 1
 aro_signed 1
 # HELP aro_alerts_active Alerts firing now, by severity
 # TYPE aro_alerts_active gauge
-aro_alerts_active{severity="high"} 0
+aro_alerts_active{severity="high"} 1
 aro_alerts_active{severity="medium"} 8
-aro_alerts_active{severity="info"} 201
+aro_alerts_active{severity="info"} 1
 # HELP aro_second_opinion Targets by verdict of the independent reader
 # TYPE aro_second_opinion gauge
 aro_second_opinion{result="agree"} 134
@@ -76,7 +76,7 @@ aro_safes_woke 0
 aro_safes_never_executed 2
 # HELP aro_target_score Composite score of a tracked contract, 0 to 100, from the oracle's last push
 # TYPE aro_target_score gauge
-aro_target_score{chain="arbitrum-sepolia",target="0x3c3d99fd298f679dbc2cecd132b4ec4d0f5e6e72"} 19
+aro_target_score{chain="arbitrum-sepolia",target="0x3c3d99fd298f679dbc2cecd132b4ec4d0f5e6e72"} 47
 aro_target_score{chain="arbitrum-sepolia",target="0x1a3c9b1d2f0529d97f2afc5136cc23e58f1fd35b"} 31
 aro_target_score{chain="arbitrum-sepolia",target="0xe23b4ae3624fb6f7cdef29bc8ead912f1ede6886"} 55
 aro_target_score{chain="arbitrum-sepolia",target="0x423552c0f05baccac5bfa91c6dcf1dc53a0a1641"} 64
@@ -98,7 +98,7 @@ aro_target_score{chain="base-sepolia",target="0x5e7bb104d84c7cb9b682aac2f3d509f5
 aro_target_score{chain="base-sepolia",target="0x8909dc15e40173ff4699343b6eb8132c65e18ec6"} 85
 aro_target_score{chain="base-sepolia",target="0x498581ff718922c3f8e6a244956af099b2652b2b"} 85
 aro_target_score{chain="base-sepolia",target="0xfbb21d0380bee3312b33c4353c8936a0f13ef26c"} 71
-aro_target_score{chain="base-sepolia",target="0xee8f4ec5672f09119b96ab6fb59c27e1b7e44b61"} 66
+aro_target_score{chain="base-sepolia",target="0xee8f4ec5672f09119b96ab6fb59c27e1b7e44b61"} 60
 aro_target_score{chain="base-sepolia",target="0x7bfa7c4f149e7415b73bdedfe609237e29cbf34a"} 65
 aro_target_score{chain="base-sepolia",target="0xbeef010f9cb27031ad51e3333f9af9c6b1228183"} 73
 aro_target_score{chain="base-sepolia",target="0xbeef2d50b428675a1921bc6bbf4bfb9d8cf1461a"} 73
@@ -243,7 +243,7 @@ aro_target_score{chain="solana-devnet",target="7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6
 aro_target_score{chain="solana-devnet",target="7sf3tcWm58vhtkJMwuw2P3T6UBX7UE5VKxPMnXJUZ1Hn"} 2
 aro_target_score{chain="solana-devnet",target="dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH"} 48
 aro_target_score{chain="solana-devnet",target="CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK"} 14
-aro_target_score{chain="solana-devnet",target="4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8"} 33
+aro_target_score{chain="solana-devnet",target="4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8"} 32
 aro_target_score{chain="solana-devnet",target="GKnHiWh3RRrE1zsNzWxRkomymHc374TvJPSTv2wPeYdB"} 54
 aro_target_score{chain="solana-devnet",target="H4ND9aYttUVLFmNypZqLjZ52FYiGvdEB45GmwNoKEjTj"} 46
 aro_target_score{chain="solana-devnet",target="7s1da8DduuBFqGra5bJBjpnvL5E9mGzCuMk1Qkh4or2Z"} 55

@@ -1,9 +1,1182 @@
 {
- "generated_utc": "2026-10-27T19:09:55Z",
+ "generated_utc": "2026-10-28T01:22:18Z",
  "compared": 202,
- "new_this_run": 0,
+ "new_this_run": 48,
  "first_seen_oracles": [],
  "moves": [
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "arbitrum-sepolia",
+   "target": "0x3c3d99fd298f679dbc2cecd132b4ec4d0f5e6e72",
+   "composite": [
+    19,
+    47
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "adminKeyScore",
+     "label": "admin key",
+     "from": 10,
+     "to": 65,
+     "why": "admin power moved to a larger group (10 \u2192 65)"
+    },
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 0,
+     "to": 70,
+     "why": "more signatures are now required (0 \u2192 70)"
+    },
+    {
+     "axis": "timelockScore",
+     "label": "timelock",
+     "from": 50,
+     "to": 0,
+     "why": "the delay before changes apply was removed (50 \u2192 0)"
+    }
+   ],
+   "block": 323518211,
+   "lastUpdated": [
+    1792449233,
+    1793135361
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "arbitrum-sepolia",
+   "target": "0xa97684ead0e402dc232d5a977953df7ecbab3cdb",
+   "composite": [
+    71,
+    71
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 40,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 40)"
+    }
+   ],
+   "block": 323518211,
+   "lastUpdated": [
+    1792449233,
+    1793135361
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "arbitrum-sepolia",
+   "target": "0x9c4ec768c28520b50860ea7a15bd7213a9ff58bf",
+   "composite": [
+    78,
+    78
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 70,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 70)"
+    }
+   ],
+   "block": 323518211,
+   "lastUpdated": [
+    1792449233,
+    1793135361
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "arbitrum-sepolia",
+   "target": "0x888888888889758f76e7103c6cbf23abbf58f946",
+   "composite": [
+    43,
+    43
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 70,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 70)"
+    }
+   ],
+   "block": 323518211,
+   "lastUpdated": [
+    1792449233,
+    1793135361
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "arbitrum-sepolia",
+   "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
+   "composite": [
+    59,
+    59
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 85,
+     "why": "a shared key was removed (80 \u2192 85)"
+    }
+   ],
+   "block": 323518211,
+   "lastUpdated": [
+    1792449233,
+    1793135361
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "arbitrum-sepolia",
+   "target": "0x1f98431c8ad98523631ae4a59f267346ea31f984",
+   "composite": [
+    85,
+    85
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 40,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 40)"
+    }
+   ],
+   "block": 323518211,
+   "lastUpdated": [
+    1792449233,
+    1793135361
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "base-sepolia",
+   "target": "0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",
+   "composite": [
+    55,
+    55
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 55,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 55)"
+    }
+   ],
+   "block": 51138749,
+   "lastUpdated": [
+    1792445925,
+    1793134526
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "base-sepolia",
+   "target": "0xe20fcbdbffc4dd138ce8b2e6fbb6cb49777ad64d",
+   "composite": [
+    71,
+    71
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 40,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 40)"
+    }
+   ],
+   "block": 51138749,
+   "lastUpdated": [
+    1792445925,
+    1793134526
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "base-sepolia",
+   "target": "0x33128a8fc17869897dce68ed026d694621f6fdfd",
+   "composite": [
+    85,
+    85
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 40,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 40)"
+    }
+   ],
+   "block": 51138749,
+   "lastUpdated": [
+    1792445925,
+    1793134526
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "base-sepolia",
+   "target": "0xb125e6687d4313864e53df431d5425969c15eb2f",
+   "composite": [
+    78,
+    78
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 70,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 70)"
+    }
+   ],
+   "block": 51138749,
+   "lastUpdated": [
+    1792445925,
+    1793134526
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "base-sepolia",
+   "target": "0x8909dc15e40173ff4699343b6eb8132c65e18ec6",
+   "composite": [
+    85,
+    85
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 40,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 40)"
+    }
+   ],
+   "block": 51138749,
+   "lastUpdated": [
+    1792445925,
+    1793134526
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "base-sepolia",
+   "target": "0x498581ff718922c3f8e6a244956af099b2652b2b",
+   "composite": [
+    85,
+    85
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 40,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 40)"
+    }
+   ],
+   "block": 51138749,
+   "lastUpdated": [
+    1792445925,
+    1793134526
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "base-sepolia",
+   "target": "0xfbb21d0380bee3312b33c4353c8936a0f13ef26c",
+   "composite": [
+    71,
+    71
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 52,
+     "to": 2,
+     "why": "the price feed moved under fewer hands (52 \u2192 2)"
+    }
+   ],
+   "block": 51138749,
+   "lastUpdated": [
+    1792445925,
+    1793134526
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "base-sepolia",
+   "target": "0xee8f4ec5672f09119b96ab6fb59c27e1b7e44b61",
+   "composite": [
+    66,
+    60
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "timelockScore",
+     "label": "timelock",
+     "from": 75,
+     "to": 55,
+     "why": "the delay before changes apply was shortened (75 \u2192 55)"
+    },
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 100,
+     "to": 85,
+     "why": "a key is now shared with another tracked protocol (100 \u2192 85)"
+    }
+   ],
+   "block": 51138749,
+   "lastUpdated": [
+    1792445925,
+    1793134526
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "base-sepolia",
+   "target": "0xbeef010f9cb27031ad51e3333f9af9c6b1228183",
+   "composite": [
+    73,
+    73
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 60,
+     "to": 30,
+     "why": "a key is now shared with another tracked protocol (60 \u2192 30)"
+    }
+   ],
+   "block": 51138749,
+   "lastUpdated": [
+    1792445925,
+    1793134526
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "base-sepolia",
+   "target": "0xbeef2d50b428675a1921bc6bbf4bfb9d8cf1461a",
+   "composite": [
+    73,
+    73
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 60,
+     "to": 30,
+     "why": "a key is now shared with another tracked protocol (60 \u2192 30)"
+    }
+   ],
+   "block": 51138749,
+   "lastUpdated": [
+    1792445925,
+    1793134526
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "ethereum-l1-sepolia",
+   "target": "0x1f98431c8ad98523631ae4a59f267346ea31f984",
+   "composite": [
+    85,
+    85
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 20,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 20)"
+    }
+   ],
+   "block": 12008914,
+   "lastUpdated": [
+    1792454859,
+    1793136292
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "ethereum-l1-sepolia",
+   "target": "0x2f39d218133afab8f2b819b1066c7e434ad94e9e",
+   "composite": [
+    78,
+    78
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 60,
+     "to": 20,
+     "why": "a key is now shared with another tracked protocol (60 \u2192 20)"
+    }
+   ],
+   "block": 12008914,
+   "lastUpdated": [
+    1792454859,
+    1793136292
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "ethereum-l1-sepolia",
+   "target": "0xc3d688b66703497daa19211eedff47f25384cdc3",
+   "composite": [
+    79,
+    79
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 70,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 70)"
+    }
+   ],
+   "block": 12008914,
+   "lastUpdated": [
+    1792454859,
+    1793136292
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "ethereum-l1-sepolia",
+   "target": "0x000000000004444c5dc75cb358380d2e3de08a90",
+   "composite": [
+    85,
+    85
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 20,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 20)"
+    }
+   ],
+   "block": 12008914,
+   "lastUpdated": [
+    1792454859,
+    1793136292
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "ethereum-l1-sepolia",
+   "target": "0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",
+   "composite": [
+    56,
+    56
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 100,
+     "to": 55,
+     "why": "a key is now shared with another tracked protocol (100 \u2192 55)"
+    }
+   ],
+   "block": 12008914,
+   "lastUpdated": [
+    1792454859,
+    1793136292
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "ethereum-l1-sepolia",
+   "target": "0xbeef047a543e45807105e51a8bbefcc5950fcfba",
+   "composite": [
+    73,
+    73
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 40,
+     "to": 20,
+     "why": "a key is now shared with another tracked protocol (40 \u2192 20)"
+    }
+   ],
+   "block": 12008914,
+   "lastUpdated": [
+    1792454859,
+    1793136292
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "ethereum-l1-sepolia",
+   "target": "0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+   "composite": [
+    73,
+    73
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 40,
+     "to": 20,
+     "why": "a key is now shared with another tracked protocol (40 \u2192 20)"
+    }
+   ],
+   "block": 12008914,
+   "lastUpdated": [
+    1792454859,
+    1793136292
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "monad",
+   "target": "0x188d586ddcf52439676ca21a244753fa19f9ea8e",
+   "composite": [
+    80,
+    80
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 40,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 40)"
+    }
+   ],
+   "block": 74812047,
+   "lastUpdated": [
+    1792446167,
+    1793134502
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "monad",
+   "target": "0x32841a8511d5c2c5b253f45668780b99139e476d",
+   "composite": [
+    67,
+    67
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 85,
+     "why": "a shared key was removed (80 \u2192 85)"
+    }
+   ],
+   "block": 74812047,
+   "lastUpdated": [
+    1792446167,
+    1793134502
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "monad",
+   "target": "0x8271e06e5887fe5ba05234f5315c19f3ec90e8ad",
+   "composite": [
+    4,
+    4
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 85,
+     "why": "a shared key was removed (80 \u2192 85)"
+    }
+   ],
+   "block": 74812047,
+   "lastUpdated": [
+    1792446167,
+    1793134502
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "monad",
+   "target": "0x34793fb9935f7bb5e5ae920fb963f39063e7a615",
+   "composite": [
+    49,
+    49
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 40,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 40)"
+    }
+   ],
+   "block": 74812047,
+   "lastUpdated": [
+    1792446167,
+    1793134502
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "monad",
+   "target": "0xba4dd672062de8feedb665dd4410658864483f1e",
+   "composite": [
+    64,
+    64
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 85,
+     "why": "a shared key was removed (80 \u2192 85)"
+    }
+   ],
+   "block": 74812047,
+   "lastUpdated": [
+    1792446167,
+    1793134502
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "plasma",
+   "target": "0x061d8e131f26512348ee5fa42e2df1ba9d6505e9",
+   "composite": [
+    71,
+    71
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 40,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 40)"
+    }
+   ],
+   "block": 37319892,
+   "lastUpdated": [
+    1792447298,
+    1793134786
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "plasma",
+   "target": "0x888888888889758f76e7103c6cbf23abbf58f946",
+   "composite": [
+    43,
+    43
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 70,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 70)"
+    }
+   ],
+   "block": 37319892,
+   "lastUpdated": [
+    1792447298,
+    1793134786
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "plasma",
+   "target": "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34",
+   "composite": [
+    57,
+    57
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 85,
+     "why": "a shared key was removed (80 \u2192 85)"
+    }
+   ],
+   "block": 37319892,
+   "lastUpdated": [
+    1792447298,
+    1793134786
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "plasma",
+   "target": "0x42388213c6f56d7e1477632b58ae6bba9adeeea3",
+   "composite": [
+    72,
+    72
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 85,
+     "why": "a shared key was removed (80 \u2192 85)"
+    }
+   ],
+   "block": 37319892,
+   "lastUpdated": [
+    1792447298,
+    1793134786
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "plasma",
+   "target": "0x9b3ceb22cab2f1b9ace4cd3132c8a123552eda2c",
+   "composite": [
+    68,
+    68
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 85,
+     "why": "a shared key was removed (80 \u2192 85)"
+    }
+   ],
+   "block": 37319892,
+   "lastUpdated": [
+    1792447298,
+    1793134786
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "plasma",
+   "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
+   "composite": [
+    59,
+    59
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 85,
+     "why": "a shared key was removed (80 \u2192 85)"
+    }
+   ],
+   "block": 37319892,
+   "lastUpdated": [
+    1792447298,
+    1793134786
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "robinhood-chain",
+   "target": "0x1f7d7550b1b028f7571e69a784071f0205fd2efa",
+   "composite": [
+    85,
+    85
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 40,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 40)"
+    }
+   ],
+   "block": 143887592,
+   "lastUpdated": [
+    1792448928,
+    1793136187
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "robinhood-chain",
+   "target": "0x8366a39cc670b4001a1121b8f6a443a643e40951",
+   "composite": [
+    85,
+    85
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 40,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 40)"
+    }
+   ],
+   "block": 143887592,
+   "lastUpdated": [
+    1792448928,
+    1793136187
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "robinhood-chain",
+   "target": "0x000000007a1c8e570011eedf86a2a35593013cba",
+   "composite": [
+    85,
+    85
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 40,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 40)"
+    }
+   ],
+   "block": 143887592,
+   "lastUpdated": [
+    1792448928,
+    1793136187
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "robinhood-chain",
+   "target": "0x544bf81c855ae84c1e8b65d5e38770898d01eee2",
+   "composite": [
+    42,
+    42
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 70,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 70)"
+    }
+   ],
+   "block": 143887592,
+   "lastUpdated": [
+    1792448928,
+    1793136187
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "robinhood-chain",
+   "target": "0x8271e06e5887fe5ba05234f5315c19f3ec90e8ad",
+   "composite": [
+    1,
+    1
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 85,
+     "why": "a shared key was removed (80 \u2192 85)"
+    }
+   ],
+   "block": 143887592,
+   "lastUpdated": [
+    1792448928,
+    1793136187
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "robinhood-chain",
+   "target": "0x8bceaa40b9acdfaedf85adf4ff01f5ad6517937f",
+   "composite": [
+    85,
+    85
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 40,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 40)"
+    }
+   ],
+   "block": 143887592,
+   "lastUpdated": [
+    1792448928,
+    1793136187
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "robinhood-chain",
+   "target": "0xbeeff0fb1dc19344a87b8479dab60a2e16160737",
+   "composite": [
+    70,
+    70
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 40,
+     "to": 25,
+     "why": "a key is now shared with another tracked protocol (40 \u2192 25)"
+    }
+   ],
+   "block": 143887592,
+   "lastUpdated": [
+    1792448928,
+    1793136187
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "robinhood-chain",
+   "target": "0xee27d5ae494300902d90454e8630a3f1c68c9c52",
+   "composite": [
+    52,
+    52
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 100,
+     "to": 40,
+     "why": "a key is now shared with another tracked protocol (100 \u2192 40)"
+    }
+   ],
+   "block": 143887592,
+   "lastUpdated": [
+    1792448928,
+    1793136187
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "robinhood-chain",
+   "target": "0xbeeff039907422219fb367e525954ddc092854d9",
+   "composite": [
+    49,
+    49
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 40,
+     "to": 25,
+     "why": "a key is now shared with another tracked protocol (40 \u2192 25)"
+    }
+   ],
+   "block": 143887592,
+   "lastUpdated": [
+    1792448928,
+    1793136187
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "robinhood-chain",
+   "target": "0xbeefff136e3684273e6aa75a1669b784b373a4fd",
+   "composite": [
+    66,
+    66
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 40,
+     "to": 25,
+     "why": "a key is now shared with another tracked protocol (40 \u2192 25)"
+    }
+   ],
+   "block": 143887592,
+   "lastUpdated": [
+    1792448928,
+    1793136187
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "robinhood-chain",
+   "target": "0x9d53d5e3bd5e8d4cbfa6db1ca238aea02e651010",
+   "composite": [
+    55,
+    55
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 55,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 55)"
+    }
+   ],
+   "block": 143887592,
+   "lastUpdated": [
+    1792448928,
+    1793136187
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "solana-devnet",
+   "target": "4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8",
+   "composite": [
+    33,
+    32
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 50,
+     "to": 46,
+     "why": "fewer signatures are now required (50 \u2192 46)"
+    }
+   ],
+   "block": null,
+   "lastUpdated": [
+    1792445226,
+    1793132800
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "tempo-moderato",
+   "target": "0xc609656ed9ef219c98c8e549bf729144f211f06e",
+   "composite": [
+    61,
+    61
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 100,
+     "to": 85,
+     "why": "a key is now shared with another tracked protocol (100 \u2192 85)"
+    }
+   ],
+   "block": 41478443,
+   "lastUpdated": [
+    1792445462,
+    1793134136
+   ]
+  },
+  {
+   "run_utc": "2026-10-28T01:22:18Z",
+   "oracle": "tempo-moderato",
+   "target": "0x10ee9aac980a180dd4dcfc96c746d60b0ea88f97",
+   "composite": [
+    55,
+    55
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 55,
+     "why": "a key is now shared with another tracked protocol (80 \u2192 55)"
+    }
+   ],
+   "block": 41478443,
+   "lastUpdated": [
+    1792445462,
+    1793134136
+   ]
+  },
   {
    "run_utc": "2026-10-20T01:08:41Z",
    "oracle": "arbitrum-sepolia",

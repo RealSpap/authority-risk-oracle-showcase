@@ -1,19 +1,20 @@
 {
- "generated_utc": "2026-10-27T19:08:24Z",
+ "generated_utc": "2026-10-28T01:20:59Z",
  "wake_days": 14,
  "safes": 42,
  "read": 42,
  "woke": [],
  "changes": [
   {
-   "delta": 1,
-   "idle_days": 3.0,
+   "delta": 3,
+   "idle_days": 0.7,
    "woke": false,
-   "safe": "arbitrum:0x5f0b\u2026841f",
+   "safe": "robinhood:0x20d6\u2026be1a",
    "governs": [
-    "arbitrum:0xffa10065ce1d1c42fabc46e06b84ed8ffeb4bae5"
+    "robinhood:0x83341f891f898cb5e0cacc8a70501bba83d9cecf",
+    "robinhood:0xa203a21dccb461e415daa342e8e635b6cee0ccb3"
    ],
-   "previous_run": "2026-10-27T13:08:17Z"
+   "previous_run": "2026-10-27T19:08:24Z"
   }
  ],
  "never_executed": [
@@ -283,10 +284,10 @@
    "never_executed": false
   },
   "robinhood:3cb8c359ff7f85fd": {
-   "nonce": 626,
+   "nonce": 629,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-10-27T07:03:47Z",
-   "last_moved": "2026-10-27T07:03:47Z",
+   "idle_since": "2026-10-28T01:20:59Z",
+   "last_moved": "2026-10-28T01:20:59Z",
    "governs": [
     "robinhood:0x83341f891f898cb5e0cacc8a70501bba83d9cecf",
     "robinhood:0xa203a21dccb461e415daa342e8e635b6cee0ccb3"

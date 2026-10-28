@@ -1,6 +1,6 @@
 {
- "run_utc": "2026-10-28T07:03:10Z",
- "previous_run_utc": "2026-10-28T01:06:46Z",
+ "run_utc": "2026-10-28T07:47:06Z",
+ "previous_run_utc": "2026-10-28T07:03:10Z",
  "schedule": "every 6 hours (GitHub Actions, cron 17 */6 * * *)",
  "oracles": [
   {
@@ -9,7 +9,7 @@
    "kind": "evm",
    "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
    "read_ok": true,
-   "block": 144052791,
+   "block": 144072253,
    "targets": 63,
    "stale": 0,
    "lastUpdated": 1793136187,
@@ -37,7 +37,7 @@
    "kind": "evm",
    "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
    "read_ok": true,
-   "block": 12010694,
+   "block": 12010912,
    "targets": 39,
    "stale": 1,
    "lastUpdated": 1793136292,
@@ -65,7 +65,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 323602578,
+   "block": 323612913,
    "targets": 13,
    "stale": 0,
    "lastUpdated": 1793135361,
@@ -93,13 +93,13 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 51245651,
+   "block": 51258817,
    "targets": 13,
    "stale": 0,
    "lastUpdated": 1793134526,
    "maxStaleness": 777600,
    "self_watch": {
-    "read": false,
+    "read": true,
     "role_events": 0,
     "code_hash": "714f7e2a4131dc65",
     "roles": {
@@ -112,7 +112,7 @@
       "updater": false
      }
     },
-    "error": "getLogs: window of 106902 blocks needs more than 120 calls at 200 blocks each"
+    "error": null
    }
   },
   {
@@ -121,7 +121,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 41514046,
+   "block": 41518412,
    "targets": 14,
    "stale": 0,
    "lastUpdated": 1793134136,
@@ -149,7 +149,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 37341274,
+   "block": 37343895,
    "targets": 9,
    "stale": 0,
    "lastUpdated": 1793134786,
@@ -177,13 +177,13 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 74882757,
+   "block": 74891421,
    "targets": 9,
    "stale": 0,
    "lastUpdated": 1793134502,
    "maxStaleness": 777600,
    "self_watch": {
-    "read": false,
+    "read": true,
     "role_events": 0,
     "code_hash": "f33b2e74ee503525",
     "roles": {
@@ -196,7 +196,7 @@
       "updater": false
      }
     },
-    "error": "getLogs: window of 70710 blocks needs more than 120 calls at 100 blocks each"
+    "error": null
    }
   },
   {
@@ -205,7 +205,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 68089877,
+   "block": 68092514,
    "targets": 16,
    "stale": 0,
    "lastUpdated": 1793135354,

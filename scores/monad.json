@@ -3,9 +3,9 @@
  "kind": "evm",
  "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
  "rpc": "https://testnet-rpc.monad.xyz/",
- "block": 74882757,
+ "block": 74891421,
  "maxStaleness": 777600,
- "readAt": 1793171096,
+ "readAt": 1793173688,
  "targets": [
   {
    "index": 0,
@@ -20,7 +20,7 @@
    "methodologyHash": "0xbcc2bb8378d005843c68080516e599fa2e28133e77313445d85427501e0e6285",
    "stale": false,
    "previousComposite": 37,
-   "previousRun": "2026-10-28T01:06:46Z"
+   "previousRun": "2026-10-28T07:03:10Z"
   },
   {
    "index": 1,
@@ -35,7 +35,7 @@
    "methodologyHash": "0xbcc2bb8378d005843c68080516e599fa2e28133e77313445d85427501e0e6285",
    "stale": false,
    "previousComposite": 80,
-   "previousRun": "2026-10-28T01:06:46Z"
+   "previousRun": "2026-10-28T07:03:10Z"
   },
   {
    "index": 2,
@@ -50,7 +50,7 @@
    "methodologyHash": "0xbcc2bb8378d005843c68080516e599fa2e28133e77313445d85427501e0e6285",
    "stale": false,
    "previousComposite": 60,
-   "previousRun": "2026-10-28T01:06:46Z"
+   "previousRun": "2026-10-28T07:03:10Z"
   },
   {
    "index": 3,
@@ -65,7 +65,7 @@
    "methodologyHash": "0xbcc2bb8378d005843c68080516e599fa2e28133e77313445d85427501e0e6285",
    "stale": false,
    "previousComposite": 43,
-   "previousRun": "2026-10-28T01:06:46Z"
+   "previousRun": "2026-10-28T07:03:10Z"
   },
   {
    "index": 4,
@@ -80,7 +80,7 @@
    "methodologyHash": "0xbcc2bb8378d005843c68080516e599fa2e28133e77313445d85427501e0e6285",
    "stale": false,
    "previousComposite": 67,
-   "previousRun": "2026-10-28T01:06:46Z"
+   "previousRun": "2026-10-28T07:03:10Z"
   },
   {
    "index": 5,
@@ -95,7 +95,7 @@
    "methodologyHash": "0xbcc2bb8378d005843c68080516e599fa2e28133e77313445d85427501e0e6285",
    "stale": false,
    "previousComposite": 4,
-   "previousRun": "2026-10-28T01:06:46Z"
+   "previousRun": "2026-10-28T07:03:10Z"
   },
   {
    "index": 6,
@@ -110,7 +110,7 @@
    "methodologyHash": "0xbcc2bb8378d005843c68080516e599fa2e28133e77313445d85427501e0e6285",
    "stale": false,
    "previousComposite": 44,
-   "previousRun": "2026-10-28T01:06:46Z"
+   "previousRun": "2026-10-28T07:03:10Z"
   },
   {
    "index": 7,
@@ -125,7 +125,7 @@
    "methodologyHash": "0xbcc2bb8378d005843c68080516e599fa2e28133e77313445d85427501e0e6285",
    "stale": false,
    "previousComposite": 49,
-   "previousRun": "2026-10-28T01:06:46Z"
+   "previousRun": "2026-10-28T07:03:10Z"
   },
   {
    "index": 8,
@@ -140,15 +140,15 @@
    "methodologyHash": "0xbcc2bb8378d005843c68080516e599fa2e28133e77313445d85427501e0e6285",
    "stale": false,
    "previousComposite": 64,
-   "previousRun": "2026-10-28T01:06:46Z"
+   "previousRun": "2026-10-28T07:03:10Z"
   }
  ],
  "self": {
   "code_hash": "f33b2e74ee50352539db6b0cc362185c66f79b6b3930811842912995b1b53def",
   "role_events": [],
-  "from_block": 74812047,
-  "to_block": 74882757,
-  "read": false,
+  "from_block": 74882757,
+  "to_block": 74891421,
+  "read": true,
   "roles": {
    "0x20630C6Ab4BA48a80edA46F77b9b6e987A8f32f5": {
     "admin": true,
@@ -159,8 +159,7 @@
     "updater": false
    }
   },
-  "error": "getLogs: window of 70710 blocks needs more than 120 calls at 100 blocks each",
-  "gap_blocks": 70710
+  "log_span": 100
  },
- "self_scanned_to": 74882757
+ "self_scanned_to": 74891421
 }

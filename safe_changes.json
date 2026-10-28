@@ -5,20 +5,20 @@
    "ecosystem": "robinhood",
    "safes": 25,
    "events": [],
-   "control": 99,
+   "control": 100,
    "status": "ok",
-   "fromBlock": 94103070,
-   "toBlock": 99897302,
+   "fromBlock": 94128358,
+   "toBlock": 99921623,
    "days_read": 7
   },
   {
    "ecosystem": "ethereum-l1",
    "safes": 15,
    "events": [],
-   "control": 18,
+   "control": 19,
    "status": "ok",
-   "fromBlock": 26239442,
-   "toBlock": 26289692,
+   "fromBlock": 26239655,
+   "toBlock": 26289905,
    "days_read": 7
   },
   {
@@ -27,8 +27,8 @@
    "events": [],
    "control": 26,
    "status": "ok",
-   "fromBlock": 516845882,
-   "toBlock": 518978890,
+   "fromBlock": 516855593,
+   "toBlock": 518987493,
    "days_read": 7
   },
   {
@@ -37,8 +37,8 @@
    "events": [],
    "control": 17,
    "status": "ok",
-   "fromBlock": 52888962,
-   "toBlock": 53191361,
+   "fromBlock": 52890241,
+   "toBlock": 53192640,
    "days_read": 7
   },
   {
@@ -46,11 +46,11 @@
    "safes": 4,
    "events": [],
    "control": 0,
-   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 43 execution(s) from other Safes on the window's tail)",
-   "fromBlock": 45154568,
-   "toBlock": 46259371,
+   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 44 execution(s) from other Safes on the window's tail)",
+   "fromBlock": 45159197,
+   "toBlock": 46264030,
    "days_read": 7,
-   "control_witness": 43
+   "control_witness": 44
   },
   {
    "ecosystem": "plasma",
@@ -58,8 +58,8 @@
    "events": [],
    "control": 10,
    "status": "ok",
-   "fromBlock": 35625952,
-   "toBlock": 36230736,
+   "fromBlock": 35628493,
+   "toBlock": 36233277,
    "days_read": 7
   },
   {
@@ -67,21 +67,18 @@
    "safes": 13,
    "events": [],
    "control": 0,
-   "status": "UNREAD (control returned 0 ExecutionSuccess events on the tracked Safes and none from any Safe on the window's tail: the RPC may be truncating, not the Safes being idle)",
-   "fromBlock": 117180213,
-   "toBlock": 117265986,
+   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 4 execution(s) from other Safes on the window's tail)",
+   "fromBlock": 117188541,
+   "toBlock": 117274316,
    "days_read": 0.3,
-   "control_witness": 0
+   "control_witness": 4
   },
   {
    "ecosystem": "hyperliquid",
    "safes": 5,
    "events": [],
    "control": null,
-   "status": "UNREAD (Web3RPCError: {'code': -32602, 'message': 'invalid block range'})",
-   "fromBlock": 49467620,
-   "toBlock": 49731084,
-   "days_read": 3.0
+   "status": "UNREAD (cannot locate the window start: Web3RPCError: {'code': -32603, 'message': 'invalid block height: 49475730'})"
   }
  ]
 }

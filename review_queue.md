@@ -1,4 +1,4 @@
-## Needs a person, 2026-10-28T07:29:15Z: 24 item(s) (priority 1: 2, priority 2: 19, priority 3: 3); oldest 17.4 d
+## Needs a person, 2026-10-28T08:07:20Z: 24 item(s) (priority 1: 2, priority 2: 19, priority 3: 3); oldest 17.4 d
 
 ### Something happened: read before trusting the score (2)
 - **queued operation executable** solana GBZnPvzLWHjmCgkE3hYB8MmyMjmoq2HAyuseNBwtxFTg (1.0 d): loader Close: Squads proposal #64: Close of program GBZnPvzLWHjmCgkE3hYB8MmyMjmoq2HAyuseNBwtxFTg; Close of program vcxZRPheWRgCbEmot2szRBnXQ1usSTCh1eJdxAYxdZA; Close of program 8xzSSjxcQu13h6oPTS (not the tracked program) via Squads v4 multisig J3mJ…vG8P (4-of-6, time lock 43200 s), found by the ind. To do: read the call before it lands. (pending_ops.json)

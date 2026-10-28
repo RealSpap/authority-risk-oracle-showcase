@@ -1,6 +1,6 @@
 {
- "run_utc": "2026-10-28T01:06:46Z",
- "previous_run_utc": "2026-10-27T18:52:25Z",
+ "run_utc": "2026-10-28T07:03:10Z",
+ "previous_run_utc": "2026-10-28T01:06:46Z",
  "schedule": "every 6 hours (GitHub Actions, cron 17 */6 * * *)",
  "oracles": [
   {
@@ -9,7 +9,7 @@
    "kind": "evm",
    "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
    "read_ok": true,
-   "block": 143887592,
+   "block": 144052791,
    "targets": 63,
    "stale": 0,
    "lastUpdated": 1793136187,
@@ -37,7 +37,7 @@
    "kind": "evm",
    "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
    "read_ok": true,
-   "block": 12008914,
+   "block": 12010694,
    "targets": 39,
    "stale": 1,
    "lastUpdated": 1793136292,
@@ -65,7 +65,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 323518211,
+   "block": 323602578,
    "targets": 13,
    "stale": 0,
    "lastUpdated": 1793135361,
@@ -93,7 +93,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 51138749,
+   "block": 51245651,
    "targets": 13,
    "stale": 0,
    "lastUpdated": 1793134526,
@@ -112,7 +112,7 @@
       "updater": false
      }
     },
-    "error": "getLogs: window of 112317 blocks needs more than 120 calls at 200 blocks each"
+    "error": "getLogs: window of 106902 blocks needs more than 120 calls at 200 blocks each"
    }
   },
   {
@@ -121,7 +121,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 41478443,
+   "block": 41514046,
    "targets": 14,
    "stale": 0,
    "lastUpdated": 1793134136,
@@ -149,7 +149,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 37319892,
+   "block": 37341274,
    "targets": 9,
    "stale": 0,
    "lastUpdated": 1793134786,
@@ -177,7 +177,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 74812047,
+   "block": 74882757,
    "targets": 9,
    "stale": 0,
    "lastUpdated": 1793134502,
@@ -196,7 +196,7 @@
       "updater": false
      }
     },
-    "error": "getLogs: window of 73101 blocks needs more than 120 calls at 100 blocks each"
+    "error": "getLogs: window of 70710 blocks needs more than 120 calls at 100 blocks each"
    }
   },
   {
@@ -205,7 +205,7 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 68068123,
+   "block": 68089877,
    "targets": 16,
    "stale": 0,
    "lastUpdated": 1793135354,
@@ -243,440 +243,7 @@
  ],
  "total_targets": 202,
  "stale_total": 1,
- "movers": [
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0x1f7d7550b1b028f7571e69a784071f0205fd2efa",
-   "label": "Uniswap v3 Factory",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 40
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0x8366a39cc670b4001a1121b8f6a443a643e40951",
-   "label": "Uniswap v4 PoolManager",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 40
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0x000000007a1c8e570011eedf86a2a35593013cba",
-   "label": "UniswapX V3DutchOrderReactor",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 40
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0x544bf81c855ae84c1e8b65d5e38770898d01eee2",
-   "label": "Pendle V2 (ProxyAdmin + devProxyAdmin + MarketFactoryV6)",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 70
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0x8271e06e5887fe5ba05234f5315c19f3ec90e8ad",
-   "label": "Curve DEX (StableSwap-NG Factory + fee-receiver)",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 85
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0x8bceaa40b9acdfaedf85adf4ff01f5ad6517937f",
-   "label": "Uniswap V2 Factory feeToSetter",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 40
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0xbeeff0fb1dc19344a87b8479dab60a2e16160737",
-   "label": "Morpho Ethena x Steakhouse USDG vault",
-   "field": "crossExposureScore",
-   "before": 40,
-   "after": 25
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0xee27d5ae494300902d90454e8630a3f1c68c9c52",
-   "label": "Chainlink Price Feed Admin (Robinhood Chain)",
-   "field": "crossExposureScore",
-   "before": 100,
-   "after": 40
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0xbeeff039907422219fb367e525954ddc092854d9",
-   "label": "Morpho Grove x Steakhouse USDG vault",
-   "field": "crossExposureScore",
-   "before": 40,
-   "after": 25
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0xbeefff136e3684273e6aa75a1669b784b373a4fd",
-   "label": "Morpho Steakhouse Turbo USDG vault",
-   "field": "crossExposureScore",
-   "before": 40,
-   "after": 25
-  },
-  {
-   "oracle": "Robinhood Chain",
-   "target": "0x9d53d5e3bd5e8d4cbfa6db1ca238aea02e651010",
-   "label": "Morpho Blue (singleton, Robinhood Chain)",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 55
-  },
-  {
-   "oracle": "Ethereum L1 (Sepolia)",
-   "target": "0x1f98431c8ad98523631ae4a59f267346ea31f984",
-   "label": "0x1f98\u2026f984",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 20
-  },
-  {
-   "oracle": "Ethereum L1 (Sepolia)",
-   "target": "0x2f39d218133afab8f2b819b1066c7e434ad94e9e",
-   "label": "0x2f39\u20264e9e",
-   "field": "crossExposureScore",
-   "before": 60,
-   "after": 20
-  },
-  {
-   "oracle": "Ethereum L1 (Sepolia)",
-   "target": "0xc3d688b66703497daa19211eedff47f25384cdc3",
-   "label": "0xc3d6\u2026cdc3",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 70
-  },
-  {
-   "oracle": "Ethereum L1 (Sepolia)",
-   "target": "0x000000000004444c5dc75cb358380d2e3de08a90",
-   "label": "0x0000\u20268a90",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 20
-  },
-  {
-   "oracle": "Ethereum L1 (Sepolia)",
-   "target": "0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",
-   "label": "0xbbbb\u2026ffcb",
-   "field": "crossExposureScore",
-   "before": 100,
-   "after": 55
-  },
-  {
-   "oracle": "Ethereum L1 (Sepolia)",
-   "target": "0xbeef047a543e45807105e51a8bbefcc5950fcfba",
-   "label": "0xbeef\u2026cfba",
-   "field": "crossExposureScore",
-   "before": 40,
-   "after": 20
-  },
-  {
-   "oracle": "Ethereum L1 (Sepolia)",
-   "target": "0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
-   "label": "0xbeef\u202664cb",
-   "field": "crossExposureScore",
-   "before": 40,
-   "after": 20
-  },
-  {
-   "oracle": "Arbitrum (Sepolia)",
-   "target": "0x3c3d99fd298f679dbc2cecd132b4ec4d0f5e6e72",
-   "label": "0x3c3d\u20266e72",
-   "field": "adminKeyScore",
-   "before": 10,
-   "after": 65
-  },
-  {
-   "oracle": "Arbitrum (Sepolia)",
-   "target": "0x3c3d99fd298f679dbc2cecd132b4ec4d0f5e6e72",
-   "label": "0x3c3d\u20266e72",
-   "field": "multisigScore",
-   "before": 0,
-   "after": 70
-  },
-  {
-   "oracle": "Arbitrum (Sepolia)",
-   "target": "0x3c3d99fd298f679dbc2cecd132b4ec4d0f5e6e72",
-   "label": "0x3c3d\u20266e72",
-   "field": "timelockScore",
-   "before": 50,
-   "after": 0
-  },
-  {
-   "oracle": "Arbitrum (Sepolia)",
-   "target": "0x3c3d99fd298f679dbc2cecd132b4ec4d0f5e6e72",
-   "label": "0x3c3d\u20266e72",
-   "field": "compositeScore",
-   "before": 19,
-   "after": 47
-  },
-  {
-   "oracle": "Arbitrum (Sepolia)",
-   "target": "0xa97684ead0e402dc232d5a977953df7ecbab3cdb",
-   "label": "0xa976\u20263cdb",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 40
-  },
-  {
-   "oracle": "Arbitrum (Sepolia)",
-   "target": "0x9c4ec768c28520b50860ea7a15bd7213a9ff58bf",
-   "label": "0x9c4e\u202658bf",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 70
-  },
-  {
-   "oracle": "Arbitrum (Sepolia)",
-   "target": "0x888888888889758f76e7103c6cbf23abbf58f946",
-   "label": "0x8888\u2026f946",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 70
-  },
-  {
-   "oracle": "Arbitrum (Sepolia)",
-   "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
-   "label": "0x52aa\u2026e497",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 85
-  },
-  {
-   "oracle": "Arbitrum (Sepolia)",
-   "target": "0x1f98431c8ad98523631ae4a59f267346ea31f984",
-   "label": "0x1f98\u2026f984",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 40
-  },
-  {
-   "oracle": "Base (Sepolia)",
-   "target": "0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",
-   "label": "0xbbbb\u2026ffcb",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 55
-  },
-  {
-   "oracle": "Base (Sepolia)",
-   "target": "0xe20fcbdbffc4dd138ce8b2e6fbb6cb49777ad64d",
-   "label": "0xe20f\u2026d64d",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 40
-  },
-  {
-   "oracle": "Base (Sepolia)",
-   "target": "0x33128a8fc17869897dce68ed026d694621f6fdfd",
-   "label": "0x3312\u2026fdfd",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 40
-  },
-  {
-   "oracle": "Base (Sepolia)",
-   "target": "0xb125e6687d4313864e53df431d5425969c15eb2f",
-   "label": "0xb125\u2026eb2f",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 70
-  },
-  {
-   "oracle": "Base (Sepolia)",
-   "target": "0x8909dc15e40173ff4699343b6eb8132c65e18ec6",
-   "label": "0x8909\u20268ec6",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 40
-  },
-  {
-   "oracle": "Base (Sepolia)",
-   "target": "0x498581ff718922c3f8e6a244956af099b2652b2b",
-   "label": "0x4985\u20262b2b",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 40
-  },
-  {
-   "oracle": "Base (Sepolia)",
-   "target": "0xfbb21d0380bee3312b33c4353c8936a0f13ef26c",
-   "label": "0xfbb2\u2026f26c",
-   "field": "oracleAuthorityScore",
-   "before": 52,
-   "after": 2
-  },
-  {
-   "oracle": "Base (Sepolia)",
-   "target": "0xee8f4ec5672f09119b96ab6fb59c27e1b7e44b61",
-   "label": "0xee8f\u20264b61",
-   "field": "timelockScore",
-   "before": 75,
-   "after": 55
-  },
-  {
-   "oracle": "Base (Sepolia)",
-   "target": "0xee8f4ec5672f09119b96ab6fb59c27e1b7e44b61",
-   "label": "0xee8f\u20264b61",
-   "field": "crossExposureScore",
-   "before": 100,
-   "after": 85
-  },
-  {
-   "oracle": "Base (Sepolia)",
-   "target": "0xee8f4ec5672f09119b96ab6fb59c27e1b7e44b61",
-   "label": "0xee8f\u20264b61",
-   "field": "compositeScore",
-   "before": 66,
-   "after": 60
-  },
-  {
-   "oracle": "Base (Sepolia)",
-   "target": "0xbeef010f9cb27031ad51e3333f9af9c6b1228183",
-   "label": "0xbeef\u20268183",
-   "field": "crossExposureScore",
-   "before": 60,
-   "after": 30
-  },
-  {
-   "oracle": "Base (Sepolia)",
-   "target": "0xbeef2d50b428675a1921bc6bbf4bfb9d8cf1461a",
-   "label": "0xbeef\u2026461a",
-   "field": "crossExposureScore",
-   "before": 60,
-   "after": 30
-  },
-  {
-   "oracle": "Tempo (Moderato)",
-   "target": "0xc609656ed9ef219c98c8e549bf729144f211f06e",
-   "label": "0xc609\u2026f06e",
-   "field": "crossExposureScore",
-   "before": 100,
-   "after": 85
-  },
-  {
-   "oracle": "Tempo (Moderato)",
-   "target": "0x10ee9aac980a180dd4dcfc96c746d60b0ea88f97",
-   "label": "0x10ee\u20268f97",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 55
-  },
-  {
-   "oracle": "Plasma",
-   "target": "0x061d8e131f26512348ee5fa42e2df1ba9d6505e9",
-   "label": "0x061d\u202605e9",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 40
-  },
-  {
-   "oracle": "Plasma",
-   "target": "0x888888888889758f76e7103c6cbf23abbf58f946",
-   "label": "0x8888\u2026f946",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 70
-  },
-  {
-   "oracle": "Plasma",
-   "target": "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34",
-   "label": "0x5d3a\u2026ef34",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 85
-  },
-  {
-   "oracle": "Plasma",
-   "target": "0x42388213c6f56d7e1477632b58ae6bba9adeeea3",
-   "label": "0x4238\u2026eea3",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 85
-  },
-  {
-   "oracle": "Plasma",
-   "target": "0x9b3ceb22cab2f1b9ace4cd3132c8a123552eda2c",
-   "label": "0x9b3c\u2026da2c",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 85
-  },
-  {
-   "oracle": "Plasma",
-   "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
-   "label": "0x52aa\u2026e497",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 85
-  },
-  {
-   "oracle": "Monad",
-   "target": "0x188d586ddcf52439676ca21a244753fa19f9ea8e",
-   "label": "0x188d\u2026ea8e",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 40
-  },
-  {
-   "oracle": "Monad",
-   "target": "0x32841a8511d5c2c5b253f45668780b99139e476d",
-   "label": "0x3284\u2026476d",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 85
-  },
-  {
-   "oracle": "Monad",
-   "target": "0x8271e06e5887fe5ba05234f5315c19f3ec90e8ad",
-   "label": "Curve DEX (StableSwap-NG Factory + fee-receiver)",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 85
-  },
-  {
-   "oracle": "Monad",
-   "target": "0x34793fb9935f7bb5e5ae920fb963f39063e7a615",
-   "label": "0x3479\u2026a615",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 40
-  },
-  {
-   "oracle": "Monad",
-   "target": "0xba4dd672062de8feedb665dd4410658864483f1e",
-   "label": "0xba4d\u20263f1e",
-   "field": "crossExposureScore",
-   "before": 80,
-   "after": 85
-  },
-  {
-   "oracle": "Solana (Devnet)",
-   "target": "4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8",
-   "label": "4qp6Fx\u2026dAG8",
-   "field": "multisigScore",
-   "before": 50,
-   "after": 46
-  },
-  {
-   "oracle": "Solana (Devnet)",
-   "target": "4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8",
-   "label": "4qp6Fx\u2026dAG8",
-   "field": "compositeScore",
-   "before": 33,
-   "after": 32
-  }
- ],
+ "movers": [],
  "alerts": [],
  "unread": [],
  "note": "The Zcash commitments are verified by the dashboard itself. An oracle in `unread` has unknown targets, not zero."

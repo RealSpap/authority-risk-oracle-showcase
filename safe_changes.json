@@ -5,20 +5,20 @@
    "ecosystem": "robinhood",
    "safes": 25,
    "events": [],
-   "control": 97,
+   "control": 99,
    "status": "ok",
-   "fromBlock": 93896461,
-   "toBlock": 99690486,
+   "fromBlock": 94103070,
+   "toBlock": 99897302,
    "days_read": 7
   },
   {
    "ecosystem": "ethereum-l1",
    "safes": 15,
    "events": [],
-   "control": 14,
+   "control": 18,
    "status": "ok",
-   "fromBlock": 26237656,
-   "toBlock": 26287908,
+   "fromBlock": 26239442,
+   "toBlock": 26289692,
    "days_read": 7
   },
   {
@@ -27,8 +27,8 @@
    "events": [],
    "control": 26,
    "status": "ok",
-   "fromBlock": 516769063,
-   "toBlock": 518908334,
+   "fromBlock": 516845882,
+   "toBlock": 518978890,
    "days_read": 7
   },
   {
@@ -37,8 +37,8 @@
    "events": [],
    "control": 17,
    "status": "ok",
-   "fromBlock": 52878221,
-   "toBlock": 53180620,
+   "fromBlock": 52888962,
+   "toBlock": 53191361,
    "days_read": 7
   },
   {
@@ -47,8 +47,8 @@
    "events": [],
    "control": 0,
    "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 43 execution(s) from other Safes on the window's tail)",
-   "fromBlock": 45115564,
-   "toBlock": 46220085,
+   "fromBlock": 45154568,
+   "toBlock": 46259371,
    "days_read": 7,
    "control_witness": 43
   },
@@ -58,19 +58,20 @@
    "events": [],
    "control": 10,
    "status": "ok",
-   "fromBlock": 35604470,
-   "toBlock": 36209254,
+   "fromBlock": 35625952,
+   "toBlock": 36230736,
    "days_read": 7
   },
   {
    "ecosystem": "monad",
    "safes": 13,
    "events": [],
-   "control": 2,
-   "status": "ok",
-   "fromBlock": 117108999,
-   "toBlock": 117194842,
-   "days_read": 0.3
+   "control": 0,
+   "status": "UNREAD (control returned 0 ExecutionSuccess events on the tracked Safes and none from any Safe on the window's tail: the RPC may be truncating, not the Safes being idle)",
+   "fromBlock": 117180213,
+   "toBlock": 117265986,
+   "days_read": 0.3,
+   "control_witness": 0
   },
   {
    "ecosystem": "hyperliquid",
@@ -78,8 +79,8 @@
    "events": [],
    "control": null,
    "status": "UNREAD (Web3RPCError: {'code': -32602, 'message': 'invalid block range'})",
-   "fromBlock": 49445550,
-   "toBlock": 49709015,
+   "fromBlock": 49467620,
+   "toBlock": 49731084,
    "days_read": 3.0
   }
  ]

@@ -1,11 +1,9 @@
 {
- "run_utc": "2026-10-28T01:06:46Z",
+ "run_utc": "2026-10-28T07:03:10Z",
  "state": "degraded",
  "reasons": [
   "1 of 202 targets stale on the oracles",
   "13 second-opinion disagreement(s) to review",
-  "1 high alert(s) from the rules firing now (delay removed: timelock score fell to 0)",
-  "methodology changed on 9 oracle(s): scores before this run are not comparable",
   "methodology hashes mixed on 1 oracle(s)",
   "method hash not in registry on 9 oracle(s): no version is shown for it (data/method_versions.json)"
  ],
@@ -17,7 +15,7 @@
   "stale": 1,
   "alarms": 0,
   "chain_ok": true,
-  "chain_entries": 191,
+  "chain_entries": 200,
   "signed": true,
   "signature_status": "signed",
   "signing_key": "11baca3ef6a69de4901c185f6cbbd3f93318fbb74f9961a8d39aead841adf409",
@@ -30,7 +28,7 @@
   },
   "methodology_mixed": 1,
   "disputes_open": 0,
-  "review_items": 33
+  "review_items": 24
  },
  "what": "the run's health in one record: ok / degraded / alarm with the reasons; written by scripts/run_status.py after every Watch run",
  "main_last_commit_age_days": 1

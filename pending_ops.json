@@ -136,7 +136,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 4706614,
+   "window_blocks": 4005298,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -149,30 +149,14 @@
    "address": "0x4d6ce4f4498d59eed397bcbc687805a07f9b2346",
    "family": "oz",
    "status": "ok",
-   "queued_events": 2,
-   "latest_queued": 1791831981,
+   "queued_events": 0,
+   "latest_queued": null,
    "pending": [],
-   "recent": [
-    {
-     "block": 514202117,
-     "tx": "0xa0f93ad721d5d2201e107b9f32a65855b7b2eca61af1b4a60a730bbf922bba74",
-     "id": "0x314f235e0b39bc8c5d078368747597d9957804ff085eca875e24b44773ae195b",
-     "index": 0,
-     "target": "0x52Aa899454998Be5b000Ad077a46Bbe360F4e497",
-     "value": 0,
-     "selector": "0x02c6bb6a",
-     "delay": 86400,
-     "signature": "updateUserSupplyConfigs((address,address,uint8,uint256,uint256,uint256)[])",
-     "calls": 2,
-     "still_queued": false,
-     "queued_at": 1791831981,
-     "decoded": "parameter change"
-    }
-   ],
+   "recent": [],
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 4706614,
+   "window_blocks": 4005298,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -192,7 +176,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 4706614,
+   "window_blocks": 4005298,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -264,7 +248,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/mainnet",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 100598,
+   "window_blocks": 100398,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -382,7 +366,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 0,
    "window_blocks": 3000000,
-   "window_days_est": 3.5,
+   "window_days_est": 4.0,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62"
@@ -1202,8 +1186,8 @@
     "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK"
    ],
    "delay": 0,
-   "queued_events": 55,
-   "latest_queued": 1792650268,
+   "queued_events": 56,
+   "latest_queued": 1793171787,
    "pending": [],
    "recent": [
     {
@@ -1223,13 +1207,22 @@
      "touches_governed": true
     }
    ],
-   "active": [],
+   "active": [
+    {
+     "index": 56,
+     "approvals": 1,
+     "rejections": 0,
+     "since": 1793171787,
+     "account": "BKu2pjhhrZM5zUzoUvWWSgWFkZLiB6YbTuDen3BwGa6i"
+    }
+   ],
    "proposals": {
     "executed": 52,
     "rejected": 2,
-    "cancelled": 1
+    "cancelled": 1,
+    "active": 1
    },
-   "transaction_index": 55
+   "transaction_index": 56
   },
   {
    "name": "Squads v4 multisig uGLh\u2026r7gX (5-of-9, time lock 43200 s), found by the independent reader (1 tracked program)",
@@ -1256,7 +1249,7 @@
    "transaction_index": 71
   }
  ],
- "discovered_utc": "2026-10-28T01:17:25Z",
+ "discovered_utc": "2026-10-28T07:15:04Z",
  "discovered": 15,
- "squads_utc": "2026-10-28T01:22:04Z"
+ "squads_utc": "2026-10-28T07:19:45Z"
 }

@@ -1,9 +1,8 @@
 # Authority risk digest, 2026-10-28 08:07 UTC
 
-## Needs a person, 2026-10-28T08:07:20Z: 24 item(s) (priority 1: 2, priority 2: 19, priority 3: 3); oldest 17.4 d
+## Needs a person, 2026-10-28T08:07:20Z: 23 item(s) (priority 1: 1, priority 2: 19, priority 3: 3); oldest 17.4 d
 
-### Something happened: read before trusting the score (2)
-- **queued operation executable** solana GBZnPvzLWHjmCgkE3hYB8MmyMjmoq2HAyuseNBwtxFTg (1.0 d): loader Close: Squads proposal #64: Close of program GBZnPvzLWHjmCgkE3hYB8MmyMjmoq2HAyuseNBwtxFTg; Close of program vcxZRPheWRgCbEmot2szRBnXQ1usSTCh1eJdxAYxdZA; Close of program 8xzSSjxcQu13h6oPTS (not the tracked program) via Squads v4 multisig J3mJ…vG8P (4-of-6, time lock 43200 s), found by the ind. To do: read the call before it lands. (pending_ops.json)
+### Something happened: read before trusting the score (1)
 - **admin transfer in flight** robinhood 0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d (0.0 d): 0x9db4…1a53 designated (pendingOwner() on the contract (Ownable2Step), a contract). To do: identify the designated admin; when it accepts, the admin read changes. (second_opinion.json pending_admin)
 
 ### Decide (19)

@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-28T13:24:27Z",
+ "generated_utc": "2026-10-28T19:27:41Z",
  "chains": {
   "arbitrum": {
    "oracle": "Arbitrum (Sepolia)",
@@ -100,34 +100,32 @@
    "oracle": "Hyperliquid (HyperEVM)",
    "targets": 16,
    "independent_read": {
-    "readable": 3,
-    "unreadable": 3,
+    "readable": 4,
+    "unreadable": 2,
     "native": 10
    },
    "proxies_fingerprinted": 5,
-   "safes": 1,
-   "safes_modules_read": 1,
+   "safes": 2,
+   "safes_modules_read": 2,
    "timelocks_in_admin_path": 1,
    "timelock_queues_watched": 1,
    "safe_events": {
     "safes": 5,
-    "days": 7,
-    "status": "unread",
-    "why": "UNREAD (cannot locate the window start: Web3RPCError: {'code': -32603, 'message': 'invalid block height: 49484337'})"
+    "days": 3.0,
+    "status": "ok",
+    "why": null
    },
    "tvl_matched": 10,
    "held_read": 0,
    "pause_answered": 0,
    "roles_read": 0,
    "admin_safes_nonce_read": 1,
-   "admin_role_probed": 1,
+   "admin_role_probed": 0,
    "blind_spots": [
-    "3 contract(s) where no admin slot, owner() or admin() answers: the independent reader cannot classify their admin",
+    "2 contract(s) where no admin slot, owner() or admin() answers: the independent reader cannot classify their admin",
     "paused() or isPaused() answered by 0 of 16 contracts: a pause on the other 16 is not seen, and 'nothing paused' says nothing about them",
     "no pauser, guardian or curator getter answers on 16 of 16 contracts: a change of those hands is not seen there",
-    "of the unreadable contracts, 1 are AccessControl contracts asked who holds the admin role among the holders already known: a yes proves one holder, never the full list",
     "10 native identifier(s) (no code at the address): outside the independent reader's reach, scored by the methodology alone",
-    "Safe events not read this run (UNREAD (cannot locate the window start: Web3RPCError: {'code': -32603, 'message': 'invalid block height: 49484337'}))",
     "no money figure for 6 of 16 contracts (no DefiLlama protocol, no totalAssets() answered): money at risk not computed for them"
    ]
   },

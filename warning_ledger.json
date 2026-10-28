@@ -1105,20 +1105,41 @@
    "first_seen_utc": "2026-10-26T18:55:57Z",
    "due_utc": "2026-10-27T06:35:20Z",
    "notice_hours": 11.7,
-   "state": "queued",
+   "state": "resolved",
    "chain": "solana",
    "timelock": "Squads v4 multisig J3mJ\u2026vG8P (4-of-6, time lock 43200 s), found by the independent reader (1 tracked program)",
-   "what": "loader Close"
+   "what": "loader Close",
+   "resolved_seen_utc": "2026-10-28T18:57:19Z"
+  },
+  "ethereum:0xe8dc0fab349ea169283c48ccfd09d797e6db7c94:0xd4801b79df7225e163cfaed0fd5ec408c53254c6f6f6cf459e980ea980c2de2f": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-10-28T18:57:19Z",
+   "due_utc": "2026-10-29T15:34:23Z",
+   "notice_hours": 20.6,
+   "state": "queued",
+   "chain": "ethereum",
+   "timelock": "Ethena Timelock",
+   "what": "authority change"
+  },
+  "solana:bqsdwkl417u4tve2sdnpks469pkdm6yzfgkh77doiejf:squads:BQsDWkL417U4tVE2sDnPks469pKdm6YzFgKH77doiEjF:99": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-10-28T18:57:19Z",
+   "due_utc": "2026-10-29T16:48:22Z",
+   "notice_hours": 21.9,
+   "state": "queued",
+   "chain": "solana",
+   "timelock": "Squads v4 multisig BQsD\u2026iEjF (5-of-13, time lock 86400 s), found by the independent reader (1 tracked program)",
+   "what": "multisig config"
   }
  },
- "updated_utc": "2026-10-28T13:03:18Z",
+ "updated_utc": "2026-10-28T18:57:19Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
-  "warned": 31,
+  "warned": 33,
   "seen_without_notice": 3,
   "missed": 13,
   "baseline": 77,
-  "warned_with_a_known_notice": 31,
+  "warned_with_a_known_notice": 33,
   "shortest_notice_hours": 0.2,
   "median_notice_hours": 21.1,
   "note": "warned: seen while queued and not yet executable (the notice is real); seen_without_notice: still queued but already executable when first seen; missed: queued after the ledger started and already applied when first seen (faster than the 6-hour cadence); baseline: applied before the ledger started, counted as neither."

@@ -130,6 +130,7 @@
   .card-tags { display: flex; gap: 6px; margin-top: 7px; flex-wrap: wrap; }
   .tag { font-size: 10px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; padding: 2.5px 7px; border-radius: 5px;
     background: var(--accent-soft); color: var(--accent); }
+  .tag.tag-alert { background: var(--band-weak-bg); color: var(--band-weak); }
   .chevron { color: var(--text-faint); transition: transform 0.15s ease; flex: none; }
   .card.open .chevron { transform: rotate(90deg); }
   .card-body { display: none; padding: 0 18px 18px; border-top: 1px solid var(--border); }
@@ -293,7 +294,7 @@
 
   <div class="stats" id="stats" style="display:none">
     <div class="stat"><div class="n" id="statCount">–</div><div class="l">Targets tracked</div></div>
-    <div class="stat"><div class="n" id="statMean">–</div><div class="l">Mean composite</div></div>
+    <div class="stat"><div class="n" id="statMean">–</div><div class="l">Mean setup grade (composite)</div></div>
     <div class="stat"><div class="n" id="statWorst">–</div><div class="l">Worst score</div></div>
     <div class="stat"><div class="n" id="statBest">–</div><div class="l">Best score</div></div>
   </div>
@@ -814,14 +815,14 @@
       summary: 'MCD_PAUSE.delay() is a real, confirmed 2-day delay, gated by DSChief - whose current "hat" is a governance spell executed just 6 days before this scorer ran.',
       tag: '$5.06B TVL (Sky Lending)',
       detail: 'Read directly from the official dss-chain-log changelog contract rather than the chainlink.makerdao.com frontend, which did not return usable JSON this pass. done()=true on the current hat confirms real, active governance, not a dormant placeholder.' },
-    { idx: [3], title: 'Ethena EthenaMinting (retired minter)',
-      summary: 'This contract was USDe’s minter until 2024-07-08 and has been inert since: USDe.mint() called from it reverts, and it holds no collateral. Its owner is the 5-of-10 Safe directly, with no delay, which is what its on-chain entry still reads (55/100/0, composite 52, last written by the 2026-09-19 push).',
-      tag: 'retired 2026-09-20, stale historical reading, no longer refreshed',
-      detail: 'Found by the unscored-role sweep: USDe.minter() has pointed at a different EthenaMinting (the idx 14 card, USDe live minter) since block 20261016, and re-pointing it here would need USDe.setMinter, which sits behind the 24h timelock. The oracle has no removal function, so this target is retired by ceasing to refresh it: the 2026-09-20 push wrote the live minter as index 14 (Ethereum L1 now tracks 15 targets, 14 of them refreshed) and left index 3 untouched. Its on-chain entry stays as a historical reading and turns stale nine days after its last update, which was the 2026-09-19 push. The old number was right about this contract and irrelevant to USDe.' },
-    { idx: [4], title: 'USDtb (Ethena Labs)',
-      summary: 'A single bare EOA - a real, actively-used key, not vanity-mined - holds both DEFAULT_ADMIN_ROLE and the ProxyAdmin owner() on a $483M stablecoin. No Safe, no Timelock, no DAO anywhere.',
-      tag: 'critical: bare EOA on $483M',
-      detail: 'The same EOA also independently holds admin on two other proxies (fUSD, aBTC) with negligible real usage, so those aren’t scored as their own targets - but the blast radius is real. Genuinely inconsistent within Ethena’s own infrastructure: USDtb’s own PSM (next card) migrated from a Safe to a real 24h Timelock on 2026-07-13; this token’s upgrade authority never got the same treatment.' },
+    { idx: [3], title: 'Ethena EthenaMinting (not refreshed since 2026-09-23)',
+      summary: 'This contract was USDe’s minter until 2024-07-08 and has been inert since: USDe.mint() called from it reverts, and it holds no collateral. Its owner is the 5-of-10 Safe directly, with no delay, which is what its on-chain entry still reads (55/100/0, composite 52, last written on 2026-09-23).',
+      tag: 'retired, stale historical reading, no longer refreshed',
+      detail: 'Found by the unscored-role sweep: USDe.minter() has pointed at a different EthenaMinting (the idx 14 card, USDe live minter) since block 20261016, and re-pointing it here would need USDe.setMinter, which sits behind the 24h timelock. The oracle has no removal function, so this target is retired by ceasing to refresh it. The last write of index 3 on the oracle is dated 2026-09-23 (16:16 UTC); its entry stays as a historical reading and turns stale nine days later, on 2026-10-02. The old number was right about this contract and irrelevant to USDe.' },
+    { idx: [4], title: 'USDtb',
+      summary: 'One EOA (an account with no contract code) holds both DEFAULT_ADMIN_ROLE and the ProxyAdmin owner() of this stablecoin, whose supply was about 475M tokens on 2026-10-28. We found no multisig, timelock or DAO on that path.',
+      tag: 'critical: one EOA, about 475M tokens',
+      detail: 'The same EOA also holds admin on two other proxies (fUSD, aBTC) with negligible real usage, so those are not scored as their own targets. The USDtb PSM (next card) moved from a multisig to a 24h Timelock on 2026-07-13; for the upgrade path of this token we found no similar change. The docs say the token has been issued by Anchorage Digital Bank since October 2025 (docs.ethena.fi), so the key may belong to the issuer. We have not confirmed who holds it.' },
     { idx: [5], title: 'USDtb PSM (peg-stability module)',
       summary: 'A real 24h Timelock + 5-of-10 Safe govern this - but 3 freeze-type functions are instantly bypassable by a single role holder. The fund-redirect functions are not.',
       tag: 'nuanced: freeze bypass, funds protected',
@@ -1940,9 +1941,20 @@
     'Admin key': 'How concentrated direct admin control is. A single unprotected EOA scores worst; a well-separated role structure scores best.',
     'Multisig': 'Signer threshold vs. total signers on any Safe/multisig found in the authority chain. Low thresholds (e.g. 1-of-1, 2-of-3) score worse.',
     'Timelock': 'Delay enforced before a privileged action executes. Zero or missing delay scores worst; longer, unbypassable delays score better.',
-    'Oracle authority': 'Concentration of who can add or update the price-oracle feed this target depends on. Reads 100 by convention when not applicable, e.g. a target with no oracle dependency at all.',
-    'Cross-exposure': 'Whether the real signers behind this target also control another tracked target, on this chain or on another ecosystem. 100 = no shared signer found with any other group; a committee identical to one tracked on another ecosystem is capped at a flat 80.'
+    'Oracle authority': 'Concentration of who can add or update the price-oracle feed this target depends on. A 100 does NOT mean safe: the contract stores one number for different cases (not applicable, or not yet computed for a price consumer outside the rule\'s current scope; or computed, with no unbounded price path found). It cannot tell them apart; see METHODOLOGY.md. A price path that could not be read is published as 20, not 100.',
+    'Cross-exposure': 'Whether the real signers behind this target also control another tracked target, on this chain or on another ecosystem. 100 = no shared signer found with any other group, OR not computed for that target (the contract cannot tell the two apart). A committee shared with targets on other ecosystems lowers it; see METHODOLOGY.md.'
   };
+  // A composite can be high while a dimension outside it is weak (composite = admin key, multisig, timelock only).
+  function setupAlerts(list) {
+    var o = Infinity, x = Infinity, out = [];
+    list.forEach(function (s) {
+      if (isFinite(s.oracleAuthorityScore)) o = Math.min(o, s.oracleAuthorityScore);
+      if (isFinite(s.crossExposureScore)) x = Math.min(x, s.crossExposureScore);
+    });
+    if (o <= 40) out.push('Oracle authority ' + o);
+    if (x <= 40) out.push('Cross-exposure ' + x);
+    return out;
+  }
   function subBar(label, value) {
     var b = band(value);
     var hint = SUBSCORE_HINTS[label];
@@ -2044,10 +2056,12 @@
       var tagsHtml = '';
       if (g.tag) tagsHtml += '<span class="tag">' + g.tag + '</span>';
       if (g.idx.length > 1) tagsHtml += '<span class="tag">' + g.idx.length + ' contracts, same finding</span>';
+      var alerts = setupAlerts(g.idx.map(function (i) { return scores[i]; }));
+      if (alerts.length) tagsHtml += '<span class="tag tag-alert" title="The headline number is the setup grade (admin key, multisig, timelock). These dimensions are not in it.">Not in the grade: ' + alerts.join(', ') + '</span>';
 
       card.innerHTML =
         '<div class="card-row">' +
-          '<div class="score-badge" style="background:var(--band-' + bd.key + '-bg);color:var(--band-' + bd.key + ')">' +
+          '<div class="score-badge" title="Setup grade: admin key, multisig and timelock only. Oracle authority and cross-exposure are not in it." style="background:var(--band-' + bd.key + '-bg);color:var(--band-' + bd.key + ')">' +
             '<div class="num">' + s.compositeScore + '</div><div class="band">' + bd.label + '</div></div>' +
           '<div class="card-main"><h3>' + g.title + '</h3><p class="summary">' + g.summary + '</p>' +
             (tagsHtml ? '<div class="card-tags">' + tagsHtml + '</div>' : '') + '</div>' +

@@ -11,7 +11,7 @@
   <a href=".github/workflows/test.yml"><img alt="Tests" src="https://github.com/RealSpap/authority-risk-oracle-showcase/actions/workflows/test.yml/badge.svg"></a>
   <a href=".github/workflows/watch.yml"><img alt="Watch" src="https://github.com/RealSpap/authority-risk-oracle-showcase/actions/workflows/watch.yml/badge.svg"></a>
   <a href=".github/workflows/mutation.yml"><img alt="Mutation" src="https://github.com/RealSpap/authority-risk-oracle-showcase/actions/workflows/mutation.yml/badge.svg"></a>
-  <img alt="Ecosystems" src="https://img.shields.io/badge/ecosystems-10-informational">
+  <img alt="Ecosystems" src="https://img.shields.io/badge/ecosystems-10%20%289%20oracles%20%2B%20Zcash%29-informational">
   <a href="https://realspap.github.io/oracle/"><img alt="Targets read by the watch" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FRealSpap%2Fauthority-risk-oracle-showcase%2Fwatch-data%2Fbadge.json"></a>
   <img alt="Network" src="https://img.shields.io/badge/deployed-testnets-orange">
   <a href="watch/API.md"><img alt="Watch integrity" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FRealSpap%2Fauthority-risk-oracle-showcase%2Fwatch-data%2Fbadge%2Fintegrity.json"></a>
@@ -50,7 +50,7 @@ cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 \
   0x1f7d7550B1b028f7571E69A784071F0205FD2EfA \
   --rpc-url https://rpc.testnet.chain.robinhood.com/rpc
 # adminKey, multisig, timelock, oracleAuthority, crossExposure, composite, lastUpdated, methodologyHash
-# 80, 100, 75, 100, 80, 85, 1792448928, 0x7a8280d6...   (read live on 2026-10-22; the last two values change at every push)
+# 80, 100, 75, 100, 40, 85, 1793136187, 0x05ae8b25...   (read live on 2026-10-28; the last two values change at every push)
 ```
 
 **3. Gate a decision on a label in 14 lines:**
@@ -63,7 +63,7 @@ python3 integrations/authority_facts_gate.py https://realspap.github.io/oracle/p
 
 | If you decide: delegates, risk managers, DAO committees | If you build: developers, integrators |
 |---|---|
-| 1. Open the [dashboard](https://realspap.github.io/oracle/): 202 contracts on 9 chains, the money behind them where one was read, the delay before a change applies. | 1. Read a score from a contract: `getScore(address)` and `isStale(address)`, as in command 2 ([`ExampleConsumer.sol`](src/ExampleConsumer.sol)). |
+| 1. Open the [dashboard](https://realspap.github.io/oracle/): 202 contracts on 9 oracles (8 EVM testnets and Solana devnet; Zcash is separate, 6 targets attested by on-chain commitments), the money behind them where one was read, the delay before a change applies. | 1. Read a score from a contract: `getScore(address)` and `isStale(address)`, as in command 2 ([`ExampleConsumer.sol`](src/ExampleConsumer.sol)). |
 | 2. Read [one contract's label](https://realspap.github.io/oracle/p/robinhood-0x1f7d7550b1b028f7571e69a784071f0205fd2efa.html): who can move it, how many keys, how long everyone else has to react, what was not read. The format is open: [Authority Facts v0.1](docs/AUTHORITY-FACTS-SPEC.md). | 2. Gate on a label in 14 lines (command 3): [`integrations/authority_facts_gate.py`](integrations/authority_facts_gate.py). |
 | 3. Follow a protocol on every chain: one Atom feed per protocol, or, after `bash scripts/watch_branch.sh prepare` (it fetches the Watch's data), `python3 scripts/brief.py morpho-blue` for a one-page brief. | 3. Put it in CI: `uses: RealSpap/authority-risk-oracle-showcase@main` with `chain`, `address`, `min-score` ([`action.yml`](action.yml)), or an agent through the local MCP server. |
 

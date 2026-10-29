@@ -5,7 +5,7 @@ script for its oracle, dated audits in `data/`, and (where the ecosystem differs
 
 | Folder | Oracle published on | Targets | Oracle kind | What is specific |
 |---|---|---|---|---|
-| [`ethereum-l1/`](ethereum-l1/) | Sepolia | 34 | Solidity | the deepest set: Safe, Timelock and DAO resolution, Morpho vaults, Aave and Compound price paths |
+| [`ethereum-l1/`](ethereum-l1/) | Sepolia | 39 | Solidity | the deepest set: Safe, Timelock and DAO resolution, Morpho vaults, Aave and Compound price paths |
 | [`arbitrum-ecosystem/`](arbitrum-ecosystem/) | Arbitrum Sepolia | 13 | Solidity | GMX V2, Compound V3, Pendle, Fluid, Uniswap V3; Aave V3 guardian Safe shared with Base; bridge-alias arithmetic for L1-to-L2 timelocks |
 | [`base-ecosystem/`](base-ecosystem/) | Base Sepolia | 13 | Solidity | Morpho Blue and Aerodrome among others; signer overlap with Arbitrum and Robinhood Chain ([finding](../data/finding_2026-09-19-base-morpho-blue-robinhood-overlap.md)) |
 | `robinhood-chain` (scorers in the shared library) | Robinhood Chain testnet | 63 | Solidity | the longest tail of small protocols; the mainnet target |

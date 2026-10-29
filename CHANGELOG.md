@@ -3,14 +3,42 @@
 <!-- readers:begin -->
 ## Changes for readers
 
-One entry per method version, named `YYYY.MM.N` (`data/method_versions.json`). `N` counts, within the month, the changes of `METHODOLOGY.md` or of the scoring code that move a published score. The `methodologyHash` stays the machine identifier: it is a digest of the scoring code of one oracle (`scripts/lib/methodology.py`), not a hash of the text of `METHODOLOGY.md`, and each oracle has its own. The hashes of 2026.10.2 were read from `getScore()` on each oracle on 2026-10-13 (about 15:30Z); an earlier draft of this section had read older hashes from the public pages of the Watch, which lagged the chain, and called a correct hash a divergence. The hashes of 2026.10.3 were read from `getScore()` on each EVM oracle and from the Solana accounts on 2026-10-20 (about 16:50Z). Versions before 2026.09.0 are not named: see the engineering log below.
+One entry per method version, named `YYYY.MM.N` (`data/method_versions.json`). `N` counts, within the month, the changes of `METHODOLOGY.md` or of the scoring code that move a published score. The `methodologyHash` stays the machine identifier: it is a digest of the scoring code of one oracle (`scripts/lib/methodology.py`), not a hash of the text of `METHODOLOGY.md`, and each oracle has its own. The hashes of 2026.10.2 were read from `getScore()` on each oracle on 2026-10-13 (about 15:30Z); an earlier draft of this section had read older hashes from the public pages of the Watch, which lagged the chain, and called a correct hash a divergence. The hashes of 2026.10.3 were read from `getScore()` on each EVM oracle and from the Solana accounts on 2026-10-20 (about 16:50Z). The hashes of 2026.10.4 were read on each oracle on 2026-10-28 (about 05:50Z). Versions before 2026.09.0 are not named: see the engineering log below.
 
 ### Known gaps, dated and not corrected
 
-- 2026-10-13: the Watch alert on `Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo` was labelled with another protocol's name: the address is GMX-Solana's `gmsol_store` (the scorer labels it correctly).
-- 2026-10-13: a Watch alert on a queued change carries the same score whatever the instruction in the queue does (a price-feed setting and a full replacement of the core program read the same).
+- 2026-10-13: A Watch alert used the name of another protocol for the address `Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo`. This address is GMX-Solana's `gmsol_store`. The scorer gives it the correct name. On 2026-10-28 the file `alerts.json` titles the alerts of this address with its short address, without a name.
+- 2026-10-13: A Watch alert about a change waiting in a timelock queue shows the same score, whatever that change does. A change to a price-feed setting and a full replacement of the core program are shown with the same score. The severity of the alert depends on how soon the change can run, not on what it does.
 
-### 2026.10.3 (2026-10-19 and 2026-10-20, on the oracles today)
+### 2026.10.4 (2026-10-27, on the nine oracles)
+
+| Oracle | methodologyHash | Pushed |
+|---|---|---|
+| Robinhood Chain | `0x05ae8b2527e36e0cfe794ab3b0eedd011f66b8007af63cb1bd050287799aa465` (63 targets) | 2026-10-27 21:23Z |
+| Ethereum L1 | `0xf1bcef2ca2dbc26e9b6b0a98e883de825d0be73765dbc53447e885de88b3c0ee` (38 targets) | 2026-10-27 21:24Z |
+| Arbitrum | `0x149f7eccbc88a7a1ded5506cd92687aed1528f7d5602cfa7e3c4ac43df14a048` (13 targets) | 2026-10-27 21:09Z |
+| Base | `0xe0d0de7c9b360a216a51b8fca8823c8e6336b8a4b41f4578d4bdbba4beab6ea5` (13 targets) | 2026-10-27 20:55Z |
+| Plasma | `0xfc81e047bf35b73ad4b06bbcc368e2cec1723619e9c4b97867ddeca578a95984` (9 targets) | 2026-10-27 20:59Z |
+| Monad | `0xbcc2bb8378d005843c68080516e599fa2e28133e77313445d85427501e0e6285` (9 targets) | 2026-10-27 20:55Z |
+| Hyperliquid | `0xc2c56961f2e8d815b640cc66c070a5b8bd2e1cdb8ef6ef02431af5cb062b65ad` (16 targets) | 2026-10-27 21:09Z |
+| Tempo | `0x5e0583b1360f9153f23d32585028d2decf6c862446c62e71867090dfde126f7a` (14 targets) | 2026-10-27 20:48Z |
+| Solana | `0x0b14b26691934fd7c0fbb1f87efb539d99df562e1f78cdc2711db3a5ad9f18c2` (26 targets) | 2026-10-27 20:26Z |
+
+On the evening of 27 October I renewed all nine oracles with method 2026.10.4. The 202 tracked targets are the same ones: none added, none removed. The hashes were computed from the scoring files before the send, and I read the same hashes on the oracles on 28 October. Each oracle shows one hash on all its entries, with one exception: the retired Ethereum L1 entry of a stablecoin minter is no longer renewed and keeps the hash of method 2026.09.0.
+
+- **Shared signers now lower a score step by step.** The cross exposure score falls by 15 for each other ecosystem that shares the committee and stops at 20 (a value already below 20 is left as it is). It stays at or under the value the target already has inside its own ecosystem. This replaces the flat 80. On the 175 EVM values I read back on 20 October, 45 targets moved: 36 fell and 9 rose by 5, because a 100 that the flat rule capped at 80 reads 85 when exactly one other ecosystem shares it. No composite moves because of this.
+- **The table of shared signers now expires after 30 days.** I swept it again on 21 October. A push after 20 November without a new sweep would read any value above 80 as 80, with a note that the snapshot is old. This can lower a score and cannot raise one, and it does not move a composite.
+- **Two vaults run by the same curator, one on Base and one on Tempo, share the same owner and curator multisig addresses.** Their shared-signer score now reads 85 instead of 100. Their composites do not include that score.
+- **Documentation, no score moves.** `METHODOLOGY.md` in the working repository (not yet public) names the four multisig scales with their formulas and values for five common committees. It also states the known limit that operating roles are not scored, with two examples I read on 21 October: a guardian role that can pause deposits and withdrawals (one holder, a 2-of-4 multisig), and an operator role with 37 functions in the verified implementation, none of them an upgrade. The proxy behind the second one was pointed to a new, unverified implementation on 22 October, so that count needs to be read again. The notes of five pages carry this limit.
+
+**What moved because the chains moved, not the method**
+- The Base vault above went from 66 to 60, for a reason on the chain: its owner, curator and guardian multisigs now have the same signer addresses. Its 7-day delay is unchanged.
+
+**How I checked.** My push guard held 27 entries whose score moved by more than 15 points. I accepted each one by hand, by address. The nine hashes read on chain after the push are the expected ones.
+
+**Freshness.** The oldest update among the renewed entries is from 27 October, 20:26 UTC (Solana). Those entries start to expire on 5 November 2026 at 20:26 UTC, nine days later, so they need renewing before then. One target is left to age.
+
+### 2026.10.3 (2026-10-19 and 2026-10-20, replaced on nine oracles on 2026-10-27)
 
 | Oracle | methodologyHash | Pushed |
 |---|---|---|
@@ -27,12 +55,12 @@ One entry per method version, named `YYYY.MM.N` (`data/method_versions.json`). `
 - Pushed from commit `4d21558f789725be539996e1dc1ca9747a3b19fb`; the hashes were computed from the scoring files of that commit before the push and match the ones read on the oracles. 202 targets are tracked across the nine oracles; every score was read back from the oracles after the push and equals the value computed before it. The Ethereum L1 oracle keeps one entry under an older hash (the retired Ethena minting entry, 2026.09.0). The Tempo hash also covers a change of its log reader (it waits and retries when the public RPC says rate limited; no score is computed differently).
 
 - Covers: five more targets on Ethereum L1 (Arbitrum bridge 60, Pendle V2 43, Aave V4 53, Fluid Liquidity 77, Base bridge 56); one rule for nested Safe seats (a Safe whose owner is another Safe is counted on the EOA keys that must really sign, only when those keys are distinct and only upward); a Safe is recognised on its code (a published Safe proxy), not only on what `getOwners()` answers; the limit that Safe owners can write the Safe's storage is now recorded as a known limit.
-- The nested-seat rule for a Morpho vault curator Safe now applies on every chain (one shared module, `scripts/lib/curator_multisig.py`, in the working repository, not yet public), after a live case on 2026-10-13: the curator of the Spark USDC Vault on Base was rewritten at 13:17:05Z (block 52554039, one Safe transaction) from a 3-of-5 into a 2-of-2 whose owners are a 3-of-5 Safe and a 1-of-2 Safe, so four keys must sign; read at the first level it looked like a 2-of-2 and the vault would have fallen from 63 to 44, on the keys that really sign it scores 65.
-- Moved a score on that push (read back from the oracles): a tracked adapter on Arbitrum (8 to 40: the Zodiac Delay module of its Safe, analysed on 2026-10-12, no longer blocks the Safe); a tracked vault on Ethereum (2 to 19: the vault's own 14-day timelock counts, confirmed by a second script that uses only the standard library, written by the same author and reading the same public RPC); a tracked vault on Base (63 to 65, instead of the 44 a first-level reading gives); a tracked curator vault on Robinhood Chain (multisig 30 to 60, composite 40 to 49); a tracked vault on Monad (cross exposure 100 to 80, composite unchanged); two tracked lending pools on Ethereum L1 (cross exposure 80 to 60: a new access-control contract in this push shares their root authority); two tracked contracts on Robinhood Chain (composite 32 to 29: an executor delay read as 0 now scores 0, a positive delay under one day 40, one day or more 60); a tracked lending program on Solana (multisig 87 to 83, composite 56 to 55: what the scorer read that day, the same value with the previous code). The five new Ethereum L1 targets carry their first scores. Two other changes of this version moved no score read on the oracles: a Safe at a threshold of 1 no longer adds its owner count to `multisigScore`, and an EIP-7702 delegated key counts as one key in three scorers. A timelock delay under one day no longer scores as the confirmed two-day delay, on two tracked timelock families (the live delays are two days: no published score moves).
-- api/scores.json remains the raw public data, with the names it has always carried.
+- The nested-seat rule for a Morpho vault curator Safe now applies on every chain (one shared module, `scripts/lib/curator_multisig.py`, in the working repository, not yet public), after a live case on 2026-10-13: the curator of the Spark USDC Vault on Base was rewritten at 13:17:05Z (block 52554039, one Safe transaction) from a 3-of-5 into a 2-of-2 whose owners are a 3-of-5 Safe and a 1-of-2 Safe, so four keys must sign; read at the first level it looked like a 2-of-2 and the vault's score would have dropped from 63 to 44; counted on the keys that really sign it, the score is 65.
+- Moved a score on that push (read back from the oracles): a tracked adapter on Arbitrum (8 to 40: the Zodiac Delay module of its Safe, analysed on 2026-10-12, no longer blocks the Safe); a tracked vault on Ethereum (2 to 19: the vault's own 14-day timelock counts, confirmed by a second script that uses only the standard library, written by the same author and reading from the same public RPC); a tracked vault on Base (63 to 65, instead of the 44 a first-level reading gives); a tracked curator vault on Robinhood Chain (multisig 30 to 60, composite 40 to 49); a tracked vault on Monad (cross exposure 100 to 80, composite unchanged); two tracked lending pools on Ethereum L1 (cross exposure 80 to 60: a new access-control contract in this push shares their root authority); two tracked contracts on Robinhood Chain (composite 32 to 29: an executor delay read as 0 now scores 0, a positive delay under one day 40, one day or more 60); a tracked lending program on Solana (multisig 87 to 83, composite 56 to 55: what the scorer read that day, the same value with the previous code). The five new Ethereum L1 targets carry their first scores. Two other changes of this version moved no score read on the oracles: a Safe at a threshold of 1 no longer adds its owner count to `multisigScore`, and an EIP-7702 delegated key counts as one key in three scorers. A timelock delay under one day no longer scores as the confirmed two-day delay, on two tracked timelock families (the live delays are two days: no published score moves).
+- api/scores.json remains the raw public data, with the same names as before.
 - Proposals refused after a second reader on 2026-10-13, so no score moves: Orvex V2 (46 proposed, 2 kept: the pair fee is uncapped), Gains Network (32 proposed, 4 kept: a 2-of-4 Safe can grant itself an allowance over the collateral). Kinetiq (4) keeps its score with a note: a bounded-power reading is under review and not applied.
 
-### 2026.10.2 (2026-10-12 and 2026-10-13, on the oracles today)
+### 2026.10.2 (2026-10-12 and 2026-10-13, replaced on 2026-10-19 and 2026-10-20)
 
 | Oracle | methodologyHash | Pushed |
 |---|---|---|
@@ -45,7 +73,7 @@ One entry per method version, named `YYYY.MM.N` (`data/method_versions.json`). `
 | Hyperliquid | `0x36452ea42a84016f691a665855cc3482c3e8bb4d87155901b491b293457a4004` (16 targets) | 2026-10-12 05:46Z |
 | Tempo | `0x0a3df5ccf0492a8006278d8f559a8ee72202d8b3d3b01ff5561fa9729045c276` (14 targets) | 2026-10-13 01:57Z |
 
-- Covers: the push of 2026-10-12 / 2026-10-13 on the eight EVM oracles. Solana was not read from the chain: the registry lists a computed hash for it (the digest of the Solana scoring code at commit 06b3b21, the commit whose code reproduces the eight hashes above to the byte), to be confirmed with a read of the Solana oracle. The Robinhood oracle (`0x9BF4...7f52`) holds `0x667dc486...fa45` since 2026-10-13 03:26Z (table above); the committed `api/scores.json` still carries `0x795edc64...14c5`, the hash of the push of 2026-10-10 (file generated 2026-10-10 20:41Z), and is regenerated at the next snapshot.
+- Covers: the push of 2026-10-12 / 2026-10-13 on the eight EVM oracles. Solana was not read from the chain: the registry lists a computed hash for it (the digest of the Solana scoring code at commit 06b3b21, the commit whose code reproduces the eight hashes above to the byte), to be confirmed with a read of the Solana oracle. The Robinhood oracle (`0x9BF4...7f52`) holds `0x667dc486...fa45` since 2026-10-13 03:26Z (table above); at that push the committed `api/scores.json` still showed `0x795edc64...14c5`, the hash of the push of 2026-10-10 (file generated 2026-10-10 20:41Z); it was regenerated on 2026-10-23.
 - Moves a score: what each target's scorer read on that day; the detail per target is in the oracle itself.
 - Ethereum L1 keeps one entry under an older hash (the retired Ethena minting entry, 2026.09.0) because the push did not rewrite it.
 
@@ -77,7 +105,7 @@ Hashes read on 2026-10-12 from the public pages of the Watch (the Solana one was
 
 - The Compare page lists the neighbouring tools one row each, what each reads and does not read, according to its own pages, read on 2026-10-12; no ranking. Built 2026-10-12, live since 2026-10-12. The two neighbours found after that reading are not on it yet (Upcoming 4).
 - The Backtest page reads 55 incidents from public postmortems against the six requirements the oracle publishes for every contract, and says which it could not apply: for the 7 that are about who controls a contract, the requirements flagged 2, missed 2 and could not be applied to 3 (figures read on the live page on 2026-10-14). Built 2026-10-12, live since 2026-10-12. It is not a replay by the scorer (Upcoming 8).
-- Each contract page shows an "Exit window" line, the time a user has to leave after a harmful change is queued, derived from the timelock sub-score (in the page code since 2026-10-11).
+- Each contract page shows an "Exit window" line, the time a user has to leave once a harmful change is waiting in the timelock, derived from the timelock sub-score (in the page code since 2026-10-11).
 
 ### Repository
 
@@ -92,16 +120,12 @@ Hashes read on 2026-10-12 from the public pages of the Watch (the Solana one was
 
 ## Upcoming
 
-No dates are promised. "next" is the immediate queue, "planned" is decided and written down, "explored" is measured or verified but not yet decided. Everything here is read-only research until a build is announced in "Changes for readers". Read against the repository and the live site on 2026-10-14: what is built has moved to "Changes for readers", and a line marked "(partly built)" says what exists today and what is still missing.
-
-### 2026.10.4 (in preparation, not on the oracles)
-
-- Nothing is decided yet and no scoring code is written for this version; the next push that carries a change moving a published score will be named here first.
+No dates are promised. "next" means the work at the top of the list, "planned" is decided and written down, "explored" is measured or verified but not yet decided. Everything here is read-only research until a build is announced in "Changes for readers". Read against the repository and the live site on 2026-10-14: what is built has moved to "Changes for readers", and a line marked "(partly built)" says what exists today and what is still missing.
 
 ### Next
 
-1. Readable method versions in the published files (partly built): the registry `data/method_versions.json` and the named versions above exist; the `methodVersion` and `methodVersionDate` fields appear in `api/scores.json` at the next generation of that file, and the Watch's `methodology.json` does not carry them yet. (see note)
-2. Watch fixes recorded as known gaps on 2026-10-13 (see "Known gaps"): a wrong label on a Solana target, and the same score for a parameter change and a full code replacement in a queue.
+1. Readable method versions in the published files (partly built): the registry `data/method_versions.json` and the named versions above exist; the `methodVersion` and `methodVersionDate` fields are in `api/scores.json`, and the Watch's `methodology.json` carries the same information as `method_version` and `method_version_date`. (see note)
+2. Watch fixes recorded as known gaps on 2026-10-13 (see "Known gaps"): the name of another protocol shown for one Solana address, and the same score for a change to a parameter and for a full replacement of the code, when the change is waiting in a timelock queue.
 3. Aave levels 0-5 for the Core reserves not yet read (the Status line of `research/aave-levels-2026-10-13/` says which are read).
 4. The Compare page, updated with the two neighbouring tools found after it was read on 2026-10-12 (Keyholder for Solana programs, OneKeyAway for EVM contracts), criterion by criterion, with sources and "not read" where we do not know. (see note)
 5. A trust page per protocol (partly built): a prototype for one protocol (Aave V3) exists in the working repository, not yet public and is not on the live site; the page shows the weakest score among the protocol's contracts, the table of its contracts, the method in plain words and how to contest a reading. Extending it to the tracked protocols is decided. (see note)
@@ -115,7 +139,7 @@ No dates are promised. "next" is the immediate queue, "planned" is decided and w
 10. Per-protocol, per-event alerts (queued timelock, rotated signer, granted role, executed freeze, changed implementation) on Telegram and Discord, driven by the 6-hour Watch, with a waiting list first (preparation files exist in the working repository, not yet public; the page is not live). The Watch itself stays free. (see note)
 11. An on-chain guard (Zodiac Roles ScoreCondition) on a testnet, refusing a deposit when the score is below a policy or stale, with a real refusal shown (partly built). (see note)
 12. "My money": paste an address, see your positions on the tracked contracts and the three worst scores, read-only, no wallet connection (cheapest path measured: a static page over the Zerion positions API). (see note)
-13. The tokens you hold: can this stablecoin be frozen, by whom, how fast (44 stablecoin entries where every power sits behind one key are already extracted).
+13. The tokens you hold: can this stablecoin be frozen, by whom, how fast (44 stablecoin entries where one key holds all the powers are already extracted).
 14. Powers actually exercised: a per-contract history of upgrades, pauses, freezes, admin mints and role changes, read from logs, with a registry of non-standard upgrade paths (Lighter on Robinhood Chain emits no EIP-1967 event).
 15. A DAO proposal ready to paste from the score sliders.
 16. Insurers and lenders as readers (Nexus Mutual, Chainproof, Munich Re DeFi Protect): a subscription file per protocol with replayable calls.
@@ -179,7 +203,7 @@ Selling single checks over x402 (eight sellers measured on chain in 2026, a few 
 
 ### Notes on items marked "see note" (re-read on 2026-10-14 from the repository, the live site and the public registries)
 
-- 1: a version registry (`data/method_versions.json`, scheme YYYY.MM.N) is in the repository; the `methodVersion` and `methodVersionDate` fields are written by `scripts/update_scores.py` at the next generation of `api/scores.json`, and the file in the repository today does not carry them; the Watch's `methodology.json` is produced by the Watch job and does not carry them yet.
+- 1: a version registry (`data/method_versions.json`, scheme YYYY.MM.N) is in the repository; the `methodVersion` and `methodVersionDate` fields are written by `scripts/update_scores.py` in the working repository (the public copy does not write them yet) and are in `api/scores.json`; the Watch's `methodology.json` is produced by the Watch job and carries the same information as `method_version` and `method_version_date`.
 - 4: the Compare page is live and lists the neighbouring tools it read on 2026-10-12; the two tools named here are not on it.
 - 5: the prototype builder (in the working repository, not yet public) writes the page only when the owner releases it with a marker file after reading it; the pages of the live site do not include it today.
 - 8: the live backtest page reads incidents from public postmortems against the six published requirements and says which it could not apply; it is not a replay by the scorer, and the "rules that existed before the incident" are not on it.

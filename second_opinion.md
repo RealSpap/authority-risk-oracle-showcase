@@ -1,10 +1,10 @@
-## Second opinion, 2026-10-29T13:15:42Z
+## Second opinion, 2026-10-29T22:55:05Z
 
-### 1 upgrade(s) executed since the previous run (2026-10-29T01:15:30Z)
+### 1 admin change(s) since the previous run (2026-10-29T13:15:42Z)
 
-- **JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4** on solana: program redeployed since the previous run: slot 459479624 -> 462802085 (2026-10-29T07:47:21Z); the score reads who may upgrade, this is an upgrade that happened
+- **0x6a8cbed756804b16e05e741edabd5cb544ae21bf** on ethereum-l1: admin read changed since the previous run: contract 0x40907540d8a6c65c637785e8f8b742ae6b0b9968 -> contract 0xeda0108d5bb8cde2ba4a59e22f3ed5d211c77187 (via admin())
 
-The code behind a tracked proxy changed: read what the new implementation does before trusting the score (the private pipeline's implementation check names the selectors added and dropped).
+The live admin of a tracked contract moved between two watch runs: the published score may be out of date before the next push. Read the case now.
 
 ### 13 disagreement(s) with the published score
 

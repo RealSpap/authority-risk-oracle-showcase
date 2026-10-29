@@ -79,7 +79,7 @@
      "signature": "acceptAdmin()",
      "calls": 16,
      "ready_at": 1793288063,
-     "state": "waiting",
+     "state": "ready",
      "decoded": "authority change"
     }
    ],
@@ -167,7 +167,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 4335483,
+   "window_blocks": 4463468,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -187,7 +187,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 4320000,
+   "window_blocks": 4480000,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -207,7 +207,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 4335483,
+   "window_blocks": 4463468,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -417,7 +417,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 86400,
    "window_blocks": 3000000,
-   "window_days_est": 3.8,
+   "window_days_est": 3.4,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x14b107cf534239c59571b066cb6497a321da897c"
@@ -910,7 +910,7 @@
      "selector": null,
      "signature": "Squads proposal #99: multisig configuration: remove member, remove member, add member, add member",
      "ready_at": 1793292502,
-     "state": "waiting",
+     "state": "ready",
      "approved_at": 1793206102,
      "account": "2h351R7Zu84xcjZknffkVPCN1xPYSsX4jpWUKQUuSeZP",
      "undecoded": false,
@@ -1255,7 +1255,7 @@
    "transaction_index": 71
   }
  ],
- "discovered_utc": "2026-10-29T13:15:42Z",
+ "discovered_utc": "2026-10-29T22:55:05Z",
  "discovered": 15,
- "squads_utc": "2026-10-29T13:23:27Z"
+ "squads_utc": "2026-10-29T23:00:14Z"
 }

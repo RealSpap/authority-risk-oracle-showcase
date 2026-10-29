@@ -1,37 +1,37 @@
 {
- "generated_utc": "2026-10-29T13:39:56Z",
- "total": 28,
+ "generated_utc": "2026-10-29T23:08:43Z",
+ "total": 27,
  "by_priority": {
   "1": 5,
   "2": 19,
-  "3": 4
+  "3": 3
  },
  "overdue": 0,
  "overdue_days": 2.0,
- "oldest_days": 18.7,
+ "oldest_days": 19.1,
  "items": [
   {
    "priority": 1,
-   "kind": "queued operation executable within 48 h",
-   "chain": "ethereum",
-   "target": "0x5D057706405B00a396745ED0fd598248e7F4ec7C",
-   "text": "authority change: acceptAdmin() via Ethena Timelock",
+   "kind": "queued operation executable",
+   "chain": "solana",
+   "target": "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C",
+   "text": "program upgrade: Squads proposal #56: Upgrade of program CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C (not the tracked program) via Squads v4 multisig tr8r\u2026Hb4u (3-of-4, time lock 0 s), found by the independent reader (1 tracked program)",
    "todo": "read the call before it lands",
    "source": "pending_ops.json",
-   "first_seen": "2026-10-28T19:27:41Z",
-   "age_days": 0.8,
+   "first_seen": "2026-10-29T13:39:56Z",
+   "age_days": 0.4,
    "overdue": false
   },
   {
    "priority": 1,
-   "kind": "queued operation executable within 48 h",
-   "chain": "solana",
-   "target": "2LecshUwdy9xi7meFgHtFJQNSKk4KdTrcpvaB56dP2NQ",
-   "text": "multisig config: Squads proposal #99: multisig configuration: remove member, remove member, add member, add member via Squads v4 multisig BQsD\u2026iEjF (5-of-13, time lock 86400 s), found by the independent reader (1 tracked program)",
-   "todo": "read the call before it lands",
-   "source": "pending_ops.json",
-   "first_seen": "2026-10-28T19:27:41Z",
-   "age_days": 0.8,
+   "kind": "admin read changed",
+   "chain": "ethereum-l1",
+   "target": "0x6a8cbed756804b16e05e741edabd5cb544ae21bf",
+   "text": "admin read changed since the previous run: contract 0x40907540d8a6c65c637785e8f8b742ae6b0b9968 -> contract 0xeda0108d5bb8cde2ba4a59e22f3ed5d211c77187 (via admin())",
+   "todo": "confirm the new admin path and whether the score should move before the weekly push",
+   "source": "second_opinion.json changed",
+   "first_seen": "2026-10-29T23:08:43Z",
+   "age_days": 0.0,
    "overdue": false
   },
   {
@@ -42,7 +42,19 @@
    "text": "0x9db4…1a53 designated (pendingOwner() on the contract (Ownable2Step), a contract)",
    "todo": "identify the designated admin; when it accepts, the admin read changes",
    "source": "second_opinion.json pending_admin",
-   "first_seen": "2026-10-29T13:39:56Z",
+   "first_seen": "2026-10-29T23:08:43Z",
+   "age_days": 0.0,
+   "overdue": false
+  },
+  {
+   "priority": 1,
+   "kind": "queued operation executable",
+   "chain": "ethereum",
+   "target": "0x5D057706405B00a396745ED0fd598248e7F4ec7C",
+   "text": "authority change: acceptAdmin() via Ethena Timelock",
+   "todo": "read the call before it lands",
+   "source": "pending_ops.json",
+   "first_seen": "2026-10-29T23:08:43Z",
    "age_days": 0.0,
    "overdue": false
   },
@@ -50,23 +62,11 @@
    "priority": 1,
    "kind": "queued operation executable",
    "chain": "solana",
-   "target": "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C",
-   "text": "program upgrade: Squads proposal #56: Upgrade of program CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C (not the tracked program) via Squads v4 multisig tr8r\u2026Hb4u (3-of-4, time lock 0 s), found by the independent reader (1 tracked program)",
+   "target": "2LecshUwdy9xi7meFgHtFJQNSKk4KdTrcpvaB56dP2NQ",
+   "text": "multisig config: Squads proposal #99: multisig configuration: remove member, remove member, add member, add member via Squads v4 multisig BQsD\u2026iEjF (5-of-13, time lock 86400 s), found by the independent reader (1 tracked program)",
    "todo": "read the call before it lands",
    "source": "pending_ops.json",
-   "first_seen": "2026-10-29T13:39:56Z",
-   "age_days": 0.0,
-   "overdue": false
-  },
-  {
-   "priority": 1,
-   "kind": "upgrade executed",
-   "chain": "solana",
-   "target": "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
-   "text": "program redeployed since the previous run: slot 459479624 -> 462802085 (2026-10-29T07:47:21Z); the score reads who may upgrade, this is an upgrade that happened",
-   "todo": "read what the new implementation does before trusting the score (the private pipeline's implementation check names selectors added and dropped); NO verified source on Sourcify for the new implementation: read the bytecode, or find a verified source on the chain's explorer",
-   "source": "second_opinion.json upgrades",
-   "first_seen": "2026-10-29T13:39:56Z",
+   "first_seen": "2026-10-29T23:08:43Z",
    "age_days": 0.0,
    "overdue": false
   },
@@ -79,7 +79,7 @@
    "todo": "say what this guard checks and who can change it",
    "source": "second_opinion.json guard_detail",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 18.7,
+   "age_days": 19.1,
    "overdue": false
   },
   {
@@ -91,7 +91,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 18.7,
+   "age_days": 19.1,
    "overdue": false
   },
   {
@@ -103,7 +103,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 18.7,
+   "age_days": 19.1,
    "overdue": false
   },
   {
@@ -115,7 +115,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 18.7,
+   "age_days": 19.1,
    "overdue": false
   },
   {
@@ -127,7 +127,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 18.7,
+   "age_days": 19.1,
    "overdue": false
   },
   {
@@ -139,7 +139,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 18.7,
+   "age_days": 19.1,
    "overdue": false
   },
   {
@@ -151,7 +151,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 18.7,
+   "age_days": 19.1,
    "overdue": false
   },
   {
@@ -163,7 +163,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 18.7,
+   "age_days": 19.1,
    "overdue": false
   },
   {
@@ -175,7 +175,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 18.7,
+   "age_days": 19.1,
    "overdue": false
   },
   {
@@ -187,7 +187,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 18.7,
+   "age_days": 19.1,
    "overdue": false
   },
   {
@@ -199,7 +199,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 18.7,
+   "age_days": 19.1,
    "overdue": false
   },
   {
@@ -211,7 +211,7 @@
    "todo": "find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen",
    "source": "pending_ops.json",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 18.7,
+   "age_days": 19.1,
    "overdue": false
   },
   {
@@ -223,7 +223,7 @@
    "todo": "find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen",
    "source": "pending_ops.json",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 18.7,
+   "age_days": 19.1,
    "overdue": false
   },
   {
@@ -235,7 +235,7 @@
    "todo": "find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen",
    "source": "pending_ops.json",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 18.7,
+   "age_days": 19.1,
    "overdue": false
   },
   {
@@ -247,7 +247,7 @@
    "todo": "find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen",
    "source": "pending_ops.json",
    "first_seen": "2026-10-17T19:07:19Z",
-   "age_days": 11.8,
+   "age_days": 12.2,
    "overdue": false
   },
   {
@@ -259,7 +259,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-26T07:23:05Z",
-   "age_days": 3.3,
+   "age_days": 3.7,
    "overdue": false
   },
   {
@@ -271,7 +271,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-26T07:23:05Z",
-   "age_days": 3.3,
+   "age_days": 3.7,
    "overdue": false
   },
   {
@@ -283,7 +283,7 @@
    "todo": "find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen",
    "source": "pending_ops.json",
    "first_seen": "2026-10-26T15:24:06Z",
-   "age_days": 2.9,
+   "age_days": 3.3,
    "overdue": false
   },
   {
@@ -295,7 +295,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-28T19:27:41Z",
-   "age_days": 0.8,
+   "age_days": 1.2,
    "overdue": false
   },
   {
@@ -307,7 +307,7 @@
    "todo": "an admin path nobody has exercised: confirm the signers can still act",
    "source": "safe_activity.json",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 18.7,
+   "age_days": 19.1,
    "overdue": false
   },
   {
@@ -319,7 +319,7 @@
    "todo": "an admin path nobody has exercised: confirm the signers can still act",
    "source": "safe_activity.json",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 18.7,
+   "age_days": 19.1,
    "overdue": false
   },
   {
@@ -331,19 +331,7 @@
    "todo": "compare with the published admin-key score; holders cannot be listed on this contract",
    "source": "admin_probe.json",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 18.7,
-   "overdue": false
-  },
-  {
-   "priority": 3,
-   "kind": "Safe modules not read this run",
-   "chain": "hyperliquid",
-   "target": "0x393d0b87ed38fc779fd9611144ae649ba6082109",
-   "text": "RPC did not answer getModulesPaginated",
-   "todo": "nothing to do unless it repeats",
-   "source": "second_opinion.json",
-   "first_seen": "2026-10-29T13:39:56Z",
-   "age_days": 0.0,
+   "age_days": 19.1,
    "overdue": false
   }
  ],

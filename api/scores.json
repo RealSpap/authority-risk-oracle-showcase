@@ -2,13 +2,13 @@
   "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
   "chainId": 46630,
   "methodologyVersion": "authority-risk-oracle-v3",
-  "methodologyHash": "0x7a8280d6128fcfffdfcab3e45d617360c4caa1a521e1ecf4f002e4762b4b3606",
-  "methodVersion": "2026.10.3",
-  "methodVersionDate": "2026-10-19",
-  "methodologyCommit": "4d21558f789725be539996e1dc1ca9747a3b19fb",
-  "generatedAt": 1792448928,
-  "txHash": "a52530fd0714cbf3f06bad0358f2a9984676a516e2830668bc1e6bd90e3636fb",
-  "blockNumber": 139001300,
+  "methodologyHash": "0x05ae8b2527e36e0cfe794ab3b0eedd011f66b8007af63cb1bd050287799aa465",
+  "methodVersion": "2026.10.4",
+  "methodVersionDate": "2026-10-27",
+  "methodologyCommit": "bbd151096c3c8458eead739283527dbe9b5ed462",
+  "generatedAt": 1793136187,
+  "txHash": "4b07384f76fa8e7ba3a6b8a8d7818b41fc11b52456bc6633f2bb114840ce10d3",
+  "blockNumber": 143806653,
   "scores": [
     {
       "target": "0xBeEff033F34C046626B8D0A041844C5d1A5409dd",
@@ -28,7 +28,7 @@
       "multisigScore": 100,
       "timelockScore": 75,
       "oracleAuthorityScore": 100,
-      "crossExposureScore": 80,
+      "crossExposureScore": 40,
       "compositeScore": 85,
       "l1CappedComposite": 57
     },
@@ -39,7 +39,7 @@
       "multisigScore": 100,
       "timelockScore": 75,
       "oracleAuthorityScore": 100,
-      "crossExposureScore": 80,
+      "crossExposureScore": 40,
       "compositeScore": 85,
       "l1CappedComposite": 57
     },
@@ -61,7 +61,7 @@
       "multisigScore": 100,
       "timelockScore": 75,
       "oracleAuthorityScore": 100,
-      "crossExposureScore": 80,
+      "crossExposureScore": 40,
       "compositeScore": 85,
       "l1CappedComposite": 57
     },
@@ -94,7 +94,7 @@
       "multisigScore": 45,
       "timelockScore": 0,
       "oracleAuthorityScore": 100,
-      "crossExposureScore": 80,
+      "crossExposureScore": 70,
       "compositeScore": 42,
       "l1CappedComposite": 42
     },
@@ -105,7 +105,7 @@
       "multisigScore": 0,
       "timelockScore": 0,
       "oracleAuthorityScore": 100,
-      "crossExposureScore": 80,
+      "crossExposureScore": 85,
       "compositeScore": 1,
       "l1CappedComposite": 1
     },
@@ -127,7 +127,7 @@
       "multisigScore": 100,
       "timelockScore": 75,
       "oracleAuthorityScore": 100,
-      "crossExposureScore": 80,
+      "crossExposureScore": 40,
       "compositeScore": 85,
       "l1CappedComposite": 57
     },
@@ -138,7 +138,7 @@
       "multisigScore": 85,
       "timelockScore": 0,
       "oracleAuthorityScore": 52,
-      "crossExposureScore": 100,
+      "crossExposureScore": 40,
       "compositeScore": 52,
       "l1CappedComposite": 52
     },
@@ -248,7 +248,7 @@
       "multisigScore": 95,
       "timelockScore": 0,
       "oracleAuthorityScore": 100,
-      "crossExposureScore": 80,
+      "crossExposureScore": 55,
       "compositeScore": 55,
       "l1CappedComposite": 55
     },
@@ -501,7 +501,7 @@
       "multisigScore": 65,
       "timelockScore": 75,
       "oracleAuthorityScore": 100,
-      "crossExposureScore": 40,
+      "crossExposureScore": 25,
       "compositeScore": 70,
       "l1CappedComposite": 57
     },
@@ -512,7 +512,7 @@
       "multisigScore": 60,
       "timelockScore": 75,
       "oracleAuthorityScore": 100,
-      "crossExposureScore": 40,
+      "crossExposureScore": 25,
       "compositeScore": 49,
       "l1CappedComposite": 49
     },
@@ -523,7 +523,7 @@
       "multisigScore": 65,
       "timelockScore": 60,
       "oracleAuthorityScore": 52,
-      "crossExposureScore": 40,
+      "crossExposureScore": 25,
       "compositeScore": 66,
       "l1CappedComposite": 57
     },

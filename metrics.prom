@@ -1,6 +1,6 @@
 # HELP aro_run_timestamp_seconds UTC time of the last Watch run (Unix seconds)
 # TYPE aro_run_timestamp_seconds gauge
-aro_run_timestamp_seconds 1793235846
+aro_run_timestamp_seconds 1793278734
 # HELP aro_oracle_read 1 when the oracle was read at the last run, 0 when it was not (its targets are then unknown, not zero)
 # TYPE aro_oracle_read gauge
 aro_oracle_read{oracle="Robinhood Chain"} 1
@@ -43,8 +43,8 @@ aro_targets_stale 1
 # HELP aro_status The run's health, one series per state, 1 for the current one
 # TYPE aro_status gauge
 aro_status{state="ok"} 0
-aro_status{state="degraded"} 1
-aro_status{state="alarm"} 0
+aro_status{state="degraded"} 0
+aro_status{state="alarm"} 1
 # HELP aro_chain_ok 1 when the hash-chained event log verifies
 # TYPE aro_chain_ok gauge
 aro_chain_ok 1
@@ -53,7 +53,7 @@ aro_chain_ok 1
 aro_signed 1
 # HELP aro_alerts_active Alerts firing now, by severity
 # TYPE aro_alerts_active gauge
-aro_alerts_active{severity="high"} 0
+aro_alerts_active{severity="high"} 1
 aro_alerts_active{severity="medium"} 9
 aro_alerts_active{severity="info"} 0
 # HELP aro_second_opinion Targets by verdict of the independent reader

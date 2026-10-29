@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-10-29T01:20:40Z",
+ "run_utc": "2026-10-29T13:23:46Z",
  "targets": 202,
  "moves_recorded": 35,
  "series": {
@@ -1875,52 +1875,16 @@
  },
  "calibration": {
   "window_days": 14,
-  "actions": 24,
-  "under_40": 10,
+  "actions": 21,
+  "under_40": 6,
   "by_band": {
-   "critical": 8,
+   "critical": 4,
    "weak": 2,
-   "moderate": 13,
+   "moderate": 14,
    "decent": 1,
    "strong": 0
   },
   "list": [
-   {
-    "kind": "upgrade executed",
-    "key": "solana:cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG",
-    "t": "2026-10-15T07:01:04Z",
-    "via": "slot 457080014",
-    "tx": null,
-    "score_then": 2,
-    "band_then": "critical"
-   },
-   {
-    "kind": "Squads proposal executed",
-    "key": "solana:2LecshUwdy9xi7meFgHtFJQNSKk4KdTrcpvaB56dP2NQ",
-    "t": "2026-10-15T07:05:37Z",
-    "via": "Squads v4 multisig BQsD\u2026iEjF (5-of-13, time lock 86400 s), found by the independent reader (1 tracked program)",
-    "tx": "ZsVAvgvJRBQJD7XUXtvcDdy4wPuLr8VEHKdyJjwDCZs",
-    "score_then": 2,
-    "band_then": "critical"
-   },
-   {
-    "kind": "upgrade executed (Squads proposal)",
-    "key": "solana:2LecshUwdy9xi7meFgHtFJQNSKk4KdTrcpvaB56dP2NQ",
-    "t": "2026-10-15T07:22:05Z",
-    "via": "Squads v4 multisig BQsD\u2026iEjF (5-of-13, time lock 86400 s), found by the independent reader (1 tracked program)",
-    "tx": "8hR6iYNAya5cKfFjE3LaHiekMH2355U4Ggv2sC5ZvEXU",
-    "score_then": 2,
-    "band_then": "critical"
-   },
-   {
-    "kind": "upgrade executed",
-    "key": "solana:2LecshUwdy9xi7meFgHtFJQNSKk4KdTrcpvaB56dP2NQ",
-    "t": "2026-10-15T13:02:22Z",
-    "via": "slot 457152296",
-    "tx": null,
-    "score_then": 2,
-    "band_then": "critical"
-   },
    {
     "kind": "upgrade executed",
     "key": "robinhood:0x14b107cf534239c59571b066cb6497a321da897c",
@@ -2099,6 +2063,15 @@
     "via": "slot 461744249",
     "tx": null,
     "score_then": 56,
+    "band_then": "moderate"
+   },
+   {
+    "kind": "upgrade executed",
+    "key": "solana:JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+    "t": "2026-10-29T13:15:42Z",
+    "via": "slot 462802085",
+    "tx": null,
+    "score_then": 47,
     "band_then": "moderate"
    }
   ],

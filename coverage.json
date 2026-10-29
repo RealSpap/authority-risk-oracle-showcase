@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-29T01:31:22Z",
+ "generated_utc": "2026-10-29T13:39:56Z",
  "chains": {
   "arbitrum": {
    "oracle": "Arbitrum (Sepolia)",
@@ -106,7 +106,7 @@
    },
    "proxies_fingerprinted": 5,
    "safes": 2,
-   "safes_modules_read": 2,
+   "safes_modules_read": 1,
    "timelocks_in_admin_path": 1,
    "timelock_queues_watched": 1,
    "safe_events": {
@@ -126,6 +126,7 @@
     "paused() or isPaused() answered by 0 of 16 contracts: a pause on the other 16 is not seen, and 'nothing paused' says nothing about them",
     "no pauser, guardian or curator getter answers on 16 of 16 contracts: a change of those hands is not seen there",
     "10 native identifier(s) (no code at the address): outside the independent reader's reach, scored by the methodology alone",
+    "modules not read on 1 of 2 admin Safes this run",
     "no money figure for 6 of 16 contracts (no DefiLlama protocol, no totalAssets() answered): money at risk not computed for them"
    ]
   },

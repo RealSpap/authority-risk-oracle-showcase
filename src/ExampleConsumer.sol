@@ -7,7 +7,9 @@ import {AuthorityRiskOracle} from "./AuthorityRiskOracle.sol";
 /// @notice Demonstrates how a lending-style contract would consume AuthorityRiskOracle
 ///         directly: it reads a vault's authority score and derives a collateral factor
 ///         from it, freezing collateral it considers governed by too weak an authority
-///         and refusing a stale read outright. This is demo scaffolding for the
+///         and refusing a stale read outright. It reads compositeScore only: the
+///         oracleAuthorityScore and crossExposureScore fields are not in the composite and are
+///         not read here. This is demo scaffolding for the
 ///         hackathon submission, not a production lending market.
 contract ExampleConsumer {
     AuthorityRiskOracle public immutable ORACLE;

@@ -50,6 +50,10 @@ protocol gating collateral factors by `getScore()` may care far more about
 protocols it's exposed to than about that target's own `compositeScore`
 in isolation. Collapsing five numbers into one would throw that choice away.
 
+**How to read the headline number.** Because of this, the composite is a grade of the target's own setup (admin key, multisig, timelock), not an overall safety grade. A target can have a high composite and a weak `oracleAuthorityScore` or `crossExposureScore`. The dashboard therefore shows a visible flag on any target whose `oracleAuthorityScore` or `crossExposureScore` is 40 or below, and `ExampleConsumer` reads only the composite (see `docs/REFERENCE.md`). A consumer that cares about price paths or shared signers must read those two fields itself.
+
+**A 100 is not one thing.** On `oracleAuthorityScore` and `crossExposureScore`, the contract stores a 100 for different cases and cannot tell them apart. For `oracleAuthorityScore`: (1) not applicable, or not yet computed because the target is a price consumer outside the rule's current scope (the code does not separate these two); (2) computed, and no material price path without a proven bound was found. A price path that could not be read is published as 20, never as 100. For `crossExposureScore`: no shared signer was found, OR the computation failed or was not done for that target and the value defaulted to 100 (the run notes say which, the contract does not). The oracle contracts are immutable, so the distinction cannot be added on chain before a redeployment. It belongs in the off-chain API, the JSON twins and the site; until it is published there, read a 100 as "not shown to be weak", never as "shown to be safe".
+
 ## What each dimension actually reads
 
 **`adminKeyScore`** - trace the target's authority getter(s) (`owner()`,

@@ -85,7 +85,7 @@ require(!oracle.isStale(collateralProtocol), "authority score stale");   // an o
 uint256 factorBps = s.compositeScore < 60 ? 0 : 5000 + (uint256(s.compositeScore) - 60) * 3000 / 40;   // the rule of ExampleConsumer below: 0 under 60, then 50% at 60 rising to 80% at 100
 ```
 
-A fuller consumer, with its tests, is [`src/ExampleConsumer.sol`](../src/ExampleConsumer.sol). Only an address holding `UPDATER_ROLE`
+A fuller consumer, with its tests, is [`src/ExampleConsumer.sol`](../src/ExampleConsumer.sol). **It reads `compositeScore` only.** `oracleAuthorityScore` and `crossExposureScore` are not in the composite and `ExampleConsumer` does not read them, so a target with a high composite and a weak price path or a shared committee still gets a collateral factor above zero. A consumer that cares must read those two fields too. Only an address holding `UPDATER_ROLE`
 can write; every sub-score is range-checked on-chain (`ScoreOutOfRange`), a gap found by this project's own review of its contract
 against the LlamaGuard pattern ([`data/contract_review_2026-09-17-llamaguard-comparison.md`](../data/contract_review_2026-09-17-llamaguard-comparison.md)).
 
@@ -214,11 +214,10 @@ The comparison establishes that the executable bytes match; it does not compare 
 
 ## How it was built, and what came before
 
-The repository started on 2026-09-15 as a private working repository; the public history here is a sequence of dated snapshots of that
-work (the earliest days are folded into the first snapshots, and a few findings still under responsible disclosure are left out). The scoring logic reuses
-classification code from two earlier research programs by the same author:
+The work on on-chain authority started on 2026-09-07 with two research programs by the same author:
 [`multisig-overlap`](https://github.com/RealSpap/multisig-overlap-showcase) and
-[`defi-admin-key-risk`](https://github.com/RealSpap/defi-admin-key-risk-showcase). Everything in this repository (contract, ten
+[`defi-admin-key-risk`](https://github.com/RealSpap/defi-admin-key-risk-showcase). Work on the oracle started on 2026-09-15, in a private working repository. The public history here is a sequence of dated snapshots of that work. The earliest days are folded into the first snapshots. A few findings still under responsible disclosure are left out. The scoring logic reuses
+classification code from the two research programs. Everything in this repository (contract, ten
 ecosystems' scorers, updater, push guard, dashboard, tests) was built from 2026-09-15 onwards.
 `methodologyHash` is derived from the bytes of the scorer files, so the digest of this public copy differs from hashes published by
 pushes made from the working repository; a push made from a commit of this repository publishes this repository's digest.

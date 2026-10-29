@@ -38,7 +38,7 @@ contract AuthorityRiskOracle is AccessControl {
             // authority setup. Full evidence (which signer, which other targets) lives
             // off-chain in data/, not on this contract.
         uint8 compositeScore; // 0-100: off-chain weighted aggregate of adminKey/multisig/timelock
-        uint64 lastUpdated; // block.timestamp of the last update
+        uint64 lastUpdated; // as supplied by the updater in updateScore/updateScores, not set from block.timestamp (the updater can write any value)
         bytes32 methodologyHash; // hash identifying the scoring script/version used
     }
 

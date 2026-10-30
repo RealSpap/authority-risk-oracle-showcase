@@ -1150,14 +1150,42 @@
    "chain": "plasma",
    "timelock": "plasma timelock 0xabd3\u20265072, found by the independent reader (1 tracked contract)",
    "what": "parameter change"
+  },
+  "solana:7fcpipjwvbpbdhymvt1gjywkciakkjz5gahdqysemvhk:squads:7FCPipJWVbPbdHymVt1gJYwKciakkJz5GahdQySemvHk:129": {
+   "outcome": "seen_without_notice",
+   "first_seen_utc": "2026-10-30T22:18:18Z",
+   "due_utc": "2026-10-30T22:11:45Z",
+   "notice_hours": null,
+   "state": "queued",
+   "chain": "solana",
+   "timelock": "Squads v4 multisig 7FCP\u2026mvHk (7-of-15, time lock 0 s), found by the independent reader (1 tracked program)",
+   "what": "program upgrade"
+  },
+  "solana:7qipzlr9j1jcvdxe1xjefgvoyfmgbpgw5hmdhbmpcjtm:squads:7qipzLR9j1JcvdxE1XJEFgvoyFmgBpgw5hMdHBMPcJtM:142": {
+   "outcome": "missed",
+   "first_seen_utc": "2026-10-30T22:18:18Z",
+   "queued_utc": "2026-10-30T18:32:16Z",
+   "state": "resolved",
+   "chain": "solana",
+   "timelock": "Squads v4 multisig 7qip\u2026cJtM (4-of-7, time lock 3600 s), found by the independent reader (1 tracked program)",
+   "what": "call"
+  },
+  "solana:7qipzlr9j1jcvdxe1xjefgvoyfmgbpgw5hmdhbmpcjtm:squads:7qipzLR9j1JcvdxE1XJEFgvoyFmgBpgw5hMdHBMPcJtM:143": {
+   "outcome": "missed",
+   "first_seen_utc": "2026-10-30T22:18:18Z",
+   "queued_utc": "2026-10-30T18:32:26Z",
+   "state": "resolved",
+   "chain": "solana",
+   "timelock": "Squads v4 multisig 7qip\u2026cJtM (4-of-7, time lock 3600 s), found by the independent reader (1 tracked program)",
+   "what": "call"
   }
  },
- "updated_utc": "2026-10-30T12:53:48Z",
+ "updated_utc": "2026-10-30T22:18:18Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
   "warned": 34,
-  "seen_without_notice": 4,
-  "missed": 13,
+  "seen_without_notice": 5,
+  "missed": 15,
   "baseline": 77,
   "warned_with_a_known_notice": 34,
   "shortest_notice_hours": 0.2,

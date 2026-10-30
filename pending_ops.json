@@ -20,7 +20,7 @@
    "address": "0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
    "family": "compound",
    "status": "ok",
-   "queued_events": 73,
+   "queued_events": 71,
    "latest_queued": 1792850999,
    "pending": [],
    "recent": [
@@ -167,7 +167,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 4463468,
+   "window_blocks": 4200000,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -187,7 +187,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 4480000,
+   "window_blocks": 4200000,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -207,7 +207,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 4463468,
+   "window_blocks": 4214634,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -397,7 +397,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 0,
    "window_blocks": 3000000,
-   "window_days_est": 3.4,
+   "window_days_est": 3.6,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62"
@@ -417,7 +417,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 86400,
    "window_blocks": 3000000,
-   "window_days_est": 3.4,
+   "window_days_est": 3.6,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x14b107cf534239c59571b066cb6497a321da897c"
@@ -1255,7 +1255,7 @@
    "transaction_index": 71
   }
  ],
- "discovered_utc": "2026-10-29T22:55:05Z",
+ "discovered_utc": "2026-10-30T05:57:08Z",
  "discovered": 15,
- "squads_utc": "2026-10-29T23:00:14Z"
+ "squads_utc": "2026-10-30T06:02:01Z"
 }

@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-10-30T06:02:14Z",
+ "run_utc": "2026-10-30T13:07:44Z",
  "targets": 202,
  "moves_recorded": 35,
  "series": {
@@ -1875,12 +1875,12 @@
  },
  "calibration": {
   "window_days": 14,
-  "actions": 21,
+  "actions": 22,
   "under_40": 5,
   "by_band": {
    "critical": 4,
    "weak": 1,
-   "moderate": 14,
+   "moderate": 15,
    "decent": 1,
    "strong": 1
   },
@@ -2073,6 +2073,15 @@
     "tx": null,
     "score_then": 81,
     "band_then": "strong"
+   },
+   {
+    "kind": "timelock op queued (parameter change)",
+    "key": "plasma:0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34",
+    "t": "2026-10-30T12:47:38Z",
+    "via": "plasma timelock 0xabd3\u20265072, found by the independent reader (1 tracked contract)",
+    "tx": "0x1f1dd153de784a621e2560e8342149e41d64d5dfd411817cf09f9d09e23fba00",
+    "score_then": 57,
+    "band_then": "moderate"
    }
   ],
   "read_as": "every authority action the watch observed in the window (a timelock operation queued or executed against a tracked contract, an admin change read independently) and the composite score the contract carried at that moment. Small counts prove little; the file grows with every run and the chained log keeps every move"

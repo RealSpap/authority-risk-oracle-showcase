@@ -5,11 +5,20 @@ X-WR-CALNAME:Authority Risk Oracle: timelock queue
 X-WR-CALDESC:Operations queued behind the watched timelocks, at the time they become executable
 BEGIN:VEVENT
 UID:0x50b1c3d1aa1fb0fa428913e4cf726ea3d246b557d84f5e45f4eb1e9ca2f440c1-0@realspap.github.io-0xd4801b79df7225e1
-DTSTAMP:20261030T055708Z
+DTSTAMP:20261030T130252Z
 DTSTART:20261029T153423Z
 DTEND:20261029T160423Z
 SUMMARY:Ethena Timelock: 0x0e18b681 becomes executable
 DESCRIPTION:0x0e18b681 on 0x5D057706405B00a396745ED0fd598248e7F4ec7C (ethereum)\nqueued in tx 0x50b1c3d1aa1fb0fa428913e4cf726ea3d246b557d84f5e45f4eb1e9ca2f440c1\nhttps://realspap.github.io/oracle/
+URL:https://realspap.github.io/oracle/
+END:VEVENT
+BEGIN:VEVENT
+UID:0x1f1dd153de784a621e2560e8342149e41d64d5dfd411817cf09f9d09e23fba00-0@realspap.github.io-0xb34e45727b92eb7c
+DTSTAMP:20261030T130252Z
+DTSTART:20261031T124738Z
+DTEND:20261031T131738Z
+SUMMARY:plasma timelock 0xabd3…5072\, found by the independent reader (1 tracked contract): setRateLimits becomes executable
+DESCRIPTION:setRateLimits on 0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34 (plasma)\nqueued in tx 0x1f1dd153de784a621e2560e8342149e41d64d5dfd411817cf09f9d09e23fba00\nhttps://realspap.github.io/oracle/
 URL:https://realspap.github.io/oracle/
 END:VEVENT
 END:VCALENDAR

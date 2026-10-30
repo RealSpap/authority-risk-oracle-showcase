@@ -1140,18 +1140,28 @@
    "chain": "solana",
    "timelock": "Squads v4 multisig tr8r\u2026Hb4u (3-of-4, time lock 0 s), found by the independent reader (1 tracked program)",
    "what": "program upgrade"
+  },
+  "plasma:0xabd3645ba0bb60c238bede64378826e1206f5072:0xb34e45727b92eb7c6e989e8d72a8dc2edd5de182b104f6a73863ee75575c9823": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-10-30T12:53:48Z",
+   "due_utc": "2026-10-31T12:47:38Z",
+   "notice_hours": 23.9,
+   "state": "queued",
+   "chain": "plasma",
+   "timelock": "plasma timelock 0xabd3\u20265072, found by the independent reader (1 tracked contract)",
+   "what": "parameter change"
   }
  },
- "updated_utc": "2026-10-30T05:46:31Z",
+ "updated_utc": "2026-10-30T12:53:48Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
-  "warned": 33,
+  "warned": 34,
   "seen_without_notice": 4,
   "missed": 13,
   "baseline": 77,
-  "warned_with_a_known_notice": 33,
+  "warned_with_a_known_notice": 34,
   "shortest_notice_hours": 0.2,
-  "median_notice_hours": 21.1,
+  "median_notice_hours": 21.4,
   "note": "warned: seen while queued and not yet executable (the notice is real); seen_without_notice: still queued but already executable when first seen; missed: queued after the ledger started and already applied when first seen (faster than the 6-hour cadence); baseline: applied before the ledger started, counted as neither."
  }
 }

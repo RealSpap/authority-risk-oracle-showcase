@@ -1,10 +1,11 @@
-## Second opinion, 2026-10-30T05:57:08Z
+## Second opinion, 2026-10-30T13:02:52Z
 
-### 12 disagreement(s) with the published score
+### 13 disagreement(s) with the published score
 
 - **0xff162c694eaa571f685030649814282ea457f169** on arbitrum: the score says one key does everything (10), the live read finds a timelock (1209600s) via EIP-1967 admin -> ProxyAdmin owner(); the timelock score says no delay (0), the live read finds a timelock of 336 h in the admin path via EIP-1967 admin -> ProxyAdmin owner()
 - **0xe23b4ae3624fb6f7cdef29bc8ead912f1ede6886** on arbitrum: the timelock score says no delay (0), the holder's owner is a timelock of 72 h
 - **0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec** on hyperliquid: the score says one key does everything (10), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisig (0), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner()
+- **0x393d0b87ed38fc779fd9611144ae649ba6082109** on hyperliquid: the score says one key does everything (10), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisig (0), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner()
 - **0xffaa4a3d97fe9107cef8a3f48c069f577ff76cc1** on hyperliquid: the timelock score says no delay (0), the live read finds a timelock of 48 h in the admin path via EIP-1967 admin -> ProxyAdmin owner()
 - **0xa9c251f8304b1b3fc2b9e8fcae78d94eff82ac66** on plasma: the timelock score says no delay (0), the contract enforces its own timelock of 24 h (timelock())
 - **0x6695c0f8706c5ace3bdf8995073179cca47926dc** on plasma: the timelock score says no delay (0), the live read finds a timelock of 48 h in the admin path via EIP-1967 admin -> ProxyAdmin owner()

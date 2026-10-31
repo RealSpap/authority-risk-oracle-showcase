@@ -641,7 +641,7 @@ class TestBeaconOwnerIsTheAuthority(unittest.TestCase):
 
 class TestSafeActivity(unittest.TestCase):
     """Mechanism 86: an admin Safe that was idle and executes again. The idle time is observed time, so a cold start fires nothing."""
-    NOW = "2026-10-20T12:00:00Z"
+    NOW = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())   # the clock of the run: main() reads the wall clock, so a fixed date made the 14-day wake of these tests fall due on 2026-10-31
     SAFE, OTHER, KEY = "0x" + "aa" * 20, "0x" + "bb" * 20, "0x" + "cc" * 20
 
     def days_ago(self, n): return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(safe_activity.utc_s(self.NOW) - int(n * 86400)))

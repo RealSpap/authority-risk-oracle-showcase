@@ -50,3 +50,94 @@ On the Ethereum oracle (Sepolia), the admin role is held by one account with no 
 
 Written in: METHODOLOGY.md; REFERENCE.md; SECURITY.md.
 
+
+## What this is for, and what it is not for
+
+This project is research and monitoring. A score and a Watch alert are not an authority sufficient to authorize a critical operation on their own: do not release funds, change a limit or accept a counterparty on a score alone. Use them as one input, next to your own reading of the contract and a person who decides. A limit that is written on this page is documented, which does not make it acceptable for your use: whether a limit is acceptable depends on what you do with the score.
+
+Written in: this page. See also README.md, SECURITY.md and WHAT-THE-SCORE-SAYS.md, which say that a score is not an audit and not advice.
+
+## A role we detect is not every power the account has
+
+The Watch names a secondary role by the getter that answered: `pauser()`, `guardian()`, `curator()`, `pauseGuardian()`, `emergencyGuardian()`, `emergencyAdmin()` and `getEmergencyAdmin()` (seven getters in `scripts/side_roles.py`). A role found that way is what that getter reports. It is not the full list of what the account or the contract can do. A contract that answers none of the seven getters is not covered: no getter means not covered, not no role. The Watch shows that case as an absent record, not as a finding.
+
+Written in: watch/API.md (`side_roles.json`).
+
+## Several holders are not several protections
+
+Where a Safe has an owner that is itself a Safe, the nested-signers check (`scripts/check_nested_signers.py`, run by hand: it is not part of the Watch and not an input of the score) opens it down to its own owners, three levels below the Safe being read (`MAX_DEPTH = 4` in `scripts/lib/nested_signers.py`: the Safe being read and the nested Safes at depths 1, 2 and 3 are opened). A Safe four levels below is counted as one contract signer and is not opened. Shared signers between two groups are compared at the depth that was reached, so a key that sits deeper, or behind a signer that is a contract, is not seen. The independent reader of the Watch looks one level down only: for the first 20 owners of a Safe it reads whether each is a key, a Safe (its threshold and number of owners) or a timelock, and does not read the owners of those Safes. A Safe with a threshold of 1 whose owners are all multisigs of threshold 2 or more, or timelocks, is marked `nested` and counted at the lowest threshold among its owner Safes (`scripts/second_opinion.py`). Several holders of a role are not several protections either: three holders that one person can reach are one protection (see "We do not see the people behind the keys" above).
+
+Written in: scripts/lib/nested_signers.py; data/finding_2026-09-25-nested-signers-formula-investigation.md.
+
+## The multisig score is not one formula
+
+The general shape is `min(100, threshold * 15 + max(0, owners - threshold) * 5)` (METHODOLOGY.md, `multisigScore`). Not every target uses it. In the code as of 30 October 2026 there are at least these shapes: (1) the shape above, in most scorers; (2) the weakest of several key sets: two Safes that each hold an upgrade path, so that the weaker sets the ceiling (`scripts/lib/scorers.py` line 701, the threshold of the weaker Safe times 15), or a proposer set and an executor set that both have to act (`chains/arbitrum-ecosystem/scorers.py` line 1086 and `chains/plasma-ecosystem/scorers.py` line 1434); (3) other weights per signature (`scripts/lib/scorers.py` line 234, one target; line 296, one target; line 334, the three Arcus pToken targets); (4) a Solana formula that counts voters (`chains/solana/scorers.py` lines 102 and 133) and a Zcash formula on miner concentration, the payout addresses needed to pass 50% and 25% (`chains/zcash/scorers.py` line 374); (5) a value set by a written rule (100 when a multisig does not apply, METHODOLOGY.md), or fixed by hand for the nine targets listed under "Known gaps" in CHANGELOG.md (that list comes from a sweep that did not read every scorer line by line; it is not claimed to be complete). A list that names the shape used by every target is not published yet. To know what a target's score used, read the notes of that target: they list the owners and the threshold that were read.
+
+Written in: METHODOLOGY.md; CHANGELOG.md (Known gaps).
+
+## Two committees under one protocol
+
+Two public findings describe two different guardian seats of one lending protocol. One is a committee of 9 signers shared by several chains (`data/finding_2026-09-17-cross-ecosystem-aave-guardian-overlap.md`); the other is a 7-signer guardian that needs 4, found on 18 of the 19 deployments checked (`data/finding_2026-09-25-aave-guardian-18-chains.md`). They are two seats, not one committee counted twice: a later finding says the 9-signer seat had been read by a scorer and only logged, while the committee analysis covered the other seat. The cross exposure score caps a committee shared between ecosystems at 80 (METHODOLOGY.md, cross exposure, since 2026-09-20). Read the findings before reading a number about this protocol's guardian.
+
+Written in: data/finding_2026-09-19-aave-guardian-ethereum-l1-fifth-chain-and-verifier-corrections.md (the explanation of the two seats); METHODOLOGY.md.
+
+## Timelocks: what is read and what is not
+
+Read: the delay of a timelock (`getMinDelay()` or `delay()`); the queue of operations, from the events `CallScheduled`, `CallExecuted` and `Cancelled` and from `QueueTransaction`, `ExecuteTransaction` and `CancelTransaction`, with `isOperationPending`; the proposer and canceller roles of a timelock, and the executor role where a scorer reads it (`scripts/lib/scorers.py`); the bypass paths named in METHODOLOGY.md.
+
+Not read: the roles that can change the delay, in general (a change of delay is not looked for as an event: `updateDelay` and `MinDelayChange` are not read outside the classification of a queued call); the difference between an operation that was executed and one that was cancelled (the queue file says that an operation is gone, executed or cancelled); an executor role open to everyone (address zero), in general. The queue of operations is published and shown, and no score reads it.
+
+A Safe has no delay of its own. Its `timelockScore` is 0 unless a delay mechanism is found and read on the path, and a Safe module that is not analysed makes the Safe count as unresolved (METHODOLOGY.md); a guard does not lower the score. A module list that could not be read leaves the score as computed, with a note.
+
+Written in: METHODOLOGY.md; scripts/check_pending_ops.py; scripts/lib/pending_ops.py.
+
+## Money: a protocol's TVL is not the money one key could take
+
+Two different money figures sit behind the same words. Where a contract answers `totalAssets()`, the figure is what that contract holds by its own account (`held_assets.json`). Otherwise the figure is the total value locked of the whole protocol, as DefiLlama reports it. The second is not the amount one key could move: a protocol's total value can sit behind other contracts than the one tracked. The independent reader (`second_opinion.json`) attaches that protocol figure to every tracked contract of the protocol, a retired or peripheral one included, and says which figure it used in the field `money_source` of `exposure` (`contract` or `protocol_tvl`). The totals by cause (`risk_by_cause.json`) work differently: a contract marked retired or peripheral in `tvl_scope.json` carries none of its protocol's value, a protocol is counted once per chain, and the contract's own figure is used only when there is no protocol match; they do not carry a flag per contract.
+
+Written in: watch/API.md (`risk_by_cause.json`, `held_assets.json`, `second_opinion.json`).
+
+## Money held by the contract itself is read for 31 of 176 EVM contracts
+
+The amount a contract holds by its own account is read only for contracts that answer `totalAssets()` (and `asset()`). On the Watch run of 29 October 2026 (12:58:54 UTC), that was 31 of 176 EVM contracts (`held_assets.json`: 176 asked, 31 answered, none unpriced). A router, a pool, a token or a Solana program does not answer and is absent from the file, which is not a zero. For the other 145, the money figure, where there is one, is the protocol's value locked.
+
+Written in: watch/API.md (`held_assets.json`).
+
+## A figure here is dated, and a snapshot is as old as its date
+
+- Distribution of the 202 composites on the Watch run of 29 October 2026 (12:58:54 UTC): critical 46, weak 28, moderate 75, decent 35, strong 18 (bands: critical 0 to 19, weak 20 to 39, moderate 40 to 59, decent 60 to 79, strong 80 to 100). It is recounted from `scores/*.json` of the `watch-data` branch at commit `a53d00a`, and it moves with each run.
+- The check that compares signers between ecosystems uses a hard-coded snapshot of the other chain, dated in the name of its constant; the convention was decided and pushed on 2026-09-20 (METHODOLOGY.md, cross exposure). The published score files do not carry the date of that snapshot, so the age of the comparison is not visible in the data.
+- The Robinhood Chain tokenized stocks and ETFs are about 230 tokens, of which 5 were sampled; the score published for them (1/100) comes from those 5 (CHANGELOG.md).
+- The back-test cited in WHAT-THE-SCORE-SAYS.md (55 incidents, 7 about who controls a contract) lists its incidents on the Backtest page of the site, `realspap.github.io/oracle/backtest/`; the three `data/backtest_*.md` files in this repository are three separate retroactive back-tests of single incidents, not the 55.
+
+Written in: CHANGELOG.md; METHODOLOGY.md; WHAT-THE-SCORE-SAYS.md.
+
+## Amounts of past incidents are press figures
+
+Dollar amounts of past incidents quoted in this repository (in `CHANGELOG.md`, `docs/LANDSCAPE.md`, `data/README.md` and the `data/backtest_*.md` files) are the figures given by the press or by the affected team at the time of writing. They are not measurements of chain state by this project, unless the file says it measured them, and they are not updated afterwards.
+
+Written in: this page. The amounts appear in CHANGELOG.md, docs/LANDSCAPE.md, data/README.md and the data/backtest_*.md files.
+
+## The oracle's own authority, by chain
+
+On the Watch run of 29 October 2026 (`scores/<oracle>.json`, field `self.roles`), each of the eight EVM oracles lists one account that holds both the admin role and the updater role. Two accounts appear across the eight: one for Robinhood Chain and one for the seven others. The files do not say whether those accounts are plain keys (only the Ethereum oracle on Sepolia is documented as a plain key, in the section above). For Solana, `scores/solana-devnet.json` carries no `self.roles`; `second_opinion.json` has a record flagged `oracle_self` for the oracle program, which reads its upgrade authority as a plain key (through its ProgramData account). On two of the eight (Base and Monad) the scan of the oracle's own role events gave up on that run (`read: false`, `gap_blocks` 214476 and 140651 in their score files), so a role change in that window was not read. A composite of the oracle's own admin and updater is stated in this repository for the Ethereum oracle only (2 out of 100). The other oracles hold no user funds, like it, and a consumer should weigh the single updater key on each of them first.
+
+Written in: REFERENCE.md; SECURITY.md; watch/API.md.
+
+## How long a change can stay unseen
+
+The Watch starts every 6 hours (at 17 minutes past 0, 6, 12 and 18 UTC). A change that happens just after a run starts is first read by the next run, normally 6 hours later, plus the length of that run. The cadence is not a bound: the run of 29 October 2026 (12:58:54 UTC) came 11 hours 55 minutes after the previous one (01:04:06 UTC), because a scheduled run was missed. If you turn on the notify-me option of the dashboard on the site, it polls `latest.json` every 10 minutes, which adds up to 10 minutes. A scheduled GitHub job can also start late; no upper bound for that delay has been measured. A change that is made and undone between two runs is not seen. Alerts and feeds are published after a run ends, not when the change happens. For a change that matters within hours, read the chain directly.
+
+Written in: watch/README.md; watch/API.md.
+
+## What the 14-day table of actions can and cannot say
+
+`score_series.json` lists the authority actions that the Watch itself saw in the last 14 days (a timelock operation or a Squads proposal queued or executed against a tracked contract, an admin change read independently, an upgrade executed) with the score the contract carried at that moment. On the run of 29 October 2026 it holds 21 actions, 6 of them on a contract scored under 40. The file does not state how many operations were left out for these reasons. It is a description of what was observed. It does not test whether low scores predict actions, it is not a calibration of the score, and with a count this small a gap between bands says little. An operation whose instructions were not decoded is not counted, and neither is one that was decoded but aims at something other than a tracked program.
+
+Written in: watch/API.md (`score_series.json`).
+
+## A transfer of control in progress is read by getter, not by event
+
+A transfer of control that has been started and not yet accepted is read at each run by getter: `pendingOwner()` (Ownable2Step, on the contract or on its ProxyAdmin) and `pendingAdmin()` (Compound-style contracts). While one is set, the Watch raises a medium alert (`admin_pending`). The start, the acceptance and the cancellation of a transfer are not followed as events: when the pending address disappears from the getter, the transfer was accepted or cancelled, and the Watch cannot tell which. The pending admin and the delay of `AccessControlDefaultAdminRules` (`pendingDefaultAdmin()`, `defaultAdminDelay()`) are not read.
+
+Written in: watch/API.md (`second_opinion.json`, `pending_admin`); rules.json.

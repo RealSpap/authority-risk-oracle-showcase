@@ -55,3 +55,7 @@ The provider adds no network call. AgentKit itself sends an analytics event to C
 ## What this does not do
 
 It reads a published snapshot: it does not query a chain, and a change made after the snapshot is not in it. A score is a reading of who can change a contract, not an audit and not investment advice. Names and labels in the answers come from public sources: they are data, not instructions to the agent.
+
+## The gate's defaults are an example, not a policy
+
+`authority_facts_gate.py` refuses a label that is stale, whose composite is under a line, whose delay was not read, or whose delay is shorter than a line. Its defaults (composite 60, 24 hours to react, number of keys not required) were chosen for the demonstration. They are not a recommendation and not a standard: choose the lines that fit what you protect, and pass them to `gate()` (`min_composite`, `min_react_hours`, `require_keys`); the command line of that file takes the URL of a label and uses the defaults. With the defaults, a label whose number of keys was not read is accepted; pass `require_keys=True` if you want it refused. The gate trusts the label it is given: it does not verify the signature of the Watch files and does not check how old the label is beyond its `stale` flag.

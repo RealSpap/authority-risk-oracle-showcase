@@ -104,6 +104,7 @@ flowchart LR
 
 1. **Score**: each ecosystem's scorer re-derives every target from live chain state (owners, thresholds, modules, proxy admins,
    timelock delays, price sources), with a second RPC cross-checking the reads that matter most (Ethereum L1 and its tokens).
+   *Exception:* for at least nine targets on Robinhood Chain, the notes are re-derived while some authority sub-scores are fixed values (see Known gaps in CHANGELOG.md); for other targets a part of the score is a documented default when a read fails (see "The multisig score is not one formula" in docs/LIMITS.md and the notes of each target).
 2. **Guard**: a push that lowers a score by more than 15 points, or that follows a read that could not be completed, is held until
    a person looks at it. An unreadable source takes a conservative score and is held, not reported as safe.
 3. **Publish**: the updater writes a batch on-chain with a `methodologyHash` derived from the code that produced it

@@ -6,6 +6,8 @@
 value) and pushes a fresh `updateScores()` batch. `bash scripts/repush_all_oracles.sh` re-pushes all nine oracles in one run;
 `DRY=1` recomputes and encodes without reading a key or sending anything.
 
+For nine targets on Robinhood Chain, some authority sub-scores are fixed values and are not re-derived from the read (CHANGELOG.md, Known gaps).
+
 A real push is guarded before it is sent:
 
 - a score that drops by more than 15 points, or follows a read that could not be completed, is **held** until a person accepts that address

@@ -57,3 +57,11 @@ The display rules of section 2 of the specification (every line shown in order, 
 ## For another implementation
 
 Publish one JSON twin per contract with the fields above, run the script on your folder, and declare each DIFFERENCE it prints in your documentation. An implementation that passes with every difference declared can say "Authority Facts v0.1 compatible" (specification, section 5).
+
+## Added on 30 October 2026: what the checker is, and where producers differ
+
+**It is not only a syntax check.** Beyond the fields and types of the schema, `scripts/conformance.py` applies rules about meaning: the band must be the band of the composite, the composite is compared with the formula, a number that stands for a failed read (zero keys, a negative delay, money of zero or less) is refused, exactly six requirements must be present, and the methodology hash must be 32 bytes. What it cannot check is whether the numbers are true: for that, `scripts/prove.py` replays the reference implementation against the chain.
+
+**What the schema bounds and what it does not.** `watch/schema/label.schema.json` requires the fields and fixes the allowed bands. It sets no minimum or maximum on a number: the bounds (a composite from 0 to 100, keys of at least 1, hours of at least 0) are enforced by `scripts/conformance.py`, not by the schema, and the schema allows extra fields. A producer who validates only against the schema accepts labels the checker refuses.
+
+**Two producers can both conform and still differ.** The specification lets an implementation declare a difference. Two labels for the same contract are comparable only if each states the date and block of its reading and the method it used; a difference of definition (what counts as a key, which delay counts) is declared in the producer's documentation, as section 5 of the specification asks, not hidden. When comparing two producers, compare those declarations first.

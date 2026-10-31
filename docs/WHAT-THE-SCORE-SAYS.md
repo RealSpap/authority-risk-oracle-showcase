@@ -17,6 +17,10 @@ Read it as **exposure**. A bare key with no delay scores near 0. A well-spread m
 
 **It does not see what happens off-chain.** Three owners of a Safe could be three employees of the same company, or the same person's three wallets. Code bugs, price manipulation and custodial wallets are outside it too. The attacks in our tests went around the configuration (a spoofed signing interface, compromised devices, a service key), not through its weakest point.
 
+**A role it names is not every power the account has.** The Watch names a secondary role by the getter that answered (a pauser, a guardian, a curator). That is what the getter reports, not the full list of what the account or the contract can do, and a contract with no such getter is not covered, which is not the same as having no such role (see [what we do not read](LIMITS.md)).
+
+**The table of observed actions is descriptive.** `score_series.json` lists the authority actions the Watch saw in the last 14 days with the score each contract carried at that moment; on the run of 29 October 2026 it held 21 actions, 6 of them on a contract scored under 40. It does not test whether low scores predict actions, and 21 is too few to read a rate from.
+
 **It is not an audit, not a rating of a company, not investment advice.** Today the oracles run on testnets, with a single updater key.
 
 ## How to use it

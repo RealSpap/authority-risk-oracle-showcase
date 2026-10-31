@@ -62,3 +62,12 @@ The Immunefi Vulnerability Severity Classification System (smart contracts table
 There is no funded bug bounty programme today. A genuine finding is acknowledged publicly, with credit, and a modest reward is at the maintainer's discretion: it is a testnet, hackathon-stage project and it says so. If a funded programme opens later, it will be linked here.
 
 This file covers the content of this repository only. The author does not act for, or speak on behalf of, any project named here.
+
+## Added on 30 October 2026: where to read the rest
+
+- Who produces what, what is public, private or external, and the licences: [docs/PROVENANCE.md](docs/PROVENANCE.md).
+- Signing key: how it would be announced, rotated and revoked, and the Zcash keys used so far: [docs/KEY-ROTATION.md](docs/KEY-ROTATION.md).
+- What a visitor's browser contacts: [docs/PRIVACY.md](docs/PRIVACY.md).
+- Which proxy patterns the readers cover and which they do not: [docs/PROOF-COVERAGE.md](docs/PROOF-COVERAGE.md).
+
+The pinned signing key is written in this repository (`watch/API.md`, `scripts/audit_public.py`, the installable package) and in the dashboard script of the site, which is built outside this repository. The maintainer publishes all of these copies (`docs/TOOLS.md` and the package README carry it too), so one person can change all of them at once. Someone who wants to rule out that the key and the files were changed together needs a copy kept by someone else; none is published. `scripts/audit_public.py` and the package check consistency; they do not establish who holds the key.

@@ -167,7 +167,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 4259154,
+   "window_blocks": 4114285,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -187,7 +187,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 4259154,
+   "window_blocks": 4114285,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -207,7 +207,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 4259154,
+   "window_blocks": 4128327,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -279,7 +279,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/mainnet",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 100398,
+   "window_blocks": 100498,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -429,7 +429,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 0,
    "window_blocks": 3000000,
-   "window_days_est": 3.5,
+   "window_days_est": 3.9,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62"
@@ -449,7 +449,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 86400,
    "window_blocks": 3000000,
-   "window_days_est": 3.6,
+   "window_days_est": 3.9,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x14b107cf534239c59571b066cb6497a321da897c"
@@ -1260,25 +1260,8 @@
    ],
    "delay": 0,
    "queued_events": 56,
-   "latest_queued": 1793250165,
-   "pending": [
-    {
-     "id": "squads:tr8rgazUrZzgdkfc6Q622nVJHMMzh29trdBE2uBHb4u:56",
-     "index": 56,
-     "target": "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C",
-     "value": 0,
-     "selector": null,
-     "signature": "Squads proposal #56: Upgrade of program CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C (not the tracked program)",
-     "ready_at": 1793250165,
-     "state": "ready",
-     "approved_at": 1793250165,
-     "account": "BKu2pjhhrZM5zUzoUvWWSgWFkZLiB6YbTuDen3BwGa6i",
-     "undecoded": false,
-     "decoded": "program upgrade",
-     "what": "Upgrade of program CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C",
-     "touches_governed": false
-    }
-   ],
+   "latest_queued": 1793414244,
+   "pending": [],
    "recent": [
     {
      "id": "squads:tr8rgazUrZzgdkfc6Q622nVJHMMzh29trdBE2uBHb4u:55",
@@ -1295,14 +1278,29 @@
      "decoded": "program upgrade",
      "what": "Upgrade of program CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
      "touches_governed": true
+    },
+    {
+     "id": "squads:tr8rgazUrZzgdkfc6Q622nVJHMMzh29trdBE2uBHb4u:56",
+     "index": 56,
+     "target": "CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C",
+     "value": 0,
+     "selector": null,
+     "signature": "Squads proposal #56: Upgrade of program CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C (not the tracked program)",
+     "still_queued": false,
+     "queued_at": 1793414244,
+     "executed_at": 1793414244,
+     "account": "BKu2pjhhrZM5zUzoUvWWSgWFkZLiB6YbTuDen3BwGa6i",
+     "undecoded": false,
+     "decoded": "program upgrade",
+     "what": "Upgrade of program CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C",
+     "touches_governed": false
     }
    ],
    "active": [],
    "proposals": {
-    "executed": 52,
+    "executed": 53,
     "rejected": 2,
-    "cancelled": 1,
-    "approved": 1
+    "cancelled": 1
    },
    "transaction_index": 56
   },
@@ -1331,7 +1329,7 @@
    "transaction_index": 71
   }
  ],
- "discovered_utc": "2026-10-30T22:29:47Z",
+ "discovered_utc": "2026-10-31T05:49:26Z",
  "discovered": 15,
- "squads_utc": "2026-10-30T22:34:26Z"
+ "squads_utc": "2026-10-31T05:53:56Z"
 }

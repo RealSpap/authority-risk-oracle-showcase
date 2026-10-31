@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-30T22:44:51Z",
+ "generated_utc": "2026-10-31T06:04:47Z",
  "chains": {
   "arbitrum": {
    "oracle": "Arbitrum (Sepolia)",
@@ -268,8 +268,8 @@
    "safe_events": {
     "safes": 4,
     "days": 7,
-    "status": "unread",
-    "why": "UNREAD (cannot locate the window start: ExtraDataLengthError: The field extraData is 3191 bytes, but should be 32. It is quite likely that you are connected to "
+    "status": "ok",
+    "why": null
    },
    "tvl_matched": 5,
    "held_read": 1,
@@ -281,7 +281,6 @@
     "9 contract(s) where no admin slot, owner() or admin() answers: the independent reader cannot classify their admin",
     "paused() or isPaused() answered by 9 of 14 contracts: a pause on the other 5 is not seen, and 'nothing paused' says nothing about them",
     "no pauser, guardian or curator getter answers on 11 of 14 contracts: a change of those hands is not seen there",
-    "Safe events not read this run (UNREAD (cannot locate the window start: ExtraDataLengthError: The field extraData is 3191 bytes, but should be 32. It is quite likely that you are connected to )",
     "no money figure for 8 of 14 contracts (no DefiLlama protocol, no totalAssets() answered): money at risk not computed for them"
    ]
   }

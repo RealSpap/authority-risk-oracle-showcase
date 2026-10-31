@@ -7,8 +7,8 @@
    "events": [],
    "control": 86,
    "status": "ok",
-   "fromBlock": 96289706,
-   "toBlock": 102080835,
+   "fromBlock": 96540281,
+   "toBlock": 102331720,
    "days_read": 7
   },
   {
@@ -17,8 +17,8 @@
    "events": [],
    "control": 30,
    "status": "ok",
-   "fromBlock": 26258355,
-   "toBlock": 26308598,
+   "fromBlock": 26260546,
+   "toBlock": 26310787,
    "days_read": 7
   },
   {
@@ -27,8 +27,8 @@
    "events": [],
    "control": 36,
    "status": "ok",
-   "fromBlock": 517664740,
-   "toBlock": 519812477,
+   "fromBlock": 517754436,
+   "toBlock": 519904640,
    "days_read": 7
   },
   {
@@ -37,16 +37,20 @@
    "events": [],
    "control": 13,
    "status": "ok",
-   "fromBlock": 53002798,
-   "toBlock": 53305197,
+   "fromBlock": 53015986,
+   "toBlock": 53318385,
    "days_read": 7
   },
   {
    "ecosystem": "tempo",
    "safes": 4,
    "events": [],
-   "control": null,
-   "status": "UNREAD (cannot locate the window start: ExtraDataLengthError: The field extraData is 3191 bytes, but should be 32. It is quite likely that you are connected to a )"
+   "control": 0,
+   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 61 execution(s) from other Safes on the window's tail)",
+   "fromBlock": 45617780,
+   "toBlock": 46720786,
+   "days_read": 7,
+   "control_witness": 61
   },
   {
    "ecosystem": "plasma",
@@ -54,19 +58,20 @@
    "events": [],
    "control": 11,
    "status": "ok",
-   "fromBlock": 35853591,
-   "toBlock": 36457419,
+   "fromBlock": 35879990,
+   "toBlock": 36483727,
    "days_read": 7
   },
   {
    "ecosystem": "monad",
    "safes": 13,
    "events": [],
-   "control": 1,
-   "status": "ok",
-   "fromBlock": 117933716,
-   "toBlock": 118019536,
-   "days_read": 0.3
+   "control": 0,
+   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 2 execution(s) from other Safes on the window's tail)",
+   "fromBlock": 118021169,
+   "toBlock": 118106988,
+   "days_read": 0.3,
+   "control_witness": 2
   },
   {
    "ecosystem": "hyperliquid",
@@ -74,8 +79,8 @@
    "events": [],
    "control": 2,
    "status": "ok",
-   "fromBlock": 49698976,
-   "toBlock": 49962496,
+   "fromBlock": 49725817,
+   "toBlock": 49989337,
    "days_read": 3.0
   }
  ]

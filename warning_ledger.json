@@ -1136,10 +1136,11 @@
    "first_seen_utc": "2026-10-29T12:58:54Z",
    "due_utc": "2026-10-29T05:02:45Z",
    "notice_hours": null,
-   "state": "queued",
+   "state": "resolved",
    "chain": "solana",
    "timelock": "Squads v4 multisig tr8r\u2026Hb4u (3-of-4, time lock 0 s), found by the independent reader (1 tracked program)",
-   "what": "program upgrade"
+   "what": "program upgrade",
+   "resolved_seen_utc": "2026-10-31T05:38:40Z"
   },
   "plasma:0xabd3645ba0bb60c238bede64378826e1206f5072:0xb34e45727b92eb7c6e989e8d72a8dc2edd5de182b104f6a73863ee75575c9823": {
    "outcome": "warned",
@@ -1180,7 +1181,7 @@
    "what": "call"
   }
  },
- "updated_utc": "2026-10-30T22:18:18Z",
+ "updated_utc": "2026-10-31T05:38:40Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
   "warned": 34,

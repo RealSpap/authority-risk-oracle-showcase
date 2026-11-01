@@ -4,13 +4,17 @@ on:
   push:
   pull_request:
 
+# Nothing in this workflow writes to the repository: the token gets read access to the contents and no more (30/10/2026).
+permissions:
+  contents: read
+
 jobs:
   python-unit-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262   # v4.4.0, pinned to its commit, as in the other workflows
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065   # v5.6.0, pinned to its commit, as in the other workflows
         with:
           python-version: "3.11"
 
@@ -43,8 +47,9 @@ jobs:
   solidity-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262   # v4.4.0, pinned to its commit, as in the other workflows
 
+      # Not pinned to a commit yet: the commit of the v1 tag was not available when this file was changed. Pin it with `gh api repos/foundry-rs/foundry-toolchain/git/ref/tags/v1` (an annotated tag needs a second lookup).
       - uses: foundry-rs/foundry-toolchain@v1
 
       - name: Install forge-std and OpenZeppelin

@@ -35,3 +35,19 @@ The Zcash tab anchors a commitment in an `OP_RETURN` output of a Zcash **testnet
 | ARO2, six live targets | 2026-09-20 19:23:45 | `462de12bf72e5e635a1feed4a4cedb02c03f17745bd15176787f8f5f8fcd701c` | 6 | `214f8105...` | `tmCj66nwJY8xgNj3jwEyUMhLGmZzbHYiHY8` | latest; the seventh target was retired from the live set on 2026-09-20 |
 
 Where to read them: `chains/zcash/data/` (the attestation files, except the ARO1 one) and `chains/zcash/METHODOLOGY.md`, sections 9.5 to 9.8. The dashboard fetches each ARO2 transaction, decodes the `OP_RETURN` and recomputes the commitment in your browser.
+
+## Rehearsal of 30 October 2026
+
+The procedure above was rehearsed on 30 October 2026 on a copy of the repository and of the Watch files, with two test keys: the variable `WATCH_SIGNING_KEY` was set to test seeds, and the real signing key was not read or used. What the rehearsal showed:
+
+1. A run signed by the old key verifies with `sign_run.py --verify --pin OLD` and with `audit_public.py --pin OLD`. The options differ: `sign_run.py --verify --pin KEY` accepts only the keys given; `audit_public.py --pin KEY` and `authority_check.py --verify-signature --pin KEY` add a key to the published one.
+2. Once the new key is added to `PINNED_KEYS` in `scripts/audit_public.py`, `audit_public.py` accepts runs signed by either key with no option.
+3. A run cannot carry two signatures: `signature.json` holds one `public_key` and one `signature`. The overlap is therefore the switch at a stated run (the last run signed by the old key, the first signed by the new one), not a double signature.
+4. Once the old key is removed from `PINNED_KEYS`, an older run fails the audit with "valid Ed25519 signature, but by a key this audit does not pin", unless the auditor passes `--pin OLD`.
+5. `sign_run.py --verify` also compares the hashes of the code that produced a run (`scripts/*.py`, `rules.json`, the workflow) with the current checkout, so any later change of these files, the change of `PINNED_KEYS` included, is reported as a code difference on older runs. `audit_public.py` does not compare the code: it checks an older run's files and signature (`--watch DIR`, or `--ref COMMIT` for a commit of the `watch-data` branch), with `--pin OLD` once the old key is removed. `--ref` was not rehearsed.
+6. The installable package trusts the key built into its release, or a key given with `--trust-key` (or the environment variable `AUTHORITY_RISK_TRUSTED_KEYS`). After a rotation, a package release that carries the new key is needed; until then its users pass `--trust-key`.
+
+Every `audit_public.py` run of the rehearsal exited 1 for another reason: the copied Watch run was 25 hours old ("watch alive"). Results 1, 2 and 4 are those of its signature line.
+
+Not rehearsed: the pin in the dashboard script of the site, which is outside this repository.
+

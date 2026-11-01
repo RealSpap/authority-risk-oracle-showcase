@@ -10,18 +10,43 @@ the composite is the published formula floor((4a + 3m + 3t + 5) / 10) of the thr
 there are exactly the six requirement checks; the methodology hash and the licence are present. A composite that differs from the formula is reported as a DIFFERENCE, not a failure: section 5 allows a
 documented difference (a cap or a minimum over several oracles), so the report lists them for the implementer to declare. Standard library only.
 Exit 0: every label conforms (differences allowed). Exit 1: at least one label breaks the specification. Exit 2: nothing could be read.
+
+--strict (30/10/2026, off by default: without it nothing above changes) also reads the label against watch/schema/label.strict.schema.json, the plain schema plus the bounds it does not state
+(composite 0..100, keys at least 1, delay at least 0, money above 0, a 32-byte hash, six requirements, the five sub-scores each 0..100), and reports a difference from the published formula as a failure.
 """
-import http.client, json, os, re, sys, urllib.request
+import http.client, json, math, os, re, sys, urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 from validate_schemas import check  # noqa: E402
 
 SCHEMA = os.path.join(HERE, "..", "watch", "schema", "label.schema.json")
+STRICT_SCHEMA = os.path.join(HERE, "..", "watch", "schema", "label.strict.schema.json")
 BANDS = (("critical", 0, 19), ("weak", 20, 39), ("moderate", 40, 59), ("decent", 60, 79), ("strong", 80, 100))
 
 
-def judge(d, schema):
-    """(violations, differences) for one parsed twin."""
+def check_bounds(d, s, path, errs):
+    """The bounds of the strict schema that validate_schemas.check does not know (minimum, maximum, exclusiveMinimum, minLength, pattern, minItems, maxItems), over the shape `check` already accepted."""
+    if isinstance(d, bool): return
+    if isinstance(d, float) and not math.isfinite(d): errs.append("%s: %s is not a finite number" % (path, d)); return
+    if isinstance(d, (int, float)):
+        if "minimum" in s and d < s["minimum"]: errs.append("%s: %s is under the minimum %s" % (path, d, s["minimum"]))
+        if "maximum" in s and d > s["maximum"]: errs.append("%s: %s is over the maximum %s" % (path, d, s["maximum"]))
+        if "exclusiveMinimum" in s and d <= s["exclusiveMinimum"]: errs.append("%s: %s is not above %s" % (path, d, s["exclusiveMinimum"]))
+    if isinstance(d, str):
+        if "minLength" in s and len(d) < s["minLength"]: errs.append("%s: shorter than %d" % (path, s["minLength"]))
+        if "pattern" in s and not re.search(s["pattern"], d): errs.append("%s: does not match %s" % (path, s["pattern"]))
+    if isinstance(d, list):
+        if "minItems" in s and len(d) < s["minItems"]: errs.append("%s: %d item(s), at least %d expected" % (path, len(d), s["minItems"]))
+        if "maxItems" in s and len(d) > s["maxItems"]: errs.append("%s: %d item(s), at most %d expected" % (path, len(d), s["maxItems"]))
+        for i, x in enumerate(d):
+            if isinstance(s.get("items"), dict): check_bounds(x, s["items"], "%s[%d]" % (path, i), errs)
+    if isinstance(d, dict):
+        for k, sub in (s.get("properties") or {}).items():
+            if k in d: check_bounds(d[k], sub, path + "." + k, errs)
+
+
+def judge(d, schema, strict=None):
+    """(violations, differences) for one parsed twin. strict: the parsed label.strict.schema.json to read it against as well (None = the plain reading, unchanged)."""
     errs, diffs = [], []
     check(d, schema, "label", errs)
     if errs: return errs, diffs
@@ -38,6 +63,10 @@ def judge(d, schema):
     if len(d["requirements"]) != 6: errs.append("%d requirement checks, the specification has six" % len(d["requirements"]))
     if not re.fullmatch(r"0x[0-9a-fA-F]{64}", d["methodology_hash"]): errs.append("methodology_hash is not a 32-byte hex hash")
     if not d["license"].strip(): errs.append("licence is empty")
+    if strict is not None:
+        check(d, strict, "label", errs); check_bounds(d, strict, "label", errs)
+        errs += ["strict: " + x for x in diffs]; diffs = []   # a difference from the published formula is a failure in strict mode
+        errs[:] = list(dict.fromkeys(errs))
     return errs, diffs
 
 
@@ -49,6 +78,8 @@ def load(src):
 
 def main(argv=None, out=print):
     argv = list(sys.argv[1:] if argv is None else argv); schema = json.load(open(SCHEMA, encoding="utf-8"))
+    strict = None
+    if "--strict" in argv: argv.remove("--strict"); strict = json.load(open(STRICT_SCHEMA, encoding="utf-8"))
     if not argv: out(__doc__.split("\n\n")[0]); return 2
     docs = []                                                      # (name, parsed or None)
     try:
@@ -66,7 +97,7 @@ def main(argv=None, out=print):
     if not docs: out("conformance: no label found"); return 2
     bad = diff = 0
     for name, d in docs:
-        errs, diffs = judge(d, schema)
+        errs, diffs = judge(d, schema, strict)
         for e in errs: out("FAIL %s: %s" % (name, e))
         for e in diffs: out("DIFFERENCE %s: %s" % (name, e))
         bad += bool(errs); diff += bool(diffs)

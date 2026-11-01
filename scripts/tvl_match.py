@@ -40,7 +40,7 @@ MAP = [
     ("robinhood", "0x544bf81c", "pendle-v2"), ("robinhood", "0x292fc50e", "symbiosis"), ("robinhood", "0x87673a61", "beefy"),
     ("robinhood", "0x94bab969", "lighter-robinhood-perps"), ("robinhood", "0x9d53d5e3", "morpho-blue"),
     ("robinhood", "0x6f475642", "layerzero-v2"), ("robinhood", "0xc39161c7", "layerzero-v2"), ("robinhood", "0xe1844c5d", "layerzero-v2"),
-    ("robinhood", "0x1f7d7550", "uniswap-v3"), ("robinhood", "0x8366a39c", "uniswap-v3"), ("robinhood", "0x000000007a1c", "uniswap-v3"), ("robinhood", "0x8bceaa40", "uniswap-v3"),
+    ("robinhood", "0x1f7d7550", "uniswap-v3"), ("robinhood", "0x8366a39c", "uniswap-v4"), ("robinhood", "0x8bceaa40", "uniswap-v2"),   # 0x000000007a1c (UniswapX V3DutchOrderReactor): DefiLlama has no UniswapX protocol, so it carries no figure
     ("robinhood", "0x00000000000014aa", "ekubo"),
     ("robinhood", "0x23a19d23", "chain:Robinhood Chain"), ("robinhood", "0xbd0d173e", "chain:Robinhood Chain"), ("robinhood", "0x1232813b", "chain:Robinhood Chain"),
     ("robinhood", "0x1a07cc4b", "chain:Robinhood Chain"), ("robinhood", "0xdf875533", "chain:Robinhood Chain"), ("robinhood", "0xf0ce991e", "chain:Robinhood Chain"),

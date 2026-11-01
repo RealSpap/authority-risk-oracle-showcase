@@ -1,0 +1,35 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Authority Facts v0.1: the JSON twin of one label, strict reading (added 2026-10-30)",
+ "description": "A stricter reading of the same label, ADDED next to label.schema.json, which is unchanged and stays the published schema. The fields and meanings are the same; this file adds the bounds that scripts/conformance.py enforces and the plain schema does not state (a composite from 0 to 100, at least one key, no negative delay, a 32-byte methodology hash, exactly six requirements) and requires the five sub-scores. Extra fields are still allowed. A line that cannot be read is null, never 0. scripts/conformance.py --strict also turns a difference from the published formula into a failure.",
+ "type": "object",
+ "required": ["chain", "address", "composite", "band", "keys_to_move", "react_hours", "money_per_key_usd", "sub", "requirements", "last_pushed", "stale", "methodology_hash", "block", "license"],
+ "properties": {
+  "name": {"type": "string"},
+  "chain": {"type": "string", "minLength": 1},
+  "address": {"type": "string", "minLength": 1},
+  "composite": {"type": "integer", "minimum": 0, "maximum": 100},
+  "band": {"enum": ["critical", "weak", "moderate", "decent", "strong"]},
+  "keys_to_move": {"type": ["integer", "null"], "minimum": 1},
+  "react_hours": {"type": ["integer", "null"], "minimum": 0},
+  "money_per_key_usd": {"type": ["number", "null"], "exclusiveMinimum": 0},
+  "sub": {
+   "type": "object",
+   "required": ["adminKeyScore", "multisigScore", "timelockScore", "oracleAuthorityScore", "crossExposureScore"],
+   "properties": {
+    "adminKeyScore": {"type": "integer", "minimum": 0, "maximum": 100},
+    "multisigScore": {"type": "integer", "minimum": 0, "maximum": 100},
+    "timelockScore": {"type": "integer", "minimum": 0, "maximum": 100},
+    "oracleAuthorityScore": {"type": "integer", "minimum": 0, "maximum": 100},
+    "crossExposureScore": {"type": "integer", "minimum": 0, "maximum": 100}
+   }
+  },
+  "requirements": {"type": "array", "minItems": 6, "maxItems": 6, "items": {"type": "object", "required": ["label", "met"], "properties": {"label": {"type": "string", "minLength": 1}, "met": {"type": "boolean"}}}},
+  "independent_read": {"type": ["object", "null"]},
+  "last_pushed": {"type": ["integer", "null"], "minimum": 1},
+  "stale": {"type": "boolean"},
+  "methodology_hash": {"type": "string", "pattern": "^0x[0-9a-fA-F]{64}$"},
+  "block": {"type": ["integer", "null"], "minimum": 0},
+  "license": {"type": "string", "minLength": 1}
+ }
+}

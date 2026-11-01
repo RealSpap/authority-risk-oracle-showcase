@@ -1,7 +1,7 @@
 {
- "generated_utc": "2026-11-01T13:37:05Z",
- "protocols": 11,
- "differing": 6,
+ "generated_utc": "2026-11-01T22:16:14Z",
+ "protocols": 12,
+ "differing": 5,
  "items": [
   {
    "slug": "curve-dex",
@@ -18,7 +18,7 @@
      "postures": [
       "contract"
      ],
-     "tvl_usd": 1054515691.990399
+     "tvl_usd": 1045137717.1604998
     },
     "monad": {
      "chain": "Monad",
@@ -31,7 +31,7 @@
      "postures": [
       "plain key"
      ],
-     "tvl_usd": 8824351.691162435
+     "tvl_usd": 8831169.125929097
     },
     "robinhood": {
      "chain": "Robinhood Chain",
@@ -44,7 +44,7 @@
      "postures": [
       "plain key"
      ],
-     "tvl_usd": 561035.5089476411
+     "tvl_usd": 559553.1855878696
     }
    },
    "weakest_chain": "robinhood",
@@ -70,7 +70,7 @@
      "postures": [
       "contract"
      ],
-     "tvl_usd": 492028867.6229477
+     "tvl_usd": 490440007.63044846
     },
     "base": {
      "chain": "Base",
@@ -83,7 +83,7 @@
      "postures": [
       "contract"
      ],
-     "tvl_usd": 504605997.4618317
+     "tvl_usd": 507688040.63998294
     },
     "ethereum-l1": {
      "chain": "Ethereum L1",
@@ -96,7 +96,7 @@
      "postures": [
       "contract"
      ],
-     "tvl_usd": 12749866605.98519
+     "tvl_usd": 12684202637.58309
     },
     "monad": {
      "chain": "Monad",
@@ -109,7 +109,7 @@
      "postures": [
       "contract"
      ],
-     "tvl_usd": 263172927.5574219
+     "tvl_usd": 262709745.21194935
     },
     "plasma": {
      "chain": "Plasma",
@@ -122,7 +122,7 @@
      "postures": [
       "contract"
      ],
-     "tvl_usd": 440527489.586173
+     "tvl_usd": 427194834.4228929
     }
    },
    "weakest_chain": "monad",
@@ -148,7 +148,7 @@
      "postures": [
       "Safe 5-of-10 (10 plain keys) + contract timelock 336 h"
      ],
-     "tvl_usd": 25388799.98210088
+     "tvl_usd": 25437367.631635472
     },
     "robinhood": {
      "chain": "Robinhood Chain",
@@ -164,7 +164,7 @@
       "contract owned by a Safe 5-of-10",
       "timelock 24 h"
      ],
-     "tvl_usd": 518341650.74633104
+     "tvl_usd": 517546861.1289431
     }
    },
    "weakest_chain": "robinhood",
@@ -192,7 +192,7 @@
       "Safe 5-of-10 (10 plain keys)",
       "timelock 24 h"
      ],
-     "tvl_usd": 4518638056.086165
+     "tvl_usd": 4528868963.315879
     },
     "plasma": {
      "chain": "Plasma",
@@ -231,7 +231,7 @@
      "postures": [
       "contract"
      ],
-     "tvl_usd": 91567495.0508961
+     "tvl_usd": 91472858.26330069
     },
     "ethereum-l1": {
      "chain": "Ethereum L1",
@@ -244,7 +244,7 @@
      "postures": [
       "timelock 48 h"
      ],
-     "tvl_usd": 708817418.601242
+     "tvl_usd": 652215223.2130079
     },
     "monad": {
      "chain": "Monad",
@@ -257,7 +257,20 @@
      "postures": [
       "contract"
      ],
-     "tvl_usd": 27717748.228345238
+     "tvl_usd": 27652451.427737303
+    },
+    "robinhood": {
+     "chain": "Robinhood Chain",
+     "contracts": 1,
+     "composite_min": 85,
+     "composite_max": 85,
+     "admin_kinds": {
+      "timelock": 1
+     },
+     "postures": [
+      "timelock 48 h"
+     ],
+     "tvl_usd": 172741731.812079
     }
    },
    "weakest_chain": "monad",
@@ -266,76 +279,7 @@
    "strongest_composite": 85,
    "spread": 5,
    "postures_differ": true,
-   "text": "Uniswap V4: Monad contract (composite 80); Base contract (composite 85); Ethereum L1 timelock 48 h (composite 85)"
-  },
-  {
-   "slug": "uniswap-v3",
-   "protocol": "Uniswap V3",
-   "chains": {
-    "arbitrum": {
-     "chain": "Arbitrum",
-     "contracts": 1,
-     "composite_min": 85,
-     "composite_max": 85,
-     "admin_kinds": {
-      "contract": 1
-     },
-     "postures": [
-      "contract owned by a timelock 48 h"
-     ],
-     "tvl_usd": 128420879.98447873
-    },
-    "base": {
-     "chain": "Base",
-     "contracts": 1,
-     "composite_min": 85,
-     "composite_max": 85,
-     "admin_kinds": {
-      "contract": 1
-     },
-     "postures": [
-      "contract"
-     ],
-     "tvl_usd": 300832103.48338956
-    },
-    "ethereum-l1": {
-     "chain": "Ethereum L1",
-     "contracts": 1,
-     "composite_min": 85,
-     "composite_max": 85,
-     "admin_kinds": {
-      "contract": 1
-     },
-     "postures": [
-      "contract owned by a timelock 48 h"
-     ],
-     "tvl_usd": 837315200.5902482
-    },
-    "robinhood": {
-     "chain": "Robinhood Chain",
-     "contracts": 4,
-     "composite_min": 85,
-     "composite_max": 85,
-     "admin_kinds": {
-      "contract": 1,
-      "timelock": 2,
-      "unreadable": 1
-     },
-     "postures": [
-      "contract owned by a timelock 48 h",
-      "timelock 48 h",
-      "not read"
-     ],
-     "tvl_usd": 85604180.94072698
-    }
-   },
-   "weakest_chain": "arbitrum",
-   "weakest_composite": 85,
-   "strongest_chain": "arbitrum",
-   "strongest_composite": 85,
-   "spread": 0,
-   "postures_differ": true,
-   "text": "Uniswap V3: Arbitrum contract owned by a timelock 48 h (composite 85); Base contract (composite 85); Ethereum L1 contract owned by a timelock 48 h (composite 85); Robinhood Chain contract owned by a timelock 48 h / timelock 48 h / not read (composite 85)"
+   "text": "Uniswap V4: Monad contract (composite 80); Base contract (composite 85); Ethereum L1 timelock 48 h (composite 85); Robinhood Chain timelock 48 h (composite 85)"
   },
   {
    "slug": "euler-v2",
@@ -352,7 +296,7 @@
      "postures": [
       "not read"
      ],
-     "tvl_usd": 193590663.7862157
+     "tvl_usd": 193567348.50871116
     },
     "plasma": {
      "chain": "Plasma",
@@ -367,7 +311,7 @@
       "not read",
       "timelock 48 h"
      ],
-     "tvl_usd": 1506640.3307038487
+     "tvl_usd": 1506319.0162685597
     }
    },
    "weakest_chain": "monad",
@@ -393,7 +337,7 @@
      "postures": [
       "timelock 24 h"
      ],
-     "tvl_usd": 61576174.24523316
+     "tvl_usd": 61531474.471073814
     },
     "base": {
      "chain": "Base",
@@ -406,7 +350,7 @@
      "postures": [
       "timelock 24 h"
      ],
-     "tvl_usd": 23066869.171465125
+     "tvl_usd": 22998265.87085455
     },
     "ethereum-l1": {
      "chain": "Ethereum L1",
@@ -419,7 +363,7 @@
      "postures": [
       "timelock 48 h"
      ],
-     "tvl_usd": 1197708618.267904
+     "tvl_usd": 1196287556.170959
     }
    },
    "weakest_chain": "arbitrum",
@@ -445,7 +389,7 @@
      "postures": [
       "Safe 5-of-9 (9 plain keys)"
      ],
-     "tvl_usd": 4354489611.299249
+     "tvl_usd": 4410578337.994
     },
     "ethereum-l1": {
      "chain": "Ethereum L1",
@@ -458,7 +402,7 @@
      "postures": [
       "Safe 6-of-10 (9 plain keys, 1 Safe)"
      ],
-     "tvl_usd": 5024289224.635304
+     "tvl_usd": 5029191464.708745
     },
     "robinhood": {
      "chain": "Robinhood Chain",
@@ -471,7 +415,7 @@
      "postures": [
       "Safe 5-of-9 (9 plain keys)"
      ],
-     "tvl_usd": 590367116.8516032
+     "tvl_usd": 589173586.8485657
     },
     "tempo": {
      "chain": "Tempo",
@@ -484,7 +428,7 @@
      "postures": [
       "Safe 5-of-9 (9 plain keys)"
      ],
-     "tvl_usd": 67186785.66547321
+     "tvl_usd": 67151800.25817584
     }
    },
    "weakest_chain": "base",
@@ -510,7 +454,7 @@
      "postures": [
       "Safe 3-of-5 (5 plain keys)"
      ],
-     "tvl_usd": 38760998.862343974
+     "tvl_usd": 38728535.222486325
     },
     "plasma": {
      "chain": "Plasma",
@@ -523,7 +467,7 @@
      "postures": [
       "Safe 3-of-5 (5 plain keys)"
      ],
-     "tvl_usd": 3162360.725962138
+     "tvl_usd": 3159967.4614566495
     },
     "robinhood": {
      "chain": "Robinhood Chain",
@@ -536,7 +480,7 @@
      "postures": [
       "Safe 3-of-5 (5 plain keys)"
      ],
-     "tvl_usd": 295623.9591393619
+     "tvl_usd": 179742.98743883683
     }
    },
    "weakest_chain": "robinhood",
@@ -562,7 +506,7 @@
      "postures": [
       "timelock 24 h"
      ],
-     "tvl_usd": 130117471.683
+     "tvl_usd": 129515422.24587557
     },
     "plasma": {
      "chain": "Plasma",
@@ -575,7 +519,7 @@
      "postures": [
       "timelock 24 h"
      ],
-     "tvl_usd": 26785991.340364043
+     "tvl_usd": 27037889.121212624
     }
    },
    "weakest_chain": "arbitrum",
@@ -585,6 +529,110 @@
    "spread": 0,
    "postures_differ": false,
    "text": "Fluid Lending: Arbitrum timelock 24 h (composite 59); Plasma timelock 24 h (composite 59)"
+  },
+  {
+   "slug": "uniswap-v2",
+   "protocol": "Uniswap V2",
+   "chains": {
+    "base": {
+     "chain": "Base",
+     "contracts": 1,
+     "composite_min": 85,
+     "composite_max": 85,
+     "admin_kinds": {
+      "unreadable": 1
+     },
+     "postures": [
+      "not read"
+     ],
+     "tvl_usd": 86336370.15639524
+    },
+    "robinhood": {
+     "chain": "Robinhood Chain",
+     "contracts": 1,
+     "composite_min": 85,
+     "composite_max": 85,
+     "admin_kinds": {
+      "unreadable": 1
+     },
+     "postures": [
+      "not read"
+     ],
+     "tvl_usd": 11813226.772251057
+    }
+   },
+   "weakest_chain": "base",
+   "weakest_composite": 85,
+   "strongest_chain": "base",
+   "strongest_composite": 85,
+   "spread": 0,
+   "postures_differ": false,
+   "text": "Uniswap V2: Base not read (composite 85); Robinhood Chain not read (composite 85)"
+  },
+  {
+   "slug": "uniswap-v3",
+   "protocol": "Uniswap V3",
+   "chains": {
+    "arbitrum": {
+     "chain": "Arbitrum",
+     "contracts": 1,
+     "composite_min": 85,
+     "composite_max": 85,
+     "admin_kinds": {
+      "contract": 1
+     },
+     "postures": [
+      "contract owned by a timelock 48 h"
+     ],
+     "tvl_usd": 127238461.33968416
+    },
+    "base": {
+     "chain": "Base",
+     "contracts": 1,
+     "composite_min": 85,
+     "composite_max": 85,
+     "admin_kinds": {
+      "contract": 1
+     },
+     "postures": [
+      "contract"
+     ],
+     "tvl_usd": 299902850.12911063
+    },
+    "ethereum-l1": {
+     "chain": "Ethereum L1",
+     "contracts": 1,
+     "composite_min": 85,
+     "composite_max": 85,
+     "admin_kinds": {
+      "contract": 1
+     },
+     "postures": [
+      "contract owned by a timelock 48 h"
+     ],
+     "tvl_usd": 831563385.8385409
+    },
+    "robinhood": {
+     "chain": "Robinhood Chain",
+     "contracts": 1,
+     "composite_min": 85,
+     "composite_max": 85,
+     "admin_kinds": {
+      "contract": 1
+     },
+     "postures": [
+      "contract owned by a timelock 48 h"
+     ],
+     "tvl_usd": 84853696.91409819
+    }
+   },
+   "weakest_chain": "arbitrum",
+   "weakest_composite": 85,
+   "strongest_chain": "arbitrum",
+   "strongest_composite": 85,
+   "spread": 0,
+   "postures_differ": false,
+   "text": "Uniswap V3: Arbitrum contract owned by a timelock 48 h (composite 85); Base contract (composite 85); Ethereum L1 contract owned by a timelock 48 h (composite 85); Robinhood Chain contract owned by a timelock 48 h (composite 85)"
   }
  ],
  "what": "protocols tracked on two chains or more (grouped by DefiLlama slug, watch/tvl.json): per chain the composite range, the admin kinds the independent reader found and the postures in one line; weakest_chain is the deployment with the lowest composite, postures_differ when the admin kinds differ between chains or the composites are 15 points apart; written by scripts/cross_chain.py after every run"

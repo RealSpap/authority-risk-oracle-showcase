@@ -11,6 +11,7 @@ the chain is broken. The reasons are listed, so a monitor can alert on the state
 """
 import argparse, json, os, time
 from watch_location import RAW  # noqa: E402
+import run_id  # noqa: E402
 
 
 def load(path):
@@ -60,6 +61,7 @@ def main():
     if ma:
         rec["main_last_commit_age_days"] = ma.get("main_last_commit_age_days")
         if ma.get("level") == "warn": reasons.append("main has had no commit for %s days: GitHub disables the scheduled Watch after 60 days without repository activity (information, no change of state)" % ma.get("main_last_commit_age_days"))
+    if run_id.current(): rec["run_id"] = run_id.current()
     tmp = os.path.join(W, "status.json.tmp"); json.dump(rec, open(tmp, "w"), indent=1); os.replace(tmp, os.path.join(W, "status.json"))
     os.makedirs(os.path.join(W, "badge"), exist_ok=True)
     parts = [("signature stale" if sig_status == "stale" else "signed" if rec["checks"]["signed"] else "unsigned"), ("chain intact" if rec["checks"]["chain_ok"] else ("chain broken" if chain else "chain unchecked"))]

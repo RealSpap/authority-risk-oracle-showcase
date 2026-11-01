@@ -12,6 +12,8 @@ workflow runs with the secret, so a change to the workflow itself could sign any
     python3 scripts/sign_run.py --watch watch                 # write watch/signature.json (signed if WATCH_SIGNING_KEY is set)
     python3 scripts/sign_run.py --watch watch --verify        # recompute every hash and check the signature; exit 1 on any mismatch or on a published file the manifest does not list
     python3 scripts/sign_run.py --new-key                     # print a fresh seed and its public key, for the maintainer only
+    python3 scripts/sign_run.py --watch watch --verify --pin KEY   # (30/10/2026) also require the signature to be by this public key (hex; repeatable; `published` = audit_public.PINNED_KEYS): the key in the file is otherwise whatever key signed it
+Exit 3 (30/10/2026): PyNaCl is not installed, so nothing could be signed or the signature could not be checked: INCOMPLETE, never a pass and never a traceback.
 
 Published files are every *.json, *.jsonl, *.xml, *.md, *.ics, *.csv under watch/ (recursively, feed/ and badge/ included), except
 this manifest, the job logs (*.txt, *.log), alarm.md, any who_controls.json, and the two summaries written after the signature from signed
@@ -23,6 +25,7 @@ import argparse, glob, hashlib, json, os, sys, time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))   # python3 -I does not put the script folder on the path
 import audit_public   # the one rule for a published name and the caps: what the audit refuses is not signed
+import run_id   # the Actions run of this passage, next to run_utc (outside the manifest, like it)
 
 SKIP = {"signature.json", "alarm.md", "alerts_high.md", "alarm_state.json", "methodology.md", "who_controls.json", "status.json", "integrity.json", "catalog.json"}   # status.json and badge/integrity.json are written after the signature, from signed sources: summaries, not evidence
 EXT = (".json", ".jsonl", ".xml", ".md", ".ics", ".csv")
@@ -78,11 +81,24 @@ def canonical(m):
     return json.dumps(m, sort_keys=True, separators=(",", ":")).encode()
 
 
+def need_nacl():
+    """The nacl.signing module, or a clean stop: without PyNaCl nothing can be signed or checked, and that is INCOMPLETE (exit 3), never a traceback and never a pass."""
+    try:
+        import nacl.signing
+        return nacl.signing
+    except ImportError:
+        print("INCOMPLETE: PyNaCl is not installed, so the signature cannot be made or checked (pip install pynacl). Nothing was signed and nothing was written.")
+        sys.exit(3)
+
+
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--watch", default="watch"); ap.add_argument("--verify", action="store_true"); ap.add_argument("--new-key", action="store_true")
+    ap.add_argument("--pin", action="append", default=[], help="with --verify: accept only this public key (hex); repeatable; `published` = the key written in audit_public.PINNED_KEYS")
     a = ap.parse_args()
+    if a.pin and not a.verify: ap.error("--pin goes with --verify")
+    pins = {k.lower() for p in a.pin for k in (audit_public.PINNED_KEYS if p == "published" else (p,))}
     if a.new_key:
-        from nacl.signing import SigningKey
+        SigningKey = need_nacl().SigningKey
         k = SigningKey.generate()
         print("WATCH_SIGNING_KEY (the secret, repository settings, never in a file):", k.encode().hex())
         print("public key (publish it in README.md and API.md):", k.verify_key.encode().hex()); return
@@ -97,23 +113,32 @@ def main():
         if s["manifest"].get("events_chain_head") != m["events_chain_head"]: bad.append("events.jsonl (chain head)")
         for f, h in (s["manifest"].get("code") or {}).items():
             if m["code"].get(f) != h: bad.append(f + " (code that produced the run differs from this checkout)")
+        incomplete = False
         if s.get("signed"):
-            from nacl.signing import VerifyKey
-            try: VerifyKey(bytes.fromhex(s["public_key"])).verify(canonical(s["manifest"]), bytes.fromhex(s["signature"])); sig = "valid"
-            except Exception as e: sig = "INVALID (%s)" % e; bad.append("signature")
-        else: sig = "none (unsigned run)"
+            if pins and str(s.get("public_key", "")).lower() not in pins: bad.append("signature REFUSED (signed by %s..., which is not a pinned key)" % str(s.get("public_key", ""))[:12])
+            try: import nacl.signing as ns
+            except ImportError: ns = None
+            if ns is None: sig = "NOT CHECKED (PyNaCl is not installed)"; incomplete = True
+            else:
+                try: ns.VerifyKey(bytes.fromhex(s["public_key"])).verify(canonical(s["manifest"]), bytes.fromhex(s["signature"])); sig = "valid"
+                except Exception as e: sig = "INVALID (%s)" % e; bad.append("signature")
+        else:
+            sig = "none (unsigned run)"
+            if pins: bad.append("signature REFUSED (the run is unsigned, and a pinned key was asked for)")
         print("manifest: %d file(s), %d changed since signing%s; signature %s" % (len(s["manifest"]["files"]), len(bad), (", %d file(s) not covered: %s" % (len(extra), ", ".join(extra[:5]))) if extra else "", sig))
         for b in bad: print("  CHANGED  " + b)
+        if incomplete and not bad: print("INCOMPLETE: the files match the manifest but the signature was not checked (pip install pynacl); this is not a pass."); sys.exit(3)
         sys.exit(1 if bad else 0)
     m = signable(a.watch); seed = os.environ.get("WATCH_SIGNING_KEY", "").strip()
     rec = {"run_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "manifest": m, "signed": False,
            "what": "sha256 of every published watch file and the head of the event-log chain; Ed25519 over the canonical JSON of `manifest` (sort_keys, no spaces). Verify: python3 scripts/sign_run.py --watch watch --verify"}
     if seed:
-        from nacl.signing import SigningKey
+        SigningKey = need_nacl().SigningKey
         k = SigningKey(bytes.fromhex(seed)); rec["signed"] = True
         rec["public_key"] = k.verify_key.encode().hex(); rec["signature"] = k.sign(canonical(m)).signature.hex()
     else:
         rec["note"] = "no WATCH_SIGNING_KEY secret: manifest written, not signed"
+    if run_id.current(): rec["run_id"] = run_id.current()
     tmp = out + ".tmp"; json.dump(rec, open(tmp, "w"), indent=1); os.replace(tmp, out)
     print("signature.json: %d file(s) in the manifest, %s" % (m["count"], ("signed by " + rec["public_key"][:16] + "…") if rec["signed"] else "unsigned (no key set)"))
 

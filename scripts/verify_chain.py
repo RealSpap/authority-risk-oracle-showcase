@@ -3,7 +3,10 @@
 previous line's exact text, and `seq` must grow by one. Anyone can run it on the published file; the dashboard does the same
 in the browser. Exit 0 when the chain holds, 1 when a link is broken (the first broken line is named), 2 when the file is missing.
 
-    python3 scripts/verify_chain.py [--events watch/events.jsonl] [--json watch/chain.json]
+    python3 scripts/verify_chain.py [--events watch/events.jsonl] [--json watch/chain.json] [--head SHA256]
+
+--head (30/10/2026) is the head the signed manifest pins (`events_chain_head` of signature.json): a chain that holds can still have lost its END. With --head the log must also end at that line;
+exit 1 otherwise (and `chain.json` says so), a missing log included. Without --head nothing changes. The links alone cannot see a cut tail; the pinned head can.
 """
 import argparse, hashlib, json, os, sys
 
@@ -32,14 +35,28 @@ def check(path):
             "head": hashlib.sha256(prev_text.encode()).hexdigest() if prev_text is not None else None}
 
 
+def check_head(r, head):
+    """r with the pinned head compared: ok only if the chain holds AND its last line is the one `head` names (the end of a log can be cut without breaking a link)."""
+    want = str(head).strip().lower()
+    if not r["ok"]:
+        if r.get("reason") == "no events file": return dict(r, head_mismatch=True, reason="the manifest pins a head but there is no events file: the log is gone")
+        return r
+    if (r.get("head") or "") != want:
+        return dict(r, ok=False, head_mismatch=True, reason="the log ends at head %s but the pinned head is %s: the end of the log was cut or replaced" % ((r.get("head") or "none")[:16], want[:16]))
+    return dict(r, pinned_head_ok=True)
+
+
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--events", default="watch/events.jsonl"); ap.add_argument("--json", default=None)
+    ap.add_argument("--head", default=None, help="sha256 of the last line the signed manifest pins (events_chain_head)")
     a = ap.parse_args()
     r = check(a.events)
+    if a.head is not None and not a.head.strip(): print("CHAIN HEAD MISMATCH: --head needs the sha256 the manifest pins (an empty value would pass an emptied log; a manifest with no head cannot be checked with --head)"); sys.exit(1)
+    if a.head is not None: r = check_head(r, a.head)
     r["what"] = "sha256 chain over watch/events.jsonl: prev = sha256(previous line), seq += 1; verified at every run and by the dashboard"
     if a.json:
         tmp = a.json + ".tmp"; json.dump(r, open(tmp, "w"), indent=1); os.replace(tmp, a.json)
-    print(("chain intact: %d chained line(s), %d before the chain, head %s" % (r["chained"], r["unchained"], (r.get("head") or "")[:16])) if r["ok"] else "CHAIN BROKEN: " + r["reason"])
+    print(("chain intact: %d chained line(s), %d before the chain, head %s" % (r["chained"], r["unchained"], (r.get("head") or "")[:16])) if r["ok"] else ("CHAIN HEAD MISMATCH: " if r.get("head_mismatch") else "CHAIN BROKEN: ") + r["reason"])
     sys.exit(0 if r["ok"] else (2 if r.get("reason") == "no events file" else 1))
 
 

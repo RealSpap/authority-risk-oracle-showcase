@@ -8,12 +8,12 @@ standard library only. The same four functions serve the MCP server (scripts/mcp
     check_protocol(W, protocol, min_score)  a protocol on every chain it is tracked on: its weakest contract, what was not read, a verdict
 
 Rules for every answer: a value the Watch did not read is `None` and is named in `not_read`; it is never 0, never "ok". `status` says which of three things happened: the answer is read (`ok`), the contract is not
-tracked (`not_tracked`), or the file needed for the answer is missing or unreadable (`not_read`). The scores are published on TESTNET oracles for contracts of the networks named in each answer: say so to your user.
+tracked (`not_tracked`), or the file needed for the answer is missing or unreadable (`not_read`). A fourth, `retired` (30/10/2026): the contract is marked retired in tvl_scope.json (the protocol's money does not sit behind it); it answers with no score, and is left out of list_targets (counted in `retired_not_listed`, a key that is 0 when nothing is retired) and check_protocol (a protocol whose every contract is retired answers `retired`). The scores are published on TESTNET oracles for contracts of the networks named in each answer: say so to your user.
 """
 import glob, json, os, sys, time
 
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
-import compare, dossier, find  # noqa: E402
+import compare, dossier, find, snapshot_rules  # noqa: E402
 
 NOTE = "A reading of who can act on a contract and how fast, from public data, taken at the time shown: not an audit, not investment advice, and it cannot see a change made after that time."
 TESTNET = "The scores are pushed to testnet oracles for contracts of the networks named here; the contract itself runs on that network, not on the testnet that stores the score."
@@ -38,6 +38,16 @@ def _find_target(W, chain, address):
     return None
 
 
+def _retired(W, key, address):
+    """The tvl_scope.json record when the contract is marked retired there, else None (no tvl_scope.json = nothing is retired)."""
+    return snapshot_rules.retired(snapshot_rules.scope_of(W), key, address)
+
+
+def _retired_answer(rec, key, address):
+    return {"status": "retired", "chain": key, "address": address, "composite": None, "reason": "this contract is marked retired in tvl_scope.json: %s" % (rec.get("note") or "the protocol's money does not sit behind it"),
+            "retired_since": rec.get("since"), "note": NOTE}
+
+
 def _no_state(W):
     return not glob.glob(os.path.join(W, "scores", "*.json"))
 
@@ -53,6 +63,8 @@ def get_score(W, chain, address):
         known = dossier.chain_key(chain)
         return {"status": "not_tracked", "chain": chain, "address": address, "composite": None, "reason": ("unknown chain %r (chains: %s)" % (chain, ", ".join(sorted(dossier.LABEL)))) if not known else "the Watch does not track this contract on %s: that says nothing about its safety" % dossier.LABEL.get(known, known), "note": NOTE}
     key, d, t = hit
+    gone = _retired(W, key, t.get("target"))
+    if gone: return _retired_answer(gone, key, t.get("target"))
     comp = t.get("compositeScore"); subs = {n: t.get(f) for n, f in SUBS}
     not_read = [n for n, v in list(subs.items()) + [("composite", comp)] if v is None]
     rec = {"status": "ok" if comp is not None else "not_read", "chain": key, "network": dossier.LABEL.get(key, key), "address": t.get("target"), "composite": comp, "sub_scores": subs, "stale": t.get("stale"),
@@ -70,12 +82,14 @@ def get_score(W, chain, address):
 def list_targets(W, chain=None, max_score=None, min_score=None, stale=None, limit=25):
     if _no_state(W): return _missing("list_targets", W)
     if chain and not find.chain_key(chain): return {"status": "not_read", "reason": "unknown chain %r (chains: %s)" % (chain, ", ".join(sorted(find.LABEL))), "note": NOTE}
+    scope = snapshot_rules.scope_of(W)
     rows = [r for r in find.table(W) if not chain or r["chain"] == find.chain_key(chain)]
+    n_retired = sum(1 for r in rows if snapshot_rules.retired(scope, r["chain"], r["target"])); rows = [r for r in rows if not snapshot_rules.retired(scope, r["chain"], r["target"])]
     unread = [r for r in rows if r["score"] is None]
     sel = [r for r in rows if r["score"] is not None and (max_score is None or r["score"] <= max_score) and (min_score is None or r["score"] >= min_score) and (stale is None or r["stale"] is stale)]
     sel.sort(key=lambda r: (r["score"], r["title"] or ""))
     limit = max(1, min(int(limit), 200))
-    return {"status": "ok", "matched": len(sel), "of": len(rows), "returned": min(limit, len(sel)), "score_not_read_so_not_filtered": len(unread),
+    return {"status": "ok", "matched": len(sel), "of": len(rows), "returned": min(limit, len(sel)), "score_not_read_so_not_filtered": len(unread), "retired_not_listed": n_retired,
             "rows": [{"chain": r["chain"], "address": r["target"], "title": r["title"], "protocol": r["protocol"], "composite": r["score"], "stale": r["stale"], "money_usd": r["money_usd"], "kind": r["kind"]} for r in sel[:limit]],
             "sorted_by": "composite, weakest first", "testnet_note": TESTNET, "note": NOTE}
 
@@ -85,6 +99,8 @@ def who_controls(W, chain, address):
     hit = _find_target(W, chain, address)
     if not hit: return {"status": "not_tracked", "chain": chain, "address": address, "reason": "the Watch does not track this contract: that says nothing about who controls it", "note": NOTE}
     key, d, t = hit; addr = dossier.norm(address)
+    gone = _retired(W, key, t.get("target"))
+    if gone: return _retired_answer(gone, key, t.get("target"))
     so = dossier.load(os.path.join(W, "second_opinion.json"))
     if so is None: return {"status": "not_read", "chain": key, "address": t.get("target"), "reason": "second_opinion.json (the independent reader) is missing or unreadable", "note": NOTE}
     r = next((x for x in so.get("results", []) if x.get("chain") == key and dossier.norm(x.get("target")) == addr), None)
@@ -101,8 +117,12 @@ def who_controls(W, chain, address):
 
 def check_protocol(W, protocol, min_score=0):
     if _no_state(W): return _missing("check_protocol", W)
-    rows = find.table(W)
-    s, err = compare.summary(W, protocol, rows)
+    scope = snapshot_rules.scope_of(W); all_rows = find.table(W)
+    s, err = compare.summary(W, protocol, all_rows)   # the protocol is named on ALL rows: dropping the retired ones first could make the query match another protocol
+    if not err:
+        hits = compare.match(all_rows, protocol); slug, p = next(iter(hits.items())); live = [r for r in p["rows"] if not snapshot_rules.retired(scope, r["chain"], r["target"])]
+        if not live: return {"status": "retired", "protocol": protocol, "reason": "every tracked contract of this protocol is marked retired in tvl_scope.json: the Watch tracks it, and no score of it is a live one", "note": NOTE}
+        s = compare.stats(W, rs=live, key=slug, name=p["name"])
     if err: return {"status": "not_tracked", "protocol": protocol, "reason": err, "note": NOTE}
     weakest = s.get("weakest_score"); read_on = s.get("weakest_score_read_on"); n = s.get("contracts")
     unread = n - read_on if isinstance(n, int) and isinstance(read_on, int) else None

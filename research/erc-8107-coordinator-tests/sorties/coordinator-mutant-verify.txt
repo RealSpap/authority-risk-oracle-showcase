@@ -1,0 +1,46 @@
+No files changed, compilation skipped
+
+Ran 7 tests for test/CompleteCoordinator.t.sol:CompleteCoordinatorTest
+[FAIL: the decision must refuse an edge past its end date] testS0_expired_edge() (block: 26192453) (gas: 4863274)
+Logs:
+  OBS|S0 expired edge|mutant=verify|decision=accepts
+
+[PASS] testS1_nothing_happens() (gas: 5167534)
+Logs:
+  OBS|S1 nothing happens|mutant=verify|decision=accepts
+  OBS|S1 nothing happens|mutant=verify|execution=accepts
+
+[PASS] testS2_registered_again_before_decision() (gas: 4739819)
+Logs:
+  OBS|S2 registered again before the decision|mutant=verify|decision=refuses (continuity: registered again)
+
+[PASS] testS3_registered_again_after_decision() (gas: 4031447)
+Logs:
+  OBS|S3 registered again after the decision|mutant=verify|decision=accepts
+  OBS|S3 registered again after the decision|mutant=verify|execution=refuses (deadline: a registration may have happened since block B)
+
+[PASS] testS4_renewed_in_grace_after_decision() (gas: 3929145)
+Logs:
+  OBS|S4 renewed in grace after the decision|mutant=verify|execution=accepts
+
+[PASS] testS5_wrapped_middle_trustor_loses_control() (gas: 5962130)
+Logs:
+  OBS|S5 wrapped middle trustor loses control|mutant=verify|decision=accepts
+  OBS|S5 wrapped middle trustor loses control|mutant=verify|execution=refuses (liveness at execution)
+
+[PASS] testS6_wrapped_trustor_without_controller_at_decision() (gas: 4931910)
+Logs:
+  OBS|S6 wrapped trustor without controller at decision|mutant=verify|decision=refuses (liveness at decision)
+
+Suite result: FAILED. 6 passed; 1 failed; 0 skipped; finished in 2.90s (2.69s CPU time)
+
+Ran 1 test suite in 3.04s (2.90s CPU time): 6 tests passed, 1 failed, 0 skipped (7 total tests)
+
+Failing tests:
+Encountered 1 failing test in test/CompleteCoordinator.t.sol:CompleteCoordinatorTest
+[FAIL: the decision must refuse an edge past its end date] testS0_expired_edge() (block: 26192453) (gas: 4863274)
+
+Encountered a total of 1 failing tests, 6 tests succeeded
+
+Tip: Run `forge test --rerun` to retry only the 1 failed test
+Tip: Run `forge test --debug --match-test <TEST_NAME>` to inspect one failing test in the debugger

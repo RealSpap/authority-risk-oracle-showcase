@@ -1,0 +1,46 @@
+No files changed, compilation skipped
+
+Ran 7 tests for test/CompleteCoordinator.t.sol:CompleteCoordinatorTest
+[PASS] testS0_expired_edge() (gas: 4749680)
+Logs:
+  OBS|S0 expired edge|mutant=liveness-execution|decision=refuses (verifyPath)
+
+[PASS] testS1_nothing_happens() (gas: 5171931)
+Logs:
+  OBS|S1 nothing happens|mutant=liveness-execution|decision=accepts
+  OBS|S1 nothing happens|mutant=liveness-execution|execution=accepts
+
+[PASS] testS2_registered_again_before_decision() (gas: 4756811)
+Logs:
+  OBS|S2 registered again before the decision|mutant=liveness-execution|decision=refuses (continuity: registered again)
+
+[PASS] testS3_registered_again_after_decision() (gas: 4048436)
+Logs:
+  OBS|S3 registered again after the decision|mutant=liveness-execution|decision=accepts
+  OBS|S3 registered again after the decision|mutant=liveness-execution|execution=refuses (deadline: a registration may have happened since block B)
+
+[PASS] testS4_renewed_in_grace_after_decision() (gas: 3933497)
+Logs:
+  OBS|S4 renewed in grace after the decision|mutant=liveness-execution|execution=accepts
+
+[FAIL: the execution must refuse] testS5_wrapped_middle_trustor_loses_control() (block: 26192453) (gas: 6039309)
+Logs:
+  OBS|S5 wrapped middle trustor loses control|mutant=liveness-execution|decision=accepts
+  OBS|S5 wrapped middle trustor loses control|mutant=liveness-execution|execution=accepts
+
+[PASS] testS6_wrapped_trustor_without_controller_at_decision() (gas: 4948903)
+Logs:
+  OBS|S6 wrapped trustor without controller at decision|mutant=liveness-execution|decision=refuses (liveness at decision)
+
+Suite result: FAILED. 6 passed; 1 failed; 0 skipped; finished in 3.35s (3.14s CPU time)
+
+Ran 1 test suite in 3.48s (3.35s CPU time): 6 tests passed, 1 failed, 0 skipped (7 total tests)
+
+Failing tests:
+Encountered 1 failing test in test/CompleteCoordinator.t.sol:CompleteCoordinatorTest
+[FAIL: the execution must refuse] testS5_wrapped_middle_trustor_loses_control() (block: 26192453) (gas: 6039309)
+
+Encountered a total of 1 failing tests, 6 tests succeeded
+
+Tip: Run `forge test --rerun` to retry only the 1 failed test
+Tip: Run `forge test --debug --match-test <TEST_NAME>` to inspect one failing test in the debugger

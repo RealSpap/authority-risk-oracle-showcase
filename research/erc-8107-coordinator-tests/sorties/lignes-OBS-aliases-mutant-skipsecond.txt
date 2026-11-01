@@ -1,0 +1,4 @@
+OBS|A0 no denial|mutant=skipsecond|address X via [G, agent.eth]=yes|via [G, backup.eth]=yes|node agent.eth=yes|node backup.eth=yes
+OBS|A1 G denies agent.eth|mutant=skipsecond|address X via [G, agent.eth]=no|via [G, backup.eth]=yes|node agent.eth=no|node backup.eth=yes
+OBS|A2 G denies both names|mutant=skipsecond|address X via [G, agent.eth]=no|via [G, backup.eth]=yes|node agent.eth=no|node backup.eth=yes
+OBS|A3 denial cleared|mutant=skipsecond|address X via [G, agent.eth]=yes|via [G, backup.eth]=yes|node agent.eth=yes|node backup.eth=yes

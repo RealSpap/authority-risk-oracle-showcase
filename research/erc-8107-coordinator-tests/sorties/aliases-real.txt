@@ -1,0 +1,24 @@
+Compiling 2 files with Solc 0.8.28
+Solc 0.8.28 finished in 2.27s
+Compiler run successful!
+
+Ran 4 tests for test/TwoAliases.t.sol:TwoAliasesTest
+[PASS] testA0_no_denial() (gas: 5065104)
+Logs:
+  OBS|A0 no denial|mutant=none|address X via [G, agent.eth]=yes|via [G, backup.eth]=yes|node agent.eth=yes|node backup.eth=yes
+
+[PASS] testA1_deny_one_alias() (gas: 3841116)
+Logs:
+  OBS|A1 G denies agent.eth|mutant=none|address X via [G, agent.eth]=no|via [G, backup.eth]=yes|node agent.eth=no|node backup.eth=yes
+
+[PASS] testA2_deny_both_aliases() (gas: 3848170)
+Logs:
+  OBS|A2 G denies both names|mutant=none|address X via [G, agent.eth]=no|via [G, backup.eth]=no|node agent.eth=no|node backup.eth=no
+
+[PASS] testA3_deny_then_clear() (gas: 3866216)
+Logs:
+  OBS|A3 denial cleared|mutant=none|address X via [G, agent.eth]=yes|via [G, backup.eth]=yes|node agent.eth=yes|node backup.eth=yes
+
+Suite result: ok. 4 passed; 0 failed; 0 skipped; finished in 2.05s (1.84s CPU time)
+
+Ran 1 test suite in 2.20s (2.05s CPU time): 4 tests passed, 0 failed, 0 skipped (4 total tests)

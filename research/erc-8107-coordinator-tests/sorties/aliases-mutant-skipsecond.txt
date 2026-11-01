@@ -1,0 +1,31 @@
+No files changed, compilation skipped
+
+Ran 4 tests for test/TwoAliases.t.sol:TwoAliasesTest
+[PASS] testA0_no_denial() (gas: 5065122)
+Logs:
+  OBS|A0 no denial|mutant=skipsecond|address X via [G, agent.eth]=yes|via [G, backup.eth]=yes|node agent.eth=yes|node backup.eth=yes
+
+[PASS] testA1_deny_one_alias() (gas: 3841116)
+Logs:
+  OBS|A1 G denies agent.eth|mutant=skipsecond|address X via [G, agent.eth]=no|via [G, backup.eth]=yes|node agent.eth=no|node backup.eth=yes
+
+[FAIL: if G denies BOTH names, X is refused through both paths] testA2_deny_both_aliases() (block: 26192453) (gas: 3885075)
+Logs:
+  OBS|A2 G denies both names|mutant=skipsecond|address X via [G, agent.eth]=no|via [G, backup.eth]=yes|node agent.eth=no|node backup.eth=yes
+
+[PASS] testA3_deny_then_clear() (gas: 3866216)
+Logs:
+  OBS|A3 denial cleared|mutant=skipsecond|address X via [G, agent.eth]=yes|via [G, backup.eth]=yes|node agent.eth=yes|node backup.eth=yes
+
+Suite result: FAILED. 3 passed; 1 failed; 0 skipped; finished in 2.52s (2.30s CPU time)
+
+Ran 1 test suite in 2.67s (2.52s CPU time): 3 tests passed, 1 failed, 0 skipped (4 total tests)
+
+Failing tests:
+Encountered 1 failing test in test/TwoAliases.t.sol:TwoAliasesTest
+[FAIL: if G denies BOTH names, X is refused through both paths] testA2_deny_both_aliases() (block: 26192453) (gas: 3885075)
+
+Encountered a total of 1 failing tests, 3 tests succeeded
+
+Tip: Run `forge test --rerun` to retry only the 1 failed test
+Tip: Run `forge test --debug --match-test <TEST_NAME>` to inspect one failing test in the debugger

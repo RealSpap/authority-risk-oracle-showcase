@@ -1,0 +1,10 @@
+OBS|S0 expired edge|mutant=none|decision=refuses (verifyPath)
+OBS|S1 nothing happens|mutant=none|decision=accepts
+OBS|S1 nothing happens|mutant=none|execution=accepts
+OBS|S2 registered again before the decision|mutant=none|decision=refuses (continuity: registered again)
+OBS|S3 registered again after the decision|mutant=none|decision=accepts
+OBS|S3 registered again after the decision|mutant=none|execution=refuses (deadline: a registration may have happened since block B)
+OBS|S4 renewed in grace after the decision|mutant=none|execution=accepts
+OBS|S5 wrapped middle trustor loses control|mutant=none|decision=accepts
+OBS|S5 wrapped middle trustor loses control|mutant=none|execution=refuses (liveness at execution)
+OBS|S6 wrapped trustor without controller at decision|mutant=none|decision=refuses (liveness at decision)

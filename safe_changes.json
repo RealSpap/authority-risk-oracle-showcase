@@ -5,10 +5,10 @@
    "ecosystem": "robinhood",
    "safes": 25,
    "events": [],
-   "control": 87,
+   "control": 77,
    "status": "ok",
-   "fromBlock": 97083649,
-   "toBlock": 102875874,
+   "fromBlock": 97373995,
+   "toBlock": 103167924,
    "days_read": 7
   },
   {
@@ -17,8 +17,8 @@
    "events": [],
    "control": 32,
    "status": "ok",
-   "fromBlock": 26265290,
-   "toBlock": 26315519,
+   "fromBlock": 26267828,
+   "toBlock": 26318056,
    "days_read": 7
   },
   {
@@ -27,8 +27,8 @@
    "events": [],
    "control": 29,
    "status": "ok",
-   "fromBlock": 517959833,
-   "toBlock": 520103491,
+   "fromBlock": 518063868,
+   "toBlock": 520199698,
    "days_read": 7
   },
   {
@@ -37,16 +37,20 @@
    "events": [],
    "control": 13,
    "status": "ok",
-   "fromBlock": 53044506,
-   "toBlock": 53346906,
+   "fromBlock": 53059763,
+   "toBlock": 53362163,
    "days_read": 7
   },
   {
    "ecosystem": "tempo",
    "safes": 4,
    "events": [],
-   "control": null,
-   "status": "UNREAD (cannot locate the window start: ExtraDataLengthError: The field extraData is 3191 bytes, but should be 32. It is quite likely that you are connected to a )"
+   "control": 0,
+   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 62 execution(s) from other Safes on the window's tail)",
+   "fromBlock": 45778116,
+   "toBlock": 46881042,
+   "days_read": 7,
+   "control_witness": 62
   },
   {
    "ecosystem": "plasma",
@@ -54,8 +58,8 @@
    "events": [],
    "control": 11,
    "status": "ok",
-   "fromBlock": 35937022,
-   "toBlock": 36540761,
+   "fromBlock": 35967530,
+   "toBlock": 36571269,
    "days_read": 7
   },
   {
@@ -63,22 +67,22 @@
    "safes": 13,
    "events": [],
    "control": 0,
-   "status": "UNREAD (control returned 0 ExecutionSuccess events on the tracked Safes and none from any Safe on the window's tail: the RPC may be truncating, not the Safes being idle)",
-   "fromBlock": 118209892,
-   "toBlock": 118295697,
+   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 1 execution(s) from other Safes on the window's tail)",
+   "fromBlock": 118310884,
+   "toBlock": 118396488,
    "days_read": 0.3,
-   "control_witness": 0
+   "control_witness": 1
   },
   {
    "ecosystem": "hyperliquid",
    "safes": 5,
    "events": [],
    "control": 0,
-   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 21 execution(s) from other Safes on the window's tail)",
-   "fromBlock": 49783591,
-   "toBlock": 50047054,
+   "status": "UNREAD (control returned 0 ExecutionSuccess events on the tracked Safes and none from any Safe on the window's tail: the RPC may be truncating, not the Safes being idle)",
+   "fromBlock": 49814606,
+   "toBlock": 50078069,
    "days_read": 3.0,
-   "control_witness": 21
+   "control_witness": 0
   }
  ]
 }

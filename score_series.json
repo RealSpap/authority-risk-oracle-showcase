@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-11-01T22:16:34Z",
+ "run_utc": "2026-11-02T06:16:09Z",
  "targets": 202,
  "moves_recorded": 35,
  "series": {
@@ -1875,10 +1875,10 @@
  },
  "calibration": {
   "window_days": 14,
-  "actions": 22,
-  "under_40": 5,
+  "actions": 23,
+  "under_40": 6,
   "by_band": {
-   "critical": 4,
+   "critical": 5,
    "weak": 1,
    "moderate": 15,
    "decent": 1,
@@ -2082,6 +2082,15 @@
     "tx": "0x1f1dd153de784a621e2560e8342149e41d64d5dfd411817cf09f9d09e23fba00",
     "score_then": 57,
     "band_then": "moderate"
+   },
+   {
+    "kind": "Squads proposal executed",
+    "key": "solana:2LecshUwdy9xi7meFgHtFJQNSKk4KdTrcpvaB56dP2NQ",
+    "t": "2026-11-02T03:10:14Z",
+    "via": "Squads v4 multisig BQsD\u2026iEjF (5-of-13, time lock 86400 s), found by the independent reader (1 tracked program)",
+    "tx": "2h351R7Zu84xcjZknffkVPCN1xPYSsX4jpWUKQUuSeZP",
+    "score_then": 2,
+    "band_then": "critical"
    }
   ],
   "read_as": "every authority action the watch observed in the window (a timelock operation queued or executed against a tracked contract, an admin change read independently) and the composite score the contract carried at that moment. Small counts prove little; the file grows with every run and the chained log keeps every move"

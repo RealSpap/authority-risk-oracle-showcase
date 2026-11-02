@@ -1126,10 +1126,11 @@
    "first_seen_utc": "2026-10-28T18:57:19Z",
    "due_utc": "2026-10-29T16:48:22Z",
    "notice_hours": 21.9,
-   "state": "queued",
+   "state": "resolved",
    "chain": "solana",
    "timelock": "Squads v4 multisig BQsD\u2026iEjF (5-of-13, time lock 86400 s), found by the independent reader (1 tracked program)",
-   "what": "multisig config"
+   "what": "multisig config",
+   "resolved_seen_utc": "2026-11-02T05:59:40Z"
   },
   "solana:tr8rgazurzzgdkfc6q622nvjhmmzh29trdbe2ubhb4u:squads:tr8rgazUrZzgdkfc6Q622nVJHMMzh29trdBE2uBHb4u:56": {
    "outcome": "seen_without_notice",
@@ -1190,14 +1191,23 @@
    "timelock": "Compound Governance Timelock",
    "what": "authority change",
    "resolved_seen_utc": "2026-10-31T21:32:01Z"
+  },
+  "solana:7qipzlr9j1jcvdxe1xjefgvoyfmgbpgw5hmdhbmpcjtm:squads:7qipzLR9j1JcvdxE1XJEFgvoyFmgBpgw5hMdHBMPcJtM:144": {
+   "outcome": "missed",
+   "first_seen_utc": "2026-11-02T05:59:40Z",
+   "queued_utc": "2026-11-02T05:51:31Z",
+   "state": "resolved",
+   "chain": "solana",
+   "timelock": "Squads v4 multisig 7qip\u2026cJtM (4-of-7, time lock 3600 s), found by the independent reader (1 tracked program)",
+   "what": "call"
   }
  },
- "updated_utc": "2026-11-01T22:00:10Z",
+ "updated_utc": "2026-11-02T05:59:40Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
   "warned": 35,
   "seen_without_notice": 5,
-  "missed": 15,
+  "missed": 16,
   "baseline": 77,
   "warned_with_a_known_notice": 35,
   "shortest_notice_hours": 0.2,

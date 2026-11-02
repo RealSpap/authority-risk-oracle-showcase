@@ -1,10 +1,9 @@
 # Authority risk digest, 2026-10-29 01:31 UTC
 
-## Needs a person, 2026-10-29T01:31:22Z: 25 item(s) (priority 1: 3, priority 2: 19, priority 3: 3); oldest 18.2 d
+## Needs a person, 2026-10-29T01:31:22Z: 24 item(s) (priority 1: 2, priority 2: 19, priority 3: 3); oldest 18.2 d
 
-### Something happened: read before trusting the score (3)
+### Something happened: read before trusting the score (2)
 - **queued operation executable within 48 h** ethereum 0x5D057706405B00a396745ED0fd598248e7F4ec7C (0.3 d): authority change: acceptAdmin() via Ethena Timelock. To do: read the call before it lands. (pending_ops.json)
-- **queued operation executable within 48 h** solana 2LecshUwdy9xi7meFgHtFJQNSKk4KdTrcpvaB56dP2NQ (0.3 d): multisig config: Squads proposal #99: multisig configuration: remove member, remove member, add member, add member via Squads v4 multisig BQsD…iEjF (5-of-13, time lock 86400 s), found by the independent reader (1 tracked program). To do: read the call before it lands. (pending_ops.json)
 - **admin transfer in flight** robinhood 0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d (0.0 d): 0x9db4…1a53 designated (pendingOwner() on the contract (Ownable2Step), a contract). To do: identify the designated admin; when it accepts, the admin read changes. (second_opinion.json pending_admin)
 
 ### Decide (19)

@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-11-02T06:16:09Z",
+ "run_utc": "2026-11-02T16:04:35Z",
  "targets": 202,
  "moves_recorded": 35,
  "series": {
@@ -1875,34 +1875,16 @@
  },
  "calibration": {
   "window_days": 14,
-  "actions": 23,
+  "actions": 21,
   "under_40": 6,
   "by_band": {
    "critical": 5,
    "weak": 1,
-   "moderate": 15,
+   "moderate": 13,
    "decent": 1,
    "strong": 1
   },
   "list": [
-   {
-    "kind": "upgrade executed (Squads proposal)",
-    "key": "solana:7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF",
-    "t": "2026-10-19T14:00:16Z",
-    "via": "Squads v4 multisig 6hhB\u2026fQbM (5-of-10, time lock 86400 s), found by the independent reader (1 tracked program)",
-    "tx": "GcpHeNdxcmJpSx5AmXAScunt37snRmq6U7HV2sioVGkV",
-    "score_then": 56,
-    "band_then": "moderate"
-   },
-   {
-    "kind": "upgrade executed (Squads proposal)",
-    "key": "solana:ADyA8hdefvWN2dbGGWFotbzWxrAvLW83WG6QCVXvJKqw",
-    "t": "2026-10-19T15:46:24Z",
-    "via": "Squads v4 multisig 2yMo\u2026rshW (3-of-4, time lock 0 s), found by the independent reader (1 tracked program)",
-    "tx": "4XNiDXUEDyXdNZ1NFqCpz9bybgFZuy7g85G2TBbe1SeT",
-    "score_then": 43,
-    "band_then": "moderate"
-   },
    {
     "kind": "upgrade executed (Squads proposal)",
     "key": "solana:ADyA8hdefvWN2dbGGWFotbzWxrAvLW83WG6QCVXvJKqw",

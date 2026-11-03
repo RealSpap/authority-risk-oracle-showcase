@@ -1,5 +1,5 @@
 {
-  "scheme": "YYYY.MM.N: N counts, within the month, the changes of METHODOLOGY.md or of the scoring code that move a published score. A version is named when it is pushed on-chain. methodVersionDate is the date of that push (UTC, ISO). The methodologyHash stays the machine identifier; this is the readable name next to it.",
+  "scheme": "YYYY.MM.N: N counts, within the month, the changes of METHODOLOGY.md or of the scoring code that move a published score or the methodologyHash of an oracle. A change that moves the hash and no published score is named too, and its entry says so. A version is named when it is pushed on-chain. methodVersionDate is the date of that push (UTC, ISO). The methodologyHash stays the machine identifier; this is the readable name next to it.",
   "field_names": {
     "version": "methodVersion",
     "date": "methodVersionDate"

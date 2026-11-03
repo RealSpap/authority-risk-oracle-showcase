@@ -1,5 +1,7 @@
 # Ethereum L1 -- Sepolia testnet deployment (native contract)
 
+> **Correction.** The last write of index 3 (Ethena EthenaMinting) read on chain is 2026-09-23 16:16:34 UTC (`lastUpdated` 1790180194); its entry went stale nine days later, on 2026-10-02. Where this page says that the entry still carries its 2026-09-19 reading, or gives `lastUpdated` 1789835973 as current, it is the record as it was written at the time. The Ethereum L1 oracle also tracks more targets than the 20 counted below.
+
 Status: **deployed for real on 2026-09-18.** The funding blocker below is
 closed -- the shared testnet key was rotated on 2026-09-18 (new address
 `0x20630C6Ab4BA48a80edA46F77b9b6e987A8f32f5`, replacing the old

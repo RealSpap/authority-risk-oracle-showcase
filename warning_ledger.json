@@ -1257,22 +1257,33 @@
    "first_seen_utc": "2026-11-03T14:11:29Z",
    "due_utc": "2026-11-03T16:17:36Z",
    "notice_hours": 2.1,
-   "state": "queued",
+   "state": "resolved",
    "chain": "solana",
    "timelock": "Squads v4 multisig uGLh\u2026r7gX (5-of-9, time lock 43200 s), found by the independent reader (1 tracked program)",
-   "what": "call"
+   "what": "call",
+   "resolved_seen_utc": "2026-11-03T22:02:18Z"
+  },
+  "ethereum:0x6d903f6003cca6255d85cca4d3b5e5146dc33925:0x768443615fbdd96792a1aee9d44b8bd95e1c2028e2dbda540db72830f32dc730": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-11-03T22:02:18Z",
+   "due_utc": "2026-11-05T21:49:47Z",
+   "notice_hours": 47.8,
+   "state": "queued",
+   "chain": "ethereum",
+   "timelock": "Compound Governance Timelock",
+   "what": "cross-chain message"
   }
  },
- "updated_utc": "2026-11-03T14:11:29Z",
+ "updated_utc": "2026-11-03T22:02:18Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
-  "warned": 40,
+  "warned": 41,
   "seen_without_notice": 5,
   "missed": 17,
   "baseline": 77,
-  "warned_with_a_known_notice": 40,
+  "warned_with_a_known_notice": 41,
   "shortest_notice_hours": 0.2,
-  "median_notice_hours": 20.9,
+  "median_notice_hours": 21.1,
   "note": "warned: seen while queued and not yet executable (the notice is real); seen_without_notice: still queued but already executable when first seen; missed: queued after the ledger started and already applied when first seen (faster than the 6-hour cadence); baseline: applied before the ledger started, counted as neither."
  }
 }

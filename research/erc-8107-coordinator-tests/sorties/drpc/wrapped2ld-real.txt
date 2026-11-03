@@ -1,0 +1,21 @@
+No files changed, compilation skipped
+
+Ran 3 tests for test/Wrapped2LDGrace.t.sol:Wrapped2LDGraceTest
+[PASS] testS7_wrapped_2LD_trustor_decided_in_grace_passes_wrapper_expiry() (gas: 5145726)
+Logs:
+  OBS|fork|chainid=1|block=26192453|timestamp=1792001507
+  OBS|S7 wrapped 2LD trustor decided in grace|mutant=none|decision=accepts
+  OBS|S7 wrapped 2LD trustor decided in grace|mutant=none|execution=refuses (liveness at execution)
+
+[PASS] testS7b_path_aware_registry_check_at_execution() (gas: 5020684)
+Logs:
+  OBS|S7b|block=26192459|validateParticipantAddress=accepts|validateParticipantWithPath=accepts
+
+[PASS] testS7c_decision_at_last_second_of_grace() (gas: 5051786)
+Logs:
+  OBS|S7c|at E+GRACE|ownerOf nonzero=yes|decision=accepts|
+  OBS|S7c|at E+GRACE+1|execution=refuses|liveness at execution
+
+Suite result: ok. 3 passed; 0 failed; 0 skipped; finished in 5.47s (4.36s CPU time)
+
+Ran 1 test suite in 5.85s (5.47s CPU time): 3 tests passed, 0 failed, 0 skipped (3 total tests)

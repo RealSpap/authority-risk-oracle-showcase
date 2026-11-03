@@ -26,8 +26,8 @@ not a per-target choice.
 | `adminKeyScore` | Who can act as this contract's ultimate authority, and how hard is that authority to compromise or coerce? |
 | `multisigScore` | If that authority is a multisig (Gnosis Safe or a bespoke equivalent), how strong is it - threshold, signer count? |
 | `timelockScore` | Is there a real, enforced delay between an authority action being queued and taking effect? |
-| `oracleAuthorityScore` | Who can change the prices this target reports (a provider) or relies on (a lending market that reads feeds)? (100 = not applicable, or not yet computed for a price consumer outside the rule's current scope; see "oracleAuthorityScore for price consumers") |
-| `crossExposureScore` | Does this target's root authority also control another *tracked* target? A shared compromised key becomes a systemic risk, not an isolated one. (100 = no overlap found, or not computed for that target; for Solana, Hyperliquid and Zcash that means within the ecosystem only, not yet checked across ecosystems; see Convention below and Limitations) |
+| `oracleAuthorityScore` | Who can change the prices this target reports (a provider) or relies on (a lending market that reads feeds)? (a 100 is not one thing: see "What a 100 means: three states") |
+| `crossExposureScore` | Does this target's root authority also control another *tracked* target? A shared compromised key becomes a systemic risk, not an isolated one. (a 100 is not one thing: see "What a 100 means: three states") |
 
 ### Aggregation
 
@@ -129,12 +129,7 @@ Solana's Drift and Kamino Lend score the minimum over their oracles' composites;
 Hyperliquid's targets follow `chains/hyperliquid/METHODOLOGY.md` section 4.4 (the
 HIP-3 dexes' oracle key, the L1 validator set, Kinetiq's operator push); ten EVM lending markets score
 the price paths upstream of them (see "oracleAuthorityScore for price consumers"
-below). Every other target publishes 100: not applicable for a target that
-neither reports nor reads a price, and not yet computed for a price consumer
-outside that rule's current scope (listed there). Not applicable includes a target that reads prices
-only through oracles nobody holding a key on it can change: each Morpho Blue market's oracle is fixed by
-its creator when the market is created, and its bad debt stays in that market, so the singletons publish
-100 and the exposure is scored at the vaults that choose the markets.
+below). Every other target publishes 100, and its basis says which kind of 100 it is: `not_applicable` for a target that neither reports nor reads a price, `not_computed` for a price consumer outside that rule's current scope (listed there). The Morpho Blue singletons are listed as `not_computed`: the code of the singleton we checked reads a price (`price()`), and only one of the four singletons was checked, so the other three are listed with it. Each market's oracle is fixed by its creator when the market is created and its bad debt stays in that market, but it has not been decided how to score a singleton whose exposure sits in the vaults that choose the markets.
 
 **`crossExposureScore`** - computed once per `score_all()` run, after every
 individual target is scored (`scripts/lib/signer_overlap.py`): re-derives
@@ -201,6 +196,22 @@ confirmed that run, and the Robinhood Chain group carries a hand-set dated flag 
 the live drift check:
 [`data/finding_2026-09-20-uniswap-one-timelock-eleven-targets.md`](data/finding_2026-09-20-uniswap-one-timelock-eleven-targets.md).
 Scorer output only until the next re-push of Arbitrum, Base, Monad and Robinhood Chain.
+
+**What a 100 means: three states.** The chain stores one number for each score. For two of them, oracle authority and cross-exposure, a 100 can mean three different things, so each published value now comes with a basis and a reason, in the Watch files, on each contract page and on the dashboard (and in `api/scores.json`, which covers one chain). The numbers themselves do not change: the basis only labels them.
+
+| basis | what it says | how to read a 100 |
+|---|---|---|
+| `computed` | The method read it and scored it. The number is a finding. | A 100 means: we looked and found nothing unbounded (for cross-exposure: no shared signer in the groups compared). |
+| `not_computed` | It applies to this contract, but it was not scored: the method does not cover this kind of contract yet, or the read failed. | The 100 (or a floor such as 20) is a placeholder, never a finding. Do not read it as safe. |
+| `not_applicable` | It has no meaning for this kind of contract (for example it neither reports nor reads a price, or it has no signer set). | Nothing to measure. A 100 here is not praise. |
+
+How it works:
+- The basis is declared for each tracked contract in `scripts/lib/dimension_basis.py`, with a reason from a fixed list. A contract with no declaration is shown as `not_computed` in the Watch, whatever its value (the dashboard labels only a 100).
+- If a score run says it could not read a part of what it needs, the basis for that run is `not_computed` whatever was declared (a value below 20 with an unread path stays `computed`: it is the weakest path that was read, "this number or lower"). The Watch and the contract pages show the declared basis; the downgrade of a single run is not published for every chain.
+- A value below 100 is never `not_applicable`.
+- A `not_computed` value is shown with the label "not scored", on a neutral bar on the dashboard when the value is 100 (a low value keeps its band colour). The label never changes a score, and the headline composite does not use these two scores.
+
+**Empty code (2026.11.1).** A node that is behind can answer `0x` for a contract, which used to read as "an account with no code" and score the path as one bare key. An empty answer is now read again up to two more times (a short pause between reads) in the three places that decide it (`price_authority._code`, `web3_utils.is_eoa`, `account_classification.classify_account`) before an address is called a bare account. A node that stays wrong is still believed; some other direct code reads are not covered. These are listed in the working notes. Ethereum L1 was not renewed with this version; it received this change on its own with 2026.11.2.
 
 **`l1CappedComposite`** (added 2026-09-17, off-chain only) - no protocol
 built on Robinhood Chain can be meaningfully safer than the L1 authority
@@ -446,7 +457,7 @@ this rule (several markets from 100 to 52) is accepted by a person, once.
   build's inputs are the contracts its immutables name, an unknown build is UNREAD. A CappedRate is judged on its own
   caps, never as a class. The VaultFactory auths, which can re-point any vault's oracle at once, were replayed from
   block 0 and are own while the factory's owner is the pinned VaultFactoryOwner (its auth setters are behind the
-  Liquidity timelock); the fee auths only set rates, and the team multisig, an Instadapp Avocado (6-of-12 on
+  Liquidity timelock); the fee auths only set rates, and the team multisig, an Instadapp Avocado (5-of-10 when read on 3 November 2026, 6-of-12 before; on
   both chains), re-points any vault's oracle and configures any DEX with no delay: it is scored from
   `requiredSigners()` and `signers()` with the Safe-rooted formula (56). The Liquidity composite still calls those
   instant powers a bounded bypass of its 24-hour timelock, which this reading contradicts. Delay: the Liquidity admin
@@ -486,7 +497,7 @@ this rule (several markets from 100 to 52) is accepted by a person, once.
 2026-10-05 to Aave V3 Horizon, the Morpho V1 vaults (Steakhouse USDT and USDC on Ethereum, four on Base,
 one on Monad), the Morpho Vault V2 vaults (two on Ethereum, six on Robinhood Chain), Radiant and GMX
 (V2 and V1) on Arbitrum, and later that day, after the decisions above, to SparkLend, Moonwell, Fluid Liquidity
-(Arbitrum, Plasma), Dolomite and Jupiter Lend: every tracked target that reads prices is now computed. Euler V2 and
+(Arbitrum, Plasma), Dolomite and Jupiter Lend: these are the targets the price-path rule covers as of 2026-10-05. Other targets that read or publish prices are either scored by their own ecosystem's rule (basis `computed`, reason `own_rule`) or not covered yet (basis `not_computed`); see "What a 100 means" below. Euler V2 and
 Kamino Liquidity were added on 2026-10-05 from the same study; the Euler
 AccessControlEmergencyGovernor on Plasma stays at 100, not applicable: a governance relay that holds no
 funds and reads no price, whose vaults are rows of the eVaultFactory. The Morpho Blue singletons are not price consumers in this sense: each

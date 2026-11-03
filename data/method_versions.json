@@ -162,6 +162,51 @@
         ]
       },
       "expected_hashes": {}
+    },
+    {
+      "version": "2026.11.1",
+      "date": "2026-11-02",
+      "status": "on-chain",
+      "note": "The push of 2026-11-02 on eight of the nine oracles, read from getScore() on each EVM oracle and from the Solana accounts after the send. Each of these oracles shows one hash on all its entries, the one computed from the scoring files of the commit that was sent, before the send. Ethereum L1 was not sent with this version and keeps the 2026.10.4 hash. The batch carries the changes listed under 2026.11.1 in CHANGELOG.md.",
+      "hashes": {
+        "robinhood-chain": [
+          "0xe2625fb9e688dcffeb302e7cdb5f05f662f60c3d2d439f4fbbe7c3ac4d453d1e"
+        ],
+        "arbitrum-ecosystem": [
+          "0xdfdfedc34ca78e3d78ae1b009e983795c193ba2a39a8e926ae2a6036f755d5a1"
+        ],
+        "base-ecosystem": [
+          "0x39ed8891e019d83889c7b6f2e853ef182a57190fd394f4f1a7167fee1a741bc0"
+        ],
+        "tempo": [
+          "0x4b8b9f250720ac31fdabaebb0a869cf64699eed816cb0f02de3ef13bcf637368"
+        ],
+        "plasma-ecosystem": [
+          "0x3aa3cbf80cdcf7d08aaa4e4a4441cfe56dea15f1a7ea336e20662dc4f262d4ac"
+        ],
+        "monad": [
+          "0x0ecf34c47dbe50b94fd1882dd54ae9adf4c44f8a47b142a1e0cbac17e59c0fbd"
+        ],
+        "hyperliquid": [
+          "0xb595576050a45dcdeeb0479747f6b283eaaca756e6cd7e70a176a194021bed65"
+        ],
+        "solana": [
+          "0x35be9749403c55797c13ba37ef7df5a6291129781661a3125987ae151296a3c9"
+        ]
+      },
+      "expected_hashes": {}
+    },
+    {
+      "version": "2026.11.2",
+      "date": "2026-11-03",
+      "status": "on-chain",
+      "note": "The push of 2026-11-03 on Ethereum L1 only, read from getScore() after the send. Its live entries show one hash, the one computed from the scoring files of the commit that was sent, before the send; the entry of the retired minter keeps its older hash. The other eight oracles keep 2026.11.1. The batch carries the changes listed under 2026.11.2 in CHANGELOG.md.",
+      "hashes": {
+        "ethereum-l1": [
+          "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439"
+        ]
+      },
+      "expected_hashes": {}
     }
   ]
 }

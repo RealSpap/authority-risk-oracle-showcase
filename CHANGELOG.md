@@ -10,6 +10,59 @@ One entry per method version, named `YYYY.MM.N` (`data/method_versions.json`). `
 - 2026-10-13: A Watch alert used the name of another protocol for the address `Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo`. This address is GMX-Solana's `gmsol_store`. The scorer gives it the correct name. On 2026-10-28 the file `alerts.json` titles the alerts of this address with its short address, without a name.
 - 2026-10-13: A Watch alert about a change waiting in a timelock queue shows the same score, whatever that change does. A change to a price-feed setting and a full replacement of the core program are shown with the same score. The severity of the alert depends on how soon the change can run, not on what it does.
 
+### 2026.11.2 (2026-11-03, on Ethereum L1 only)
+
+| Oracle | methodologyHash | Pushed |
+|---|---|---|
+| Robinhood Chain | `0xe2625fb9e688dcffeb302e7cdb5f05f662f60c3d2d439f4fbbe7c3ac4d453d1e` (63 targets) | 2026-11-02 21:22Z |
+| Ethereum L1 | `0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439` (38 targets) | 2026-11-03 20:50Z |
+| Arbitrum | `0xdfdfedc34ca78e3d78ae1b009e983795c193ba2a39a8e926ae2a6036f755d5a1` (13 targets) | 2026-11-02 21:16Z |
+| Base | `0x39ed8891e019d83889c7b6f2e853ef182a57190fd394f4f1a7167fee1a741bc0` (13 targets) | 2026-11-02 20:51Z |
+| Plasma | `0x3aa3cbf80cdcf7d08aaa4e4a4441cfe56dea15f1a7ea336e20662dc4f262d4ac` (9 targets) | 2026-11-02 20:57Z |
+| Monad | `0x0ecf34c47dbe50b94fd1882dd54ae9adf4c44f8a47b142a1e0cbac17e59c0fbd` (9 targets) | 2026-11-02 20:51Z |
+| Hyperliquid | `0xb595576050a45dcdeeb0479747f6b283eaaca756e6cd7e70a176a194021bed65` (16 targets) | 2026-11-02 21:16Z |
+| Tempo | `0x4b8b9f250720ac31fdabaebb0a869cf64699eed816cb0f02de3ef13bcf637368` (14 targets) | 2026-11-02 20:41Z |
+| Solana | `0x35be9749403c55797c13ba37ef7df5a6291129781661a3125987ae151296a3c9` (26 targets) | 2026-11-02 21:52Z |
+
+On the evening of 3 November I renewed Ethereum L1 on its own with method 2026.11.2. The hash was computed from the scoring files before the send, and I read it on chain after it: it is the expected one. 38 live entries were rewritten. The other eight oracles are unchanged since 2026.11.1.
+
+- **The Curve factory's administrator is read through its DAO.** Since 29 October the factory is administered by a proxy contract, no longer directly by the Curve DAO Ownership Agent. The scorer now recognises the proxy by its address and follows it to the Agent it points to. The proxy also has an emergency Safe: the scorer reads it and writes it in the notes, outside the score, because it does not act on this factory (only the DAO can use the proxy's execute function). What that Safe can do on other Curve contracts is not scored in this entry. Any other administrator, or a proxy that points elsewhere, is scored at the conservative floor, named, and never credited as the DAO. This is what the push guard held on the 2026.11.1 dry run.
+- **The stored list of Fluid's team multisig owners has 10 addresses instead of 12.** Two addresses had left and none had joined. I read the same 10 on Ethereum, Arbitrum and Plasma before changing the list, which is dated in the code. The cross-ecosystem rule is unchanged: the list read must equal the stored one exactly.
+- **Ethereum L1 now carries the 2026.11.1 changes it did not get on 2 November:** a label on every 0-100 dimension, an empty answer for a contract's code read again before an address is called a bare account, the retired minter entry labelled as an old finding kept as published, and one dated note reworded so that it no longer quotes a market-size figure.
+
+**How I checked.** After the send I read the 38 live entries on chain and compared each with what the dry run had announced: same hash, none stale, same composite score. The one entry of the retired minter is not counted: it keeps its older hash and its last write of 23 September, as published. I did not take a separate reading before the send, so this is a comparison with the dry run. A reading is what these entries showed that evening, not a guarantee for the next one.
+
+**What is not in this repository yet.** The scoring code behind the 2026.10.4, 2026.11.1 and 2026.11.2 hashes is not yet published here, so these hashes cannot yet be recomputed from this repository alone.
+
+**Freshness.** The Ethereum L1 entries start to expire on 12 November 2026 at 20:50 UTC, nine days after their update of 3 November, 20:50 UTC. The other eight oracles start to expire on 11 November 2026 at 20:41 UTC.
+
+### 2026.11.1 (2026-11-02, on eight of the nine oracles)
+
+| Oracle | methodologyHash | Pushed |
+|---|---|---|
+| Robinhood Chain | `0xe2625fb9e688dcffeb302e7cdb5f05f662f60c3d2d439f4fbbe7c3ac4d453d1e` (63 targets) | 2026-11-02 21:22Z |
+| Arbitrum | `0xdfdfedc34ca78e3d78ae1b009e983795c193ba2a39a8e926ae2a6036f755d5a1` (13 targets) | 2026-11-02 21:16Z |
+| Base | `0x39ed8891e019d83889c7b6f2e853ef182a57190fd394f4f1a7167fee1a741bc0` (13 targets) | 2026-11-02 20:51Z |
+| Plasma | `0x3aa3cbf80cdcf7d08aaa4e4a4441cfe56dea15f1a7ea336e20662dc4f262d4ac` (9 targets) | 2026-11-02 20:57Z |
+| Monad | `0x0ecf34c47dbe50b94fd1882dd54ae9adf4c44f8a47b142a1e0cbac17e59c0fbd` (9 targets) | 2026-11-02 20:51Z |
+| Hyperliquid | `0xb595576050a45dcdeeb0479747f6b283eaaca756e6cd7e70a176a194021bed65` (16 targets) | 2026-11-02 21:16Z |
+| Tempo | `0x4b8b9f250720ac31fdabaebb0a869cf64699eed816cb0f02de3ef13bcf637368` (14 targets) | 2026-11-02 20:41Z |
+| Solana | `0x35be9749403c55797c13ba37ef7df5a6291129781661a3125987ae151296a3c9` (26 targets) | 2026-11-02 21:52Z |
+
+On the evening of 2 November I renewed eight of the nine oracles with method 2026.11.1, all except Ethereum L1. The hashes were computed from the scoring files before the send, and I read them on chain after it: they are the expected ones. 163 live entries were rewritten.
+
+**Ethereum L1 was not renewed in this batch.** When I ran the dry run for Ethereum L1, the push guard held two entries and I did not send them: for one, the scorer cannot yet read how the contract is administered; for the other, a stored comparison list is out of date. Both were addressed the next day, and Ethereum L1 was renewed on its own on 3 November with 2026.11.2 (section above).
+
+- **Every 0-100 dimension now says how its number was obtained.** The chain stores one number per dimension, so a 100 on oracle authority or on cross exposure could mean "looked and found nothing unbounded", "not scored" or "has no meaning for this target". Each entry now carries a label (computed, not computed, not applicable) and a plain reason, declared target by target for the tracked targets. A target with no declaration reads "not computed", never "not applicable". The label never changes a number.
+- **An empty answer for a contract's code is no longer read as a bare account on the first read.** A node that is behind can answer `0x` for a contract, and the path was then scored as a single bare key. An empty answer is now read again up to two more times before an address is called a bare account. Ethereum L1 received this change with 2026.11.2.
+- **Two changes belong to Ethereum L1 only and were made with 2026.11.2:** the entry of one minter contract that is no longer refreshed is labelled as an old finding kept as published (it was last written on 2026-09-23; whether the contract is retired on chain has not been verified), and one dated note on the Ethereum L1 scorer that quoted a market-size figure for one token is replaced by wording that does not carry the figure.
+
+**How I checked.** After the send I read the 163 entries of the eight oracles on chain and compared each with what the dry run had announced: same hash, none stale, same composite and cross-exposure sub-scores. I did not read the entries before the send, so this is a comparison with the dry run, not a before-and-after reading. The push guard held two Solana entries; I read the cause and accepted them by hand. A reading is what these 163 entries showed that evening, not a guarantee for the next one.
+
+**What is not in this repository yet.** The scoring code behind the 2026.10.4 and 2026.11.1 hashes is not yet published here, so these two hashes cannot yet be recomputed from this repository alone.
+
+**Freshness.** The oldest update among the renewed entries is from 2 November, 20:41 UTC (Tempo). Those entries start to expire on 11 November 2026 at 20:41 UTC, nine days later, so they need renewing before then.
+
 ### 2026.10.4 (2026-10-27, on the nine oracles)
 
 | Oracle | methodologyHash | Pushed |

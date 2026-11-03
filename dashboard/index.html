@@ -1666,7 +1666,7 @@
       '</div>' +
       '<div class="card-body">' +
         '<div class="zc-note">Signed by a key whose private half was later found in the private repository’s history (since rotated): this proves the attestation’s integrity and timing, not who published it. Its own file still describes the key as a zero-value throwaway and predates the exposure.</div>' +
-        '<div class="subscores">' + subBar('Admin key', s.adminKeyScore) + subBar('Multisig', s.multisigScore) + subBar('Timelock', s.timelockScore) + subBar('Oracle authority', s.oracleAuthorityScore) + subBar('Cross-exposure', s.crossExposureScore) + '</div>' +
+        '<div class="subscores">' + subBar('Admin key', s.adminKeyScore) + subBar('Multisig', s.multisigScore) + subBar('Timelock', s.timelockScore) + subBar('Oracle authority', s.oracleAuthorityScore, basisOf(activeKey, s.address, 'oracleAuthority', s.oracleAuthorityScore)) + subBar('Cross-exposure', s.crossExposureScore, basisOf(activeKey, s.address, 'crossExposure', s.crossExposureScore)) + '</div>' +
         '<div class="zc-verify">' +
           '<div class="zc-verify-row">' +
             '<div class="zc-verify-step">' +
@@ -1955,12 +1955,40 @@
     if (x <= 40) out.push('Cross-exposure ' + x);
     return out;
   }
-  function subBar(label, value) {
+  // 2026.10.5 proposal: what a 100 means. data/dimension_basis.json is fetched once. Fail closed: if it did not load, or the target is absent, a 100 is shown "not scored"
+  // on a neutral bar, never as a good score; a value below 100 without a basis has no label.
+  var BASIS = null, BASIS_ECO = { 'robinhood': 'robinhood-chain', 'ethereum-l1': 'ethereum-l1', 'arbitrum': 'arbitrum-ecosystem', 'base': 'base-ecosystem', 'plasma': 'plasma-ecosystem', 'tempo': 'tempo', 'monad': 'monad', 'hyperliquid': 'hyperliquid', 'solana': 'solana' };
+  var BASIS_TIP = {
+    computed: 'Read and scored. The number is what the method found.',
+    not_computed: 'This applies to this contract, but it was not scored: the method does not cover this kind of contract yet, or the read failed. The number shown is a placeholder, not a finding. Do not read it as safe.',
+    not_applicable: 'This does not apply to this kind of contract, for example it neither reports nor reads a price. There is nothing to measure here, so a 100 is not praise.'
+  };
+  var BASIS_LABEL = { computed: 'scored', not_computed: 'not scored', not_applicable: 'not applicable' };
+  var BASIS_NONE = 'No declaration for this target (or the declarations did not load): treated as not scored, never as not applicable.';
+  function escAttr(x) { return String(x).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  try {
+    fetch('https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/main/data/dimension_basis.json').then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { if (j && j.targets) { BASIS = j.targets; if (typeof applyFilters === 'function') { try { applyFilters(); } catch (e) { } } } }).catch(function () { });
+  } catch (e) { }
+  var BASIS_OUTDATED = 'The declaration for this target says one thing and the published value says another: treated as not scored until the declaration is reviewed.';
+  var BASIS_WALK = 'Scored as the weakest of the material price paths one hop upstream (rule of 2026-10-04).';
+  var BASIS_FLOOR = 'A material price path could not be read in this run; the number is a floor, not a finding.';
+  function basisOf(chainKey, address, dim, value) {
+    var t = BASIS && BASIS[(BASIS_ECO[chainKey] || chainKey) + ':' + (String(address).slice(0, 2) === '0x' ? String(address).toLowerCase() : address)];
+    var b = t && t[dim + 'Basis'], code = t && t[dim + 'ReasonCode'];
+    if (!(b && BASIS_LABEL[b] && t[dim + 'Reason'])) return value === 100 ? { basis: 'not_computed', reason: BASIS_NONE } : null;
+    if (value < 100 && dim === 'oracleAuthority' && code === 'no_allocation_today') return { basis: 'computed', reason: BASIS_WALK };
+    if (value >= 20 && dim === 'oracleAuthority' && code === 'price_walk_partial') return { basis: 'not_computed', reason: BASIS_FLOOR };
+    if (value < 100 && ((dim === 'oracleAuthority' && b === 'not_applicable') || (dim === 'crossExposure' && b !== 'computed'))) return { basis: 'not_computed', reason: BASIS_OUTDATED };
+    return { basis: b, reason: t[dim + 'Reason'] };
+  }
+  function subBar(label, value, bs) {
     var b = band(value);
     var hint = SUBSCORE_HINTS[label];
     var lbl = hint ? '<span class="lbl" title="' + hint.replace(/"/g, '&quot;') + '">' + label + '<span class="info">i</span></span>' : '<span class="lbl">' + label + '</span>';
+    if (bs) lbl += ' <span class="tag" title="' + escAttr(BASIS_TIP[bs.basis] + ' ' + (bs.reason || '')) + '">' + BASIS_LABEL[bs.basis] + '</span>';
+    var neutral = bs && bs.basis !== 'computed' && value >= 100;      // a placeholder 100 or a not-applicable 100 is never drawn in a band colour; a low value keeps its band colour
     return '<div class="subscore"><div class="sl">' + lbl + '<b>' + value + '</b></div>' +
-      '<div class="track"><i style="width:' + value + '%;background:var(--band-' + b.key + ')"></i></div></div>';
+      '<div class="track"><i style="width:' + (neutral ? 100 : value) + '%;background:' + (neutral ? 'var(--border)' : 'var(--band-' + b.key + ')') + '"></i></div></div>';
   }
 
   var activeKey = 'robinhood';
@@ -2069,7 +2097,7 @@
         '</div>' +
         '<div class="card-body">' +
           (g.detail ? '<p class="detail">' + g.detail + '</p>' : '') +
-          '<div class="subscores">' + subBar('Admin key', s.adminKeyScore) + subBar('Multisig', s.multisigScore) + subBar('Timelock', s.timelockScore) + subBar('Oracle authority', s.oracleAuthorityScore) + subBar('Cross-exposure', s.crossExposureScore) + '</div>' +
+          '<div class="subscores">' + subBar('Admin key', s.adminKeyScore) + subBar('Multisig', s.multisigScore) + subBar('Timelock', s.timelockScore) + subBar('Oracle authority', s.oracleAuthorityScore, basisOf(activeKey, s.address, 'oracleAuthority', s.oracleAuthorityScore)) + subBar('Cross-exposure', s.crossExposureScore, basisOf(activeKey, s.address, 'crossExposure', s.crossExposureScore)) + '</div>' +
           '<div class="addrs">' + addrsHtml + '</div>' +
           '<div class="foot-row"><span><b>Last updated</b> ' + fmtDate(s.lastUpdated) + '</span>' +
             '<span><b>Methodology</b> <span style="font-family:var(--mono)">' + shortHash(s.methodologyHash) + '</span></span>' +

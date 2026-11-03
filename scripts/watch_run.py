@@ -290,8 +290,41 @@ def restore_dropped_targets(current, prev_by_target):
     return sorted(list(current) + back, key=lambda t: t.get("index", 0))
 
 
+# 2026.10.5 proposal: what a 100 means, declared per target (scripts/export_dimension_basis.py writes the file from scripts/lib/dimension_basis.py).
+# Fail closed: a missing file, a missing declaration, or a declaration the published value contradicts gives "not_computed", never "not_applicable" and never no field.
+# The Watch shows the DECLARED state. A score run that could not read something downgrades it in api/scores.json only (the Watch has no notes to read).
+_SLUG_ECO = {"robinhood-chain": "robinhood-chain", "ethereum-l1-sepolia": "ethereum-l1", "arbitrum-sepolia": "arbitrum-ecosystem", "base-sepolia": "base-ecosystem", "tempo-moderato": "tempo",
+             "plasma": "plasma-ecosystem", "monad": "monad", "hyperliquid-hyperevm": "hyperliquid", "solana-devnet": "solana"}
+_BASIS_STATES = ("computed", "not_computed", "not_applicable")
+_NO_DECLARATION = "No declaration for this target: treated as not scored, never as not applicable."
+_WALK = "Scored as the weakest of the material price paths one hop upstream (rule of 2026-10-04)."
+_FLOOR = "A material price path could not be read in this run; the number is a floor, not a finding."
+_OUTDATED = "The declaration for this target says one thing and the published value says another: treated as not scored until the declaration is reviewed."
+
+
+def load_basis():
+    try:
+        return json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data", "dimension_basis.json"), encoding="utf-8")).get("targets", {})
+    except (OSError, ValueError, AttributeError):
+        return {}
+
+
+def basis_fields(slug, t, basis):
+    d = basis.get("%s:%s" % (_SLUG_ECO.get(slug, slug), t["target"].lower() if t["target"].startswith("0x") else t["target"])) or {}
+    out = {}
+    for dim in ("oracleAuthority", "crossExposure"):
+        b, r, v = d.get(dim + "Basis"), d.get(dim + "Reason"), t.get(dim + "Score")
+        if b not in _BASIS_STATES or not isinstance(r, str) or not r: b, r = "not_computed", _NO_DECLARATION
+        elif isinstance(v, (int, float)) and v < 100 and dim == "oracleAuthority" and d.get(dim + "ReasonCode") == "no_allocation_today": b, r = "computed", _WALK      # money arrived since the declaration was written
+        elif isinstance(v, (int, float)) and v >= 20 and dim == "oracleAuthority" and d.get(dim + "ReasonCode") == "price_walk_partial": b, r = "not_computed", _FLOOR      # back at the floor of 20: a placeholder again
+        elif isinstance(v, (int, float)) and v < 100 and ((dim == "oracleAuthority" and b == "not_applicable") or (dim == "crossExposure" and b != "computed")): b, r = "not_computed", _OUTDATED
+        out[dim + "Basis"], out[dim + "Reason"] = b, r
+    return out
+
+
 def main():
     os.makedirs(os.path.join(WATCH, "scores"), exist_ok=True)
+    BASIS = load_basis()
     now = datetime.datetime.now(datetime.timezone.utc)
     run_utc = now.strftime("%Y-%m-%dT%H:%M:%SZ")
     names = labels()
@@ -346,6 +379,7 @@ def main():
             p = prev.get(t["target"]) if prev else None
             t["previousComposite"] = p["compositeScore"] if p else None
             t["previousRun"] = prev_latest.get("run_utc") if p else None
+            t.update(basis_fields(s, t, BASIS))
             if p is None:
                 if prev is not None:
                     movers.append({"oracle": name, "target": t["target"], "label": label, "field": "new", "before": None, "after": t["compositeScore"]})

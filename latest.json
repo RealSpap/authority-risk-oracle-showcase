@@ -1,6 +1,6 @@
 {
- "run_utc": "2026-11-02T15:48:40Z",
- "previous_run_utc": "2026-11-02T05:59:40Z",
+ "run_utc": "2026-11-03T00:57:07Z",
+ "previous_run_utc": "2026-11-02T15:48:40Z",
  "schedule": "every 6 hours (GitHub Actions, cron 17 */6 * * *)",
  "oracles": [
   {
@@ -9,10 +9,10 @@
    "kind": "evm",
    "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
    "read_ok": true,
-   "block": 147133095,
+   "block": 147382798,
    "targets": 63,
    "stale": 0,
-   "lastUpdated": 1793136187,
+   "lastUpdated": 1793654542,
    "maxStaleness": 777600,
    "self_watch": {
     "read": true,
@@ -37,7 +37,7 @@
    "kind": "evm",
    "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
    "read_ok": true,
-   "block": 12049142,
+   "block": 12051865,
    "targets": 39,
    "stale": 1,
    "lastUpdated": 1793136292,
@@ -65,10 +65,10 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 325361487,
+   "block": 325484656,
    "targets": 13,
    "stale": 0,
-   "lastUpdated": 1793135361,
+   "lastUpdated": 1793654183,
    "maxStaleness": 777600,
    "self_watch": {
     "read": true,
@@ -93,10 +93,10 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 53563335,
+   "block": 53727840,
    "targets": 13,
    "stale": 0,
-   "lastUpdated": 1793134526,
+   "lastUpdated": 1793652679,
    "maxStaleness": 777600,
    "self_watch": {
     "read": false,
@@ -112,7 +112,7 @@
       "updater": false
      }
     },
-    "error": "getLogs: window of 176703 blocks needs more than 120 calls at 200 blocks each"
+    "error": "getLogs: window of 164505 blocks needs more than 120 calls at 200 blocks each"
    }
   },
   {
@@ -121,10 +121,10 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 42284304,
+   "block": 42336588,
    "targets": 14,
    "stale": 0,
-   "lastUpdated": 1793134136,
+   "lastUpdated": 1793652101,
    "maxStaleness": 777600,
    "self_watch": {
     "read": true,
@@ -149,10 +149,10 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 37804321,
+   "block": 37837219,
    "targets": 9,
    "stale": 0,
-   "lastUpdated": 1793134786,
+   "lastUpdated": 1793653056,
    "maxStaleness": 777600,
    "self_watch": {
     "read": true,
@@ -177,10 +177,10 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 76393975,
+   "block": 76500761,
    "targets": 9,
    "stale": 0,
-   "lastUpdated": 1793134502,
+   "lastUpdated": 1793652705,
    "maxStaleness": 777600,
    "self_watch": {
     "read": false,
@@ -196,7 +196,7 @@
       "updater": false
      }
     },
-    "error": "getLogs: window of 113007 blocks needs more than 120 calls at 100 blocks each"
+    "error": "getLogs: window of 106786 blocks needs more than 120 calls at 100 blocks each"
    }
   },
   {
@@ -205,10 +205,10 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 68560236,
+   "block": 68593624,
    "targets": 16,
    "stale": 0,
-   "lastUpdated": 1793135354,
+   "lastUpdated": 1793654209,
    "maxStaleness": 777600,
    "self_watch": {
     "read": true,
@@ -236,14 +236,103 @@
    "block": null,
    "targets": 26,
    "stale": 0,
-   "lastUpdated": 1793132846,
+   "lastUpdated": 1793656425,
    "maxStaleness": 777600,
    "self_watch": null
   }
  ],
  "total_targets": 202,
  "stale_total": 1,
- "movers": [],
+ "movers": [
+  {
+   "oracle": "Robinhood Chain",
+   "target": "0x6f475642a6e85809b1c36fa62763669b1b48dd5b",
+   "label": "LayerZero V2 EndpointV2 (Robinhood Chain)",
+   "field": "multisigScore",
+   "before": 85,
+   "after": 90
+  },
+  {
+   "oracle": "Robinhood Chain",
+   "target": "0x6f475642a6e85809b1c36fa62763669b1b48dd5b",
+   "label": "LayerZero V2 EndpointV2 (Robinhood Chain)",
+   "field": "compositeScore",
+   "before": 48,
+   "after": 49
+  },
+  {
+   "oracle": "Robinhood Chain",
+   "target": "0xc39161c743d0307eb9bcc9fef03eeb9dc4802de7",
+   "label": "LayerZero V2 SendUln302 (Robinhood Chain)",
+   "field": "multisigScore",
+   "before": 85,
+   "after": 90
+  },
+  {
+   "oracle": "Robinhood Chain",
+   "target": "0xc39161c743d0307eb9bcc9fef03eeb9dc4802de7",
+   "label": "LayerZero V2 SendUln302 (Robinhood Chain)",
+   "field": "compositeScore",
+   "before": 48,
+   "after": 49
+  },
+  {
+   "oracle": "Robinhood Chain",
+   "target": "0xe1844c5d63a9543023008d332bd3d2e6f1fe1043",
+   "label": "LayerZero V2 ReceiveUln302 (Robinhood Chain)",
+   "field": "multisigScore",
+   "before": 85,
+   "after": 90
+  },
+  {
+   "oracle": "Robinhood Chain",
+   "target": "0xe1844c5d63a9543023008d332bd3d2e6f1fe1043",
+   "label": "LayerZero V2 ReceiveUln302 (Robinhood Chain)",
+   "field": "compositeScore",
+   "before": 48,
+   "after": 49
+  },
+  {
+   "oracle": "Robinhood Chain",
+   "target": "0x14b107cf534239c59571b066cb6497a321da897c",
+   "label": "Arcus Perps BridgeVault (Robinhood Chain)",
+   "field": "adminKeyScore",
+   "before": 50,
+   "after": 65
+  },
+  {
+   "oracle": "Robinhood Chain",
+   "target": "0x14b107cf534239c59571b066cb6497a321da897c",
+   "label": "Arcus Perps BridgeVault (Robinhood Chain)",
+   "field": "multisigScore",
+   "before": 35,
+   "after": 45
+  },
+  {
+   "oracle": "Robinhood Chain",
+   "target": "0x14b107cf534239c59571b066cb6497a321da897c",
+   "label": "Arcus Perps BridgeVault (Robinhood Chain)",
+   "field": "compositeScore",
+   "before": 31,
+   "after": 40
+  },
+  {
+   "oracle": "Solana (Devnet)",
+   "target": "2LecshUwdy9xi7meFgHtFJQNSKk4KdTrcpvaB56dP2NQ",
+   "label": "2Lecsh\u2026P2NQ",
+   "field": "crossExposureScore",
+   "before": 100,
+   "after": 80
+  },
+  {
+   "oracle": "Solana (Devnet)",
+   "target": "1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78",
+   "label": "1oopBo\u2026kF78",
+   "field": "crossExposureScore",
+   "before": 100,
+   "after": 80
+  }
+ ],
  "alerts": [],
  "unread": [],
  "note": "The Zcash commitments are verified by the dashboard itself. An oracle in `unread` has unknown targets, not zero."

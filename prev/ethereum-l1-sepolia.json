@@ -3,9 +3,9 @@
  "kind": "evm",
  "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
  "rpc": "https://ethereum-sepolia-rpc.publicnode.com",
- "block": 12058130,
+ "block": 12058526,
  "maxStaleness": 777600,
- "readAt": 1793743352,
+ "readAt": 1793748142,
  "targets": [
   {
    "index": 0,
@@ -20,7 +20,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 85,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_applicable",
+   "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Its root signer set was compared with the other tracked groups it appears in a comparison with (its own chain, and the dated snapshot of other EVM chains where one exists); 100 means no shared signer was found in those groups (contracts of the same protocol count as one group)."
   },
   {
    "index": 1,
@@ -35,7 +39,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 78,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "computed",
+   "oracleAuthorityReason": "Scored as the weakest of the material price paths one hop upstream (rule of 2026-10-04).",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Its root signer set was compared with the other tracked groups it appears in a comparison with (its own chain, and the dated snapshot of other EVM chains where one exists); 100 means no shared signer was found in those groups (contracts of the same protocol count as one group)."
   },
   {
    "index": 2,
@@ -50,7 +58,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 81,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_computed",
+   "oracleAuthorityReason": "This target, or the protocol it governs, reads or publishes prices, and the price-path rule does not cover it yet; the 100 is a placeholder, not a finding.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Its root signer set was compared with the other tracked groups it appears in a comparison with (its own chain, and the dated snapshot of other EVM chains where one exists); 100 means no shared signer was found in those groups (contracts of the same protocol count as one group)."
   },
   {
    "index": 3,
@@ -65,7 +77,11 @@
    "methodologyHash": "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167",
    "stale": true,
    "previousComposite": 52,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_applicable",
+   "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "This value was last refreshed on 2026-09-23, and the contract has not been refreshed since; it is an old finding kept as published, and whether the contract is retired on chain has not been verified."
   },
   {
    "index": 4,
@@ -80,7 +96,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 2,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_applicable",
+   "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Its root signer set was compared with the other tracked groups it appears in a comparison with (its own chain, and the dated snapshot of other EVM chains where one exists); 100 means no shared signer was found in those groups (contracts of the same protocol count as one group)."
   },
   {
    "index": 5,
@@ -95,7 +115,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 73,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_applicable",
+   "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Its root signer set was compared with the other tracked groups it appears in a comparison with (its own chain, and the dated snapshot of other EVM chains where one exists); 100 means no shared signer was found in those groups (contracts of the same protocol count as one group)."
   },
   {
    "index": 6,
@@ -110,7 +134,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 57,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_applicable",
+   "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Its root signer set was compared with the other tracked groups it appears in a comparison with (its own chain, and the dated snapshot of other EVM chains where one exists); 100 means no shared signer was found in those groups (contracts of the same protocol count as one group)."
   },
   {
    "index": 7,
@@ -125,7 +153,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 57,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_applicable",
+   "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Its root signer set was compared with the other tracked groups it appears in a comparison with (its own chain, and the dated snapshot of other EVM chains where one exists); 100 means no shared signer was found in those groups (contracts of the same protocol count as one group)."
   },
   {
    "index": 8,
@@ -140,7 +172,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 57,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_applicable",
+   "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Its root signer set was compared with the other tracked groups it appears in a comparison with (its own chain, and the dated snapshot of other EVM chains where one exists); 100 means no shared signer was found in those groups (contracts of the same protocol count as one group)."
   },
   {
    "index": 9,
@@ -155,7 +191,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 79,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "computed",
+   "oracleAuthorityReason": "Scored as the weakest of the material price paths one hop upstream (rule of 2026-10-04).",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Its root signer set was compared with the other tracked groups it appears in a comparison with (its own chain, and the dated snapshot of other EVM chains where one exists); 100 means no shared signer was found in those groups (contracts of the same protocol count as one group)."
   },
   {
    "index": 10,
@@ -170,7 +210,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 78,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_computed",
+   "oracleAuthorityReason": "A material price path could not be read in this run; the number is a floor, not a finding.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Its root signer set was compared with the other tracked groups it appears in a comparison with (its own chain, and the dated snapshot of other EVM chains where one exists); 100 means no shared signer was found in those groups (contracts of the same protocol count as one group)."
   },
   {
    "index": 11,
@@ -185,7 +229,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 85,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_applicable",
+   "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Its root signer set was compared with the other tracked groups it appears in a comparison with (its own chain, and the dated snapshot of other EVM chains where one exists); 100 means no shared signer was found in those groups (contracts of the same protocol count as one group)."
   },
   {
    "index": 12,
@@ -200,7 +248,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 56,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_computed",
+   "oracleAuthorityReason": "This target, or the protocol it governs, reads or publishes prices, and the price-path rule does not cover it yet; the 100 is a placeholder, not a finding.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Its root signer set was compared with the other tracked groups it appears in a comparison with (its own chain, and the dated snapshot of other EVM chains where one exists); 100 means no shared signer was found in those groups (contracts of the same protocol count as one group)."
   },
   {
    "index": 13,
@@ -215,7 +267,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 52,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_applicable",
+   "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Its root signer set was compared with the other tracked groups it appears in a comparison with (its own chain, and the dated snapshot of other EVM chains where one exists); 100 means no shared signer was found in those groups (contracts of the same protocol count as one group)."
   },
   {
    "index": 14,
@@ -230,7 +286,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 73,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_applicable",
+   "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Its root signer set was compared with the other tracked groups it appears in a comparison with (its own chain, and the dated snapshot of other EVM chains where one exists); 100 means no shared signer was found in those groups (contracts of the same protocol count as one group)."
   },
   {
    "index": 15,
@@ -245,7 +305,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 80,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "computed",
+   "oracleAuthorityReason": "Scored by this ecosystem's own rule for who can change the prices it reports or relies on.",
+   "crossExposureBasis": "not_computed",
+   "crossExposureReason": "Nothing shows that its root was compared with the other tracked groups (it is in no comparison registry and no run note says so); the 100 is a placeholder, not a finding."
   },
   {
    "index": 16,
@@ -260,7 +324,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 60,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_applicable",
+   "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Its root signer set was compared with the other tracked groups it appears in a comparison with (its own chain, and the dated snapshot of other EVM chains where one exists); 100 means no shared signer was found in those groups (contracts of the same protocol count as one group)."
   },
   {
    "index": 17,
@@ -275,7 +343,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 81,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_applicable",
+   "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
+   "crossExposureBasis": "not_computed",
+   "crossExposureReason": "Nothing shows that its root was compared with the other tracked groups (it is in no comparison registry and no run note says so); the 100 is a placeholder, not a finding."
   },
   {
    "index": 18,
@@ -290,7 +362,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 22,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_computed",
+   "oracleAuthorityReason": "This target, or the protocol it governs, reads or publishes prices, and the price-path rule does not cover it yet; the 100 is a placeholder, not a finding.",
+   "crossExposureBasis": "not_computed",
+   "crossExposureReason": "Nothing shows that its root was compared with the other tracked groups (it is in no comparison registry and no run note says so); the 100 is a placeholder, not a finding."
   },
   {
    "index": 19,
@@ -305,7 +381,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 47,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "computed",
+   "oracleAuthorityReason": "Scored as the weakest of the material price paths one hop upstream (rule of 2026-10-04).",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Its root signer set was compared with the other tracked groups it appears in a comparison with (its own chain, and the dated snapshot of other EVM chains where one exists); 100 means no shared signer was found in those groups (contracts of the same protocol count as one group)."
   },
   {
    "index": 20,
@@ -320,7 +400,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 43,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_applicable",
+   "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Its root signer set was compared with the other tracked groups it appears in a comparison with (its own chain, and the dated snapshot of other EVM chains where one exists); 100 means no shared signer was found in those groups (contracts of the same protocol count as one group)."
   },
   {
    "index": 21,
@@ -335,7 +419,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 19,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "computed",
+   "oracleAuthorityReason": "Scored as the weakest of the material price paths one hop upstream (rule of 2026-10-04).",
+   "crossExposureBasis": "not_computed",
+   "crossExposureReason": "Nothing shows that its root was compared with the other tracked groups (it is in no comparison registry and no run note says so); the 100 is a placeholder, not a finding."
   },
   {
    "index": 22,
@@ -350,7 +438,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 2,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "computed",
+   "oracleAuthorityReason": "Scored as the weakest of the material price paths one hop upstream (rule of 2026-10-04).",
+   "crossExposureBasis": "not_computed",
+   "crossExposureReason": "Nothing shows that its root was compared with the other tracked groups (it is in no comparison registry and no run note says so); the 100 is a placeholder, not a finding."
   },
   {
    "index": 23,
@@ -365,7 +457,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 73,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "computed",
+   "oracleAuthorityReason": "Scored as the weakest of the material price paths one hop upstream (rule of 2026-10-04).",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Its root signer set was compared with the other tracked groups it appears in a comparison with (its own chain, and the dated snapshot of other EVM chains where one exists); 100 means no shared signer was found in those groups (contracts of the same protocol count as one group)."
   },
   {
    "index": 24,
@@ -380,7 +476,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 73,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "computed",
+   "oracleAuthorityReason": "Scored as the weakest of the material price paths one hop upstream (rule of 2026-10-04).",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Its root signer set was compared with the other tracked groups it appears in a comparison with (its own chain, and the dated snapshot of other EVM chains where one exists); 100 means no shared signer was found in those groups (contracts of the same protocol count as one group)."
   },
   {
    "index": 25,
@@ -395,7 +495,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 73,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "computed",
+   "oracleAuthorityReason": "Scored as the weakest of the material price paths one hop upstream (rule of 2026-10-04).",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Its root signer set was compared with the other tracked groups it appears in a comparison with (its own chain, and the dated snapshot of other EVM chains where one exists); 100 means no shared signer was found in those groups (contracts of the same protocol count as one group)."
   },
   {
    "index": 26,
@@ -410,7 +514,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 73,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "computed",
+   "oracleAuthorityReason": "Scored as the weakest of the material price paths one hop upstream (rule of 2026-10-04).",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Its root signer set was compared with the other tracked groups it appears in a comparison with (its own chain, and the dated snapshot of other EVM chains where one exists); 100 means no shared signer was found in those groups (contracts of the same protocol count as one group)."
   },
   {
    "index": 27,
@@ -425,7 +533,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 100,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_applicable",
+   "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
+   "crossExposureBasis": "not_applicable",
+   "crossExposureReason": "This target has no signer set to compare (no administrator, or no one who can act on it), so there is nothing to measure here."
   },
   {
    "index": 28,
@@ -440,7 +552,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 2,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_applicable",
+   "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
+   "crossExposureBasis": "not_computed",
+   "crossExposureReason": "Nothing shows that its root was compared with the other tracked groups (it is in no comparison registry and no run note says so); the 100 is a placeholder, not a finding."
   },
   {
    "index": 29,
@@ -455,7 +571,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 40,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_applicable",
+   "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
+   "crossExposureBasis": "not_computed",
+   "crossExposureReason": "Nothing shows that its root was compared with the other tracked groups (it is in no comparison registry and no run note says so); the 100 is a placeholder, not a finding."
   },
   {
    "index": 30,
@@ -470,7 +590,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 81,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_applicable",
+   "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Its root signer set was compared with the other tracked groups it appears in a comparison with (its own chain, and the dated snapshot of other EVM chains where one exists); 100 means no shared signer was found in those groups (contracts of the same protocol count as one group)."
   },
   {
    "index": 31,
@@ -485,7 +609,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 81,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_applicable",
+   "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Its root signer set was compared with the other tracked groups it appears in a comparison with (its own chain, and the dated snapshot of other EVM chains where one exists); 100 means no shared signer was found in those groups (contracts of the same protocol count as one group)."
   },
   {
    "index": 32,
@@ -500,7 +628,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 2,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_applicable",
+   "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
+   "crossExposureBasis": "not_computed",
+   "crossExposureReason": "Nothing shows that its root was compared with the other tracked groups (it is in no comparison registry and no run note says so); the 100 is a placeholder, not a finding."
   },
   {
    "index": 33,
@@ -515,7 +647,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 47,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_applicable",
+   "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
+   "crossExposureBasis": "not_computed",
+   "crossExposureReason": "Nothing shows that its root was compared with the other tracked groups (it is in no comparison registry and no run note says so); the 100 is a placeholder, not a finding."
   },
   {
    "index": 34,
@@ -530,7 +666,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 60,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_applicable",
+   "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Its root signer set was compared with the other tracked groups it appears in a comparison with (its own chain, and the dated snapshot of other EVM chains where one exists); 100 means no shared signer was found in those groups (contracts of the same protocol count as one group)."
   },
   {
    "index": 35,
@@ -545,7 +685,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 43,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_applicable",
+   "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Its root signer set was compared with the other tracked groups it appears in a comparison with (its own chain, and the dated snapshot of other EVM chains where one exists); 100 means no shared signer was found in those groups (contracts of the same protocol count as one group)."
   },
   {
    "index": 36,
@@ -560,7 +704,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 53,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_computed",
+   "oracleAuthorityReason": "This target, or the protocol it governs, reads or publishes prices, and the price-path rule does not cover it yet; the 100 is a placeholder, not a finding.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Its root signer set was compared with the other tracked groups it appears in a comparison with (its own chain, and the dated snapshot of other EVM chains where one exists); 100 means no shared signer was found in those groups (contracts of the same protocol count as one group)."
   },
   {
    "index": 37,
@@ -575,7 +723,11 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 77,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_computed",
+   "oracleAuthorityReason": "A material price path could not be read in this run; the number is a floor, not a finding.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Its root signer set was compared with the other tracked groups it appears in a comparison with (its own chain, and the dated snapshot of other EVM chains where one exists); 100 means no shared signer was found in those groups (contracts of the same protocol count as one group)."
   },
   {
    "index": 38,
@@ -590,14 +742,18 @@
    "methodologyHash": "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439",
    "stale": false,
    "previousComposite": 56,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_applicable",
+   "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
+   "crossExposureBasis": "not_computed",
+   "crossExposureReason": "Nothing shows that its root was compared with the other tracked groups (it is in no comparison registry and no run note says so); the 100 is a placeholder, not a finding."
   }
  ],
  "self": {
   "code_hash": "714f7e2a4131dc657f0b333392998aa45a874dc82f3e86c6b07c28514736e4e4",
   "role_events": [],
-  "from_block": 12055795,
-  "to_block": 12058130,
+  "from_block": 12058130,
+  "to_block": 12058526,
   "read": true,
   "roles": {
    "0x20630C6Ab4BA48a80edA46F77b9b6e987A8f32f5": {
@@ -611,5 +767,5 @@
   },
   "log_span": 5000
  },
- "self_scanned_to": 12058130
+ "self_scanned_to": 12058526
 }

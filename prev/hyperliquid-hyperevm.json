@@ -3,9 +3,9 @@
  "kind": "evm",
  "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
  "rpc": "https://998.rpc.thirdweb.com",
- "block": 68670540,
+ "block": 68675399,
  "maxStaleness": 777600,
- "readAt": 1793743580,
+ "readAt": 1793748308,
  "targets": [
   {
    "index": 0,
@@ -20,7 +20,11 @@
    "methodologyHash": "0xb595576050a45dcdeeb0479747f6b283eaaca756e6cd7e70a176a194021bed65",
    "stale": false,
    "previousComposite": 26,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "computed",
+   "oracleAuthorityReason": "Scored by this ecosystem's own rule for who can change the prices it reports or relies on.",
+   "crossExposureBasis": "not_computed",
+   "crossExposureReason": "Nothing shows that its root was compared with the other tracked groups (it is in no comparison registry and no run note says so); the 100 is a placeholder, not a finding."
   },
   {
    "index": 1,
@@ -35,7 +39,11 @@
    "methodologyHash": "0xb595576050a45dcdeeb0479747f6b283eaaca756e6cd7e70a176a194021bed65",
    "stale": false,
    "previousComposite": 9,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "computed",
+   "oracleAuthorityReason": "Scored by this ecosystem's own rule for who can change the prices it reports or relies on.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Compared inside its own ecosystem only; 100 means no shared signer was found there, not that none exists elsewhere."
   },
   {
    "index": 2,
@@ -50,7 +58,11 @@
    "methodologyHash": "0xb595576050a45dcdeeb0479747f6b283eaaca756e6cd7e70a176a194021bed65",
    "stale": false,
    "previousComposite": 32,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "computed",
+   "oracleAuthorityReason": "Scored by this ecosystem's own rule for who can change the prices it reports or relies on.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Compared inside its own ecosystem only; 100 means no shared signer was found there, not that none exists elsewhere."
   },
   {
    "index": 3,
@@ -65,7 +77,11 @@
    "methodologyHash": "0xb595576050a45dcdeeb0479747f6b283eaaca756e6cd7e70a176a194021bed65",
    "stale": false,
    "previousComposite": 5,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "computed",
+   "oracleAuthorityReason": "Scored by this ecosystem's own rule for who can change the prices it reports or relies on.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Compared inside its own ecosystem only; 100 means no shared signer was found there, not that none exists elsewhere."
   },
   {
    "index": 4,
@@ -80,7 +96,11 @@
    "methodologyHash": "0xb595576050a45dcdeeb0479747f6b283eaaca756e6cd7e70a176a194021bed65",
    "stale": false,
    "previousComposite": 9,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "computed",
+   "oracleAuthorityReason": "Scored by this ecosystem's own rule for who can change the prices it reports or relies on.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Compared inside its own ecosystem only; 100 means no shared signer was found there, not that none exists elsewhere."
   },
   {
    "index": 5,
@@ -95,7 +115,11 @@
    "methodologyHash": "0xb595576050a45dcdeeb0479747f6b283eaaca756e6cd7e70a176a194021bed65",
    "stale": false,
    "previousComposite": 4,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "computed",
+   "oracleAuthorityReason": "Scored by this ecosystem's own rule for who can change the prices it reports or relies on.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Compared inside its own ecosystem only; 100 means no shared signer was found there, not that none exists elsewhere."
   },
   {
    "index": 6,
@@ -110,7 +134,11 @@
    "methodologyHash": "0xb595576050a45dcdeeb0479747f6b283eaaca756e6cd7e70a176a194021bed65",
    "stale": false,
    "previousComposite": 4,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_computed",
+   "oracleAuthorityReason": "This target, or the protocol it governs, reads or publishes prices, and the price-path rule does not cover it yet; the 100 is a placeholder, not a finding.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Compared inside its own ecosystem only; 100 means no shared signer was found there, not that none exists elsewhere."
   },
   {
    "index": 7,
@@ -125,7 +153,11 @@
    "methodologyHash": "0xb595576050a45dcdeeb0479747f6b283eaaca756e6cd7e70a176a194021bed65",
    "stale": false,
    "previousComposite": 31,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_computed",
+   "oracleAuthorityReason": "This target, or the protocol it governs, reads or publishes prices, and the price-path rule does not cover it yet; the 100 is a placeholder, not a finding.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Compared inside its own ecosystem only; 100 means no shared signer was found there, not that none exists elsewhere."
   },
   {
    "index": 8,
@@ -140,7 +172,11 @@
    "methodologyHash": "0xb595576050a45dcdeeb0479747f6b283eaaca756e6cd7e70a176a194021bed65",
    "stale": false,
    "previousComposite": 4,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "computed",
+   "oracleAuthorityReason": "Scored by this ecosystem's own rule for who can change the prices it reports or relies on.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Compared inside its own ecosystem only; 100 means no shared signer was found there, not that none exists elsewhere."
   },
   {
    "index": 9,
@@ -155,7 +191,11 @@
    "methodologyHash": "0xb595576050a45dcdeeb0479747f6b283eaaca756e6cd7e70a176a194021bed65",
    "stale": false,
    "previousComposite": 9,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_computed",
+   "oracleAuthorityReason": "This target, or the protocol it governs, reads or publishes prices, and the price-path rule does not cover it yet; the 100 is a placeholder, not a finding.",
+   "crossExposureBasis": "not_computed",
+   "crossExposureReason": "Nothing shows that its root was compared with the other tracked groups (it is in no comparison registry and no run note says so); the 100 is a placeholder, not a finding."
   },
   {
    "index": 10,
@@ -170,7 +210,11 @@
    "methodologyHash": "0xb595576050a45dcdeeb0479747f6b283eaaca756e6cd7e70a176a194021bed65",
    "stale": false,
    "previousComposite": 9,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_applicable",
+   "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
+   "crossExposureBasis": "not_computed",
+   "crossExposureReason": "Nothing shows that its root was compared with the other tracked groups (it is in no comparison registry and no run note says so); the 100 is a placeholder, not a finding."
   },
   {
    "index": 11,
@@ -185,7 +229,11 @@
    "methodologyHash": "0xb595576050a45dcdeeb0479747f6b283eaaca756e6cd7e70a176a194021bed65",
    "stale": false,
    "previousComposite": 9,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_applicable",
+   "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
+   "crossExposureBasis": "not_computed",
+   "crossExposureReason": "Nothing shows that its root was compared with the other tracked groups (it is in no comparison registry and no run note says so); the 100 is a placeholder, not a finding."
   },
   {
    "index": 12,
@@ -200,7 +248,11 @@
    "methodologyHash": "0xb595576050a45dcdeeb0479747f6b283eaaca756e6cd7e70a176a194021bed65",
    "stale": false,
    "previousComposite": 9,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_applicable",
+   "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
+   "crossExposureBasis": "not_computed",
+   "crossExposureReason": "Nothing shows that its root was compared with the other tracked groups (it is in no comparison registry and no run note says so); the 100 is a placeholder, not a finding."
   },
   {
    "index": 13,
@@ -215,7 +267,11 @@
    "methodologyHash": "0xb595576050a45dcdeeb0479747f6b283eaaca756e6cd7e70a176a194021bed65",
    "stale": false,
    "previousComposite": 48,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_applicable",
+   "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Compared inside its own ecosystem only; 100 means no shared signer was found there, not that none exists elsewhere."
   },
   {
    "index": 14,
@@ -230,7 +286,11 @@
    "methodologyHash": "0xb595576050a45dcdeeb0479747f6b283eaaca756e6cd7e70a176a194021bed65",
    "stale": false,
    "previousComposite": 61,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_computed",
+   "oracleAuthorityReason": "This target, or the protocol it governs, reads or publishes prices, and the price-path rule does not cover it yet; the 100 is a placeholder, not a finding.",
+   "crossExposureBasis": "not_computed",
+   "crossExposureReason": "Nothing shows that its root was compared with the other tracked groups (it is in no comparison registry and no run note says so); the 100 is a placeholder, not a finding."
   },
   {
    "index": 15,
@@ -245,14 +305,18 @@
    "methodologyHash": "0xb595576050a45dcdeeb0479747f6b283eaaca756e6cd7e70a176a194021bed65",
    "stale": false,
    "previousComposite": 47,
-   "previousRun": "2026-11-03T14:11:29Z"
+   "previousRun": "2026-11-03T22:02:18Z",
+   "oracleAuthorityBasis": "not_computed",
+   "oracleAuthorityReason": "This target, or the protocol it governs, reads or publishes prices, and the price-path rule does not cover it yet; the 100 is a placeholder, not a finding.",
+   "crossExposureBasis": "computed",
+   "crossExposureReason": "Compared inside its own ecosystem only; 100 means no shared signer was found there, not that none exists elsewhere."
   }
  ],
  "self": {
   "code_hash": "d887acd5363e20681be1ca642f94f863a1c188067201cb4c37d351b5a9738a23",
   "role_events": [],
-  "from_block": 68641870,
-  "to_block": 68670540,
+  "from_block": 68670540,
+  "to_block": 68675399,
   "read": true,
   "roles": {
    "0x20630C6Ab4BA48a80edA46F77b9b6e987A8f32f5": {
@@ -266,6 +330,6 @@
   },
   "log_span": 1000
  },
- "self_scanned_to": 68670540,
+ "self_scanned_to": 68675399,
  "read_via": "https://998.rpc.thirdweb.com"
 }

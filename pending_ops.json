@@ -198,7 +198,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 3978947,
+   "window_blocks": 3756521,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -218,7 +218,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 3978947,
+   "window_blocks": 3768224,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -238,7 +238,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 3978947,
+   "window_blocks": 3756521,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -301,7 +301,7 @@
      "signature": "executePayload(address,string,bytes)",
      "calls": 1,
      "ready_at": 1793748035,
-     "state": "waiting",
+     "state": "ready",
      "decoded": "nested timelock"
     }
    ],
@@ -341,7 +341,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/mainnet",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 100498,
+   "window_blocks": 100699,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -475,7 +475,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 0,
    "window_blocks": 3000000,
-   "window_days_est": 3.5,
+   "window_days_est": 3.6,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62"
@@ -495,7 +495,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 86400,
    "window_blocks": 3000000,
-   "window_days_est": 3.5,
+   "window_days_est": 3.6,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x14b107cf534239c59571b066cb6497a321da897c"
@@ -1364,7 +1364,7 @@
    "transaction_index": 72
   }
  ],
- "discovered_utc": "2026-11-03T22:12:31Z",
+ "discovered_utc": "2026-11-03T23:30:09Z",
  "discovered": 15,
- "squads_utc": "2026-11-03T22:17:32Z"
+ "squads_utc": "2026-11-03T23:34:47Z"
 }

@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-11-03T01:13:39Z",
+ "generated_utc": "2026-11-03T14:27:46Z",
  "method_version": "2026.10.4",
  "method_version_date": "2026-10-27",
  "registry_read": true,
@@ -152,79 +152,6 @@
    }
   }
  ],
- "changes": [
-  {
-   "oracle": "arbitrum-sepolia",
-   "name": "Arbitrum (Sepolia)",
-   "chain": "arbitrum",
-   "from": "0x149f7eccbc88a7a1ded5506cd92687aed1528f7d5602cfa7e3c4ac43df14a048",
-   "to": "0xdfdfedc34ca78e3d78ae1b009e983795c193ba2a39a8e926ae2a6036f755d5a1",
-   "targets": 13,
-   "run_utc": "2026-11-03T01:13:39Z"
-  },
-  {
-   "oracle": "base-sepolia",
-   "name": "Base (Sepolia)",
-   "chain": "base",
-   "from": "0xe0d0de7c9b360a216a51b8fca8823c8e6336b8a4b41f4578d4bdbba4beab6ea5",
-   "to": "0x39ed8891e019d83889c7b6f2e853ef182a57190fd394f4f1a7167fee1a741bc0",
-   "targets": 13,
-   "run_utc": "2026-11-03T01:13:39Z"
-  },
-  {
-   "oracle": "hyperliquid-hyperevm",
-   "name": "Hyperliquid (HyperEVM)",
-   "chain": "hyperliquid",
-   "from": "0xc2c56961f2e8d815b640cc66c070a5b8bd2e1cdb8ef6ef02431af5cb062b65ad",
-   "to": "0xb595576050a45dcdeeb0479747f6b283eaaca756e6cd7e70a176a194021bed65",
-   "targets": 16,
-   "run_utc": "2026-11-03T01:13:39Z"
-  },
-  {
-   "oracle": "monad",
-   "name": "Monad",
-   "chain": "monad",
-   "from": "0xbcc2bb8378d005843c68080516e599fa2e28133e77313445d85427501e0e6285",
-   "to": "0x0ecf34c47dbe50b94fd1882dd54ae9adf4c44f8a47b142a1e0cbac17e59c0fbd",
-   "targets": 9,
-   "run_utc": "2026-11-03T01:13:39Z"
-  },
-  {
-   "oracle": "plasma",
-   "name": "Plasma",
-   "chain": "plasma",
-   "from": "0xfc81e047bf35b73ad4b06bbcc368e2cec1723619e9c4b97867ddeca578a95984",
-   "to": "0x3aa3cbf80cdcf7d08aaa4e4a4441cfe56dea15f1a7ea336e20662dc4f262d4ac",
-   "targets": 9,
-   "run_utc": "2026-11-03T01:13:39Z"
-  },
-  {
-   "oracle": "robinhood-chain",
-   "name": "Robinhood Chain",
-   "chain": "robinhood",
-   "from": "0x05ae8b2527e36e0cfe794ab3b0eedd011f66b8007af63cb1bd050287799aa465",
-   "to": "0xe2625fb9e688dcffeb302e7cdb5f05f662f60c3d2d439f4fbbe7c3ac4d453d1e",
-   "targets": 63,
-   "run_utc": "2026-11-03T01:13:39Z"
-  },
-  {
-   "oracle": "solana-devnet",
-   "name": "Solana (Devnet)",
-   "chain": "solana",
-   "from": "0x0b14b26691934fd7c0fbb1f87efb539d99df562e1f78cdc2711db3a5ad9f18c2",
-   "to": "0x35be9749403c55797c13ba37ef7df5a6291129781661a3125987ae151296a3c9",
-   "targets": 26,
-   "run_utc": "2026-11-03T01:13:39Z"
-  },
-  {
-   "oracle": "tempo-moderato",
-   "name": "Tempo (Moderato)",
-   "chain": "tempo",
-   "from": "0x5e0583b1360f9153f23d32585028d2decf6c862446c62e71867090dfde126f7a",
-   "to": "0x4b8b9f250720ac31fdabaebb0a869cf64699eed816cb0f02de3ef13bcf637368",
-   "targets": 14,
-   "run_utc": "2026-11-03T01:13:39Z"
-  }
- ],
+ "changes": [],
  "what": "methodologyHash as read on each oracle (keccak256 of the scoring code and its version, set at the push): one hash per oracle is the normal state; a mix means a push half done or a target scored by an older method; a change (against the previous run) means every score of that oracle was produced by a new method: compare across it with care, the chained log keeps the date"
 }

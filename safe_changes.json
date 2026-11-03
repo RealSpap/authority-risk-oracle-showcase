@@ -5,10 +5,10 @@
    "ecosystem": "robinhood",
    "safes": 25,
    "events": [],
-   "control": 62,
+   "control": 67,
    "status": "ok",
-   "fromBlock": 98857308,
-   "toBlock": 104666915,
+   "fromBlock": 99312701,
+   "toBlock": 105128395,
    "days_read": 7
   },
   {
@@ -17,18 +17,18 @@
    "events": [],
    "control": 38,
    "status": "ok",
-   "fromBlock": 26280687,
-   "toBlock": 26330913,
+   "fromBlock": 26284645,
+   "toBlock": 26334873,
    "days_read": 7
   },
   {
    "ecosystem": "arbitrum",
    "safes": 14,
    "events": [],
-   "control": 22,
+   "control": 23,
    "status": "ok",
-   "fromBlock": 518602126,
-   "toBlock": 520733058,
+   "fromBlock": 518766217,
+   "toBlock": 520899382,
    "days_read": 7
   },
   {
@@ -37,20 +37,16 @@
    "events": [],
    "control": 13,
    "status": "ok",
-   "fromBlock": 53137175,
-   "toBlock": 53439575,
+   "fromBlock": 53160984,
+   "toBlock": 53463383,
    "days_read": 7
   },
   {
    "ecosystem": "tempo",
    "safes": 4,
    "events": [],
-   "control": 0,
-   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 58 execution(s) from other Safes on the window's tail)",
-   "fromBlock": 46061419,
-   "toBlock": 47161903,
-   "days_read": 7,
-   "control_witness": 58
+   "control": null,
+   "status": "UNREAD (cannot locate the window start: ExtraDataLengthError: The field extraData is 3191 bytes, but should be 32. It is quite likely that you are connected to a )"
   },
   {
    "ecosystem": "plasma",
@@ -58,19 +54,20 @@
    "events": [],
    "control": 12,
    "status": "ok",
-   "fromBlock": 36122368,
-   "toBlock": 36725859,
+   "fromBlock": 36169973,
+   "toBlock": 36773464,
    "days_read": 7
   },
   {
    "ecosystem": "monad",
    "safes": 13,
    "events": [],
-   "control": 1,
-   "status": "ok",
-   "fromBlock": 118823023,
-   "toBlock": 118908854,
-   "days_read": 0.3
+   "control": 0,
+   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 7 execution(s) from other Safes on the window's tail)",
+   "fromBlock": 118980453,
+   "toBlock": 119065907,
+   "days_read": 0.3,
+   "control_witness": 7
   },
   {
    "ecosystem": "hyperliquid",
@@ -78,8 +75,8 @@
    "events": [],
    "control": 2,
    "status": "ok",
-   "fromBlock": 49972246,
-   "toBlock": 50235709,
+   "fromBlock": 50020382,
+   "toBlock": 50283901,
    "days_read": 3.0
   }
  ]

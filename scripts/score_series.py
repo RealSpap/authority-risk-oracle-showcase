@@ -15,6 +15,7 @@ import argparse, glob, json, os, sys, time
 
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 from evaluate_rules import WATCH_SLUGS, PENDING_CHAIN, norm  # noqa: E402
+from lib.reader_audit import count_exclusion, mark_method_breaks  # noqa: E402  -- method_break and what the calibration left out
 
 BANDS = [(0, 19, "critical"), (20, 39, "weak"), (40, 59, "moderate"), (60, 79, "decent"), (80, 100, "strong")]   # the dashboard's bands
 
@@ -53,14 +54,18 @@ def main():
         pts = [p for p in series.get(ka, []) if p["t"] <= when_iso]
         return (pts[-1] if pts else (series[ka][0] if series.get(ka) else None))
     # calibration: the actions the watch observed, in the window, against tracked contracts
-    now = time.time(); since = now - a.window * 86400; actions = []
+    now = time.time(); since = now - a.window * 86400; actions = []; excl = {"undecoded": 0, "other_target": 0}
     if os.path.exists(a.pending):
         for tl in json.load(open(a.pending)).get("results", []):
             ck = PENDING_CHAIN.get(tl.get("chain"), tl.get("chain"))
+            recent_ids = {o_.get("id") for o_ in tl.get("recent", []) if o_.get("id")}
             for st in ("recent", "pending"):
                 for op in tl.get(st, []):
                     ka = ck + ":" + norm(op.get("target")); when = op.get("executed_at") or op.get("queued_at")
-                    if op.get("undecoded") or op.get("touches_governed") is False: continue   # not read, or decoded and aimed at another program or a transfer: not an authority action on the tracked program
+                    why_ = count_exclusion(op)
+                    if why_:   # not read, or decoded and aimed at another program or a transfer: not an authority action on the tracked program; counted, not hidden
+                        if ka in series and when and int(when) >= since and not (st == "pending" and op.get("id") in recent_ids): excl[why_] += 1   # an operation still queued is in `recent` AND `pending`: counted once
+                        continue
                     if ka in series and when and int(when) >= since:
                         dk = op.get("decoded") or ""
                         actions.append({"kind": ("upgrade executed (Squads proposal)" if dk == "program upgrade" and op.get("executed_at") else ("Squads proposal " if tl.get("family") == "squads" else "timelock op ") + ("executed" if op.get("executed_at") else "queued") + ((" (%s)" % dk) if dk and tl.get("family") != "squads" else "")), "key": ka, "t": iso(when), "via": tl.get("name"), "tx": op.get("tx") or op.get("account")})
@@ -88,9 +93,10 @@ def main():
             try: e = json.loads(l)
             except ValueError: continue
             if e.get("kind") == "methodology_changed" and e.get("chain"): meth_changes.setdefault(e["chain"], []).append({"t": e["run_utc"], "from": e.get("from"), "to": e.get("to")})
+    mark_method_breaks(series, meth_changes)   # a point after a methodology change on its chain is not comparable with the points before it
     n_moves = sum(len(v) for v in moves.values())
     out = {"run_utc": iso(now), "targets": len(series), "moves_recorded": n_moves, "series": series, "methodology_changes": meth_changes,
-           "calibration": {"window_days": a.window, "actions": len(uniq), "under_40": by_band["critical"] + by_band["weak"], "by_band": by_band, "list": uniq[:200],
+           "calibration": {"window_days": a.window, "actions": len(uniq), "excluded_undecoded": excl["undecoded"], "excluded_other_target": excl["other_target"], "under_40": by_band["critical"] + by_band["weak"], "by_band": by_band, "list": uniq[:200],
                            "read_as": "every authority action the watch observed in the window (a timelock operation queued or executed against a tracked contract, an admin change read independently) and the composite score the contract carried at that moment. Small counts prove little; the file grows with every run and the chained log keeps every move"},
            "what": "series: every composite score over time per tracked contract (from the on-chain value and the moves in the hash-chained events.jsonl); calibration: observed authority actions against the score at the time; written by scripts/score_series.py after every Watch run"}
     tmp = a.out + ".tmp"; json.dump(out, open(tmp, "w"), indent=1); os.replace(tmp, a.out)

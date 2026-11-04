@@ -31,6 +31,7 @@ sys.path.insert(0, os.path.join(HERE, "lib"))
 from lib import code_review  # noqa: E402
 from lib.pending_ops import QUEUE_TOPICS, decode_scheduled, dedupe_ops, status  # noqa: E402
 from lib.fresh_ops import fresh_enough  # noqa: E402
+from lib.reader_audit import final_state, window_fields  # noqa: E402
 from lib.web3_utils import get_w3  # noqa: E402
 
 TENDERLY = {"ethereum": "https://gateway.tenderly.co/public/mainnet", "arbitrum": "https://gateway.tenderly.co/public/arbitrum"}
@@ -67,6 +68,7 @@ def check_timelock(name, chain, address, family, days, recent_days=14):
             out["grace"] = int.from_bytes(_call(calls_w3, address, "GRACE_PERIOD()"), "big")
         block_time = 12 if chain == "ethereum" else 0.25
         start = max(0, head - int(days * 86400 / block_time * 1.15))
+        out.update(window_fields(head, start, block_time))   # the window this list was read over, in the same fields as the discovered timelocks
         raw = logs_w3.eth.get_logs({"address": Web3.to_checksum_address(address), "topics": [QUEUE_TOPICS[family]], "fromBlock": start, "toBlock": head})
         ops = [o for o in (decode_scheduled(family, lg) for lg in raw) if o]
         out["queued_events"] = len(ops)
@@ -83,11 +85,26 @@ def check_timelock(name, chain, address, family, days, recent_days=14):
                 still = bool(int.from_bytes(_call(calls_w3, address, "queuedTransactions(bytes32)", _b32(op["id"])), "big"))
                 ready, grace = op["eta"], out["grace"]
             st = status(now, ready, grace) if still else None
+            fin = "expired" if (still and family != "oz" and st == "expired") else None   # still in a Compound-style queue but past eta + grace, so it can never execute; told only while the operation is still published (fresh_enough: 7 days after it became executable), so for a grace under 7 days
+            if not still and op["block"] >= recent_from:   # how a queued operation that is gone ended, told when the chain can tell
+                if family == "oz":
+                    try: done = bool(int.from_bytes(_call(calls_w3, address, "isOperationDone(bytes32)", _b32(op["id"])), "big"))
+                    except Exception: done = None  # noqa: BLE001 -- unread is unknown, not cancelled
+                    fin = final_state("oz", False, done=done)
+                else:
+                    ex = ca = None
+                    try:
+                        tp = lambda s: "0x" + Web3.keccak(text=s).hex().removeprefix("0x")
+                        base = {"address": Web3.to_checksum_address(address), "fromBlock": op["block"], "toBlock": head}
+                        ex = len(logs_w3.eth.get_logs({**base, "topics": [tp("ExecuteTransaction(bytes32,address,uint256,string,bytes,uint256)"), op["id"]]}))
+                        ca = len(logs_w3.eth.get_logs({**base, "topics": [tp("CancelTransaction(bytes32,address,uint256,string,bytes,uint256)"), op["id"]]}))
+                    except Exception: ex = ca = None  # noqa: BLE001
+                    fin = final_state("compound", False, executed_events=ex, cancelled_events=ca)
             hidden = still and not fresh_enough(st, ready, now)   # executable for more than 7 days: not listed, in neither list (lib/fresh_ops.py)
             if still and not hidden:
                 out["pending"].append({**op, "ready_at": ready, "state": st})
             if op["block"] >= recent_from and not hidden:
-                out["recent"].append({**op, "still_queued": still, "queued_at": logs_w3.eth.get_block(op["block"])["timestamp"]})
+                out["recent"].append({**op, "still_queued": still, "final_state": fin, "queued_at": logs_w3.eth.get_block(op["block"])["timestamp"]})
     except Exception as e:  # noqa: BLE001 -- any unread part makes the whole timelock UNREAD, never "nothing pending"
         out["status"] = f"UNREAD ({type(e).__name__}: {str(e)[:120]})"
     return out
@@ -124,7 +141,7 @@ def main():
             print(f"    {p['state']:8s} {fmt_left(p['ready_at'] - now):>12s}  {p['target']}  {fn_of(p)}  value {p['value']}  calls {p['calls']}  id {p['id']}")
         for p in sorted(r["recent"], key=lambda p: p["queued_at"]):
             when = time.strftime("%Y-%m-%d %H:%M", time.gmtime(p["queued_at"]))
-            print(f"    queued {when}Z  {'STILL QUEUED' if p['still_queued'] else 'gone (executed or cancelled)'}  {p['target']}  {fn_of(p)}")
+            print(f"    queued {when}Z  {'STILL QUEUED' if p['still_queued'] else ('gone (' + str(p.get('final_state') or 'executed or cancelled') + ')')}  {p['target']}  {fn_of(p)}")
     unread = [r["name"] for r in results if r["status"].startswith("UNREAD")]
     if unread:
         print(f"\nUNREAD (no conclusion): {unread}")

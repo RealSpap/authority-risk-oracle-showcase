@@ -30,6 +30,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 from live_target_counts import ORACLES  # noqa: E402
+import run_id  # noqa: E402  -- the Actions run of this passage, written in latest.json so that files can be shown to belong to one run (scripts/check_run_id.py)
 import solana_oracle_reader  # noqa: E402
 
 def _dump_json(obj, path, indent=None):
@@ -412,6 +413,7 @@ def main():
         "movers": movers, "alerts": alerts, "unread": unread,
         "note": "The Zcash commitments are verified by the dashboard itself. An oracle in `unread` has unknown targets, not zero.",
     }
+    if run_id.current(): latest["run_id"] = run_id.current()
     _dump_json(latest, os.path.join(WATCH, "latest.json"), indent=1)
     with open(os.path.join(WATCH, "history.jsonl"), "a") as f:
         f.write(json.dumps({"run_utc": run_utc, "targets": latest["total_targets"], "stale": latest["stale_total"],

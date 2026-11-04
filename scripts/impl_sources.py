@@ -6,7 +6,10 @@ Written to watch/impl_sources.json, keyed <chain>:<target>; one request per impl
 
     python3 scripts/impl_sources.py --so watch/second_opinion.json --out watch/impl_sources.json
 """
-import argparse, json, os, re, time, urllib.error, urllib.request
+import argparse, hashlib, json, os, re, sys, time, urllib.error, urllib.request
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from lib.reader_audit import stamp_check  # noqa: E402  -- when it was checked, against which deployed code
 
 CHAIN_ID = {"ethereum-l1": 1, "arbitrum": 42161, "base": 8453, "robinhood": 4663, "monad": 143, "hyperliquid": 999, "plasma": 9745}   # chains Sourcify knows; tempo is not listed there
 
@@ -36,23 +39,33 @@ def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--so", default="watch/second_opinion.json"); ap.add_argument("--out", default="watch/impl_sources.json"); a = ap.parse_args()
     so = json.load(open(a.so)) if os.path.exists(a.so) else {"results": []}
     prev = (json.load(open(a.out)) if os.path.exists(a.out) else {}).get("by_target", {})
-    out, cache = {}, {}; asked = 0
+    out, cache, code_of = {}, {}, {}; asked = 0
+    now_iso = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    def deployed_sha256(chain, addr):   # the code at the implementation address when it was checked (None if it could not be read)
+        k = chain + ":" + addr.lower()
+        if k not in code_of:
+            try:
+                from second_opinion import MAINNET, rpc_batch
+                c = rpc_batch(MAINNET[chain], [("eth_getCode", [addr, "latest"])])[0]
+                code_of[k] = hashlib.sha256(bytes.fromhex(c[2:])).hexdigest() if isinstance(c, str) and len(c) > 2 else None
+            except Exception: code_of[k] = None  # noqa: BLE001
+        return code_of[k]
     for r in so.get("results", []):
         if not r.get("impl") or r.get("oracle_self") or r["chain"] not in CHAIN_ID: continue
         key = r["chain"] + ":" + str(r["target"]).lower(); ck = r["chain"] + ":" + r["impl"].lower()
         if ck not in cache:
             cache[ck] = sourcify(CHAIN_ID[r["chain"]], r["impl"]); asked += 1; time.sleep(0.25)
             if cache[ck] is None and prev.get(key, {}).get("impl", "").lower() == r["impl"].lower(): cache[ck] = dict(prev[key], stale=True)   # Sourcify not answering: keep the previous answer for the same implementation, marked
-        if cache[ck] is None: out[key] = {"impl": r["impl"], "via": r.get("impl_via"), "verified": None, "note": "Sourcify not answering this run"}; continue
-        out[key] = dict({"impl": r["impl"], "via": r.get("impl_via")}, **{k: v for k, v in cache[ck].items() if k != "impl"})
+        if cache[ck] is None: out[key] = stamp_check({"impl": r["impl"], "via": r.get("impl_via"), "verified": None, "note": "Sourcify not answering this run"}, now_iso, None); continue
+        out[key] = stamp_check(dict({"impl": r["impl"], "via": r.get("impl_via")}, **{k: v for k, v in cache[ck].items() if k != "impl"}), now_iso, deployed_sha256(r["chain"], r["impl"]), prev.get(key))
     for r in so.get("results", []):   # Solana: the program behind each tracked account, against OtterSec's verified builds (since 2026-10-10)
         if r.get("chain") != "solana" or r.get("oracle_self") or r.get("kind") in ("unreadable", "native"): continue
         program = r.get("via_program") or r["target"]; key = "solana:" + str(r["target"]).lower(); ck = "solana:" + program
         if ck not in cache:
             cache[ck] = osec(program); asked += 1; time.sleep(0.3)
             if cache[ck] is None and prev.get(key, {}).get("impl") == program: cache[ck] = dict(prev[key], stale=True)
-        if cache[ck] is None: out[key] = {"impl": program, "via": "program", "verified": None, "note": "OtterSec not answering this run"}; continue
-        out[key] = dict({"impl": program, "via": "program (verified build, OtterSec)"}, **{k: v for k, v in cache[ck].items() if k != "impl"})
+        if cache[ck] is None: out[key] = stamp_check({"impl": program, "via": "program", "verified": None, "note": "OtterSec not answering this run"}, now_iso, None); continue
+        out[key] = stamp_check(dict({"impl": program, "via": "program (verified build, OtterSec)"}, **{k: v for k, v in cache[ck].items() if k != "impl"}), now_iso, None, prev.get(key))   # the binary of a Solana program is not hashed here
     chains_skipped = sorted({r["chain"] for r in so.get("results", []) if r.get("impl") and r["chain"] not in CHAIN_ID})
     rec = {"run_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "checked": len(out), "verified": sum(1 for v in out.values() if v.get("verified")), "unverified": sum(1 for v in out.values() if v.get("verified") is False), "not_answered": sum(1 for v in out.values() if v.get("verified") is None),
            "chains_not_on_sourcify": chains_skipped, "by_target": out, "what": "for every implementation behind a tracked proxy (second_opinion.json, impl): whether Sourcify holds a verified source on that chain, with match, name, compiler and date; for every Solana program behind a tracked account: whether OtterSec holds a verified build matching the deployed binary (source osec, repo_url); an upgrade to an unverified implementation is an upgrade nobody can read; written by scripts/impl_sources.py after every run"}

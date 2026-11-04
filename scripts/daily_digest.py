@@ -140,6 +140,14 @@ def signer_kinds():
     return code, bad, head
 
 
+def scorer_pins():
+    """(exit code, CHANGED/UNREAD lines with their differences, headline) of check_scorer_pins.py (sweep of the scorers, class 1): the configurations that scorers read and publish constants for."""
+    code, lines = run("check_scorer_pins.py", timeout=900)
+    bad = [l.rstrip() for l in lines if re.search(r"\[(CHANGED|UNREAD)\]|^   \S", l)]
+    head = next((l.strip() for l in lines if re.search(r"\d+ pin\(s\)", l)), "")
+    return code, bad, head
+
+
 def queue_section(path):
     """The review queue (watch/review_queue.md, written earlier in the same run) as the first section of the report, so the one page a person reads says what needs them. [] when no path is
     given; a line saying it was not read when the file is missing: the absence of a list must not read as an empty list."""
@@ -242,6 +250,16 @@ def main():
         out += [f"- {h}" for h in bad] or ["- check_signer_kinds.py failed without a recognizable line: read it directly"]
         if any("[UNREAD]" in h for h in bad) or not head:
             unread.append("Signer kinds: a signer could not be read, or the script failed")
+
+    code, bad, head = scorer_pins()
+    out += ["", "## Configurations behind constant scores (Ramses CL V2, Longbow vaults, Spark executor: the scorer reads them, the score does not follow them)"]
+    if code == 0 and head:
+        out.append(f"- every configuration still matches the scorer's documentation ({head})")
+    else:
+        findings += 1
+        out += [f"- {h.strip()}" for h in bad] or ["- check_scorer_pins.py failed without a recognizable line: read it directly"]
+        if any("[UNREAD]" in h for h in bad) or not head:
+            unread.append("Scorer pins: a configuration could not be read, or the script failed")
 
     out += ["", "## Not read (no conclusion drawn for these)"]
     out += [f"- {u}" for u in unread] or ["- every attempted source was read"]

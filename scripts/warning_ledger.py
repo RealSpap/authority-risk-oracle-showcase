@@ -52,16 +52,17 @@ def update(prev, po, now):
             if queued:                                                        # warned only when the time left is known and positive: an operation already executable, or without a time, gave no notice to count
                 nh = round((d - now) / 3600, 1) if d and d > now else None
                 E[key] = {"outcome": "warned" if nh is not None else "seen_without_notice", "first_seen_utc": iso(now), "due_utc": iso(d) if d else None, "notice_hours": nh, "state": "queued"}
-            elif first_run or not isinstance(q, (int, float)) or q < started: E[key] = {"outcome": "baseline", "first_seen_utc": iso(now), "state": "resolved"}
-            else: E[key] = {"outcome": "missed", "first_seen_utc": iso(now), "queued_utc": iso(q), "state": "resolved"}
+            elif first_run or not isinstance(q, (int, float)) or q < started: E[key] = {"outcome": "baseline", "first_seen_utc": iso(now), "state": "resolved", "final_state": o.get("final_state") or "unknown"}
+            else: E[key] = {"outcome": "missed", "first_seen_utc": iso(now), "queued_utc": iso(q), "state": "resolved", "final_state": o.get("final_state") or "unknown"}   # how it ended (executed / cancelled / expired / unknown), told when check_pending_ops could tell
             E[key].update({"chain": r.get("chain"), "timelock": r.get("name"), "what": o.get("decoded") or o.get("signature")})
         elif E[key]["state"] == "queued" and not queued:
-            E[key]["state"] = "resolved"; E[key]["resolved_seen_utc"] = iso(now)
+            E[key]["state"] = "resolved"; E[key]["resolved_seen_utc"] = iso(now); E[key]["final_state"] = o.get("final_state") or "unknown"
+        elif queued and o.get("state") == "expired": E[key]["final_state"] = "expired"   # still in a Compound-style queue but past eta + grace: it can never execute
     for key in list(E):                                                       # a queued operation that left both lists was applied, cancelled or fell out of the window: said, not guessed
         e = E[key]
         if e["state"] == "queued" and key not in seen:
             if e.get("due_utc") and now - secs(e["due_utc"]) > FRESH_READY_DAYS * 86400: del E[key]; continue   # executable for more than 7 days when it left: the queue file does not list it, so the ledger does not keep it (lib/fresh_ops.py)
-            e["state"] = "resolved"; e["resolved_seen_utc"] = iso(now); e["left_the_files"] = True
+            e["state"] = "resolved"; e["resolved_seen_utc"] = iso(now); e["left_the_files"] = True; e["final_state"] = "unknown"   # it left the files: how it ended is not told
     if len(E) > KEEP: led["entries"] = dict(sorted(E.items(), key=lambda kv: kv[1]["first_seen_utc"])[-KEEP:])
     led["updated_utc"] = iso(now); led["summary"] = summarize(led["entries"], led["started_utc"]); return led
 

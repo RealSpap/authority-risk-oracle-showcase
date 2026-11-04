@@ -11,6 +11,7 @@ import argparse, glob, json, os, sys, time
 
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 from evaluate_rules import lower_keys, WATCH_SLUGS, norm, LABEL  # noqa: E402
+from lib.reader_audit import snapshot_status  # noqa: E402  -- the date of the shared-signer sweep, per chain
 
 
 def load(p):
@@ -56,9 +57,11 @@ def main():
             k = r.get("kind") or "unreadable"; c["admin_kinds"][k] = c["admin_kinds"].get(k, 0) + 1
             p = posture(r)
             if p not in c["postures"]: c["postures"].append(p)
+    snap = load(os.path.join(a.data, "cross_snapshot.json")) or {}; ss = snapshot_status(snap.get("swept_utc"), snap.get("valid_days", 30), time.time())   # the sweep the crossExposure scores rest on
     out_protos = []
     for slug, g in groups.items():
         if len(g["chains"]) < 2: continue
+        for c_ in g["chains"].values(): c_["exposure_snapshot_utc"] = ss["swept_utc"]   # null = the date is not recorded (data/cross_snapshot.json), never a made-up one
         chains = g["chains"]; kinds_sets = [frozenset(k for k in c["admin_kinds"] if k not in ("unreadable", "native")) for c in chains.values()]
         weakest = min(chains.items(), key=lambda kv: kv[1]["composite_min"]); strongest = max(chains.items(), key=lambda kv: kv[1]["composite_min"])
         differs = len(set(s for s in kinds_sets if s)) > 1 or (strongest[1]["composite_min"] - weakest[1]["composite_min"]) >= 15
@@ -66,7 +69,7 @@ def main():
                            "spread": strongest[1]["composite_min"] - weakest[1]["composite_min"], "postures_differ": differs,
                            "text": "%s: %s" % (g["protocol"], "; ".join("%s %s (composite %s)" % (c["chain"], " / ".join(c["postures"]) or "admin not read", c["composite_min"] if c["composite_min"] == c["composite_max"] else "%d to %d" % (c["composite_min"], c["composite_max"])) for c in sorted(chains.values(), key=lambda c: c["composite_min"])))})
     out_protos.sort(key=lambda p: (-p["postures_differ"], -p["spread"], p["protocol"]))
-    out = {"generated_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "protocols": len(out_protos), "differing": sum(1 for p in out_protos if p["postures_differ"]), "items": out_protos,
+    out = {"generated_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "exposure_snapshot": ss, "protocols": len(out_protos), "differing": sum(1 for p in out_protos if p["postures_differ"]), "items": out_protos,
            "what": "protocols tracked on two chains or more (grouped by DefiLlama slug, watch/tvl.json): per chain the composite range, the admin kinds the independent reader found and the postures in one line; weakest_chain is the deployment with the lowest composite, postures_differ when the admin kinds differ between chains or the composites are 15 points apart; written by scripts/cross_chain.py after every run"}
     tmp = a.out + ".tmp"; json.dump(out, open(tmp, "w"), indent=1); os.replace(tmp, a.out)
     print("cross-chain: %d protocol(s) on 2+ chains, %d with differing postures" % (len(out_protos), out["differing"]))

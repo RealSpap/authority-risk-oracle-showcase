@@ -21,6 +21,7 @@ import argparse, glob, json, os, sys, time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from second_opinion import MAINNET, rpc_batch, addr_of, short, delegation, is_plain  # noqa: E402
 from evaluate_rules import WATCH_SLUGS  # noqa: E402
+from lib.reader_audit import no_getter_recognised  # noqa: E402  -- a contract none of the seven getters recognises is listed, not silent
 
 ROLES = {"pauser()": "0x9fd0506d", "guardian()": "0x452a9320", "curator()": "0xe66f53b7", "pauseGuardian()": "0x24a3d622",
          "emergencyGuardian()": "0xbc394350", "emergencyAdmin()": "0x70905dce", "getEmergencyAdmin()": "0xddcaa9ea"}   # keccak checked 10/10
@@ -48,7 +49,7 @@ def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--scores", default="watch/scores"); ap.add_argument("--out", default="watch/side_roles.json"); a = ap.parse_args()
     try: prev = json.load(open(a.out)); prev_by = prev.get("by_target") or {}
     except Exception: prev, prev_by = {}, {}  # noqa: BLE001
-    now = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()); by_target, changes, asked, stale, unread = {}, [], 0, 0, []
+    now = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()); by_target, changes, asked, stale, unread = {}, [], 0, 0, []; no_getter = []
     for f in sorted(glob.glob(os.path.join(a.scores, "*.json"))):
         key = WATCH_SLUGS.get(os.path.basename(f)[:-5]); url = MAINNET.get(key)
         if not url: continue
@@ -56,6 +57,7 @@ def main():
         r = rpc_batch(url, [("eth_call", [{"to": t, "data": ROLES[n]}, "latest"]) for t in ts for n in names])
         if ts and all(x is None for x in r): unread.append(key)
         holders = {}   # (target, role) -> address | None (cleared) | "?" (not answered)
+        no_getter += [key + ":" + t.lower() for i, t in enumerate(ts) if no_getter_recognised(r[len(names) * i:len(names) * (i + 1)])]   # every getter answered and none was a role getter
         for i, t in enumerate(ts):
             for j, n in enumerate(names):
                 v = r[len(names) * i + j]
@@ -105,7 +107,7 @@ def main():
                         changes.append(ch)
             if roles or pend: by_target[ka] = dict({"roles": roles} if roles else {}, **({"pending": pend} if pend else {}))
     plain = sorted(k for k, v in by_target.items() if any(x.get("kind") == "eoa" and not x.get("stale") for x in (v.get("roles") or {}).values()))
-    out = {"generated_utc": now, "asked": asked, "count": len(by_target), "pending": sorted(k for k, v in by_target.items() if any(not x.get("stale") for x in (v.get("pending") or {}).values())), "plain_key_roles": plain, "changes": changes, "stale": stale, "unread_chains": unread, "previous_run": prev.get("generated_utc"), "by_target": by_target,
+    out = {"generated_utc": now, "asked": asked, "count": len(by_target), "pending": sorted(k for k, v in by_target.items() if any(not x.get("stale") for x in (v.get("pending") or {}).values())), "plain_key_roles": plain, "no_getter_recognised": sorted(no_getter), "getters_checked": list(ROLES), "changes": changes, "stale": stale, "unread_chains": unread, "previous_run": prev.get("generated_utc"), "by_target": by_target,
            "what": "the secondary roles of the tracked EVM contracts (pauser, guardian, curator, pauseGuardian, emergencyGuardian, emergencyAdmin) named by the getter that answered, who holds each (plain key shortened, Safe as threshold and count, timelock with its delay, contract) and the changes since the previous run; a call nobody answered keeps the previous role marked stale; read by scripts/side_roles.py"}
     json.dump(out, open(a.out + ".tmp", "w"), indent=1); os.replace(a.out + ".tmp", a.out)
     for c in changes: print("ROLE CHANGE %s %s: %s%s" % (c["target"][:40], c["role"], c["change"], " (a SHORTER delay)" if c.get("shorter") else ""))

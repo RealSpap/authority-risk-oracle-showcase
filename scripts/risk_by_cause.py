@@ -11,6 +11,7 @@ import argparse, glob, json, os, sys, time
 
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 from evaluate_rules import lower_keys, WATCH_SLUGS, norm, PENDING_CHAIN  # noqa: E402
+from lib.reader_audit import cause_overlaps, money_source  # noqa: E402
 
 
 def load(p):
@@ -61,7 +62,7 @@ def main():
             for t in d.get("targets", []): targets[key + ":" + norm(t["target"]).lower()] = t
     held = (load(os.path.join(W, "held_assets.json")) or {}).get("by_target", {})   # a vault with no DefiLlama match still holds money by its own account (totalAssets, since 2026-10-10): counted as its own protocol
     total_money = money_once(targets, tvl, scope, held)
-    out = {}
+    out, hit_sets = {}, {}
     for cid, label in CAUSES:
         hits = []
         for ka in targets:
@@ -78,9 +79,11 @@ def main():
             elif cid == "side_role_plain_key": hit = ka in plain_side
             else: hit = bool(r.get("modules"))
             if hit: hits.append(ka)
-        money = money_once(hits, tvl, scope, held)
+        money = money_once(hits, tvl, scope, held); hit_sets[cid] = set(hits)
         out[cid] = {"label": label, "contracts": len(hits), "with_tvl": sum(1 for ka in hits if (ka in tvl or (held.get(ka) or {}).get("held_usd")) and (scope.get(ka) or {}).get("scope") not in ("retired", "peripheral")), "out_of_scope": sum(1 for ka in hits if (scope.get(ka) or {}).get("scope") in ("retired", "peripheral")), "tvl_usd": round(money), "share_of_tracked": (round(money / total_money, 3) if total_money else None), "targets": sorted(hits)}
+        out[cid]["money_source"] = {ka: money_source(ka, tvl, scope, held) for ka in hits}   # which kind of figure each contract's money is (protocol TVL, chain figure, contract figure, held by the contract, none)
     rec = {"generated_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "tracked_tvl_usd": round(total_money), "contracts": len(targets), "causes": out,
+           "overlaps": cause_overlaps(hit_sets, lambda ks: money_once(ks, tvl, scope, held)),   # the contracts and the money that sit under two causes at once, and under at least one
            "what": "money at risk by cause, from the independent reads of the run (second_opinion.json, impl_sources.json, pending_ops.json) and DefiLlama (tvl.json, one figure per protocol and chain; a contract with no protocol match counts what it holds by its own account, held_assets.json); a contract can sit under several causes; read a cause as the money a single failure of that kind would expose, not as a sum across causes; written by scripts/risk_by_cause.py after every run"}
     tmp = a.out + ".tmp"; json.dump(rec, open(tmp, "w"), indent=1); os.replace(tmp, a.out)
     print("risk by cause: $%.0fM tracked on %d contracts; " % (total_money / 1e6, len(targets)) + "; ".join("%s: %d contract(s), $%.0fM" % (cid, v["contracts"], v["tvl_usd"] / 1e6) for cid, v in out.items()))

@@ -71,8 +71,14 @@ python3 integrations/authority_facts_gate.py https://realspap.github.io/oracle/p
 
 [Reference](docs/REFERENCE.md) (what it scores, deployed oracles, how it works, limits) · [All the tools](docs/TOOLS.md) · [Methodology](METHODOLOGY.md) · [How it compares](docs/LANDSCAPE.md) · [Operate it](docs/OPERATIONS.md) · [What a score says and does not say](docs/WHAT-THE-SCORE-SAYS.md)
 
+[What we do not read](docs/LIMITS.md) | [Provenance and licences](docs/PROVENANCE.md) | [Key rotation](docs/KEY-ROTATION.md) | [What your browser contacts](docs/PRIVACY.md) | [Proxy and authority coverage](docs/PROOF-COVERAGE.md)
+
 The score reads **exposure**, how much one compromise can do. It does not predict who gets hit. Submitted to Colosseum's [Crypto World's Fair](https://colosseum.com/worldsfair) on 12 October 2026. Code MIT, data and text CC BY 4.0: see Licences below.
 
+
+## History of this repository
+
+The history of this repository was rewritten on 30 September 2026, and every commit up to 6 October 2026 is a snapshot or carries a round time, so the dates of these commits prove nothing; the first snapshot summarises work done from 15 September 2026. What can still be checked is the dated transactions of the oracles on their chains, which do not depend on git (table in docs/HISTORY.md), the hash-chained event log of the Watch since 10 October 2026, its signed manifests since 11 October 2026, and the methodology hash, tied to the scoring code for every push after 30 September 2026.
 
 ## Licences
 
@@ -87,3 +93,5 @@ The score reads **exposure**, how much one compromise can do. It does not predic
 | The specification text in `docs/` | CC0, as the document itself says | the document |
 
 Attribution for data and text: "Authority Risk Oracle, realspap.github.io/oracle" with a link. Earlier copies were released under the MIT licence.
+
+**Signing key of the Watch** (Ed25519, public): `11baca3ef6a69de4901c185f6cbbd3f93318fbb74f9961a8d39aead841adf409`. The same key is written in [`watch/API.md`](watch/API.md), in `scripts/audit_public.py` and on [realspap.github.io/oracle/key/](https://realspap.github.io/oracle/key/); compare the copies, then check a run with `python3 scripts/audit_public.py`. A key change would be announced first (see [KEY-ROTATION](docs/KEY-ROTATION.md)).

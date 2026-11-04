@@ -150,3 +150,18 @@ Each note below states what the files do as of that date. None of them changes a
 **A Safe nonce says that the Safe acted, not what it did.** `safe_activity.json` compares the `nonce()` of a Safe from one run to the next: a higher nonce means transactions were executed, and says nothing about their content. The file is not linked to the decoded operations in `pending_ops.json`. To see what a Safe did, read its executed transactions.
 
 **A secondary role with no getter is not covered, which is not the same as no role.** `side_roles.json` lists the contracts that answered one of seven getters. A contract that answers none of them is absent from the file, and its absence says nothing about whether it has such a role (see `docs/LIMITS.md`).
+
+## Fields added on 30 October 2026: readers
+
+Every field below is added; none renames or changes the meaning of an existing one. A client that ignores unknown fields sees nothing different. `null` is "not read", never zero.
+
+| File | Field | Meaning |
+|---|---|---|
+| `impl_sources.json` | `by_target[].checked_at`, `deployed_code_sha256` | when Sourcify or OtterSec ANSWERED, and the sha256 of the code deployed then |
+| `side_roles.json` | `no_getter_recognised[]`, `getters_checked[]` | contracts with none of the seven role getters: not covered, which is not "no role" |
+| `pending_ops.json` | `results[].window_blocks`, `window_days_est`, `window_note`, `recent[].final_state` | the window read for each timelock (an operation queued before it is not seen); `executed`, `cancelled` or `unknown` for an operation out of the queue (see the `final_state` row below for `expired`) |
+| `warning_ledger.json` | `entries.<k>.final_state` | the same, kept in the durable ledger |
+| `risk_by_cause.json` | `causes.<c>.money_source`, `overlaps` | where each contract's money figure comes from; the money under two causes at once and under at least one |
+| `score_series.json` | `series.<k>[].method_break`, `calibration.excluded_undecoded`, `excluded_other_target` | a change of method between two points; actions of the calibration window left out |
+| `cross_chain.json` | `exposure_snapshot`, `items[].chains.<c>.exposure_snapshot_utc` | the date of the sweep of shared signers and its expiry |
+| `pending_ops.json` | `recent[].final_state` | `expired` is told only for an operation that is still in a Compound-style queue past eta + grace AND still published (executable for at most 7 days); the two Compound timelocks watched have a grace of 14 days, so it does not occur for them. An operation that left the queue with no execution and no cancellation event found is `unknown` |

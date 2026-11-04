@@ -22,8 +22,9 @@ sys.path.insert(0, os.path.dirname(__file__))
 from lib.cross_ecosystem_overlap import (  # noqa: E402
     ARBITRUM_GROUPS, BASE_GROUPS, ETHEREUM_L1_GROUPS, HYPERLIQUID_GROUPS, MONAD_GROUPS, PLASMA_GROUPS, TEMPO_GROUPS,
 )
+from lib.reader_audit import depth_limit_hits  # noqa: E402  -- a Safe below the depth bound is not in the tree
 from lib.nested_signers import (  # noqa: E402
-    KNOWN_7702_DELEGATES, KNOWN_CONTRACT_SIGNERS, build_tree, leaf_keys, min_eoa_keys, nested_safes,
+    MAX_DEPTH, KNOWN_7702_DELEGATES, KNOWN_CONTRACT_SIGNERS, build_tree, leaf_keys, min_eoa_keys, nested_safes,
     new_committee_links, new_overlaps_when_expanded, status_of_signer, unresolved_signers,
 )
 from lib.safe_modules import (  # noqa: E402
@@ -152,6 +153,8 @@ def main():
         for kind, node in unresolved_signers(tree):
             if status_of_signer(kind, node) == "unanalyzed":
                 unanalyzed.append((eco, keys[0], kind, node))
+        for hit in depth_limit_hits(tree, get_safe, MAX_DEPTH):   # build_tree resolves no Safe below MAX_DEPTH; a Safe found there has signers the tree does not hold
+            unanalyzed.append((eco, keys[0], f"depth limit (a Safe below the {MAX_DEPTH}-level bound, its signers are not in the tree)", {"addr": hit}))
         for nested in nested_safes(tree):
             if (eco, nested["addr"].lower(), "checked") in seen_signers:
                 continue

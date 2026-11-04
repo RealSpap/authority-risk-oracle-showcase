@@ -1,0 +1,179 @@
+{
+ "what": "The configurations that scorers READ and then publish constants for (balayage of the scorers, 2026-10-30, class 1). For the targets below at least one of the three admin sub-scores is a value fixed by hand (listed in `fixed_subscores` of each pin; data/finding_2026-09-18-scorers-hardcoded-score-literals.md): if the configuration changes, the notes change and that sub-score does not. Spark is the partial case: its admin and multisig sub-scores are constants, its timelock sub-score is computed from the live delay (and the ALMProxy scorer has a branch that scores 20/0/0 on a divergence). scripts/check_scorer_pins.py reads each configuration live and compares it to what the scorer's own documentation says it was when the constants were chosen. A difference is a reason to re-score by hand; it is not a verdict. The scorers are not changed by this file.",
+ "baseline": "documented: the values are those written in the docstring of each scorer (scripts/lib/scorers.py) at the time its constants were set, not a reading of the chain. The first run of `check_scorer_pins.py --update` on a machine allowed to read the chain writes the live values, the head block of each chain (`snapshot_blocks`) and the time (`snapshot_utc`) as a dated snapshot.",
+ "snapshot_utc": null,
+ "rpc": {
+  "robinhood": "https://rpc.mainnet.chain.robinhood.com"
+ },
+ "pins": [
+  {
+   "id": "ramses-clv2",
+   "scorer": "score_ramses_clv2",
+   "chain": "robinhood",
+   "constants": [
+    15,
+    5,
+    0
+   ],
+   "targets": [
+    "0xE0c4ceb92d08CA985bB70fe0a22fEb121A9854A8",
+    "0x4b37359BF291AbE8453692DB58d515a8b013Dca9",
+    "0x83341F891f898cb5E0cacC8a70501BBa83d9CecF",
+    "0xA203A21dCCB461E415DaA342E8e635B6CeE0cCb3"
+   ],
+   "reads": [
+    {
+     "name": "team_multisig_threshold",
+     "kind": "uint",
+     "to": "0x20D630cF1f5628285BfB91DfaC8C89eB9087BE1A",
+     "call": "getThreshold()",
+     "expect": 1,
+     "source": "scorer docstring: a 1-of-1 Safe whose sole signer is a bare EOA. The known-limit note of 2026-10-21 in the same file says '1-of-2' for the key that is one of the two signers of that Safe: this read settles which"
+    },
+    {
+     "name": "team_multisig_owner_count",
+     "kind": "owners_len",
+     "to": "0x20D630cF1f5628285BfB91DfaC8C89eB9087BE1A",
+     "call": "getOwners()",
+     "expect": 1,
+     "source": "scorer docstring (same sentence)"
+    },
+    {
+     "name": "timelock_min_delay",
+     "kind": "uint",
+     "to": "0xE41c07CcD69A0f19A2186f3Ad30409BD585436CE",
+     "call": "getMinDelay()",
+     "expect": 0,
+     "source": "scorer docstring and notes: the delay of RamsesTimelock is 0"
+    }
+   ],
+   "fixed_subscores": [
+    "admin",
+    "multisig",
+    "timelock"
+   ]
+  },
+  {
+   "id": "longbow-vaults",
+   "scorer": "score_longbow_vault",
+   "chain": "robinhood",
+   "constants": [
+    40,
+    40,
+    15
+   ],
+   "targets": [
+    "0x026df18fbd2A7639089D0a16293383ec687A5Ca1",
+    "0x65dC90cd3a0BCDE967c8AE6019d6790b616E78F7",
+    "0xe129D4Cb2d454C4ACFAc909d1576453A9b835f61"
+   ],
+   "reads_per_target": [
+    {
+     "name": "owner_safe_threshold",
+     "kind": "uint",
+     "to": "$target",
+     "via": "owner()",
+     "call": "getThreshold()",
+     "expect": 2,
+     "source": "scorer docstring: owner() and curator() are two separately deployed Safes with the identical 3 owners and the identical 2-of-3 threshold"
+    },
+    {
+     "name": "owner_safe_owner_count",
+     "kind": "owners_len",
+     "to": "$target",
+     "via": "owner()",
+     "call": "getOwners()",
+     "expect": 3,
+     "source": "same sentence"
+    },
+    {
+     "name": "curator_safe_threshold",
+     "kind": "uint",
+     "to": "$target",
+     "via": "curator()",
+     "call": "getThreshold()",
+     "expect": 2,
+     "source": "same sentence"
+    },
+    {
+     "name": "curator_safe_owner_count",
+     "kind": "owners_len",
+     "to": "$target",
+     "via": "curator()",
+     "call": "getOwners()",
+     "expect": 3,
+     "source": "same sentence"
+    },
+    {
+     "name": "owner_and_curator_share_owners",
+     "kind": "owners_equal",
+     "to": "$target",
+     "vias": [
+      "owner()",
+      "curator()"
+     ],
+     "call": "getOwners()",
+     "expect": true,
+     "source": "scorer docstring: owner() and curator() are two separately deployed Safes with the identical 3 owners (the SAME set, which the owner counts above do not show)"
+    }
+   ],
+   "fixed_subscores": [
+    "admin",
+    "multisig",
+    "timelock"
+   ]
+  },
+  {
+   "id": "spark-executor",
+   "scorer": "score_spark_savings_usdg and score_spark_liquidity_layer_almproxy",
+   "chain": "robinhood",
+   "constants": [
+    50,
+    30,
+    null
+   ],
+   "targets": [
+    "0xde770c84FE66E063336b31737cFE9790f18c4087",
+    "0xfD2fD4B046136B540A56C11c75ac679AE7d1dB24"
+   ],
+   "reads": [
+    {
+     "name": "executor_delay",
+     "kind": "uint",
+     "to": "0x826aeaeee9233fa8ba199518dd8621a5962b1d02",
+     "call": "delay()",
+     "expect": 0,
+     "source": "scorer docstring: the local delay of the executor is confirmably 0"
+    },
+    {
+     "name": "executor_grace_period",
+     "kind": "uint",
+     "to": "0x826aeaeee9233fa8ba199518dd8621a5962b1d02",
+     "call": "gracePeriod()",
+     "expect": 604800,
+     "source": "scorer docstring: gracePeriod 604800"
+    },
+    {
+     "name": "executor_code_length",
+     "kind": "code_len",
+     "to": "0x826aeaeee9233fa8ba199518dd8621a5962b1d02",
+     "expect": 8113,
+     "source": "scorer docstring: 8,113 bytes, identical for both targets"
+    },
+    {
+     "name": "receiver_is_safe",
+     "kind": "is_safe",
+     "to": "0xc12B1e59c5E337d5Acd2b4f0A9a27d9E5D7387E8",
+     "expect": false,
+     "source": "scorer note: expected False, an ArbitrumReceiver pattern and not a multisig"
+    }
+   ],
+   "fixed_subscores": [
+    "admin",
+    "multisig"
+   ],
+   "note": "the ALMProxy scorer (score_spark_liquidity_layer_almproxy) scores 20/0/0 on a divergence branch; the delay read below feeds the live timelock sub-score of both scorers"
+  }
+ ],
+ "snapshot_blocks": null
+}

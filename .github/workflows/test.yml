@@ -49,8 +49,8 @@ jobs:
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262   # v4.4.0, pinned to its commit, as in the other workflows
 
-      # Not pinned to a commit yet: the commit of the v1 tag was not available when this file was changed. Pin it with `gh api repos/foundry-rs/foundry-toolchain/git/ref/tags/v1` (an annotated tag needs a second lookup).
-      - uses: foundry-rs/foundry-toolchain@v1
+      # v1 and v1.9.2 are lightweight tags of the same commit (read on 2026-10-30 with `git ls-remote https://github.com/foundry-rs/foundry-toolchain refs/tags/v1 refs/tags/v1.9.2`, no peeled line): pinned to that commit, as in the other workflows
+      - uses: foundry-rs/foundry-toolchain@dba66c27052e63476d886f22216e119ba7e615bf   # v1.9.2
 
       - name: Install forge-std and OpenZeppelin
         run: forge install foundry-rs/forge-std OpenZeppelin/openzeppelin-contracts --no-git

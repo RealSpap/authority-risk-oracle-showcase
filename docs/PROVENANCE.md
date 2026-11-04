@@ -38,7 +38,7 @@ A figure that comes from private material cannot be reproduced from this reposit
 
 An external source can be wrong, late or unavailable. When it does not answer, the Watch keeps the previous record marked stale or writes the line as not read; it does not write a zero. The scorers listed in Known gaps (CHANGELOG.md) are an exception: for them a failed read can leave a fixed score.
 
-**Dependencies.** `scripts/requirements.txt` gives ranges (`web3>=7.0.0,<9`, `pynacl>=1.5,<2`, `Pillow>=10,<13`), not exact versions, so two installs can differ. The Solidity libraries are not committed: `foundry.toml` points to a `lib/` folder that `forge install` fills (CONTRIBUTING.md). As of 30 October 2026 no list of exact versions with hashes is published.
+**Dependencies.** `scripts/requirements.txt` gives ranges (`web3>=7.0.0,<9`, `pynacl>=1.5,<2`, `Pillow>=10,<13`), not exact versions, so two installs can differ. The Solidity libraries are not committed: `foundry.toml` points to a `lib/` folder that `forge install` fills (CONTRIBUTING.md). Since 30 October 2026 `scripts/requirements.lock` lists exact versions with the sha256 of every file PyPI publishes for them (44 packages, resolved for Python 3.11 on Linux x86_64, the version and platform of the test workflow); `pip install --require-hashes -r scripts/requirements.lock` installs exactly that. The test workflow still installs from the ranges of `requirements.txt`. Every action of every workflow in `.github/workflows/` is pinned to a commit.
 
 ## What you can replay, and what you cannot
 

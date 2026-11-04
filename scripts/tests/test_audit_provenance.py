@@ -381,7 +381,7 @@ class TestWorkflowAndLock(unittest.TestCase):
         t = open(os.path.join(ROOT, ".github", "workflows", "test.yml")).read()
         self.assertRegex(t, r"(?m)^permissions:\n  contents: read\n")
         unpinned = [m for m in re.findall(r"uses:\s*(\S+)", t) if not re.search(r"@[0-9a-f]{40}$", m)]
-        self.assertEqual(unpinned, ["foundry-rs/foundry-toolchain@v1"], "the one action still to pin (its commit was not available offline)")
+        self.assertEqual(unpinned, [], "every action of the test workflow is pinned to a commit")
 
     def test_a_lock_file_when_it_exists_pins_every_package_with_hashes(self):
         p = os.path.join(ROOT, "scripts", "requirements.lock")

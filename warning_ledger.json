@@ -1237,10 +1237,11 @@
    "first_seen_utc": "2026-11-03T14:11:29Z",
    "due_utc": "2026-11-04T04:42:56Z",
    "notice_hours": 14.5,
-   "state": "queued",
+   "state": "resolved",
    "chain": "solana",
    "timelock": "Squads v4 multisig C4aw\u2026SuPk (4-of-9, time lock 86400 s), found by the independent reader (1 tracked program)",
-   "what": "program upgrade"
+   "what": "program upgrade",
+   "resolved_seen_utc": "2026-11-04T06:19:01Z"
   },
   "solana:c4awuufiul8dnt5wmdp27hnekkqbgynrsbca4xygsupk:squads:C4awuufiuL8DNT5wMDP27HneKKqbgynrsbCa4XYGSuPk:1029": {
    "outcome": "warned",
@@ -1272,14 +1273,23 @@
    "chain": "ethereum",
    "timelock": "Compound Governance Timelock",
    "what": "cross-chain message"
+  },
+  "solana:axkj8oh5adu4zrwfsujptxdb6vhq4gdehporebgruusm:squads:AxkJ8oH5aDu4ZRWfsujPtxdb6Vhq4gDehpoReBgrUUSm:20": {
+   "outcome": "missed",
+   "first_seen_utc": "2026-11-04T06:19:01Z",
+   "queued_utc": "2026-11-04T02:19:01Z",
+   "state": "resolved",
+   "chain": "solana",
+   "timelock": "Squads v4 multisig AxkJ\u2026UUSm (4-of-8, time lock 86400 s), found by the independent reader (1 tracked program)",
+   "what": "program upgrade"
   }
  },
- "updated_utc": "2026-11-03T23:22:18Z",
+ "updated_utc": "2026-11-04T06:19:01Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
   "warned": 41,
   "seen_without_notice": 5,
-  "missed": 17,
+  "missed": 18,
   "baseline": 77,
   "warned_with_a_known_notice": 41,
   "shortest_notice_hours": 0.2,

@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-11-03T23:35:08Z",
+ "run_utc": "2026-11-04T06:32:18Z",
  "targets": 202,
  "moves_recorded": 39,
  "series": {
@@ -1955,13 +1955,13 @@
  },
  "calibration": {
   "window_days": 14,
-  "actions": 17,
+  "actions": 21,
   "under_40": 5,
   "by_band": {
    "critical": 4,
    "weak": 1,
-   "moderate": 10,
-   "decent": 1,
+   "moderate": 12,
+   "decent": 3,
    "strong": 1
   },
   "list": [
@@ -2117,6 +2117,42 @@
     "tx": "2h351R7Zu84xcjZknffkVPCN1xPYSsX4jpWUKQUuSeZP",
     "score_then": 2,
     "band_then": "critical"
+   },
+   {
+    "kind": "upgrade executed (Squads proposal)",
+    "key": "solana:H4ND9aYttUVLFmNypZqLjZ52FYiGvdEB45GmwNoKEjTj",
+    "t": "2026-11-04T02:19:01Z",
+    "via": "Squads v4 multisig AxkJ\u2026UUSm (4-of-8, time lock 86400 s), found by the independent reader (1 tracked program)",
+    "tx": "4yrfWv5zTsJfGSz3a3HtzPe6g3u6buyZTbebVkHVsj4X",
+    "score_then": 46,
+    "band_then": "moderate"
+   },
+   {
+    "kind": "upgrade executed (Squads proposal)",
+    "key": "solana:1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78",
+    "t": "2026-11-04T04:52:42Z",
+    "via": "Squads v4 multisig C4aw\u2026SuPk (4-of-9, time lock 86400 s), found by the independent reader (1 tracked program)",
+    "tx": "Hrv2eKm6L8ehAq1GXBQUzpWt6YALHKBhtrKL73CchWzh",
+    "score_then": 70,
+    "band_then": "decent"
+   },
+   {
+    "kind": "upgrade executed",
+    "key": "solana:H4ND9aYttUVLFmNypZqLjZ52FYiGvdEB45GmwNoKEjTj",
+    "t": "2026-11-04T06:27:18Z",
+    "via": "slot 465131236",
+    "tx": null,
+    "score_then": 46,
+    "band_then": "moderate"
+   },
+   {
+    "kind": "upgrade executed",
+    "key": "solana:1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78",
+    "t": "2026-11-04T06:27:18Z",
+    "via": "slot 465174374",
+    "tx": null,
+    "score_then": 70,
+    "band_then": "decent"
    }
   ],
   "read_as": "every authority action the watch observed in the window (a timelock operation queued or executed against a tracked contract, an admin change read independently) and the composite score the contract carried at that moment. Small counts prove little; the file grows with every run and the chained log keeps every move"

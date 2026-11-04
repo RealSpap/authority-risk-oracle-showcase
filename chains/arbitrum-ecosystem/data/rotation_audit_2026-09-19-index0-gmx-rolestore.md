@@ -116,3 +116,23 @@ read back on both Sepolia RPCs: 10/0/60/100/100 -> **22**,
   pair that is not yet ROLE_ADMIN live (a pending migration, or an
   abandoned one) was not resolved. The scorer follows the live chain
   either way.
+
+## Update 2026-10-31 (read-only, two RPCs, Arbitrum block 520043942, 16:48 UTC)
+
+This audit is kept as written; the facts below are what the chain says now. Nothing here changes a published score.
+
+| Check | Result on 2026-10-31 |
+|---|---|
+| `RoleStore.getRoleMembers(TIMELOCK_ADMIN)` | the 5-of-8 Safe `0x8D1d2e24...` and the 4-of-6 Safe `0x58F58245...`. The EOA `0xE014cbD6...` listed above is no longer a member. The RoleStore emits no events (no logs over 9 million blocks), so the date of the change cannot be read. |
+| `RoleStore.getRoleMembers(ROLE_ADMIN)` | five: the GMX DAO timelock `0x4bd1cdAa...`, controllers `0x2Dd99f39...` and `0xF68560cA...`, TimelockConfig `0xE7706986...` and `0x4Ed34E6c...`. |
+| the newer pair | `0xF68560cA...` (ConfigTimelockController) and `0x4Ed34E6c...` (TimelockConfig, `timelockController()` = `0xF68560cA...`, `roleStore()` = this RoleStore), both Sourcify-verified. Their roles on the controller were set up on 2026-10-22 (blocks 517361393 to 517361786). This is the migration that this audit noted as not yet live. The date it became ROLE_ADMIN is not readable. |
+| `getMinDelay()` | 86400 on `0x4bd1cdAa...`, `0x2Dd99f39...` and `0xF68560cA...`; `0x4Ed34E6c...` and `0xE7706986...` have no such getter and schedule with their controller's minimum delay (verified source: every `signal*` function calls `_schedule` with `getMinDelay()`; `revokeRole` is immediate and limited to the TIMELOCK_MULTISIG role). |
+| PROPOSER / EXECUTOR / CANCELLER on `0x2Dd99f39...` and on `0xF68560cA...` (`hasRole`, after replaying `RoleGranted` and `RoleRevoked` from block 0) | the same four holders on both: the EOA `0xE014cbD6...`, both Safes, and the TimelockConfig of that pair. No `address(0)` executor (execution is not open to anyone). |
+| EOA `0xE014cbD6...` | no code, nonce 72 (also 72 on 2026-09-19). |
+| a schedule of a RoleStore ROLE_ADMIN grant on each controller, simulated by `eth_call` from the EOA (no transaction) | accepted on both controllers at the 86400 s minimum delay. With delay 0: reverted `insufficient delay`. From a random address: reverted `missing role`. |
+| GMX DAO timelock `0x4bd1cdAa...` | `PROPOSER`, `EXECUTOR` and `CANCELLER` of the second bare EOA noted on 2026-09-20 (`0xE7BfFf2a...`) were revoked on 2026-10-24 (blocks 517982783, 517982833, 517982861). The remaining holder of the three roles is the contract `0x03e8f708...`. |
+
+What this means: the path described above through `TIMELOCK_ADMIN` and `TimelockConfig` is closed for the EOA, but the same EOA can still schedule a grant of any RoleStore role directly on the two controllers and, holding EXECUTOR there, is listed to execute it after 24 hours; both Safes hold the same roles and the 5-of-8 Safe can cancel inside the window.
+
+Not verified: that the EOA could execute a scheduled grant (the scheduling was simulated, the execution was not), who controls that key, whether the Safe signers watch the queue, and whether any path other than these roles leads to a RoleStore grant. Scripts and raw output of this read are kept outside the public repository; every on-chain value above can be repeated with public calls to an Arbitrum One archive RPC up to block 520043942, and the source facts can be checked on Sourcify.
+

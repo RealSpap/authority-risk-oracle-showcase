@@ -532,6 +532,56 @@ class TestCrossChainAndRiskByCause(unittest.TestCase):
             out = self.run_script("cross_chain.py", d)
             self.assertIsNone(out["items"][0]["chains"]["robinhood"]["exposure_snapshot_utc"])      # no date recorded: null, not a made-up one
 
+    def test_the_sweep_date_is_per_target_then_per_chain_then_the_files(self):
+        now = 1_793_000_000
+        snap = {"swept_utc": "2026-10-21", "valid_days": 30, "chains": {"base": {"swept_utc": "2026-10-10"}}, "targets": {"robinhood:0xaa": {"swept_utc": "2026-08-01", "valid_days": 30}}}
+        f = lambda ka: ra.snapshot_for(snap, ka, now)
+        self.assertEqual((f("robinhood:0xAA")["swept_utc"], f("robinhood:0xAA")["from"], f("robinhood:0xAA")["expired"]), ("2026-08-01", "target", True))     # the key is lower-cased
+        self.assertEqual((f("base:0xbb")["swept_utc"], f("base:0xbb")["from"]), ("2026-10-10", "chain"))
+        self.assertEqual((f("tempo:0xcc")["swept_utc"], f("tempo:0xcc")["from"]), ("2026-10-21", "global"))
+        none = ra.snapshot_for({}, "tempo:0xcc", now)
+        self.assertEqual((none["swept_utc"], none["expired"], none["from"]), (None, None, "none"))                    # no date: unknown, never made up
+        self.assertEqual(ra.snapshot_for({"swept_utc": "not a date"}, "tempo:0xcc", now)["from"], "none")
+        bad = ra.snapshot_for({"swept_utc": "2026-10-21", "targets": {"tempo:0xcc": {"swept_utc": "garbage"}}}, "tempo:0xcc", now)
+        self.assertEqual(bad["from"], "global")                                                                       # an unreadable target date falls back, it does not erase the file's
+
+    def test_cross_chain_publishes_the_sweep_of_each_target_and_the_oldest_per_chain(self):
+        with tempfile.TemporaryDirectory() as d:
+            a1, a2 = self.fixture(d)
+            json.dump({"swept_utc": "2026-10-21", "valid_days": 30, "targets": {"robinhood:" + a1: {"swept_utc": "2026-08-01"}}}, open(os.path.join(d, "data", "cross_snapshot.json"), "w"))
+            out = self.run_script("cross_chain.py", d)
+            chains = out["items"][0]["chains"]
+            self.assertEqual(chains["robinhood"]["exposure_snapshot_utc"], "2026-08-01")
+            self.assertEqual(chains["robinhood"]["targets"][0]["from"], "target")
+            self.assertEqual(chains["robinhood"]["exposure_snapshot_expired_targets"], 1)
+            self.assertEqual(chains["base"]["exposure_snapshot_utc"], "2026-10-21")
+            self.assertEqual(chains["base"]["exposure_snapshot_expired_targets"], 0)
+
+    def test_a_target_with_no_date_at_all_is_unknown_not_expired(self):
+        with tempfile.TemporaryDirectory() as d:
+            a1, a2 = self.fixture(d)
+            json.dump({"valid_days": 30, "targets": {"robinhood:" + a1: {"swept_utc": "2026-10-20"}}}, open(os.path.join(d, "data", "cross_snapshot.json"), "w"))     # no date for the file, none for base
+            out = self.run_script("cross_chain.py", d)["items"][0]["chains"]
+            self.assertEqual((out["robinhood"]["exposure_snapshot_unknown_targets"], out["robinhood"]["exposure_snapshot_expired_targets"]), (0, 0))
+            self.assertEqual((out["base"]["exposure_snapshot_utc"], out["base"]["exposure_snapshot_unknown_targets"], out["base"]["exposure_snapshot_expired_targets"]), (None, 1, 0))
+
+    def test_the_oldest_sweep_of_a_chain_and_the_order_target_chain_file(self):
+        with tempfile.TemporaryDirectory() as d:
+            a1, a2 = self.fixture(d)
+            a3 = "0x" + "a3" * 20
+            sp = os.path.join(d, "watch", "scores", "robinhood-chain.json")
+            doc = json.load(open(sp)); doc["targets"].append({"target": a3, "compositeScore": 40, "lastUpdated": 1790000000}); json.dump(doc, open(sp, "w"))
+            tp = os.path.join(d, "watch", "tvl.json")
+            tv = json.load(open(tp)); tv["matched"]["robinhood:" + a3] = {"slug": "p", "name": "P", "tvl": 1e6, "scope": "chain", "chain": "Robinhood Chain"}; json.dump(tv, open(tp, "w"))
+            json.dump({"swept_utc": "2026-10-21", "valid_days": 30, "chains": {"robinhood": {"swept_utc": "2026-09-15"}}, "targets": {"robinhood:" + a1: {"swept_utc": "2026-08-01"}}},
+                      open(os.path.join(d, "data", "cross_snapshot.json"), "w"))
+            ch = self.run_script("cross_chain.py", d)["items"][0]["chains"]["robinhood"]
+            by = {x["target"]: x for x in ch["targets"]}
+            self.assertEqual((by[a1]["swept_utc"], by[a1]["from"]), ("2026-08-01", "target"))      # the target's own date wins over its chain's
+            self.assertEqual((by[a3]["swept_utc"], by[a3]["from"]), ("2026-09-15", "chain"))
+            self.assertEqual(ch["exposure_snapshot_utc"], "2026-08-01")                          # the OLDEST of the two
+            self.assertEqual(ch["exposure_snapshot_expired_targets"], 2)                         # 2026-08-01 and 2026-09-15 are both past 30 days
+
     def test_risk_by_cause_says_where_each_figure_comes_from_and_what_overlaps(self):
         with tempfile.TemporaryDirectory() as d:
             a1, a2 = self.fixture(d)
@@ -612,6 +662,16 @@ class TestScorerPins(unittest.TestCase):
 
 class TestSecondReviewReservesPure(unittest.TestCase):
 
+
+    def test_a_never_pushed_score_is_not_a_push_of_1970(self):
+        f = ra.freshness_record(1790000000, 5, 1789999990, [{"lastUpdated": 0}, {"lastUpdated": 1789000000}, {"lastUpdated": True}])
+        self.assertEqual((f["newest_push"], f["oldest_push"]), (1789000000, 1789000000))
+        f = ra.freshness_record(1790000000, 5, 1789999990, [{"lastUpdated": 0}])
+        self.assertEqual((f["newest_push"], f["oldest_push"]), (None, None))
+
+    def test_a_sweep_date_written_with_capitals_still_matches(self):
+        snap = {"swept_utc": "2026-10-21", "valid_days": 30, "targets": {"Robinhood:0xAABB": {"swept_utc": "2026-08-01"}}}
+        self.assertEqual(ra.snapshot_for(snap, "robinhood:0xaabb", 1_793_000_000)["from"], "target")
 
     def test_a_standing_stall_is_said_when_it_starts_and_then_once_a_day_not_at_every_run(self):
         said = []

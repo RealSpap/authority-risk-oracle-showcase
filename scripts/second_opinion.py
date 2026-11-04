@@ -13,10 +13,14 @@ with none of the three getters is "unreadable", never "agrees". Standard library
     python3 scripts/second_opinion.py --scores watch/scores --out watch/second_opinion.json --md watch/second_opinion.md
 """
 import argparse, glob, hashlib, json, os, sys, time, urllib.request
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from lib.reader_extras import (ADMIN_TOPICS, DEFAULT_ADMIN_DELAY_SEL, DELAY_TOPICS, LOG_STEP_BLOCKS, LOG_STEP_BY_CHAIN, admin_events_of, admin_gap, default_admin_delay_of, delay_change_of, events_by_address, member_disagreement, open_executor_call, open_executor_of, scan_logs, window_for)  # noqa: E402
+from lib.reader_audit import (PENDING_DEFAULT_ADMIN_SEL, PENDING_FOLLOW_NOTE, admin_member_calls, assemble_admin_members, first_read_through_new_getter, modules_truncated_of, parse_modules_page, parse_pending_default_admin, pending_family, read_gap_seconds, since_score_push_seconds, transfer_outcome)  # noqa: E402  -- admin members, modules page, read gap, pending transfers
 
 # the targets live on mainnets; the oracles on testnets. Same map as the dashboard's MAINNET config (read 2026-10-10).
 MAINNET = {"robinhood": "https://rpc.mainnet.chain.robinhood.com", "ethereum-l1": "https://ethereum-rpc.publicnode.com", "arbitrum": "https://arb1.arbitrum.io/rpc",
            "base": "https://mainnet.base.org", "plasma": "https://rpc.plasma.to", "tempo": "https://rpc.tempo.xyz", "monad": "https://rpc.monad.xyz", "hyperliquid": "https://rpc.hyperliquid.xyz/evm"}
+LOGS_RPC = {"ethereum-l1": "https://gateway.tenderly.co/public/mainnet", "arbitrum": "https://gateway.tenderly.co/public/arbitrum"}   # eth_getLogs: publicnode refuses it (403, read 30/10/2026); the same gateways as check_pending_ops.py answer a filter of 4 addresses and 6 topics over 2 million blocks. Other chains: their own RPC, and a refusal is an incomplete window
 SLOT_ADMIN = "0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103"
 SLOT_IMPL = "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"    # EIP-1967 implementation: the code behind a proxy; a change here is an upgrade executed
 SLOT_BEACON = "0xa3f0ad74e5423aebfd80d3ef4346578335a9a72aeaee59ff6cb3582b35133d50"  # EIP-1967 beacon: the implementation is the beacon's implementation()
@@ -294,7 +298,11 @@ def main():
         for r in json.load(open(a.out)).get("results", []): prev[r["chain"] + ":" + str(r["target"]).lower()] = r
         prev_utc = json.load(open(a.out)).get("generated_utc")
     except Exception: prev_utc = None  # noqa: BLE001
-    changes = []; upgrades = []; now_utc = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    prev_windows = {}
+    try: prev_windows = json.load(open(a.out)).get("event_windows") or {}   # the last block whose events were read completely, per chain: a window the node refused is read again next run, none is lost
+    except Exception: prev_windows = {}  # noqa: BLE001
+    if not isinstance(prev_windows, dict): prev_windows = {}
+    event_windows = {}; changes = []; upgrades = []; now_utc = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     def carry_since(rec, pr, moved):   # "admin unchanged since": the earliest run that read the same holder, carried from run to run
         rec["since"] = (pr.get("since") or prev_utc or now_utc) if (pr and not moved and pr.get("kind") not in (None, "unreadable", "native")) else now_utc
     for f in sorted(glob.glob(os.path.join(a.scores, "*.json"))):
@@ -310,10 +318,12 @@ def main():
                    ("eth_call", [{"to": t["target"], "data": SEL["timelock"]}, "latest"])]   # since 2026-10-10: a delay the contract enforces on itself
         b0 = rpc_batch(url, [("eth_blockNumber", [])])[0]; block_start = int(b0, 16) if b0 else None   # since 2026-10-10: the reads of this chain happen between block_start and block_end, said in every record
         r1 = rpc_batch(url, c1)
-        holders = []; native_idx = set(); impls = []; pendings = []; self_delays = []
+        holders = []; native_idx = set(); impls = []; pendings = []; self_delays = []; pend_clean = {}   # pend_clean[i]: the pending getters that answered a whole word this run (an answer of zero is "nothing designated"; no answer is nothing)
+        clean_word = lambda w: isinstance(w, str) and len(w) == 66 and w.startswith("0x")
         for i, t in enumerate(targets):
             slot, own, adm, tcode = r1[9 * i], r1[9 * i + 1], r1[9 * i + 2], r1[9 * i + 3]
             impls.append((addr_of(r1[9 * i + 4]), addr_of(r1[9 * i + 5])))
+            pend_clean[i] = {f for f, w in (("contract_owner", r1[9 * i + 6]), ("contract_admin", r1[9 * i + 7])) if clean_word(w)}
             pendings.append((addr_of(r1[9 * i + 6]), "pendingOwner() on the contract (Ownable2Step)") if addr_of(r1[9 * i + 6]) else ((addr_of(r1[9 * i + 7]), "pendingAdmin() on the contract") if addr_of(r1[9 * i + 7]) else (None, None)))
             sd = r1[9 * i + 8]
             try: sd = int(sd, 16) if (sd and sd != "0x" and len(sd) == 66) else None
@@ -331,6 +341,7 @@ def main():
         # when enumerable, the first holder of DEFAULT_ADMIN_ROLE is the admin; AccessManaged: authority() is the AccessManager that holds every role.
         AC_IFACE = "0x01ffc9a7" + "7965db0b".ljust(64, "0"); AC_COUNT = "0xca15c873" + "0" * 64; AC_MEMBER = "0x9010d07c" + "0" * 128
         c1b_idx = [i for i, h in enumerate(holders) if not h[0] and h[2] is False and i not in native_idx]
+        ac_members, admin_answers = {}, {}   # the first member and the count of DEFAULT_ADMIN_ROLE per target, then the other members up to a bound
         if c1b_idx:
             c1b = []
             for i in c1b_idx:
@@ -339,15 +350,26 @@ def main():
             for j, i in enumerate(c1b_idx):
                 si, cnt, mem, auth = r1b[4 * j:4 * j + 4]
                 is_ac = bool(si and len(si) == 66 and int(si, 16) == 1); n_members = int(cnt, 16) if (cnt and len(cnt) == 66) else None
-                if is_ac and addr_of(mem): holders[i] = (addr_of(mem), "DEFAULT_ADMIN_ROLE member 1 of %s (AccessControl)" % (n_members if n_members is not None else "?"), False)
+                if is_ac and addr_of(mem): holders[i] = (addr_of(mem), "DEFAULT_ADMIN_ROLE member 1 of %s (AccessControl)" % (n_members if n_members is not None else "?"), False); ac_members[i] = (addr_of(mem), n_members)
                 elif addr_of(auth): holders[i] = (addr_of(auth), "authority() (AccessManaged: the AccessManager holds every role)", False)
                 elif is_ac: ac_note[i] = "AccessControl (ERC-165) whose admin-role holders are not enumerable on-chain: read them from RoleGranted events; nothing for this reader to compare"
             for i, note in ac_note.items(): holders[i] = (None, note, False)
+            calls_ = [(i, admin_member_calls(targets[i]["target"], n_)) for i, (m0_, n_) in ac_members.items() if isinstance(n_, int) and n_ > 1]
+            flat_ = [c_ for _, cs_ in calls_ for c_ in cs_]; ans_ = rpc_batch(url, flat_) if flat_ else []; pos_ = 0
+            for i, cs_ in calls_: admin_answers[i] = ans_[pos_:pos_ + len(cs_)]; pos_ += len(cs_)   # an unanswered member is counted unread by assemble_admin_members, never as absent
+        # AccessControlDefaultAdminRules keeps a transfer of the default admin in pendingDefaultAdmin(); read it for every target that has code (no getter: nothing)
+        rpd_ = rpc_batch(url, [("eth_call", [{"to": t["target"], "data": PENDING_DEFAULT_ADMIN_SEL}, "latest"]) if i not in native_idx else ("eth_blockNumber", []) for i, t in enumerate(targets)])
+        for i, w_ in enumerate(rpd_):
+            if i in native_idx: continue
+            pa_, sched_ = parse_pending_default_admin(w_)
+            if isinstance(w_, str) and len(w_) >= 66 and w_.startswith("0x"): pend_clean[i].add("default_admin")
+            if pa_ and not pendings[i][0]: pendings[i] = (pa_, "pendingDefaultAdmin() (AccessControlDefaultAdminRules)" + (", acceptable from %s" % time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(sched_)) if sched_ else ""))
         # pass 2: a ProxyAdmin behind the slot has an owner(): follow one hop
         c2 = [("eth_call", [{"to": h[0], "data": SEL["owner"]}, "latest"]) if h[0] and h[2] is True else ("eth_blockNumber", []) for h in holders]
         r2 = rpc_batch(url, c2)
         r2p = rpc_batch(url, [("eth_call", [{"to": h[0], "data": SEL["pendingOwner"]}, "latest"]) if h[0] and h[2] is True else ("eth_blockNumber", []) for h in holders])   # a transfer in flight on the ProxyAdmin
         for i, (h, pp) in enumerate(zip(holders, r2p)):
+            if h[0] and h[2] is True and clean_word(pp): pend_clean[i].add("proxy_admin")
             if h[0] and h[2] is True and addr_of(pp) and not pendings[i][0]: pendings[i] = (addr_of(pp), "pendingOwner() on the ProxyAdmin (Ownable2Step)")
         pend_idx = [i for i, p in enumerate(pendings) if p[0]]
         if pend_idx:   # what the designated admin is: a plain key leaves shortened, a contract stays whole (the same rule as every holder)
@@ -372,17 +394,15 @@ def main():
         b1 = rpc_batch(url, [("eth_blockNumber", [])])[0]; block_end = int(b1, 16) if b1 else None
         r3n = rpc_batch(url, [("eth_getTransactionCount", [addr or "0x" + "0" * 40, "latest"]) for addr, _ in final])   # a plain key's nonce: how many transactions it has sent (0: never acted from this address)
         def modules_of(word):   # getModulesPaginated -> (address[] array, address next): offset, next, length, then the addresses
-            try:
-                if not word or len(word) < 2 + 64 * 3: return None
-                n = int(word[2 + 128:2 + 192], 16)
-                return [("0x" + word[2 + 192 + 64 * j + 24:2 + 192 + 64 * (j + 1)]).lower() for j in range(min(n, 50))]
-            except ValueError: return None
+            return parse_modules_page(word, 50)[0]   # the cursor `next` is read too (parse_modules_page), see modules_truncated
         for i, (t, (addr, path)) in enumerate(zip(targets, final)):
             code, thr, own, dly, dly2, mods, grd = r3[7 * i], r3[7 * i + 1], r3[7 * i + 2], r3[7 * i + 3], r3[7 * i + 4], r3[7 * i + 5], r3[7 * i + 6]
             rec = {"chain": key, "target": t["target"], "adminKeyScore": t.get("adminKeyScore"), "path": path, "holder": addr, "impl": impl_final[i][0], "impl_via": impl_final[i][1],   # impl: the code behind the proxy (a contract address, public by nature), None for a non-proxy
                    "pending_admin": pendings[i][0], "pending_via": pendings[i][1],   # since 2026-10-10: a transfer designated and not yet accepted, the earliest warning of a change of hands
                    "block_start": block_start, "block_end": block_end,   # the reads of this record happened between these two blocks of the chain (public RPCs answer at latest; the span is a few blocks)
-                   "self_delay_seconds": self_delays[i]}   # timelock() on the contract itself (MetaMorpho vaults enforce 7 days on curator actions); None when there is no such getter
+                   "self_delay_seconds": self_delays[i],   # timelock() on the contract itself (MetaMorpho vaults enforce 7 days on curator actions); None when there is no such getter
+                   "scores_read_at": d.get("readAt") if isinstance(d.get("readAt"), int) else None, "read_gap_seconds": read_gap_seconds(d.get("readAt"), time.time()), "since_score_push_seconds": since_score_push_seconds(t.get("lastUpdated"), time.time())}   # seconds between the Watch's reading of the oracle and this reading (not a block gap: other networks)
+            if i in ac_members: rec["admin_members"] = assemble_admin_members(ac_members[i][0], ac_members[i][1], admin_answers.get(i, []))   # every holder of DEFAULT_ADMIN_ROLE up to a bound, or how many were not read
             if i in native_idx:
                 rec["kind"] = "native"; rec["why"] = "no code at this address on the chain's mainnet: a derived identifier for a native (non-EVM) entity such as HyperCore, or a contract that lives on another chain (a rollup's own L1 contracts); nothing for this reader to compare here"; native += 1; results.append(rec); continue
             if not addr or code in (None, "") or thr is None or own is None or dly is None or dly2 is None:   # a probe not answered is not a classification: fail closed, never guess "contract" (dly2 too, since 10/10: a Compound-style timelock read as "contract" on one flaky run was a false admin change)
@@ -408,6 +428,7 @@ def main():
                         kind = "safe"; rec["threshold"], rec["owners"] = tv, n
                         rec["keys_to_act"], rec["keys_lost_to_freeze"] = tv, n - tv + 1   # the two faces of a multisig: t keys collude to act, n-t+1 keys lost and nobody can act (a 3-of-3 freezes on one lost key)
                         rec["modules"] = modules_of(mods) if mods not in (None, "", "0x") else (None if mods is None else [])   # None = not read (fail closed), [] = none enabled; a module executes without the t-of-n signatures
+                        rec["modules_truncated"] = modules_truncated_of(mods, 50)   # True = more modules than the page of 50 returned, the list is cut (None = not read)
                         rec["guard"] = addr_of(grd) if grd is not None else None
                 except ValueError: pass
                 if kind == "contract" and dly and dly != "0x":
@@ -418,13 +439,16 @@ def main():
                     except ValueError: pass
             rec["kind"] = kind; s = t.get("adminKeyScore"); rec["multisigScore"] = t.get("multisigScore")
             pr = prev.get(key + ":" + t["target"].lower())
+            rec["pending_getters"] = sorted(pend_clean.get(i, ()))   # the pending getters that answered this run; a transfer first SEEN through a getter the previous record did not read is not a change of the admin
+            new_getter = first_read_through_new_getter(pr, rec.get("pending_admin"), rec.get("pending_via"))
             if pr and pr.get("kind") not in (None, "unreadable", "native") and (not same_addr(pr.get("holder"), addr) or pr.get("kind") != kind or pr.get("threshold") != rec.get("threshold") or pr.get("owners") != rec.get("owners") or pr.get("delay_seconds") != rec.get("delay_seconds")
                             or (pr.get("modules") is not None and rec.get("modules") is not None and sorted(map(short, pr["modules"])) != sorted(map(short, rec["modules"]))) or (pr.get("guard") != rec.get("guard") and "guard" in pr)
-                            or ("pending_admin" in pr and short(str(pr.get("pending_admin") or "")).lower() != short(str(rec.get("pending_admin") or "")).lower())
+                            or ("pending_admin" in pr and short(str(pr.get("pending_admin") or "")).lower() != short(str(rec.get("pending_admin") or "")).lower() and not new_getter)
                             or ("self_delay_seconds" in pr and pr.get("self_delay_seconds") is not None and rec.get("self_delay_seconds") is not None and pr["self_delay_seconds"] != rec["self_delay_seconds"])):   # on short forms: a run that could not probe the nature keeps the address whole, the next one shortens a key, the same address must not read as a change   # since 2026-10-10 the delay too: a timelock whose delay drops to 0 is the admin path changing, not waiting for the weekly scorer
                 def desc(x): return "%s %s" % (x.get("kind"), (short(x.get("holder")) if x.get("kind") == "eoa" else x.get("holder")) or "") + (" %s-of-%s" % (x["threshold"], x["owners"]) if x.get("kind") == "safe" else "") + (" %ss" % x["delay_seconds"] if x.get("kind") == "timelock" else "") + ((" +%d module(s)" % len(x["modules"])) if x.get("modules") else "") + (" guard %s" % x["guard"] if x.get("guard") else "") + ((" (transfer pending to %s)" % x["pending_admin"]) if x.get("pending_admin") else "") + ((" [contract timelock %ss]" % x["self_delay_seconds"]) if x.get("self_delay_seconds") else "") + ((" [signers: %s]" % ", ".join("%d %s" % (v, k) for k, v in sorted(x["owners_kinds"].items()))) if x.get("owners_kinds") else "")
                 rec["changed"] = "admin read changed since the previous run: %s -> %s (via %s)" % (desc(pr), desc(rec), path); changes.append(rec)
             carry_since(rec, pr, bool(rec.get("changed")))
+            if pr and pr.get("pending_admin"): rec["pending_outcome"] = transfer_outcome(pr.get("pending_admin"), rec.get("holder"), rec.get("pending_admin"), short, prev_via=pr.get("pending_via"), clean_families=pend_clean.get(i))   # what became of the transfer seen at the previous run
             if pr and pr.get("impl") and rec.get("impl") and not same_addr(pr["impl"], rec["impl"]):   # both reads answered and differ: an upgrade was executed between two runs
                 rec["upgraded"] = "implementation changed since the previous run: %s -> %s (%s); the score reads who may upgrade, this is an upgrade that happened" % (pr["impl"], rec["impl"], rec.get("impl_via")); upgrades.append(rec)
             if kind == "safe" and rec.get("threshold") == 1 and rec.get("owners_detail") and not rec.get("nested") and s is not None and s >= 50 and any(d_["kind"] == "eoa" for d_ in rec["owners_detail"]):
@@ -484,6 +508,77 @@ def main():
                 else: dis.append(rec)
             else: agree += 1
             results.append(rec)
+        # pass 3a (30/10/2026): the admin events of the window since the last block already read (a transfer started and cancelled between two runs), the delay of the default admin and
+        # of timelocks (MinDelayChange / NewDelay), an executor anyone can use, and the holders of the admin role that the score does not weigh. Events read: those of the TARGET and of its
+        # timelock holder. NOT read: the ProxyAdmin's own OwnershipTransferStarted, EIP-1967 AdminChanged, Compound NewPendingAdmin, RoleGranted / RoleRevoked (the oracle's own are watched by watch_run).
+        chain_recs = [r_ for r_ in results if r_["chain"] == key and not r_.get("oracle_self")]
+        prev_blocks = [pr_.get("block_end") for k_, pr_ in prev.items() if k_.startswith(key + ":") and isinstance(pr_.get("block_end"), int)]
+        scanned_from = prev_windows.get(key, {}).get("scanned_to") if isinstance(prev_windows.get(key, {}).get("scanned_to"), int) else (max(prev_blocks) if prev_blocks else None)   # the last block whose events were read completely; the first run of the lot starts from the previous record
+        logs_urls = [u_ for u_ in dict.fromkeys([LOGS_RPC.get(key), url]) if u_]
+        logs_head = None
+        for u_ in logs_urls:   # the head of the node that answers the logs: a window must not end beyond it (a lagging gateway would silently return nothing for the last blocks)
+            h_ = rpc_batch(u_, [("eth_blockNumber", [])])[0]
+            if isinstance(h_, str) and h_.startswith("0x"): logs_head = int(h_, 16); break
+        hi_ = min(block_end, logs_head) if (isinstance(block_end, int) and logs_head is not None) else None
+        win = window_for(scanned_from, hi_) if hi_ is not None else {"reason": "the block of this record or the head of the logs node was not read"}
+        ev_by_addr, win_complete = {}, None
+        if "from" in win:
+            addrs_ = sorted({r_["target"].lower() for r_ in chain_recs if r_.get("kind") != "native"} | {r_["holder"].lower() for r_ in chain_recs if r_.get("kind") == "timelock" and r_.get("holder") and not r_.get("alias_of")})
+            def getlogs_(a_, b_, addrs_=addrs_):
+                for u_ in logs_urls:
+                    got_ = rpc_batch(u_, [("eth_getLogs", [{"address": addrs_, "topics": [list(ADMIN_TOPICS + DELAY_TOPICS)], "fromBlock": hex(a_), "toBlock": hex(b_)}])])[0]
+                    if isinstance(got_, list): return got_
+                return None
+            logs_, win_complete = scan_logs(getlogs_, win["from"], win["to"], step=LOG_STEP_BY_CHAIN.get(key, LOG_STEP_BLOCKS))
+            if win.get("cut"): win_complete = False   # the first blocks of the window were never read: not a complete window, whatever the last ones say
+            ev_by_addr = events_by_address(logs_)
+        # the last block read completely moves only with a window read completely (or a cut one: the lost blocks are said, once); otherwise the next run starts from it again and the window grows
+        if "from" in win: scanned_to = win["to"] if (win_complete or win.get("cut")) else scanned_from
+        else: scanned_to = scanned_from if scanned_from is not None else (hi_ if hi_ is not None else None)
+        event_windows[key] = {"from": win.get("from"), "to": win.get("to"), "cut": win.get("cut"), "complete": win_complete, "note": win.get("reason"), "scanned_to": scanned_to}
+        tl_recs = [r_ for r_ in chain_recs if r_.get("kind") == "timelock" and r_.get("holder") and r_.get("timelock_family") != "compound" and not r_.get("alias_of")]   # an alias holder lives on L1: the reads below would ask the wrong chain
+        ex_ans = rpc_batch(url, [open_executor_call(r_["holder"]) for r_ in tl_recs]) if tl_recs else []
+        da_recs = [r_ for r_ in chain_recs if "default_admin" in (r_.get("pending_getters") or [])]
+        da_ans = rpc_batch(url, [("eth_call", [{"to": r_["target"], "data": DEFAULT_ADMIN_DELAY_SEL}, "latest"]) for r_ in da_recs]) if da_recs else []
+        mrecs = [r_ for r_ in chain_recs if isinstance(r_.get("admin_members"), dict) and r_["admin_members"].get("members") and r_.get("kind") not in ("unreadable", "native")]
+        first_member = lambda r_: r_["admin_members"]["members"][0]            # the holder BEFORE any hop (an Arbitrum alias is replaced by its L1 address in `holder`, not here)
+        mem_addrs = sorted({m_ for r_ in mrecs for m_ in r_["admin_members"]["members"] if m_.lower() != first_member(r_).lower()})
+        mem_codes = rpc_batch(url, [("eth_getCode", [m_, "latest"]) for m_ in mem_addrs]) if mem_addrs else []
+        member_kinds = {m_.lower(): (None if c_ is None else ("eoa" if is_plain(c_) else "contract")) for m_, c_ in zip(mem_addrs, mem_codes)}
+        complete_window = bool(win_complete) and "from" in win
+        for r_ in chain_recs:
+            evs_ = ev_by_addr.get(r_["target"].lower())
+            if complete_window:   # null as long as the window was not read completely: [] means "none in a window that was read"
+                kept_, total_ = admin_events_of(evs_)
+                r_["admin_events"] = [dict(e_, **{k_: short(e_[k_]) for k_ in ("previous", "new") if k_ in e_ and e_[k_]}) for e_ in kept_]   # a plain key never leaves in full
+                r_["admin_events_total"] = total_
+            else: r_["admin_events"] = None; r_["admin_events_total"] = None
+            if r_.get("kind") == "timelock" and r_.get("holder") and not r_.get("alias_of"):
+                r_["delay_change"] = delay_change_of(ev_by_addr.get(r_["holder"].lower()), previous_delay=(prev.get(key + ":" + r_["target"].lower()) or {}).get("delay_seconds")) if complete_window else None
+                if r_["delay_change"] and r_.get("changed") and r_["delay_change"].get("new") is not None:
+                    r_["changed"] += "; the timelock emitted a delay change to %ss at block %s%s" % (r_["delay_change"]["new"], r_["delay_change"].get("block"), " (shorter)" if r_["delay_change"].get("direction") == "shorter" else "")
+        for r_, w_ in zip(tl_recs, ex_ans): r_["open_executor"] = open_executor_of(w_)
+        for r_, w_ in zip(da_recs, da_ans):
+            r_["default_admin_delay_seconds"] = nowd_ = default_admin_delay_of(w_)
+            pd_ = (prev.get(key + ":" + r_["target"].lower()) or {}).get("default_admin_delay_seconds")
+            if nowd_ is not None and pd_ is not None and nowd_ != pd_:   # the delay a change of default admin must wait: a drop is the same kind of finding as a shorter timelock
+                r_["default_admin_delay_change"] = {"previous": pd_, "now": nowd_, "direction": "shorter" if nowd_ < pd_ else "longer"}
+                if nowd_ < pd_:
+                    msg_ = "the delay of a change of default admin was shortened from %ss to %ss" % (pd_, nowd_)
+                    if r_.get("changed"): r_["changed"] += "; " + msg_
+                    else: r_["changed"] = msg_; changes.append(r_)
+        for r_ in mrecs:
+            first_ = first_member(r_)
+            r_["admin_members_gap"] = gap_ = admin_gap(first_, r_["admin_members"], member_kinds)
+            if r_.get("kind") == "eoa" or member_kinds.get(first_.lower()) == "eoa": gap_["weighed_holder"] = short(first_)   # a plain key never leaves in full
+            r_["admin_members"]["members"] = [short(m_) if (member_kinds.get(m_.lower()) == "eoa" or (m_.lower() == first_.lower() and r_.get("kind") == "eoa")) else m_ for m_ in r_["admin_members"]["members"]]
+            txt_ = member_disagreement(r_.get("adminKeyScore"), gap_)
+            if txt_:
+                if r_.get("disagree") or r_.get("acknowledged"): r_["disagree"] = (r_.get("disagree") or "") + "; " + txt_   # already listed (or reviewed: the note covers the old finding, this one is added to its text)
+                else:
+                    r_["disagree"] = txt_; agree -= 1; note_ = ack.get(key + ":" + str(r_["target"]).lower())
+                    if note_: r_["acknowledged"] = str(note_)[:300]; acked.append(r_)
+                    else: dis.append(r_)
         # pass 3b (since 2026-10-10): a holder read as a bare contract (no Safe, no timelock getter) often has an owner() of its own, and THAT is the hand:
         # Uniswap's V3 factory is owned by a 14 KB contract owned by the governance Timelock. One more hop, classified like a holder, with the same axes.
         bare = [r_ for r_ in results if r_["chain"] == key and r_.get("kind") == "contract" and r_.get("holder") and not r_.get("oracle_self")]
@@ -754,8 +849,9 @@ def main():
         rec_ = {"keys_to_move": keys, "react_hours": hours, "tvl_usd": money, "money_per_key_usd": (money / keys) if (money and keys) else None, "money_source": src, "held_symbol": h_.get("symbol"), "held_amount": h_.get("amount")}
         r_["exposure"] = rec_
         if keys and money: exposure.append({"chain": r_["chain"], "target": r_["target"], "keys_to_move": keys, "react_hours": hours, "tvl_usd": round(money), "money_per_key_usd": round(money / keys), "money_source": src})
+    for k_, w_ in prev_windows.items(): event_windows.setdefault(k_, w_)   # a chain that was not read this run keeps its marker: the next run starts from the last block read
     exposure.sort(key=lambda x: (-x["money_per_key_usd"], x["react_hours"]))
-    out = {"generated_utc": now_utc, "blocks": blocks, "signer_composition": signer_composition, "exposure": exposure[:40], "checked": sum(1 for r_ in results if not r_.get("oracle_self")), "clusters": clusters, "concentration": concentration, "cluster_changes": cluster_changes, "agree": agree, "disagree": len(dis), "unreadable": unread, "native": native, "acknowledged": len(acked), "rpc_calls_unanswered": RPC_ERRORS,
+    out = {"generated_utc": now_utc, "pending_follow": PENDING_FOLLOW_NOTE, "event_windows": event_windows, "blocks": blocks, "signer_composition": signer_composition, "exposure": exposure[:40], "checked": sum(1 for r_ in results if not r_.get("oracle_self")), "clusters": clusters, "concentration": concentration, "cluster_changes": cluster_changes, "agree": agree, "disagree": len(dis), "unreadable": unread, "native": native, "acknowledged": len(acked), "rpc_calls_unanswered": RPC_ERRORS,
            "disagreements": dis, "acknowledged_disagreements": acked, "changed": changes, "upgrades": upgrades, "previous_utc": prev_utc, "results": results,
            "what": "an independent reader (EVM: EIP-1967 admin slot then ProxyAdmin owner(), else owner(), else admin(); holder classified as EOA / Safe / timelock / contract. Solana: the program upgrade authority through ProgramData, classified as plain key / Squads multisig / immutable / program-owned account) against the published adminKeyScore; a disagreement is a finding to review, an unreadable target is not an agreement, a native target (no code at the address: a derived identifier for a non-EVM entity) is outside this reader's reach"}
     tmp = a.out + ".tmp"; json.dump(out, open(tmp, "w"), indent=1); os.replace(tmp, a.out)

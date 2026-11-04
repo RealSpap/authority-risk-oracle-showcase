@@ -11,7 +11,7 @@ import argparse, glob, json, os, sys, time
 
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 from evaluate_rules import lower_keys, WATCH_SLUGS, norm, LABEL  # noqa: E402
-from lib.reader_audit import snapshot_status  # noqa: E402  -- the date of the shared-signer sweep, per chain
+from lib.reader_audit import snapshot_for, snapshot_status  # noqa: E402  -- the date of the shared-signer sweep, per chain
 
 
 def load(p):
@@ -45,11 +45,13 @@ def main():
         d = load(f) or {}; key = WATCH_SLUGS.get(os.path.basename(f)[:-5]) or ("solana" if d.get("kind") == "solana" else None)
         if key:
             for t in d.get("targets", []): scores[key + ":" + norm(t["target"]).lower()] = t
+    snap = load(os.path.join(a.data, "cross_snapshot.json")) or {}
     groups = {}
     for ka, m in tvl.items():
         if not m.get("slug") or ka not in scores: continue
         key = ka.split(":", 1)[0]; g = groups.setdefault(m["slug"], {"protocol": m.get("name") or m["slug"], "chains": {}})
         c = g["chains"].setdefault(key, {"chain": LABEL.get(key, key), "contracts": 0, "composite_min": 100, "composite_max": 0, "admin_kinds": {}, "postures": [], "tvl_usd": 0.0})
+        c.setdefault("targets", []).append(dict(snapshot_for(snap, ka, time.time()), target=ka.split(":", 1)[1]))   # the sweep THIS target rests on (target, then chain, then the file's date)
         t = scores[ka]; comp = int(t.get("compositeScore") or 0); c["contracts"] += 1; c["composite_min"] = min(c["composite_min"], comp); c["composite_max"] = max(c["composite_max"], comp)
         if m.get("scope") == "chain" and (scope.get(ka) or {}).get("scope") not in ("retired", "peripheral"): c["tvl_usd"] = max(c["tvl_usd"], float(m.get("tvl") or 0))   # one chain figure per protocol and chain, not summed over its contracts; a retired contract carries none
         r = so.get(ka)
@@ -57,11 +59,15 @@ def main():
             k = r.get("kind") or "unreadable"; c["admin_kinds"][k] = c["admin_kinds"].get(k, 0) + 1
             p = posture(r)
             if p not in c["postures"]: c["postures"].append(p)
-    snap = load(os.path.join(a.data, "cross_snapshot.json")) or {}; ss = snapshot_status(snap.get("swept_utc"), snap.get("valid_days", 30), time.time())   # the sweep the crossExposure scores rest on
+    ss = snapshot_status(snap.get("swept_utc"), snap.get("valid_days", 30), time.time())   # the sweep the crossExposure scores rest on
     out_protos = []
     for slug, g in groups.items():
         if len(g["chains"]) < 2: continue
-        for c_ in g["chains"].values(): c_["exposure_snapshot_utc"] = ss["swept_utc"]   # null = the date is not recorded (data/cross_snapshot.json), never a made-up one
+        for c_ in g["chains"].values():   # the oldest date among its targets; null as soon as one target has none (data/cross_snapshot.json), never a made-up one
+            dates_ = [x_["swept_utc"] for x_ in c_.get("targets", [])]
+            c_["exposure_snapshot_utc"] = None if (not dates_ or None in dates_) else min(dates_)
+            c_["exposure_snapshot_expired_targets"] = sum(1 for x_ in c_.get("targets", []) if x_["expired"])
+            c_["exposure_snapshot_unknown_targets"] = sum(1 for x_ in c_.get("targets", []) if x_["expired"] is None)   # no date: neither valid nor expired
         chains = g["chains"]; kinds_sets = [frozenset(k for k in c["admin_kinds"] if k not in ("unreadable", "native")) for c in chains.values()]
         weakest = min(chains.items(), key=lambda kv: kv[1]["composite_min"]); strongest = max(chains.items(), key=lambda kv: kv[1]["composite_min"])
         differs = len(set(s for s in kinds_sets if s)) > 1 or (strongest[1]["composite_min"] - weakest[1]["composite_min"]) >= 15

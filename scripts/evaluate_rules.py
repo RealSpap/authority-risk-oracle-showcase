@@ -11,6 +11,7 @@ each such alert carries its evidence (timelock, tx, selector, when it executes).
 import argparse, ast, glob, hashlib, hmac, json, os, sys, time, urllib.request
 from watch_location import RAW  # the feeds live on the watch-data branch
 from lib.fresh_ops import fresh_enough  # one filter for the queue everywhere: an operation executable for more than 7 days is not listed
+from lib.reader_audit import batches_for, channels_still_owed, configured_channels, delivered_after, is_notified, reading_evidence, state_unverified  # delivery per channel, a state nobody could read
 from pending_ics import SELNAMES  # the same small selector-to-name table as the calendar and the page: an alert names the queued function when the event did not
 
 def _dump_json(obj, path, indent=None):
@@ -191,6 +192,18 @@ def main():
     except Exception: pass  # noqa: BLE001
     try: pause_all = json.load(open(a.pause)).get("by_target") or {}   # a flip of paused() / isPaused() since the previous run (stale records never fire)
     except Exception: pause_all = {}  # noqa: BLE001
+    unverified = {}   # a pause or Safe-activity state nobody could read for days: what is shown is the last state read, not the current one
+    try:
+        pdoc_ = json.load(open(a.pause))
+        for ka_, rec_ in (pdoc_.get("by_target") or {}).items():
+            if state_unverified(rec_, pdoc_.get("generated_utc")): unverified.setdefault(ka_, "pause state")
+    except Exception: pass  # noqa: BLE001
+    try:
+        sdoc_ = json.load(open(a.safe))
+        for rec_ in (sdoc_.get("by_safe") or {}).values():
+            if state_unverified(rec_, sdoc_.get("generated_utc")):
+                for tk_ in rec_.get("governs") or []: unverified.setdefault(tk_, "Safe activity")
+    except Exception: pass  # noqa: BLE001
     try: held_all = json.load(open(a.held)).get("by_target") or {}   # the balance moves too (amount_change_pct): a contract that loses most of its assets between two runs
     except Exception: held_all = {}  # noqa: BLE001
     try:   # watch/held_assets.json (since 2026-10-10): a vault DefiLlama lists no protocol for carries what it holds by its own account, as the dashboard and risk_by_cause count it; 12 such vaults held $1.9B with no money-based rule able to fire on them
@@ -198,10 +211,12 @@ def main():
             if ka_ not in tvl and ka_ not in scoped_ and h_.get("held_usd"): tvl = dict(tvl); tvl[ka_] = {"slug": "held:" + ka_, "name": "held by the contract", "tvl": float(h_["held_usd"]), "scope": "contract", "chain": ka_.split(":")[0]}
     except Exception: pass  # noqa: BLE001
     latest = json.load(open(a.latest)) if os.path.exists(a.latest) else {}
+    so_rec = {}   # the independent reader's record per target, for the alert's proof
     so_status, so_changed, so_shared, so_upgraded, so_pending = {}, set(), {}, set(), set()   # the independent reader's verdict per target (scripts/second_opinion.py), two more fields a rule can use
     if os.path.exists(a.second_opinion):
         try:
             so = json.load(open(a.second_opinion))
+            for r_ in so.get("results", []): so_rec[r_["chain"] + ":" + norm(r_["target"])] = r_
             for r_ in so.get("results", []): so_status[r_["chain"] + ":" + norm(r_["target"])] = "disagree" if r_.get("disagree") and not r_.get("acknowledged") else "reviewed" if r_.get("acknowledged") else r_.get("kind") if r_.get("kind") in ("unreadable", "native") else "agree"
             so_shared = {r_["chain"] + ":" + norm(r_["target"]): len(r_.get("shares_admin_with") or []) for r_ in so.get("results", [])}
             for r_ in so.get("changed", []): so_changed.add(r_["chain"] + ":" + norm(r_["target"]))
@@ -231,7 +246,8 @@ def main():
     for f in sorted(glob.glob(os.path.join(a.scores, "*.json"))):
         key = WATCH_SLUGS.get(os.path.basename(f)[:-5])
         if not key: continue
-        for t in json.load(open(f))["targets"]:
+        doc_ = json.load(open(f)); meta_ = {k_: doc_.get(k_) for k_ in ("oracle", "rpc", "block", "readAt", "read_tag")}   # where and when the score was read, kept for the alert's proof
+        for t in doc_["targets"]:
             addr = norm(t["target"]); ka = key + ":" + addr; m = tvl.get(key + ":" + addr.lower()); score = int(t["compositeScore"])
             prevc = t.get("previousComposite"); delta = None if prevc in (None, "") else score - int(prevc)
             ps = prevsub.get(os.path.basename(f)[:-5] + ":" + addr)
@@ -244,7 +260,7 @@ def main():
                    "held_drop_pct": (-(held_all[ka]["amount_change_pct"]) if (held_all.get(ka) or {}).get("amount_change_pct") is not None and not held_all[ka].get("stale") else None),
                    "pause_change": (pause_all.get(ka) or {}).get("change") if not (pause_all.get(ka) or {}).get("stale") else None, "paused": (pause_all.get(ka) or {}).get("paused") if not (pause_all.get(ka) or {}).get("stale") else None,
                    "side_role_change": any(not c_.get("shorter") for c_ in side_changes.get(ka, [])), "side_delay_cut": any(c_.get("shorter") for c_ in side_changes.get(ka, [])),
-                   "held_vanished": bool((held_all.get(ka) or {}).get("vanished")), "safe_woke": ka in safe_woke,
+                   "held_vanished": bool((held_all.get(ka) or {}).get("vanished")), "safe_woke": ka in safe_woke, "state_unverified": ka in unverified,
                    "held_drop_usd": ((held_all[ka]["prev_amount"] - held_all[ka]["amount"]) * held_all[ka]["price_usd"] if (held_all.get(ka) or {}).get("amount_change_pct") is not None and held_all[ka].get("price_usd") and not held_all[ka].get("stale") else None),   # a stale record never fires, in dollars either (the shipped rules also test held_drop_pct, which already ignored it)
                    "second_opinion": so_status.get(ka), "admin_changed": ka in so_changed, "shared_admin": so_shared.get(ka), "dispute": disputes.get(ka), "upgraded": ka in so_upgraded, "admin_pending": ka in so_pending,
                    "age_days": ((now_s - int(t["lastUpdated"])) / 86400) if t.get("lastUpdated") else None,   # since the last push of this score; the oracles mark it stale at 9 days
@@ -272,8 +288,10 @@ def main():
                 sw = {"safe": short_safe(safe_woke[ka]["safe"]), "delta": safe_woke[ka].get("delta"), "idle_days": safe_woke[ka].get("idle_days"), "previous_run": safe_woke[ka].get("previous_run")} if ("safe_woke" in r["when"] and ka in safe_woke) else None
                 if sw: h["safe_wake"] = sw
                 if pz: h["pause"] = pz
+                # `evidence` stays what it was (the queued operations behind a queue alert: consumers read each item as one); the proof of every alert, the queue ones included, is `reading` (block, time, composite, the command that redoes the read)
                 active.append({"rule": r["name"], "severity": r.get("severity", "info"), "chain": env["chain"], "target": t["target"], "title": env["title"], "score": score, "delta": delta, "tvl_usd": env["tvl_usd"], "first_seen": (now if is_new else h["first_seen"]), "new": is_new,
-                               "evidence": evidence if "queued" in r["when"] or "ready_in" in r["when"] else [], "previous_run": latest.get("previous_run_utc") if delta is not None else None,
+                               "evidence": evidence if "queued" in r["when"] or "ready_in" in r["when"] else [], "reading": reading_evidence(meta_, so_rec.get(ka), t, ka),
+                               "previous_run": latest.get("previous_run_utc") if delta is not None else None,
                                **({"balance": bal} if bal else {}), **({"pause": pz} if pz else {}), **({"side_role": sr} if sr else {}), **({"safe_wake": sw} if sw else {})})
     history = sorted(seen.values(), key=lambda h: h["last_seen"], reverse=True)[:500]
     out = {"evaluated_utc": now, "run_utc": latest.get("run_utc"), "rules": [r["name"] for r in rules["rules"]], "active": active, "history": history, "errors": errors}
@@ -295,19 +313,34 @@ def main():
     _dump_json({"schemaVersion": 1, "label": "authority alerts", "message": ("%d firing" % len(active)) + (", %d high" % hi if hi else "") if active else "none firing", "color": "e05d5d" if hi else ("dfb13a" if active else "3fbf8f")}, os.path.join(bd, "alerts.json"))
     new = [x for x in active if not x["notified"] and SEV.get(x["severity"], 0) >= SEV.get(rules.get("notify", {}).get("min_severity", "medium"), 1)]   # new, or not delivered last time
     sent = []; impl_src = impl_verified_by_address(os.path.join(os.path.dirname(a.out) or ".", "impl_sources.json"))   # Sourcify state of the code behind each proxy, for the daily mode
+    # Delivery per channel: `sent` used to be one list for all channels, so a channel that worked marked the alert delivered for the channel that failed. Now each alert keeps the channels that carry it
+    # (`delivered`), a retry goes only to the channels still owed, and the alert is `notified` when every channel it needs carries it.
+    akey = lambda x: x["rule"] + "|" + x["chain"] + ":" + norm(x["target"])
+    configured = configured_channels(os.environ); prev_active = {akey(x): x for x in prev.get("active", [])}
+    daily = os.environ.get("TELEGRAM_MODE") == "daily"
+    owed = {akey(x): [c for c in (list(configured) if x["new"] else channels_still_owed(prev_active.get(akey(x)), configured)) if not (c == "telegram" and daily and not live_on_telegram(x, impl_src))] for x in new}   # the daily mode owes Telegram the critical alerts only, decided BEFORE the cap of 10 per message, so non-critical ones cannot fill it
+    batches = batches_for([akey(x) for x in new], owed, configured); by_key = {akey(x): x for x in new}
+    results = {}
     if new and not a.no_send:
-        text = "Authority Risk Oracle: %d new alert(s)\n" % len(new) + "\n".join("[%s] %s: %s (%s, score %d)%s" % (x["severity"], x["rule"], x["title"], x["chain"], x["score"], (" " + detail_text(x)) if detail_text(x) else "") for x in new[:10]) + "\nhttps://realspap.github.io/oracle/"
-        if os.environ.get("DISCORD_WEBHOOK_URL") and post_json(os.environ["DISCORD_WEBHOOK_URL"], {"content": text[:1900], "allowed_mentions": {"parse": []}}): sent.append("discord")
-        if os.environ.get("ALERT_WEBHOOK_URL") and post_signed(os.environ["ALERT_WEBHOOK_URL"], os.environ.get("ALERT_WEBHOOK_SECRET", ""), {"event": "alerts", "version": 1, "sent_utc": now, "alerts": [{k: x.get(k) for k in ("rule", "severity", "chain", "target", "title", "score", "delta", "tvl_usd", "first_seen")} for x in new[:10]], "page": "https://realspap.github.io/oracle/"}): sent.append("webhook")
-        daily = os.environ.get("TELEGRAM_MODE") == "daily"; tg_new = [x for x in new if live_on_telegram(x, impl_src)] if daily else new   # daily mode (12/10, off by default): the public channel gets one summary a day (scripts/telegram_digest.py --daily) and only the critical alerts live
-        tg_text = text if not daily else ("Authority Risk Oracle: %d critical alert(s)\n" % len(tg_new) + "\n".join("[%s] %s: %s (%s, score %d)" % (x["severity"], x["rule"], x["title"], x["chain"], x["score"]) for x in tg_new[:10]) + "\nhttps://realspap.github.io/oracle/")
-        if os.environ.get("TELEGRAM_BOT_TOKEN") and os.environ.get("TELEGRAM_CHAT_ID") and tg_new:
+        owed_total = {c: sum(1 for x in new if c in owed[akey(x)]) for c in configured}   # the title says how many the channel is owed; the message lists at most 10 of them, the rest follow at the next run
+        mk = lambda items, head, c="discord": head % owed_total.get(c, len(items)) + ("(%d listed, the others follow at the next run)\n" % len(items) if owed_total.get(c, len(items)) > len(items) else "") + "\n".join("[%s] %s: %s (%s, score %d)%s" % (x["severity"], x["rule"], x["title"], x["chain"], x["score"], (" " + detail_text(x)) if detail_text(x) else "") for x in items[:10]) + "\nhttps://realspap.github.io/oracle/"
+        if "discord" in configured and batches["discord"]:
+            items = [by_key[k] for k in batches["discord"]]; results["discord"] = bool(post_json(os.environ["DISCORD_WEBHOOK_URL"], {"content": mk(items, "Authority Risk Oracle: %d new alert(s)\n", "discord")[:1900], "allowed_mentions": {"parse": []}}))
+        if "webhook" in configured and batches["webhook"]:
+            items = [by_key[k] for k in batches["webhook"]]; results["webhook"] = bool(post_signed(os.environ["ALERT_WEBHOOK_URL"], os.environ.get("ALERT_WEBHOOK_SECRET", ""), {"event": "alerts", "version": 1, "sent_utc": now, "alerts": [{k: x.get(k) for k in ("rule", "severity", "chain", "target", "title", "score", "delta", "tvl_usd", "first_seen")} for x in items[:10]], "page": "https://realspap.github.io/oracle/"}))
+        tg_items = [by_key[k] for k in batches.get("telegram", [])]; tg_new = [x for x in tg_items if live_on_telegram(x, impl_src)] if daily else tg_items   # daily mode (12/10, off by default): the public channel gets one summary a day (scripts/telegram_digest.py --daily) and only the critical alerts live
+        if "telegram" in configured and tg_new:
+            tg_text = mk(tg_new, "Authority Risk Oracle: %d new alert(s)\n", "telegram") if not daily else ("Authority Risk Oracle: %d critical alert(s)\n" % len(tg_new) + "\n".join("[%s] %s: %s (%s, score %d)" % (x["severity"], x["rule"], x["title"], x["chain"], x["score"]) for x in tg_new[:10]) + "\nhttps://realspap.github.io/oracle/")
             try:
                 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "lib")); import alerts
-                if alerts.send_telegram_alert(tg_text if len(tg_text) <= 4000 else tg_text[:3900] + "\n... (cut at Telegram's limit of 4096 characters, the rest is on the alerts page)"): sent.append("telegram")
-            except Exception: pass
-    channels = bool(os.environ.get("DISCORD_WEBHOOK_URL") or (os.environ.get("ALERT_WEBHOOK_URL") and os.environ.get("ALERT_WEBHOOK_SECRET")) or (os.environ.get("TELEGRAM_BOT_TOKEN") and os.environ.get("TELEGRAM_CHAT_ID") and (os.environ.get("TELEGRAM_MODE") != "daily" or any(live_on_telegram(x, impl_src) for x in new))))
-    for i, x in enumerate(new): x["notified"] = (bool(sent) and i < 10) or not channels or a.no_send   # delivered (the message carries ten at most), or nobody to deliver to; a failed or unsent one is retried next run
+                results["telegram"] = bool(alerts.send_telegram_alert(tg_text if len(tg_text) <= 4000 else tg_text[:3900] + "\n... (cut at Telegram's limit of 4096 characters, the rest is on the alerts page)"))
+            except Exception: results["telegram"] = False
+            batches["telegram"] = [akey(x) for x in tg_new[:10]]   # what Telegram really carried: the daily mode drops the non-critical ones
+        sent = [c for c, ok in results.items() if ok]
+    for x in new:
+        k = akey(x); x["delivered"] = delivered_after((prev_active.get(k) or {}).get("delivered") if not x["new"] else None, k, batches, results)
+        required = [c for c in configured if not (c == "telegram" and daily and not live_on_telegram(x, impl_src))]   # the daily mode asks Telegram for the critical ones only
+        x["notified"] = is_notified(x["delivered"], required) or a.no_send   # every channel the alert needs carries it, or nobody to deliver to; a failed or unsent one is retried next run, on the channels still owed
     _dump_json(out, a.out, indent=1)   # written again with the delivery state
     # the alarm channel that needs no secret (since 2026-10-10): a HIGH alert that appeared this run (not one that stays) is written for the workflow, which opens an issue in the private repository.
     # Before, only Discord / Telegram (secrets nobody had set yet) carried a drain, a pause or a change ready to execute: the feeds and the page, nothing that reaches a person.

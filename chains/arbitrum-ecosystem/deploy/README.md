@@ -511,3 +511,8 @@ READ_RPC_URL=https://arb1.arbitrum.io/rpc \
 # -> 10 targets, updateScores() calldata encoded (3012 bytes),
 #    methodologyHash 0x6acfe9c5f210a6d1e4cd50a30ea19b8436bcee1b948e633d2de153bd4dd78915
 ```
+
+## 2026-10-31: read-only recheck of tracked index 0 (GMX V2 RoleStore), nothing pushed
+
+The 2026-09-19 entry above (`TIMELOCK_ADMIN` includes a bare EOA) is no longer true as written: the role is held by two Safes today. The same EOA still holds PROPOSER, EXECUTOR and CANCELLER on the two ConfigTimelockControllers that are ROLE_ADMIN holders, and a simulated schedule of a RoleStore grant from it is accepted at the 24 hour minimum delay. The other bare EOA noted on 2026-09-20 on the GMX DAO timelock had its three roles revoked on 2026-10-24. Dated details, what was verified and what was not: `data/rotation_audit_2026-09-19-index0-gmx-rolestore.md`, section "Update 2026-10-31". No score was changed or pushed by this note.
+

@@ -202,9 +202,21 @@ jobs:
         if: always()
         env:
           HAS_TOKEN: ${{ secrets.ISSUES_TOKEN != '' }}
+          ALARM_CONDITION: ${{ steps.run.outputs.code != '0' || steps.so.outputs.disagree != '0' || steps.so.outputs.upgraded != '0' || steps.meth.outputs.changed != '0' || steps.rq.outputs.overdue != '0' || steps.rules.outputs.hi_new != '0' }}   # the same condition as the Alarm step: the gate tells the end of an alarm only when it is false
         run: |
           if [ "$HAS_TOKEN" = "true" ]; then W="--write"; else W=""; fi
           python3 scripts/alarm_gate.py --watch watch --run-log watch/run.log $W | tee -a "$GITHUB_OUTPUT"
+
+      - name: "Alarm cleared: the findings of the last notice are all gone, so the person who was told is told it is over (an issue in the private repository; nothing without ISSUES_TOKEN)"
+        if: always() && steps.gate.outputs.mode == 'recovered'   # the state that makes it 'recovered' is only written when ISSUES_TOKEN exists
+        continue-on-error: true   # a failed notice (an expired token, the API down) must not stop the run from being recorded on watch-data: this step is before "Record the run"
+        env:
+          GH_TOKEN: ${{ secrets.ISSUES_TOKEN }}
+          PRIVATE_REPO: RealSpap/authority-risk-oracle
+        run: |
+          [ -n "$GH_TOKEN" ] || exit 0
+          gh label create alarm --repo "$PRIVATE_REPO" --color B60205 --description "A score dropped, a target turned stale or an oracle stopped answering" 2>/dev/null || true
+          gh issue create --repo "$PRIVATE_REPO" --title "Alarm cleared $(date -u '+%Y-%m-%d %H:%M') UTC: no finding stands any more" --label alarm --body "The Watch run of $(date -u +%Y-%m-%dT%H:%MZ) found none of the findings of the last alarm. This is the end of that alarm, not a silence: the run files are on the watch-data branch."
 
       - name: Record the run on the watch-data branch (watch/.gitignore keeps the job logs, *.txt and *.log, out of it; main receives nothing)
         run: |
@@ -227,8 +239,20 @@ jobs:
           [ "$(wc -c < watch/alarm.md)" -gt 60000 ] && { head -c 60000 watch/alarm.md > watch/alarm.tmp && printf '\n\n(cut at 60000 characters, GitHub refuses an issue body over 65536: the files are in watch/ and the job log)\n' >> watch/alarm.tmp && mv watch/alarm.tmp watch/alarm.md; }   # a long day (every target stale + the whole review queue) must not lose the alarm
           [ -n "$GH_TOKEN" ] || { echo "::warning::alarm raised but no ISSUES_TOKEN secret: no issue opened (alarm.md is printed below)"; cat watch/alarm.md; exit 0; }
           gh label create alarm --repo "$PRIVATE_REPO" --color B60205 --description "A score dropped, a target turned stale or an oracle stopped answering" 2>/dev/null || true
-          gh issue create --repo "$PRIVATE_REPO" --title "Alarm$([ "${{ steps.gate.outputs.mode }}" = reminder ] && printf ' reminder (the state below has not changed for a day)') $(date -u '+%Y-%m-%d %H:%M') UTC: $(( $(grep -c ALARM watch/run.log) + ${{ steps.so.outputs.disagree || 0 }} + ${{ steps.so.outputs.upgraded || 0 }} + ${{ steps.meth.outputs.changed || 0 }} + ${{ steps.rq.outputs.overdue || 0 }} + ${{ steps.rules.outputs.hi_new || 0 }} )) finding(s) on the deployed oracles" \
-            --label alarm --body-file watch/alarm.md
+          gh label create escalation --repo "$PRIVATE_REPO" --color 5B0000 --description "The same alarm state has stood for 72 hours or more" 2>/dev/null || true
+          gh issue create --repo "$PRIVATE_REPO" --title "Alarm$([ "${{ steps.gate.outputs.mode }}" = reminder ] && printf ' reminder (the state below has not changed for a day)')$([ "${{ steps.gate.outputs.mode }}" = escalation ] && printf ' ESCALATION (the state below has stood for 3 days or more)') $(date -u '+%Y-%m-%d %H:%M') UTC: $(( $(grep -c ALARM watch/run.log) + ${{ steps.so.outputs.disagree || 0 }} + ${{ steps.so.outputs.upgraded || 0 }} + ${{ steps.meth.outputs.changed || 0 }} + ${{ steps.rq.outputs.overdue || 0 }} + ${{ steps.rules.outputs.hi_new || 0 }} )) finding(s) on the deployed oracles" \
+            --label "alarm$([ "${{ steps.gate.outputs.mode }}" = escalation ] && printf ',escalation')" --body-file watch/alarm.md
+
+      - name: "Escalation: the same alarm state has stood for 72 hours or more, so the alert channels (Discord, the signed webhook, Telegram), which the alarm does not use, get one short message: counts and kinds only, nothing private"
+        if: always() && steps.gate.outputs.mode == 'escalation'
+        continue-on-error: true   # a channel that is down must not stop the run from being recorded
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          ALERT_WEBHOOK_URL: ${{ secrets.ALERT_WEBHOOK_URL }}
+          ALERT_WEBHOOK_SECRET: ${{ secrets.ALERT_WEBHOOK_SECRET }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python3 scripts/escalate.py --watch watch
 
       - name: "Daily report (first run of the day, about 20 minutes): stale oracles, Safe changes, queued operations, code changes"
         run: |

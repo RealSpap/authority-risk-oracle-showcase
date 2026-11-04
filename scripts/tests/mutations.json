@@ -483,7 +483,7 @@
   },
   {
    "file": "scripts/alarm_gate.py",
-   "old": "f.add(\"alarm:\" + l.strip()[:160])",
+   "old": "f.add(\"alarm:\" + l.strip().split(VOLATILE)[0][:160])",
    "new": "f.add(\"alarm:\" + l.strip()[:16])",
    "why": "two different alarm lines look the same"
   },
@@ -1430,15 +1430,15 @@
    "why": "an alert at exactly the minimum severity is not delivered"
   },
   {
-   "file": "scripts/evaluate_rules.py",
-   "old": "(bool(sent) and i < 10) or not channels or a.no_send",
-   "new": "(bool(sent)) or not channels or a.no_send",
+   "file": "scripts/lib/reader_audit.py",
+   "old": "if c in owed.get(k, [])][:cap]",
+   "new": "if c in owed.get(k, [])]",
    "why": "alerts beyond the ten in a message are marked delivered"
   },
   {
-   "file": "scripts/evaluate_rules.py",
-   "old": "(bool(sent) and i < 10) or not channels or a.no_send",
-   "new": "(bool(sent) and i < 10) or a.no_send",
+   "file": "scripts/lib/reader_audit.py",
+   "old": "return all(c in delivered for c in required)",
+   "new": "return bool(required) and all(c in delivered for c in required)",
    "why": "with no channel configured an alert stays undelivered for ever"
   },
   {

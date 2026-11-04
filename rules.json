@@ -1,6 +1,6 @@
 {
  "version": 1,
- "about": "Alert rules on CHANGES (a static condition such as 'score under 20' is already the dashboard sorted by at-risk; these fire when something moves), evaluated by scripts/evaluate_rules.py at every watch run. Fork this file: each rule is a name, a plain condition over the fields below, and a severity. Fields: score (0-100), delta (change since the previous run, null if none), stale (true/false), tvl_usd (DefiLlama, null if not matched), at_risk_usd (tvl \u00d7 (100 - score) / 100), admin, multisig, timelock, price_feed, shared (the five sub-scores), chain, title. From the timelock queue: queued_ops (operations queued against this contract), ready_in_hours (until the earliest executes; negative = ready now), executed_14d (operations queued in the last 14 days that have left the queue: run or cancelled; one still waiting is in queued_ops). Per-axis change since the previous run: admin_delta, multisig_delta, timelock_delta (null on the first run). From the independent reader (scripts/second_opinion.py): second_opinion ('agree', 'disagree', 'reviewed', 'unreadable', 'native', null when not read) admin_changed (true when the live admin read moved since the previous run) shared_admin (how many other tracked contracts the same holder governs, null when not read) and age_days (days since the score was last pushed on-chain; the oracles mark it stale at 9). Operators: <, <=, >, >=, ==, !=, + and -, and/or/not, parentheses. The dashboard evaluates the same syntax in the browser with two extra fields (held, starred) and without not; a null compares false here.",
+ "about": "Alert rules on CHANGES (a static condition such as 'score under 20' is already the dashboard sorted by at-risk; these fire when something moves), evaluated by scripts/evaluate_rules.py at every watch run. Fork this file: each rule is a name, a plain condition over the fields below, and a severity. Fields: score (0-100), delta (change since the previous run, null if none), stale (true/false), tvl_usd (DefiLlama, null if not matched), at_risk_usd (tvl \u00d7 (100 - score) / 100), admin, multisig, timelock, price_feed, shared (the five sub-scores), chain, title. From the timelock queue: queued_ops (operations queued against this contract), ready_in_hours (until the earliest executes; negative = ready now), executed_14d (operations queued in the last 14 days that have left the queue: run or cancelled; one still waiting is in queued_ops). Per-axis change since the previous run: admin_delta, multisig_delta, timelock_delta (null on the first run). From the independent reader (scripts/second_opinion.py): second_opinion ('agree', 'disagree', 'reviewed', 'unreadable', 'native', null when not read) admin_changed (true when the live admin read moved since the previous run) shared_admin (how many other tracked contracts the same holder governs, null when not read) and age_days (days since the score was last pushed on-chain; the oracles mark it stale at 9). state_unverified (true when the pause state of the contract, or the activity of the Safe that governs it, has not been readable for 3 days or more). Operators: <, <=, >, >=, ==, !=, + and -, and/or/not, parentheses. The dashboard evaluates the same syntax in the browser with two extra fields (held, starred) and without not; a null compares false here.",
  "rules": [
   {
    "name": "score dropped by 10 or more",
@@ -101,6 +101,16 @@
    "severity": "medium",
    "name": "the Safe that governs this contract, observed idle for 14 days or more, executed a transaction (nonce moved), with money behind it",
    "when": "safe_woke and tvl_usd != null and tvl_usd >= 10000000"
+  },
+  {
+   "severity": "info",
+   "name": "a pause or Safe-activity state of this contract has not been readable for 3 days or more: what is shown is the last state read, not the current one",
+   "when": "state_unverified"
+  },
+  {
+   "severity": "medium",
+   "name": "a pause or Safe-activity state of this contract with money behind it has not been readable for 3 days or more",
+   "when": "state_unverified and tvl_usd != null and tvl_usd >= 10000000"
   }
  ],
  "notify": {

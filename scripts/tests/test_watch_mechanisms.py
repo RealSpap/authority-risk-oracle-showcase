@@ -4940,7 +4940,7 @@ class TestWaitlistAndDailyChannel(unittest.TestCase):
         src = open(w, encoding="utf-8").read(); self.assertIn("vars.TELEGRAM_MODE == 'daily'", src); self.assertIn("vars.TELEGRAM_MODE != 'daily'", src); self.assertIn("steps.run.outputs.code == '2' && vars.TELEGRAM_MODE != 'daily'", src)          # nothing changes until the owner sets the variable; the full alarm text (protocols, findings) does not reach the public channel in daily mode
         import evaluate_rules, telegram_digest
         r = subprocess.run([sys.executable, os.path.join(self.HERE, "..", "telegram_digest.py"), "--selftest"], capture_output=True, text=True); self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
-        self.assertIn('os.environ.get("TELEGRAM_MODE") != "daily"', open(os.path.join(self.HERE, "..", "evaluate_rules.py"), encoding="utf-8").read())
+        self.assertIn('daily = os.environ.get("TELEGRAM_MODE") == "daily"', open(os.path.join(self.HERE, "..", "evaluate_rules.py"), encoding="utf-8").read())   # the daily-mode switch is read once, off unless the variable says daily (it was spelled `!= "daily"` inside the old one-list delivery test)
 
 
 class TestLiveCriticalAlertsInDailyMode(unittest.TestCase):

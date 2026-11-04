@@ -31,6 +31,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 from live_target_counts import ORACLES  # noqa: E402
 import run_id  # noqa: E402  -- the Actions run of this passage, written in latest.json so that files can be shown to belong to one run (scripts/check_run_id.py)
+from lib.reader_audit import block_honoured, evaluation_of, freshness_record, future_dated, last_updated_alerts, scan_progress  # noqa: E402  -- scan stall, lastUpdated checks, freshness
 import solana_oracle_reader  # noqa: E402
 
 def _dump_json(obj, path, indent=None):
@@ -152,8 +153,26 @@ def read_evm_any(name, oracle, url, since_block=None):
     raise last
 
 
-def call(oracle, data):
-    return ("eth_call", [{"to": oracle, "data": data}, "latest"])
+def call(oracle, data, tag="latest"):
+    return ("eth_call", [{"to": oracle, "data": data}, tag])
+
+
+def pin_on():
+    """WATCH_PIN_BLOCK=1: the reads of the oracle's table (count, targets, scores, staleness) are asked AT the reference block of the run, so a third party can replay them exactly.
+    Off by default (the reads stay at `latest`, the outputs are the same as before): some public nodes keep no old state or ignore the block tag (see `block_probe`)."""
+    return os.environ.get("WATCH_PIN_BLOCK") == "1"
+
+
+def probe_block(url, oracle, latest_count_hex):
+    """Does this node answer for the block that is asked? The same call (trackedTargetsCount) is asked at block 1, where the oracle did not exist: a node that honours the tag
+    answers empty or reverts, a node that ignores it repeats its answer for the head. Never raises: {"honoured": True|False|None, "probe_block": 1, "note"}."""
+    try:
+        old = rpc(url, [("eth_call", [{"to": oracle, "data": SEL_COUNT}, "0x1"])], tries=1)[0]
+        h = block_honoured(latest_count_hex, old_answer=old)
+    except Exception as e:  # noqa: BLE001 -- the error text says whether the node keeps no old state
+        old, h = None, block_honoured(latest_count_hex, old_error=str(e)[:200])
+    return {"honoured": h, "probe_block": 1, "note": ("the node answered for block 1 as it did for the head: it ignores the block tag" if h is False else
+                                                      "the node answered differently at block 1: it honours the block tag" if h is True else "not told (no old state served, or no answer to compare)")}
 
 
 def pad(addr):
@@ -224,15 +243,17 @@ def self_watch(oracle, url, since_block, block):
 
 def read_evm(name, oracle, url, since_block=None):
     block = int(rpc(url, [("eth_blockNumber", [])])[0], 16)
-    count_hex, max_hex = rpc(url, [call(oracle, SEL_COUNT), call(oracle, SEL_MAX)])
+    tag = hex(block) if pin_on() else "latest"
+    count_hex, max_hex = rpc(url, [call(oracle, SEL_COUNT, tag), call(oracle, SEL_MAX, tag)])
     count, max_staleness = int(count_hex, 16), int(max_hex, 16)
+    probe = probe_block(url, oracle, count_hex)
     self_w = self_watch(oracle, url, since_block, block)
-    targets = ["0x" + r[-40:] for r in batched(url, [call(oracle, SEL_TARGET + f"{j:064x}") for j in range(count)])]
+    targets = ["0x" + r[-40:] for r in batched(url, [call(oracle, SEL_TARGET + f"{j:064x}", tag) for j in range(count)])]
     bad = [t for t in targets if not re.fullmatch(r"0x[0-9a-fA-F]{40}", t)]
     if bad: raise RuntimeError(f"{len(bad)} target(s) are not addresses (RPC answer not trusted): {bad[:2]}")
     rows = []
     if targets:
-        res = batched(url, [call(oracle, SEL_SCORE + pad(t)) for t in targets] + [call(oracle, SEL_STALE + pad(t)) for t in targets])
+        res = batched(url, [call(oracle, SEL_SCORE + pad(t), tag) for t in targets] + [call(oracle, SEL_STALE + pad(t), tag) for t in targets])
         for i, (t, s, st) in enumerate(zip(targets, res[:len(targets)], res[len(targets):])):
             if len(s) < 2 + 64 * 8:
                 raise ValueError(f"getScore returned {len(s)} chars for {t}")
@@ -240,7 +261,25 @@ def read_evm(name, oracle, url, since_block=None):
             rows.append({"index": i, "target": t, **{f: int(words[k], 16) for k, f in enumerate(FIELDS)},
                          "lastUpdated": int(words[6], 16), "methodologyHash": "0x" + (words[7] if re.fullmatch(r"[0-9a-fA-F]{64}", words[7]) else "0" * 64), "stale": int(st, 16) == 1})
     return {"name": name, "kind": "evm", "oracle": oracle, "rpc": url, "block": block, "maxStaleness": max_staleness,
-            "readAt": int(time.time()), "targets": rows, "self": self_w, "self_scanned_to": scanned_to(self_w, since_block, block)}
+            "readAt": int(time.time()), "targets": rows, "self": self_w, "self_scanned_to": scanned_to(self_w, since_block, block),
+            "reference_block": block, "pinned_block": block if tag != "latest" else None, "read_tag": "pinned" if tag != "latest" else "latest", "block_probe": probe}   # the reference block of the run (always), the block the table was ASKED at (only when WATCH_PIN_BLOCK=1, else None: a read at `latest` is not a read at that block), the tag, and whether this node honours a block tag
+
+
+def block_time_of(url, block):
+    """The time of `block` as the chain says it (unix seconds), or None when it could not be read: a failed read skips the date checks (F1), it never raises and never counts as zero."""
+    try:
+        b = rpc(url, [("eth_getBlockByNumber", [hex(block), False])], tries=1)[0]
+        return int(b["timestamp"], 16) if isinstance(b, dict) and b.get("timestamp") else None
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def fixed_scorer_targets():
+    """The targets whose scorer reads a configuration and publishes constants (data/scorer_pins.json, lower case), or an empty set when the file is missing or unreadable."""
+    try:
+        return {a.lower() for pin in json.load(open(os.path.join(ROOT, "data", "scorer_pins.json")))["pins"] for a in pin.get("targets", [])}
+    except Exception:  # noqa: BLE001
+        return set()
 
 
 def read_solana():
@@ -358,6 +397,9 @@ def main():
             prev = {t["target"]: t for t in json.load(open(path))["targets"]}
         except Exception:  # noqa: BLE001
             pass
+        if cur.get("kind") == "evm":   # a hole in the scan of the oracle's own role events is an alarm; the block time lets the dates the updater supplies be checked against the chain
+            cur["block_time"] = block_time_of(cur["rpc"], cur["block"])
+            cur["scan_stalled_runs"], extra = scan_progress(prev_doc, cur); alerts.extend(extra)
         if prev is not None and len(cur["targets"]) < len(prev):   # the contract cannot remove a target: a smaller list is an RPC answer not to trust
             alerts.append(f"{name}: {len(cur['targets'])} targets read, {len(prev)} last run: the oracle cannot remove a target, this RPC answer is not trusted")
             cur["targets"] = restore_dropped_targets(cur["targets"], prev)   # QA 11/10: the short list used to be written as it was, and the targets that came back next run were announced as new ones, for ever in the chained log
@@ -375,9 +417,16 @@ def main():
                     alerts.append(f"{name}: ORACLE roles of {acct} ({KNOWN_HOLDERS.get(acct, '')}) changed: admin {was.get('admin')} -> {now_r['admin']}, updater {was.get('updater')} -> {now_r['updater']}")
             if prev_doc.get("maxStaleness") is not None and prev_doc["maxStaleness"] != cur.get("maxStaleness"):
                 alerts.append(f"{name}: ORACLE maxStaleness changed {prev_doc['maxStaleness']} -> {cur['maxStaleness']}")
+        if cur.get("kind") == "evm":   # F1 (a date in the future) and F2 (a date that went back); the updater supplies lastUpdated and the contract does not check it
+            lu_alerts, lu_skip = last_updated_alerts(name, cur["targets"], prev, cur.get("block_time"), label_of=lambda t_: names.get(t_["target"].lower(), t_["target"][:6] + "…" + t_["target"][-4:]), already_future=prev_doc.get("future_dated") or [])
+            cur["future_dated"] = future_dated(cur["targets"], cur.get("block_time"))
+            alerts.extend(lu_alerts); cur["lastupdated_check"] = lu_skip or "ok"
+        newest_push = max((x["lastUpdated"] for x in cur["targets"] if isinstance(x.get("lastUpdated"), int)), default=None)
+        fixed_set = fixed_scorer_targets()
         for t in cur["targets"]:
             label = names.get(t["target"].lower(), t["target"][:6] + "…" + t["target"][-4:])
             p = prev.get(t["target"]) if prev else None
+            t["evaluation"] = evaluation_of(t.get("lastUpdated"), newest_push, str(t["target"]).lower() in fixed_set)   # recomputed in the newest pass, kept from an older one, or fixed by decision
             t["previousComposite"] = p["compositeScore"] if p else None
             t["previousRun"] = prev_latest.get("run_utc") if p else None
             t.update(basis_fields(s, t, BASIS))
@@ -397,6 +446,7 @@ def main():
         last_push = max((t["lastUpdated"] for t in cur["targets"]), default=0)
         summary.append({"name": name, "slug": s, "kind": cur["kind"], "oracle": cur["oracle"], "read_ok": True, "block": cur["block"],
                         "targets": len(cur["targets"]), "stale": len(stale), "lastUpdated": last_push, "maxStaleness": cur["maxStaleness"],
+                        "freshness": freshness_record(cur.get("readAt"), cur.get("block"), cur.get("block_time"), cur["targets"]),   # when the Watch read it, the block and its time, the newest and the oldest push, side by side
                         "self_watch": ({"read": bool(sw.get("read")), "role_events": len(sw.get("role_events", [])), "code_hash": (sw.get("code_hash") or "")[:16], "roles": sw.get("roles"), "error": sw.get("error")} if sw else None)})
         _dump_json(cur, path, indent=1)
         # one shields.io endpoint per target, so a protocol can show its own score in its README

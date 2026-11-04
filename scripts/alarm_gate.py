@@ -4,7 +4,7 @@
 The Alarm step's condition stays true as long as a finding stands: 12 unreviewed second-opinion disagreements, an overdue review item.
 Without a gate the job opened a new private issue on every 6-hour run for the same state, four a day (seen 10/10 before the first run).
 
-    python3 scripts/alarm_gate.py --watch watch --run-log watch/run.log [--write]      # prints mode=new|reminder|quiet|unrecognised
+    python3 scripts/alarm_gate.py --watch watch --run-log watch/run.log [--write]      # prints mode=new|reminder|escalation|quiet|recovered|unrecognised (the last two modes need ALARM_CONDITION=true|false from the workflow)
 
 The findings are the ones the condition reads: ALARM lines of the run, unreviewed second-opinion disagreements, upgrades executed, a methodology
 change, an overdue review item, a HIGH alert that appeared this run. They are identified, not counted: a finding that goes away and comes
@@ -13,6 +13,9 @@ the workflow passes it only when an issue can really be opened (ISSUES_TOKEN set
 the alarm in its log, as before. A first run (no state) is "new"; no finding the gate reads is "unrecognised" and never quiet. REMINDER_HOURS = 24.
 """
 import argparse, calendar, json, os, sys, time
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from lib.reader_audit import VOLATILE, decide_gate  # noqa: E402  -- 'escalation' (a state that stands for days) and 'recovered' (the findings are gone) next to the four modes below
 
 REMINDER_HOURS = 24
 
@@ -26,7 +29,7 @@ def findings(watch, run_log):
     f = set()
     try:
         for l in open(run_log):
-            if l.strip().startswith("ALARM"): f.add("alarm:" + l.strip()[:160])
+            if l.strip().startswith("ALARM"): f.add("alarm:" + l.strip().split(VOLATILE)[0][:160])
     except OSError: pass
     so = load(os.path.join(watch, "second_opinion.json")) or {}
     for d in so.get("disagreements") or []: f.add("disagree:%s:%s" % (d.get("chain"), str(d.get("target")).lower()))
@@ -50,9 +53,14 @@ def decide(found, state, now):
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--watch", default="watch"); ap.add_argument("--run-log", default="watch/run.log"); ap.add_argument("--write", action="store_true"); a = ap.parse_args()
     path = os.path.join(a.watch, "alarm_state.json"); state = load(path); now = time.time(); found = findings(a.watch, a.run_log)
-    mode = decide(found, state, now); stamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(now))
+    cond = os.environ.get("ALARM_CONDITION")   # "true" / "false" from the workflow: the end of an alarm is only told when the condition itself says it is over
+    readable = all(load(os.path.join(a.watch, f)) is not None for f in ("second_opinion.json", "methodology.json", "review_queue.json", "alerts.json"))   # a file the gate reads that cannot be read is no finding AND no proof that the state is over
+    mode = decide_gate(found, state, now, REMINDER_HOURS, condition_holds=None if (cond not in ("true", "false") or not readable) else cond == "true"); stamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(now))
     if a.write:
-        rec = {"updated_utc": stamp, "notified_utc": stamp if mode in ("new", "reminder") else (state or {}).get("notified_utc"), "mode": mode, "findings": sorted(found),
+        rec = {"updated_utc": stamp, "notified_utc": stamp if mode in ("new", "reminder", "escalation") else (None if mode == "recovered" else (state or {}).get("notified_utc")),
+               "first_notified_utc": stamp if mode == "new" else (None if mode == "recovered" else ((state or {}).get("first_notified_utc") or (state or {}).get("notified_utc"))),
+               "escalations": ((state or {}).get("escalations") or 0) + 1 if mode == "escalation" else (0 if mode in ("new", "recovered") else ((state or {}).get("escalations") or 0)),
+               "first_seen": {f: ((state or {}).get("first_seen") or {}).get(f) or ((state or {}).get("first_notified_utc") if f in set((state or {}).get("findings") or []) else None) or stamp for f in sorted(found)}, "mode": mode, "findings": sorted(found),
                "what": "what the Alarm step last saw and when it last opened an issue (scripts/alarm_gate.py): a finding not in this list opens a new issue, a standing state a reminder once every %d hours" % REMINDER_HOURS}
         json.dump(rec, open(path + ".tmp", "w"), indent=1); os.replace(path + ".tmp", path)
     print("alarm gate: %d finding(s), %s%s" % (len(found), mode, "" if a.write else " (state not written)"), file=sys.stderr)

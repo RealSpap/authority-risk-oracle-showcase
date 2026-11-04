@@ -80,7 +80,7 @@ def last_updated_alerts(name, targets, prev_by_target, block_time, label_of=lamb
 def freshness_record(run_utc_epoch, block, block_time, targets):
     """Four ages in one place for one oracle: when the Watch read it, the block read and its time, the newest and the oldest push on the oracle.
     Every value is a unix time or None (unknown, never zero)."""
-    pushes = [t["lastUpdated"] for t in targets if isinstance(t.get("lastUpdated"), int)]
+    pushes = [t["lastUpdated"] for t in targets if isinstance(t.get("lastUpdated"), int) and not isinstance(t["lastUpdated"], bool) and t["lastUpdated"] > 0]   # 0 is "never pushed", not 1970
     return {"watch_read_at": run_utc_epoch, "block": block, "block_time": block_time,
             "newest_push": max(pushes) if pushes else None, "oldest_push": min(pushes) if pushes else None}
 
@@ -399,6 +399,22 @@ def snapshot_status(swept_utc, valid_days, now):
     return {"swept_utc": swept_utc, "valid_until_utc": time.strftime("%Y-%m-%d", time.gmtime(until)), "expired": now > until}
 
 
+def snapshot_for(snap, ka, now):
+    """The sweep of the shared-signer table that ONE target rests on: {swept_utc, valid_until_utc, expired, from}. `snap` is data/cross_snapshot.json:
+    an entry in `targets` (key '<chain>:<address>', lower case) wins over one in `chains` (key '<chain>'), which wins over the file's own date; `from` says which
+    one answered ('target', 'chain', 'global') or 'none' (no readable date: swept_utc and expired are None, never a made-up date). An entry without `valid_days`
+    uses the file's (30 by default)."""
+    snap = snap if isinstance(snap, dict) else {}
+    chain = str(ka).split(":", 1)[0]
+    lower = lambda m: {str(k).lower(): v for k, v in m.items()} if isinstance(m, dict) else {}      # keys written by hand: an address pasted with capitals still matches
+    for scope, entry in (("target", lower(snap.get("targets")).get(str(ka).lower())), ("chain", lower(snap.get("chains")).get(chain.lower())), ("global", snap)):
+        if isinstance(entry, dict) and isinstance(entry.get("swept_utc"), str):
+            st = snapshot_status(entry.get("swept_utc"), entry.get("valid_days", snap.get("valid_days", 30)), now)
+            if st["swept_utc"] is not None:
+                return dict(st, **{"from": scope})
+    return {"swept_utc": None, "valid_until_utc": None, "expired": None, "from": "none"}
+
+
 # ---------------------------------------------------------------- [18] where the money figure of a contract comes from
 
 def money_source(ka, tvl, scope, held):
@@ -551,8 +567,11 @@ def transfer_outcome(prev_pending, holder_now, pending_now, short=lambda a: str(
     return "cleared" if fam is not None and fam in (clean_families or ()) else "unread"
 
 
-PENDING_FOLLOW_NOTE = ("a transfer of the admin is read as a state at every run (about every 6 hours), not followed by events: one started and cancelled between two runs is not seen; "
-                       "the outcome of one that was seen is told at the next run (accepted, replaced, cleared or unread), by comparing the two readings; cleared is a cancellation or an acceptance on a path the record does not read")
+PENDING_FOLLOW_NOTE = ("a transfer of the admin is read as a state at every run (about every 6 hours) and, since the second part of the readers, the events of the target contract and of its timelock "
+                       "since the last block read are read too (`admin_events`, `event_windows`): a transfer started and cancelled on the TARGET inside a window that was read completely is seen as events. "
+                       "Not read as events: the ProxyAdmin's own transfers, EIP-1967 AdminChanged, Compound NewPendingAdmin, RoleGranted and RoleRevoked; a window that could not be read completely "
+                       "(`complete: false`) is read again at the next run; the outcome of a transfer that was seen is told at the next run (accepted, replaced, cleared or unread), by comparing the two readings; "
+                       "cleared is a cancellation or an acceptance on a path the record does not read")
 
 
 # ---------------------------------------------------------------- [17][86] does the node answer for the block that was asked

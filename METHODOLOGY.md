@@ -42,6 +42,8 @@ round-half-up, deliberately not Python's built-in `round()` (banker's
 rounding produced a value one point off an already-published score once -
 see that function's own docstring).
 
+In whole numbers, which is how `scripts/lib/scorers.py` computes it: `compositeScore = (4 * adminKeyScore + 3 * multisigScore + 3 * timelockScore + 5) // 10`. This is the same function as the line above, written so that no floating-point rounding can enter.
+
 `oracleAuthorityScore` and `crossExposureScore` are published on-chain and
 on the dashboard but are **not** folded into `compositeScore`. Each is a
 distinct fact a consuming contract might weight differently - a lending
@@ -784,6 +786,9 @@ edges, not just its claims.
   1-of-N seat makes the dispersion bonus overstate strength (Aave's protocol guardian: 4 keys needed, 13 can contribute). The
   formula still counts a nested Safe as one owner; unifying that is not done. Record:
   `data/finding_2026-09-21-who-really-signs.md`.
+  The resolver opens nested Safes down to three levels below the Safe being read
+  (`MAX_DEPTH = 4` in `scripts/lib/nested_signers.py`: the Safe itself and levels 1 to 3); a Safe four levels down is counted as one
+  contract signer, which the hand-run check lists as not analysed (depth limit). The independent reader of the Watch looks one level down only.
 - **A "real EOA" signer's own key hygiene is out of scope.** Whether an
   address is protected by a hardware wallet, a leaked seed phrase, or an
   exchange's hot wallet all read identically on-chain as "one key."
@@ -870,6 +875,11 @@ edges, not just its claims.
   not that nothing changes before the next scheduled run.** Robinhood
   Chain's scores are pushed by hand, at the latest every nine days (the staleness limit); the Watch re-reads the tracked contracts every 6 hours
   and its independent reader flags a changed admin, but the on-chain score changes at the next push (or a manual `--dry-run`/push picks it up).
+- **A disagreement between the independent reader and a score is never settled automatically in favour of the higher score.** It is
+  published as a finding to review (`second_opinion.json`). It leaves that list in only two ways: a person's dated note
+  (`data/second_opinion_acknowledged.json`, valid for 30 days from its date), or a corroboration, when the reader itself
+  reads and verifies on chain a second path with the weakness the score claims (listed apart in `corroborated_disagreements`,
+  recomputed at every run; this only ever sides with the lower score).
 - **This oracle scores authority *structure*, not authority *intent*.** A
   well-governed DAO with a real timelock can still vote to do something
   harmful; a bare EOA can belong to a careful, trustworthy operator. The

@@ -13,7 +13,7 @@ The conflict of interest when the rater is paid by the protocol it rates (Gauntl
 
 ## Closest precedent: SolGov
 
-SolGov, built after the $285M Drift exploit, tracks 50 Solana protocols across 63 multisigs and 180+ programs: multisig
+SolGov, built after the Drift exploit (a figure of about $285M given by press reports, not measured here), tracks 50 Solana protocols across 63 multisigs and 180+ programs: multisig
 threshold, timelock delay, role separation, verified builds, key rotation. It is the strongest outside evidence that the thesis
 is right: someone else independently hit the same gap and shipped a live product for it, on one ecosystem. This project
 re-derived the same founding incident from the on-chain transactions, and also scored Drift's current, reformed authority

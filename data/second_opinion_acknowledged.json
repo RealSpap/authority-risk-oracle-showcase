@@ -1,4 +1,4 @@
 {
- "_doc": "Second-opinion disagreements a human has already reviewed (scripts/second_opinion.py), so they stop travelling with the alarm while staying visible on the dashboard with the note. Keys are <chain key>:<target address; any case is read as lower case> as in watch/second_opinion.json. Add an entry only after reading the case: say what the scorer weighs (which role) and where it was reviewed.",
+ "_doc": "Second-opinion disagreements a human has already reviewed (scripts/second_opinion.py), so they stop travelling with the alarm while staying visible on the dashboard with the note. Keys are <chain key>:<target address; any case is read as lower case> as in watch/second_opinion.json. Add an entry only after reading the case: start the note with the review date (YYYY-MM-DD), then say what the scorer weighs (which role) and where it was reviewed. An entry older than 30 days, or without a date, no longer silences the disagreement.",
  "disagreements": {}
 }

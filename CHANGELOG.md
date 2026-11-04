@@ -327,7 +327,7 @@ trust but the RPC and the contract itself. Chain tabs read all 4 real deployed
 oracles live (Robinhood Chain, Ethereum L1 Sepolia, Arbitrum Sepolia, Base
 Sepolia -- see "Real multi-chain deploys" below), each finding gets a shareable
 deep link, and a sourced panel ties the scoring dimensions directly to two real
-2026 exploits (Drift Protocol's $285M compromised admin key, KelpDAO's $292M
+2026 exploits (Drift Protocol's compromised admin key ($285M, a press figure), KelpDAO's ($292M, a press figure)
 1-of-1 cross-chain verifier). Search by target/finding/address and filter by risk
 band (Critical/Weak/Moderate/Decent/Strong), same idea as SolGov's column
 filters, applied to a page that never leaves the chain to render.
@@ -1078,7 +1078,7 @@ live catch.
 **Third retroactive backtest (2026-09-17)**: a compromised multisig, and a
 real before/after live score, not just a historical estimate.
 [`data/backtest_2026-09-17-drift-protocol-security-council-compromise.md`](data/backtest_2026-09-17-drift-protocol-security-council-compromise.md):
-Drift Protocol's 2026-04-01 $285M Security Council compromise -- cited in
+Drift Protocol's 2026-04-01 Security Council compromise ($285M, a press figure) -- cited in
 this project's own README as SolGov's founding motivation, making it an
 obvious next target once confirmed (via Chainalysis, TRM Labs, Elliptic,
 BlockSec) to be a genuine authority-risk failure, not a smart-contract bug.

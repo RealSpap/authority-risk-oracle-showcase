@@ -167,6 +167,11 @@ jobs:
       - name: Shorten every root-signer address in what leaves with the run (the index itself stays in the runner)
         run: python3 scripts/redact_signers.py --index "$RUNNER_TEMP/who_controls.json" --scores watch/scores watch/second_opinion.json watch/second_opinion.md watch/digest.md watch/safe_changes.json watch/pending_ops.json watch/alerts.json watch/moves.json watch/paper_trail.json watch/review_queue.json watch/review_queue.md watch/coverage.json watch/side_roles.json watch/safe_activity.json watch/admin_probe.json
 
+      - name: "Trust status per target (watch/trust.json): VERIFIED, PARTIAL, STALE, DISPUTED, UNVERIFIED or UNAVAILABLE with machine-readable reasons, one state per dimension, distinct from the score; written AFTER the addresses are shortened (it copies sentences of the independent reader, which must not carry a signer address) and before the run is signed, so the manifest covers it"
+        run: python3 scripts/trust.py --watch watch --data data > watch/trust.txt 2>&1 || { echo "exit code $?" >> watch/trust.txt; cat watch/trust.txt; }
+        env:
+          HAS_SIGNING_KEY: ${{ secrets.WATCH_SIGNING_KEY != '' }}   # whether a key exists, never the key: this script only says whether the run will be signed
+
       - name: The watch files keep their published contract (watch/schema)
         run: python3 scripts/validate_schemas.py --watch watch > watch/schemas.txt 2>&1 || { echo "exit code $?" >> watch/schemas.txt; cat watch/schemas.txt; exit 1; }
 

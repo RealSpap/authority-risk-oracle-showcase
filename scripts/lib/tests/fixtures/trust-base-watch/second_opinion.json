@@ -1,0 +1,38 @@
+{
+ "generated_utc": "2026-10-30T06:20:00Z",
+ "results": [
+  {
+   "chain": "robinhood",
+   "target": "0xa1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+   "kind": "safe",
+   "threshold": 3,
+   "owners": 5,
+   "modules": [],
+   "guard": null,
+   "path": "owner()",
+   "block_start": 999,
+   "block_end": 1001,
+   "modules_truncated": false
+  },
+  {
+   "chain": "robinhood",
+   "target": "0xb2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+   "kind": "timelock",
+   "delay_seconds": 172800,
+   "path": "EIP-1967 admin -> ProxyAdmin owner()",
+   "block_start": 999,
+   "block_end": 1001
+  },
+  {
+   "chain": "robinhood",
+   "target": "0xc3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3",
+   "kind": "eoa",
+   "path": "owner()",
+   "block_start": 999,
+   "block_end": 1001
+  }
+ ],
+ "disagreements": [],
+ "changed": [],
+ "upgrades": []
+}

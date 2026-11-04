@@ -1,0 +1,19 @@
+{
+ "what": "The result each adversarial case must give, written BEFORE the first run of run.py. A case whose expected result says the attack is NOT detected is a known gap, stated so that nobody mistakes the kit for a proof of safety. If a run disagrees with this file, either the code regressed or this file was wrong: change it only with a line in CHANGES below saying why.",
+ "written_before_first_run": true,
+ "now_utc": "2026-10-30T07:20:00Z",
+ "cases": {
+  "00-baseline": {"statuses": {"A": "VERIFIED", "B": "VERIFIED", "C": "VERIFIED"}},
+  "01-hidden-authority": {"attack": "DEFAULT_ADMIN_ROLE has 25 members; the reader reads 10 (its bound) and the other 15 can hold the power", "detected": true, "status_of_B": "PARTIAL", "reason": "admin_members_unread", "members_unread": 15},
+  "02-safe-with-module": {"attack": "a Safe with more modules than the page of 50 (a module executes without the signatures), and a Safe whose module list cannot be read", "detected": true, "modules_truncated_flag": true, "status_of_A_truncated": "PARTIAL", "reason_truncated": "modules_truncated", "status_of_A_unread": "PARTIAL", "reason_unread": "modules_unread"},
+  "03-timelock-outside-window": {"attack": "an operation queued 40 days ago, the timelock read over a 30-day window", "detected": false, "known_gap": true, "op_40_days_old_listed": false, "op_10_days_old_listed": true, "window_days_declared": 34.5, "window_note_declared": true, "status_of_B": "VERIFIED"},
+  "04-rpc-that-lies": {"attack": "a node that answers a shorter list of targets, a non-address target, or a score word that is too short", "detected": true, "short_list_restored": true, "garbage_target_refused": true, "short_score_refused": true, "status_when_oracle_unread": "UNAVAILABLE"},
+  "05-signature-and-key-replaced": {"attack": "the published files are replaced and the manifest is signed again with the attacker's own key", "detected": false, "known_gap": true, "sign_run_verify_exit_after_resign_with_other_key": 0, "other_key_is_pinned": false, "altered_file_without_resign_exit": 1, "trust_notices_replacement": false},
+  "06-journal-truncated": {"attack": "the last lines of events.jsonl are cut off", "detected": true, "verify_chain_ok": true, "sign_run_verify_exit": 1, "chain_head_mismatch_reported": true},
+  "07-webhook-loss": {"attack": "15 alerts at once, one channel down, a receiver that stores a message and loses its answer", "detected": true, "alerts": 15, "lost": 0, "duplicates_without_ack_loss": 0, "runs_to_deliver_all": 3, "duplicates_with_ack_loss": 4},
+  "08-proxy-outside-patterns": {"attack": "a proxy whose admin follows none of the patterns the reader knows (no EIP-1967 slot, no owner(), no admin())", "detected": true, "status_of_C": "UNVERIFIED", "reason": "independent_read_unreadable"},
+  "09-finance-stale": {"attack": "the money figure behind a contract is five days old", "detected": true, "financial_exposure_state": "stale", "status_of_A": "VERIFIED", "reason": "money_stale"},
+  "10-surveillance-interrupted": {"attack": "the Watch stopped three days ago", "detected": true, "status_of_A": "STALE", "reason": "watch_old", "run_age_hours": 73}
+ },
+ "CHANGES": []
+}

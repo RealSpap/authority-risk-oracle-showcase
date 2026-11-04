@@ -94,7 +94,8 @@ def build(W, chain, address):
         out += ["- %s" % (r.get("posture") or "kind: %s" % r.get("kind"))]
         if r.get("kind") in ("unreadable", "native"): out += ["- the independent reader cannot classify the admin here: %s" % (r.get("why") or r.get("kind"))]
         if r.get("keys_to_act") is not None: out += ["- %s key(s) to act; %s lost keys would freeze it" % (r.get("keys_to_act"), r.get("keys_lost_to_freeze"))]
-        if r.get("disagree"): out += ["- **the independent reader disagrees with the score%s**: %s" % (" (reviewed: %s)" % r["acknowledged"] if r.get("acknowledged") else "", r["disagree"])]
+        if r.get("corroborated"): out += ["- **the independent reader disagreed with the score; corroborated (the reader itself read a second path with that weakness)**: %s" % (r["corroborated"].get("disagreement") or "")]
+        elif r.get("disagree"): out += ["- **the independent reader disagrees with the score%s**: %s" % (" (reviewed: %s)" % r["acknowledged"] if r.get("acknowledged") else " (corroborated: the reader itself read a second path with that weakness)" if r.get("corroborated") else "", r["disagree"])]
         elif r.get("kind") not in ("unreadable", "native"): out += ["- consistent with the published admin-key score"]
         ex = r.get("exposure") if isinstance(r.get("exposure"), dict) else next((e for e in (so or {}).get("exposure", []) if e.get("chain") == key and norm(e.get("target")) == addr), None)
         if ex: out += ["- to move the money: %s key(s)%s; money behind one key about $%s (%s)" % (ex.get("keys_to_move"), (", %s h to react" % ex["react_hours"]) if ex.get("react_hours") is not None else "", "{:,.0f}".format(ex["money_per_key_usd"]) if ex.get("money_per_key_usd") is not None else "?", ex.get("money_source"))]

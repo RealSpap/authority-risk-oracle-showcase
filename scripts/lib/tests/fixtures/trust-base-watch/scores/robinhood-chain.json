@@ -1,0 +1,55 @@
+{
+ "name": "Robinhood Chain",
+ "kind": "evm",
+ "oracle": "0x0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f",
+ "rpc": "https://rpc.example.invalid",
+ "block": 1000,
+ "maxStaleness": 777600,
+ "readAt": 1793000100,
+ "targets": [
+  {
+   "index": 0,
+   "target": "0xa1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+   "adminKeyScore": 50,
+   "multisigScore": 50,
+   "timelockScore": 50,
+   "oracleAuthorityScore": 100,
+   "crossExposureScore": 100,
+   "compositeScore": 50,
+   "lastUpdated": 1793000000,
+   "methodologyHash": "0x7777777777777777777777777777777777777777777777777777777777777777",
+   "stale": false
+  },
+  {
+   "index": 1,
+   "target": "0xb2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+   "adminKeyScore": 50,
+   "multisigScore": 50,
+   "timelockScore": 50,
+   "oracleAuthorityScore": 100,
+   "crossExposureScore": 100,
+   "compositeScore": 50,
+   "lastUpdated": 1793000000,
+   "methodologyHash": "0x7777777777777777777777777777777777777777777777777777777777777777",
+   "stale": false
+  },
+  {
+   "index": 2,
+   "target": "0xc3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3",
+   "adminKeyScore": 50,
+   "multisigScore": 50,
+   "timelockScore": 50,
+   "oracleAuthorityScore": 100,
+   "crossExposureScore": 100,
+   "compositeScore": 50,
+   "lastUpdated": 1793000000,
+   "methodologyHash": "0x7777777777777777777777777777777777777777777777777777777777777777",
+   "stale": false
+  }
+ ],
+ "self": {
+  "read": true,
+  "role_events": []
+ },
+ "self_scanned_to": 1000
+}

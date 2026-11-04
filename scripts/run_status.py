@@ -44,6 +44,7 @@ def main():
     elif sig_status == "stale": reasons.append("signature STALE: this run could not be signed (%s); signature.json is the one of an earlier run" % ("signing refused, see signature.txt" if refused else "its run time is older than latest.json")); worse("alarm")
     if so and so.get("upgrades"): reasons.append("%d upgrade(s) executed on tracked contracts since the previous run" % len(so["upgrades"])); worse("alarm")
     if so and so.get("disagree"): reasons.append("%d second-opinion disagreement(s) to review" % so["disagree"]); worse("degraded")
+    if so and so.get("corroborated"): reasons.append("%d second-opinion disagreement(s) corroborated: the reader itself read and verified a second, weaker authority path on chain (listed in second_opinion.json under corroborated_disagreements with the facts read, recomputed at every run, not counted as a disagreement to review)" % so["corroborated"])   # information, not a state: it never makes the state worse
     if dp and dp.get("open"): reasons.append("%d public dispute(s) open, review pending" % dp["open"]); worse("degraded")
     hi_rules = [x for x in ((rules_al or {}).get("active") or []) if x.get("severity") == "high"]   # since 2026-10-10: a drain, a pause, a change ready to execute, an upgrade: the rules' own high alerts count in the state
     if hi_rules: reasons.append("%d high alert(s) from the rules firing now (%s)" % (len(hi_rules), "; ".join(sorted({str(x.get("rule"))[:100] for x in hi_rules})[:3]))); worse("degraded")
@@ -54,7 +55,7 @@ def main():
            "checks": {"oracles_read": (len(latest.get("oracles", [])) - len(latest.get("unread", []))) if latest else None, "oracles": len(latest.get("oracles", [])) if latest else None,
                       "targets": (latest or {}).get("total_targets"), "stale": (latest or {}).get("stale_total"), "alarms": len((latest or {}).get("alerts", [])),
                       "chain_ok": chain.get("ok") if chain else None, "chain_entries": chain.get("lines") if chain else None, "signed": bool(sig and sig.get("signed")) and sig_status != "stale", "signature_status": sig_status,
-                      "signing_key": (sig or {}).get("public_key"), "second_opinion": ({k: so.get(k) for k in ("agree", "disagree", "acknowledged", "unreadable", "native")} if so else None),
+                      "signing_key": (sig or {}).get("public_key"), "second_opinion": ({k: so.get(k) for k in ("agree", "disagree", "corroborated", "acknowledged", "unreadable", "native")} if so else None),
                       "methodology_mixed": len(meth.get("mixed", [])) if meth else None, "disputes_open": dp.get("open") if dp else None, "review_items": rq.get("total") if rq else None},   # the review queue is information for the maintainer, it does not change the state
            "what": "the run's health in one record: ok / degraded / alarm with the reasons; written by scripts/run_status.py after every Watch run"}
     ma = load(os.path.join(W, "main_activity.json"))   # since 2026-10-14: how old the last commit on main is (GitHub disables scheduled workflows after 60 days without repository activity)

@@ -7,12 +7,13 @@ finds (bare EOA, Safe t-of-n, timelock, other contract). Then it compares with t
 is: 50 and above, "admin power is not a bare key"; under 20, "one key does everything". Two disagreements are reported:
   - the score says not a bare key, the live read finds a bare EOA;
   - the score says one key, the live read finds a Safe with a threshold of 3 or more, or a timelock.
-A disagreement is a finding to review (the scorer may look at a different role than the proxy admin), not a verdict; an address
+A disagreement is a finding to review (the scorer may look at a different role than the proxy admin), not a verdict (since 2026-10-29 a disagreement
+answered by a second authority path that this reader itself reads and verifies on chain is "corroborated": listed apart, recomputed every run); an address
 with none of the three getters is "unreadable", never "agrees". Standard library, read-only.
 
     python3 scripts/second_opinion.py --scores watch/scores --out watch/second_opinion.json --md watch/second_opinion.md
 """
-import argparse, glob, hashlib, json, os, sys, time, urllib.request
+import argparse, calendar, glob, hashlib, json, os, sys, time, urllib.request
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from lib.reader_extras import (ADMIN_TOPICS, DEFAULT_ADMIN_DELAY_SEL, DELAY_TOPICS, LOG_STEP_BLOCKS, LOG_STEP_BY_CHAIN, admin_events_of, admin_gap, default_admin_delay_of, delay_change_of, events_by_address, member_disagreement, open_executor_call, open_executor_of, scan_logs, window_for)  # noqa: E402
 from lib.reader_audit import (PENDING_DEFAULT_ADMIN_SEL, PENDING_FOLLOW_NOTE, admin_member_calls, assemble_admin_members, first_read_through_new_getter, modules_truncated_of, parse_modules_page, parse_pending_default_admin, pending_family, read_gap_seconds, since_score_push_seconds, transfer_outcome)  # noqa: E402  -- admin members, modules page, read gap, pending transfers
@@ -288,11 +289,272 @@ def addr_of(word):
     return None if int(a, 16) == 0 else a
 
 
+# ---------------------------------------------------------------------------------------------------------------------------------------
+# CORROBORATION (29/10/2026). A score is the weakest of several authority paths of a target; this reader reads one path (the first hop), so a
+# score driven by ANOTHER path used to show as a disagreement. Here the reader reads MORE FACTS, with its own code, and a disagreement is
+# "corroborated" only when a second path, READ AND VERIFIED ON CHAIN BY THIS READER, has the weakness the score claims (a bare key for "one
+# key does everything", no delay for "no delay"). A corroborated disagreement leaves `disagreements` (and the badge) but is NOT silent: it is
+# listed in `corroborated` with the facts read and the block they were read at, and it is recomputed at every run, so it returns the moment
+# the path changes or no longer verifies (the difference with a human acknowledgement, which only depends on a key).
+# INDEPENDENCE: this reader imports nothing from a scorer and shares no logic with it. HINTS below is written BY HAND: addresses named in
+# the repository's public notes, each one only a place to look; nothing counts until a relation read on chain here (hasRole, a getter, a
+# derived address, an account field) confirms it. A hint that does not verify corroborates nothing (fail closed). Reserve, said plainly:
+# these are the same public notes the scorer's author read, so the two are not independent of what those notes say; they are independent of
+# the scorer's code and of its scoring rules. tests/test_second_opinion_corroboration.py checks that no scorer is imported.
+# ---------------------------------------------------------------------------------------------------------------------------------------
+ONE_DAY = 86400   # the same threshold the timelock comparisons above already use: a delay under a day is "no delay"
+H_ROLE = {"DEFAULT_ADMIN_ROLE": "0x" + "0" * 64, "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1", "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+          "POOL_MANAGER_ROLE": "0x6077685936c8169d09204a1d97db12e41713588c38e1d29a61867d3dcee98aff", "OPERATOR_ROLE": "0x97667070c54ef182b0f5858b034beac1b6f3089aa2d3188bb1e8929f4fa9b929",
+          "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08", "TREASURY_ROLE": "0xe1dcbdb91df27212a29bc27177c840cf2f819ecf2187432e1fac86c2dd5dfca9"}
+S_HAS_ROLE, S_ROLE_COUNT, S_ROLE_MEMBER, S_DEFAULT_ADMIN, S_POOL_ADMIN, S_PROVIDER, S_HAS_ROLE_U8 = "0x91d14854", "0xca15c873", "0x9010d07c", "0x84ef8ffc", "0xaecda378", "0xfe65acfe", "0x95a8c58d"
+SQDS_V3 = "SMPLecH534NA9acpos4G6x7uf3LWbCAwZQE9e8ZekMu"
+HINTS = {   # "<chain key>:<target lower>" -> [hint, ...]; written by hand from the public notes named in each comment
+    # gTrade Diamond: data/scored_targets_2026-09-25-3-corrections.md (an emergency timelock with a 10 h delay; two Safes and a bare key named as its proposers)
+    "arbitrum:0xff162c694eaa571f685030649814282ea457f169": [{"type": "timelock_roles", "timelock": "0x893FCf48D56CE2e92AFB4a085941135243D5E75a",
+        "candidates": ["0xc07EEd650aB255190CA9766162CfB47cFDf72f3a", "0xe8997C502fCD0729B462FCA19A50cF0DAEA0cAB5", "0x80fd0accC8Da81b0852d2Dca17b5DDab68f22253"], "bound_to_target": "diamond_role_probe"}],
+    # Radiant LendingPool: the pool configurator's onlyPoolAdmin functions answer to the provider's getPoolAdmin(), not to the provider's owner()
+    "arbitrum:0xe23b4ae3624fb6f7cdef29bc8ead912f1ede6886": [{"type": "pool_admin", "provider": "0x454a8dAf74B24037eE2fa073Ce1be9277Ed6160a"}],
+    # Yuzu yzUSD: data/finding_2026-09-20-yuzu-authority-trace.md (a Safe that holds POOL_MANAGER_ROLE on yzPP directly)
+    "plasma:0x6695c0f8706c5ace3bdf8995073179cca47926dc": [{"type": "role_holder", "contract": "0xebfc8c2fe73c431ef2a371aea9132110aab50dca", "role": "POOL_MANAGER_ROLE", "holder": "0xe61ad2de346db42879b6ee3c7cf0c6a2cdc0530d"}],
+    # role holders read and shown; no corroboration while what the role permits is not established
+    "hyperliquid:0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec": [{"type": "roles_display", "roles": ["OPERATOR_ROLE", "MANAGER_ROLE", "TREASURY_ROLE"]}],
+    "hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109": [{"type": "roles_display", "roles": ["OPERATOR_ROLE", "MANAGER_ROLE", "TREASURY_ROLE"]}],
+    # Solana: the target is the account itself, the field offsets are the accounts' public layouts
+    "solana:gknhiwh3rrre1zsnzwxrkomymhc374tvjpstv2wpeydb": [{"type": "sol_field", "label": "GlobalConfig.adminAuthority", "offset": 2224, "multisig": "HvYoRSJdVcj6WRWV57yLu2Vmwh1ccqJRdkCwhNsSfRu4", "vault_index": 0}],
+    "solana:h4nd9ayttuvlfmnypzqljz52fyigvdeb45gmwnokejtj": [{"type": "sol_squads_v3_field", "label": "Perpetuals.admin", "offset": 51, "multisig": "7ZyDFzet6sKgZLN4D89JLfo7chu2n7nYdkFt5RCFk8Sf", "authority_indexes": [1, 2]}],
+    "solana:2lecshuwdy9xi7meFgHtFJQNSKk4KdTrcpvaB56dP2NQ".lower(): [{"type": "sol_field", "label": "WhirlpoolsConfig.reward_emissions_super_authority", "offset": 72, "multisig": "5JZFPx6Qkg9PAgYMn9wHWirsiEQBfeJuE667MWeRBLPN", "vault_index": 0,
+        "scope_note": "a weaker authority exists; that its power is full is the scorer's judgment call, not corroborated here"}],
+    "solana:usxyistspewz55psk7szoul79ntovgqbatdt57th6bx": [{"type": "sol_programs", "programs": [{"label": "Aux 7FaMy", "program": "7FaMyGiTVdjm8dd3PxpjjCX15ibbmuE1zWVFX2PHxYUK", "multisig": "BPdkMGWnttz4izo6RD6pXpcbVgGiqD2GR3Jds7HvaXEE", "vault_index": 0},
+        {"label": "YieldVault eUSXyK", "program": "eUSXyKoZ6aGejYVbnp3wtWQ1E8zuokLAJPecPxxtgG3", "multisig": "AEb1u8FK8EuXLcPtprCy8s4NkqBNoP5mfbuEEop2dJGf", "vault_index": 1}],
+        "scope_note": "a program with a weaker authority exists; its weight on the funds of the first program is the scorer's judgment, not corroborated here"}],
+}
+
+
+def _word_addr(w):
+    return addr_of(w) if (w and len(w) == 66 and w != "0x" + "0" * 64) else None
+
+
+def _modules_count(word):
+    try:
+        if not word or len(word) < 2 + 64 * 3: return None
+        return int(word[2 + 128:2 + 192], 16)
+    except ValueError: return None
+
+
+def read_path_evm(url, addr):
+    """What an address IS, from its own code and getters: a plain key, a Safe k-of-n (and whether it has modules), a timelock with its delay,
+    or a contract with no Safe or timelock getter (said as such: the absence of a getter is weak evidence of no delay, never more)."""
+    r = rpc_batch(url, [("eth_getCode", [addr, "latest"]), ("eth_call", [{"to": addr, "data": SEL["getThreshold"]}, "latest"]), ("eth_call", [{"to": addr, "data": SEL["getOwners"]}, "latest"]),
+                        ("eth_call", [{"to": addr, "data": SEL["getMinDelay"]}, "latest"]), ("eth_call", [{"to": addr, "data": SEL["delay"]}, "latest"]),
+                        ("eth_call", [{"to": addr, "data": SEL["timelock"]}, "latest"]), ("eth_call", [{"to": addr, "data": MODULES_PAGE}, "latest"])])
+    code, thr, own, d1, d2, d3, mods = r
+    p = {"address": addr, "kind": "unread"}
+    if code in (None, ""): return p
+    if is_plain(code): p["kind"] = "eoa"; return p
+    p["kind"] = "contract"
+    try:
+        tv = int(thr, 16) if thr and thr != "0x" else 0; n = int(own[2 + 64:2 + 128], 16) if own and len(own) >= 130 else 0
+        if 0 < tv <= 50 and n >= tv: p.update(kind="safe", threshold=tv, owners=n, modules=_modules_count(mods) if mods not in (None, "", "0x") else None)
+        if p["kind"] == "safe" and p["modules"] is not None: p["modules"] = [] if p["modules"] == 0 else p["modules"]   # [] = none enabled; a count = some, so a delay may sit in one of them
+    except ValueError: pass
+    if p["kind"] == "contract":
+        for w in (d1, d2):
+            if w and w != "0x" and len(w) == 66:
+                try: p.update(kind="timelock", delay_seconds=int(w, 16)); break
+                except ValueError: pass
+    if p["kind"] == "contract":
+        answered = [x for x in (thr, d1, d2, d3) if x is None]
+        p["no_delay_getter"] = not answered and all(x in ("", "0x") for x in (d1, d2, d3))   # every delay getter reverted: weak evidence, flagged
+    return p
+
+
+def _one_key(p):   # a bare key, or a multisig whose threshold is 1, is one key
+    return p["kind"] == "eoa" or (p["kind"] in ("safe", "squads_v4", "squads_v3") and p.get("threshold") == 1)
+
+
+def _no_delay(p):  # no delay the reader can see on this path
+    k = p["kind"]
+    if k == "eoa": return True
+    if k == "safe": return p.get("modules") == []   # a module (a Zodiac Delay) may add a delay: only a Safe read WITHOUT modules counts
+    if k == "timelock": return p.get("delay_seconds", ONE_DAY) < ONE_DAY
+    if k == "squads_v4": return p.get("time_lock_s") == 0
+    if k == "squads_v3": return True   # Squads v3 has no time-lock field
+    if k == "contract": return p.get("no_delay_getter") is True
+    return False
+
+
+def _axes(text):
+    """The parts of a disagreement text that a weaker path can answer (the 'score says it is weaker than the read' side). The generous
+    side ('the score says a delay is confirmed', 'the score says admin power is not a bare key') is never answered by a weaker path."""
+    out = []
+    for part in str(text or "").split("; "):
+        if part.startswith("the score says one key does everything"): out.append(("key_low", part))
+        elif part.startswith("the multisig score says no real multisig"): out.append(("multisig_low", part))
+        elif part.startswith("the timelock score says no delay (0)"): out.append(("delay_zero", part))
+        else: out.append(("other", part))
+    return out
+
+
+def evaluate(rec, paths):
+    """Corroboration of a record's disagreement by verified paths, or None. EVERY part must be answered by a path other than the one the
+    disagreement is about; one unanswered part (or a part of the generous side) leaves the whole disagreement standing."""
+    own = [rec.get("holder"), (rec.get("behind") or {}).get("address")]
+    cand = [p for p in paths if p.get("verified") and not any(o and same_addr(p.get("address"), o) for o in own)]
+    done = []
+    for axis, part in _axes(rec.get("disagree")):
+        if axis in ("key_low", "multisig_low"): ok = [p for p in cand if _one_key(p)]
+        elif axis == "delay_zero": ok = [p for p in cand if _no_delay(p)]
+        else: return None
+        if not ok: return None
+        done.append({"axis": axis, "claim": part, "answered_by": [p["label"] for p in ok]})
+    return done or None
+
+
+def _hex_args(*words): return "0x" + "".join(w[2:] if w.startswith("0x") else w for w in words)   # calldata is always 0x-prefixed: arb1.arbitrum.io refuses it otherwise (the first real read got no answer for that reason)
+
+
+def evm_paths(url, rec, hints):
+    """The extra paths of one EVM record: generic reads of the target's own authority getters, plus the hinted places, each verified."""
+    t = rec["target"]; paths = []
+    def add(label, addr, how, **kw):
+        if addr and not any(same_addr(addr, q["address"]) for q in paths):
+            p = read_path_evm(url, addr); p.update(label=label, via=how, verified=True, **kw); paths.append(p)
+    r = rpc_batch(url, [("eth_call", [{"to": t, "data": SEL["owner"]}, "latest"]), ("eth_call", [{"to": t, "data": S_DEFAULT_ADMIN}, "latest"]),
+                        ("eth_call", [{"to": t, "data": S_ROLE_COUNT + H_ROLE["DEFAULT_ADMIN_ROLE"][2:]}, "latest"])])
+    add("target.owner()", _word_addr(r[0]), "owner() on the target"); add("target.defaultAdmin()", _word_addr(r[1]), "defaultAdmin() on the target")
+    try: n = int(r[2], 16) if r[2] and len(r[2]) == 66 else 0
+    except ValueError: n = 0
+    if 0 < n <= 10:
+        ms = rpc_batch(url, [("eth_call", [{"to": t, "data": S_ROLE_MEMBER + H_ROLE["DEFAULT_ADMIN_ROLE"][2:] + "%064x" % i}, "latest"]) for i in range(n)])
+        for i, w in enumerate(ms): add("DEFAULT_ADMIN_ROLE member %d of %d" % (i + 1, n), _word_addr(w), "getRoleMember(DEFAULT_ADMIN_ROLE, %d)" % i)
+    for h in hints:
+        if h["type"] == "pool_admin":   # verified: the target names this provider itself
+            pv = rpc_batch(url, [("eth_call", [{"to": t, "data": S_PROVIDER}, "latest"]), ("eth_call", [{"to": h["provider"], "data": S_POOL_ADMIN}, "latest"])])
+            if _word_addr(pv[0]) and same_addr(_word_addr(pv[0]), h["provider"]): add("provider.getPoolAdmin()", _word_addr(pv[1]), "getPoolAdmin() on the provider the target names (getAddressesProvider())")
+        elif h["type"] == "role_holder":   # verified: hasRole(role, holder) is true on the contract
+            hv = rpc_batch(url, [("eth_call", [{"to": h["contract"], "data": _hex_args(S_HAS_ROLE, H_ROLE[h["role"]], "0" * 24 + h["holder"][2:].lower())}, "latest"])])
+            if hv[0] and len(hv[0]) == 66 and int(hv[0], 16) == 1: add("%s holds %s" % (h["holder"][:8], h["role"]), h["holder"], "hasRole(%s, holder) is true on %s" % (h["role"], h["contract"]))
+        elif h["type"] == "timelock_roles":
+            tl = h["timelock"]; dv = rpc_batch(url, [("eth_call", [{"to": tl, "data": SEL["getMinDelay"]}, "latest"])]); bound = None
+            pb = rpc_batch(url, [("eth_call", [{"to": t, "data": _hex_args(S_HAS_ROLE_U8, "0" * 24 + tl[2:].lower(), "%064x" % i)}, "latest"]) for i in range(12)])   # the Diamond's own role check: is the timelock a holder of some role there? hasRole(address,uint8) over the role ids, ONE batch (twelve separate requests were rate-limited on the first real read)
+            for i, pr in enumerate(pb):
+                if pr and len(pr) == 66 and int(pr, 16) == 1: bound = i; break
+            if bound is None: continue   # the timelock is not shown to hold power on the target: nothing from it counts
+            try: delay = int(dv[0], 16) if dv[0] and len(dv[0]) == 66 else None
+            except ValueError: delay = None
+            if delay is not None:
+                paths.append({"address": tl, "kind": "timelock", "delay_seconds": delay, "label": "emergency timelock (holds role id %d on the target)" % bound, "via": "getMinDelay() on a timelock that hasRole(address,uint8) says holds a role on the target", "verified": True})
+            hr = rpc_batch(url, [("eth_call", [{"to": tl, "data": _hex_args(S_HAS_ROLE, H_ROLE["PROPOSER_ROLE"], "0" * 24 + c[2:].lower())}, "latest"]) for c in h["candidates"]])
+            for c, w in zip(h["candidates"], hr):
+                if w and len(w) == 66 and int(w, 16) == 1:
+                    p = read_path_evm(url, c); p.update(label="proposer of the emergency timelock", via="hasRole(PROPOSER_ROLE, address) is true on the timelock", verified=True); paths.append(p)
+        elif h["type"] == "roles_display":   # shown, never corroborating
+            for role in h["roles"]:
+                c = rpc_batch(url, [("eth_call", [{"to": t, "data": S_ROLE_COUNT + H_ROLE[role][2:]}, "latest"])])[0]
+                try: cn = int(c, 16) if c and len(c) == 66 else 0
+                except ValueError: cn = 0
+                if 0 < cn <= 5:
+                    mm = rpc_batch(url, [("eth_call", [{"to": t, "data": S_ROLE_MEMBER + H_ROLE[role][2:] + "%064x" % i}, "latest"]) for i in range(cn)])
+                    for i, w in enumerate(mm):
+                        a_ = _word_addr(w)
+                        if a_: p = read_path_evm(url, a_); p.update(label="%s member %d of %d" % (role, i + 1, cn), via="getRoleMember(%s, %d)" % (role, i), verified=True, display_only=True); paths.append(p)
+    return paths
+
+
+# ----- Solana: own derivations and decoders (public account layouts), no scorer code
+def _pda(seeds, program):
+    for bump in range(255, -1, -1):
+        h = hashlib.sha256(b"".join(seeds) + bytes([bump]) + b58decode(program) + b"ProgramDerivedAddress").digest()
+        if not on_curve_bytes(h): return b58encode(h)
+    return None
+
+
+def _v4_vault(ms, idx): return _pda([b"multisig", b58decode(ms), b"vault", bytes([idx])], SQUADS_V4)
+def _v3_authority(ms, idx): return _pda([b"squad", b58decode(ms), idx.to_bytes(4, "little"), b"authority"], SQDS_V3)
+
+
+def _v4_path(label, authority, ms, idx, how):
+    """A Squads v4 vault as a path: verified only if the vault derived from the multisig and the index IS the authority."""
+    if _v4_vault(ms, idx) != authority: return None
+    info = squads_multisig(ms)
+    if not info: return None
+    return {"address": authority, "kind": "squads_v4", "threshold": info["threshold"], "owners": info["owners"], "voters": info.get("voters"), "time_lock_s": info["delay_seconds"], "multisig": ms,
+            "label": label, "via": how + ", the vault derived from multisig %s index %d" % (ms, idx), "verified": True}
+
+
+def _field(acct, offset):
+    d = acct.get("data") or b""
+    return b58encode(d[offset:offset + 32]) if len(d) >= offset + 32 else None
+
+
+def sol_paths(rec, hints):
+    paths = []; t = rec["target"]
+    for h in hints:
+        if h["type"] == "sol_field":
+            a = sol_account(t); v = _field(a, h["offset"]) if a and a.get("exists") else None
+            if not v: continue
+            if on_curve(v): paths.append({"address": v, "kind": "eoa", "label": h["label"], "via": "account field at offset %d" % h["offset"], "verified": True, "note": h.get("scope_note")}); continue
+            p = _v4_path(h["label"], v, h["multisig"], h["vault_index"], "%s, account field at offset %d" % (h["label"], h["offset"]))
+            if p: p["note"] = h.get("scope_note"); paths.append(p)
+        elif h["type"] == "sol_squads_v3_field":
+            a = sol_account(t); v = _field(a, h["offset"]) if a and a.get("exists") else None
+            if not v: continue
+            ms = h["multisig"]; acc = sol_account(ms)
+            if not (acc and acc.get("exists") and acc.get("owner") == SQDS_V3): continue
+            if not any(_v3_authority(ms, i) == v for i in h["authority_indexes"]): continue   # verified: the field is an authority derived from this Squads v3 multisig
+            d = acc["data"]; thr = int.from_bytes(d[8:10], "little"); n = int.from_bytes(d[54:58], "little")
+            if 1 <= thr <= n <= 100: paths.append({"address": v, "kind": "squads_v3", "threshold": thr, "owners": n, "multisig": ms, "label": h["label"], "via": "account field at offset %d, an authority derived from Squads v3 multisig %s" % (h["offset"], ms), "verified": True})
+        elif h["type"] == "sol_programs":
+            for pr in h["programs"]:
+                kind, holder, path, extra = solana_read(pr["program"])
+                if kind == "pda" and holder:
+                    p = _v4_path(pr["label"], holder, pr["multisig"], pr["vault_index"], "upgrade authority of program %s" % pr["program"])
+                    if p: p["note"] = h.get("scope_note"); paths.append(p)
+    return paths
+
+
+def corroborate_all(results, dis, acked_keys=()):
+    """Run after every disagreement is known. Moves the corroborated ones out of `dis`; returns the list of them (recomputed each run)."""
+    out = []
+    for rec in list(dis):
+        key = rec["chain"] + ":" + str(rec["target"]).lower(); hints = HINTS.get(key, [])
+        try:
+            if rec["chain"] == "solana": paths = sol_paths(rec, hints)
+            else:
+                url = MAINNET.get(rec["chain"]); paths = evm_paths(url, rec, hints) if url else []
+        except Exception as e:   # noqa: BLE001 -- an unreadable extra path is not a corroboration
+            rec["other_paths_error"] = type(e).__name__; paths = []
+        shown = [dict(p) for p in paths if p.get("verified")]
+        for p in shown: p["is_primary_holder"] = bool(rec.get("holder") and same_addr(p.get("address"), rec.get("holder")))   # the path the disagreement is about, shown for context, never used to answer it
+        if shown: rec["other_paths"] = shown
+        verdict = evaluate(rec, [p for p in paths if not p.get("display_only")])
+        if verdict:
+            weak = any(p["kind"] == "contract" and p["label"] in [l for a_ in verdict for l in a_["answered_by"]] for p in shown)
+            rec["corroborated"] = {"axes": verdict, "paths": [p for p in shown if not p.get("display_only")], "blocks": {"start": rec.get("block_start"), "end": rec.get("block_end")},
+                                   "strength": "weak: a contract holder with no Safe or timelock getter and no delay getter, the absence of a getter is not a proof" if weak else "read",
+                                   "reading": "corroborates that a weaker path exists, not how the scorer weighs it; recomputed at every run, it returns the moment the path changes or no longer verifies"}
+            rec["corroborated"]["disagreement"] = rec.pop("disagree", None)   # the finding moves INTO the corroboration: no reader of `disagree` (alerts, trust, MCP tools, find, brief) sees a disagreement that was answered
+            dis.remove(rec); out.append(rec)
+    return out
+
+
+ACK_MAX_DAYS = 30
+
+
+def ack_fresh(note, now=None, days=ACK_MAX_DAYS):
+    """A human acknowledgement is only as durable as the day it was written (it depends on the key chain:target alone). Its note starts with the review
+    date (YYYY-MM-DD); older than `days`, or without a date, it no longer silences the disagreement, which comes back until someone reads it again."""
+    try:   # UTC midnight: no daylight-saving drift in the day count
+        d = calendar.timegm(time.strptime(str(note)[:10], "%Y-%m-%d")); return 0 <= ((now if now is not None else time.time()) - d) <= days * 86400
+    except ValueError: return False
+
+
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--scores", default="watch/scores"); ap.add_argument("--out", default="watch/second_opinion.json"); ap.add_argument("--md", default="watch/second_opinion.md"); ap.add_argument("--ack", default="data/second_opinion_acknowledged.json"); ap.add_argument("--tvl", default="watch/tvl.json"); ap.add_argument("--held", default="watch/held_assets.json", help="what each contract holds by its own account (held_assets.py): preferred to the protocol TVL for the attacker's question"); ap.add_argument("--events", default="watch/events.jsonl", help="the hash-chained event log: every admin change and every group that grew is appended there too")
     a = ap.parse_args(); results, dis, agree, unread, native, acked = [], [], 0, 0, 0, []
     try: ack = {str(k).lower(): v for k, v in (json.load(open(a.ack)).get("disagreements") or {}).items()}   # keys in the form every lookup below uses: an address pasted checksummed matches too   # reviewed by a human: still shown, no longer alarmed
     except Exception: ack = {}   # noqa: BLE001 -- an unreadable file acknowledges nothing
+    ack = {k: v for k, v in ack.items() if ack_fresh(v)}   # 29/10/2026: an acknowledgement expires 30 days after the date its note starts with
     prev = {}   # the previous run's reads: a holder that changed between two runs is an early warning the weekly scorer cannot give
     try:
         for r in json.load(open(a.out)).get("results", []): prev[r["chain"] + ":" + str(r["target"]).lower()] = r
@@ -702,6 +964,7 @@ def main():
                 else: dis.append(rec)
             else: agree += 1
             results.append(rec)
+    corroborated = corroborate_all(results, dis)   # not added to `agree`: agree + disagree + corroborated + acknowledged + unreadable + native = checked; 29/10/2026: a disagreement answered by a second path verified HERE leaves the list, stays visible, and is recomputed at every run
     bdir = os.path.join(os.path.dirname(a.out) or ".", "badge"); slug_of = {}
     for f in glob.glob(os.path.join(a.scores, "*.json")):
         try: slug_of[chain_key(os.path.basename(f)[:-5]) or ("solana" if json.load(open(f)).get("kind") == "solana" else None)] = os.path.basename(f)[:-5]
@@ -709,7 +972,7 @@ def main():
     for r_ in results:   # a shields.io endpoint badge per target: what the independent read says, for a protocol that wants to show it
         sl = slug_of.get(r_["chain"]); k_ = r_.get("kind")
         if not sl or r_.get("oracle_self"): continue
-        msg, col = ("disagrees" if r_.get("disagree") and not r_.get("acknowledged") else "reviewed" if r_.get("acknowledged") else "agrees" if k_ not in ("unreadable", "native") else "not readable"), ("orange" if r_.get("disagree") and not r_.get("acknowledged") else "brightgreen" if k_ not in ("unreadable", "native") else "lightgrey")
+        msg, col = ("disagrees" if r_.get("disagree") and not r_.get("acknowledged") and not r_.get("corroborated") else "reviewed" if r_.get("acknowledged") else "corroborated" if r_.get("corroborated") else "agrees" if k_ not in ("unreadable", "native") else "not readable"), ("orange" if r_.get("disagree") and not r_.get("acknowledged") and not r_.get("corroborated") else "brightgreen" if k_ not in ("unreadable", "native") else "lightgrey")
         if k_ == "safe" and r_.get("nested"): msg += ", %s-of-%s over %s" % (r_.get("threshold"), r_.get("owners"), " + ".join(d_["kind"] for d_ in r_.get("owners_detail", [])))
         elif k_ == "safe": msg += ", Safe %s-of-%s" % (r_.get("threshold"), r_.get("owners"))
         elif k_ == "timelock": msg += ", timelock %dh" % ((r_.get("delay_seconds") or 0) // 3600)
@@ -851,7 +1114,7 @@ def main():
         if keys and money: exposure.append({"chain": r_["chain"], "target": r_["target"], "keys_to_move": keys, "react_hours": hours, "tvl_usd": round(money), "money_per_key_usd": round(money / keys), "money_source": src})
     for k_, w_ in prev_windows.items(): event_windows.setdefault(k_, w_)   # a chain that was not read this run keeps its marker: the next run starts from the last block read
     exposure.sort(key=lambda x: (-x["money_per_key_usd"], x["react_hours"]))
-    out = {"generated_utc": now_utc, "pending_follow": PENDING_FOLLOW_NOTE, "event_windows": event_windows, "blocks": blocks, "signer_composition": signer_composition, "exposure": exposure[:40], "checked": sum(1 for r_ in results if not r_.get("oracle_self")), "clusters": clusters, "concentration": concentration, "cluster_changes": cluster_changes, "agree": agree, "disagree": len(dis), "unreadable": unread, "native": native, "acknowledged": len(acked), "rpc_calls_unanswered": RPC_ERRORS,
+    out = {"generated_utc": now_utc, "pending_follow": PENDING_FOLLOW_NOTE, "event_windows": event_windows, "blocks": blocks, "signer_composition": signer_composition, "exposure": exposure[:40], "checked": sum(1 for r_ in results if not r_.get("oracle_self")), "clusters": clusters, "concentration": concentration, "cluster_changes": cluster_changes, "agree": agree, "disagree": len(dis), "corroborated": len(corroborated), "corroborated_disagreements": corroborated, "unreadable": unread, "native": native, "acknowledged": len(acked), "rpc_calls_unanswered": RPC_ERRORS,
            "disagreements": dis, "acknowledged_disagreements": acked, "changed": changes, "upgrades": upgrades, "previous_utc": prev_utc, "results": results,
            "what": "an independent reader (EVM: EIP-1967 admin slot then ProxyAdmin owner(), else owner(), else admin(); holder classified as EOA / Safe / timelock / contract. Solana: the program upgrade authority through ProgramData, classified as plain key / Squads multisig / immutable / program-owned account) against the published adminKeyScore; a disagreement is a finding to review, an unreadable target is not an agreement, a native target (no code at the address: a derived identifier for a non-EVM entity) is outside this reader's reach"}
     tmp = a.out + ".tmp"; json.dump(out, open(tmp, "w"), indent=1); os.replace(tmp, a.out)
@@ -883,6 +1146,7 @@ def main():
     if concentration.get("top5_share") is not None: print("  concentration: the five heaviest holders sit over %.0f%% of the tracked money ($%.0fM of $%.0fM)" % (100 * concentration["top5_share"], top5 / 1e6, tracked_total / 1e6))
     for x in cluster_changes: print("  GREW " + x["text"])
     if clusters: print("  shared admins: %d holder(s) govern 2+ tracked contracts; the heaviest, a %s, sits over %d contract(s) on %s holding about $%.0fM" % (len(clusters), clusters[0]["kind"], clusters[0]["targets"], ", ".join(clusters[0]["chains"]), clusters[0]["tvl_usd"] / 1e6))
+    print("corroborated: %d" % len(corroborated))
     print("second opinion: %d checked, %d agree, %d disagree, %d reviewed, %d unreadable, %d native (no code at the address), %d admin change(s), %d upgrade(s) executed since the previous run (%d RPC call(s) unanswered after retries)" % (out["checked"], agree, len(dis), len(acked), unread, native, len(changes), len(upgrades), RPC_ERRORS))
     for x in changes: print("  CHANGED " + x["chain"] + " " + x["target"] + ": " + x["changed"])
     for x in dis: print("  DISAGREE " + x["chain"] + " " + x["target"] + ": " + x["disagree"])

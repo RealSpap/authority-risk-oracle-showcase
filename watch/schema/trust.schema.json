@@ -1,0 +1,611 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "watch/trust.json v1",
+ "type": "object",
+ "required": [
+  "schemaVersion",
+  "generated_utc",
+  "rule_version",
+  "rule",
+  "targets",
+  "counts",
+  "dimension_counts",
+  "run",
+  "by_target",
+  "rule_sha256",
+  "error"
+ ],
+ "properties": {
+  "schemaVersion": {
+   "type": "integer"
+  },
+  "generated_utc": {
+   "type": "string"
+  },
+  "rule_version": {
+   "type": "string"
+  },
+  "rule": {
+   "type": "string"
+  },
+  "targets": {
+   "type": "integer"
+  },
+  "counts": {
+   "type": "object",
+   "required": [
+    "VERIFIED",
+    "PARTIAL",
+    "STALE",
+    "DISPUTED",
+    "UNVERIFIED",
+    "UNAVAILABLE"
+   ],
+   "properties": {
+    "VERIFIED": {
+     "type": "integer"
+    },
+    "PARTIAL": {
+     "type": "integer"
+    },
+    "STALE": {
+     "type": "integer"
+    },
+    "DISPUTED": {
+     "type": "integer"
+    },
+    "UNVERIFIED": {
+     "type": "integer"
+    },
+    "UNAVAILABLE": {
+     "type": "integer"
+    }
+   },
+   "additionalProperties": false
+  },
+  "dimension_counts": {
+   "type": "object",
+   "required": [
+    "reading",
+    "coverage",
+    "method",
+    "signature",
+    "journal",
+    "notification",
+    "financial_exposure",
+    "surveillance"
+   ],
+   "properties": {
+    "reading": {
+     "type": "object",
+     "required": [
+      "ok",
+      "not_applicable",
+      "partial",
+      "unverified",
+      "stale",
+      "disputed",
+      "unavailable"
+     ],
+     "properties": {
+      "ok": {
+       "type": "integer"
+      },
+      "not_applicable": {
+       "type": "integer"
+      },
+      "partial": {
+       "type": "integer"
+      },
+      "unverified": {
+       "type": "integer"
+      },
+      "stale": {
+       "type": "integer"
+      },
+      "disputed": {
+       "type": "integer"
+      },
+      "unavailable": {
+       "type": "integer"
+      }
+     },
+     "additionalProperties": false
+    },
+    "coverage": {
+     "type": "object",
+     "required": [
+      "ok",
+      "not_applicable",
+      "partial",
+      "unverified",
+      "stale",
+      "disputed",
+      "unavailable"
+     ],
+     "properties": {
+      "ok": {
+       "type": "integer"
+      },
+      "not_applicable": {
+       "type": "integer"
+      },
+      "partial": {
+       "type": "integer"
+      },
+      "unverified": {
+       "type": "integer"
+      },
+      "stale": {
+       "type": "integer"
+      },
+      "disputed": {
+       "type": "integer"
+      },
+      "unavailable": {
+       "type": "integer"
+      }
+     },
+     "additionalProperties": false
+    },
+    "method": {
+     "type": "object",
+     "required": [
+      "ok",
+      "not_applicable",
+      "partial",
+      "unverified",
+      "stale",
+      "disputed",
+      "unavailable"
+     ],
+     "properties": {
+      "ok": {
+       "type": "integer"
+      },
+      "not_applicable": {
+       "type": "integer"
+      },
+      "partial": {
+       "type": "integer"
+      },
+      "unverified": {
+       "type": "integer"
+      },
+      "stale": {
+       "type": "integer"
+      },
+      "disputed": {
+       "type": "integer"
+      },
+      "unavailable": {
+       "type": "integer"
+      }
+     },
+     "additionalProperties": false
+    },
+    "signature": {
+     "type": "object",
+     "required": [
+      "ok",
+      "not_applicable",
+      "partial",
+      "unverified",
+      "stale",
+      "disputed",
+      "unavailable"
+     ],
+     "properties": {
+      "ok": {
+       "type": "integer"
+      },
+      "not_applicable": {
+       "type": "integer"
+      },
+      "partial": {
+       "type": "integer"
+      },
+      "unverified": {
+       "type": "integer"
+      },
+      "stale": {
+       "type": "integer"
+      },
+      "disputed": {
+       "type": "integer"
+      },
+      "unavailable": {
+       "type": "integer"
+      }
+     },
+     "additionalProperties": false
+    },
+    "journal": {
+     "type": "object",
+     "required": [
+      "ok",
+      "not_applicable",
+      "partial",
+      "unverified",
+      "stale",
+      "disputed",
+      "unavailable"
+     ],
+     "properties": {
+      "ok": {
+       "type": "integer"
+      },
+      "not_applicable": {
+       "type": "integer"
+      },
+      "partial": {
+       "type": "integer"
+      },
+      "unverified": {
+       "type": "integer"
+      },
+      "stale": {
+       "type": "integer"
+      },
+      "disputed": {
+       "type": "integer"
+      },
+      "unavailable": {
+       "type": "integer"
+      }
+     },
+     "additionalProperties": false
+    },
+    "notification": {
+     "type": "object",
+     "required": [
+      "ok",
+      "not_applicable",
+      "partial",
+      "unverified",
+      "stale",
+      "disputed",
+      "unavailable"
+     ],
+     "properties": {
+      "ok": {
+       "type": "integer"
+      },
+      "not_applicable": {
+       "type": "integer"
+      },
+      "partial": {
+       "type": "integer"
+      },
+      "unverified": {
+       "type": "integer"
+      },
+      "stale": {
+       "type": "integer"
+      },
+      "disputed": {
+       "type": "integer"
+      },
+      "unavailable": {
+       "type": "integer"
+      }
+     },
+     "additionalProperties": false
+    },
+    "financial_exposure": {
+     "type": "object",
+     "required": [
+      "ok",
+      "not_applicable",
+      "partial",
+      "unverified",
+      "stale",
+      "disputed",
+      "unavailable"
+     ],
+     "properties": {
+      "ok": {
+       "type": "integer"
+      },
+      "not_applicable": {
+       "type": "integer"
+      },
+      "partial": {
+       "type": "integer"
+      },
+      "unverified": {
+       "type": "integer"
+      },
+      "stale": {
+       "type": "integer"
+      },
+      "disputed": {
+       "type": "integer"
+      },
+      "unavailable": {
+       "type": "integer"
+      }
+     },
+     "additionalProperties": false
+    },
+    "surveillance": {
+     "type": "object",
+     "required": [
+      "ok",
+      "not_applicable",
+      "partial",
+      "unverified",
+      "stale",
+      "disputed",
+      "unavailable"
+     ],
+     "properties": {
+      "ok": {
+       "type": "integer"
+      },
+      "not_applicable": {
+       "type": "integer"
+      },
+      "partial": {
+       "type": "integer"
+      },
+      "unverified": {
+       "type": "integer"
+      },
+      "stale": {
+       "type": "integer"
+      },
+      "disputed": {
+       "type": "integer"
+      },
+      "unavailable": {
+       "type": "integer"
+      }
+     },
+     "additionalProperties": false
+    }
+   },
+   "additionalProperties": false
+  },
+  "run": {
+   "type": "object",
+   "required": [
+    "signature",
+    "journal",
+    "watch_run_utc",
+    "inputs_unread"
+   ],
+   "properties": {
+    "signature": {
+     "type": "string",
+     "enum": [
+      "expected_signed",
+      "unsigned",
+      "unread"
+     ],
+     "description": "what the PREVIOUS manifest says and whether a key exists in this run: `expected_signed` is a promise about the signature made after this file, not a verification of any signature"
+    },
+    "journal": {
+     "type": "string",
+     "enum": [
+      "ok",
+      "broken",
+      "unread"
+     ]
+    },
+    "watch_run_utc": {
+     "type": [
+      "string",
+      "null"
+     ]
+    },
+    "inputs_unread": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "signature_key": {
+     "type": "string",
+     "enum": [
+      "pinned",
+      "not_pinned",
+      "unknown"
+     ],
+     "description": "whether the public key of the previous manifest is one of audit_public.PINNED_KEYS"
+    }
+   }
+  },
+  "by_target": {
+   "type": "object",
+   "additionalProperties": {
+    "type": "object",
+    "required": [
+     "status",
+     "reasons",
+     "dimensions"
+    ],
+    "properties": {
+     "status": {
+      "type": "string",
+      "enum": [
+       "VERIFIED",
+       "PARTIAL",
+       "STALE",
+       "DISPUTED",
+       "UNVERIFIED",
+       "UNAVAILABLE"
+      ]
+     },
+     "reasons": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "required": [
+        "code",
+        "dimension",
+        "effect",
+        "detail"
+       ],
+       "properties": {
+        "code": {
+         "type": "string"
+        },
+        "dimension": {
+         "type": "string",
+         "enum": [
+          "reading",
+          "coverage",
+          "method",
+          "signature",
+          "journal",
+          "notification",
+          "financial_exposure",
+          "surveillance"
+         ]
+        },
+        "effect": {
+         "type": "string",
+         "enum": [
+          "decides",
+          "degrades",
+          "info"
+         ]
+        },
+        "detail": {
+         "type": "string"
+        }
+       }
+      }
+     },
+     "dimensions": {
+      "type": "object",
+      "required": [
+       "reading",
+       "coverage",
+       "method",
+       "signature",
+       "journal",
+       "notification",
+       "financial_exposure",
+       "surveillance"
+      ],
+      "properties": {
+       "reading": {
+        "type": "string",
+        "enum": [
+         "ok",
+         "not_applicable",
+         "partial",
+         "unverified",
+         "stale",
+         "disputed",
+         "unavailable"
+        ]
+       },
+       "coverage": {
+        "type": "string",
+        "enum": [
+         "ok",
+         "not_applicable",
+         "partial",
+         "unverified",
+         "stale",
+         "disputed",
+         "unavailable"
+        ]
+       },
+       "method": {
+        "type": "string",
+        "enum": [
+         "ok",
+         "not_applicable",
+         "partial",
+         "unverified",
+         "stale",
+         "disputed",
+         "unavailable"
+        ]
+       },
+       "signature": {
+        "type": "string",
+        "enum": [
+         "ok",
+         "not_applicable",
+         "partial",
+         "unverified",
+         "stale",
+         "disputed",
+         "unavailable"
+        ]
+       },
+       "journal": {
+        "type": "string",
+        "enum": [
+         "ok",
+         "not_applicable",
+         "partial",
+         "unverified",
+         "stale",
+         "disputed",
+         "unavailable"
+        ]
+       },
+       "notification": {
+        "type": "string",
+        "enum": [
+         "ok",
+         "not_applicable",
+         "partial",
+         "unverified",
+         "stale",
+         "disputed",
+         "unavailable"
+        ]
+       },
+       "financial_exposure": {
+        "type": "string",
+        "enum": [
+         "ok",
+         "not_applicable",
+         "partial",
+         "unverified",
+         "stale",
+         "disputed",
+         "unavailable"
+        ]
+       },
+       "surveillance": {
+        "type": "string",
+        "enum": [
+         "ok",
+         "not_applicable",
+         "partial",
+         "unverified",
+         "stale",
+         "disputed",
+         "unavailable"
+        ]
+       }
+      },
+      "additionalProperties": false
+     }
+    }
+   }
+  },
+  "what": {
+   "type": "string"
+  },
+  "rule_sha256": {
+   "type": "string",
+   "description": "sha256 of scripts/lib/trust_rules.py as run: the rule that produced this file"
+  },
+  "error": {
+   "type": [
+    "string",
+    "null"
+   ],
+   "description": "null when the file was computed; the reason when the computation failed and every target is UNAVAILABLE (trust_not_computed)"
+  }
+ }
+}

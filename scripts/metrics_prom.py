@@ -65,7 +65,7 @@ def build(W):
         for a in alerts["active"]: n[a.get("severity") if a.get("severity") in n else "info"] += 1
         o.gauge("aro_alerts_active", "Alerts firing now, by severity", [({"severity": k}, v) for k, v in n.items()])
     if so:
-        o.gauge("aro_second_opinion", "Targets by verdict of the independent reader", [({"result": k}, so.get(k)) for k in ("agree", "disagree", "unreadable", "native")])
+        o.gauge("aro_second_opinion", "Targets by verdict of the independent reader", [({"result": k}, so.get(k)) for k in ("agree", "disagree", "corroborated", "unreadable", "native")])
     if pause and isinstance(pause.get("paused"), list):
         o.gauge("aro_contracts_paused", "Tracked contracts that answer paused() true now", [({}, len(pause["paused"]))])
     if safe:

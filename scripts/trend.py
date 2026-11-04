@@ -36,7 +36,7 @@ def main():
     line = {"run_utc": (lat or {}).get("run_utc") or time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "targets": (lat or {}).get("total_targets"), "stale": (lat or {}).get("stale_total")}
     if rbc: line["tracked_tvl_usd"] = rbc.get("tracked_tvl_usd"); line["causes"] = {k: {"contracts": v.get("contracts"), "tvl_usd": v.get("tvl_usd")} for k, v in (rbc.get("causes") or {}).items()}
     if so:
-        line.update({"agree": so.get("agree"), "disagree": so.get("disagree"), "unreadable": so.get("unreadable"), "changed": len(so.get("changed") or []), "upgrades": len(so.get("upgrades") or [])})
+        line.update({"agree": so.get("agree"), "disagree": so.get("disagree"), "corroborated": so.get("corroborated"), "unreadable": so.get("unreadable"), "changed": len(so.get("changed") or []), "upgrades": len(so.get("upgrades") or [])})
         sc = so.get("signer_composition") or {}; line["signers"] = {"multisigs": sc.get("safes"), "signers": sc.get("signers"), "plain_keys": (sc.get("by_kind") or {}).get("eoa"), "keys_only": sc.get("safes_of_plain_keys_only"), "frozen_by_one_key": sc.get("safes_frozen_by_one_lost_key")}
     if cov: line["blind_spots"] = sum(len(c.get("blind_spots") or []) for c in (cov.get("chains") or {}).values())
     if isrc: line["verified_code"] = {"checked": isrc.get("checked"), "verified": isrc.get("verified")}

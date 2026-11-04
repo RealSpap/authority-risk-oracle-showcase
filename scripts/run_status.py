@@ -39,6 +39,13 @@ def main():
     except OSError: pass
     older = bool(sig and latest and isinstance(sig.get("run_utc"), str) and isinstance(latest.get("run_utc"), str) and sig["run_utc"] < latest["run_utc"])   # the signature file is from an EARLIER run: this run was not signed
     if sig is not None and (refused or older): sig_status = "stale"   # N55bis: a refused signing leaves the previous signature.json in place; it must not be shown as "signed"
+    try:
+        import audit_public
+        pinned_keys = [k.lower() for k in audit_public.PINNED_KEYS]
+    except Exception:  # noqa: BLE001 -- the list of pinned keys could not be loaded: the badge then says the key was not checked
+        pinned_keys = []
+    key_state = "key not checked" if not pinned_keys else ("key pinned" if str((sig or {}).get("public_key", "")).lower() in pinned_keys else "key not pinned")   # "signed" is the file's own word; the pinned key is what makes it mean something
+    if sig_status == "signed" and key_state != "key pinned": reasons.append("the run is signed but %s: a signature by a key nobody pinned proves nothing about who ran it" % key_state); worse("degraded")
     if sig_status == "missing": reasons.append("no signed manifest"); worse("degraded")
     elif sig_status == "unsigned": reasons.append("run unsigned (no signing key set)"); worse("degraded")
     elif sig_status == "stale": reasons.append("signature STALE: this run could not be signed (%s); signature.json is the one of an earlier run" % ("signing refused, see signature.txt" if refused else "its run time is older than latest.json")); worse("alarm")
@@ -65,8 +72,8 @@ def main():
     if run_id.current(): rec["run_id"] = run_id.current()
     tmp = os.path.join(W, "status.json.tmp"); json.dump(rec, open(tmp, "w"), indent=1); os.replace(tmp, os.path.join(W, "status.json"))
     os.makedirs(os.path.join(W, "badge"), exist_ok=True)
-    parts = [("signature stale" if sig_status == "stale" else "signed" if rec["checks"]["signed"] else "unsigned"), ("chain intact" if rec["checks"]["chain_ok"] else ("chain broken" if chain else "chain unchecked"))]
-    if so: parts.append("2nd opinion %s" % ("%d to review" % so["disagree"] if so.get("disagree") else "agrees"))
+    parts = [("signature stale" if sig_status == "stale" else ("signed, " + key_state) if rec["checks"]["signed"] else "unsigned"), ("chain intact" if rec["checks"]["chain_ok"] else ("chain broken" if chain else "chain unchecked"))]
+    if so: parts.append("2nd opinion: %d agree, %d to review, %d unread" % (so.get("agree") or 0, so.get("disagree") or 0, (so.get("unreadable") or 0) + (so.get("native") or 0)))   # the words say what was counted; "agrees" said more than the reader read
     badge = {"schemaVersion": 1, "label": "watch integrity", "message": " · ".join(parts), "color": {"ok": "brightgreen", "degraded": "orange", "alarm": "red"}[state]}
     tmp = os.path.join(W, "badge", "integrity.json.tmp"); json.dump(badge, open(tmp, "w"), indent=1); os.replace(tmp, os.path.join(W, "badge", "integrity.json"))
     print("status: %s%s" % (state, (" (" + "; ".join(reasons) + ")") if reasons else ""))

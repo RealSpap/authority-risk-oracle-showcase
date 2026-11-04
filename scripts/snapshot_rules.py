@@ -2,7 +2,7 @@
 
 `scripts/authority_check.py` (the CI gate, the GitHub Action and, through it, the local helper `scripts/mcp_server.py`) takes from this module what makes a score file usable: is it a score file, how old is it,
 is the flag `stale` a boolean, is the composite a whole number from 0 to 100. `scripts/agent_tools.py` (which the installable package `authority-risk-mcp` carries byte for byte, see
-packages/authority-risk-mcp/vendor_tools.py) takes from it only whether a contract is retired in tvl_scope.json; it applies no age limit and still answers on a score file of any age. This module is the one
+packages/authority-risk-mcp/vendor_tools.py) takes from it whether a contract is retired in tvl_scope.json, and (since the second round of review) the same file, composite and stale-flag rules for `get_score` and `check_protocol`: a score file of unknown or old age, a composite that is not a whole number from 0 to 100 and a stale flag that is not true/false give `status: not_read` with the reason. This module is the one
 copy of those rules.
 Standard library only; nothing here reads the network or a key.
 

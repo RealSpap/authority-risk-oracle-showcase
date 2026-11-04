@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""The adversarial kit: the ten tests of the review of 2026-10-30, a baseline and the alert-proof case (twelve cases), run offline against fixtures, each with the result it must give written beforehand (EXPECTED.json).
+"""The adversarial kit: the ten tests of the review of 2026-10-30, a baseline, the alert-proof case and the node without old state (thirteen cases), run offline against fixtures, each with the result it must give written beforehand (EXPECTED.json).
 
     python3 scripts/adversarial/run.py              # all cases; exit 0 only if every case gave its expected result
     python3 scripts/adversarial/run.py --case 07    # one case
@@ -15,7 +15,7 @@ WHAT EACH CASE EXERCISES (said in `exercises` in EXPECTED.json): cases 01, 02, 0
 (or by the reader's own pure function) and check the status the rule gives: they test the association between a reading and a status, NOT the reader's RPC reads
 (no node is asked). Case 03 runs the real timelock code on a fake chain. Case 04 runs the real reader on fake RPC answers. Case 05 runs the real signing and
 verification code. Case 06 the real chain verifier. Case 07 the real delivery code with simulated receivers (HTTP transport, redirects and Telegram are not
-exercised). Case 10 the trust rule on an old run. Case 11 the real alert engine and the offline replay of the proof it carries.
+exercised). Case 10 the trust rule on an old run. Case 11 the real alert engine and the offline replay of the proof it carries. Case 12 the real block probe on fake RPC answers and the trust rule on a scores file that carries it.
 """
 import argparse
 import calendar
@@ -340,9 +340,40 @@ def case_11():
     return {"detected": bool(reading) and ok and not ok_alt and not ok_none, "evidence_present": bool(reading), "proof_matches_recorded_read": ok, "altered_block_detected": not ok_alt, "missing_proof_detected": not ok_none}
 
 
+def case_12():
+    """A node that keeps no archive: the block tag is ignored (it answers for block 1 as for the head), or its old state is simply gone, or it honours the tag."""
+    import watch_run as wr
+    latest = "0x" + "%064x" % 7
+    orig = wr.rpc
+    probes = {}
+    try:
+        wr.rpc = lambda url, calls, tries=3: [latest]                                              # ignores the tag: the same answer for block 1
+        probes["ignored"] = wr.probe_block("http://x", "0x" + "ab" * 20, latest)["honoured"]
+        def gone(url, calls, tries=3):
+            raise RuntimeError("missing trie node: historical state not available")
+        wr.rpc = gone                                                                               # pruned: the old state is not there, the node says so
+        probes["gone"] = wr.probe_block("http://x", "0x" + "ab" * 20, latest)["honoured"]
+        wr.rpc = lambda url, calls, tries=3: ["0x"]                                                 # honours the tag: nothing existed at block 1
+        probes["honoured"] = wr.probe_block("http://x", "0x" + "ab" * 20, latest)["honoured"]
+    finally:
+        wr.rpc = orig
+    st = {}
+    for name, honoured in (("ignored", probes["ignored"]), ("gone", probes["gone"]), ("honoured", probes["honoured"])):
+        w = Watch()
+        try:
+            w.edit("scores/robinhood-chain.json", lambda d, h=honoured: d.update({"block_probe": {"honoured": h, "probe_block": 1, "note": "case 12"}}))
+            doc = w.trust()
+            st[name] = (status(doc, A), codes(doc, A))
+        finally:
+            w.close()
+    return {"detected": probes["ignored"] is False and st["ignored"][0] == "UNVERIFIED", "probe_when_tag_ignored": probes["ignored"], "probe_when_old_state_missing": probes["gone"],
+            "probe_when_tag_honoured": probes["honoured"], "status_of_A_when_tag_ignored": st["ignored"][0], "reason_when_tag_ignored": next((c for c in st["ignored"][1] if c == "block_not_honoured"), None),
+            "status_of_A_when_tag_honoured": st["honoured"][0], "status_of_A_when_old_state_missing": st["gone"][0]}
+
+
 CASES = {"00-baseline": case_00, "01-hidden-authority": case_01, "02-safe-with-module": case_02, "03-timelock-outside-window": case_03, "04-rpc-that-lies": case_04,
          "05-signature-and-key-replaced": case_05, "06-journal-truncated": case_06, "07-webhook-loss": case_07, "08-proxy-outside-patterns": case_08, "09-finance-stale": case_09,
-         "10-surveillance-interrupted": case_10, "11-alert-proof-replayable": case_11}
+         "10-surveillance-interrupted": case_10, "11-alert-proof-replayable": case_11, "12-node-without-old-state": case_12}
 
 
 def compare(expected, observed):

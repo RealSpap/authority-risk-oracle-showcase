@@ -59,6 +59,9 @@ REASONS = {
     "independent_read_missing": ("reading", "unverified", "decides"),
     "independent_read_unreadable": ("reading", "unverified", "decides"),
     "native_entity": ("reading", "unverified", "decides"),
+    "score_row_unreadable": ("reading", "unverified", "decides"),      # the row of the score file has no composite between 0 and 100: nothing to rely on
+    "stale_flag_unknown": ("reading", "unverified", "decides"),         # the row says neither stale nor fresh (isStale is missing or not a boolean): unknown is never ok
+    "block_not_honoured": ("reading", "unverified", "decides"),      # the node ignores the block tag (its probe answered for block 1 as for the head): a reading pinned to a block cannot be replayed
     "modules_truncated": ("reading", "partial", "degrades"),
     "modules_unread": ("reading", "partial", "degrades"),
     "reader_cannot_contradict": ("reading", "partial", "degrades"),
@@ -81,6 +84,7 @@ REASONS = {
     "pause_no_getter": ("coverage", "ok", "info"),     # the reader cannot tell "no pause getter" from "the RPC did not answer for this contract" (pause_state.py drops both): the detail says so
     "side_roles_not_covered": ("coverage", "ok", "info"),
     "run_unsigned": ("signature", "partial", "degrades"),
+    "signature_previous_run_missing": ("signature", "partial", "degrades"),      # the manifest on file is older than the previous run: the previous run was not signed (signing refused or failed), its signature.json is the one of an earlier run
     "signature_unread": ("signature", "unverified", "degrades"),
     "signature_key_not_pinned": ("signature", "partial", "degrades"),
     "signature_key_unverifiable": ("signature", "unverified", "degrades"),
@@ -115,6 +119,23 @@ REASONS = {
     "input_stale:methodology": ("method", "partial", "degrades"),
     "input_stale:disputes": ("reading", "partial", "degrades"),
 }
+# Would a later Watch run, with no change to the code, the data or the contract, take the reason away? A consumer that gets PARTIAL or STALE and is told to wait
+# must know whether waiting can help. Every code of REASONS is in exactly one of the two sets (a test fails when a new code is in neither).
+TRANSIENT = frozenset({
+    "oracle_not_read", "trust_not_computed", "score_stale", "modules_unread", "admin_events_unread", "admin_members_unread", "state_unverified_pause", "state_unverified_safe_activity",
+    "state_stale_pause", "state_stale_safe_activity", "pause_unread", "side_roles_unread", "side_roles_stale", "signature_unread", "signature_key_unverifiable", "journal_unread",
+    "alert_undelivered", "signature_previous_run_missing", "watch_old", "oracle_self_watch_unread", "scan_gap", "score_row_unreadable", "stale_flag_unknown",
+    "input_missing:second_opinion", "input_missing:pause_state", "input_missing:safe_activity", "input_missing:side_roles", "input_missing:tvl", "input_missing:held_assets",
+    "input_missing:alerts", "input_missing:methodology", "input_missing:disputes",
+    "input_stale:second_opinion", "input_stale:pause_state", "input_stale:safe_activity", "input_stale:side_roles", "input_stale:tvl", "input_stale:held_assets", "input_stale:alerts",
+    "input_stale:methodology", "input_stale:disputes",
+})
+PERMANENT = frozenset({
+    "dispute_open", "reader_disagrees", "reader_disagreement_acknowledged", "independent_read_missing", "independent_read_unreadable", "native_entity", "modules_truncated",
+    "reader_cannot_contradict", "admin_members_not_weighed", "safe_signers_unclassified", "score_fixed_by_decision", "method_hash_differs", "run_unsigned", "signature_key_not_pinned",
+    "journal_broken", "oracle_method_mixed", "method_version_unregistered", "executor_open", "pause_no_getter", "side_roles_not_covered", "money_unknown", "money_stale", "money_unread",
+    "money_out_of_scope", "block_not_honoured",
+})
 INPUT_DATE_FIELD = {"second_opinion": "generated_utc", "pause_state": "generated_utc", "safe_activity": "generated_utc", "side_roles": "generated_utc", "tvl": "generated_utc",
                     "held_assets": "generated_utc", "alerts": "evaluated_utc", "methodology": "generated_utc", "disputes": "run_utc"}
 INPUT_MAX_LAG_SECONDS = 3600   # every input is written AFTER latest.run_utc by the steps that follow the Watch (+10 to +25 minutes in the run of 29/10); one written more than an hour BEFORE it is the file of an earlier run (a step that failed leaves it in place)
@@ -159,6 +180,10 @@ def run_reasons(inputs, now, key_present):
         out["signature_key_unverifiable"] = "no list of pinned keys could be loaded (audit_public.PINNED_KEYS): the key of the previous manifest cannot be compared"
     elif str(sig.get("public_key", "")).lower() not in {k.lower() for k in inputs["pinned_keys"]}:
         out["signature_key_not_pinned"] = "the previous manifest is signed by a key that is not pinned (audit_public.PINNED_KEYS): a valid signature by another key proves the files match what that key signed, not who holds it"
+    if isinstance(sig, dict) and sig.get("signed"):
+        sig_t, prev_t = _epoch(sig.get("run_utc")), _epoch(_get(latest, "previous_run_utc"))
+        if sig_t is not None and prev_t is not None and sig_t < prev_t:      # this file is written BEFORE this run is signed, so the manifest on file should be the previous run's
+            out["signature_previous_run_missing"] = "the manifest on file is from %s, before the previous run (%s): that run was not signed" % (sig.get("run_utc"), _get(latest, "previous_run_utc"))
     if not isinstance(chain, dict):
         out["journal_unread"] = "watch/chain.json could not be read"
     elif chain.get("ok") is not True:
@@ -242,6 +267,13 @@ def derive_all(inputs, now, key_present, fixed_targets=frozenset(), evm_chains=N
                 rs["oracle_self_watch_unread"] = "the scan of the oracle's own role events was not read"
             if _get(doc, "self", "gap_blocks") or int(doc.get("scan_stalled_runs") or 0) >= 2:
                 rs["scan_gap"] = "the scan of the oracle's own role events has a hole or has not advanced"
+            if _get(doc, "block_probe", "honoured") is False:                  # only an explicit False: a node that is merely not told (None) is not accused
+                rs["block_not_honoured"] = "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
+            comp = t.get("compositeScore")
+            if not (isinstance(comp, int) and not isinstance(comp, bool) and 0 <= comp <= 100):
+                rs["score_row_unreadable"] = "the score row carries no composite between 0 and 100"
+            if not isinstance(t.get("stale"), bool):
+                rs["stale_flag_unknown"] = "the score row says neither stale nor fresh (isStale is missing or not true/false)"
             if t.get("stale") is True:
                 rs["score_stale"] = "the on-chain score is stale (isStale)"
             h = t.get("methodologyHash")
@@ -354,8 +386,12 @@ def _record(reasons):
         status = "PARTIAL"
     else:
         status = "VERIFIED"
+    blocking = [c for c in reasons if REASONS[c][2] != "info"]
     return {"status": status, "reasons": [{"code": c, "dimension": REASONS[c][0], "effect": REASONS[c][2], "detail": reasons[c]} for c in sorted(reasons)],
-            "dimensions": {d: dims[d]["state"] for d in DIMENSIONS}}
+            "dimensions": {d: dims[d]["state"] for d in DIMENSIONS},
+            # true only when VERIFIED is not reached yet and every reason that holds it back would go away at a later run of the Watch by itself (see TRANSIENT): waiting can help.
+            # false for VERIFIED (nothing to wait for) and for a status held back by a reason that needs a change in the code, the data or the contract.
+            "retry_may_help": bool(blocking) and all(c in TRANSIENT for c in blocking)}
 
 
 def summary(records):

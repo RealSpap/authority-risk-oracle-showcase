@@ -68,7 +68,7 @@ class TestGateOptions(unittest.TestCase):
     def test_the_published_gate_is_unchanged(self):
         self.assertEqual(authority_facts_gate.gate(GL), (True, "ok: Base 70 (decent), 48 h to react"))
         self.assertEqual(authority_facts_gate.gate(dict(GL, keys_to_move=None))[0], True)   # default: keys not required
-        self.assertEqual(len(open(os.path.join(ROOT, "integrations", "authority_facts_gate.py")).read().splitlines()), 16)   # the file the page links to ("fourteen lines") is not touched
+        self.assertEqual(len(open(os.path.join(ROOT, "integrations", "authority_facts_gate.py")).read().splitlines()), 18)   # the file the page links to: 18 lines since the second round of review made it refuse what it does not know (it was 16)
 
     def test_the_lines_are_options(self):
         self.assertFalse(authority_facts_gate_strict.strict_gate(GL, min_composite=80)[0])
@@ -318,7 +318,7 @@ class TestRetiredTargets(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory(); self.addCleanup(self.tmp.cleanup); self.W = self.tmp.name; os.makedirs(os.path.join(self.W, "scores"))
         def tgt(addr, comp): return {"target": addr, "adminKeyScore": 80, "multisigScore": 100, "timelockScore": 75, "oracleAuthorityScore": 100, "crossExposureScore": 80, "compositeScore": comp, "lastUpdated": 1790000000, "stale": False, "methodologyHash": "0x" + "11" * 32}
-        json.dump({"name": "Base (Sepolia)", "kind": "evm", "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720", "rpc": "https://sepolia.base.org", "block": 1, "maxStaleness": 777600, "readAt": 1791895264, "targets": [tgt(A, 70), tgt(B, 30)]},
+        json.dump({"name": "Base (Sepolia)", "kind": "evm", "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720", "rpc": "https://sepolia.base.org", "block": 1, "maxStaleness": 777600, "readAt": int(time.time()) - 3600, "targets": [tgt(A, 70), tgt(B, 30)]},
                   open(os.path.join(self.W, "scores", "base-sepolia.json"), "w"))
 
     def scope(self, **rec): json.dump({"targets": {"base:" + B.upper().replace("0X", "0x"): rec}}, open(os.path.join(self.W, "tvl_scope.json"), "w"))

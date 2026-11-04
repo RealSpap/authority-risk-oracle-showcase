@@ -131,6 +131,14 @@
   .tag { font-size: 10px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; padding: 2.5px 7px; border-radius: 5px;
     background: var(--accent-soft); color: var(--accent); }
   .tag.tag-alert { background: var(--band-weak-bg); color: var(--band-weak); }
+  .trust-chip { cursor: help; }
+  .trust-chip.t-verified { background: var(--band-strong-bg); color: var(--band-strong); }
+  .trust-chip.t-partial, .trust-chip.t-stale { background: var(--band-moderate-bg); color: var(--band-moderate); }
+  .trust-chip.t-disputed, .trust-chip.t-unverified, .trust-chip.t-unavailable { background: var(--band-critical-bg); color: var(--band-critical); }
+  .trust-chip.t-notread { background: transparent; color: var(--text-faint); box-shadow: inset 0 0 0 1px var(--text-faint); }
+  .watchband { margin: 8px 0 0; font-size: 12px; color: var(--text-dim); line-height: 1.6; }
+  .watchband .row { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; }
+  .watchband b { font-weight: 600; color: var(--text); }
   .chevron { color: var(--text-faint); transition: transform 0.15s ease; flex: none; }
   .card.open .chevron { transform: rotate(90deg); }
   .card-body { display: none; padding: 0 18px 18px; border-top: 1px solid var(--border); }
@@ -249,6 +257,7 @@
   </div>
 
   <div class="aggregate" id="aggregate">Reading targets across <b id="aggChains">9</b> deployed oracles…</div>
+  <div class="watchband" id="watchBand" aria-live="polite">Evidence status and freshness: not read yet.</div>
   <p style="margin:6px 0 0;font-size:12px;color:var(--text-faint)">Card text is the finding as written on its date. The scores and bars are read live from the chain and can be newer: when a later push changed a number, the live one is the current one.</p>
 
   <div class="incidents">
@@ -1934,6 +1943,93 @@
 
   function shortAddr(a) { return a.slice(0, 6) + '…' + a.slice(-4); }
   function shortHash(h) { return h.slice(0, 10) + '…' + h.slice(-6); }
+  // The Watch is a set of files rewritten every 6 hours on the watch-data branch. Two of them are shown next to the scores: trust.json (an evidence status per target, distinct from
+  // the score) and latest.json (oracles[].freshness: four ages side by side). The statuses are VERIFIED, PARTIAL, STALE, DISPUTED, UNVERIFIED and UNAVAILABLE. A status that was not read,
+  // a file that cannot be parsed, one that carries an error or one older than 8 hours is shown as "not read": a missing status is NEVER shown as VERIFIED.
+  var WATCH_BASE = 'https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/watch-data/';
+  var TRUST_STATUSES = ['VERIFIED', 'PARTIAL', 'STALE', 'DISPUTED', 'UNVERIFIED', 'UNAVAILABLE'];
+  var TRUST_WORST_FIRST = ['UNAVAILABLE', 'DISPUTED', 'UNVERIFIED', 'STALE', 'PARTIAL', 'VERIFIED'];
+  var TRUST_HINTS = {
+    'VERIFIED': 'Every check listed in trust.json passed for this target. This is not a statement that the contract is safe.',
+    'PARTIAL': 'Some checks are incomplete (see the reasons in trust.json).',
+    'STALE': 'Something this target rests on is old.',
+    'DISPUTED': 'The independent reading disagrees with the published score, or a dispute is open.',
+    'UNVERIFIED': 'The independent reading could not confirm this target.',
+    'UNAVAILABLE': 'The oracle or the trust computation could not be read.',
+    'not read': 'No evidence status was read for this target: the Watch file did not load, carries an error, is older than 8 hours or does not cover it. This is not VERIFIED.'
+  };
+  var TRUST_MAX_AGE_S = 8 * 3600;
+  var watchTrust = null, watchLatest = null, watchWhy = 'not fetched yet';
+  function parseUtc(s) { var m = /^(\d{4})-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)Z$/.exec(String(s)); return m ? Date.UTC(+m[1], m[2] - 1, +m[3], +m[4], +m[5], +m[6]) / 1000 : null; }
+  function readWatch() {
+    function get(name) { return fetch(WATCH_BASE + name, { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error(name + ' ' + r.status); return r.json(); }); }
+    return Promise.all([get('trust.json').catch(function (e) { watchWhy = String(e.message || e); return null; }), get('latest.json').catch(function () { return null; })]).then(function (res) {
+      var tj = res[0];
+      watchLatest = res[1] && Array.isArray(res[1].oracles) ? res[1] : null;
+      watchTrust = null;
+      if (!tj) return;
+      var gen = parseUtc(tj.generated_utc);
+      if (typeof tj !== 'object' || tj.error || !tj.by_target || typeof tj.by_target !== 'object') watchWhy = 'trust.json carries an error or no targets';
+      else if (gen === null) watchWhy = 'trust.json has no readable date';
+      else if (Date.now() / 1000 - gen > TRUST_MAX_AGE_S) watchWhy = 'trust.json is older than 8 hours (' + tj.generated_utc + ')';
+      else { watchTrust = tj; watchWhy = ''; }
+    }).catch(function (e) { watchTrust = null; watchWhy = String(e && e.message || e); }).then(function () {
+      updateWatchBand();
+      if (typeof lastScores !== 'undefined' && lastScores) renderCards(lastScores);
+    });
+  }
+  function trustKey(chainKey, address) { var a = String(address); return chainKey + ':' + (a.indexOf('0x') === 0 ? a.toLowerCase() : a); }
+  function trustStatusOf(chainKey, address) {
+    var rec = watchTrust && watchTrust.by_target ? watchTrust.by_target[trustKey(chainKey, address)] : null;
+    return rec && TRUST_STATUSES.indexOf(rec.status) !== -1 ? rec.status : 'not read';
+  }
+  function trustStatusOfGroup(chainKey, addresses) {
+    var worst = null;
+    for (var i = 0; i < addresses.length; i++) {
+      var st = trustStatusOf(chainKey, addresses[i]);
+      if (st === 'not read') return 'not read';
+      if (worst === null || TRUST_WORST_FIRST.indexOf(st) < TRUST_WORST_FIRST.indexOf(worst)) worst = st;
+    }
+    return worst || 'not read';
+  }
+  function trustChip(st) {
+    return '<span class="tag trust-chip t-' + st.replace(' ', '') + '" title="' + escAttr(TRUST_HINTS[st] || TRUST_HINTS['not read']) + '">Evidence: ' + st + '</span>';
+  }
+  function ageText(ts) {
+    if (typeof ts !== 'number' || !isFinite(ts) || ts <= 0) return 'not published';
+    var s = Math.max(0, Date.now() / 1000 - ts);
+    return (s < 5400 ? Math.round(s / 60) + ' min' : s < 172800 ? (s / 3600).toFixed(1) + ' h' : (s / 86400).toFixed(1) + ' d') + ' ago';
+  }
+  function freshnessOf(chain) {
+    if (!watchLatest || !chain || !chain.oracle) return null;
+    for (var i = 0; i < watchLatest.oracles.length; i++) {
+      var o = watchLatest.oracles[i];
+      if (o && String(o.oracle).toLowerCase() === String(chain.oracle).toLowerCase()) return o.freshness && typeof o.freshness === 'object' ? o.freshness : {};
+    }
+    return null;
+  }
+  function updateWatchBand() {
+    var el = document.getElementById('watchBand');
+    if (!el) return;
+    var html;
+    if (!watchTrust) html = '<div class="row"><span><b>Evidence status</b>: not read (' + escAttr(watchWhy) + '). A target without a status is never shown as VERIFIED.</span></div>';
+    else {
+      var c = {}; TRUST_STATUSES.forEach(function (s) { c[s] = 0; });
+      Object.keys(watchTrust.by_target).forEach(function (k) { var s = watchTrust.by_target[k] && watchTrust.by_target[k].status; if (c[s] !== undefined) c[s]++; });
+      html = '<div class="row"><span><b>Evidence status</b> of ' + Object.keys(watchTrust.by_target).length + ' targets (trust.json of ' + escAttr(watchTrust.generated_utc) + '): ' +
+        TRUST_STATUSES.map(function (s) { return s + ' <b>' + c[s] + '</b>'; }).join(' · ') + '. VERIFIED means the listed checks passed, not that a contract is safe.</span></div>';
+    }
+    var chain = CHAINS[activeKey], f = chain && chain.kind !== 'zcash' ? freshnessOf(chain) : null;
+    if (f) {
+      html += '<div class="row"><span><b>Freshness of this oracle</b> (latest.json, oracles[].freshness):</span>' +
+        '<span><b>Watch read</b> ' + ageText(f.watch_read_at) + '</span>' +
+        '<span><b>Block</b> ' + (typeof f.block === 'number' ? f.block + ', ' + ageText(f.block_time) : 'not published') + '</span>' +
+        '<span><b>Newest push</b> ' + ageText(f.newest_push) + '</span>' +
+        '<span><b>Oldest push</b> ' + ageText(f.oldest_push) + '</span></div>';
+    } else if (chain && chain.kind !== 'zcash') html += '<div class="row"><span><b>Freshness of this oracle</b>: not read (the Watch does not publish it for this oracle yet).</span></div>';
+    el.innerHTML = html;
+  }
+  readWatch();
   function fmtDate(ts) {
     var d = new Date(ts * 1000);
     return d.toLocaleString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
@@ -2083,6 +2179,7 @@
       }).join('');
 
       var tagsHtml = '';
+      if (chain.kind !== 'zcash') tagsHtml += trustChip(trustStatusOfGroup(activeKey, g.idx.map(function (i) { return scores[i].address; })));
       if (g.tag) tagsHtml += '<span class="tag">' + g.tag + '</span>';
       if (g.idx.length > 1) tagsHtml += '<span class="tag">' + g.idx.length + ' contracts, same finding</span>';
       var alerts = setupAlerts(g.idx.map(function (i) { return scores[i]; }));
@@ -2118,6 +2215,7 @@
       });
       container.appendChild(card);
     });
+    updateWatchBand();
 
     if (openSlug) {
       var target = container.querySelector('[data-slug="' + openSlug + '"]');

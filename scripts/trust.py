@@ -67,6 +67,7 @@ def build(watch, data, now=None, key_present=None):
     run = {"signature": "expected_signed" if (inputs.get("signature") or {}).get("signed") and key_present else ("unsigned" if inputs.get("signature") else "unread"),   # a promise about the signature made after this file, not a verification
            "signature_key": "unknown" if not (pk and inputs["pinned_keys"]) else ("pinned" if pk in {k.lower() for k in inputs["pinned_keys"]} else "not_pinned"),
            "journal": "ok" if (inputs.get("chain") or {}).get("ok") is True else ("broken" if inputs.get("chain") else "unread"),
+           "alert_channels": ((inputs.get("alerts") or {}).get("channels_configured") if isinstance((inputs.get("alerts") or {}).get("channels_configured"), int) and not isinstance((inputs.get("alerts") or {}).get("channels_configured"), bool) else None),   # the number of chat channels the alert step had; 0 means `notification: ok` was reached with nobody to tell; None: not published (an older alerts.json)
            "watch_run_utc": (inputs.get("latest") or {}).get("run_utc"), "inputs_unread": sorted(c.split(":", 1)[1] for c in tr.run_reasons(inputs, now, key_present) if c.startswith("input_missing:"))}
     return {"schemaVersion": 1, "generated_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(now)), "rule_version": tr.RULE_VERSION, "rule": tr.__doc__.split("THE RULE")[1].split('"""')[0].strip(),
             "rule_sha256": hashlib.sha256(open(tr.__file__.replace(".pyc", ".py"), "rb").read()).hexdigest(), "error": None,

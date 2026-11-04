@@ -10,7 +10,7 @@ standard library only. The same four functions serve the MCP server (scripts/mcp
 Rules for every answer: a value the Watch did not read is `None` and is named in `not_read`; it is never 0, never "ok". `status` says which of three things happened: the answer is read (`ok`), the contract is not
 tracked (`not_tracked`), or the file needed for the answer is missing or unreadable (`not_read`). A fourth, `retired` (30/10/2026): the contract is marked retired in tvl_scope.json (the protocol's money does not sit behind it); it answers with no score, and is left out of list_targets (counted in `retired_not_listed`, a key that is 0 when nothing is retired) and check_protocol (a protocol whose every contract is retired answers `retired`). The scores are published on TESTNET oracles for contracts of the networks named in each answer: say so to your user.
 """
-import glob, json, os, sys, time
+import glob, json, os, re, sys, time
 
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 import compare, dossier, find, snapshot_rules  # noqa: E402
@@ -72,6 +72,18 @@ def _missing(what, W):
     return {"status": "not_read", "reason": "%s: no score file under %s/scores. The state of the Watch lives on the watch-data branch (https://github.com/RealSpap/authority-risk-oracle-showcase/tree/watch-data), clone it as the folder." % (what, W), "note": NOTE}
 
 
+_ADDR = re.compile(r"0x[0-9a-fA-F]{40}")
+_RPC = re.compile(r"https://[A-Za-z0-9.-]+(:[0-9]{1,5})?(/[A-Za-z0-9._~/%-]*)?")
+
+
+def _replay_safe(d, t):
+    """The `cast call` line is meant to be pasted into a shell: it is built only from an oracle and a target that are addresses, a block that is a whole number and an RPC that is a plain https address with no space,
+    quote, `;`, `|`, `&`, `$`, backtick or `#`. A score file is not a trusted input (the local helper and the integrations do not check its signature)."""
+    ok_block = isinstance(d.get("block"), int) and not isinstance(d.get("block"), bool) and d["block"] > 0
+    return bool(isinstance(d.get("oracle"), str) and _ADDR.fullmatch(d["oracle"]) and isinstance(t.get("target"), str) and _ADDR.fullmatch(t["target"]) and ok_block
+                and isinstance(d.get("rpc"), str) and _RPC.fullmatch(d["rpc"]))
+
+
 def get_score(W, chain, address):
     if _no_state(W): return _missing("get_score", W)
     hit = _find_target(W, chain, address)
@@ -85,10 +97,14 @@ def get_score(W, chain, address):
     if ambiguous: return ambiguous
     comp = t.get("compositeScore"); subs = {n: t.get(f) for n, f in SUBS}
     not_read = [n for n, v in list(subs.items()) + [("composite", comp)] if v is None]
-    rec = {"status": "ok" if comp is not None else "not_read", "chain": key, "network": dossier.LABEL.get(key, key), "address": t.get("target"), "composite": comp, "sub_scores": subs, "stale": t.get("stale"),
+    # the same three rules as the CI gate and `check` (snapshot_rules): a file of unknown or old age, a composite that is not a whole number from 0 to 100 and a stale flag that is not true/false are NOT an answer
+    problem = snapshot_rules.document_problem(d) or snapshot_rules.composite_problem(t) or snapshot_rules.stale_problem(t)
+    if snapshot_rules.stale_problem(t): not_read.append("stale")
+    if not isinstance(d.get("readAt"), (int, float)) or isinstance(d.get("readAt"), bool): not_read.append("watch_read_utc")
+    rec = {"status": "ok" if problem is None else "not_read", "reason": problem, "chain": key, "network": dossier.LABEL.get(key, key), "address": t.get("target"), "composite": comp, "sub_scores": subs, "stale": t.get("stale"),
            "previous_composite": t.get("previousComposite"), "last_pushed_utc": _iso(t.get("lastUpdated")), "watch_read_utc": _iso(d.get("readAt")), "methodology_hash": t.get("methodologyHash"), "not_read": not_read,
            "oracle": {"name": d.get("name"), "kind": d.get("kind"), "address": d.get("oracle"), "rpc": d.get("rpc"), "block": d.get("block"), "max_staleness_seconds": d.get("maxStaleness")}, "testnet_note": TESTNET, "note": NOTE}
-    if d.get("kind") == "evm" and d.get("oracle") and d.get("block") and d.get("rpc") and t.get("target"):
+    if d.get("kind") == "evm" and _replay_safe(d, t):
         rec["replay"] = {"command": "cast call %s '%s' %s --rpc-url %s --block %s" % (d["oracle"], GETSCORE_ABI, t["target"], d["rpc"], d["block"]),
                          "how_to_read": "the tuple is (adminKey, multisig, timelock, priceFeed, sharedControl, composite, lastUpdated, methodologyHash); --block needs an archive node: without it you read the latest value, which may be newer than this answer"}
     else:
@@ -149,6 +165,9 @@ def check_protocol(W, protocol, min_score=0):
         if not live: return {"status": "retired", "protocol": protocol, "reason": "every tracked contract of this protocol is marked retired in tvl_scope.json: the Watch tracks it, and no score of it is a live one", "note": NOTE}
         s = compare.stats(W, rs=live, key=slug, name=p["name"])
     if err: return {"status": "not_tracked", "protocol": protocol, "reason": err, "note": NOTE}
+    chains = {r["chain"] for r in live}; slug_of = lambda f, d: dossier.WATCH_SLUGS.get(os.path.basename(f)[:-5]) or ("solana" if (d or {}).get("kind") == "solana" else None)
+    file_problems = [p for f in sorted(glob.glob(os.path.join(W, "scores", "*.json"))) for d in [dossier.load(f)] if slug_of(f, d) in chains for p in [snapshot_rules.document_problem(d)] if p]
+    if file_problems: return {"status": "not_read", "protocol": protocol, "reason": file_problems[0], "note": NOTE}   # the same age rule as `check`: no verdict on a score file of unknown or old age
     weakest = s.get("weakest_score"); read_on = s.get("weakest_score_read_on"); n = s.get("contracts")
     unread = n - read_on if isinstance(n, int) and isinstance(read_on, int) else None
     if weakest is None: verdict = "unread"
@@ -169,6 +188,8 @@ def main():
     out = {"get_score": lambda: get_score(a.watch, a.chain, a.address), "who_controls": lambda: who_controls(a.watch, a.chain, a.address), "list_targets": lambda: list_targets(a.watch, a.chain, a.max_score, None, None, a.limit),
            "check_protocol": lambda: check_protocol(a.watch, a.protocol, a.min_score)}[a.tool]()
     print(json.dumps(out, indent=1))
+    # the exit code says what the answer is, so that `agent_tools.py ... && deploy` does not deploy on "not read": 0 read (and a protocol verdict ok), 1 not tracked or a protocol verdict fail, 3 not read (or a protocol verdict unread / unread_part)
+    sys.exit(3 if out.get("status") == "not_read" or out.get("verdict") in ("unread", "unread_part") else 1 if out.get("status") == "not_tracked" or out.get("verdict") == "fail" else 0)
 
 
 if __name__ == "__main__":

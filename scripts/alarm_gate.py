@@ -46,7 +46,9 @@ def decide(found, state, now):
     seen = set((state or {}).get("findings") or []); last = (state or {}).get("notified_utc")
     if not found: return "unrecognised"   # the Alarm step only runs when its condition holds: no finding the gate knows means a cause it does not read, and that must never be silenced
     if found - seen or not state: return "new"
-    age = (now - calendar.timegm(time.strptime(last, "%Y-%m-%dT%H:%M:%SZ"))) / 3600 if last else 1e9   # last is UTC: timegm, never mktime (an hour off in summer time, seen in audit_public.py)
+    try: age = (now - calendar.timegm(time.strptime(last, "%Y-%m-%dT%H:%M:%SZ"))) / 3600 if last else 1e9
+    except (ValueError, TypeError, OverflowError): return "new"   # a notice date that cannot be read is no notice
+    if age < -1: return "new"   # a notice dated in the future (the state file is not signed) must not keep the alarm quiet   # last is UTC: timegm, never mktime (an hour off in summer time, seen in audit_public.py)
     return "reminder" if age >= REMINDER_HOURS else "quiet"
 
 

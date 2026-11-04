@@ -1,11 +1,12 @@
 """Closing addition of 30/10/2026: a contract listed twice in a score file is signalled by the agent tools instead of answered with the first row. Standard library only; no network."""
-import contextlib, io, json, os, re, subprocess, sys, tempfile, unittest
+import contextlib, io, json, os, re, subprocess, sys, tempfile, time, unittest
 from unittest import mock
 
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.normpath(os.path.join(HERE, "..", ".."))
 sys.path.insert(0, os.path.join(ROOT, "scripts"))
 import agent_tools  # noqa: E402
 A = "0xaaa0000000000000000000000000000000000001"
+# since the same-age rule of `check` applies to getScore (second round), the fixture is read a minute ago: a file of unknown or old age is not an answer
 
 
 class TestDuplicateRows(unittest.TestCase):
@@ -16,7 +17,7 @@ class TestDuplicateRows(unittest.TestCase):
         return dict({"target": addr, "adminKeyScore": 80, "multisigScore": 100, "timelockScore": 75, "oracleAuthorityScore": 100, "crossExposureScore": 80, "compositeScore": comp, "lastUpdated": 1790000000, "stale": False, "methodologyHash": "0x" + "ab" * 32}, **kw)
 
     def write(self, rows):
-        json.dump({"name": "Base (Sepolia)", "kind": "evm", "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720", "rpc": "https://sepolia.base.org", "block": 1, "maxStaleness": 777600, "readAt": 1790000100, "targets": rows},
+        json.dump({"name": "Base (Sepolia)", "kind": "evm", "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720", "rpc": "https://sepolia.base.org", "block": 1, "maxStaleness": 777600, "readAt": int(time.time()) - 60, "targets": rows},
                   open(os.path.join(self.W, "scores", "base-sepolia.json"), "w"))
 
     def test_one_row_is_unchanged(self):

@@ -22,6 +22,7 @@ import trust  # noqa: E402
 from lib import trust_rules as tr  # noqa: E402
 import run as kit  # noqa: E402
 import harness  # noqa: E402
+import trust_support  # noqa: E402
 try:
     import nacl.signing  # noqa: F401
     HAVE_NACL = True
@@ -38,6 +39,25 @@ class TestKit(unittest.TestCase):
                 continue
             exp = kit.jload(kit.EXPECTED)["cases"][name]
             self.assertEqual(kit.compare(exp, fn()), [], name)
+
+    def test_the_kit_has_thirteen_cases_and_the_node_without_old_state_was_written_before_it_ran(self):
+        exp = kit.jload(kit.EXPECTED)
+        self.assertEqual(len(kit.CASES), 13)
+        self.assertEqual(len(exp["cases"]), 13)
+        case = exp["cases"]["12-node-without-old-state"]
+        self.assertEqual((case["status_of_A_when_tag_ignored"], case["reason_when_tag_ignored"]), ("UNVERIFIED", "block_not_honoured"))
+        self.assertNotEqual(case["status_of_A_when_tag_ignored"], "VERIFIED")
+        self.assertTrue(any("case 12" in line and "BEFORE" in line for line in exp["CHANGES"]))
+
+    def test_a_node_that_ignores_the_block_tag_is_unverified_one_that_is_merely_not_told_is_not_accused(self):
+        for honoured, want, reasons in ((False, "UNVERIFIED", ["block_not_honoured"]), (None, "VERIFIED", []), (True, "VERIFIED", []), ("no", "VERIFIED", []), (0, "VERIFIED", [])):
+            w = trust_support.Watch()
+            try:
+                w.edit("scores/robinhood-chain.json", lambda d, h=honoured: d.update({"block_probe": {"honoured": h}}))
+                doc = w.trust()
+                self.assertEqual((trust_support.status(doc, trust_support.A), [c for c in trust_support.codes(doc, trust_support.A) if c == "block_not_honoured"]), (want, reasons), honoured)
+            finally:
+                w.close()
 
     def test_the_command_exits_zero(self):
         import contextlib, io

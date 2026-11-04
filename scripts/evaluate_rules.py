@@ -317,6 +317,7 @@ def main():
     # (`delivered`), a retry goes only to the channels still owed, and the alert is `notified` when every channel it needs carries it.
     akey = lambda x: x["rule"] + "|" + x["chain"] + ":" + norm(x["target"])
     configured = configured_channels(os.environ); prev_active = {akey(x): x for x in prev.get("active", [])}
+    out["channels_configured"] = len(configured)   # how many chat channels exist in this run (0: an alert is marked notified because nobody was there to tell, only the GitHub issue for a high alert remains)
     daily = os.environ.get("TELEGRAM_MODE") == "daily"
     owed = {akey(x): [c for c in (list(configured) if x["new"] else channels_still_owed(prev_active.get(akey(x)), configured)) if not (c == "telegram" and daily and not live_on_telegram(x, impl_src))] for x in new}   # the daily mode owes Telegram the critical alerts only, decided BEFORE the cap of 10 per message, so non-critical ones cannot fill it
     batches = batches_for([akey(x) for x in new], owed, configured); by_key = {akey(x): x for x in new}

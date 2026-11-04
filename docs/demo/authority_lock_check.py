@@ -13,11 +13,12 @@ def main(lock_path, reading_path):
     lock, rd = load(lock_path), load(reading_path)
     if not str(lock.get("format", "")).startswith("authority.lock/0.1") or not isinstance(lock.get("entries"), list): print("ERROR: %s is not an authority.lock/0.1 file" % lock_path); sys.exit(2)
     if not isinstance(rd.get("readings"), list): print("ERROR: %s has no list of readings" % reading_path); sys.exit(2)
+    if not lock["entries"]: print("ERROR: %s lists no entry: an empty lock confirms nothing (a truncated file is not a pass)" % lock_path); sys.exit(2)
     by = {(r["chain"], r["address"].lower()): r for r in rd["readings"]}; bad = 0
     for e in lock["entries"]:
         name = "%s (%s, %s...)" % (e["label"], e["chain"], e["address"][:10]); r = by.get((e["chain"], e["address"].lower()))
         if r is None: bad += 1; print("RED   NOT FOUND  %s: this contract is not in the reading. The lock cannot confirm anything about it." % name); continue
-        if r["state"] != "read" and e["expect"].get("state") == "read": bad += 1; print("RED   NOT READ   %s: no reading of who can change this contract could be made. That is no information about its safety, and it is not a pass." % name); continue
+        if r.get("state") != "read" and e["expect"].get("state", "read") == "read": bad += 1; print("RED   NOT READ   %s: no reading of who can change this contract could be made. That is no information about its safety, and it is not a pass." % name); continue
         diffs = [(FIELDS[k], v, r.get(k)) for k, v in e["expect"].items() if k in FIELDS and r.get(k) != v]
         if diffs: bad += 1; print("RED   CHANGED    %s: " % name + "; ".join("%s was %s when the lock was written, now %s" % (f, "not set" if a is None else a, "not set" if b is None else b) for f, a, b in diffs) + ". Read why before you sign.")
         else: print("GREEN MATCHES    %s: the reading is the one the lock expects." % name)

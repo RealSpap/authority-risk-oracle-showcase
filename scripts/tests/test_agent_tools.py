@@ -1,5 +1,5 @@
 """Tests of scripts/agent_tools.py, of the four MCP tools built on it and of the LangChain and AgentKit wrappers (skipped when those libraries are not installed)."""
-import json, os, sys, tempfile, unittest
+import json, os, sys, tempfile, time, unittest
 
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.join(HERE, "..", "..")
 sys.path.insert(0, os.path.join(HERE, "..")); sys.path.insert(0, os.path.join(ROOT, "integrations"))
@@ -22,11 +22,11 @@ def tgt(addr, comp, stale=False, **over):
 def build(w, with_second_opinion=True, with_state=True):
     os.makedirs(os.path.join(w, "scores"), exist_ok=True)
     if not with_state: return
-    json.dump({"name": "Robinhood Chain", "kind": "evm", "oracle": ORACLE, "rpc": "https://rpc.testnet.chain.robinhood.com/rpc", "block": 134282761, "maxStaleness": 777600, "readAt": 1791895264,
+    json.dump({"name": "Robinhood Chain", "kind": "evm", "oracle": ORACLE, "rpc": "https://rpc.testnet.chain.robinhood.com/rpc", "block": 134282761, "maxStaleness": 777600, "readAt": int(time.time()) - 3600,
                "targets": [tgt(A, 85), tgt(B, 32, True), tgt(C, None, adminKeyScore=None)]}, open(os.path.join(w, "scores", "robinhood-chain.json"), "w"))
-    json.dump({"name": "Base (Sepolia)", "kind": "evm", "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720", "rpc": "https://sepolia.base.org", "block": 40000000, "maxStaleness": 777600, "readAt": 1791895264,
+    json.dump({"name": "Base (Sepolia)", "kind": "evm", "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720", "rpc": "https://sepolia.base.org", "block": 40000000, "maxStaleness": 777600, "readAt": int(time.time()) - 3600,
                "targets": [tgt(D, 40), tgt(E, 50)]}, open(os.path.join(w, "scores", "base-sepolia.json"), "w"))
-    json.dump({"name": "Solana (devnet)", "kind": "solana", "oracle": "5VhiTAGLEViGgajhxPbzdWz7WLUAiRy42DY6qi6tYh4W", "block": 1, "readAt": 1791895264, "targets": [tgt("JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4", 71)]},
+    json.dump({"name": "Solana (devnet)", "kind": "solana", "oracle": "5VhiTAGLEViGgajhxPbzdWz7WLUAiRy42DY6qi6tYh4W", "block": 1, "readAt": int(time.time()) - 3600, "targets": [tgt("JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4", 71)]},
               open(os.path.join(w, "scores", "solana-devnet.json"), "w"))
     json.dump({"matched": {"robinhood:" + A: {"name": "Alpha Swap V3", "slug": "alpha-swap-v3", "tvl": 1000000}, "base:" + D: {"name": "Alpha Swap V3", "slug": "alpha-swap-v3", "tvl": 500000}}}, open(os.path.join(w, "tvl.json"), "w"))
     if with_second_opinion:

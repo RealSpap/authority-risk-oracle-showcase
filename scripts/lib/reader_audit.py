@@ -182,7 +182,12 @@ def decide_gate(found, state, now, reminder_hours=24, escalate_hours=ESCALATE_HO
         return "recovered" if standing_kinds and last and condition_holds is False else "unrecognised"
     if found - seen or not state:
         return "new"
-    age = (now - parse(last)) / 3600 if last else 1e9
+    try:
+        age = (now - parse(last)) / 3600 if last else 1e9
+    except (ValueError, TypeError, OverflowError):
+        return "new"      # a notice date that cannot be read is no notice
+    if age < -1:
+        return "new"      # a notice dated in the future (the state file is not signed) must not keep the alarm quiet
     if age < reminder_hours:
         return "quiet"
     first_seen = (state or {}).get("first_seen") or {}

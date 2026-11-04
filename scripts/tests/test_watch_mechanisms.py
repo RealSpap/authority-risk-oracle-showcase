@@ -2014,7 +2014,8 @@ class TestAuditPublic(unittest.TestCase):
         if sign: TestSignRun("test_the_canonical_bytes_do_not_depend_on_key_order_or_spacing").run_cli("--watch", w, key=key)
         return w
 
-    def audit(self, w, *extra, tz=None):
+    def audit(self, w, *extra, tz=None, allow_unsigned=True):
+        extra = extra + (("--allow-unsigned",) if allow_unsigned else ())   # most cases below are about something else than the signature: an unsigned run is accepted for them, and refused in TestAuditPublic.test_an_unsigned_run_fails_unless_allowed
         try: from nacl.signing import SigningKey; pin = ["--pin", SigningKey(bytes.fromhex(self.KEY)).verify_key.encode().hex()]   # the audit trusts only a key it pins: the test key is pinned here
         except ImportError: pin = []
         old, oldtz, buf = sys.argv, os.environ.get("TZ"), io.StringIO(); sys.argv = ["audit_public.py", "--watch", w, "--sample", "0", *pin, *extra]
@@ -2061,7 +2062,31 @@ class TestAuditPublic(unittest.TestCase):
         self.have_nacl()
         with tempfile.TemporaryDirectory() as tmp: code, out = self.audit(self.watch(tmp, key=self.KEY))
         self.assertEqual(code, 0); self.assertIn("AUDIT PASSED: 0 failure(s)", out)
-        for want in ("PASS  manifest: ", "0 differ", "PASS  manifest: event-log chain head matches", "PASS  signature: valid Ed25519 signature", "PASS  methodology: one hash per oracle", "NOTE  on-chain sample skipped: the scores files carry no oracle address", "NOTE  event log: no events.jsonl published yet"): self.assertIn(want, out)
+        for want in ("PASS  manifest: ", "0 differ", "NOTE  manifest: no event-log chain head on either side", "PASS  signature: valid Ed25519 signature", "PASS  methodology: one hash per oracle", "NOTE  on-chain sample skipped: the scores files carry no oracle address", "NOTE  event log: no events.jsonl published yet"): self.assertIn(want, out)
+
+    def test_an_unsigned_run_fails_unless_allowed(self):
+        self.have_nacl()
+        with tempfile.TemporaryDirectory() as tmp:
+            w = self.watch(tmp)       # no key: the run is unsigned
+            code, out = self.audit(w, allow_unsigned=False)
+            self.assertEqual(code, 1); self.assertIn("AUDIT FAILED", out); self.assertIn("UNSIGNED", out)
+            code, out = self.audit(w)
+            self.assertEqual(code, 0); self.assertIn("accepted because --allow-unsigned was given", out)
+
+    def test_a_missing_journal_on_both_sides_is_a_note_not_a_matching_head(self):
+        self.have_nacl()
+        with tempfile.TemporaryDirectory() as tmp: code, out = self.audit(self.watch(tmp, key=self.KEY))
+        self.assertNotIn("PASS  manifest: event-log chain head", out); self.assertIn("this is not a match", out)
+
+    def test_the_audit_does_not_call_an_rpc_address_chosen_by_the_file_it_audits(self):
+        self.have_nacl()
+        for rpc in ("file:///etc/hostname", "http://10.0.0.1/rpc", "ftp://x", "", None):
+            sc = {"kind": "evm", "name": "E", "oracle": "0x" + "11" * 20, "rpc": rpc, "targets": [{"target": "0x" + "aa" * 20, "compositeScore": 50, "lastUpdated": 1, "methodologyHash": "0xaa"}]}
+            with tempfile.TemporaryDirectory() as tmp: code, out = self.audit(self.watch(tmp, key=self.KEY, scores=sc))
+            self.assertEqual(code, 1, rpc); self.assertIn("not an https address", out)
+        sc["rpc"] = "https://rpc.example.org"
+        with tempfile.TemporaryDirectory() as tmp: code, out = self.audit(self.watch(tmp, key=self.KEY, scores=sc))
+        self.assertNotIn("not an https address", out)
 
     def test_sample_zero_skips_the_on_chain_re_read_when_there_is_something_to_read(self):
         evm = {"kind": "evm", "name": "Base", "oracle": "0x" + "0a" * 20, "rpc": "https://rpc.invalid", "targets": [{"target": "0x" + "11" * 20, "compositeScore": 55, "lastUpdated": 1000, "methodologyHash": "0xaa"}]}

@@ -413,6 +413,13 @@
       "unknown"
      ],
      "description": "whether the public key of the previous manifest is one of audit_public.PINNED_KEYS"
+    },
+    "alert_channels": {
+     "type": [
+      "integer",
+      "null"
+     ],
+     "description": "the number of chat channels (Discord, signed webhook, Telegram) the alert step of this run had; 0 means every alert counts as delivered because nobody could be told (a high alert still opens an issue); null: not published by this run"
     }
    }
   },
@@ -423,7 +430,8 @@
     "required": [
      "status",
      "reasons",
-     "dimensions"
+     "dimensions",
+     "retry_may_help"
     ],
     "properties": {
      "status": {
@@ -589,6 +597,10 @@
        }
       },
       "additionalProperties": false
+     },
+     "retry_may_help": {
+      "type": "boolean",
+      "description": "true only when the target is not VERIFIED and every reason that holds it back would go away at a later Watch run by itself (a read that failed, a file from an earlier run); false when VERIFIED or when a reason needs a change in the code, the data or the contract: waiting does not help"
      }
     }
    }

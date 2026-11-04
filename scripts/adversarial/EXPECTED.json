@@ -105,12 +105,26 @@
    "proof_matches_recorded_read": true,
    "altered_block_detected": true,
    "missing_proof_detected": true
+  },
+  "12-node-without-old-state": {
+   "attack": "a node that keeps no archive and answers every block from the head: the block tag is ignored, so a reading pinned to a block cannot be replayed and says nothing about that block",
+   "detected": true,
+   "exercises": "the real probe (watch_run.probe_block) on fake RPC answers, then the trust rule on a scores file that carries the probe. A node that errors with 'historical state not available' is NOT told by the probe (None) and does not change the status: it cannot be told apart from a node that simply keeps no old state, which is a normal pruned node.",
+   "limits": "The probe asks one thing at one block (the oracle's target count at block 1). A node that serves old state for some blocks and the head for others is not caught. A pruned node that errors is not flagged: it answers honestly at the head and only a replay at an old block fails.",
+   "probe_when_old_state_missing": null,
+   "probe_when_tag_honoured": true,
+   "probe_when_tag_ignored": false,
+   "reason_when_tag_ignored": "block_not_honoured",
+   "status_of_A_when_old_state_missing": "VERIFIED",
+   "status_of_A_when_tag_honoured": "VERIFIED",
+   "status_of_A_when_tag_ignored": "UNVERIFIED"
   }
  },
  "CHANGES": [
   "2026-10-30: case 11 (an alert carries a replayable proof) added BEFORE it was first run. EXPECTED-first.json is this file as it was written before the first run of any case (cases 00 to 10); its sha256 is 78c5450868a5010e60e03d0f426775787f1ee31f9b24f5c61e8254ef425cca21.",
   "2026-10-30, after the first review of this kit: case 05 rewritten. The first expectation said 'not detected, known gap' because the trust rule did not look at the key. The rule now compares the key of the previous manifest to the pinned list (reason signature_key_not_pinned), and `sign_run.py --verify --pin` already refuses a replacement key: detected is now true with a pin, the gap that remains (verification without a pin) is stated in `limits`.",
   "2026-10-30, same review: case 09 key `detected` renamed `listed` (the stale money figure is listed, it does not decide the status); `status_of_B` dropped from case 03 (it did not depend on the case); `exercises` added to cases 01, 02, 03, 04, 07, 08 to say what each one really runs.",
-  "2026-10-30, after the second review of this kit: the rule gained reader_cannot_contradict, safe_signers_unclassified, signature_key_unverifiable, input_missing:held_assets and a one-hour limit for an input file older than its run; no expected result of a case changed. Case 10 got an `exercises` line saying what it does not show."
+  "2026-10-30, after the second review of this kit: the rule gained reader_cannot_contradict, safe_signers_unclassified, signature_key_unverifiable, input_missing:held_assets and a one-hour limit for an input file older than its run; no expected result of a case changed. Case 10 got an `exercises` line saying what it does not show.",
+  "2026-10-30: case 12 (a node that keeps no old state and ignores the block tag) added BEFORE any code for it or any run. Its expectation was written first, in this form, sha256 of its canonical JSON 10ca80c7afa9fdf1b3c9d06eb3247f0c3627945cc004d03b77dd14e548501cab. The trust rule gained the reason block_not_honoured in the same change."
  ]
 }

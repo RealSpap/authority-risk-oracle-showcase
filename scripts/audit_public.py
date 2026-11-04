@@ -143,6 +143,7 @@ def extract_ref(ref):
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--watch", default=None); ap.add_argument("--sample", type=int, default=8); ap.add_argument("--seed", type=int, default=None); ap.add_argument("--pin", action="append", default=[], help="a signing public key (64 hex characters) to trust in addition to the one pinned in this script")
+    ap.add_argument("--allow-unsigned", action="store_true", help="accept a run that carries no signature (a run from before signed manifests existed): by default an unsigned run FAILS the audit")
     ap.add_argument("--ref", default=None, help="a git commit, tag or branch of this checkout: audit the state of the Watch as it was then, a commit of the watch-data branch (state at the root of the tree) or, before the move, of main (state in watch/); every run commits its signed manifest")
     a = ap.parse_args(); fails = 0; incomplete = []
     if a.ref:   # past run: extract the state of the Watch at that commit into a temporary folder and audit that
@@ -194,7 +195,8 @@ def main():
         (PASS if not changed else FAIL)("manifest: %d file(s) listed, %d checked, %d differ%s" % (len(s["manifest"]["files"]), len(s["manifest"]["files"]) - len(missing), len(changed), (": " + ", ".join(changed[:5])) if changed else ""))
         if missing: NOTE("%d listed file(s) not present locally (feeds and badges are not fetched by this audit): hashes not compared for them" % len(missing))
         head = c.get("head") if c["ok"] else None
-        (PASS if s["manifest"].get("events_chain_head") == head else FAIL)("manifest: event-log chain head %s" % ("matches" if s["manifest"].get("events_chain_head") == head else "differs"))
+        if head is None and s["manifest"].get("events_chain_head") is None: NOTE("manifest: no event-log chain head on either side (the journal was not read, or the run has none): this is not a match")
+        else: (PASS if s["manifest"].get("events_chain_head") == head else FAIL)("manifest: event-log chain head %s" % ("matches" if s["manifest"].get("events_chain_head") == head else "differs"))
         if s.get("signed"):
             try:
                 from nacl.signing import VerifyKey
@@ -203,7 +205,8 @@ def main():
                 else: FAIL("signature: valid Ed25519 signature, but by a key this audit does not pin (%s...): it proves the files match what that key signed, not who holds it. Pass --pin KEY if you trust it" % s["public_key"][:16])
             except ImportError: NOTE("signature present (key %s…) but NOT VERIFIED: pynacl is not installed here (pip install pynacl, then run again); this audit is incomplete" % s["public_key"][:16]); incomplete.append("signature not verified")
             except Exception as e: FAIL("signature: INVALID (%s)" % e)
-        else: NOTE("run unsigned (no signing key set by the maintainer at that run)")
+        elif getattr(a, "allow_unsigned", False): NOTE("run unsigned (no signing key set by the maintainer at that run); accepted because --allow-unsigned was given")
+        else: FAIL("signature: the run is UNSIGNED. A run nobody signed proves nothing about who produced it, and the pinned key only protects a run that carries a signature (pass --allow-unsigned for a run from before signing existed)")
     else: NOTE("no signature.json: this run predates signed manifests")
     # 3. schemas
     try:
@@ -234,6 +237,7 @@ def main():
     for f in sorted(glob.glob(os.path.join(watch, "scores", "*.json"))):
         d = json.load(open(f))
         if d.get("kind") == "evm":
+            if not (isinstance(d.get("rpc"), str) and d["rpc"].startswith("https://")): FAIL("%s: the score file names an RPC that is not an https address: the audit does not call an address chosen by the file it audits" % str(d.get("name"))[:40]); continue
             for t in d.get("targets", []): rows.append((d["name"], d["oracle"], d["rpc"], t))
     if rows and a.sample <= 0: NOTE("on-chain sample skipped (--sample 0)")
     elif rows:

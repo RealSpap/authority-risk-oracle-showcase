@@ -407,10 +407,38 @@ class TestFourthPass(unittest.TestCase):
             st, bd = self.status(self.watch(tmp, "2026-10-22T12:05:00Z", txt="REFUSED TO SIGN: 1 published name(s)\nexit code 1\n"))
         self.assertEqual(st["checks"]["signature_status"], "stale"); self.assertIn("signature stale", bd["message"])
 
-    def test_a_fresh_signed_run_is_still_signed(self):
+    def test_a_fresh_signed_run_is_still_signed_when_its_key_is_pinned(self):
+        import audit_public
+        old = audit_public.PINNED_KEYS
+        audit_public.PINNED_KEYS = tuple(old) + ("ab" * 32,)       # the key of the fixture
+        try:
+            with tempfile.TemporaryDirectory() as tmp:
+                st, bd = self.status(self.watch(tmp, "2026-10-22T12:05:00Z"))
+        finally:
+            audit_public.PINNED_KEYS = old
+        self.assertEqual(st["checks"]["signature_status"], "signed"); self.assertTrue(st["checks"]["signed"]); self.assertTrue(bd["message"].startswith("signed, key pinned")); self.assertEqual(st["state"], "ok", st["reasons"])
+
+    def test_a_signature_by_a_key_nobody_pinned_is_not_a_green_badge(self):
         with tempfile.TemporaryDirectory() as tmp:
-            st, bd = self.status(self.watch(tmp, "2026-10-22T12:05:00Z"))
-        self.assertEqual(st["checks"]["signature_status"], "signed"); self.assertTrue(st["checks"]["signed"]); self.assertTrue(bd["message"].startswith("signed")); self.assertEqual(st["state"], "ok", st["reasons"])
+            st, bd = self.status(self.watch(tmp, "2026-10-22T12:05:00Z"))      # signed by "ab" * 32, which is not pinned
+        self.assertEqual(st["state"], "degraded"); self.assertIn("not pinned", " ".join(st["reasons"])); self.assertTrue(bd["message"].startswith("signed, key not pinned")); self.assertEqual(bd["color"], "orange")
+
+    def test_when_the_list_of_pinned_keys_cannot_be_loaded_the_badge_says_the_key_was_not_checked(self):
+        import audit_public
+        old = audit_public.PINNED_KEYS
+        audit_public.PINNED_KEYS = ()
+        try:
+            with tempfile.TemporaryDirectory() as tmp:
+                st, bd = self.status(self.watch(tmp, "2026-10-22T12:05:00Z"))
+        finally:
+            audit_public.PINNED_KEYS = old
+        self.assertTrue(bd["message"].startswith("signed, key not checked")); self.assertEqual(st["state"], "degraded")
+
+    def test_the_second_opinion_part_of_the_badge_counts_what_was_read_and_what_was_not(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            w = self.watch(tmp, "2026-10-22T12:05:00Z"); json.dump({"agree": 3, "disagree": 0, "unreadable": 60, "native": 37}, open(os.path.join(w, "second_opinion.json"), "w"))
+            st, bd = self.status(w)
+        self.assertIn("2nd opinion: 3 agree, 0 to review, 97 unread", bd["message"]); self.assertNotIn("agrees", bd["message"])
 
     def test_the_audit_of_a_stale_signature_has_its_own_exit_code(self):
         with tempfile.TemporaryDirectory() as tmp:

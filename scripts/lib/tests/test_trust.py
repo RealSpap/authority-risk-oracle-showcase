@@ -93,7 +93,7 @@ class TestOnTheFixture(unittest.TestCase):
         d = self.w.trust()
         self.assertEqual(d["counts"]["VERIFIED"], 3)
         self.assertEqual(d["targets"], 3)
-        self.assertEqual(d["run"], {"signature": "expected_signed", "signature_key": "pinned", "journal": "ok", "watch_run_utc": "2026-10-30T06:20:00Z", "inputs_unread": []})
+        self.assertEqual(d["run"], {"signature": "expected_signed", "signature_key": "pinned", "journal": "ok", "alert_channels": None, "watch_run_utc": "2026-10-30T06:20:00Z", "inputs_unread": []})   # the fixture alerts.json predates the field `channels_configured`: unknown, not zero
         self.assertIsNone(d["error"])
         import hashlib
         self.assertEqual(d["rule_sha256"], hashlib.sha256(open(tr.__file__.replace(".pyc", ".py"), "rb").read()).hexdigest())

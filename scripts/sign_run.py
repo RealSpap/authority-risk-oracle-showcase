@@ -18,7 +18,7 @@ Exit 3 (30/10/2026): PyNaCl is not installed, so nothing could be signed or the 
 Published files are every *.json, *.jsonl, *.xml, *.md, *.ics, *.csv under watch/ (recursively, feed/ and badge/ included), except
 this manifest, the job logs (*.txt, *.log), alarm.md, any who_controls.json, and the two summaries written after the signature from signed
 sources (status.json, badge/integrity.json); catalog.json and metrics.prom are derived the same way and its extension is not one the manifest lists. The manifest also records the sha256 of the code that
-produced the run (scripts/*.py, rules.json, .github/workflows/watch.yml) and the commit it ran from, so a published run names its
+produced the run (every .py file under scripts/ and chains/ except the tests, rules.json, .github/workflows/watch.yml) and the commit it ran from, so a published run names its
 exact producer. The signature covers the canonical JSON of the manifest.
 """
 import argparse, glob, hashlib, json, os, sys, time
@@ -66,7 +66,8 @@ def manifest(watch):
         if lines: head = hashlib.sha256(lines[-1].encode()).hexdigest()
     # provenance: the code that produced the run (scripts, rules, the workflow itself) and the commit it ran from
     root = os.path.dirname(os.path.abspath(watch)); code = {}
-    for rel in sorted(glob.glob(os.path.join(root, "scripts", "*.py"))) + [os.path.join(root, "rules.json"), os.path.join(root, ".github", "workflows", "watch.yml")]:
+    produced_by = [f for pat in ("scripts/**/*.py", "chains/**/*.py") for f in glob.glob(os.path.join(root, pat), recursive=True) if "/tests/" not in f.replace(os.sep, "/") and "/__pycache__/" not in f.replace(os.sep, "/")]   # the readers, the scorers and the chain modules too (scripts/lib, chains/*): the 44 files of the method hash are in there
+    for rel in sorted(set(produced_by)) + [os.path.join(root, "rules.json"), os.path.join(root, ".github", "workflows", "watch.yml")]:
         if os.path.isfile(rel): code[os.path.relpath(rel, root)] = hashlib.sha256(open(rel, "rb").read()).hexdigest()
     return {"files": files, "events_chain_head": head, "count": len(files), "code": code, "commit": os.environ.get("GITHUB_SHA") or None}
 

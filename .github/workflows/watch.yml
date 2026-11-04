@@ -41,6 +41,8 @@ jobs:
         id: run
         run: |
           set +e
+          head=$(python3 -c "import json;print(((json.load(open('watch/signature.json')) or {}).get('manifest') or {}).get('events_chain_head') or '')" 2>/dev/null || true)
+          if [ -n "$head" ]; then python3 scripts/verify_chain.py --events watch/events.jsonl --head "$head" || { echo "code=2" >> "$GITHUB_OUTPUT"; echo "::error title=Journal head::the event log no longer ends where the signed manifest of the previous run says it ends (or is gone): this run does not continue it"; exit 1; }; else echo "no pinned head in the previous manifest (first run, or an unsigned one): nothing to compare"; fi
           python3 scripts/watch_run.py 2>&1 | tee watch/run.log   # 2>&1: a crash prints its Traceback on stderr; without it run.log never held one, so a crash (exit 1) read as 'something unread', a warning, and the job stayed green (review 11/10)
           c=${PIPESTATUS[0]}; echo "code=$c" >> "$GITHUB_OUTPUT"
           if [ "$c" = 1 ] && ! grep -q Traceback watch/run.log; then echo "a target or an oracle was not read this run (exit 1), a warning shown on the page, not a failure" > watch/run.txt; elif [ "$c" != 0 ] && [ "$c" != 2 ]; then echo "exit code $c" > watch/run.txt; fi   # 2 = an alarm, 1 without a traceback = something unread, both known states
@@ -79,7 +81,7 @@ jobs:
         run: |
           python3 scripts/second_opinion.py --scores watch/scores --out watch/second_opinion.json --md watch/second_opinion.md > watch/second_opinion.txt 2>&1 || echo "exit code $?" >> watch/second_opinion.txt
           cat watch/second_opinion.txt
-          echo "disagree=$(python3 -c "import json;print(json.load(open('watch/second_opinion.json')).get('disagree',0))" 2>/dev/null || echo 0)" >> "$GITHUB_OUTPUT"
+          echo "disagree=$(python3 -c "import json;print(int(json.load(open('watch/second_opinion.json')).get('disagree',0)))" 2>/dev/null || echo 0)" >> "$GITHUB_OUTPUT"   # int(): the value comes from a file that may be the previous run's, and a text with a line break would write other step outputs
           echo "upgraded=$(python3 -c "import json;print(len(json.load(open('watch/second_opinion.json')).get('upgrades',[])))" 2>/dev/null || echo 0)" >> "$GITHUB_OUTPUT"
 
       - name: "Did a Safe that governs tracked contracts wake up: its nonce, how long it was observed idle, and a move after 14 days or more"
@@ -156,7 +158,7 @@ jobs:
         id: rq
         run: |
           python3 scripts/review_queue.py --watch watch --data data --out watch/review_queue.json --md watch/review_queue.md > watch/review_queue.txt 2>&1 || echo "exit code $?" >> watch/review_queue.txt
-          echo "overdue=$(python3 -c "import json;print(json.load(open('watch/review_queue.json')).get('overdue',0))" 2>/dev/null || echo 0)" >> "$GITHUB_OUTPUT"
+          echo "overdue=$(python3 -c "import json;print(int(json.load(open('watch/review_queue.json')).get('overdue',0)))" 2>/dev/null || echo 0)" >> "$GITHUB_OUTPUT"   # int(): see above
 
       - name: "Trend: one line per run with the numbers measured, so the next runs can say whether the tracked set improves"
         run: python3 scripts/trend.py --watch watch --out watch/trend.jsonl > watch/trend.txt 2>&1 || echo "exit code $?" >> watch/trend.txt
@@ -202,7 +204,7 @@ jobs:
       - name: "A catalogue of what the watch publishes (watch/catalog.json): where each file is, what it holds, which one answers which question"
         run: python3 scripts/catalog.py --watch watch --api watch/API.md > watch/catalog.txt 2>&1 || echo "exit code $?" >> watch/catalog.txt; cat watch/catalog.txt
 
-      - name: "Fail closed: no published file may still name a signer address of the private index (everything under watch/, not only the redaction list)"
+      - name: "Check: no published file may still name a signer address of the private index (everything under watch/, not only the redaction list). Without the index (the step above failed or timed out) the check is NOT RUN, says so, and the run is published with the strict redaction of the list only"
         run: python3 scripts/redact_signers.py --index "$RUNNER_TEMP/who_controls.json" --scores watch/scores --check watch
 
       - name: "Alarm gate: a new finding opens an issue, a standing state a reminder once a day, an unchanged one nothing (watch/alarm_state.json)"

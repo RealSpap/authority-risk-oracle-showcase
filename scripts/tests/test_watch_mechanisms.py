@@ -3145,17 +3145,22 @@ class TestRequirementsInTheDossier(unittest.TestCase):
         self.assertIn("- 0 of 6 requirements met", text); self.assertIn("- not read: Price feed not under one hand (price feed ? , 60 or more needed)".replace("? ,", "?,"), text)
 
 
-CERV, SIM, EGO, PIEU, USERS = "CER" + "VEAU", "Si" + "m", "Ego" + "rov", "Pie" + "uvre", b"/Us" + b"ers/"
+# The five words the publication guard refuses (the name of an internal folder, two fragments of a person's name, a private project, a personal path prefix) are NOT written in this published file, not even in
+# pieces: they are read from a JSON list of five strings kept outside the repository, named by PUBLICATION_GUARD_WORDS. Without that file the tests below that need them are skipped.
+_FIVE_FILE = os.environ.get("PUBLICATION_GUARD_WORDS")
+_FIVE = json.load(open(_FIVE_FILE, encoding="utf-8")) if _FIVE_FILE and os.path.isfile(_FIVE_FILE) else None
+CERV, SIM, EGO, PIEU, USERS = (_FIVE[0], _FIVE[1], _FIVE[2], _FIVE[3], _FIVE[4].encode()) if _FIVE else (None, None, None, None, None)
 
 
 class TestGardeSupplement(unittest.TestCase):
     """garde_supplement.py: the pre-push guard reads the author, the message and the added TEXT lines; a forbidden word in a file NAME or inside a BINARY file passed it. These run on throw-away git repositories."""
     HERE = os.path.dirname(__file__); FILE = os.path.join(HERE, "..", "..", "..", "garde_supplement.py"); ORIGINAL = os.path.join(HERE, "..", "..", "..", "..", "2026-09-30-garde-publication", "garde_prepush.py")
-    # the forbidden words are built from pieces: this file is published, and the push scripts refuse a file that contains them
+    # the forbidden words are not in this file: see PUBLICATION_GUARD_WORDS above
     ID = ["-c", "user.name=Spap", "-c", "user.email=335248717+RealSpap@users.noreply.github.com"]
 
     def load(self):
         if not (os.path.exists(self.FILE) and os.path.exists(self.ORIGINAL)): self.skipTest("garde_supplement.py and the guard it imports are not beside the surveillance folder in this checkout")
+        if CERV is None: self.skipTest("PUBLICATION_GUARD_WORDS does not name the file of the five words kept outside the repository")
         spec = importlib.util.spec_from_file_location("garde_supplement", self.FILE); m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
 
     def repo(self, tmp, files, remove=()):

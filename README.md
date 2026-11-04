@@ -50,10 +50,14 @@ cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 \
   0x1f7d7550B1b028f7571E69A784071F0205FD2EfA \
   --rpc-url https://rpc.testnet.chain.robinhood.com/rpc
 # adminKey, multisig, timelock, oracleAuthority, crossExposure, composite, lastUpdated, methodologyHash
-# 80, 100, 75, 100, 40, 85, 1793136187, 0x05ae8b25...   (read live on 2026-10-28; the last two values change at every push)
+# 80, 100, 75, 100, 40, 85, 1793136187, 0x05ae8b25...   (read live on 2026-10-28; the fifth value, crossExposure, was 80 on 22 October and is 40 since the push of 27 October with method 2026.10.4, and the time and the hash change at every push)
 ```
 
-**3. Gate a decision on a label in 14 lines:**
+**A score is not a status.** The composite says how strong an authority setup looks. `watch/trust.json` says how much of that was checked, how old it is and whether anything contradicts it (`VERIFIED`, `PARTIAL`, `STALE`, `DISPUTED`, `UNVERIFIED`, `UNAVAILABLE`, see [watch/API.md](watch/API.md)). A contract can score 100 and be `UNVERIFIED`. None of the three commands below reads the status yet: a consumer that decides on money reads it itself and refuses anything that is not `VERIFIED` and fresh.
+
+**The composite on the chain is not the cap.** For the contracts that rest on the Robinhood Chain rollup, the project also computes `l1CappedComposite` (57 for the Uniswap v3 factory of command 2, whose composite on the chain is 85). It is published in `api/scores.json` and is not on the chain; read it before you gate on the composite alone (METHODOLOGY.md, rollup section).
+
+**3. Gate a decision on a label in 18 lines:**
 
 ```bash
 python3 integrations/authority_facts_gate.py https://realspap.github.io/oracle/p/robinhood-0x1f7d7550b1b028f7571e69a784071f0205fd2efa.json
@@ -64,7 +68,7 @@ python3 integrations/authority_facts_gate.py https://realspap.github.io/oracle/p
 | If you decide: delegates, risk managers, DAO committees | If you build: developers, integrators |
 |---|---|
 | 1. Open the [dashboard](https://realspap.github.io/oracle/): 202 contracts on 9 oracles (8 EVM testnets and Solana devnet; Zcash is separate, 6 targets attested by on-chain commitments), the money behind them where one was read, the delay before a change applies. | 1. Read a score from a contract: `getScore(address)` and `isStale(address)`, as in command 2 ([`ExampleConsumer.sol`](src/ExampleConsumer.sol)). |
-| 2. Read [one contract's label](https://realspap.github.io/oracle/p/robinhood-0x1f7d7550b1b028f7571e69a784071f0205fd2efa.html): who can move it, how many keys, how long everyone else has to react, what was not read. The format is open: [Authority Facts v0.1](docs/AUTHORITY-FACTS-SPEC.md). | 2. Gate on a label in 14 lines (command 3): [`integrations/authority_facts_gate.py`](integrations/authority_facts_gate.py). |
+| 2. Read [one contract's label](https://realspap.github.io/oracle/p/robinhood-0x1f7d7550b1b028f7571e69a784071f0205fd2efa.html): who can move it, how many keys, how long everyone else has to react, what was not read. The format is open: [Authority Facts v0.1](docs/AUTHORITY-FACTS-SPEC.md). | 2. Gate on a label in 18 lines (command 3): [`integrations/authority_facts_gate.py`](integrations/authority_facts_gate.py). |
 | 3. Follow a protocol on every chain: one Atom feed per protocol, or, after `bash scripts/watch_branch.sh prepare` (it fetches the Watch's data), `python3 scripts/brief.py morpho-blue` for a one-page brief. | 3. Put it in CI: `uses: RealSpap/authority-risk-oracle-showcase@main` with `chain`, `address`, `min-score` ([`action.yml`](action.yml)), or an agent through the local MCP server. |
 
 ## Everything else

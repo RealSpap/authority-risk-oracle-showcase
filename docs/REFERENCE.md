@@ -17,7 +17,7 @@ and act on it without trusting anyone's website.
   and shared signers across protocols (0 = one bare key can do anything, 100 = no unchecked power found).
 - **Two view functions**: `getScore(address)` and `isStale(address)`. A consumer contract can freeze collateral behind a weak
   authority and refuse a stale read outright ([`ExampleConsumer.sol`](../src/ExampleConsumer.sol) does exactly that).
-- **Every number is re-derived live** on every run, from one public RPC per chain, and a second RPC that cross-checks the reads that matter most (mainly Ethereum L1 and its tokens). The only values not re-read are the dated snapshots and pins listed in the methodology. The methodology states
+- **Every number is re-derived live** on every run, from one public RPC per chain, and a second RPC that cross-checks the reads that matter most (mainly Ethereum L1 and its tokens). The only values not re-read are the dated snapshots and pins listed in the methodology, and the sub-scores that a scorer fixes by hand: the three pins of `data/scorer_pins.json` (nine targets) and the constants a second sweep found in `scripts/lib/scorers.py` (the rollup's `78, 75`, whose composite 57 is the cap `l1CappedComposite` of the Robinhood Chain targets that rest on it, the Uniswap `80, 100, 75`, Ekubo's 100): those are listed in docs/LIMITS.md and are not yet pinned. The methodology states
   what the oracle cannot see, next to what it can.
 
 ## What it scores

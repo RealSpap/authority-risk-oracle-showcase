@@ -70,9 +70,37 @@ class Base(unittest.TestCase):
     def call(self, st, name, args): return server.answer(st, name, args)
 
 
+class TestTheServerDoesNotRunCodeOfTheDirectoryItIsStartedIn(unittest.TestCase):
+    def test_a_file_named_like_a_vendored_module_in_the_current_directory_does_not_win(self):
+        if not os.path.isdir(os.path.join(PKG, "src", "authority_risk_mcp", "_vendor")): self.skipTest("python3 vendor_tools.py has not been run")
+        with tempfile.TemporaryDirectory() as hostile:
+            open(os.path.join(hostile, "agent_tools.py"), "w").write("print('PWNED: agent_tools.py of the current directory ran inside the server')\nraise SystemExit(0)\n")
+            env = dict(os.environ, PYTHONPATH=os.path.join(PKG, "src"), PYTHONDONTWRITEBYTECODE="1")
+            r = subprocess.run([sys.executable, "-B", "-c", "import sys; sys.path.insert(0, ''); from authority_risk_mcp import server; print(server.agent_tools.__file__)"], cwd=hostile, env=env, capture_output=True, text=True, timeout=60)
+        self.assertNotIn("PWNED", r.stdout + r.stderr)
+        self.assertIn("_vendor", r.stdout)
+
+
+class TestTheNpmLauncher(unittest.TestCase):
+    JS = open(os.path.join(PKG, "npm", "bin", "authority-risk-mcp.js"), encoding="utf-8").read()
+
+    def test_it_starts_the_server_in_the_package_folder_and_makes_data_dir_absolute(self):
+        self.assertIn("cwd: python", self.JS)                                  # not the folder of the project the agent reads
+        self.assertIn("path.resolve(a)", self.JS)
+        self.assertIn("--data-dir=", self.JS)
+
+    def test_the_path_logic_gives_absolute_paths_for_both_spellings(self):
+        import shutil
+        if not shutil.which("node"): self.skipTest("node is not installed")
+        line = next(l for l in self.JS.splitlines() if l.startswith("const args = "))
+        js = 'const path = require("node:path"); const process_argv = ["node", "x", "--data-dir", "rel/dir", "--data-dir=other", "--max-age-hours", "5"];\n' + line.replace("process.argv", "process_argv") + '\nconsole.log(JSON.stringify(args));'
+        out = json.loads(subprocess.run(["node", "-e", js], capture_output=True, text=True, timeout=30).stdout)
+        self.assertEqual(out, ["--data-dir", os.path.abspath("rel/dir"), "--data-dir=" + os.path.abspath("other"), "--max-age-hours", "5"])
+
+
 class TestEd25519(unittest.TestCase):
     def test_rfc8032_vectors_and_tampering(self):
-        for seed, pk, msg, sig in (("9d61b19deffd5a60ba844af492ec2cc44449c5697b326919703bac031cae7f60", "d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a", "",
+        for seed, pk, msg, sig in (("9d61b19deffd5a60ba844af492ec2cc44449c5697b326919703bac031cae7f60", "d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a", "",   # pragma: allowlist secret  (RFC 8032 test vectors: public)
                                     "e5564300c360ac729086e2cc806e828a84877f1eb8e5d974d873e065224901555fb8821590a33bacc61e39701cf9b46bd25bf5f0595bbe24655141438e7a100b"),
                                    ("4ccd089b28ff96da9db6c346ec114e0f5b8a319f35aba624da8cf6ed4fb8a6fb", "3d4017c3e843895a92b70aa74d1b7ebc9c982ccf2ec4968cc0cd55f12af4660c", "72",
                                     "92a009a9f0d4cab8720e820b5f642540a2b27b5416503f8fb3762223ebdb69da085ac1e43e15996e458f3613d0f11d8c387b2eaeb4302aeeb00d291612bb0c00")):
@@ -104,9 +132,12 @@ class TestEd25519(unittest.TestCase):
 
 
 class TestIntegrityOverHttp(Base):
+    def oldest_read_at(self):
+        import glob
+        return min(json.load(open(f))["readAt"] for f in glob.glob(os.path.join(self.W, "scores", "*.json")))
+
     def test_a_signed_pinned_snapshot_is_read_and_says_so(self):
-        import calendar, time
-        t0 = calendar.timegm(time.strptime("2026-10-14T09:55:22Z", "%Y-%m-%dT%H:%M:%SZ"))
+        t0 = self.oldest_read_at()       # the age is read from the signed files themselves (their readAt), not from run_utc
         sign_dir(self.W); s = self.serve(); st = self.store([s.url], now=lambda: t0 + 3600)
         r = self.call(st, "getScore", {"chain": "robinhood", "address": A})
         self.assertEqual((r["status"], r["composite"]), ("ok", 85)); i = r["integrity"]
@@ -114,6 +145,59 @@ class TestIntegrityOverHttp(Base):
         self.assertEqual((i["snapshot_age_hours"], i["snapshot_stale"]), (1.0, False))
         st.close()
         st = self.store([s.url], now=lambda: t0 + 5 * 86400); i = self.call(st, "getScore", {"chain": "robinhood", "address": A})["integrity"]; self.assertEqual((i["snapshot_age_hours"], i["snapshot_stale"]), (120.0, True)); st.close()
+
+    def test_run_utc_next_to_the_manifest_cannot_make_old_files_look_fresh(self):
+        import time
+        t0 = self.oldest_read_at(); sign_dir(self.W)
+        sig = json.load(open(os.path.join(self.W, "signature.json"))); sig["run_utc"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(t0 + 100 * 86400)); json.dump(sig, open(os.path.join(self.W, "signature.json"), "w"))
+        s = self.serve(); st = self.store([s.url], now=lambda: t0 + 100 * 86400)       # a replay: the files are 100 days old, the unsigned field says "now"
+        i = self.call(st, "getScore", {"chain": "robinhood", "address": A})["integrity"]
+        self.assertTrue(i["verified"]); self.assertEqual((i["snapshot_age_hours"], i["snapshot_stale"]), (2400.0, True)); st.close()
+
+    def test_the_age_is_that_of_the_oldest_score_file(self):
+        import glob
+        t0 = self.oldest_read_at(); f = sorted(glob.glob(os.path.join(self.W, "scores", "*.json")))[0]
+        d = json.load(open(f)); d["readAt"] = t0 - 10 * 3600; json.dump(d, open(f, "w"))       # one file older than the others
+        sign_dir(self.W); s = self.serve(); st = self.store([s.url], now=lambda: t0)
+        i = self.call(st, "getScore", {"chain": "robinhood", "address": A})["integrity"]
+        self.assertEqual(i["snapshot_age_hours"], 10.0); st.close()
+
+    def test_a_snapshot_without_a_readable_read_time_has_an_unknown_age_not_a_fresh_one(self):
+        import glob
+        files = sorted(glob.glob(os.path.join(self.W, "scores", "*.json"))); original = {f: open(f).read() for f in files}
+        for what in ("missing", True, 0, -5, "yesterday", None, "garbage"):
+            for f in files:
+                open(f, "w").write(original[f])
+            d = json.load(open(files[0]))
+            if what == "missing": d.pop("readAt", None); json.dump(d, open(files[0], "w"))
+            elif what == "garbage": open(files[0], "w").write("{not json")
+            else: d["readAt"] = what; json.dump(d, open(files[0], "w"))
+            sign_dir(self.W); s = self.serve(); st = self.store([s.url], now=lambda: self.oldest_read_at_or(0) + 3600)
+            try: i = self.call(st, "getScore", {"chain": "robinhood", "address": A})["integrity"]
+            except Exception: continue             # a file that is not JSON is not a value either
+            self.assertEqual((i["snapshot_age_hours"], i["snapshot_stale"]), (None, None), repr(what)); st.close()
+
+    def oldest_read_at_or(self, default):
+        try: return self.oldest_read_at()
+        except Exception: return default
+
+    def test_a_folder_with_a_file_the_signed_manifest_does_not_list_is_refused(self):
+        sign_dir(self.W)
+        self.store(None, data_dir=self.W).sync()                                                   # as signed: accepted
+        extra = os.path.join(self.W, "scores", "forged-sepolia.json"); json.dump({"name": "X", "kind": "evm", "readAt": 1, "targets": []}, open(extra, "w"))
+        with self.assertRaises(IntegrityFailed) as cm: self.store(None, data_dir=self.W).sync()
+        self.assertIn("forged-sepolia.json", str(cm.exception)); self.assertIn("not listed", str(cm.exception))
+        os.remove(extra)
+        self.store(None, data_dir=self.W).sync()                                                   # without it the folder is accepted again
+        json.dump({"targets": {}}, open(os.path.join(self.W, "admin_probe.json"), "w"))            # a file of the fixed list of names, written after the signature
+        with self.assertRaises(IntegrityFailed) as cm: self.store(None, data_dir=self.W).sync()
+        self.assertIn("admin_probe.json", str(cm.exception))
+
+    def test_a_manifest_name_that_climbs_out_of_the_folder_is_never_asked_for(self):
+        st = self.store(None)
+        names = {"scores/ok-sepolia.json": "0" * 64, "scores/../../escape.json": "0" * 64, "../x.json": "0" * 64, "/abs.json": "0" * 64, "scores//x.json": "0" * 64, "scores/./x.json": "0" * 64,
+                 "scores\\win.json": "0" * 64, "scores/a\\b.json": "0" * 64, "scores/nul\0.json": "0" * 64, "second_opinion.json": "0" * 64, "../second_opinion.json": "0" * 64}
+        self.assertEqual(st._wanted({"files": names}), ["scores/ok-sepolia.json", "second_opinion.json"])
 
     def test_a_tampered_file_is_never_a_value(self):
         sign_dir(self.W); good = json.load(open(os.path.join(self.W, "scores", "robinhood-chain.json"))); good["targets"][0]["compositeScore"] = 99

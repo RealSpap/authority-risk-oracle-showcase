@@ -1,5 +1,7 @@
 # Methodology
 
+> **Which method this document describes.** It describes the scoring code that is in this repository. The methods 2026.10.4 and 2026.11.1 that the oracles run (CHANGELOG.md) differ from it in the cross-exposure rule: the paragraph "Convention (decided 2026-09-20)" below says a flat 80, and the CHANGELOG says that the score falls by 15 for each other ecosystem that shares the committee and stops at 20. The code of those two methods is not yet published here, so their hashes cannot yet be recomputed from this repository alone. Where this document and the CHANGELOG disagree on cross-exposure, the CHANGELOG describes what the chain runs.
+
 What every score means, what it reads on-chain to get there, and what it
 cannot see. Written so a DAO delegate, a hackathon judge, or a protocol team
 being scored can check any number below against the live chain themselves,
@@ -11,13 +13,13 @@ Arbitrum, Plasma, Monad). **Updated 2026-10-11**: Hyperliquid (a HyperEVM oracle
 Zcash also have their own `chains/<ecosystem>/METHODOLOGY.md` adapting these same five dimensions to a different or
 non-Safe authority model, plus their own `scorers.py` and dated `data/scored_targets_*.md` notes with the live-verified
 numbers. Target counts change with every batch: `python3 scripts/live_target_counts.py` reads them from the oracles
-(197 across nine oracles on 2026-10-11, plus the Zcash commitment). This document doesn't duplicate the chain files.
+(197 across nine oracles on 2026-10-11, 202 live entries since the later additions, plus the Zcash commitment). This document doesn't duplicate the chain files.
 
 ## The five dimensions
 
 Every scored target gets five sub-scores, each 0-100, **higher is safer**. A
 dimension that genuinely does not apply to a target (no oracle role, no
-cross-protocol signer data available yet) scores 100 - full marks, not
+cross-protocol signer data available yet) scores 100 - full marks (and that 100 is counted in the weighted average: for a target governed by a DAO with no multisig, 30 points of the composite come from a multisig that does not apply; docs/LIMITS.md), not
 penalized as if it were a real weakness. This is a project-wide convention,
 not a per-target choice.
 
@@ -81,7 +83,7 @@ silently treated as either extreme.
 found on non-Safe multisigs). The general shape used across most targets:
 `min(100, threshold * 15 + max(0, ownerCount - threshold) * 5)` - a higher
 threshold matters more than a larger owner count at a fixed threshold, since
-more owners at the same threshold means more key combinations can reach it.
+more owners at the same threshold means more key combinations can reach it. Read the formula as it is: at a fixed threshold the score RISES with the number of owners (a 1-of-20 Safe scores 100 on this dimension, a 3-of-5 scores 55), because of the `+ 5` per extra owner, up to the cap of 100. It rewards dispersion; it does not penalise a low threshold beyond the `threshold * 15` term, and the reason given above is not the reason for the `+ 5` (see docs/LIMITS.md, "The multisig score is not one formula").
 **Not every target uses this exact formula** - several scorer functions use
 a tuned variant reflecting that specific target's context (see Limitations).
 
@@ -93,7 +95,7 @@ returns "unresolved" (the same result as "not a Safe", which every scorer alread
 the conservative unresolved-authority floor) when **a module is enabled that has not been
 analyzed**, or **the singleton is neither a published Safe build nor analyzed**. Analyzed
 means read, understood and recorded with its evidence in `scripts/lib/safe_modules.py`
-(`KNOWN_ANALYSES`, `KNOWN_SINGLETON_ANALYSES`); five modules or guards and one odd singleton
+(`KNOWN_ANALYSES`, `KNOWN_SINGLETON_ANALYSES`); ten analysed Safe modules or guards (nine modules, one guard) and one odd singleton
 are recorded today. Three deliberate limits: a module list that could not be *read* leaves the
 score as computed and adds a note, so a flaky RPC cannot collapse a score; a guard or a
 fallback handler never degrades, since they can block or answer calls but not act as the Safe;

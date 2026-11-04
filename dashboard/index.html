@@ -681,7 +681,7 @@
   CHAINS.robinhood.groups = [
     { idx: [0], title: 'Morpho Steakhouse USDG vault',
       summary: 'Root owner resolves to a bare EOA two hops down; the real 7-day timelock never covers setOwner / setCurator / setIsSentinel. Shares its curator Safe with the Ethena x Steakhouse vault.',
-      tag: 'cross-exposure: 80',
+      tag: 'shared signers',
       detail: 'curator() is a real 3-of-7 Safe, and isSentinel() is true for a 1-of-7 Safe sharing the same seven owners - but owner() points through an 8,609-byte contract to a bare EOA two hops down. Per-function timelocks are real (604,800s / 7 days) on addAdapter / removeAdapter / cap changes, but setOwner, setCurator, setIsSentinel and decreaseAbsoluteCap all resolve to 0. A curator/sentinel layer that looks like real multisig protection sits behind a root that isn’t multisig-protected at all. Its curator Safe\'s all 7 owners are shared with the Morpho Ethena x Steakhouse USDG vault (batch 7 crossExposureScore: 80/100) - the only overlap found across all 15 tracked signer groups.' },
     { idx: [1, 2, 4, 9], title: 'Uniswap v2 + v3 + v4 + UniswapX - one identity, four surfaces',
       summary: 'RESOLVED 2026-09-17: the address controlling v3 Factory, v4 PoolManager, the UniswapX reactor, and v2’s feeToSetter is the real Uniswap L1 Governance Timelock’s Arbitrum bridge alias, not a vanity-ground key. Re-scored to 85/100, independently re-confirming the L1 Timelock and GovernorBravo live on every run.',
@@ -706,7 +706,7 @@
       detail: '~$50.4K TVL. No bare-EOA exposure at any traced hop. Still capped in the 30s because the setOwner/setCurator zero-delay gap is systemic across every Morpho vault checked on this chain, not something either vault’s own governance choices could fix.' },
     { idx: [20], title: 'Morpho Ethena x Steakhouse USDG vault',
       summary: 'The largest raw multisig found on this chain - a real 5-of-10 Safe at owner - still capped by the same zero-delay authority gap, and shares its curator Safe with the Steakhouse vault.',
-      tag: 'cross-exposure: 80',
+      tag: 'shared signers',
       detail: '~$23.6M TVL, the largest single TVL found on this chain. curator() is the identical 3-of-7 Safe as the Morpho Steakhouse USDG vault - all 7 owners overlap, dropping both vaults\' crossExposureScore from 100 to 80 (batch 7). owner() resolves two hops through a non-Safe contract to a real 5-of-10 Safe. Best-governed vault found on this chain, but setOwner/setCurator timelocks are still 0. Not flagged as a hidden risk: Steakhouse Financial curating two vaults on the same chain is a normal, visible relationship - but it is still a real fact a lending market treating these as independently-governed collateral would get wrong.' },
     { idx: [5], title: 'Spark Savings USDG (spUSDG)',
       summary: 'Revised from 22 (batch 3): the admin-role holder’s own controller is now traced to Sky/MakerDAO’s own verified "SubProxy" contract on Ethereum mainnet - a real, identifiable chain, not an unknown.',
@@ -728,11 +728,11 @@
       detail: '$3.83M chain TVL, invisible to Morpho’s own vaultV2s API since Longbow creates 55 isolated markets directly on the shared Morpho Blue singleton - resolved via Longbow’s own production API instead, every address independently re-verified on-chain. setOwner/setCurator/setIsSentinel timelocks confirmed at 0 on all three vaults, the same chain-wide gap as every other Morpho vault; addAdapter (3 days) and removeAdapter (7 days) carry a real delay that doesn’t cover what matters.' },
     { idx: [6], title: 'Pendle V2 - ProxyAdmin + devProxyAdmin + MarketFactoryV6',
       summary: 'Both ProxyAdmins are real, distinct Safes (3-of-5 and 3-of-6), MarketFactoryV6’s owner is Pendle’s governance proxy whose DEFAULT_ADMIN_ROLE is held by the same 3-of-5 Safe, and no timelock gates any of the three.',
-      tag: 'cross-exposure: 80 (pushed on-chain 2026-09-20), same Safe as Plasma Pendle',
+      tag: 'shared signers, same Safe as Plasma Pendle',
       detail: 'ProxyAdmin.owner() and devProxyAdmin.owner() each resolve to a genuinely different, independently-composed Gnosis Safe. MarketFactoryV6.owner() is a 225-byte ERC-1967 proxy, Pendle’s governance proxy, with no owner() getter; read with hasRole on two RPCs on 2026-09-20, its DEFAULT_ADMIN_ROLE is held by the same 3-of-5 Safe that owns ProxyAdmin (the same proxy address and the same admin Safe exist on Plasma), so this third path adds no weaker link and the score does not move. A separate GUARDIAN key can freeze markets (availability-only), disclosed by the 2026-09-20 sweep and not scored. Pushed on-chain 2026-09-20: the 3-of-5 Safe that owns ProxyAdmin is the same address, with the same 5 owners, that owns Pendle’s Router on Plasma, so crossExposureScore is folded to a flat 80 (composite unchanged). It is a dated, hand-confirmed flag on this target’s signer group, not a live comparison against Plasma.' },
     { idx: [7], title: 'Curve DEX - StableSwap-NG Factory + fee-receiver',
       summary: 'The exact same bare EOA is both the AMM factory’s admin() and the fee-receiver/x-gov vault’s owner(), so one key controls the DEX’s parameters and its protocol fees.',
-      tag: 'single-RPC only, cross-exposure: 80 (pushed on-chain 2026-09-20)',
+      tag: 'single-RPC only, shared signers',
       detail: 'Confirmed via eth_getCode: 0 bytecode, a bare EOA. Only checked against the single official Robinhood Chain mainnet RPC so far; a second-RPC cross-check attempt 404’d, so this is flagged single-source rather than presented as this project’s usual 2-RPC-confirmed standard. Pushed on-chain 2026-09-20: the same bare EOA (0xabc336d4…1cbF) is also the StableSwap factory admin on Monad, so crossExposureScore is folded to a flat 80 (composite unchanged). An identical EOA address is the identical key, and the flag is a dated claim confirmed by the cross-ecosystem sweep script, not a live read of Monad.' },
     { idx: [34], title: 'Chainlink Price Feed Admin (Robinhood Chain)',
       summary: 'Not a protocol consuming an oracle - the oracle’s own governance. One Safe is owner() on every Chainlink feed sampled on this chain, including 3 already-tracked stock-token feeds.',
@@ -784,7 +784,7 @@
       detail: 'A separately-checked LP vault has no exposed admin surface of its own (owner/curator/admin/manager/governance all revert) - all real authority here sits on the exchange gateway. Scored with the same convention already used for Curve DEX’s identical one-key-two-contracts pattern.' },
     { idx: [50], title: 'Morpho Blue (singleton, Robinhood Chain)',
       summary: 'By chain-specific TVL, the single largest authority surface on this chain, and previously miscategorized as "already covered" by the individual vaults built on top of it. It is not: the singleton’s own owner is a separate, additional layer underneath every vault and market here.',
-      tag: '~$538M chain TVL, cross-exposure: 80 (pushed on-chain 2026-09-20)',
+      tag: '~$538M chain TVL, shared signers',
       detail: 'owner() resolves to a real Gnosis Safe. Per Morpho’s own immutable-core design, it can only enable new IRMs/LLTVs for future markets and set the (capped) protocol fee, so it cannot touch funds already deposited in existing markets, including Longbow’s 55 isolated markets built on this same singleton. Scored on the root mechanism itself, the same convention as every other Safe-rooted target here. Pushed on-chain 2026-09-20: the owner Safe’s 9 signers at 5-of-9 are the same committee as the Morpho Blue owner Safes on Ethereum L1, Base and Tempo (the Safe address differs on some of these chains, the owner set does not), so crossExposureScore is folded to a flat 80 (composite unchanged). It is a dated flag on this target’s signer group, not a live comparison against the other chains.' },
     { idx: [51], title: 'NOXA Fun Launch Locker',
       summary: 'A lead deliberately left open in an earlier pass, resolved properly this time: every one of the 36 real function selectors in the locker’s bytecode was extracted and checked against a public signature database - no principal-moving function exists anywhere in the set.',
@@ -819,7 +819,7 @@
       detail: 'Live-verified this pass: quorum (40M UNI) is 4.0% of UNI’s total supply, proposalThreshold is 0.1%, and the 5 most recent real proposals (ids 96–100) cleared quorum with real turnout of 46.9M–73.0M UNI - a genuinely active vote, not a rubber stamp. This is the same Timelock address this project’s Robinhood Chain correction already identified via its Arbitrum L2 bridge alias; this scorer confirms it directly on L1. Open gap: no check yet for an emergency-bypass path on this Timelock/Governor pair.' },
     { idx: [1], title: 'Aave V3 Ethereum Pool',
       summary: 'PoolAddressesProvider.owner() closes into a mutual-pointer EXECUTOR/PayloadsController pair (BGD Labs’ Aave Governance V3), with a real confirmed 1-day per-access-level delay.',
-      tag: '$14.77B TVL, cross-exposure: 80 (pushed on-chain 2026-09-20)',
+      tag: '$14.77B TVL, shared signers',
       detail: 'The exact same authority shape as Aave’s Arbitrum and Base deployments below, by design the same official BGD Labs infrastructure reused across every chain Aave governs. A GOVERNANCE_GUARDIAN Safe can veto/cancel payloads outside the normal timelock path. Pushed on-chain 2026-09-20: both emergency committees on this deployment are also tracked on other chains. The PayloadsController.guardian() Safe has 9 signers identical to the guardian committee on Arbitrum, Base, Plasma and Monad, and the PROTOCOL_GUARDIAN Safe (4-of-7, the ACLManager’s EMERGENCY_ADMIN holder) has 7 signers identical to the emergency-admin Safes on the same four chains. The scorer compares each freshly read owner set against a dated snapshot and folds the overlap into crossExposureScore as a flat 80, applied once even though both committees match; no other score moves.' },
     { idx: [2], title: 'MakerDAO / Sky governance (MCD_PAUSE)',
       summary: 'MCD_PAUSE.delay() is a real, confirmed 2-day delay, gated by DSChief - whose current "hat" is a governance spell executed just 6 days before this scorer ran.',
@@ -847,15 +847,15 @@
       detail: 'The pauseGuardian Safe (no module, no guard) is also the Governor’s proposalGuardian and whitelistGuardian, so it can cancel proposals; its instant pause is a freeze (availability) power, not a fund-redirect one, which is why timelockScore is 60 rather than Uniswap’s 75.' },
     { idx: [10], title: 'SparkLend PoolAddressesProvider',
       summary: 'PoolAddressesProvider.owner() is SparkProxy, whose three wards are Sky’s MCD_PAUSE_PROXY (behind the same 2-day-delay governance already scored for MCD_PAUSE), an ESM whose threshold is set to the uint256 maximum so it cannot fire, and StarGuard, itself warded only by MCD_PAUSE_PROXY. A separate FreezerMom can freeze or pause markets with no delay, through the Sky Chief’s current hat or a 3-of-5 Safe.',
-      tag: 'cross-exposure: 80, same Sky root as MCD_PAUSE',
+      tag: 'shared signers, same Sky root as MCD_PAUSE',
       detail: 'The instant seat can only freeze or pause markets, an availability risk rather than fund redirection, and it is why timelockScore is 60 instead of MCD_PAUSE’s 70. Two other RISK_ADMIN holders (KillSwitchOracle and CapAutomator) are automated contracts administered by SparkProxy, disclosed but not scored.' },
     { idx: [11], title: 'Uniswap V4 PoolManager',
       summary: 'PoolManager.owner() is directly the Uniswap Governance Timelock (2-day delay, answering to GovernorBravo), with no fee adapter or Safe in between. The protocolFeeController, a V4FeeAdapter, is also owned and fee-set by that same Timelock.',
-      tag: 'cross-exposure: 80, same Timelock as V3 Factory',
+      tag: 'shared signers, same Timelock as V3 Factory',
       detail: 'Same root and same scoring as the V3 Factory (admin 80, timelock 75, composite 85), so both sit behind one Timelock, which is why crossExposureScore is 80. The V4FeePolicy’s owner and feeSetter are also that Timelock.' },
     { idx: [12], title: 'Morpho Blue (singleton, Ethereum L1)',
       summary: 'owner() is a 5-of-9 Gnosis Safe reached in one hop (all nine signers are plain EOAs), with no Timelock and no delay. Its owner-only powers are setOwner, enableIrm, enableLltv, setFee (capped at 25%) and setFeeRecipient, so by Morpho’s immutable-core design it cannot withdraw funds from existing markets.',
-      tag: 'cross-exposure: 80 (pushed on-chain 2026-09-20), same 9 signers as the Base, Robinhood and Tempo Morpho Safes',
+      tag: 'shared signers, same 9 signers as the Base, Robinhood and Tempo Morpho Safes',
       detail: 'The owner Safe’s 9 signers are identical, at the same 5-of-9 threshold, to the Morpho Blue owner Safes on Base, Robinhood Chain and Tempo, so one committee gates all four deployments. Pushed on-chain 2026-09-20: that cross-ecosystem overlap is folded into crossExposureScore as a flat 80, where the within-Ethereum-L1 comparison alone would leave it at 100; composite is unchanged. The scorer compares the freshly read owner set against a dated snapshot of the committee and opens no second RPC connection. Scored with the same rule as the Base card (admin 65 for a threshold of 3 or more, timelock 0), so one protocol keeps one convention across ecosystems.' },
     { idx: [13], title: 'WBTC (Wrapped BTC)',
       summary: 'WBTC.owner() is the WBTC Controller, whose owner is a legacy Gnosis MultiSigWallet (6-of-10, not a Safe) with no timelock. That multisig can replace the Factory (the only address the Controller lets mint or burn), replace the Members registry, pause or unpause the token and start a transfer of the token’s own ownership.',
@@ -947,7 +947,7 @@
       detail: 'A standard, publicly-documented part of Arbitrum’s own security model (an intentional emergency-bypass path, not a discovered flaw), scored on the strength of the Safe itself and the ordinary delay that still applies to the non-emergency path.' },
     { idx: [4], title: 'Aave V3 Pool (Arbitrum)',
       summary: 'Same BGD Labs Aave Governance V3 pattern as the Ethereum L1 and Base deployments, real 1-day delay - plus a live cross-chain finding: its GOVERNANCE_GUARDIAN Safe shares the identical 9 owners at 5-of-9 with Base’s own Aave guardian Safe.',
-      tag: 'cross-exposure: 80 - shared committee with Base',
+      tag: 'shared signers - shared committee with Base',
       detail: '$489.2M supplied, the largest Arbitrum TVL scouted. The guardian committee comparison is against a dated 2026-09-17 snapshot of Base’s owner set (re-verified via a dedicated script, not on every push) - a CREATE2-redeployed shared committee, the same pattern this project’s sister research (multisig-overlap) already documented for ether.fi/Curve, found live here for the first time in this project’s own tracked targets.' },
     { idx: [5], title: 'Compound V3 - Comet USDC (Arbitrum)',
       summary: 'Governor, proxy admin and configurator all resolve to one LocalTimelock (1-day delay) whose admin is Compound’s ArbitrumBridgeReceiver, relaying Compound’s Ethereum-mainnet DAO timelock.',
@@ -955,11 +955,11 @@
       detail: 'Same shape as the Base Comet, re-derived live against roots.json. A 5-of-9 pauseGuardian Safe can pause outside the timelock (pause only, disclosed, not scored).' },
     { idx: [6], title: 'Pendle V2 - Router + MarketFactoryV6 (Arbitrum)',
       summary: 'Router owner, factory proxy admin and the governance proxy’s DEFAULT_ADMIN_ROLE all converge on one 3-of-5 Safe, with no timelock.',
-      tag: 'cross-exposure: 60 - same Safe on Plasma + Robinhood Chain',
+      tag: 'shared signers - same Safe on Plasma + Robinhood Chain',
       detail: 'The same Safe address with the same 5 owners is the tracked Pendle root on Plasma and on Robinhood Chain as well: one committee, three chains.' },
     { idx: [7], title: 'Fluid Liquidity (Arbitrum)',
       summary: 'Upgrade/governance admin is a self-administered TimelockController (24h). Proposer = Fluid’s 6-of-12 Avocado multisig, executor = a 3-of-5 Safe.',
-      tag: 'cross-exposure: 80 - same 6-of-12 as Plasma',
+      tag: 'shared signers - same 6-of-12 as Plasma',
       detail: 'Resolves the signer set Plasma’s sibling scorer left open. Bounded config handlers and the guardian (same Avocado multisig) act without the delay, so timelock is capped at 55.' },
     { idx: [8], title: 'Uniswap V3 Factory (Arbitrum One)',
       summary: 'The factory owner is a fee adapter whose owner and feeSetter are the Arbitrum alias of Uniswap’s Ethereum-mainnet Governance Timelock (2-day delay, GovernorBravo).',
@@ -974,7 +974,7 @@
       detail: 'Scored on the authority root mechanism itself (a Safe, same convention as every other Safe-rooted target in this project), not on the narrower operational blast radius - consistent with how Aerodrome’s pauser Safe below is also scored on the mechanism rather than its scope.' },
     { idx: [1], title: 'Aave V3 Base',
       summary: 'Same BGD Labs Aave Governance V3 pattern as Arbitrum and Ethereum L1, real 1-day delay - and the mirror of Arbitrum’s cross-chain finding: this guardian Safe is the identical 9-of-9 owner set at 5-of-9 threshold as Arbitrum’s own.',
-      tag: 'cross-exposure: 80 - shared committee with Arbitrum',
+      tag: 'shared signers - shared committee with Arbitrum',
       detail: '$500.8M TVL. The Ethereum-mainnet Aave DAO root (proposal counts, quorum) is out of scope for this Base-only scorer - see the Ethereum L1 tab’s own Aave card for that root directly.' },
     { idx: [2], title: 'Aerodrome Finance PoolFactory',
       summary: 'pauser()/feeManager() AND Voter.governor() are confirmed the exact same 3-of-7 Safe - one key can pause pools, redirect where AERO emissions flow, and reassign itself, with no timelock anywhere.',
@@ -990,7 +990,7 @@
       detail: 'LocalTimelock’s own delay() is re-confirmed live at a real 86,400s (1 day) - the actually-enforced LOCAL delay on Base. The L1 Compound Timelock’s own separate delay is out of scope for this Base-RPC-only scorer.' },
     { idx: [5], title: 'Aerodrome Slipstream CLFactory',
       summary: 'owner(), swapFeeManager() and unstakedFeeManager() all resolve to one 3-of-7 Safe with no timelock, the same Safe that controls Aerodrome V1 (pauser, feeManager and Voter.governor()), so one signer set governs both Aerodrome pool factories.',
-      tag: 'cross-exposure: 80, same Safe as Aerodrome V1',
+      tag: 'shared signers, same Safe as Aerodrome V1',
       detail: 'In the deployed CLFactory source the owner can set the owner and enable tick spacings (fee up to 10%), the swap fee manager sets a swap fee module (accepted up to 10%), and the unstaked fee manager sets an unstaked fee module (accepted up to 100%) and the default unstaked fee (capped at 50%); pools are EIP-1167 clones of an immutable implementation, so there is no pool upgrade path. Adding this target put two tracked targets on one Safe, which is why Aerodrome V1’s crossExposure went from 100 to 80 while its composite stayed 46.' },
     { idx: [6], title: 'Uniswap V2 Factory (Base)',
       summary: 'feeToSetter() is an OP-stack cross-domain forwarder (CrossChainAccount) that only forwards calls relayed by the L2CrossDomainMessenger from Uniswap’s Ethereum-mainnet Governance Timelock, which enforces a 2-day delay (172,800s) and is administered by GovernorBravo. It is the same forwarder that owns the V3 Factory’s fee adapter, with no Safe and no bare EOA in the chain.',
@@ -1013,23 +1013,23 @@
       detail: 'Not documented in Plasma’s own docs site (which states plainly the validator/committee mechanism is "under active development") - found instead in Plasma’s own GitHub org, PlasmaLaboratories/node-templates, a validator config file naming this exact contract. On-chain self-ID confirms it: a raw call returns the ASCII string "plasma-validator-set/v1". Its own config sets an activation_height for this contract that hadn’t been reached as of this scorer’s first pass - Plasma’s existing static validator list could still be what’s actually operative today, not this contract yet.' },
     { idx: [1], title: 'Aave V3 Pool',
       summary: 'Same BGD Labs Aave Governance V3 pattern already tracked on Ethereum L1/Arbitrum/Base, real 1-day delay - and a THIRD chain sharing the identical 9-signer, 5-of-9 guardian committee already found on Arbitrum and Base.',
-      tag: 'cross-exposure: 80 - shared committee, now 3 chains',
+      tag: 'shared signers - shared committee, now 3 chains',
       detail: '~$496M TVL, ~87% of all of Plasma’s DeFi TVL - the dominant lender on this chain. The guardian Safe’s owner set was independently re-derived live and matches Arbitrum’s and Base’s own guardian committees exactly, byte for byte - the same 9 people can now cancel the emergency path on three separate chains.' },
     { idx: [2], title: 'Pendle (Router + Market Factory V6)',
       summary: 'A real 3-of-5 Safe, reached by two independent on-chain paths that converge on the same address, and that same Safe is the literal SAME contract address as the Pendle Safe already tracked on Robinhood Chain.',
-      tag: 'cross-exposure: 80 (pushed on-chain 2026-09-20), identical Safe address, not just same signers',
+      tag: 'shared signers, identical Safe address, not just same signers',
       detail: 'Every fact here was cross-checked on a second, independent public RPC (thirdweb’s), byte-identical both times. This project’s cross-ecosystem overlap check has found matching signer SETS before, but this is its first-ever hit on the stronger case: the exact same deployed Safe contract, reused across two unrelated chains via CREATE2, so one compromised key set controls both simultaneously. Pushed on-chain 2026-09-20: crossExposureScore is folded to a flat 80 when the freshly read owner set equals a dated snapshot of Robinhood Chain’s Pendle owner Safe (3-of-5, 5 owners), and stays 100 if the Safe cannot be read or the sets differ. Admin, multisig and timelock are unchanged.' },
     { idx: [3], title: 'Ethena USDe OFT',
       summary: 'A real 5-of-10 Safe - and the same 10 signers, as an exact set, already control Ethereum L1’s own tracked Ethena Safe. A real delay is queued (Ownable2Step pending) but not active yet.',
-      tag: 'cross-exposure: 80 - same 10 signers as Ethereum L1',
+      tag: 'shared signers - same 10 signers as Ethereum L1',
       detail: 'owner() is the current, active authority (the 5-of-10 Safe); pendingOwner() shows an in-progress transfer to a real TimelockController with a 1-day delay, on which that same Safe already holds every role - so even once accepted, authority doesn’t change hands, just gets a delay. Scored on the CURRENT state (no delay in effect), not the pending one.' },
     { idx: [4], title: 'Euler V2 eVaultFactory',
       summary: 'A fully-traced chain: Governor → a real 4-day Timelock → a 4-of-8 DAO Safe, with a separate 2-of-3 securityCouncil able to cancel. Despite Euler’s own “DAO” naming, this is Safe-and-Timelock-gated, not a token-vote DAO.',
-      tag: 'best-governed target on this chain, cross-exposure: 80 (pushed on-chain 2026-09-20)',
+      tag: 'best-governed target on this chain, shared signers',
       detail: 'Pushed on-chain 2026-09-20: the DAO Safe’s 8 signers are identical, as an exact set, to the signers of Euler’s DAO Safe on Monad (a different Safe address per chain), so crossExposureScore is folded to a flat 80 against a dated 2026-09-19 snapshot of Monad’s DAO signers; admin, multisig and timelock are unchanged. 156 vaults deployed through this factory; at least one confirmed live to be retroactively upgradeable by this exact authority chain. A real, disclosed concentration: securityCouncil’s third signer is itself the separate "labs" Safe, and all 6 of labs’ own signers are a subset of the DAO Safe’s 8, so a smaller group of people sits behind more than one nominally-separate committee here. Not covered by the score: PAUSE_GUARDIAN_ROLE on the Governor is held by the Labs Safe and two bare EOAs, and either EOA alone can pause the factory (confirmed by eth_call simulation), an instant availability freeze that the timelock does not gate.' },
     { idx: [5], title: 'Euler V2 AccessControlEmergencyGovernor',
       summary: 'The same Governor → Timelock → Safe shape as the factory above, but for per-vault risk parameters, with a real 2-day delay, genuinely not instant despite the "Emergency" name.',
-      tag: 'cross-exposure: 80 (pushed on-chain 2026-09-20), same DAO Safe as the factory',
+      tag: 'shared signers, same DAO Safe as the factory',
       detail: 'Not confirmed this pass: which, if any, of the 156 deployed vaults actually point their own governor() at this specific address (a vault’s creator chooses at deploy time). Scored on the mechanism’s own confirmed-live strength, not on unconfirmed reach. Pushed on-chain 2026-09-20: the DAO Safe that proposes on this governor’s timelock is the same 4-of-8 Safe as the factory’s, whose 8 signers are identical to Euler’s DAO Safe on Monad, so crossExposureScore is folded to a flat 80 (admin, multisig and timelock unchanged).' },
     { idx: [6], title: 'Fluid (Instadapp) Liquidity',
       summary: 'A self-administered TimelockController with a real, confirmed 24-hour delay controls both governance and proxy upgrades on one shared storage slot. Its proposer is an Avocado multisig (6 of 12 signers) and its executor a 3-of-5 Safe, the same committee as Fluid on Arbitrum One.',
@@ -1094,7 +1094,7 @@
       tag: 'composite 61 - strongest target on this chain' },
     { idx: [13], title: 'Morpho Blue core',
       summary: 'Owned by a 5-of-9 Safe (nine plain EOA signers, no module, no guard) with no timelock, so any 5 signers can act immediately. The owner’s powers are limited to transferring ownership, enabling new rate models and LLTVs, and setting per-market fees (capped at 25% of interest) and the fee recipient, with no function to move user funds, pause the contract, or change an existing market’s oracle, rate model or LLTV.',
-      tag: '$42.6M TVL, no timelock, cross-exposure: 80 (pushed on-chain 2026-09-20)',
+      tag: '$42.6M TVL, no timelock, shared signers',
       detail: 'The oracle score of 100 means not applicable, not safe: this owner has no power over any market’s price source, but per-market oracle authority is a separate target shape not yet scored. Within Tempo no signer is shared with another tracked target, but the same 9 signers at the same 5-of-9 threshold also control the Morpho Blue owner Safe on Ethereum, Base and Robinhood Chain. Pushed on-chain 2026-09-20: that cross-ecosystem overlap is folded into crossExposureScore as a flat 80 (composite unchanged). The Safe address differs from Ethereum’s, so the scorer’s dated snapshot holds the owner set, not an address, and records the finding in the target’s notes (crossChainSignerOverlap). The core is immutable (no proxy) and no protocol fee is active today (feeRecipient reads the zero address and every market reads a fee of 0).' },
   ];
 
@@ -1129,11 +1129,11 @@
       detail: 'A Yearn risk-score PR flagged this gap; independently re-verified live, it is NOT remediated. A decoded on-chain transaction (2026-09-11, 4 days before that PR was even merged) shows 4-of-5 Emergency Council signers resetting two market allocation caps to 50.05% via this exact zero-delay path - not a live permission read alone, a proven pattern of use.' },
     { idx: [7], title: 'Aave V3 Pool',
       summary: 'Same BGD Labs Aave Governance V3 pattern as Ethereum L1, Arbitrum, Base and Plasma: PoolAddressesProvider.owner() is an Executor owned by a PayloadsController that is owned by that same Executor, with a real 1-day delay on Level_1, the only configured tier. That delay does not bind every upgrade path: the ACLManager also gives POOL_ADMIN to the PROTOCOL_GUARDIAN Safe (4-of-7), which can swap a reserve’s aToken or debt-token implementation with no delay. Separately, the 5-of-9 guardian Safe that can cancel payloads has the same 9 signers as the guardians on Ethereum L1, Arbitrum, Base and Plasma, so one committee holds that seat on at least five chains.',
-      tag: 'PROTOCOL_GUARDIAN Safe holds POOL_ADMIN, cross-exposure: 80',
+      tag: 'PROTOCOL_GUARDIAN Safe holds POOL_ADMIN, shared signers',
       detail: 'Level_1 has an 86,400s delay and all payloads created so far were executed at least that long after queueing, while Level_2 reads the zero address with a 0s delay here (Ethereum L1 has a Level_2 executor with a 7-day delay). The DAO path covers the Monad-side Executor and PayloadsController, whose message originator is Ethereum’s Aave Governance V3 core (chain id 1); that Ethereum root itself was not re-verified here. Pushed on-chain 2026-09-20 (Monad testnet block 64022942; previously 65 / 100 / 50 with composite 71): the ACLManager, read live through getACLManager(), reports isPoolAdmin and isEmergencyAdmin both true for the PROTOCOL_GUARDIAN Safe, a 4-of-7 (four bare-EOA owners and three nested 1-of-3 Safes) whose 7 owners are identical to Ethereum L1’s PROTOCOL_GUARDIAN and to the emergency-admin Safes on Arbitrum, Base and Plasma. isPoolAdmin lets it upgrade every reserve’s aToken and variableDebtToken implementation at once (state-override simulation, 2026-09-19), so the 1-day Executor delay does not bind it. The Executor holds DEFAULT_ADMIN and can revoke the seat, and the Safe cannot grant roles; both are disclosed and not score inputs. The scorer therefore applies the Safe-with-no-timelock rule: admin key 65 (threshold of 3 or more, never raised above the DAO-path value), multisig 75 (4 × 15 + 3 × 5), timelock 0, composite 49. If the Safe is confirmed not to hold isPoolAdmin it falls back to the DAO-path scoring (65 / 100 / 50), and if the seat cannot be read it degrades to 20 / 20 / 0. Cross-exposure is 80 while the 9-signer guardian committee matches.' },
     { idx: [8], title: 'Euler V2 eVaultFactory',
       summary: 'eVaultFactory.upgradeAdmin() is a Governor whose only admin is a 4-day TimelockController: a 4-of-8 DAO Safe is the sole proposer and anyone can execute once the delay passes, so no on-chain token vote is in the path. The delay has one bypass: PAUSE_GUARDIAN_ROLE, held by a 2-of-6 Labs Safe and two bare EOAs, can put every upgradeable vault into read-only mode instantly.',
-      tag: 'cross-exposure: 80, same 8 DAO signers as Plasma',
+      tag: 'shared signers, same 8 DAO signers as Plasma',
       detail: 'Every vault this factory has deployed is flagged upgradeable, so its implementation reaches all of them. The DAO Safe’s 8 signers are identical to Euler’s DAO Safe on Plasma at a different Safe address. The 2-of-3 Security Council Safe holds only CANCELLER_ROLE on the factory timelock, and no role on the factory Governor, the emergency governor or either emergency timelock. The same two bare EOAs hold PAUSE_GUARDIAN_ROLE on Plasma’s Euler Governor too.' },
   ];
 
@@ -1156,7 +1156,7 @@
     { idx: [2],
       title: 'HIP-3 dex io',
       summary: 'For price pushes, the deployer\'s own 3-of-5 binds, because it can reassign sub-deployers and reach setOracle anyway. The L1 cap binds too: 26 against its own 32. It shares root keys with two dormant dexes.',
-      tag: 'cross-exposure: 60, shares keys with flx and hyna',
+      tag: 'shared signers, shares keys with flx and hyna',
       detail: 'Picked over flx after a live sweep: io had about $55.4M open interest and about $39.5M net deposit at the 2026-09-17 read, while flx, with more listed assets, had zero open interest. The 4-of-6 oracle updater is stronger than the 3-of-5 deployer, but the deployer stays in the oracle set, so the weaker key binds; the weakest haltTrading key is a 2-of-3. One signer signs for both the flx and io deployers, and five signers alone meet the 4-of-6 threshold of both io\'s oracle updater and hyna\'s setOracle sub-deployer. flx and hyna both showed zero open interest at the 2026-09-19 re-read.' },
     { idx: [3],
       title: 'HIP-3 dex para (Paragon)',
@@ -1166,7 +1166,7 @@
     { idx: [4],
       title: 'HIP-3 dex mkts (Markets by Kinetiq)',
       summary: 'The deployer identity resolves to a single EOA and is shared with the dormant dex km, so a compromise is not a small-dex problem. The same address also runs Kinetiq\'s kmHYPE staking contract; no dex-admin path was found in it.',
-      tag: 'cross-exposure: 80, shared deployer with km',
+      tag: 'shared signers, shared deployer with km',
       detail: 'About $6.4M to $6.7M open interest and 24 listed assets at promotion on 2026-09-17; km showed zero. The deployer address carries a proxy to Kinetiq\'s HIP3StakingManager. A first read suggested a second root-control path, but the verified source shows every CoreWriter call is a staking or trading helper, so nothing was folded into the score; the earlier finding notes a raw-action passthrough was not fully ruled out, though the ABI suggests none. The API wallet can only be set through EXManager, which needs a signature from exWalletAdmin, a plain EOA. The haltTrading and setOracle sub-deployers are plain keys. Stored under a derived key.' },
     { idx: [5],
       title: 'Kinetiq HIP3StakingManager (kmHYPE)',
@@ -1615,8 +1615,8 @@
   }
   // While the explorer has not indexed the transaction, only its raw bytes are read: the commitment in them is checked, but that the
   // transaction is in a block is not confirmed by this page. The words "on-chain" / "anchored on-chain" must not claim more than that.
-  function zcOnchainChip(t) { return t.txMeta ? 'commitment = on-chain' : 'commitment = raw tx served by the explorer (block inclusion not confirmed here)'; }
-  function zcOnchainWord(t) { return t.txMeta ? 'on-chain' : 'in the raw transaction the explorer serves (its block inclusion is not confirmed here)'; }
+  function zcOnchainChip(t) { return t.txMeta ? 'commitment = in a transaction the explorer reports (its hash is not recomputed here)' : 'commitment = raw tx served by the explorer (block inclusion not confirmed here)'; }
+  function zcOnchainWord(t) { return t.txMeta ? 'in a transaction the explorer reports (its hash is not recomputed here)' : 'in the raw transaction the explorer serves (its block inclusion is not confirmed here)'; }
   function zcBlockTimeSpan(t, att) {
     var tip = 'the block’s own time is the trust-bearing timestamp; publishedAtUtc in the file is informational and not committed';
     if (t.txMeta) return '<span title="' + tip + '"><b>Block time</b> ' + zcBlockTime(t.txMeta) + '</span>';
@@ -1948,7 +1948,7 @@
   // a file that cannot be parsed, one that carries an error or one older than 8 hours is shown as "not read": a missing status is NEVER shown as VERIFIED.
   var WATCH_BASE = 'https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/watch-data/';
   var TRUST_STATUSES = ['VERIFIED', 'PARTIAL', 'STALE', 'DISPUTED', 'UNVERIFIED', 'UNAVAILABLE'];
-  var TRUST_WORST_FIRST = ['UNAVAILABLE', 'DISPUTED', 'UNVERIFIED', 'STALE', 'PARTIAL', 'VERIFIED'];
+  var TRUST_WORST_FIRST = ['UNAVAILABLE', 'DISPUTED', 'STALE', 'UNVERIFIED', 'PARTIAL', 'VERIFIED'];      // the order of the rule (trust_rules.py): STALE is decided before UNVERIFIED
   var TRUST_HINTS = {
     'VERIFIED': 'Every check listed in trust.json passed for this target. This is not a statement that the contract is safe.',
     'PARTIAL': 'Some checks are incomplete (see the reasons in trust.json).',
@@ -1971,6 +1971,7 @@
       var gen = parseUtc(tj.generated_utc);
       if (typeof tj !== 'object' || tj.error || !tj.by_target || typeof tj.by_target !== 'object') watchWhy = 'trust.json carries an error or no targets';
       else if (gen === null) watchWhy = 'trust.json has no readable date';
+      else if (gen - Date.now() / 1000 > 300) watchWhy = 'trust.json is dated in the future (' + tj.generated_utc + ')';
       else if (Date.now() / 1000 - gen > TRUST_MAX_AGE_S) watchWhy = 'trust.json is older than 8 hours (' + tj.generated_utc + ')';
       else { watchTrust = tj; watchWhy = ''; }
     }).catch(function (e) { watchTrust = null; watchWhy = String(e && e.message || e); }).then(function () {
@@ -2218,7 +2219,7 @@
     updateWatchBand();
 
     if (openSlug) {
-      var target = container.querySelector('[data-slug="' + openSlug + '"]');
+      var target = Array.prototype.find.call(container.children, function (el) { return el.dataset && el.dataset.slug === openSlug; });      // no selector built from the address bar
       if (target) {
         target.classList.add('open', 'deep-linked');
         setTimeout(function () { target.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 60);

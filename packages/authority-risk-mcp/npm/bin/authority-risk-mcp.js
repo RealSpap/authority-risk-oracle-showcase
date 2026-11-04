@@ -21,7 +21,10 @@ if (!found) {
 }
 
 const env = { ...process.env, PYTHONPATH: python + (process.env.PYTHONPATH ? path.delimiter + process.env.PYTHONPATH : ""), PYTHONDONTWRITEBYTECODE: "1" };
-const child = spawn(found[0], [...found[1], "-m", "authority_risk_mcp", ...process.argv.slice(2)], { stdio: "inherit", env });
+// The server starts in the package folder, not in the folder the user is in: `python -m` puts the current directory first on the import path, and a file of the project the agent is reading
+// (agent_tools.py, json.py ...) must not run inside the server. A path given on the command line is made absolute first so that it still means what the user typed.
+const args = process.argv.slice(2).map((a, i, all) => (all[i - 1] === "--data-dir" ? path.resolve(a) : a.startsWith("--data-dir=") ? "--data-dir=" + path.resolve(a.slice(11)) : a));
+const child = spawn(found[0], [...found[1], "-m", "authority_risk_mcp", ...args], { stdio: "inherit", env, cwd: python });
 for (const sig of ["SIGINT", "SIGTERM"]) process.on(sig, () => child.kill(sig));
 child.on("exit", (code, signal) => process.exit(code === null ? (signal ? 1 : 0) : code));
 child.on("error", (e) => { process.stderr.write("authority-risk-mcp: could not start Python: " + e.message + "\n"); process.exit(1); });

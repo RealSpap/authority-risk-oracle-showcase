@@ -2,7 +2,7 @@
 
     pip install langchain-core
     git clone --depth 1 -b watch-data https://github.com/RealSpap/authority-risk-oracle-showcase.git watch-data   # the state of the Watch, refreshed every 6 hours
-    from authority_risk_oracle.langchain import authority_risk_tools      # or: import this file
+    from integrations.langchain_authority_risk import authority_risk_tools   # from the root of this repository, as in integrations/README.md
     tools = authority_risk_tools("watch-data")                            # a list of StructuredTool: hand it to an agent
 
 Every tool returns a JSON string with `status` (ok / not_tracked / not_read). A value the Watch did not read is null and named in `not_read`: an agent must never treat it as 0 or as safe. The scores are published on

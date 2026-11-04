@@ -8,6 +8,7 @@ Two sources: HTTPS (raw.githubusercontent.com first, jsDelivr as the fall-back; 
 branch, offline). The folder is checked against its own `signature.json` when it has one.
 """
 import calendar
+import glob
 import hashlib
 import json
 import os
@@ -164,24 +165,45 @@ class Store:
     def _sync_once(self):
         sig = self._read_signature(); integ, m = self._verify_manifest(sig)
         if m is not None: integ["chain_head"] = self._chain_head(m)
-        run = (sig or {}).get("run_utc"); integ["manifest_run_utc"] = run
-        try:
-            age = (self.now() - calendar.timegm(time.strptime(run, "%Y-%m-%dT%H:%M:%SZ"))) / 3600 if run else None
-        except (TypeError, ValueError): age = None
-        integ["snapshot_age_hours"] = None if age is None else round(age, 1)
-        integ["snapshot_stale"] = None if age is None else age > self.max_age_hours
+        integ["manifest_run_utc"] = (sig or {}).get("run_utc")      # information only: this field sits NEXT TO the signed manifest, not inside it, so a replay of old files can carry a new one
         if self.data_dir:
             self._dir = self.data_dir
             if m is not None: self._check_local(m)
         else:
             self._materialize(m)
+        # the age is read from the files that were verified (the oldest `readAt` of the score files, which the signature covers), never from run_utc
+        age = self._oldest_read_age_hours()
+        integ["snapshot_age_hours"] = None if age is None else round(age, 1)
+        integ["snapshot_stale"] = None if age is None else age > self.max_age_hours
         self._stamp = self.now(); self._integrity = integ
         return self._dir, integ
 
+    def _oldest_read_age_hours(self):
+        """Hours since the oldest `readAt` among the score files of the verified folder, or None when no score file carries a usable one (unknown, never fresh)."""
+        ts = []
+        for f in glob.glob(os.path.join(self._dir or "", "scores", "*.json")):
+            try: ra = json.load(open(f, encoding="utf-8")).get("readAt")
+            except (OSError, ValueError, AttributeError): return None
+            if not isinstance(ra, (int, float)) or isinstance(ra, bool) or ra <= 0: return None
+            ts.append(ra)
+        return (self.now() - min(ts)) / 3600 if ts else None
+
+    @staticmethod
+    def _plain(rel):
+        """A manifest name that stays inside the folder: relative, no `..`, no backslash, no empty part, no NUL. The producer refuses the others; a reader must not write what a manifest names without the same rule."""
+        parts = str(rel).split("/")
+        return bool(rel) and "\\" not in rel and "\0" not in rel and not rel.startswith("/") and all(p not in ("", ".", "..") for p in parts)
+
     def _wanted(self, m):
-        return sorted(r for r in m["files"] if r in NEEDED or any(r.startswith(p) for p in NEEDED_PREFIX) and r.endswith(".json"))
+        return sorted(r for r in m["files"] if self._plain(r) and (r in NEEDED or any(r.startswith(p) for p in NEEDED_PREFIX) and r.endswith(".json")))
 
     def _check_local(self, m):
+        # a file the folder has and the signed manifest does not list is a file nobody signed: it must not be read as if it were verified
+        present = [r for r in NEEDED if os.path.isfile(os.path.join(self.data_dir, r))]
+        sdir = os.path.join(self.data_dir, "scores")
+        if os.path.isdir(sdir): present += ["scores/" + n for n in sorted(os.listdir(sdir)) if n.endswith(".json")]
+        unlisted = [r for r in present if r not in m["files"]]
+        if unlisted: raise IntegrityFailed("%s in the folder is not listed in the signed manifest: nobody signed it" % ", ".join(unlisted[:3]))
         for rel in self._wanted(m):
             p = os.path.join(self.data_dir, rel)
             if not os.path.isfile(p): continue   # a file the folder does not have is a file not read, which the tools say

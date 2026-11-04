@@ -42,6 +42,28 @@ class TestSource(unittest.TestCase):
         self.assertIn("if (chain.kind !== 'zcash') tagsHtml += trustChip(trustStatusOfGroup(activeKey,", cards)
         self.assertIn("updateWatchBand();", cards)
 
+    def test_no_hand_written_tag_carries_a_cross_exposure_number_that_the_chain_can_contradict(self):
+        self.assertEqual(re.findall(r"tag: '[^'\n]*cross-exposure: \d", PAGE), [])
+        self.assertGreaterEqual(PAGE.count("shared signers"), 20)
+
+    def test_the_address_bar_never_builds_a_selector(self):
+        self.assertNotIn("querySelector('[data-slug=", PAGE)
+        self.assertIn("el.dataset.slug === openSlug", PAGE)
+
+    def test_the_zcash_tab_does_not_say_on_chain_for_a_transaction_whose_hash_it_does_not_recompute(self):
+        for fn in ("function zcOnchainChip(t)", "function zcOnchainWord(t)"):
+            line = next(l for l in PAGE.splitlines() if fn in l)
+            self.assertIn("hash is not recomputed here", line)
+            self.assertNotRegex(line, r"\? 'commitment = on-chain'|\? 'on-chain'")
+
+    def test_the_worst_first_order_is_the_one_of_the_trust_rule(self):
+        line = next(l for l in PAGE.splitlines() if l.strip().startswith("var TRUST_WORST_FIRST"))
+        order = re.findall(r"'([A-Z]+)'", line.split("//")[0])
+        self.assertEqual(order, ["UNAVAILABLE", "DISPUTED", "STALE", "UNVERIFIED", "PARTIAL", "VERIFIED"])
+        rule = open(os.path.join(ROOT, "scripts", "lib", "trust_rules.py"), encoding="utf-8").read()
+        doc = [l.split()[0] for l in rule.split("THE RULE")[1].splitlines() if l.startswith("  ") and l.split() and l.split()[0] in order]
+        self.assertEqual(doc, order[:len(doc)] if doc else order)
+
     def test_the_only_new_host_is_one_the_privacy_page_already_lists(self):
         priv = open(os.path.join(ROOT, "docs", "PRIVACY.md"), encoding="utf-8").read()
         self.assertIn("raw.githubusercontent.com", priv)
@@ -138,6 +160,8 @@ var iso = function (h) { return new Date(Date.now() - h * 3600e3).toISOString().
 var res = {}, by = {'robinhood:0x1': {status: 'VERIFIED'}};
 (async function () {
   serve({'trust.json': {generated_utc: iso(7), by_target: by}}); await readWatch(); res.fresh = watchTrust !== null;
+  serve({'trust.json': {generated_utc: iso(-3), by_target: by}}); await readWatch(); res.future = watchTrust === null; res.future_why = watchWhy;
+  serve({'trust.json': {generated_utc: iso(-0.01), by_target: by}}); await readWatch(); res.skew_ok = watchTrust !== null;
   serve({'trust.json': {generated_utc: iso(9), by_target: by}}); await readWatch(); res.old = watchTrust === null; res.old_why = watchWhy;
   serve({'trust.json': {generated_utc: iso(1), error: 'boom', by_target: by}}); await readWatch(); res.error = watchTrust === null;
   serve({'trust.json': {generated_utc: 'yesterday', by_target: by}}); await readWatch(); res.undated = watchTrust === null; res.undated_why = watchWhy;
@@ -146,10 +170,11 @@ var res = {}, by = {'robinhood:0x1': {status: 'VERIFIED'}};
   serve({}); await readWatch(); res.missing = watchTrust === null; res.missing_why = watchWhy;
   console.log(JSON.stringify(res));
 })();""")
-        self.assertEqual({k: v for k, v in out.items() if k not in ("old_why", "missing_why", "undated_why")}, {"fresh": True, "old": True, "error": True, "undated": True, "no_targets": True, "garbage": True, "missing": True})
+        self.assertEqual({k: v for k, v in out.items() if k not in ("old_why", "missing_why", "undated_why", "future_why")}, {"fresh": True, "future": True, "skew_ok": True, "old": True, "error": True, "undated": True, "no_targets": True, "garbage": True, "missing": True})
         self.assertIn("older than 8 hours", out["old_why"])
         self.assertIn("404", out["missing_why"])
         self.assertIn("no readable date", out["undated_why"])
+        self.assertIn("in the future", out["future_why"])
 
 
 if __name__ == "__main__":

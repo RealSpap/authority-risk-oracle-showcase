@@ -46,7 +46,7 @@ Three edge cases were scored by the letter of the protocol. The protocol treats 
   "unresolved contract" (8) instead of the EOA it resolves to (2).
 
 Read sensibly (floki 101, POL 80, Wasabi 2), the exploratory outcome is S = 2.875, p_low = 0.35, 3 of 5 below the median: **NOT CONCLUSIVE**.
-A large regular gap is still ruled out; the label "does not discriminate" should be read with that caveat.
+No gap was detected. With five sets the data do not rule out a large one: a rough 95 percent interval on the gap between a victim and the median of its controls (recomputed on 30 October 2026, not part of the protocol) runs from about -58 to +31 points. The label "does not discriminate" should be read with that caveat.
 
 ## Gaps in our own reading rules, found on the way
 
@@ -62,5 +62,5 @@ A large regular gap is still ruled out; the label "does not discriminate" should
 ## Limits
 
 Five sets, one chain, current CoinGecko/DefiLlama categories used for selection, "untouched" detected by name in a public list, the rated
-object differs from the attacked contract for Gala and Resolv. Contamination declared in the protocol: the victims' configurations for
+object differs from the attacked contract for Gala, Resolv and Humanity (the table rates a 4-of-7 Safe where the sources name 3 of 6 on Ethereum and 3 of 5 on BNB Chain), and the controls rated 101 (no authority) are counted in the medians above the 0-100 scale. Contamination declared in the protocol: the victims' configurations for
 Bybit and Wasabi were known before the protocol was written.

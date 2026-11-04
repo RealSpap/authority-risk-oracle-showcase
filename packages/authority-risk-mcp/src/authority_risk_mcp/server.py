@@ -11,7 +11,8 @@ from . import __version__
 from .store import IntegrityFailed, NotRead, Store
 
 _VENDOR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "_vendor")
-if _VENDOR not in sys.path: sys.path.append(_VENDOR)   # the modules copied from the repository's scripts/ folder import each other by plain name
+if _VENDOR in sys.path: sys.path.remove(_VENDOR)
+sys.path.insert(0, _VENDOR)   # FIRST, not last: the modules copied from the repository's scripts/ folder import each other by plain name, and a file of that name in the current directory (`python -m` puts it first) must not win
 import agent_tools  # noqa: E402
 
 PROTOCOL = "2025-06-18"; MAX_CHARS = 60000; MAX_ROWS = 200

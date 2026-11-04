@@ -25,17 +25,33 @@ def _iso(ts):
     return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(ts)) if isinstance(ts, (int, float)) and not isinstance(ts, bool) and ts > 0 else None
 
 
-def _find_target(W, chain, address):
-    """(score-file document, target row) or None. The chain may be written as the Watch writes it (robinhood, base, ethereum-l1...) or as its score file."""
+def _matches(W, chain, address):
+    """Every (chain key, score-file document, target row) that names this contract, in file order. The chain may be written as the Watch writes it (robinhood, base, ethereum-l1...) or as its score file."""
     key = dossier.chain_key(chain)
-    if not key: return None
-    addr = dossier.norm(address)
+    if not key: return []
+    addr = dossier.norm(address); out = []
     for f in sorted(glob.glob(os.path.join(W, "scores", "*.json"))):
         d = dossier.load(f) or {}
         if dossier.WATCH_SLUGS.get(os.path.basename(f)[:-5]) == key or (key == "solana" and d.get("kind") == "solana"):
-            for t in d.get("targets", []):
-                if dossier.norm(t.get("target")) == addr: return key, d, t
-    return None
+            out += [(key, d, t) for t in d.get("targets", []) if dossier.norm(t.get("target")) == addr]
+    return out
+
+
+def _find_target(W, chain, address):
+    """(chain key, score-file document, target row) of the first row, or None."""
+    m = _matches(W, chain, address)
+    return m[0] if m else None
+
+
+def _duplicate_answer(W, chain, address, hit):
+    """A contract that a score file lists more than once (30/10/2026): the rows are compared. Equal rows are harmless and the answer carries `duplicate_rows`; rows that differ make the answer `not_read`,
+    because the first line is not known to be the current one. Returns (answer to give instead, or None; number of rows)."""
+    rows = _matches(W, chain, address)
+    if len(rows) < 2: return None, 1
+    fields = ("compositeScore", "previousComposite", "stale", "lastUpdated", "methodologyHash") + tuple(f for _, f in SUBS)
+    if all(all(r[2].get(f) == hit[2].get(f) for f in fields) for r in rows[1:]): return None, len(rows)
+    return {"status": "not_read", "chain": hit[0], "address": hit[2].get("target"), "composite": None, "duplicate": True, "duplicate_rows": len(rows),
+            "reason": "the score file lists this contract %d times with different values, so the Watch does not know which row is current" % len(rows), "note": NOTE}, len(rows)
 
 
 def _retired(W, key, address):
@@ -65,6 +81,8 @@ def get_score(W, chain, address):
     key, d, t = hit
     gone = _retired(W, key, t.get("target"))
     if gone: return _retired_answer(gone, key, t.get("target"))
+    ambiguous, n_rows = _duplicate_answer(W, chain, address, hit)
+    if ambiguous: return ambiguous
     comp = t.get("compositeScore"); subs = {n: t.get(f) for n, f in SUBS}
     not_read = [n for n, v in list(subs.items()) + [("composite", comp)] if v is None]
     rec = {"status": "ok" if comp is not None else "not_read", "chain": key, "network": dossier.LABEL.get(key, key), "address": t.get("target"), "composite": comp, "sub_scores": subs, "stale": t.get("stale"),
@@ -76,6 +94,7 @@ def get_score(W, chain, address):
     else:
         rec["replay"] = None
         rec["replay_note"] = "no ready command for this network: read the score account of the oracle program (seeds 'score' + the target) on the cluster named in `oracle`" if d.get("kind") == "solana" else "no replay data in the file"
+    if n_rows > 1: rec["duplicate_rows"] = n_rows
     return rec
 
 
@@ -85,11 +104,14 @@ def list_targets(W, chain=None, max_score=None, min_score=None, stale=None, limi
     scope = snapshot_rules.scope_of(W)
     rows = [r for r in find.table(W) if not chain or r["chain"] == find.chain_key(chain)]
     n_retired = sum(1 for r in rows if snapshot_rules.retired(scope, r["chain"], r["target"])); rows = [r for r in rows if not snapshot_rules.retired(scope, r["chain"], r["target"])]
+    pairs = {}   # the contracts that are listed (not the retired ones) which a score file names more than once; the target is already normalised by find.table, which keeps the case of a Solana address
+    for r in rows: pairs[(r["chain"], r["target"])] = pairs.get((r["chain"], r["target"]), 0) + 1
+    n_duplicate = sum(1 for n in pairs.values() if n > 1)
     unread = [r for r in rows if r["score"] is None]
     sel = [r for r in rows if r["score"] is not None and (max_score is None or r["score"] <= max_score) and (min_score is None or r["score"] >= min_score) and (stale is None or r["stale"] is stale)]
     sel.sort(key=lambda r: (r["score"], r["title"] or ""))
     limit = max(1, min(int(limit), 200))
-    return {"status": "ok", "matched": len(sel), "of": len(rows), "returned": min(limit, len(sel)), "score_not_read_so_not_filtered": len(unread), "retired_not_listed": n_retired,
+    return {"status": "ok", "matched": len(sel), "of": len(rows), "returned": min(limit, len(sel)), "score_not_read_so_not_filtered": len(unread), "retired_not_listed": n_retired, "contracts_listed_twice": n_duplicate,
             "rows": [{"chain": r["chain"], "address": r["target"], "title": r["title"], "protocol": r["protocol"], "composite": r["score"], "stale": r["stale"], "money_usd": r["money_usd"], "kind": r["kind"]} for r in sel[:limit]],
             "sorted_by": "composite, weakest first", "testnet_note": TESTNET, "note": NOTE}
 
@@ -101,6 +123,8 @@ def who_controls(W, chain, address):
     key, d, t = hit; addr = dossier.norm(address)
     gone = _retired(W, key, t.get("target"))
     if gone: return _retired_answer(gone, key, t.get("target"))
+    ambiguous, n_rows = _duplicate_answer(W, chain, address, hit)
+    if ambiguous: return ambiguous
     so = dossier.load(os.path.join(W, "second_opinion.json"))
     if so is None: return {"status": "not_read", "chain": key, "address": t.get("target"), "reason": "second_opinion.json (the independent reader) is missing or unreadable", "note": NOTE}
     r = next((x for x in so.get("results", []) if x.get("chain") == key and dossier.norm(x.get("target")) == addr), None)
@@ -112,6 +136,7 @@ def who_controls(W, chain, address):
            "to_move_the_money": {"keys": ex.get("keys_to_move"), "react_hours": ex.get("react_hours"), "money_usd": ex.get("tvl_usd"), "money_source": ex.get("money_source")}, "unreadable_reason": r.get("why") if r.get("kind") in ("unreadable", "native") else None}
     out["not_read"] = sorted(k for k in ("threshold", "keys_to_act", "delay_summary", "admin_holder") if out[k] is None) + (["admin (kind: %s)" % r.get("kind")] if r.get("kind") in ("unreadable", "native") else [])
     out["note"] = NOTE; out["testnet_note"] = TESTNET
+    if n_rows > 1: out["duplicate_rows"] = n_rows
     return out
 
 

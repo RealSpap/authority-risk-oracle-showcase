@@ -175,8 +175,10 @@ def main():
     if os.path.exists(sp):
         s = json.load(open(sp)); changed, missing = [], []
         try:
-            lrun = json.load(open(os.path.join(watch, "latest.json")))["run_utc"]
-            if isinstance(s.get("run_utc"), str) and s["run_utc"] < lrun: stale_sig = True; FAIL("SIGNATURE STALE: signature.json is from %s, latest.json from %s: the last run could not be signed, and the files below are checked against the signature of an earlier run" % (s["run_utc"], lrun))   # N55bis
+            lj_ = json.load(open(os.path.join(watch, "latest.json"))); lrun = lj_["run_utc"]
+            if isinstance(s.get("run_id"), str) and isinstance(lj_.get("run_id"), str) and s["run_id"] != lj_["run_id"]:   # 30/10/2026: the identifier of the passage, written by both files (scripts/run_id.py)
+                stale_sig = True; FAIL("SIGNATURE FROM ANOTHER PASSAGE: signature.json carries run_id %s, latest.json run_id %s: the two files were not written by the same run of the Watch, so the signature is not shown to cover this latest.json" % (s["run_id"], lj_["run_id"]))
+            elif isinstance(s.get("run_utc"), str) and s["run_utc"] < lrun: stale_sig = True; FAIL("SIGNATURE STALE: signature.json is from %s, latest.json from %s: the last run could not be signed, and the files below are checked against the signature of an earlier run" % (s["run_utc"], lrun))   # N55bis
         except (OSError, ValueError, KeyError, TypeError): pass
         mf = s.get("manifest", {}).get("files") if isinstance(s.get("manifest"), dict) else None
         if not isinstance(mf, dict): FAIL("manifest: signature.json has no manifest of files"); mf = {}; s = {"manifest": {"files": {}}}
@@ -250,7 +252,7 @@ def main():
     else: NOTE("on-chain sample skipped: the scores files carry no oracle address and RPC (a run before 2026-10-07), nothing to re-read")
     if incomplete and not fails: print("\nAUDIT INCOMPLETE: 0 failure(s), but %s (exit 3: not a pass)" % "; ".join(incomplete)); sys.exit(3)
     print("\n%s: %d failure(s)" % ("AUDIT PASSED" if not fails else "AUDIT FAILED", fails))
-    if stale_sig: sys.exit(4)   # 4 = the signature is of an earlier run than latest.json (a distinct code, N55bis)
+    if stale_sig: sys.exit(4)   # 4 = the signature is not the one of the run that wrote latest.json: an earlier run_utc, or a different run_id (30/10/2026) (a distinct code, N55bis)
     sys.exit(1 if fails else 0)
 
 

@@ -193,6 +193,9 @@ jobs:
       - name: "One health record for the run (watch/status.json: ok / degraded / alarm with the reasons) and the integrity badge"
         run: python3 scripts/run_status.py --watch watch > watch/status.txt 2>&1 || echo "exit code $?" >> watch/status.txt; cat watch/status.txt
 
+      - name: "The files come from the same passage: latest.json, status.json and signature.json carry the same run_id (a step that failed leaves an old file in place)"
+        run: python3 scripts/check_run_id.py --watch watch > watch/run_id.txt 2>&1 || echo "exit code $?" >> watch/run_id.txt; cat watch/run_id.txt
+
       - name: "The run as Prometheus metrics (watch/metrics.prom): a monitor can alert on a stopped Watch, an alarm, a high alert or an oracle not read, without parsing nine files"
         run: python3 scripts/metrics_prom.py --watch watch > watch/metrics.txt 2>&1 || echo "exit code $?" >> watch/metrics.txt; cat watch/metrics.txt
 

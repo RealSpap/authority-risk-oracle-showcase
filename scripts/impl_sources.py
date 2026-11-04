@@ -30,7 +30,9 @@ def osec(program):
     program's deployed binary right now (is_verified), the repository, and when it last matched."""
     try:
         d = json.loads(urllib.request.urlopen(urllib.request.Request("https://verify.osec.io/status/%s" % program, headers={"User-Agent": "curl/8"}), timeout=20).read())
+        h = str(d.get("on_chain_hash") or "").lower()   # the sha256 of the deployed binary as OtterSec read it; empty when it has no record of the program
         return {"verified": bool(d.get("is_verified")), "match": "verified build" if d.get("is_verified") else None, "name": None, "compiler": None, "verified_at": d.get("last_verified_at"),
+                "on_chain_hash": h if re.fullmatch(r"[0-9a-f]{64}", h) else None,
                 "repo_url": (d.get("repo_url") or None), "source": "osec", "note": None if d.get("is_verified") else ("a repository is registered but no build matches the deployed binary" if d.get("repo_url") else "no verified build registered")}
     except Exception: return None  # noqa: BLE001 -- a transport failure is not an answer
 
@@ -65,7 +67,8 @@ def main():
             cache[ck] = osec(program); asked += 1; time.sleep(0.3)
             if cache[ck] is None and prev.get(key, {}).get("impl") == program: cache[ck] = dict(prev[key], stale=True)
         if cache[ck] is None: out[key] = stamp_check({"impl": program, "via": "program", "verified": None, "note": "OtterSec not answering this run"}, now_iso, None); continue
-        out[key] = stamp_check(dict({"impl": program, "via": "program (verified build, OtterSec)"}, **{k: v for k, v in cache[ck].items() if k != "impl"}), now_iso, None, prev.get(key))   # the binary of a Solana program is not hashed here
+        osec_hash = cache[ck].get("on_chain_hash")   # the binary is not downloaded here: its hash is the one OtterSec reports (30/10/2026), None when it has no record
+        out[key] = stamp_check(dict({"impl": program, "via": "program (verified build, OtterSec)"}, **{k: v for k, v in cache[ck].items() if k not in ("impl", "on_chain_hash")}, **({"code_hash_source": "OtterSec on_chain_hash"} if osec_hash else {})), now_iso, osec_hash, prev.get(key))
     chains_skipped = sorted({r["chain"] for r in so.get("results", []) if r.get("impl") and r["chain"] not in CHAIN_ID})
     rec = {"run_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "checked": len(out), "verified": sum(1 for v in out.values() if v.get("verified")), "unverified": sum(1 for v in out.values() if v.get("verified") is False), "not_answered": sum(1 for v in out.values() if v.get("verified") is None),
            "chains_not_on_sourcify": chains_skipped, "by_target": out, "what": "for every implementation behind a tracked proxy (second_opinion.json, impl): whether Sourcify holds a verified source on that chain, with match, name, compiler and date; for every Solana program behind a tracked account: whether OtterSec holds a verified build matching the deployed binary (source osec, repo_url); an upgrade to an unverified implementation is an upgrade nobody can read; written by scripts/impl_sources.py after every run"}

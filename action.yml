@@ -27,6 +27,10 @@ inputs:
     description: "true: a score file that cannot be read is a warning, not a failure (it is never a pass by itself)"
     required: false
     default: "false"
+  verify-signature:
+    description: "true: also verify signature.json of the Watch against the pinned key and check that each score file read is the one the signature lists (a run that is unsigned or signed by another key fails). Needs PyNaCl on the runner (pip install pynacl before this step): without it the check is incomplete (exit 3). Off by default."
+    required: false
+    default: "false"
 
 runs:
   using: composite
@@ -40,11 +44,13 @@ runs:
         IN_MIN: ${{ inputs.min-score }}
         IN_DROP: ${{ inputs.max-drop }}
         IN_UNREAD: ${{ inputs.allow-unread }}
+        IN_VERIFY: ${{ inputs.verify-signature }}
       run: |
         # the inputs travel by environment, never spliced into the command line
         args=(--min-score "${IN_MIN:-0}")
         [ -n "$IN_CHAIN" ] && args+=(--chain "$IN_CHAIN" --address "$IN_ADDRESS")
         [ -n "$IN_DROP" ] && args+=(--max-drop "$IN_DROP")
         [ "$IN_UNREAD" = "true" ] && args+=(--allow-unread)
+        [ "$IN_VERIFY" = "true" ] && args+=(--verify-signature)
         if [ -n "$IN_TARGETS" ]; then printf '%s\n' "$IN_TARGETS" > "$RUNNER_TEMP/authority-targets.txt"; args+=(--file "$RUNNER_TEMP/authority-targets.txt"); fi
         python3 "$GITHUB_ACTION_PATH/scripts/authority_check.py" "${args[@]}"

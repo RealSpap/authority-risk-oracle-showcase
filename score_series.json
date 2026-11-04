@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-11-04T06:32:18Z",
+ "run_utc": "2026-11-04T20:45:16Z",
  "targets": 202,
  "moves_recorded": 39,
  "series": {
@@ -1955,70 +1955,16 @@
  },
  "calibration": {
   "window_days": 14,
-  "actions": 21,
-  "under_40": 5,
+  "actions": 19,
+  "under_40": 8,
   "by_band": {
    "critical": 4,
-   "weak": 1,
-   "moderate": 12,
+   "weak": 4,
+   "moderate": 7,
    "decent": 3,
    "strong": 1
   },
   "list": [
-   {
-    "kind": "upgrade executed",
-    "key": "solana:JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
-    "t": "2026-10-21T07:03:23Z",
-    "via": "slot 459479624",
-    "tx": null,
-    "score_then": 47,
-    "band_then": "moderate"
-   },
-   {
-    "kind": "upgrade executed",
-    "key": "solana:Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
-    "t": "2026-10-21T07:03:23Z",
-    "via": "slot 459537822",
-    "tx": null,
-    "score_then": 51,
-    "band_then": "moderate"
-   },
-   {
-    "kind": "Squads proposal executed",
-    "key": "solana:Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
-    "t": "2026-10-21T08:30:34Z",
-    "via": "Squads v4 multisig CxnE\u2026unP1 (4-of-7, time lock 600 s), found by the independent reader (1 tracked program)",
-    "tx": "5w61mZgLbkkDwbvX7QAc7fmLwfEfhCjGLD5uHFshv4rD",
-    "score_then": 51,
-    "band_then": "moderate"
-   },
-   {
-    "kind": "Squads proposal executed",
-    "key": "solana:Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
-    "t": "2026-10-21T08:30:50Z",
-    "via": "Squads v4 multisig CxnE\u2026unP1 (4-of-7, time lock 600 s), found by the independent reader (1 tracked program)",
-    "tx": "8TianVJJ3xh1xWsmRsRTC6ZdzTMpM63NtkByeiuF1kAs",
-    "score_then": 51,
-    "band_then": "moderate"
-   },
-   {
-    "kind": "Squads proposal executed",
-    "key": "solana:USXyiSTsPEWz55pSK7sZoUL79ntoVGQbaTDT57tH6bx",
-    "t": "2026-10-21T09:56:48Z",
-    "via": "Squads v4 multisig AEb1\u2026dJGf (3-of-7, time lock 86400 s), found by the independent reader (1 tracked program)",
-    "tx": "GUjCmaFw3xSSpRBPi9xVXJapH2x9hRGZvRksUrHUBp5b",
-    "score_then": 35,
-    "band_then": "weak"
-   },
-   {
-    "kind": "upgrade executed",
-    "key": "solana:Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
-    "t": "2026-10-21T13:00:50Z",
-    "via": "slot 459556802",
-    "tx": null,
-    "score_then": 51,
-    "band_then": "moderate"
-   },
    {
     "kind": "upgrade executed",
     "key": "robinhood:0x83341f891f898cb5e0cacc8a70501bba83d9cecf",
@@ -2153,6 +2099,42 @@
     "tx": null,
     "score_then": 70,
     "band_then": "decent"
+   },
+   {
+    "kind": "Squads proposal executed",
+    "key": "solana:4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8",
+    "t": "2026-11-04T15:18:12Z",
+    "via": "Squads v4 multisig 7FCP\u2026mvHk (7-of-16, time lock 0 s), found by the independent reader (1 tracked program)",
+    "tx": "66gsynJhTjD2CQ88t9j6dUDKfwHsc85FSvxvCvJceiLz",
+    "score_then": 32,
+    "band_then": "weak"
+   },
+   {
+    "kind": "upgrade executed (Squads proposal)",
+    "key": "solana:4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8",
+    "t": "2026-11-04T16:02:21Z",
+    "via": "Squads v4 multisig 7FCP\u2026mvHk (7-of-16, time lock 0 s), found by the independent reader (1 tracked program)",
+    "tx": "EPuxo6r3L6u8vrbu1PRwhHu9RQ9NzxT55EqJg1V8ww4g",
+    "score_then": 32,
+    "band_then": "weak"
+   },
+   {
+    "kind": "admin changed (independent read)",
+    "key": "solana:4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8",
+    "t": "2026-11-04T20:18:29Z",
+    "via": null,
+    "tx": null,
+    "score_then": 32,
+    "band_then": "weak"
+   },
+   {
+    "kind": "upgrade executed",
+    "key": "solana:4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8",
+    "t": "2026-11-04T20:18:29Z",
+    "via": "slot 465361726",
+    "tx": null,
+    "score_then": 32,
+    "band_then": "weak"
    }
   ],
   "read_as": "every authority action the watch observed in the window (a timelock operation queued or executed against a tracked contract, an admin change read independently) and the composite score the contract carried at that moment. Small counts prove little; the file grows with every run and the chained log keeps every move"

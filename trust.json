@@ -1,33 +1,33 @@
 {
  "schemaVersion": 1,
- "generated_utc": "2026-11-05T07:24:19Z",
+ "generated_utc": "2026-11-05T20:29:10Z",
  "rule_version": "1",
  "rule": "(version 1). For each target, every reason that applies is listed with its dimension, a state and an effect. A dimension takes the worst state\nof its reasons. For the status, a reason with effect \"decides\" counts for the state it carries, one with effect \"degrades\" counts for PARTIAL at most, one with\neffect \"info\" for nothing. The status is the first line that matches, from the top:\n\n  UNAVAILABLE  a dimension is unavailable: the oracle holding the target was not read this run, or the trust computation itself failed (trust_not_computed).\n  DISPUTED     a dimension is disputed: an open public dispute, or the independent reader disagrees and nobody has reviewed it.\n  STALE        a dimension is stale: the on-chain score is stale, a pause or Safe-activity state has not been readable for 3 days or more (or for a time that\n               is not known), the Watch run itself is older than 8 hours, or the independent reader's file is from an earlier run than the Watch's.\n  UNVERIFIED   the independent reader did not read this target (no record, unreadable, or its input file missing) or there is nothing to read\n               independently (a native entity).\n  PARTIAL      something was checked and something was not: an incomplete reading (modules or admin members not all read, signers not classified, an admin\n               the reader cannot contradict: a contract it did not resolve, a program-derived address), a method that differs or is fixed by decision, an\n               alert not delivered, an unsigned run, a signing key that is not pinned (or cannot be compared), a broken journal, an input file that could not\n               be read or is from an earlier run; the reasons say what.\n  VERIFIED     none of the above. It means the checks listed here passed: not that the contract is safe, and not that the score is right.\n\nA reason whose effect is \"info\" is listed and sets its dimension's state, but never moves the status (a contract with no pause getter, money that no\nsource figures). The eight dimensions: reading, coverage, method, signature, journal, notification, financial_exposure, surveillance.\nUnknown is never ok: an input that could not be read puts its dimension in \"unverified\", not in \"ok\".\n\nWHEN IT IS COMPUTED. trust.json is recomputed only when the Watch runs, right after the files of the run are written. If the Watch stops, the file that stays\npublished keeps its statuses: the rule cannot see its own silence. A consumer must compare `generated_utc` to the present time (the Watch runs every 6 hours;\na file older than about 8 hours says nothing about now).",
  "rule_sha256": "9dcada2b4e3586203b448d3016da77e201ad174577447ce223c425e5dbbb79e6",
  "error": null,
  "targets": 202,
  "counts": {
-  "VERIFIED": 99,
-  "PARTIAL": 36,
+  "VERIFIED": 98,
+  "PARTIAL": 42,
   "STALE": 1,
-  "DISPUTED": 2,
-  "UNVERIFIED": 55,
-  "UNAVAILABLE": 9
+  "DISPUTED": 4,
+  "UNVERIFIED": 57,
+  "UNAVAILABLE": 0
  },
  "dimension_counts": {
   "reading": {
-   "ok": 119,
+   "ok": 118,
    "not_applicable": 0,
    "partial": 22,
-   "unverified": 58,
+   "unverified": 57,
    "stale": 1,
-   "disputed": 2,
+   "disputed": 4,
    "unavailable": 0
   },
   "coverage": {
-   "ok": 180,
+   "ok": 174,
    "not_applicable": 0,
-   "partial": 22,
+   "partial": 28,
    "unverified": 0,
    "stale": 0,
    "disputed": 0,
@@ -81,11 +81,11 @@
   "surveillance": {
    "ok": 180,
    "not_applicable": 0,
-   "partial": 13,
+   "partial": 22,
    "unverified": 0,
    "stale": 0,
    "disputed": 0,
-   "unavailable": 9
+   "unavailable": 0
   }
  },
  "run": {
@@ -93,7 +93,7 @@
   "signature_key": "pinned",
   "journal": "ok",
   "alert_channels": 1,
-  "watch_run_utc": "2026-11-05T06:44:27Z",
+  "watch_run_utc": "2026-11-05T19:56:18Z",
   "inputs_unread": []
  },
  "by_target": {
@@ -2673,16 +2673,16 @@
    "status": "DISPUTED",
    "reasons": [
     {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
      "code": "block_not_honoured",
      "dimension": "reading",
      "effect": "decides",
      "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
-     "code": "modules_unread",
-     "dimension": "reading",
-     "effect": "degrades",
-     "detail": "the modules of the Safe could not be read, or the reader did not say whether the list is complete (a module executes without the signatures)"
     },
     {
      "code": "pause_no_getter",
@@ -2705,7 +2705,7 @@
    ],
    "dimensions": {
     "reading": "disputed",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
@@ -2718,6 +2718,12 @@
   "hyperliquid:0x8888888c43cbb7e1c4132542e46831bffd866ed3": {
    "status": "UNVERIFIED",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
     {
      "code": "block_not_honoured",
      "dimension": "reading",
@@ -2751,7 +2757,7 @@
    ],
    "dimensions": {
     "reading": "unverified",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
@@ -2764,6 +2770,12 @@
   "hyperliquid:0x8888888192a4a0593c13532ba48449fc24c3beda": {
    "status": "UNVERIFIED",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
     {
      "code": "block_not_honoured",
      "dimension": "reading",
@@ -2791,7 +2803,7 @@
    ],
    "dimensions": {
     "reading": "unverified",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
@@ -2802,8 +2814,14 @@
    "retry_may_help": false
   },
   "hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109": {
-   "status": "UNVERIFIED",
+   "status": "DISPUTED",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
     {
      "code": "block_not_honoured",
      "dimension": "reading",
@@ -2811,16 +2829,16 @@
      "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
     },
     {
-     "code": "independent_read_unreadable",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "holder probes not all answered (RPC)"
-    },
-    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "reader_disagrees",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the score says one key does everything (10), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisi"
     },
     {
      "code": "side_roles_not_covered",
@@ -2830,8 +2848,8 @@
     }
    ],
    "dimensions": {
-    "reading": "unverified",
-    "coverage": "ok",
+    "reading": "disputed",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
@@ -3045,22 +3063,28 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
      "code": "block_not_honoured",
      "dimension": "reading",
      "effect": "decides",
      "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
     },
     {
-     "code": "independent_read_unreadable",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "holder probes not all answered (RPC)"
-    },
-    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "reader_cannot_contradict",
+     "dimension": "reading",
+     "effect": "degrades",
+     "detail": "the admin is a contract the reader did not resolve to a key, a Safe or a timelock: its agreement with the score checks nothing"
     },
     {
      "code": "side_roles_not_covered",
@@ -3071,7 +3095,7 @@
    ],
    "dimensions": {
     "reading": "unverified",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
@@ -3084,6 +3108,12 @@
   "hyperliquid:0xffaa4a3d97fe9107cef8a3f48c069f577ff76cc1": {
    "status": "UNVERIFIED",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
     {
      "code": "block_not_honoured",
      "dimension": "reading",
@@ -3111,7 +3141,7 @@
    ],
    "dimensions": {
     "reading": "unverified",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
@@ -3122,7 +3152,7 @@
    "retry_may_help": false
   },
   "monad:0xd691b0afed67f96cec28ab6308cbe5b2c103b7e9": {
-   "status": "UNAVAILABLE",
+   "status": "UNVERIFIED",
    "reasons": [
     {
      "code": "admin_events_unread",
@@ -3143,10 +3173,10 @@
      "detail": "no source figures the money behind this contract"
     },
     {
-     "code": "oracle_not_read",
+     "code": "oracle_self_watch_unread",
      "dimension": "surveillance",
-     "effect": "decides",
-     "detail": "the oracle monad was not read this run"
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
     },
     {
      "code": "scan_gap",
@@ -3169,12 +3199,12 @@
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "unverified",
-    "surveillance": "unavailable"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
   "monad:0x188d586ddcf52439676ca21a244753fa19f9ea8e": {
-   "status": "UNAVAILABLE",
+   "status": "PARTIAL",
    "reasons": [
     {
      "code": "admin_events_unread",
@@ -3183,10 +3213,10 @@
      "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
     },
     {
-     "code": "oracle_not_read",
+     "code": "oracle_self_watch_unread",
      "dimension": "surveillance",
-     "effect": "decides",
-     "detail": "the oracle monad was not read this run"
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
     },
     {
      "code": "pause_no_getter",
@@ -3221,12 +3251,12 @@
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "unavailable"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
   "monad:0x36878c6fca7e0e8a88f90dc410cfbbca5b695c95": {
-   "status": "UNAVAILABLE",
+   "status": "PARTIAL",
    "reasons": [
     {
      "code": "admin_events_unread",
@@ -3235,10 +3265,10 @@
      "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
     },
     {
-     "code": "oracle_not_read",
+     "code": "oracle_self_watch_unread",
      "dimension": "surveillance",
-     "effect": "decides",
-     "detail": "the oracle monad was not read this run"
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
     },
     {
      "code": "reader_cannot_contradict",
@@ -3261,12 +3291,12 @@
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "unavailable"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
   "monad:0xd651346d7c789536ebf06dc72ae3c8502cd695cc": {
-   "status": "UNAVAILABLE",
+   "status": "PARTIAL",
    "reasons": [
     {
      "code": "admin_events_unread",
@@ -3275,10 +3305,10 @@
      "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
     },
     {
-     "code": "oracle_not_read",
+     "code": "oracle_self_watch_unread",
      "dimension": "surveillance",
-     "effect": "decides",
-     "detail": "the oracle monad was not read this run"
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
     },
     {
      "code": "pause_no_getter",
@@ -3307,12 +3337,12 @@
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "unavailable"
+    "surveillance": "partial"
    },
    "retry_may_help": true
   },
   "monad:0x32841a8511d5c2c5b253f45668780b99139e476d": {
-   "status": "UNAVAILABLE",
+   "status": "PARTIAL",
    "reasons": [
     {
      "code": "admin_events_unread",
@@ -3321,10 +3351,10 @@
      "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
     },
     {
-     "code": "oracle_not_read",
+     "code": "oracle_self_watch_unread",
      "dimension": "surveillance",
-     "effect": "decides",
-     "detail": "the oracle monad was not read this run"
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
     },
     {
      "code": "pause_no_getter",
@@ -3347,12 +3377,12 @@
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "unavailable"
+    "surveillance": "partial"
    },
    "retry_may_help": true
   },
   "monad:0x8271e06e5887fe5ba05234f5315c19f3ec90e8ad": {
-   "status": "UNAVAILABLE",
+   "status": "PARTIAL",
    "reasons": [
     {
      "code": "admin_events_unread",
@@ -3361,10 +3391,10 @@
      "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
     },
     {
-     "code": "oracle_not_read",
+     "code": "oracle_self_watch_unread",
      "dimension": "surveillance",
-     "effect": "decides",
-     "detail": "the oracle monad was not read this run"
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
     },
     {
      "code": "pause_no_getter",
@@ -3393,12 +3423,12 @@
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "unavailable"
+    "surveillance": "partial"
    },
    "retry_may_help": true
   },
   "monad:0xad663ac84052b52be4ed1b27ba416505e84a00bf": {
-   "status": "UNAVAILABLE",
+   "status": "UNVERIFIED",
    "reasons": [
     {
      "code": "admin_events_unread",
@@ -3413,10 +3443,10 @@
      "detail": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
     },
     {
-     "code": "oracle_not_read",
+     "code": "oracle_self_watch_unread",
      "dimension": "surveillance",
-     "effect": "decides",
-     "detail": "the oracle monad was not read this run"
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
     },
     {
      "code": "pause_no_getter",
@@ -3445,12 +3475,12 @@
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "unavailable"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
   "monad:0x34793fb9935f7bb5e5ae920fb963f39063e7a615": {
-   "status": "UNAVAILABLE",
+   "status": "PARTIAL",
    "reasons": [
     {
      "code": "admin_events_unread",
@@ -3459,10 +3489,10 @@
      "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
     },
     {
-     "code": "oracle_not_read",
+     "code": "oracle_self_watch_unread",
      "dimension": "surveillance",
-     "effect": "decides",
-     "detail": "the oracle monad was not read this run"
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
     },
     {
      "code": "pause_no_getter",
@@ -3491,12 +3521,12 @@
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "unavailable"
+    "surveillance": "partial"
    },
    "retry_may_help": true
   },
   "monad:0xba4dd672062de8feedb665dd4410658864483f1e": {
-   "status": "UNAVAILABLE",
+   "status": "UNVERIFIED",
    "reasons": [
     {
      "code": "admin_events_unread",
@@ -3511,10 +3541,10 @@
      "detail": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
     },
     {
-     "code": "oracle_not_read",
+     "code": "oracle_self_watch_unread",
      "dimension": "surveillance",
-     "effect": "decides",
-     "detail": "the oracle monad was not read this run"
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
     },
     {
      "code": "pause_no_getter",
@@ -3543,7 +3573,7 @@
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "unavailable"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -5869,17 +5899,23 @@
    "retry_may_help": false
   },
   "solana:GKnHiWh3RRrE1zsNzWxRkomymHc374TvJPSTv2wPeYdB": {
-   "status": "VERIFIED",
+   "status": "DISPUTED",
    "reasons": [
     {
      "code": "money_unknown",
      "dimension": "financial_exposure",
      "effect": "info",
      "detail": "no source figures the money behind this contract"
+    },
+    {
+     "code": "reader_disagrees",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the timelock score says no delay (0), the Squads multisig enforces a native time lock of 24 h"
     }
    ],
    "dimensions": {
-    "reading": "ok",
+    "reading": "disputed",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",

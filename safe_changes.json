@@ -5,30 +5,30 @@
    "ecosystem": "robinhood",
    "safes": 25,
    "events": [],
-   "control": 44,
+   "control": 45,
    "status": "ok",
-   "fromBlock": 100723475,
-   "toBlock": 106556254,
+   "fromBlock": 101175793,
+   "toBlock": 107014535,
    "days_read": 7
   },
   {
    "ecosystem": "ethereum-l1",
    "safes": 15,
    "events": [],
-   "control": 32,
+   "control": 33,
    "status": "ok",
-   "fromBlock": 26296845,
-   "toBlock": 26347080,
+   "fromBlock": 26300754,
+   "toBlock": 26350987,
    "days_read": 7
   },
   {
    "ecosystem": "arbitrum",
    "safes": 14,
    "events": [],
-   "control": 19,
+   "control": 20,
    "status": "ok",
-   "fromBlock": 519290879,
-   "toBlock": 521408538,
+   "fromBlock": 519460577,
+   "toBlock": 521582448,
    "days_read": 7
   },
   {
@@ -37,8 +37,8 @@
    "events": [],
    "control": 14,
    "status": "ok",
-   "fromBlock": 53234437,
-   "toBlock": 53536837,
+   "fromBlock": 53257964,
+   "toBlock": 53598493,
    "days_read": 7
   },
   {
@@ -46,11 +46,11 @@
    "safes": 4,
    "events": [],
    "control": 0,
-   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 50 execution(s) from other Safes on the window's tail)",
-   "fromBlock": 46413667,
-   "toBlock": 47516119,
+   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 40 execution(s) from other Safes on the window's tail)",
+   "fromBlock": 46499656,
+   "toBlock": 47602117,
    "days_read": 7,
-   "control_witness": 50
+   "control_witness": 40
   },
   {
    "ecosystem": "plasma",
@@ -58,29 +58,31 @@
    "events": [],
    "control": 12,
    "status": "ok",
-   "fromBlock": 36316883,
-   "toBlock": 36919844,
+   "fromBlock": 36363538,
+   "toBlock": 36966862,
    "days_read": 7
   },
   {
    "ecosystem": "monad",
    "safes": 13,
    "events": [],
-   "control": 1,
-   "status": "ok",
-   "fromBlock": 119465411,
-   "toBlock": 119550973,
-   "days_read": 0.3
+   "control": 0,
+   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 3 execution(s) from other Safes on the window's tail)",
+   "fromBlock": 119620360,
+   "toBlock": 119705076,
+   "days_read": 0.3,
+   "control_witness": 3
   },
   {
    "ecosystem": "hyperliquid",
    "safes": 5,
    "events": [],
-   "control": 2,
-   "status": "ok",
-   "fromBlock": 50169808,
-   "toBlock": 50433328,
-   "days_read": 3.0
+   "control": 0,
+   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 12 execution(s) from other Safes on the window's tail)",
+   "fromBlock": 50217671,
+   "toBlock": 50481190,
+   "days_read": 3.0,
+   "control_witness": 12
   }
  ]
 }

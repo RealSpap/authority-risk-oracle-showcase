@@ -1,6 +1,6 @@
 # HELP aro_run_timestamp_seconds UTC time of the last Watch run (Unix seconds)
 # TYPE aro_run_timestamp_seconds gauge
-aro_run_timestamp_seconds 1793861067
+aro_run_timestamp_seconds 1793908578
 # HELP aro_oracle_read 1 when the oracle was read at the last run, 0 when it was not (its targets are then unknown, not zero)
 # TYPE aro_oracle_read gauge
 aro_oracle_read{oracle="Robinhood Chain"} 1
@@ -9,7 +9,7 @@ aro_oracle_read{oracle="Arbitrum (Sepolia)"} 1
 aro_oracle_read{oracle="Base (Sepolia)"} 1
 aro_oracle_read{oracle="Tempo (Moderato)"} 1
 aro_oracle_read{oracle="Plasma"} 1
-aro_oracle_read{oracle="Monad"} 0
+aro_oracle_read{oracle="Monad"} 1
 aro_oracle_read{oracle="Hyperliquid (HyperEVM)"} 1
 aro_oracle_read{oracle="Solana (Devnet)"} 1
 # HELP aro_oracle_targets Targets the oracle tracks
@@ -20,6 +20,7 @@ aro_oracle_targets{oracle="Arbitrum (Sepolia)"} 13
 aro_oracle_targets{oracle="Base (Sepolia)"} 13
 aro_oracle_targets{oracle="Tempo (Moderato)"} 14
 aro_oracle_targets{oracle="Plasma"} 9
+aro_oracle_targets{oracle="Monad"} 9
 aro_oracle_targets{oracle="Hyperliquid (HyperEVM)"} 16
 aro_oracle_targets{oracle="Solana (Devnet)"} 26
 # HELP aro_oracle_stale_targets Targets of the oracle whose score is older than its maxStaleness
@@ -30,11 +31,12 @@ aro_oracle_stale_targets{oracle="Arbitrum (Sepolia)"} 0
 aro_oracle_stale_targets{oracle="Base (Sepolia)"} 0
 aro_oracle_stale_targets{oracle="Tempo (Moderato)"} 0
 aro_oracle_stale_targets{oracle="Plasma"} 0
+aro_oracle_stale_targets{oracle="Monad"} 0
 aro_oracle_stale_targets{oracle="Hyperliquid (HyperEVM)"} 0
 aro_oracle_stale_targets{oracle="Solana (Devnet)"} 0
 # HELP aro_targets Targets tracked across the oracles that were read
 # TYPE aro_targets gauge
-aro_targets 193
+aro_targets 202
 # HELP aro_targets_stale Targets whose score is stale
 # TYPE aro_targets_stale gauge
 aro_targets_stale 1
@@ -52,14 +54,14 @@ aro_signed 1
 # HELP aro_alerts_active Alerts firing now, by severity
 # TYPE aro_alerts_active gauge
 aro_alerts_active{severity="high"} 1
-aro_alerts_active{severity="medium"} 2
+aro_alerts_active{severity="medium"} 4
 aro_alerts_active{severity="info"} 0
 # HELP aro_second_opinion Targets by verdict of the independent reader
 # TYPE aro_second_opinion gauge
-aro_second_opinion{result="agree"} 133
-aro_second_opinion{result="disagree"} 2
-aro_second_opinion{result="corroborated"} 10
-aro_second_opinion{result="unreadable"} 41
+aro_second_opinion{result="agree"} 134
+aro_second_opinion{result="disagree"} 4
+aro_second_opinion{result="corroborated"} 9
+aro_second_opinion{result="unreadable"} 39
 aro_second_opinion{result="native"} 16
 # HELP aro_contracts_paused Tracked contracts that answer paused() true now
 # TYPE aro_contracts_paused gauge

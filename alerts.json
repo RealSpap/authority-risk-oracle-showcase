@@ -1,6 +1,6 @@
 {
- "evaluated_utc": "2026-11-05T07:15:54Z",
- "run_utc": "2026-11-05T06:44:27Z",
+ "evaluated_utc": "2026-11-05T20:19:51Z",
+ "run_utc": "2026-11-05T19:56:18Z",
  "rules": [
   "score dropped by 10 or more",
   "score fell under 40",
@@ -34,30 +34,64 @@
    "title": "Kinetiq kmHYPE",
    "score": 4,
    "delta": 0,
-   "tvl_usd": 40950070.974043615,
+   "tvl_usd": 38353409.589775056,
    "first_seen": "2026-11-02T06:16:09Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 68790035,
-    "oracle_read_at": 1793861328,
+    "oracle_block": 68838418,
+    "oracle_read_at": 1793909032,
     "composite": 4,
     "previous_composite": 4,
     "score_last_updated": 1793654209,
     "second_opinion": {
      "kind": "safe",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 50431886,
-     "block_end": null,
-     "read_gap_seconds": 606,
-     "since_score_push_seconds": 207725
+     "block_start": 50480331,
+     "block_end": 50480338,
+     "read_gap_seconds": 544,
+     "since_score_push_seconds": 255367
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec --rpc-url https://998.rpc.thirdweb.com --block 68790035",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec --rpc-url https://998.rpc.thirdweb.com --block 68838418",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-04T19:44:05Z",
+   "previous_run": "2026-11-05T06:44:27Z",
    "notified": true
+  },
+  {
+   "rule": "the independent reader disagrees with the admin-key score, with money behind it",
+   "severity": "medium",
+   "chain": "Hyperliquid",
+   "target": "0x393d0b87ed38fc779fd9611144ae649ba6082109",
+   "title": "Kinetiq kHYPE",
+   "score": 4,
+   "delta": 0,
+   "tvl_usd": 812612408.5558356,
+   "first_seen": "2026-11-05T20:19:51Z",
+   "new": true,
+   "evidence": [],
+   "reading": {
+    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
+    "oracle_block": 68838418,
+    "oracle_read_at": 1793909032,
+    "composite": 4,
+    "previous_composite": 4,
+    "score_last_updated": 1793654209,
+    "second_opinion": {
+     "kind": "safe",
+     "path": "EIP-1967 admin -> ProxyAdmin owner()",
+     "block_start": 50480331,
+     "block_end": 50480338,
+     "read_gap_seconds": 554,
+     "since_score_push_seconds": 255377
+    },
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x393d0b87ed38fc779fd9611144ae649ba6082109 --rpc-url https://998.rpc.thirdweb.com --block 68838418",
+    "reproduce_exact": false
+   },
+   "previous_run": "2026-11-05T06:44:27Z",
+   "notified": true,
+   "delivered": []
   },
   {
    "rule": "an admin transfer is in flight: a new owner or admin is designated and has not accepted yet (pendingOwner / pendingAdmin)",
@@ -73,24 +107,58 @@
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 148835342,
-    "oracle_read_at": 1793861072,
+    "oracle_block": 149140138,
+    "oracle_read_at": 1793908587,
     "composite": 1,
     "previous_composite": 1,
     "score_last_updated": 1793654542,
     "second_opinion": {
      "kind": "eoa",
      "path": "owner()",
-     "block_start": 106553148,
-     "block_end": 106553604,
-     "read_gap_seconds": 1672,
-     "since_score_push_seconds": 208202
+     "block_start": 107010466,
+     "block_end": 107011000,
+     "read_gap_seconds": 1123,
+     "since_score_push_seconds": 255168
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 148835342",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 149140138",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-04T19:44:05Z",
+   "previous_run": "2026-11-05T06:44:27Z",
    "notified": true
+  },
+  {
+   "rule": "the independent reader disagrees with the admin-key score, with money behind it",
+   "severity": "medium",
+   "chain": "Solana",
+   "target": "GKnHiWh3RRrE1zsNzWxRkomymHc374TvJPSTv2wPeYdB",
+   "title": "Kamino Liquidity",
+   "score": 54,
+   "delta": 0,
+   "tvl_usd": 65592110.92849209,
+   "first_seen": "2026-11-05T20:19:51Z",
+   "new": true,
+   "evidence": [],
+   "reading": {
+    "oracle": "5VhiTAGLEViGgajhxPbzdWz7WLUAiRy42DY6qi6tYh4W",
+    "oracle_block": null,
+    "oracle_read_at": 1793909033,
+    "composite": 54,
+    "previous_composite": 54,
+    "score_last_updated": 1793656384,
+    "second_opinion": {
+     "kind": "squads",
+     "path": "account owned by program 6LtLpnUF\u2026 -> program -> ProgramData 8n11WG\u2026 -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly) -> Squads v4 vault 0 of multisig E7994UpSGhSpbpnuSepPXHBuMy3eRvHJL36DjTs1kb2b",
+     "block_start": null,
+     "block_end": null,
+     "read_gap_seconds": null,
+     "since_score_push_seconds": null
+    },
+    "reproduce": null,
+    "reproduce_exact": false
+   },
+   "previous_run": "2026-11-05T06:44:27Z",
+   "notified": true,
+   "delivered": []
   },
   {
    "rule": "a queued change against this contract is ready to execute now",
@@ -120,7 +188,7 @@
    "reading": {
     "oracle": "5VhiTAGLEViGgajhxPbzdWz7WLUAiRy42DY6qi6tYh4W",
     "oracle_block": null,
-    "oracle_read_at": 1793861328,
+    "oracle_read_at": 1793909033,
     "composite": 70,
     "previous_composite": 70,
     "score_last_updated": 1793656415,
@@ -135,7 +203,7 @@
     "reproduce": null,
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-04T19:44:05Z",
+   "previous_run": "2026-11-05T06:44:27Z",
    "notified": true
   }
  ],
@@ -148,8 +216,8 @@
    "target": "0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d",
    "title": "0xfe7e\u20269b0d",
    "first_seen": "2026-10-10T21:14:27Z",
-   "last_seen": "2026-11-05T07:15:54Z",
-   "times": 107,
+   "last_seen": "2026-11-05T20:19:51Z",
+   "times": 108,
    "score": 1,
    "delta": 0,
    "tvl_usd": null
@@ -162,11 +230,11 @@
    "target": "0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec",
    "title": "Kinetiq kmHYPE",
    "first_seen": "2026-11-02T06:16:09Z",
-   "last_seen": "2026-11-05T07:15:54Z",
-   "times": 103,
+   "last_seen": "2026-11-05T20:19:51Z",
+   "times": 104,
    "score": 4,
    "delta": 0,
-   "tvl_usd": 40950070.974043615
+   "tvl_usd": 38353409.589775056
   },
   {
    "key": "a queued change against this contract is ready to execute now|solana:1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78",
@@ -176,11 +244,39 @@
    "target": "1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78",
    "title": "1oopBo\u2026kF78",
    "first_seen": "2026-11-04T06:32:18Z",
-   "last_seen": "2026-11-05T07:15:54Z",
-   "times": 16,
+   "last_seen": "2026-11-05T20:19:51Z",
+   "times": 17,
    "score": 70,
    "delta": 0,
    "tvl_usd": null
+  },
+  {
+   "key": "the independent reader disagrees with the admin-key score, with money behind it|solana:GKnHiWh3RRrE1zsNzWxRkomymHc374TvJPSTv2wPeYdB",
+   "rule": "the independent reader disagrees with the admin-key score, with money behind it",
+   "severity": "medium",
+   "chain": "Solana",
+   "target": "GKnHiWh3RRrE1zsNzWxRkomymHc374TvJPSTv2wPeYdB",
+   "title": "Kamino Liquidity",
+   "first_seen": "2026-11-05T20:19:51Z",
+   "last_seen": "2026-11-05T20:19:51Z",
+   "times": 107,
+   "score": 54,
+   "delta": 0,
+   "tvl_usd": 65592110.92849209
+  },
+  {
+   "key": "the independent reader disagrees with the admin-key score, with money behind it|hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109",
+   "rule": "the independent reader disagrees with the admin-key score, with money behind it",
+   "severity": "medium",
+   "chain": "Hyperliquid",
+   "target": "0x393d0b87ed38fc779fd9611144ae649ba6082109",
+   "title": "Kinetiq kHYPE",
+   "first_seen": "2026-11-05T20:19:51Z",
+   "last_seen": "2026-11-05T20:19:51Z",
+   "times": 97,
+   "score": 4,
+   "delta": 0,
+   "tvl_usd": 812612408.5558356
   },
   {
    "key": "the independent reader disagrees with the admin-key score, with money behind it|plasma:0x6695c0f8706c5ace3bdf8995073179cca47926dc",
@@ -211,20 +307,6 @@
    "tvl_usd": 63597661.71531778
   },
   {
-   "key": "the independent reader disagrees with the admin-key score, with money behind it|solana:GKnHiWh3RRrE1zsNzWxRkomymHc374TvJPSTv2wPeYdB",
-   "rule": "the independent reader disagrees with the admin-key score, with money behind it",
-   "severity": "medium",
-   "chain": "Solana",
-   "target": "GKnHiWh3RRrE1zsNzWxRkomymHc374TvJPSTv2wPeYdB",
-   "title": "Kamino Liquidity",
-   "first_seen": "2026-10-10T21:14:27Z",
-   "last_seen": "2026-11-04T20:45:17Z",
-   "times": 106,
-   "score": 54,
-   "delta": 0,
-   "tvl_usd": 67008462.03752164
-  },
-  {
    "key": "the independent reader disagrees with the admin-key score, with money behind it|solana:H4ND9aYttUVLFmNypZqLjZ52FYiGvdEB45GmwNoKEjTj",
    "rule": "the independent reader disagrees with the admin-key score, with money behind it",
    "severity": "medium",
@@ -251,20 +333,6 @@
    "score": 2,
    "delta": 0,
    "tvl_usd": 290211760.72403264
-  },
-  {
-   "key": "the independent reader disagrees with the admin-key score, with money behind it|hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109",
-   "rule": "the independent reader disagrees with the admin-key score, with money behind it",
-   "severity": "medium",
-   "chain": "Hyperliquid",
-   "target": "0x393d0b87ed38fc779fd9611144ae649ba6082109",
-   "title": "Kinetiq kHYPE",
-   "first_seen": "2026-11-03T22:17:44Z",
-   "last_seen": "2026-11-04T20:45:17Z",
-   "times": 96,
-   "score": 4,
-   "delta": 0,
-   "tvl_usd": 882953523.0634149
   },
   {
    "key": "an upgrade was executed: the implementation behind this contract changed since the previous run|solana:4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8",

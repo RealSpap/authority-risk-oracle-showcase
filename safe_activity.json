@@ -1,51 +1,50 @@
 {
- "generated_utc": "2026-11-04T20:41:51Z",
+ "generated_utc": "2026-11-05T07:13:26Z",
  "wake_days": 14,
  "safes": 42,
  "read": 42,
- "woke": [
-  "ethereum-l1:0x7bb4\u2026595c"
- ],
+ "woke": [],
  "changes": [
   {
-   "delta": 2,
-   "idle_days": 5.6,
-   "woke": false,
-   "safe": "ethereum-l1:0x3b0a\u20261862",
-   "governs": [
-    "ethereum-l1:0x2cc440b721d2cafd6d64908d6d8c4acc57f8afc3"
-   ],
-   "previous_run": "2026-11-04T06:30:45Z"
-  },
-  {
    "delta": 1,
-   "idle_days": 15.8,
-   "woke": true,
-   "safe": "ethereum-l1:0x7bb4\u2026595c",
-   "governs": [
-    "ethereum-l1:0x49048044d57e1c92a77f79988d21fa8faf74e97e"
-   ],
-   "previous_run": "2026-11-04T06:30:45Z"
-  },
-  {
-   "delta": 2,
-   "idle_days": 5.6,
+   "idle_days": 0.4,
    "woke": false,
    "safe": "ethereum-l1:0xfa77\u20266a66",
    "governs": [
     "ethereum-l1:0xc5f0f7b66764f6ec8c8dff7ba683102295e16409"
    ],
-   "previous_run": "2026-11-04T06:30:45Z"
+   "previous_run": "2026-11-04T20:41:51Z"
   },
   {
-   "delta": 1,
-   "idle_days": 4.9,
+   "delta": 14,
+   "idle_days": 0.4,
    "woke": false,
    "safe": "robinhood:0x0eea\u2026dfd8",
    "governs": [
     "robinhood:0x1ac9db4a2608ba45d6127b1737949b51bb54b7f3"
    ],
-   "previous_run": "2026-11-04T06:30:45Z"
+   "previous_run": "2026-11-04T20:41:51Z"
+  },
+  {
+   "delta": 8,
+   "idle_days": 4.7,
+   "woke": false,
+   "safe": "robinhood:0x20d6\u2026be1a",
+   "governs": [
+    "robinhood:0x83341f891f898cb5e0cacc8a70501bba83d9cecf",
+    "robinhood:0xa203a21dccb461e415daa342e8e635b6cee0ccb3"
+   ],
+   "previous_run": "2026-11-04T20:41:51Z"
+  },
+  {
+   "delta": 2,
+   "idle_days": 2.6,
+   "woke": false,
+   "safe": "robinhood:0xfa20\u20266047",
+   "governs": [
+    "robinhood:0x0bfbcf9fa4f9c56b0f40a671ad40e0805a091865"
+   ],
+   "previous_run": "2026-11-04T20:41:51Z"
   }
  ],
  "never_executed": [
@@ -209,10 +208,10 @@
    "never_executed": false
   },
   "ethereum-l1:701af90d53a786de": {
-   "nonce": 2195,
+   "nonce": 2196,
    "observed_since": "2026-10-11T06:47:22Z",
-   "idle_since": "2026-11-04T20:41:51Z",
-   "last_moved": "2026-11-04T20:41:51Z",
+   "idle_since": "2026-11-05T07:13:26Z",
+   "last_moved": "2026-11-05T07:13:26Z",
    "governs": [
     "ethereum-l1:0xc5f0f7b66764f6ec8c8dff7ba683102295e16409"
    ],
@@ -224,7 +223,6 @@
    "observed_since": "2026-11-01T22:15:04Z",
    "idle_since": "2026-11-01T22:15:04Z",
    "governs": [
-    "hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109",
     "hyperliquid:0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec"
    ],
    "safe": "hyperliquid:0x18a8\u2026f8f1",
@@ -305,10 +303,10 @@
    "never_executed": false
   },
   "robinhood:e8bf689e4f96ba54": {
-   "nonce": 492,
+   "nonce": 506,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-11-04T20:41:51Z",
-   "last_moved": "2026-11-04T20:41:51Z",
+   "idle_since": "2026-11-05T07:13:26Z",
+   "last_moved": "2026-11-05T07:13:26Z",
    "governs": [
     "robinhood:0x1ac9db4a2608ba45d6127b1737949b51bb54b7f3"
    ],
@@ -316,10 +314,10 @@
    "never_executed": false
   },
   "robinhood:3cb8c359ff7f85fd": {
-   "nonce": 645,
+   "nonce": 653,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-10-31T12:39:00Z",
-   "last_moved": "2026-10-31T12:39:00Z",
+   "idle_since": "2026-11-05T07:13:26Z",
+   "last_moved": "2026-11-05T07:13:26Z",
    "governs": [
     "robinhood:0x83341f891f898cb5e0cacc8a70501bba83d9cecf",
     "robinhood:0xa203a21dccb461e415daa342e8e635b6cee0ccb3"
@@ -463,10 +461,10 @@
    "never_executed": false
   },
   "robinhood:d2822dd3a9cf19ee": {
-   "nonce": 51,
+   "nonce": 53,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-11-02T16:03:14Z",
-   "last_moved": "2026-11-02T16:03:14Z",
+   "idle_since": "2026-11-05T07:13:26Z",
+   "last_moved": "2026-11-05T07:13:26Z",
    "governs": [
     "robinhood:0x0bfbcf9fa4f9c56b0f40a671ad40e0805a091865"
    ],

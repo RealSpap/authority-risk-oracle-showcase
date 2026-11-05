@@ -259,6 +259,11 @@
      }
     }
    }
+  },
+  "channels_configured": {
+   "type": "integer",
+   "minimum": 0,
+   "description": "how many chat channels existed in the run that wrote this file; with 0, `notified` is true for every alert because nobody was there to tell"
   }
  }
 }

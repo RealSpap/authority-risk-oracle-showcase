@@ -12,7 +12,10 @@
    "pending": [],
    "recent": [],
    "delay": 172800,
-   "grace": 1209600
+   "grace": 1209600,
+   "window_blocks": 745200,
+   "window_days_est": 103.5,
+   "window_note": "an operation queued before this window is not seen"
   },
   {
    "name": "Compound Governance Timelock",
@@ -52,6 +55,7 @@
      "signature": "sendMessage(address,bytes,uint32)",
      "calls": 1,
      "still_queued": false,
+     "final_state": "executed",
      "queued_at": 1792850999,
      "decoded": "cross-chain message"
     },
@@ -67,6 +71,7 @@
      "signature": "setProposalGuardian((address,uint96))",
      "calls": 1,
      "still_queued": false,
+     "final_state": "cancelled",
      "queued_at": 1793447519,
      "decoded": "authority change"
     },
@@ -82,12 +87,16 @@
      "signature": "sendMessage(address,bytes,uint32)",
      "calls": 1,
      "still_queued": true,
+     "final_state": null,
      "queued_at": 1793742587,
      "decoded": "cross-chain message"
     }
    ],
    "delay": 172800,
-   "grace": 1209600
+   "grace": 1209600,
+   "window_blocks": 745200,
+   "window_days_est": 103.5,
+   "window_note": "an operation queued before this window is not seen"
   },
   {
    "name": "Ethena Timelock",
@@ -111,11 +120,15 @@
      "signature": "acceptAdmin()",
      "calls": 16,
      "still_queued": false,
+     "final_state": "executed",
      "queued_at": 1793201663,
      "decoded": "authority change"
     }
    ],
-   "delay": 86400
+   "delay": 86400,
+   "window_blocks": 745200,
+   "window_days_est": 103.5,
+   "window_note": "an operation queued before this window is not seen"
   },
   {
    "name": "Arbitrum L1 Timelock",
@@ -127,7 +140,10 @@
    "latest_queued": 1789757831,
    "pending": [],
    "recent": [],
-   "delay": 259200
+   "delay": 259200,
+   "window_blocks": 745200,
+   "window_days_est": 103.5,
+   "window_note": "an operation queued before this window is not seen"
   },
   {
    "name": "Arbitrum L2 Core Governor Timelock",
@@ -139,7 +155,10 @@
    "latest_queued": 1788508690,
    "pending": [],
    "recent": [],
-   "delay": 691200
+   "delay": 691200,
+   "window_blocks": 35769600,
+   "window_days_est": 103.5,
+   "window_note": "an operation queued before this window is not seen"
   },
   {
    "name": "Arbitrum L2 Treasury Timelock",
@@ -151,7 +170,10 @@
    "latest_queued": null,
    "pending": [],
    "recent": [],
-   "delay": 259200
+   "delay": 259200,
+   "window_blocks": 35769600,
+   "window_days_est": 103.5,
+   "window_note": "an operation queued before this window is not seen"
   },
   {
    "name": "arbitrum timelock 0x3fb4\u2026f88a, found by the independent reader (1 tracked contract)",
@@ -167,7 +189,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 4304626,
+   "window_blocks": 3827848,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -187,7 +209,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 4304626,
+   "window_blocks": 3827848,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -207,7 +229,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 4304626,
+   "window_blocks": 3827848,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -310,7 +332,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/mainnet",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 100398,
+   "window_blocks": 100699,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -348,7 +370,7 @@
    "log_rpc": "https://rpc.plasma.to",
    "delay": 172800,
    "window_blocks": 600000,
-   "window_days_est": 7.1,
+   "window_days_est": 6.9,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x6695c0f8706c5ace3bdf8995073179cca47926dc"
@@ -368,7 +390,7 @@
    "log_rpc": "https://rpc.plasma.to",
    "delay": 86400,
    "window_blocks": 600000,
-   "window_days_est": 7.1,
+   "window_days_est": 6.9,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x52aa899454998be5b000ad077a46bbe360f4e497"
@@ -388,7 +410,7 @@
    "log_rpc": "https://rpc.plasma.to",
    "delay": 172800,
    "window_blocks": 600000,
-   "window_days_est": 7.1,
+   "window_days_est": 6.9,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x9b3ceb22cab2f1b9ace4cd3132c8a123552eda2c"
@@ -424,7 +446,7 @@
    "log_rpc": "https://rpc.plasma.to",
    "delay": 86400,
    "window_blocks": 600000,
-   "window_days_est": 7.1,
+   "window_days_est": 6.9,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34"
@@ -444,7 +466,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 0,
    "window_blocks": 3000000,
-   "window_days_est": 3.6,
+   "window_days_est": 3.8,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62"
@@ -464,7 +486,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 86400,
    "window_blocks": 3000000,
-   "window_days_est": 3.6,
+   "window_days_est": 3.7,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x14b107cf534239c59571b066cb6497a321da897c"
@@ -711,7 +733,7 @@
    "active": [
     {
      "index": 131,
-     "approvals": 3,
+     "approvals": 4,
      "rejections": 0,
      "since": 1793805569,
      "account": "GiDrhFAJGHpfyfTtJexnJ61tboqTdJdSANTBGehERC1S"
@@ -1231,7 +1253,7 @@
      "selector": null,
      "signature": "Squads proposal #65: Upgrade of program jupnw4B6Eqs7ft6rxpzYLJZYSnrpRgPcr589n5Kv4oc (not the tracked program)",
      "ready_at": 1793834316,
-     "state": "waiting",
+     "state": "ready",
      "approved_at": 1793791116,
      "account": "AUZqenZA3Ev6ZgFxdJoumUW1CKxHskThW9nFPs6jDY7v",
      "undecoded": false,
@@ -1282,22 +1304,6 @@
    "latest_queued": 1793414244,
    "pending": [],
    "recent": [
-    {
-     "id": "squads:tr8rgazUrZzgdkfc6Q622nVJHMMzh29trdBE2uBHb4u:55",
-     "index": 55,
-     "target": "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
-     "value": 0,
-     "selector": null,
-     "signature": "Squads proposal #55: Upgrade of program CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
-     "still_queued": false,
-     "queued_at": 1792650268,
-     "executed_at": 1792650268,
-     "account": "6zxqZxBAuGtpoHPSAvLFZdNdjesVpHbuuF6hjMGwm8fX",
-     "undecoded": false,
-     "decoded": "program upgrade",
-     "what": "Upgrade of program CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
-     "touches_governed": true
-    },
     {
      "id": "squads:tr8rgazUrZzgdkfc6Q622nVJHMMzh29trdBE2uBHb4u:56",
      "index": 56,
@@ -1365,7 +1371,7 @@
    "transaction_index": 72
   }
  ],
- "discovered_utc": "2026-11-04T20:18:29Z",
+ "discovered_utc": "2026-11-05T06:57:25Z",
  "discovered": 15,
- "squads_utc": "2026-11-04T20:45:00Z"
+ "squads_utc": "2026-11-05T07:15:34Z"
 }

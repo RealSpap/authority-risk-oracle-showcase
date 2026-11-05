@@ -7,7 +7,8 @@
 <p align="center"><b>Who can really move a DeFi protocol's funds? Read the answer on-chain, and check it yourself.</b></p>
 
 <p align="center">
-  <a href="LICENSE"><img alt="License: code MIT, data CC BY 4.0" src="https://img.shields.io/badge/license-code%20MIT%20%C2%B7%20data%20CC%20BY%204.0-blue"></a>
+  <a href="LICENSE"><img alt="License: CC BY 4.0" src="https://img.shields.io/badge/License-CC%20BY%204.0-blue"></a>
+  <a href="LICENSE-CODE"><img alt="Code: MIT" src="https://img.shields.io/badge/Code-MIT-blue"></a>
   <a href=".github/workflows/test.yml"><img alt="Tests" src="https://github.com/RealSpap/authority-risk-oracle-showcase/actions/workflows/test.yml/badge.svg"></a>
   <a href=".github/workflows/watch.yml"><img alt="Watch" src="https://github.com/RealSpap/authority-risk-oracle-showcase/actions/workflows/watch.yml/badge.svg"></a>
   <a href=".github/workflows/mutation.yml"><img alt="Mutation" src="https://github.com/RealSpap/authority-risk-oracle-showcase/actions/workflows/mutation.yml/badge.svg"></a>

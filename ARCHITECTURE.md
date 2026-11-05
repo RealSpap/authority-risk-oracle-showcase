@@ -29,7 +29,7 @@ api/         the JSON snapshot of the last on-chain push
 
 ## How the Watch runs
 
-A GitHub Actions job (`.github/workflows/watch.yml`, cron `17 */6 * * *`, UTC) re-reads every deployed oracle, compares with the previous run, and rewrites the files in `watch/`: scores, the money behind each target, the queue of changes behind watched timelocks, the alerts that fire, why a score moved, an independent second reading, and a hash-chained event log with a signed manifest. It holds no key that can send a transaction. The job commits its output to the `watch-data` branch, not to `main`, so the history of `main` is the history of the work and the generated data is read from the root of that branch (https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/watch-data/).
+A GitHub Actions job (`.github/workflows/watch.yml`, cron `17 */6 * * *`, UTC) re-reads every deployed oracle, compares with the previous run, and rewrites the files in `watch/`: scores, the money behind each target, the queue of changes behind watched timelocks, the alerts that fire, why a score moved, an independent second reading, and a hash-chained event log with a signed manifest. It holds no key that can send a transaction. The job commits its output to the `watch-data` branch, not to `main`, so the history of `main` is the history of the work and the generated data is read from the root of that branch (https://github.com/RealSpap/authority-risk-oracle-showcase/tree/watch-data).
 
 ## Where to read a score
 

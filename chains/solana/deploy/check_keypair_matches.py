@@ -6,7 +6,7 @@ only the (public) derived pubkey. Reuses solana_tx.py's own b58encode
 
 Added 2026-09-24: the solana-devnet keypair file was found to be genuinely
 missing from BOTH the pre- and post-migration keys/ locations (not just a
-wrong path this time) -- see REPRISE.md, 2026-09-24. Once a keypair file
+wrong path this time) -- found on 2026-09-24. Once a keypair file
 exists, run this BEFORE a real push:
 
     python3 chains/solana/deploy/check_keypair_matches.py <path> BcwteMtYL5wL8dvMYWedPT2V6oh1hTgd8vgKEkQyy9yx

@@ -172,3 +172,21 @@ This read shows that these accounts hold the roles. It does not show that no oth
 Applying the published formula to these facts: a plain key with no multisig and no delay scores 0 for the multisig and 0 for the timelock, and METHODOLOGY.md ("The controller") scores the admin key of a plain key with no multisig and no delay 5. The composite of the oracle's own authority is therefore 2 out of 100, on each of the eight EVM oracles and on the Solana program, by the written rule. Some scorers in `scripts/lib/scorers.py` (the "same key" convention of `score_curve_dex`) give an admin key score of 2 instead of 5 when one plain key holds two separate control paths of a target; this convention is in the code, not in METHODOLOGY.md, and with it the composite would be 1 out of 100. Either way each of the nine oracles is in the critical band by the project's own method. These are calculations from the published method on what was read; they are not scores written on a chain, and the choice of 5 or 2 is a convention of the method, not a measurement. An earlier figure of about 4 on the EVM oracles and 2 on Solana, given on the oracle page until 31 October 2026, is replaced by the figures above.
 
 Written in: this page; METHODOLOGY.md; REFERENCE.md; SECURITY.md; scripts/lib/scorers.py (`_composite`).
+
+## What the offline checks and the alerts do not guarantee
+
+These limits of the verification tools and of the alert code are stated so that a reader knows what to check alone (as of 31 October 2026).
+
+**The local audit and the signature check do not report the same things.** On a local folder or a `--ref`, `scripts/audit_public.py` checks the files that the signed manifest lists; `scripts/sign_run.py --verify` also reports a file that the manifest does not list. Run both on a folder you rely on.
+
+**An alert is retried only while its condition holds.** An alert that could not be delivered, and whose condition is gone at the next run, is not sent later. A consumer who needs every alert should read the files of each run and not rely on delivery alone.
+
+**The offline replay of the proof of an alert is a consistency check.** `evidence_matches` does not prove that the `reproduce` command is exactly the one the record implies. Read the command before you run it.
+
+**A node that lies can still be believed.** The Watch checks some of the values a node returns, not all of them. For a figure you rely on, read it on chain yourself, from a node you chose.
+
+**A kind of reading that the trust rule does not know counts as a reading.** In `trust.json`, a record of the independent reader counts as read unless its kind says it could not be read, so a kind added to the reader later counts as read until the rule names it. A consumer who reads `second_opinion.json` should treat a kind it does not know as not read.
+
+**A chat channel counts as delivered on a success status.** The body of the answer is not read. Confirm receipt in the channel itself.
+
+Written in: this page.

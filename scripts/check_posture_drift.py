@@ -6,7 +6,7 @@ demand-driver feature, `data/finding_2026-09-20-competitor-gaps-and-morpho-vault
 12 "Posture-change alerts ranked by observed lead time"). This is a real gap DeFiScan and Foreshock both
 sell as a headline feature ("24/7 monitoring") that this project had never automated across every
 ecosystem at once -- today's own session hand-built this exact check, one ecosystem at a time, on
-Monad/Solana/Arbitrum/Ethereum L1/Robinhood Chain (see REPRISE.md's "[backlog note]" entries), each
+Monad/Solana/Arbitrum/Ethereum L1/Robinhood Chain, each
 time as a throwaway script. This generalizes that into one reusable, reproducible tool.
 
 Different from `scripts/check_implementation_changes.py` (which fingerprints a target's CODE) and
@@ -26,7 +26,7 @@ already caused once. This tool inherits that protection instead of re-discoverin
 Solana is NOT covered here (a native Anchor program, a different getScore ABI/decode entirely) -- use
 `chains/solana/deploy/read_scores_solana.py` for that, which already does the same job for that one
 ecosystem. Zcash is not covered either (no testnet oracle deployed as of this writing, phase
-`deploy_testnet` per REPRISE.md).
+`deploy_testnet`).
 
     python3 scripts/check_posture_drift.py                       # every EVM ecosystem
     python3 scripts/check_posture_drift.py --ecosystem arbitrum,ethereum-l1

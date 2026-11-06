@@ -21,6 +21,7 @@ HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 def dominant(d):
     seen = {}
     for t in d.get("targets", []):
+        if t.get("retired"): continue   # a target retired on purpose keeps the hash it was last scored under: it is not a second method in use (listed apart in `retired`, data/retired_targets.json)
         h = (t.get("methodologyHash") or "").lower()
         if not h or set(h[2:]) == {"0"}: h = "none"
         seen[h] = seen.get(h, 0) + 1
@@ -44,11 +45,12 @@ def main():
     ap.add_argument("--events", default="watch/events.jsonl"); ap.add_argument("--out", default="watch/methodology.json"); ap.add_argument("--md", default="watch/methodology.md")
     a = ap.parse_args(); now = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     from evaluate_rules import WATCH_SLUGS
-    hashes, mixed, changes = {}, [], []
+    hashes, mixed, changes, retired_rows = {}, [], [], []
     for f in sorted(glob.glob(os.path.join(a.scores, "*.json"))):
         try: d = json.load(open(f))
         except ValueError: continue
         slug = os.path.basename(f)[:-5]; seen, dom = dominant(d)
+        retired_rows += [{"oracle": slug, "target": t.get("target"), "hash": (t.get("methodologyHash") or "").lower()} for t in d.get("targets", []) if t.get("retired")]
         for h, n in seen.items():
             hashes.setdefault(h, {"oracles": {}, "targets": 0}); hashes[h]["oracles"][slug] = n; hashes[h]["targets"] += n
         if len(seen) > 1: mixed.append({"oracle": slug, "hashes": seen})
@@ -69,7 +71,7 @@ def main():
         if ver: known.append((dt or "", ver))
         elif h != "none": unregistered.append({"hash": h, "oracles": sorted(v["oracles"]), "targets": v["targets"]})
     newest = max(known) if known else (None, None)
-    out = {"generated_utc": now, "method_version": newest[1], "method_version_date": newest[0] or None, "registry_read": reg is not None, "unregistered": unregistered, "hashes": hashes, "mixed": mixed, "changes": changes,
+    out = {"generated_utc": now, "method_version": newest[1], "method_version_date": newest[0] or None, "registry_read": reg is not None, "unregistered": unregistered, "hashes": hashes, "mixed": mixed, "changes": changes, "retired": retired_rows,
            "what": "methodologyHash as read on each oracle (keccak256 of the scoring code and its version, set at the push): one hash per oracle is the normal state; a mix means a push half done or a target scored by an older method; a change (against the previous run) means every score of that oracle was produced by a new method: compare across it with care, the chained log keeps the date"}
     tmp = a.out + ".tmp"; json.dump(out, open(tmp, "w"), indent=1); os.replace(tmp, a.out)
     if a.md:

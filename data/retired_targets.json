@@ -1,0 +1,10 @@
+{
+ "_doc": "Targets an oracle still tracks on purpose although the scorer no longer produces them (the contract cannot remove a target). The Watch lists them apart as retired: they are not counted stale and not counted in the methodology hashes in use. Key: <oracle-slug>:<target address, any case>. last_update_at_retirement is the lastUpdated read on chain when the target was retired: a later value means the target was written again, and the Watch counts it as a normal target again and alerts until this file is edited. Kept by hand after reading the contract. See scripts/lib/retired.py.",
+ "targets": {
+  "ethereum-l1-sepolia:0x2cc440b721d2cafd6d64908d6d8c4acc57f8afc3": {
+   "note": "EthenaMinting, USDe's old minter, retired on 2026-09-20 and replaced by the live minter; last written on 2026-09-23; the oracle cannot remove it, so it is left to go stale (see data/finding_2026-09-20-ethena-live-minter.md)",
+   "since": "2026-09-20",
+   "last_update_at_retirement": 1790180194
+  }
+ }
+}

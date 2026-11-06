@@ -18,6 +18,8 @@ could not be read (never reported as fresh by omission).
 """
 import argparse
 import datetime
+import os
+import re
 import sys
 import time
 
@@ -26,6 +28,8 @@ from web3 import Web3
 sys.path.insert(0, __file__.rsplit("/", 1)[0])
 from live_target_counts import ORACLES  # noqa: E402
 import solana_oracle_reader  # noqa: E402
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "lib"))
+import retired as retired_targets  # noqa: E402
 
 FRESHNESS_ABI = [
     {"name": "trackedTargetsCount", "type": "function", "stateMutability": "view", "inputs": [], "outputs": [{"type": "uint256"}]},
@@ -78,17 +82,19 @@ def read_freshness_solana(reader=solana_oracle_reader.read_oracle, name="Solana 
         return [(name, None, f"{type(e).__name__}: {e}")]
 
 
-def summarize(info, now, warn_seconds):
-    """Pure: from one oracle's info and the current time, the freshness facts a person acts on."""
+def summarize(info, now, warn_seconds, slug=None, registry=None):
+    """Pure: from one oracle's info and the current time, the freshness facts a person acts on. A target listed in data/retired_targets.json (and not written since) is left out of the rows and returned in `retired`."""
     ms = info["max_staleness"]
-    rows = []
+    rows, retired = [], []
     for i, addr, last in info["updated"]:
+        e = (registry or {}).get("%s:%s" % (slug, str(addr).lower()))
+        if e and last == e["last_update_at_retirement"]: retired.append({"index": i, "address": addr, "last_updated": last}); continue
         remaining = last + ms - now  # seconds until this entry turns stale (negative = already stale)
         rows.append({"index": i, "address": addr, "last_updated": last, "seconds_to_stale": remaining})
     stale = [r for r in rows if r["seconds_to_stale"] <= 0]
     soon = [r for r in rows if 0 < r["seconds_to_stale"] <= warn_seconds]
     oldest = min(rows, key=lambda r: r["last_updated"]) if rows else None
-    return {"rows": rows, "stale": stale, "soon": soon, "oldest": oldest, "count": info["count"], "max_staleness": ms}
+    return {"rows": rows, "stale": stale, "soon": soon, "oldest": oldest, "count": info["count"], "max_staleness": ms, "retired": retired}
 
 
 def _fmt(ts):
@@ -111,14 +117,19 @@ def main(argv=None):
     args = ap.parse_args(argv)
     now = int(time.time())
     warn = int(args.warn_hours * 3600)
-    problem = False
+    problem = False; n_retired = 0
+    registry, reg_err = retired_targets.load()
+    if reg_err: print(f"  retired targets file not read, nothing is treated as retired ({reg_err})"); problem = True
     for name, info, err in read_freshness(pause=0.1) + read_freshness_solana():
         if err:
             print(f"  {name:<24} UNREADABLE -- {err}")
             problem = True
             continue
-        s = summarize(info, now, warn)
+        s = summarize(info, now, warn, re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-"), registry)
         print(_oracle_line(name, s))
+        n_retired += len(s["retired"])
+        for r in s["retired"]:
+            print(f"      retired, left to go stale on purpose (data/retired_targets.json): index {r['index']} {r['address']}")
         for r in s["stale"]:
             print(f"      already stale: index {r['index']} {r['address']}")
             problem = True
@@ -126,7 +137,7 @@ def main(argv=None):
             print(f"      stale within {args.warn_hours:g} h: index {r['index']} {r['address']} ({_fmt(r['last_updated'] + s['max_staleness'])})")
             problem = True
     print("\nRe-push any oracle listed above before its first entry turns stale; a retired target is left to go stale on purpose." if problem
-          else "\nEvery tracked target on every oracle is fresh beyond the warning window.")
+          else "\nEvery tracked target on every oracle is fresh beyond the warning window" + (" (except %d retired, listed above)." % n_retired if n_retired else "."))
     sys.exit(1 if problem else 0)
 
 

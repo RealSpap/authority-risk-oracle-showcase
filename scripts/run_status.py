@@ -31,6 +31,7 @@ def main():
         if latest.get("alerts"): reasons.append("%d alarm(s) raised by the watch" % len(latest["alerts"])); worse("alarm")
         if latest.get("unread"): reasons.append("oracle(s) not read: " + ", ".join(latest["unread"])); worse("degraded")
         if latest.get("stale_total"): reasons.append("%d of %d targets stale on the oracles" % (latest["stale_total"], latest.get("total_targets", 0)))
+        if latest.get("retired_total"): reasons.append("%d retired target(s) listed apart, not counted stale (information, no change of state; names in latest.json `retired`)" % latest["retired_total"])
     if chain is None: reasons.append("event-log chain not checked"); worse("degraded")
     elif not chain.get("ok"): reasons.append("event-log chain broken: " + str(chain.get("reason"))); worse("alarm")
     sig_status = "missing" if sig is None else ("signed" if sig.get("signed") else "unsigned")
@@ -60,7 +61,7 @@ def main():
     if meth and meth.get("unregistered"): reasons.append("method hash not in registry on %d oracle(s): no version is shown for it (data/method_versions.json)" % len({o for u in meth["unregistered"] for o in u["oracles"]}))   # information: no change of state, a version is never invented
     rec = {"run_utc": (latest or {}).get("run_utc") or time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "state": state, "reasons": reasons, "data_location": RAW,   # where every file of the Watch is served (the watch-data branch): a page or a monitor reads this, not a constant of its own
            "checks": {"oracles_read": (len(latest.get("oracles", [])) - len(latest.get("unread", []))) if latest else None, "oracles": len(latest.get("oracles", [])) if latest else None,
-                      "targets": (latest or {}).get("total_targets"), "stale": (latest or {}).get("stale_total"), "alarms": len((latest or {}).get("alerts", [])),
+                      "targets": (latest or {}).get("total_targets"), "stale": (latest or {}).get("stale_total"), "retired": (latest or {}).get("retired_total"), "alarms": len((latest or {}).get("alerts", [])),
                       "chain_ok": chain.get("ok") if chain else None, "chain_entries": chain.get("lines") if chain else None, "signed": bool(sig and sig.get("signed")) and sig_status != "stale", "signature_status": sig_status,
                       "signing_key": (sig or {}).get("public_key"), "second_opinion": ({k: so.get(k) for k in ("agree", "disagree", "corroborated", "acknowledged", "unreadable", "native")} if so else None),
                       "methodology_mixed": len(meth.get("mixed", [])) if meth else None, "disputes_open": dp.get("open") if dp else None, "review_items": rq.get("total") if rq else None},   # the review queue is information for the maintainer, it does not change the state

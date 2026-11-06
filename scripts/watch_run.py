@@ -30,6 +30,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 from live_target_counts import ORACLES  # noqa: E402
+sys.path.insert(0, os.path.join(HERE, "lib"))
+import retired as retired_targets  # noqa: E402   # data/retired_targets.json: targets tracked on purpose but no longer scored, listed apart
 import run_id  # noqa: E402  -- the Actions run of this passage, written in latest.json so that files can be shown to belong to one run (scripts/check_run_id.py)
 from lib.reader_audit import block_honoured, evaluation_of, freshness_record, future_dated, last_updated_alerts, scan_progress  # noqa: E402  -- scan stall, lastUpdated checks, freshness
 import solana_oracle_reader  # noqa: E402
@@ -409,6 +411,9 @@ def main():
     run_utc = now.strftime("%Y-%m-%dT%H:%M:%SZ")
     names = labels()
     summary, movers, alerts, unread = [], [], [], []
+    RETIRED, retired_err = retired_targets.load()   # a file that cannot be read retires nothing (everything is counted as before) and is an alarm, never a silent fallback
+    if retired_err: alerts.append("retired targets file not read, nothing is treated as retired this run (%s)" % retired_err)
+    retired_all = []
     prev_latest = {}
     try:
         prev_latest = json.load(open(os.path.join(WATCH, "latest.json")))
@@ -443,7 +448,10 @@ def main():
         if prev is not None and len(cur["targets"]) < len(prev):   # the contract cannot remove a target: a smaller list is an RPC answer not to trust
             alerts.append(f"{name}: {len(cur['targets'])} targets read, {len(prev)} last run: the oracle cannot remove a target, this RPC answer is not trusted")
             cur["targets"] = restore_dropped_targets(cur["targets"], prev)   # QA 11/10: the short list used to be written as it was, and the targets that came back next run were announced as new ones, for ever in the chained log
-        stale = [t for t in cur["targets"] if t["stale"]]
+        ret_here, woken = retired_targets.apply(s, cur["targets"], RETIRED)   # retired: kept out of the stale count and the methodology hashes in use, listed apart; woken: written again, counted as a normal target
+        for t in woken: alerts.append(f"{name}: retired target {t['target'][:6]}…{t['target'][-4:]} was written again (last update {iso(t['lastUpdated'])}, retired at {iso(RETIRED[s + ':' + t['target'].lower()]['last_update_at_retirement'])}): counted as a normal target until data/retired_targets.json is edited")
+        retired_all += retired_targets.listing(s, ret_here, RETIRED)
+        stale = [t for t in cur["targets"] if t["stale"] and not t.get("retired")]
         sw = cur.get("self") or {}
         if sw:
             for ev in sw.get("role_events", []):
@@ -481,11 +489,11 @@ def main():
                     movers.append({"oracle": name, "target": t["target"], "label": label, "field": f, "before": p.get(f), "after": t[f]})
             if p.get("compositeScore", 0) - t["compositeScore"] >= DROP_THRESHOLD:
                 alerts.append(f"{name}: {label} composite {p['compositeScore']} -> {t['compositeScore']}")
-            if t["stale"] and not p.get("stale"):
+            if t["stale"] and not p.get("stale") and not t.get("retired"):
                 alerts.append(f"{name}: {label} turned stale (last update {iso(t['lastUpdated'])})")
         last_push = max((t["lastUpdated"] for t in cur["targets"]), default=0)
         summary.append({"name": name, "slug": s, "kind": cur["kind"], "oracle": cur["oracle"], "read_ok": True, "block": cur["block"],
-                        "targets": len(cur["targets"]), "stale": len(stale), "lastUpdated": last_push, "maxStaleness": cur["maxStaleness"],
+                        "targets": len(cur["targets"]), "stale": len(stale), "retired": len(ret_here), "lastUpdated": last_push, "maxStaleness": cur["maxStaleness"],
                         "freshness": freshness_record(cur.get("readAt"), cur.get("block"), cur.get("block_time"), cur["targets"]),   # when the Watch read it, the block and its time, the newest and the oldest push, side by side
                         "self_watch": ({"read": bool(sw.get("read")), "role_events": len(sw.get("role_events", [])), "code_hash": (sw.get("code_hash") or "")[:16], "roles": sw.get("roles"), "error": sw.get("error")} if sw else None)})
         _dump_json(cur, path, indent=1)
@@ -494,19 +502,20 @@ def main():
         os.makedirs(bdir, exist_ok=True)
         for t in cur["targets"]:
             v = t["compositeScore"]
-            _dump_json({"schemaVersion": 1, "label": "authority risk", "message": f"{v}/100" + (" (stale)" if t["stale"] else ""),
+            _dump_json({"schemaVersion": 1, "label": "authority risk", "message": f"{v}/100" + (" (retired)" if t.get("retired") else " (stale)" if t["stale"] else ""),
                        "color": "red" if v < 20 else "orange" if v < 40 else "yellow" if v < 60 else "green" if v < 80 else "brightgreen"}, os.path.join(bdir, (t["target"].lower() if str(t["target"]).startswith("0x") else t["target"]) + ".json"))   # a Solana id keeps its case
 
     latest = {
         "run_utc": run_utc, "previous_run_utc": prev_latest.get("run_utc"), "schedule": "every 6 hours (GitHub Actions, cron 17 */6 * * *)",
         "oracles": summary, "total_targets": sum(o.get("targets", 0) for o in summary), "stale_total": sum(o.get("stale", 0) for o in summary),
+        "retired_total": len(retired_all), "retired": retired_all,   # kept apart on purpose (data/retired_targets.json): counted in total_targets, not in stale_total; names, notes and dates are published
         "movers": movers, "alerts": alerts, "unread": unread,
         "note": "The Zcash commitments are verified by the dashboard itself. An oracle in `unread` has unknown targets, not zero.",
     }
     if run_id.current(): latest["run_id"] = run_id.current()
     _dump_json(latest, os.path.join(WATCH, "latest.json"), indent=1)
     with open(os.path.join(WATCH, "history.jsonl"), "a") as f:
-        f.write(json.dumps({"run_utc": run_utc, "targets": latest["total_targets"], "stale": latest["stale_total"],
+        f.write(json.dumps({"run_utc": run_utc, "targets": latest["total_targets"], "stale": latest["stale_total"], "retired": latest["retired_total"],
                             "movers": len(movers), "alerts": len(alerts), "unread": len(unread), "unread_oracles": unread}) + "\n")   # names since 2026-10-10: the dashboard shows each oracle's read reliability over 7 days
     events_path = os.path.join(WATCH, "events.jsonl")
     # Hash-chained since 2026-10-10: every line carries `seq` and `prev`, the sha256 of the previous line's exact text ("" for the
@@ -533,7 +542,7 @@ def main():
     write_feed(events)
     read = len(summary) - len(unread)
     _dump_json({"schemaVersion": 1, "label": "authority risk oracle",
-               "message": f"{latest['total_targets']} targets, {latest['stale_total']} stale, {len(alerts)} alarm{'s' if len(alerts) != 1 else ''}",
+               "message": f"{latest['total_targets']} targets, {latest['stale_total']} stale, " + (f"{latest['retired_total']} retired, " if latest["retired_total"] else "") + f"{len(alerts)} alarm{'s' if len(alerts) != 1 else ''}",
                "color": "red" if alerts else "orange" if latest["stale_total"] or unread else "brightgreen"}, os.path.join(WATCH, "badge.json"), indent=1)
     alarm = os.path.join(WATCH, "alarm.md")
     if alerts:
@@ -542,7 +551,7 @@ def main():
                     + f"\nRead-only watch of the deployed oracles (`scripts/watch_run.py`). Details: `watch/latest.json`, page: {PAGE}\n")
     elif os.path.exists(alarm):
         os.remove(alarm)
-    print(f"{latest['total_targets']} targets read on {read} of {len(readers)} oracles, {latest['stale_total']} stale, "
+    print(f"{latest['total_targets']} targets read on {read} of {len(readers)} oracles, {latest['stale_total']} stale, {latest['retired_total']} retired, "
           f"{len(movers)} moves, {len(alerts)} alerts, unread: {', '.join(unread) or 'none'}")
     for a in alerts:
         print("  ALARM", a)

@@ -21,6 +21,14 @@ PAGE = os.path.join(ROOT, "docs", "MULTISIG-SHAPES.md")
 FILES = ["scripts/lib/scorers.py"]   # then chains/*/scorers.py, sorted
 
 
+_SRC = ""   # source of the file being read: the page quotes the code AS WRITTEN, never ast.unparse, whose output changes between Python versions (3.9 and 3.11 differ on `for (k, n) in`)
+
+
+def _u(node):
+    seg = ast.get_source_segment(_SRC, node)
+    return " ".join(seg.split()) if seg else ast.dump(node)
+
+
 def _num(n, v=None):
     return isinstance(n, ast.Constant) and isinstance(n.value, (int, float)) and not isinstance(n.value, bool) and (v is None or n.value == v)
 
@@ -62,7 +70,7 @@ def _assigned(ctx, name):
 
 def classify(node, helpers, depth=0, ctx=None):
     """(class, short text) of one expression."""
-    text = ast.unparse(node)
+    text = _u(node)
     if _num(node): return "fixed", text
     if is_standard(node): return "standard", ""
     if ctx is not None and depth < 4:
@@ -104,9 +112,9 @@ def element(value, i, helpers, depth=0, ctx=None):
         for r in rets:
             if isinstance(r, (ast.Tuple, ast.List)): out += element(r, i, helpers, depth + 1, hctx)
             elif isinstance(r, ast.Call): out += element(r, i, helpers, depth + 1, hctx)
-            else: out.append(("other", "returned by %s: %s" % (value.func.id, ast.unparse(r)[:60])))
-        return out or [("other", ast.unparse(value)[:80])]
-    return [("other", "unpacked from " + ast.unparse(value)[:80])]
+            else: out.append(("other", "returned by %s: %s" % (value.func.id, _u(r)[:60])))
+        return out or [("other", _u(value)[:80])]
+    return [("other", "unpacked from " + _u(value)[:80])]
 
 
 def is_standard_gen(g):
@@ -119,7 +127,9 @@ def _returns(fn):
 
 def analyse(path):
     """[(function, line, [(class, text)...])] for the functions of one file that build a `multisigScore` key."""
-    tree = ast.parse(open(path, encoding="utf-8").read())
+    global _SRC
+    _SRC = open(path, encoding="utf-8").read()
+    tree = ast.parse(_SRC)
     funcs = [f for f in ast.walk(tree) if isinstance(f, (ast.FunctionDef, ast.AsyncFunctionDef))]
     helpers = {f.name: (f, _returns(f)) for f in funcs}
     consts = {t.id: st.value for st in tree.body if isinstance(st, ast.Assign) for t in st.targets if isinstance(t, ast.Name)}
@@ -141,9 +151,9 @@ def analyse(path):
                                 i = [k for k, e in enumerate(t.elts) if isinstance(e, ast.Name) and e.id == v.id][0]
                                 items += [(st.lineno,) + c for c in element(st.value, i, helpers, 0, Ctx(fn, consts))]; got = True
                     elif isinstance(st, ast.For) and any(isinstance(e, ast.Name) and e.id == v.id for e in ast.walk(st.target)):
-                        items.append((st.lineno, "other", "loop variable over " + ast.unparse(st.iter)[:60])); got = True
+                        items.append((st.lineno, "other", "loop variable over " + _u(st.iter)[:60])); got = True
                     elif isinstance(st, ast.AugAssign) and isinstance(st.target, ast.Name) and st.target.id == v.id:
-                        items.append((st.lineno, "other", ast.unparse(st))); got = True
+                        items.append((st.lineno, "other", _u(st))); got = True
                 if not got: items.append((line, "other", "%s (a parameter or an unresolved name)" % v.id))
             else: items.append((line,) + classify(v, helpers, 0, Ctx(fn, consts)))
         flat = []

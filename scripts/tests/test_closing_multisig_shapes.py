@@ -39,6 +39,10 @@ class TestThePageMatchesTheCode(unittest.TestCase):
         rows = [l for l in page.splitlines() if l.startswith("| `") and "other" in l.split("|")[3]]
         for l in rows: self.assertIn(l.split("|")[2].strip(), tail, l)   # a function classed "other" is named in the closing section
 
+    def test_the_page_does_not_depend_on_the_python_version(self):
+        # ast.unparse prints `for (k, n) in` on 3.9 and `for k, n in` on 3.11: the page quotes the source as written instead, so one page is right on every version
+        self.assertNotIn("ast.unparse(", open(os.path.join(ROOT, "scripts", "multisig_shapes.py"), encoding="utf-8").read())
+
     def test_the_limits_page_points_to_it(self):
         self.assertIn("docs/MULTISIG-SHAPES.md", open(os.path.join(ROOT, "docs", "LIMITS.md"), encoding="utf-8").read())
 

@@ -10,7 +10,7 @@ Functions by class (a function with several classes is counted in each): fixed 1
 
 | Function | Line | Classes | Expressions that are not the standard formula |
 |---|---|---|---|
-| `score_morpho_steakhouse_usdg` | 124 | rule, standard | `0 if curator and is_eoa(w3, curator) else 5` |
+| `score_morpho_steakhouse_usdg` | 124 | rule, standard | `0 if (curator and is_eoa(w3, curator)) else 5` |
 | `score_uniswap_v3_factory` | 230 | fixed, weights | fixed: 0, 100; `root_safe[1] * 10 if root_safe else 0` |
 | `score_uniswap_v4_poolmanager` | 261 | fixed | fixed: 0, 100 |
 | `score_lighter_escrow` | 296 | weights | `master_safe[1] * 20 + 5 if master_safe else 0` |
@@ -20,7 +20,7 @@ Functions by class (a function with several classes is counted in each): fixed 1
 | `score_morpho_vault_generic` | 486 | fixed, standard | fixed: 0 |
 | `score_spark_savings_usdg` | 554 | fixed | fixed: 30 |
 | `score_spark_liquidity_layer_almproxy` | 633 | fixed | fixed: 0, 30 |
-| `score_pendle_v2` | 701 | weights | `min((s[1] for s in safes)) * 15 if safes else 0` |
+| `score_pendle_v2` | 701 | weights | `min(s[1] for s in safes) * 15 if safes else 0` |
 | `score_curve_dex` | 749 | fixed | fixed: 0 |
 | `score_meridian_exchangegateway` | 810 | fixed | fixed: 0 |
 | `score_rollup_l1_authority` | 1012 | fixed | fixed: 0, 75 |
@@ -56,7 +56,7 @@ Functions by class (a function with several classes is counted in each): fixed 1
 | `score_aave_v3_pool_arbitrum` | 772 | fixed | fixed: 100 |
 | `score_compound_v3_comet_arbitrum_usdc` | 892 | fixed | fixed: 100 |
 | `score_pendle_v2_arbitrum` | 986 | fixed, standard | fixed: 0 |
-| `score_fluid_liquidity_arbitrum` | 1080 | fixed, weakest | fixed: 0; `min((min(100, k * 15 + max(0, n - k) * 5) for (k, n) in ((prop_k, prop_n), (exec_k, exec_n` |
+| `score_fluid_liquidity_arbitrum` | 1080 | fixed, weakest | fixed: 0; `min(min(100, k * 15 + max(0, n - k) * 5) for k, n in ((prop_k, prop_n), (exec_k, exec_n)))` |
 | `score_uniswap_v3_factory_arbitrum` | 1160 | fixed | fixed: 0, 100 |
 | `score_gmx_v1_vault` | 1232 | fixed, standard, weakest | fixed: 0; `branches of the function` |
 | `score_dolomite_margin_arbitrum` | 1420 | fixed, standard | fixed: 0 |
@@ -108,9 +108,9 @@ Functions by class (a function with several classes is counted in each): fixed 1
 | `score_morpho_steakhouse_usdc_l1` | 2532 | fixed, standard | fixed: 20 |
 | `score_morpho_steakhouse_prime_usdc_v2` | 2620 | fixed, standard | fixed: 20 |
 | `score_morpho_steakhouse_prime_eurcv_v2` | 2638 | fixed, standard | fixed: 20 |
-| `_score_token` | 2732 | fixed, other | fixed: 20; `unpacked from (min((p[i] for p in parts)) for i in range(3))` |
+| `_score_token` | 2732 | fixed, other | fixed: 20; `unpacked from (min(p[i] for p in parts) for i in range(3))` |
 | `score_weth9` | 2759 | fixed | fixed: 20, 100 |
-| `_sky_governed_token` | 2849 | fixed, other | fixed: 20; `sky['multisigScore']` |
+| `_sky_governed_token` | 2849 | fixed, other | fixed: 20; `sky["multisigScore"]` |
 
 ## `chains/hyperliquid/scorers.py`
 
@@ -143,7 +143,7 @@ Functions by class (a function with several classes is counted in each): fixed 1
 | `_score_ethena_oft_plasma_behind_timelock` | 711 | fixed, standard | fixed: 20 |
 | `score_euler_v2_evault_factory_plasma` | 953 | fixed, standard | fixed: 20 |
 | `score_euler_v2_access_control_emergency_governor_plasma` | 1107 | fixed, standard | fixed: 20 |
-| `score_fluid_liquidity_plasma` | 1424 | fixed, standard, weakest | fixed: 0; `min((min(100, k * 15 + max(0, n - k) * 5) for (k, n) in ((prop_k, prop_n), (exec_k, exec_n` |
+| `score_fluid_liquidity_plasma` | 1424 | fixed, standard, weakest | fixed: 0; `min(min(100, k * 15 + max(0, n - k) * 5) for k, n in ((prop_k, prop_n), (exec_k, exec_n)))` |
 | `score_telos_consilium_euler_earn_plasma` | 1582 | fixed, standard | fixed: 0 |
 | `score_yuzu_money_plasma` | 1771 | fixed, standard | fixed: 0 |
 
@@ -152,7 +152,7 @@ Functions by class (a function with several classes is counted in each): fixed 1
 | Function | Line | Classes | Expressions that are not the standard formula |
 |---|---|---|---|
 | `score_jupiter_aggregator_v6` | 276 | fixed, weights | fixed: 0, 20, 100; `branches of the function` |
-| `score_solend_dao_governance` | 433 | weakest | `min((p[1] for p in paths.values()))` |
+| `score_solend_dao_governance` | 433 | weakest | `min(p[1] for p in paths.values())` |
 | `score_drift_protocol` | 616 | weakest | `min(multisig_a, multisig_b)` |
 | `score_kamino_lend` | 792 | fixed, weakest | fixed: 20; `min(klend_path[1], market_path[1])` |
 | `score_raydium` | 964 | weakest | `min(multisig_a, multisig_b)` |
@@ -170,7 +170,7 @@ Functions by class (a function with several classes is counted in each): fixed 1
 
 | Function | Line | Classes | Expressions that are not the standard formula |
 |---|---|---|---|
-| `score_l1` | 374 | weights | `min(100, 15 * k50 + 5 * k25) if k50 and k25 else 20` |
+| `score_l1` | 374 | weights | `min(100, 15 * k50 + 5 * k25) if (k50 and k25) else 20` |
 | `score_fund` | 424 | helper, other | `_UNRESOLVED_P2SH_MULTISIG (a parameter or an unresolved name)`; `multisig_score_kn -> weights` |
 | `_unresolved` | 424 | other | `_UNRESOLVED_P2SH_MULTISIG (a parameter or an unresolved name)` |
 | `score_ext_zec_omft` | 621 | fixed, helper | fixed: 16; `multisig_score_kn -> weights` |
@@ -183,8 +183,8 @@ The parser could not follow the multisig value of these functions to a formula (
 
 | File | Function | Line | What was found |
 |---|---|---|---|
-| `chains/ethereum-l1/scorers.py` | `_score_token` | 2732 | `unpacked from (min((p[i] for p in parts)) for i in range(3))` |
-| `chains/ethereum-l1/scorers.py` | `_sky_governed_token` | 2849 | `sky['multisigScore']` |
+| `chains/ethereum-l1/scorers.py` | `_score_token` | 2732 | `unpacked from (min(p[i] for p in parts) for i in range(3))` |
+| `chains/ethereum-l1/scorers.py` | `_sky_governed_token` | 2849 | `sky["multisigScore"]` |
 | `chains/hyperliquid/scorers.py` | `_apply_hyperevm_identity_overrides` | 153 | `key_score(k, n)` |
 | `chains/solana/scorers.py` | `_staking_result` | 2536 | `multisig (a parameter or an unresolved name)` |
 | `chains/zcash/scorers.py` | `score_fund` | 424 | `_UNRESOLVED_P2SH_MULTISIG (a parameter or an unresolved name)` |

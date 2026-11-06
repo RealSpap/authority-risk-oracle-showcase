@@ -92,7 +92,7 @@ jobs:
         run: timeout 5m python3 scripts/pause_state.py --scores watch/scores --out watch/pause_state.json > watch/pause_state.txt 2>&1 || echo "exit code $?" >> watch/pause_state.txt
 
       - name: "The other hands on a contract (curator, guardian, pauser): who holds each and whether one changed hands since the previous run"
-        run: timeout 5m python3 scripts/side_roles.py --scores watch/scores --out watch/side_roles.json > watch/side_roles.txt 2>&1 || echo "exit code $?" >> watch/side_roles.txt
+        run: timeout 10m python3 scripts/side_roles.py --scores watch/scores --out watch/side_roles.json > watch/side_roles.txt 2>&1 || { c=$?; if [ "$c" = 124 ]; then echo "timed out at the step limit (124), previous file kept, a warning" >> watch/side_roles.txt; echo "::warning title=side_roles timed out::the secondary-roles step hit its 10 minute limit; the previous watch/side_roles.json is kept"; else echo "exit code $c" >> watch/side_roles.txt; fi; }
 
       - name: The paper trail of every target (which dated documents mention its address)
         run: python3 scripts/paper_trail.py --out watch/paper_trail.json > watch/paper_trail.txt 2>&1 || echo "exit code $?" >> watch/paper_trail.txt

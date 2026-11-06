@@ -2254,6 +2254,61 @@ class TestOracleReads(unittest.TestCase):
         with self.assertRaises(RuntimeError) as cm: self.with_urlopen([[{"id": 0, "result": "a"}, {"id": 1, "error": {"message": "limit"}}]], [("m", []), ("n", [])], tries=1)
         self.assertIn("limit", str(cm.exception))
 
+    def forbidden(self): return watch_run.urllib.error.HTTPError("http://x", 403, "Forbidden", {}, None)
+
+    def test_a_403_to_a_batch_reads_the_same_calls_one_by_one_and_remembers_it(self):
+        # 04/11: testnet-rpc.monad.xyz answers 403 to every JSON-RPC batch (one call included) and 200 to the same call sent alone: the Monad oracle was "unread" from 03/11 on
+        watch_run._single_only.clear()
+        out, seen = self.with_urlopen([self.forbidden(), {"id": 0, "result": "a"}, {"id": 0, "result": "b"}], [("m", []), ("n", [])])
+        self.assertEqual(out, ["a", "b"]); self.assertIsInstance(seen[0], list); self.assertTrue(all(isinstance(x, dict) for x in seen[1:]))
+        self.assertEqual([x["method"] for x in seen[1:]], ["m", "n"]); self.assertIn("http://x", watch_run._single_only)
+        out, seen = self.with_urlopen([{"id": 0, "result": "c"}], [("m", [])]); self.assertEqual(out, ["c"]); self.assertEqual(len(seen), 1); self.assertIsInstance(seen[0], dict)   # no batch is sent again
+        watch_run._single_only.clear()
+
+    def test_a_read_one_by_one_is_all_or_nothing_never_a_partial_list(self):
+        for answers in ([self.forbidden(), {"id": 0, "result": "a"}, OSError("x"), OSError("y")],                                 # the second call never answers
+                        [self.forbidden(), {"id": 0, "result": "a"}, {"id": 0, "error": {"message": "boom"}}, {"id": 0, "error": {"message": "boom"}}],   # an error entry in the middle
+                        [self.forbidden(), {"id": 7, "result": "a"}, {"id": 7, "result": "a"}],                                   # an answer that is not ours
+                        [self.forbidden(), {"id": 0}, {"id": 0}]):                                                                # no result at all
+            watch_run._single_only.clear()
+            with self.assertRaises(RuntimeError): self.with_urlopen(answers, [("m", []), ("n", [])])
+        watch_run._single_only.clear()
+
+    def test_a_429_on_a_call_read_alone_is_rate_limited_and_marks_the_endpoint(self):
+        watch_run._single_only.clear(); watch_run._rate_seen.clear(); watch_run._rate_spent.clear()
+        http429 = watch_run.urllib.error.HTTPError("http://x", 429, "Too Many", {}, None)
+        with self.assertRaises(watch_run.RateLimited): self.with_urlopen([self.forbidden(), {"id": 0, "result": "a"}, http429], [("m", []), ("n", [])])
+        self.assertIn("http://x", watch_run._rate_seen)   # batched() paces its calls from then on
+        watch_run._single_only.clear(); watch_run._rate_seen.clear()
+        with self.assertRaises(watch_run.RateLimited): self.with_urlopen([self.forbidden(), {"jsonrpc": "2.0", "id": 0, "error": {"code": -32005, "message": "rate limited"}}], [("m", [])])   # the JSON-RPC form of the same limit
+        watch_run._single_only.clear(); watch_run._rate_seen.clear()
+
+    def test_a_jsonrpc_429_marks_the_endpoint_and_the_pause_between_calls_and_the_tries_hold_on_later_reads(self):
+        watch_run._single_only.clear(); watch_run._rate_seen.clear(); slept = []; watch_run.time.sleep = slept.append
+        out, _seen = self.with_urlopen([self.forbidden(), {"id": 0, "result": "a"}, {"id": 0, "result": "b"}, {"id": 0, "result": "c"}], [("m", []), ("n", []), ("o", [])])
+        self.assertEqual(out, ["a", "b", "c"]); self.assertEqual(slept.count(0.2), 2)   # a pause between two calls, none before the first nor after the last
+        slept.clear()
+        with self.assertRaises(RuntimeError): self.with_urlopen([OSError("a")], [("m", [])], tries=1)   # the endpoint is already known to refuse batches: the caller's tries still hold
+        self.assertEqual([z for z in slept if z >= 1], [])
+        watch_run._single_only.clear()
+        with self.assertRaises(watch_run.RateLimited): self.with_urlopen([self.forbidden(), {"jsonrpc": "2.0", "id": 0, "error": {"code": -32005, "message": "rate limited"}}], [("m", [])])
+        self.assertIn("http://x", watch_run._rate_seen)   # the JSON-RPC form of the limit marks the endpoint too
+        watch_run._single_only.clear(); watch_run._rate_seen.clear()
+
+    def test_the_tries_of_the_caller_are_kept_when_reading_one_by_one(self):
+        watch_run._single_only.clear(); slept = []; watch_run.time.sleep = slept.append
+        with self.assertRaises(RuntimeError): self.with_urlopen([self.forbidden(), OSError("a")], [("m", [])], tries=1)
+        self.assertEqual([z for z in slept if z >= 1], [])   # one attempt, no pause after the last
+        slept.clear(); watch_run._single_only.clear()
+        with self.assertRaises(RuntimeError): self.with_urlopen([self.forbidden(), OSError("a"), OSError("b")], [("m", [])], tries=2)
+        self.assertEqual([z for z in slept if z >= 1], [1])   # two attempts, one pause between them
+        watch_run._single_only.clear()
+
+    def test_a_403_on_a_big_batch_still_reads_every_row(self):
+        watch_run._single_only.clear(); calls = [("m", [i]) for i in range(25)]
+        out, seen = self.with_urlopen([self.forbidden()] + [{"id": 0, "result": i} for i in range(25)], calls)
+        self.assertEqual(out, list(range(25))); watch_run._single_only.clear()
+
     RATE = {"jsonrpc": "2.0", "id": None, "error": {"code": -32005, "message": "rate limited"}}
 
     def test_a_rate_limited_answer_is_waited_out_with_growing_pauses_not_counted_as_a_try(self):

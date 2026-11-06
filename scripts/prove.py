@@ -54,15 +54,43 @@ def http_json(url):
     except ValueError: return None
 
 
+_NO_BATCH = set()   # endpoints that answered 403 to a JSON-RPC batch (testnet-rpc.monad.xyz does, even for one call, and answers the same call sent alone): read call by call from then on
+_UA = {"content-type": "application/json", "User-Agent": "authority-risk-oracle-prove/1"}
+
+
+def _late(i): return i > 0 and time.time() > DEADLINE   # past the time budget no retry is started: the read ends UNREAD (never a wrong OK)
+
+
+def rpc_singles(url, calls, tries=3):
+    """The same eth_calls sent one at a time (no array). The list of hex results, or None unless EVERY call answered with its own id and a result (never a partial list)."""
+    out = []
+    for to, data in calls:
+        body = json.dumps({"jsonrpc": "2.0", "id": 0, "method": "eth_call", "params": [{"to": to, "data": data}, "latest"]}).encode()
+        for i in range(tries):
+            if _late(i): return None
+            try:
+                r = json.load(urllib.request.urlopen(urllib.request.Request(url, body, _UA), timeout=30))
+                if isinstance(r, dict) and r.get("id") == 0 and isinstance(r.get("result"), str): out.append(r["result"]); break
+            except Exception: pass
+            time.sleep(1 + i)
+        else: return None
+    return out
+
+
 def rpc_batch(url, calls, tries=3):
-    """calls = [(to, data)]; one JSON-RPC batch; returns the list of hex results, or None if the endpoint did not answer every call (never a partial list)."""
+    """calls = [(to, data)]; one JSON-RPC batch; returns the list of hex results, or None if the endpoint did not answer every call (never a partial list).
+    An endpoint that refuses batches (HTTP 403) is read call by call (rpc_singles), the same rule: every call answered or None."""
+    if url in _NO_BATCH: return rpc_singles(url, calls)
     body = json.dumps([{"jsonrpc": "2.0", "id": i, "method": "eth_call", "params": [{"to": to, "data": data}, "latest"]} for i, (to, data) in enumerate(calls)]).encode()
     for i in range(tries):
+        if _late(i): break
         try:
-            resp = json.load(urllib.request.urlopen(urllib.request.Request(url, body, {"content-type": "application/json", "User-Agent": "authority-risk-oracle-prove/1"}), timeout=30))
+            resp = json.load(urllib.request.urlopen(urllib.request.Request(url, body, _UA), timeout=30))
             if isinstance(resp, dict): resp = [resp]
             by_id = {r.get("id"): r for r in resp if isinstance(r, dict)}
             if len(by_id) == len(calls) and all("result" in by_id[k] and isinstance(by_id[k]["result"], str) for k in range(len(calls))): return [by_id[k]["result"] for k in range(len(calls))]
+        except urllib.error.HTTPError as e:
+            if e.code == 403: _NO_BATCH.add(url); return rpc_singles(url, calls)
         except Exception: pass
         time.sleep(1 + i)
     return None

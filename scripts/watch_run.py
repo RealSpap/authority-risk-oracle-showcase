@@ -86,9 +86,46 @@ def _rate_limited(out):
     return False
 
 
+class BatchRefused(RuntimeError):
+    """HTTP 403 to a JSON-RPC batch."""
+
+
+_single_only = set()   # endpoints that refused a JSON-RPC batch with HTTP 403 (testnet-rpc.monad.xyz does, even for one call, while it answers the same call sent alone): read call by call from then on
+
+
+def _singles(url, calls, tries=3):
+    """The same calls sent one at a time (a plain JSON-RPC object, no array). Returns the results in order only if EVERY call answered: a partial list is never returned, the read is unread (RuntimeError).
+    A rate-limited answer raises RateLimited at once and marks the endpoint (batched then paces its calls). `tries` is the caller's: tries=1 means one attempt and no pause after it.
+    The table is read over several seconds, not in one request: a push of the oracle in between would mix two states under one reference block (a few seconds for 9 targets, and already true between the lots of `batched`).
+    ponytail: a fixed 0.2 s between calls, no growing wait (the batch path keeps that); add it when an endpoint that refuses batches also rate-limits."""
+    out = []
+    for m, p in calls:
+        if out: time.sleep(0.2)
+        body = json.dumps({"jsonrpc": "2.0", "id": 0, "method": m, "params": p}).encode(); last = None
+        for attempt in range(tries):
+            try:
+                req = urllib.request.Request(url, data=body, headers={"content-type": "application/json", "user-agent": "watch_run/1"})
+                with urllib.request.urlopen(req, timeout=40) as r:
+                    one = json.loads(r.read().decode())
+                if _rate_limited(one): raise RateLimited(str(one.get("error"))[:100])
+                if not isinstance(one, dict) or one.get("id") != 0 or "error" in one or "result" not in one: raise ValueError(f"malformed single answer ({str(one)[:80]})")
+                out.append(one["result"]); break
+            except RateLimited: _rate_seen.add(url); raise
+            except urllib.error.HTTPError as e:
+                if e.code == 429: _rate_seen.add(url); raise RateLimited("HTTP 429")
+                last = e
+            except Exception as e:  # noqa: BLE001 -- retried, then reported
+                last = e
+            if attempt < tries - 1: time.sleep(1 + attempt)
+        else:
+            raise RuntimeError(f"{type(last).__name__}: {last} (read one call at a time)")
+    return out
+
+
 def rpc(url, calls, tries=3):
     """One JSON-RPC batch; returns a list of results in order. Raises on the last failed try. A rate-limited answer (the public Hyperliquid testnet node does this to GitHub's shared runner
     addresses, 11/10: three reads in four came back unread) is waited out with growing pauses instead of being counted as one of the `tries`."""
+    if url in _single_only: return _singles(url, calls, tries)
     body = json.dumps([{"jsonrpc": "2.0", "id": i, "method": m, "params": p} for i, (m, p) in enumerate(calls)]).encode()
     last, attempt, waits = None, 0, 0
     while True:
@@ -99,6 +136,7 @@ def rpc(url, calls, tries=3):
                     out = json.loads(r.read().decode())
             except urllib.error.HTTPError as e:
                 if e.code == 429: raise RateLimited("HTTP 429")
+                if e.code == 403: raise BatchRefused("HTTP 403")   # the endpoint refuses batches: the same calls, one by one (handled below, outside the retry of the batch)
                 raise
             if _rate_limited(out): raise RateLimited(str(out.get("error"))[:100])
             if not isinstance(out, list) or len(out) != len(calls):
@@ -108,6 +146,8 @@ def rpc(url, calls, tries=3):
                 if any(_rate_limited(x) for x in res): raise RateLimited(str([x["error"] for x in res if "error" in x])[:100])
                 raise ValueError(str([x["error"] for x in res if "error" in x])[:160])
             return [x["result"] for x in res]
+        except BatchRefused:
+            _single_only.add(url); return _singles(url, calls, tries)   # an error raised here is not retried by the clauses below: the batch is not sent again
         except RateLimited as e:
             last = e; _rate_seen.add(url)
             if waits >= len(RATE_WAITS) or _rate_spent.get(url, 0) + RATE_WAITS[waits] > _rate_cap.get(url, RATE_BUDGET): break

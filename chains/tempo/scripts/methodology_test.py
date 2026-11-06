@@ -127,6 +127,18 @@ MORPHO_BLUE_TARGETS = {
     "Morpho Blue core": "0x10EE9AAC980A180dd4DcFc96C746d60B0EA88f97",
 }
 
+# ADDED 2026-11-06 (rule R10, the first target on Tempo TESTNET, chain 42431): Held's per-shop arbiter, version 4
+# (HeldArbiter.sol, verified exact on contracts.tempo.xyz on 2026-11-04). Every other target of this file is a
+# Tempo MAINNET contract (chain 4217); this one exists only on the testnet where the oracle itself lives, so it is
+# read from the two testnet endpoints below. The two names are two public endpoints of the same operator, not two
+# independent operators: a fact read here has one operator behind both reads (disclosed in METHODOLOGY.md R10).
+TESTNET_RPCS = ["https://rpc.moderato.tempo.xyz", "https://rpc.testnet.tempo.xyz"]
+HELD_ARBITER_TARGETS = {
+    "Held arbiter (Sandbox Shop)": "0xe80694d6feC5d676aD4B7D51478559BE8CC54F3e",
+}
+# keccak of the 6,867-byte runtime code, read on both testnet endpoints on 2026-11-06. A different code is not scored as this contract.
+HELD_ARBITER_CODE_HASH = "70e77076aea503473eef11c94dd6977e44ddcf4376ff2778f2934ea09c747e2c"
+
 # ADDED 2026-09-20 (crossExposureScore convention decision, see
 # cross_exposure()): the 9 owners of Morpho Association's global governance
 # Safe, hardcoded as a dated, lowercased snapshot and compared against the
@@ -883,6 +895,71 @@ def score_morpho_blue(label, core):
     }
 
 
+def _testnet_code(addr):
+    codes = {rpc(u, "eth_getCode", [addr, "latest"]) for u in TESTNET_RPCS}
+    if len(codes) != 1:
+        raise RuntimeError(f"testnet endpoints disagree on the code of {addr}")
+    return codes.pop()
+
+
+def _testnet_call(to, sig, out_types):
+    vals = [call(to, sig, out_types=out_types, url=u) for u in TESTNET_RPCS]
+    if json.dumps(_norm(vals[0])) != json.dumps(_norm(vals[1])):
+        raise RuntimeError(f"testnet endpoints disagree on {to} {sig}")
+    return vals[0]
+
+
+def _opcode_absent(runtime, banned):
+    """True when none of the banned opcodes appears as an instruction (the data of PUSH1..PUSH32 is skipped)."""
+    i = 0
+    while i < len(runtime):
+        op = runtime[i]
+        if op in banned:
+            return False
+        i += 1 + (op - 0x5F if 0x60 <= op <= 0x7F else 0)
+    return True
+
+
+def score_resolver_arbiter(label, arbiter):
+    """ADDED 2026-11-06 (rule R10). Held's per-shop arbiter (HeldArbiter.sol v4, Tempo TESTNET, read from the verified source):
+    no owner, no admin, no proxy, no DELEGATECALL / CALLCODE / SELFDESTRUCT, every parameter an immutable fixed at deployment. What
+    remains is ONE privileged address, `resolver`, immutable too: it may decide a DISPUTED payment (release it to the merchant or
+    refund the payer) during `resolveWindow` after the dispute; after the window anyone can refund the payer, and the resolver cannot
+    send funds anywhere else. Root-control set = {resolver}, resolved by R2/R3 unchanged (a key with no code is an EOA); a code that
+    is not the pinned one, an owner() that answers, a proxy slot that is set or an opcode that can change the code degrades the
+    target to the unresolved key. No delay exists on the resolver, so R5b gives 0. The bounded scope goes to `notes`, not to a score
+    (the Morpho Blue convention: the root mechanism is scored as it is, the scope caveat is written next to it)."""
+    arbiter = to_checksum_address(arbiter)
+    runtime = bytes.fromhex(_testnet_code(arbiter)[2:])
+    pinned = keccak(runtime).hex() == HELD_ARBITER_CODE_HASH
+    no_opcode = _opcode_absent(runtime, (0xF2, 0xF4, 0xFF))   # CALLCODE, DELEGATECALL, SELFDESTRUCT
+    no_owner = _testnet_call(arbiter, "owner()", ("address",)) is None
+    no_proxy = all(not int(rpc(TESTNET_RPCS[0], "eth_getStorageAt", [arbiter, slot, "latest"]), 16) for slot in (EIP1967_IMPL, EIP1967_ADMIN))
+    resolver = _testnet_call(arbiter, "resolver()", ("address",))
+    checks = {"codeHashPinned": pinned, "noDelegatecallCallcodeSelfdestruct": no_opcode, "noOwner": no_owner, "noProxySlot": no_proxy}
+    root, key = [], None
+    if resolver and int(resolver[0], 16):
+        addr = to_checksum_address(resolver[0])
+        if all(checks.values()) and _testnet_code(addr) == "0x":
+            key = {"address": addr, "kind": "EOA", "k": 1, "n": 1, "signers": [addr], "role": "resolver"}
+        else:
+            key = {"address": addr, "kind": "unresolved (code not the pinned one, or the resolver has code)", "k": None, "n": None, "signers": [], "role": "resolver"}
+        root.append(key)
+    else:
+        key = {"address": None, "kind": "unresolved (resolver unreadable)", "k": None, "n": None, "signers": [], "role": "resolver"}
+        root.append(key)
+    a, m, t = admin_key_score(key), multisig_score(key), timelock_score(0)
+    return {
+        "target": label, "address": arbiter, "kind": "Resolver arbiter (immutable code, one resolver key)",
+        "reads": {"resolver": key["address"], "checks": checks, "chainId": 42431},
+        "rootControlSet": root,
+        "weakestKey": {"k": key["k"], "n": key["n"], "address": key["address"], "role": "resolver"},
+        "adminKeyScore": a, "multisigScore": m, "timelockScore": t, "oracleAuthorityScore": 100,
+        "compositeScore": composite(a, m, t),
+        "notes": {"scope": "The code cannot be changed and has no owner. One immutable resolver key decides a disputed payment between the payer and the merchant for resolveWindow after the dispute, and cannot send funds anywhere else; after the window anyone can refund the payer. Read from a Tempo TESTNET contract: the other Tempo targets are mainnet. The composite is the result of the current method, which scores the resolver key as it is. CHANGELOG.md lists planned changes of method (Planned: method and standards, items 31, 32 and 36), so the number can move; no specific change is promised."},
+    }
+
+
 def cross_exposure(results):
     """Section 4.1, rule R6: contract semantics. 100 - 20 per OTHER tracked Tempo target
     sharing at least one root signer, floored at 0.
@@ -916,6 +993,8 @@ def main():
         results.append(score_vault_v2(label, addr))
     for label, addr in MORPHO_BLUE_TARGETS.items():
         results.append(score_morpho_blue(label, addr))
+    for label, addr in HELD_ARBITER_TARGETS.items():
+        results.append(score_resolver_arbiter(label, addr))
     cross_exposure(results)
     base = results[0]["compositeScore"]
     for r in results[1:]:

@@ -94,6 +94,13 @@ def score_all(_url_unused=None) -> list:
         # ADDED 2026-09-19: Morpho Blue core (rule R9, mt.score_morpho_blue).
         for label, addr in mt.MORPHO_BLUE_TARGETS.items():
             results.append(mt.score_morpho_blue(label, addr))
+        # ADDED 2026-11-06: Held's arbiter (rule R10, a TESTNET contract). Isolated: a failed testnet read drops this target
+        # for the run and says so; it never skips the mainnet targets above.
+        for label, addr in mt.HELD_ARBITER_TARGETS.items():
+            try:
+                results.append(mt.score_resolver_arbiter(label, addr))
+            except Exception as e:
+                print(f"score_all(): {label} NOT scored this run -- {type(e).__name__}: {e}")
         mt.cross_exposure(results)
         base = results[0]["compositeScore"]
         for r in results[1:]:

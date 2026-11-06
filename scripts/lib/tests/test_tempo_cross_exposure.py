@@ -267,6 +267,7 @@ class TestScoreAllKeepsTheNote(unittest.TestCase):
             mock.patch.object(s_mt, "TOKENS", {"TOK": {"address": addr(0x11), "lz_oapp": None}}),
             mock.patch.object(s_mt, "VAULT_V2_TARGETS", {}),
             mock.patch.object(s_mt, "MORPHO_BLUE_TARGETS", {"Morpho Blue core": core_addr}),
+            mock.patch.object(s_mt, "HELD_ARBITER_TARGETS", {}),   # the arbiter is read from the testnet: not part of this test
             mock.patch.object(s_mt, "scan_role_logs", lambda addresses: (1, {to_checksum_address(a): [] for a in addresses})),
             mock.patch.object(s_mt, "score_chain_baseline",
                               lambda: self._fake_result("Tempo L1 validator registry (ValidatorConfigV2)", addr(0x2), [addr(0x1)], 31)),

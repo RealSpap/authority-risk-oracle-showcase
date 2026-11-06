@@ -199,6 +199,7 @@ def decide_gate(found, state, now, reminder_hours=24, escalate_hours=ESCALATE_HO
 # ---------------------------------------------------------------- [8] every holder of DEFAULT_ADMIN_ROLE, within a bound
 
 ADMIN_MEMBERS_CAP = 10
+ADMIN_MEMBERS_MAX_PLAUSIBLE = 10000   # an enumerable admin role announced with more holders than this is not read as a count
 _MEMBER_SEL = "0x9010d07c"   # getRoleMember(bytes32,uint256)
 
 
@@ -208,28 +209,51 @@ def admin_member_calls(target, total, cap=ADMIN_MEMBERS_CAP):
     return [("eth_call", [{"to": target, "data": _MEMBER_SEL + "0" * 64 + f"{j:064x}"}, "latest"]) for j in range(1, n)]
 
 
-def assemble_admin_members(first, total, answers, cap=ADMIN_MEMBERS_CAP):
+def admin_member_probe_call(target, total, cap=ADMIN_MEMBERS_CAP):
+    """The eth_call for the index just past the announced count (getRoleMember(DEFAULT_ADMIN_ROLE, total)), or None when there is nothing to confirm
+    (no count, or a count above the bound, which is unread anyway). An enumerable set answers a revert there; a member there means the count is too low."""
+    if not isinstance(total, int) or isinstance(total, bool) or not 0 < total <= cap:
+        return None
+    return ("eth_call", [{"to": target, "data": _MEMBER_SEL + "0" * 64 + f"{total:064x}"}, "latest"])
+
+
+_NOT_ASKED = object()
+
+
+def assemble_admin_members(first, total, answers, cap=ADMIN_MEMBERS_CAP, beyond=_NOT_ASKED):
     """{members, total, read, unread, note}. `first` is member 0 (an address or None), `answers` the raw answers for members 1 ..
-    An unanswered or malformed answer is an unread member, never an absent one."""
+    An unanswered or malformed answer is an unread member, never an absent one.
+
+    Since 31/10/2026 the enumeration is not taken at its word: the members are distinct (the same address at two indexes counts as unread, an
+    enumerable set holds each member once); a count above ADMIN_MEMBERS_MAX_PLAUSIBLE is not a count (total and unread unknown); and `beyond`, the
+    answer for the index just past the count (admin_member_probe_call), must not be a member: a member there, or no answer, leaves the number unknown."""
     def addr(w):
         try:
             return ("0x" + w[-40:]).lower() if isinstance(w, str) and len(w) == 66 and int(w, 16) != 0 else None
         except ValueError:   # 66 characters that are not hexadecimal: an unreadable answer, counted unread
             return None
     members = [first.lower()] if first else []
-    bad = 0
+    bad = dup = 0
     for w in answers or []:
         a = addr(w)
-        if a:
+        if a and a in members:
+            dup += 1
+        elif a:
             members.append(a)
         else:
             bad += 1
-    if not isinstance(total, int):
+    if not isinstance(total, int) or isinstance(total, bool):
         return {"members": members, "total": None, "read": len(members), "unread": None, "note": "the number of members was not read"}
+    if total > ADMIN_MEMBERS_MAX_PLAUSIBLE or total < 0:
+        return {"members": members, "total": None, "read": len(members), "unread": None, "note": "the announced number of members (%d) is not a plausible count: not read" % total}
+    if beyond is not _NOT_ASKED and (beyond is None or addr(beyond)):
+        return {"members": members, "total": total, "read": len(members), "unread": None,
+                "note": ("an index past the announced count of %d answers a member: the count is too low, the number of members is not known" % total) if beyond is not None else
+                        "the index past the announced count got no answer: the count of %d is not confirmed" % total}
     unread = max(0, total - len(members))
     note = None
     if unread:
-        note = f"{unread} of {total} members of DEFAULT_ADMIN_ROLE not read" + (" (above the bound of %d)" % cap if total > cap else " (an answer was missing)")
+        note = f"{unread} of {total} members of DEFAULT_ADMIN_ROLE not read" + (" (above the bound of %d)" % cap if total > cap else (" (the same member answered at %d index(es))" % dup if dup else " (an answer was missing)"))
     return {"members": members, "total": total, "read": len(members), "unread": unread, "note": note}
 
 
@@ -248,16 +272,31 @@ def modules_truncated_of(word, page=50):
 
 def parse_modules_page(word, page=50):
     """(modules, truncated) from a getModulesPaginated answer (offset, next, length, addresses). `truncated` is True when `next` is not the
-    sentinel: more modules exist than the page returned. (None, None) for an answer that cannot be read."""
+    sentinel: more modules exist than the page returned. (None, None) for an answer that cannot be read.
+
+    Strict since 31/10/2026: an answer is read only when it has the exact shape of the ABI encoding a Safe returns: the offset of the array is 0x40,
+    the length is at most the page size and the answer holds exactly that many words, `next` and every module are address words (twelve zero bytes
+    first), no module is zero or the sentinel, and `next` is not zero: a Safe ends its list with the sentinel 0x1 (every version from 1.1.1 to 1.4.1), so a
+    cursor of zero is no end of list, whatever the length of the page. Anything else (a run of zeros from a contract that answers every call, a cursor of
+    zero on a page of 50 or of 0, a length above the page) is unread, never a complete list."""
     try:
-        if not word or len(word) < 2 + 64 * 3:
+        if not isinstance(word, str) or not word.startswith("0x") or len(word) < 2 + 64 * 3 or (len(word) - 2) % 64:
             return None, None
-        nxt = "0x" + word[2 + 64 + 24:2 + 128]
-        n = int(word[2 + 128:2 + 192], 16)
-        if len(word) < 2 + 192 + 64 * min(n, page):
+        words = [word[2 + 64 * j:2 + 64 * (j + 1)] for j in range((len(word) - 2) // 64)]
+        if int(words[0], 16) != 0x40:
             return None, None
-        mods = [("0x" + word[2 + 192 + 64 * j + 24:2 + 192 + 64 * (j + 1)]).lower() for j in range(min(n, page))]
-        return mods, (int(nxt, 16) not in (0, 1))
+        n = int(words[2], 16)
+        if n > page or len(words) != 3 + n:
+            return None, None
+        if any(int(w[:24], 16) != 0 for w in [words[1]] + words[3:]):
+            return None, None
+        nxt = int(words[1], 16)
+        mods = [("0x" + w[24:]).lower() for w in words[3:]]
+        if any(int(m, 16) in (0, 1) for m in mods):
+            return None, None
+        if nxt == 0:                        # the list ends with the sentinel, never with zero: zero is what a contract that answers zeros says
+            return None, None
+        return mods, nxt != 1
     except ValueError:
         return None, None
 

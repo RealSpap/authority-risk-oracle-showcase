@@ -25,6 +25,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 from watch_location import RAW  # noqa: E402  -- the root of the watch-data branch is the published watch/ folder
 SEL_SCORE = "0xd47875d0"
+FUTURE_TOLERANCE_SECONDS = 600   # as scripts/lib/trust_rules.py: a date more than 10 minutes after the present time is a date in the future, a FAIL (31/10/2026)
 PINNED_KEYS = ("11baca3ef6a69de4901c185f6cbbd3f93318fbb74f9961a8d39aead841adf409",)   # the signing key published in README.md and API.md; the MCP package pins the same one. A rotation is a commit that adds the new key here first.
 
 
@@ -179,10 +180,22 @@ def main():
     if c.get("reason") == "no events file": NOTE("event log: no events.jsonl published yet (nothing to chain)")
     else: (PASS if c["ok"] else FAIL)("event log: %s (%s chained, %s before the chain)" % ("chain intact" if c["ok"] else c.get("reason"), c.get("chained"), c.get("unchained")))
     # 1b. is the watch alive: latest.json older than two schedules (6 h cron) means the job stopped, and every audited file is that old
-    try:
-        lj = json.load(open(os.path.join(watch, "latest.json"))); age_h = (time.time() - __import__("calendar").timegm(time.strptime(lj["run_utc"], "%Y-%m-%dT%H:%M:%SZ"))) / 3600   # timegm, not mktime: the local clock may be on summer time
-        (NOTE if age_h <= 12 else FAIL)("watch alive: last run %s, %.1f h ago%s" % (lj["run_utc"], age_h, "" if age_h <= 12 else " (older than two 6-hour schedules: the job is not running, everything audited here is that old)"))
-    except Exception as e: NOTE("watch age not checked (%s)" % str(e)[:60])
+    # (31/10/2026: a file that is there with a date that cannot be read is a FAIL, not a note: an age that cannot be computed cannot be shown to be young, and a date in
+    # another format, such as +00:00, was read by nothing below)
+    utc_of = lambda v: __import__("calendar").timegm(time.strptime(v, "%Y-%m-%dT%H:%M:%SZ"))   # timegm, not mktime: the local clock may be on summer time
+    try: lj = json.load(open(os.path.join(watch, "latest.json")))
+    except OSError as e: lj = None; NOTE("watch age not checked (%s)" % str(e)[:60])
+    except ValueError as e: lj = None; FAIL("watch age: latest.json cannot be read (%s)" % str(e)[:60])
+    if lj is not None:
+        try: age_h = (time.time() - __import__("calendar").timegm(time.strptime(lj["run_utc"], "%Y-%m-%dT%H:%M:%SZ"))) / 3600
+        except (KeyError, TypeError, ValueError, AttributeError, IndexError) as e: age_h = None; FAIL("watch age: latest.json carries no readable run_utc (%s): the age of the run cannot be computed, so it cannot be shown to be young" % (str(e)[:60] or type(e).__name__))
+        if age_h is not None and age_h * 3600 < -FUTURE_TOLERANCE_SECONDS: FAIL("watch dated in the future: last run %s, %.1f h AFTER the present time of this audit (a clock ahead or a date written by hand: a negative age says nothing about now)" % (lj["run_utc"], -age_h))
+        elif age_h is not None: (NOTE if age_h <= 12 else FAIL)("watch alive: last run %s, %.1f h ago%s" % (lj["run_utc"], age_h, "" if age_h <= 12 else " (older than two 6-hour schedules: the job is not running, everything audited here is that old)"))
+    for name, field in (("signature.json", "run_utc"), ("trust.json", "generated_utc")):   # 31/10/2026: the other dates a reader of the run relies on, in the future too
+        if not os.path.exists(os.path.join(watch, name)): continue   # a run from before that file existed: checked (or noted) by the steps that read it
+        try: t_ = utc_of(json.load(open(os.path.join(watch, name)))[field])
+        except (OSError, KeyError, TypeError, ValueError, AttributeError, IndexError) as e: FAIL("%s: %s is not a readable date (%s): a date that cannot be read cannot be shown not to be in the future" % (name, field, str(e)[:60] or type(e).__name__)); continue
+        if t_ - time.time() > FUTURE_TOLERANCE_SECONDS: FAIL("%s %s is %s, %.1f h AFTER the present time of this audit: a date in the future" % (name, field, time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(t_)), (t_ - time.time()) / 3600))
     # 2. manifest + signature
     sp = os.path.join(watch, "signature.json"); stale_sig = False
     if os.path.exists(sp):

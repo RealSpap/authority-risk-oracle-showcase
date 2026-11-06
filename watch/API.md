@@ -211,6 +211,7 @@ Added; none renames or changes the meaning of an existing field. `null` is "not 
 | File | What | Meaning |
 |---|---|---|
 | `trust.json` | reason `score_future_dated` (reading, unverified, decides) | the score row is dated later than the time it was read at: the target is in `future_dated` of its score file, or its `lastUpdated` is more than 300 seconds after `block_time` (after `readAt` when the block time was not read). The on-chain staleness check measures from that date, so such a score would never turn stale: the target is `UNVERIFIED` until a score with a plausible date is pushed. `scripts/audit_public.py` applies the same rule to the scores files of a signed run and **fails** it (line `score dates`): a signature and matching hashes do not make such a date plausible |
+| `trust.json` | reason `run_future_dated` (surveillance, stale, decides) | `latest.json` `run_utc`, the date of an input file (the fields the rule already compares with the run) or `signature.json` `run_utc` is more than 600 seconds after the time the status is computed: a run dated in the future would otherwise never turn `STALE` while the present time is before that date. The target is `STALE` until a run carries plausible dates. `scripts/audit_public.py` fails such a run (`watch dated in the future`) with the same tolerance |
 
 ## Fields added by the corroboration of the independent reader (30 October 2026)
 

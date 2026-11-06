@@ -16,7 +16,7 @@ with none of the three getters is "unreadable", never "agrees". Standard library
 import argparse, calendar, glob, hashlib, json, os, sys, time, urllib.request
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from lib.reader_extras import (ADMIN_TOPICS, DEFAULT_ADMIN_DELAY_SEL, DELAY_TOPICS, LOG_STEP_BLOCKS, LOG_STEP_BY_CHAIN, admin_events_of, admin_gap, default_admin_delay_of, delay_change_of, events_by_address, member_disagreement, open_executor_call, open_executor_of, scan_logs, window_for)  # noqa: E402
-from lib.reader_audit import (PENDING_DEFAULT_ADMIN_SEL, PENDING_FOLLOW_NOTE, admin_member_calls, assemble_admin_members, first_read_through_new_getter, modules_truncated_of, parse_modules_page, parse_pending_default_admin, pending_family, read_gap_seconds, since_score_push_seconds, transfer_outcome)  # noqa: E402  -- admin members, modules page, read gap, pending transfers
+from lib.reader_audit import (PENDING_DEFAULT_ADMIN_SEL, PENDING_FOLLOW_NOTE, admin_member_calls, admin_member_probe_call, assemble_admin_members, first_read_through_new_getter, modules_truncated_of, parse_modules_page, parse_pending_default_admin, pending_family, read_gap_seconds, since_score_push_seconds, transfer_outcome)  # noqa: E402  -- admin members, modules page, read gap, pending transfers
 
 # the targets live on mainnets; the oracles on testnets. Same map as the dashboard's MAINNET config (read 2026-10-10).
 MAINNET = {"robinhood": "https://rpc.mainnet.chain.robinhood.com", "ethereum-l1": "https://ethereum-rpc.publicnode.com", "arbitrum": "https://arb1.arbitrum.io/rpc",
@@ -645,7 +645,7 @@ def main():
         # not show. Those targets get the same four probes (supportsInterface, getRoleMemberCount, getRoleMember(0), authority()) in the same batch; the getter stays the holder that is
         # followed, and every role holder and the AccessManager of authority() enter admin_members, so the gap and the trust rule see them. A probe that got no answer is NOT READ (beside_role_set).
         beside_idx = [i for i, h in enumerate(holders) if h[0] and h[1] in ("owner()", "admin()") and i not in native_idx]
-        ac_members, admin_answers, beside_why, beside_extra = {}, {}, {}, {}   # the first member and the count of DEFAULT_ADMIN_ROLE per target, then the other members up to a bound; for the targets read through owner() or admin(): why their role set was not read, and the AccessManager authority() names
+        ac_members, admin_answers, admin_beyond, beside_why, beside_extra = {}, {}, {}, {}, {}   # the first member and the count of DEFAULT_ADMIN_ROLE per target, then the other members up to a bound; for the targets read through owner() or admin(): why their role set was not read, and the AccessManager authority() names
         if c1b_idx or beside_idx:
             c1b = []
             for i in c1b_idx:
@@ -667,9 +667,12 @@ def main():
                 if why_: beside_why[i] = why_
                 if extra_: beside_extra[i] = extra_
             for i, note in ac_note.items(): holders[i] = (None, note, False)
-            calls_ = [(i, admin_member_calls(targets[i]["target"], n_)) for i, (m0_, n_) in ac_members.items() if isinstance(n_, int) and n_ > 1]
-            flat_ = [c_ for _, cs_ in calls_ for c_ in cs_]; ans_ = rpc_batch(url, flat_) if flat_ else []; pos_ = 0
-            for i, cs_ in calls_: admin_answers[i] = ans_[pos_:pos_ + len(cs_)]; pos_ += len(cs_)   # an unanswered member is counted unread by assemble_admin_members, never as absent
+            calls_ = [(i, admin_member_calls(targets[i]["target"], n_), admin_member_probe_call(targets[i]["target"], n_)) for i, (m0_, n_) in ac_members.items() if isinstance(n_, int) and n_ >= 1]   # 31/10/2026: plus the index past the count, which must not hold a member
+            flat_ = [c_ for _, cs_, pc_ in calls_ for c_ in cs_ + ([pc_] if pc_ else [])]; ans_ = rpc_batch(url, flat_) if flat_ else []; pos_ = 0
+            for i, cs_, pc_ in calls_:
+                got_ = ans_[pos_:pos_ + len(cs_) + (1 if pc_ else 0)]; pos_ += len(got_)
+                admin_answers[i] = got_[:len(cs_)]   # an unanswered member is counted unread by assemble_admin_members, never as absent
+                if pc_: admin_beyond[i] = got_[len(cs_)] if len(got_) > len(cs_) else None
         # AccessControlDefaultAdminRules keeps a transfer of the default admin in pendingDefaultAdmin(); read it for every target that has code (no getter: nothing)
         rpd_ = rpc_batch(url, [("eth_call", [{"to": t["target"], "data": PENDING_DEFAULT_ADMIN_SEL}, "latest"]) if i not in native_idx else ("eth_blockNumber", []) for i, t in enumerate(targets)])
         for i, w_ in enumerate(rpd_):
@@ -715,7 +718,7 @@ def main():
                    "block_start": block_start, "block_end": block_end,   # the reads of this record happened between these two blocks of the chain (public RPCs answer at latest; the span is a few blocks)
                    "self_delay_seconds": self_delays[i],   # timelock() on the contract itself (MetaMorpho vaults enforce 7 days on curator actions); None when there is no such getter
                    "scores_read_at": d.get("readAt") if isinstance(d.get("readAt"), int) else None, "read_gap_seconds": read_gap_seconds(d.get("readAt"), time.time()), "since_score_push_seconds": since_score_push_seconds(t.get("lastUpdated"), time.time())}   # seconds between the Watch's reading of the oracle and this reading (not a block gap: other networks)
-            if i in ac_members: rec["admin_members"] = assemble_admin_members(ac_members[i][0], ac_members[i][1], admin_answers.get(i, []))   # every holder of DEFAULT_ADMIN_ROLE up to a bound, or how many were not read
+            if i in ac_members: rec["admin_members"] = assemble_admin_members(ac_members[i][0], ac_members[i][1], admin_answers.get(i, []), **({"beyond": admin_beyond[i]} if i in admin_beyond else {}))   # every holder of DEFAULT_ADMIN_ROLE up to a bound, or how many were not read
             if i in beside_why: rec["admin_members"]["note"] = beside_why[i][:160]
             if i in beside_extra:   # authority() beside owner() or admin(): the AccessManager holds roles the getter does not show; it enters the members, so it is a holder that is not weighed
                 am_ = rec.get("admin_members") or {"members": [], "total": 0, "read": 0, "unread": 0, "note": None}

@@ -237,8 +237,8 @@ class TestModulesPage(unittest.TestCase):
         self.assertEqual(len(mods), 50)
         self.assertTrue(trunc)
 
-    def test_a_zero_next_is_not_a_cut(self):
-        self.assertFalse(ra.parse_modules_page(modules_word([5], 0))[1])
+    def test_a_zero_next_is_not_an_end_of_list(self):
+        self.assertEqual(ra.parse_modules_page(modules_word([5], 0)), (None, None))   # 31/10/2026: a Safe ends its list with the sentinel 1; zero is unread
 
     def test_a_malformed_answer_is_unread(self):
         self.assertEqual(ra.parse_modules_page(None), (None, None))

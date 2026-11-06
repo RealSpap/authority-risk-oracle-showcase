@@ -13,7 +13,8 @@ effect "info" for nothing. The status is the first line that matches, from the t
   UNAVAILABLE  a dimension is unavailable: the oracle holding the target was not read this run, or the trust computation itself failed (trust_not_computed).
   DISPUTED     a dimension is disputed: an open public dispute, or the independent reader disagrees and nobody has reviewed it.
   STALE        a dimension is stale: the on-chain score is stale, a pause or Safe-activity state has not been readable for 3 days or more (or for a time that
-               is not known), the Watch run itself is older than 8 hours, or the independent reader's file is from an earlier run than the Watch's.
+               is not known), the Watch run itself is older than 8 hours, the run or one of its input files is dated more than 10 minutes after the
+               present time (an age that is negative says nothing about now), or the independent reader's file is from an earlier run than the Watch's.
   UNVERIFIED   the independent reader did not read this target (no record, unreadable, or its input file missing), there is nothing to read
                independently (a native entity), or the score is dated later than the block it was read at (its staleness can never show).
   PARTIAL      something was checked and something was not: an incomplete reading (modules or admin members not all read, signers not classified, an admin
@@ -97,6 +98,7 @@ REASONS = {
     "money_unread": ("financial_exposure", "unverified", "info"),
     "money_out_of_scope": ("financial_exposure", "not_applicable", "info"),
     "watch_old": ("surveillance", "stale", "decides"),
+    "run_future_dated": ("surveillance", "stale", "decides"),     # run_utc, the date of an input file or of the manifest is later than the present time by more than FUTURE_TOLERANCE_SECONDS: a clock ahead, or a date written by hand
     "oracle_self_watch_unread": ("surveillance", "partial", "degrades"),
     "scan_gap": ("surveillance", "partial", "degrades"),
     # an input file the run could not read: the dimension it feeds cannot be called ok
@@ -125,7 +127,7 @@ REASONS = {
 TRANSIENT = frozenset({
     "oracle_not_read", "trust_not_computed", "score_stale", "modules_unread", "admin_events_unread", "admin_members_unread", "state_unverified_pause", "state_unverified_safe_activity",
     "state_stale_pause", "state_stale_safe_activity", "pause_unread", "side_roles_unread", "side_roles_stale", "signature_unread", "signature_key_unverifiable", "journal_unread",
-    "alert_undelivered", "signature_previous_run_missing", "watch_old", "oracle_self_watch_unread", "scan_gap", "score_row_unreadable", "stale_flag_unknown",
+    "alert_undelivered", "signature_previous_run_missing", "watch_old", "run_future_dated", "oracle_self_watch_unread", "scan_gap", "score_row_unreadable", "stale_flag_unknown",
     "input_missing:second_opinion", "input_missing:pause_state", "input_missing:safe_activity", "input_missing:side_roles", "input_missing:tvl", "input_missing:held_assets",
     "input_missing:alerts", "input_missing:methodology", "input_missing:disputes",
     "input_stale:second_opinion", "input_stale:pause_state", "input_stale:safe_activity", "input_stale:side_roles", "input_stale:tvl", "input_stale:held_assets", "input_stale:alerts",
@@ -139,6 +141,7 @@ PERMANENT = frozenset({
 })
 INPUT_DATE_FIELD = {"second_opinion": "generated_utc", "pause_state": "generated_utc", "safe_activity": "generated_utc", "side_roles": "generated_utc", "tvl": "generated_utc",
                     "held_assets": "generated_utc", "alerts": "evaluated_utc", "methodology": "generated_utc", "disputes": "run_utc"}
+FUTURE_TOLERANCE_SECONDS = 600   # a date later than the present time by more than 10 minutes is a date in the future: the steps of a run share one clock, and a consumer's clock is off by seconds, not minutes
 INPUT_MAX_LAG_SECONDS = 3600   # every input is written AFTER latest.run_utc by the steps that follow the Watch (+10 to +25 minutes in the run of 29/10); one written more than an hour BEFORE it is the file of an earlier run (a step that failed leaves it in place)
 SEV = {"info": 0, "medium": 1, "high": 2}   # as scripts/evaluate_rules.py
 SCORE_FUTURE_TOLERANCE_SECONDS = 300   # as LASTUPDATED_FUTURE_TOLERANCE in scripts/lib/reader_audit.py: the pusher's clock can be a little ahead of the chain's
@@ -195,6 +198,10 @@ def run_reasons(inputs, now, key_present):
     elif chain.get("ok") is not True:
         out["journal_broken"] = "the hash chain of events.jsonl does not verify (chain.json ok is not true)"
     run_t = _epoch(_get(latest, "run_utc"))
+    future = [label for label, utc in [("latest.run_utc", _get(latest, "run_utc")), ("signature.run_utc", _get(sig, "run_utc"))] + [("%s.%s" % (n, f), _get(inputs.get(n), f)) for n, f in sorted(INPUT_DATE_FIELD.items())]
+              if _epoch(utc) is not None and _epoch(utc) - now > FUTURE_TOLERANCE_SECONDS]
+    if future:      # a negative age is not a fresh one: until the present time reaches that date, watch_old and input_stale cannot fire
+        out["run_future_dated"] = "dated more than %d seconds after the present time: %s" % (FUTURE_TOLERANCE_SECONDS, ", ".join(future))
     if run_t is None:
         out["watch_old"] = "the time of the Watch run is not known"
     elif now - run_t > WATCH_MAX_AGE_HOURS * 3600:

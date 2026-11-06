@@ -1271,10 +1271,12 @@
    "first_seen_utc": "2026-11-03T22:02:18Z",
    "due_utc": "2026-11-05T21:49:47Z",
    "notice_hours": 47.8,
-   "state": "queued",
+   "state": "resolved",
    "chain": "ethereum",
    "timelock": "Compound Governance Timelock",
-   "what": "cross-chain message"
+   "what": "cross-chain message",
+   "resolved_seen_utc": "2026-11-06T06:41:22Z",
+   "final_state": "executed"
   },
   "solana:axkj8oh5adu4zrwfsujptxdb6vhq4gdehporebgruusm:squads:AxkJ8oH5aDu4ZRWfsujPtxdb6Vhq4gDehpoReBgrUUSm:20": {
    "outcome": "missed",
@@ -1441,16 +1443,46 @@
    "chain": "solana",
    "timelock": "Squads v4 multisig 51sm\u2026cjuH (3-of-5, time lock 36000 s), found by the independent reader (1 tracked program)",
    "what": "call"
+  },
+  "solana:c4awuufiul8dnt5wmdp27hnekkqbgynrsbca4xygsupk:squads:C4awuufiuL8DNT5wMDP27HneKKqbgynrsbCa4XYGSuPk:1030": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-11-06T06:41:22Z",
+   "due_utc": "2026-11-07T04:44:29Z",
+   "notice_hours": 22.1,
+   "state": "queued",
+   "chain": "solana",
+   "timelock": "Squads v4 multisig C4aw\u2026SuPk (4-of-9, time lock 86400 s), found by the independent reader (1 tracked program)",
+   "what": "program authority change"
+  },
+  "solana:c4awuufiul8dnt5wmdp27hnekkqbgynrsbca4xygsupk:squads:C4awuufiuL8DNT5wMDP27HneKKqbgynrsbCa4XYGSuPk:1031": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-11-06T06:41:22Z",
+   "due_utc": "2026-11-07T04:44:43Z",
+   "notice_hours": 22.1,
+   "state": "queued",
+   "chain": "solana",
+   "timelock": "Squads v4 multisig C4aw\u2026SuPk (4-of-9, time lock 86400 s), found by the independent reader (1 tracked program)",
+   "what": "program upgrade"
+  },
+  "solana:c4awuufiul8dnt5wmdp27hnekkqbgynrsbca4xygsupk:squads:C4awuufiuL8DNT5wMDP27HneKKqbgynrsbCa4XYGSuPk:1032": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-11-06T06:41:22Z",
+   "due_utc": "2026-11-07T04:54:41Z",
+   "notice_hours": 22.2,
+   "state": "queued",
+   "chain": "solana",
+   "timelock": "Squads v4 multisig C4aw\u2026SuPk (4-of-9, time lock 86400 s), found by the independent reader (1 tracked program)",
+   "what": "program upgrade"
   }
  },
- "updated_utc": "2026-11-05T19:56:18Z",
+ "updated_utc": "2026-11-06T06:41:22Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
-  "warned": 53,
+  "warned": 56,
   "seen_without_notice": 5,
   "missed": 22,
   "baseline": 77,
-  "warned_with_a_known_notice": 53,
+  "warned_with_a_known_notice": 56,
   "shortest_notice_hours": 0.2,
   "median_notice_hours": 22.1,
   "note": "warned: seen while queued and not yet executable (the notice is real); seen_without_notice: still queued but already executable when first seen; missed: queued after the ledger started and already applied when first seen (faster than the 6-hour cadence); baseline: applied before the ledger started, counted as neither."

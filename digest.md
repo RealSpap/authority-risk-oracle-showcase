@@ -1,13 +1,12 @@
 # Authority risk digest, 2026-11-03 22:24 UTC
 
-## Needs a person, 2026-11-03T22:24:51Z: 27 item(s) (priority 1: 5, priority 2: 19, priority 3: 3); oldest 24.0 d
+## Needs a person, 2026-11-03T22:24:51Z: 26 item(s) (priority 1: 4, priority 2: 19, priority 3: 3); oldest 24.0 d
 
-### Something happened: read before trusting the score (5)
+### Something happened: read before trusting the score (4)
 - **queued operation executable within 48 h** ethereum 0x2386DC45AdDed673317eF068992F19421B481F4c (0.9 d): nested timelock: executePayload(address,string,bytes) via ethereum-l1 timelock 0x2386…1f4c, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
 - **queued operation executable within 48 h** solana 1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78 (0.3 d): program upgrade: Squads proposal #1029: Upgrade of program 1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78 via Squads v4 multisig C4aw…SuPk (4-of-9, time lock 86400 s), found by the independent reader (1 tracked program). To do: read the call before it lands. (pending_ops.json)
 - **admin transfer in flight** robinhood 0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d (0.0 d): 0x9db4…1a53 designated (pendingOwner() on the contract (Ownable2Step), a contract). To do: identify the designated admin; when it accepts, the admin read changes. (second_opinion.json pending_admin)
 - **methodology changed** ethereum-l1  (0.0 d): Ethereum L1 (Sepolia): 0xf1bcef2ca2 -> 0xa37efe0973 on 38 target(s). To do: expected after a release of the scorer; otherwise a push by a key that should not hold the updater role. (methodology.json)
-- **queued operation executable within 48 h** ethereum 0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6 (0.0 d): cross-chain message: sendMessage(address,bytes,uint32) via Compound Governance Timelock. To do: read the call before it lands. (pending_ops.json)
 
 ### Decide (19)
 - **Safe guard to identify** ethereum-l1 0x2cc440b721d2cafd6d64908d6d8c4acc57f8afc3 (24.0 d): 0x74ab…8d29: contract, owned by 0xa075…c344. To do: say what this guard checks and who can change it. (second_opinion.json guard_detail)

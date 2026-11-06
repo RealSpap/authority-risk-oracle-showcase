@@ -1319,10 +1319,12 @@
    "first_seen_utc": "2026-11-04T19:44:05Z",
    "due_utc": "2026-11-04T23:18:36Z",
    "notice_hours": 3.6,
-   "state": "queued",
+   "state": "resolved",
    "chain": "solana",
    "timelock": "Squads v4 multisig J3mJ\u2026vG8P (4-of-6, time lock 43200 s), found by the independent reader (1 tracked program)",
-   "what": "program upgrade"
+   "what": "program upgrade",
+   "resolved_seen_utc": "2026-11-06T19:23:49Z",
+   "final_state": "unknown"
   },
   "ethereum:0x6d903f6003cca6255d85cca4d3b5e5146dc33925:0x31788560395a3db04e3fa7c79b58eb9a1a7ccc72ecb020c3d4865dfd76d44cef": {
    "outcome": "warned",
@@ -1473,14 +1475,24 @@
    "chain": "solana",
    "timelock": "Squads v4 multisig C4aw\u2026SuPk (4-of-9, time lock 86400 s), found by the independent reader (1 tracked program)",
    "what": "program upgrade"
+  },
+  "solana:7fcpipjwvbpbdhymvt1gjywkciakkjz5gahdqysemvhk:squads:7FCPipJWVbPbdHymVt1gJYwKciakkJz5GahdQySemvHk:131": {
+   "outcome": "missed",
+   "first_seen_utc": "2026-11-06T19:23:49Z",
+   "queued_utc": "2026-11-06T15:24:14Z",
+   "state": "resolved",
+   "final_state": "unknown",
+   "chain": "solana",
+   "timelock": "Squads v4 multisig 7FCP\u2026mvHk (7-of-15, time lock 0 s), found by the independent reader (1 tracked program)",
+   "what": "multisig config"
   }
  },
- "updated_utc": "2026-11-06T06:41:22Z",
+ "updated_utc": "2026-11-06T19:23:49Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
   "warned": 56,
   "seen_without_notice": 5,
-  "missed": 22,
+  "missed": 23,
   "baseline": 77,
   "warned_with_a_known_notice": 56,
   "shortest_notice_hours": 0.2,

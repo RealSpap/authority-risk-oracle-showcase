@@ -3,9 +3,9 @@
  "kind": "evm",
  "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
  "rpc": "https://testnet-rpc.monad.xyz/",
- "block": 77403608,
+ "block": 77548771,
  "maxStaleness": 777600,
- "readAt": 1793947504,
+ "readAt": 1793993278,
  "targets": [
   {
    "index": 0,
@@ -21,7 +21,7 @@
    "stale": false,
    "evaluation": "recomputed",
    "previousComposite": 37,
-   "previousRun": "2026-11-05T19:56:18Z",
+   "previousRun": "2026-11-06T06:41:22Z",
    "oracleAuthorityBasis": "not_applicable",
    "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
    "crossExposureBasis": "computed",
@@ -41,7 +41,7 @@
    "stale": false,
    "evaluation": "recomputed",
    "previousComposite": 80,
-   "previousRun": "2026-11-05T19:56:18Z",
+   "previousRun": "2026-11-06T06:41:22Z",
    "oracleAuthorityBasis": "not_applicable",
    "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
    "crossExposureBasis": "computed",
@@ -61,7 +61,7 @@
    "stale": false,
    "evaluation": "recomputed",
    "previousComposite": 60,
-   "previousRun": "2026-11-05T19:56:18Z",
+   "previousRun": "2026-11-06T06:41:22Z",
    "oracleAuthorityBasis": "not_applicable",
    "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
    "crossExposureBasis": "not_computed",
@@ -81,7 +81,7 @@
    "stale": false,
    "evaluation": "recomputed",
    "previousComposite": 43,
-   "previousRun": "2026-11-05T19:56:18Z",
+   "previousRun": "2026-11-06T06:41:22Z",
    "oracleAuthorityBasis": "not_applicable",
    "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
    "crossExposureBasis": "computed",
@@ -101,7 +101,7 @@
    "stale": false,
    "evaluation": "recomputed",
    "previousComposite": 67,
-   "previousRun": "2026-11-05T19:56:18Z",
+   "previousRun": "2026-11-06T06:41:22Z",
    "oracleAuthorityBasis": "not_computed",
    "oracleAuthorityReason": "A material price path could not be read in this run; the number is a floor, not a finding.",
    "crossExposureBasis": "computed",
@@ -121,7 +121,7 @@
    "stale": false,
    "evaluation": "recomputed",
    "previousComposite": 4,
-   "previousRun": "2026-11-05T19:56:18Z",
+   "previousRun": "2026-11-06T06:41:22Z",
    "oracleAuthorityBasis": "not_applicable",
    "oracleAuthorityReason": "This target neither reports nor reads a price, so there is nothing to measure here.",
    "crossExposureBasis": "computed",
@@ -141,7 +141,7 @@
    "stale": false,
    "evaluation": "recomputed",
    "previousComposite": 44,
-   "previousRun": "2026-11-05T19:56:18Z",
+   "previousRun": "2026-11-06T06:41:22Z",
    "oracleAuthorityBasis": "not_computed",
    "oracleAuthorityReason": "This target, or the protocol it governs, reads or publishes prices, and the price-path rule does not cover it yet; the 100 is a placeholder, not a finding.",
    "crossExposureBasis": "computed",
@@ -161,7 +161,7 @@
    "stale": false,
    "evaluation": "recomputed",
    "previousComposite": 49,
-   "previousRun": "2026-11-05T19:56:18Z",
+   "previousRun": "2026-11-06T06:41:22Z",
    "oracleAuthorityBasis": "computed",
    "oracleAuthorityReason": "Scored as the weakest of the material price paths one hop upstream (rule of 2026-10-04).",
    "crossExposureBasis": "computed",
@@ -181,7 +181,7 @@
    "stale": false,
    "evaluation": "recomputed",
    "previousComposite": 64,
-   "previousRun": "2026-11-05T19:56:18Z",
+   "previousRun": "2026-11-06T06:41:22Z",
    "oracleAuthorityBasis": "computed",
    "oracleAuthorityReason": "Scored as the weakest of the material price paths that could be read; at least one other path could not be read, so the true value is this number or lower.",
    "crossExposureBasis": "computed",
@@ -191,8 +191,8 @@
  "self": {
   "code_hash": "f33b2e74ee50352539db6b0cc362185c66f79b6b3930811842912995b1b53def",
   "role_events": [],
-  "from_block": 77280682,
-  "to_block": 77403608,
+  "from_block": 77403608,
+  "to_block": 77548771,
   "read": false,
   "roles": {
    "0x20630C6Ab4BA48a80edA46F77b9b6e987A8f32f5": {
@@ -204,11 +204,11 @@
     "updater": false
    }
   },
-  "error": "getLogs: window of 122926 blocks needs more than 120 calls at 100 blocks each",
-  "gap_blocks": 122926
+  "error": "getLogs: window of 145163 blocks needs more than 120 calls at 100 blocks each",
+  "gap_blocks": 145163
  },
- "self_scanned_to": 77403608,
- "reference_block": 77403608,
+ "self_scanned_to": 77548771,
+ "reference_block": 77548771,
  "pinned_block": null,
  "read_tag": "latest",
  "block_probe": {
@@ -216,7 +216,7 @@
   "probe_block": 1,
   "note": "not told (no old state served, or no answer to compare)"
  },
- "block_time": 1793947322,
+ "block_time": 1793993088,
  "scan_stalled_runs": 0,
  "future_dated": [],
  "lastupdated_check": "ok"

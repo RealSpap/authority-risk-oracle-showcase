@@ -414,7 +414,7 @@
      "signature": "addToWhitelist(address,bytes4)",
      "calls": 3,
      "ready_at": 1793958899,
-     "state": "waiting",
+     "state": "ready",
      "decoded": "parameter change"
     }
    ],
@@ -556,7 +556,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 4156701,
+   "window_blocks": 4171034,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -659,28 +659,11 @@
    "log_rpc": "https://gateway.tenderly.co/public/mainnet",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 100598,
+   "window_blocks": 100398,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
     "0x52aa899454998be5b000ad077a46bbe360f4e497"
-   ]
-  },
-  {
-   "name": "hyperliquid timelock 0xc5de\u202623d2, found by the independent reader (1 tracked contract)",
-   "chain": "hyperliquid",
-   "address": "0xc5ded4f7f53919c714059a17d31371ae847e23d2",
-   "family": "oz",
-   "status": "UNREAD (Web3RPCError: {'code': -32005, 'message': 'rate limited'})",
-   "queued_events": null,
-   "latest_queued": null,
-   "pending": [],
-   "recent": [],
-   "discovered": true,
-   "log_rpc": "https://rpc.hyperliquid.xyz/evm",
-   "delay": 172800,
-   "governs": [
-    "0xffaa4a3d97fe9107cef8a3f48c069f577ff76cc1"
    ]
   },
   {
@@ -749,26 +732,10 @@
    "address": "0xabd3645ba0bb60c238bede64378826e1206f5072",
    "family": "oz",
    "status": "ok",
-   "queued_events": 1,
-   "latest_queued": 1793364458,
+   "queued_events": 0,
+   "latest_queued": null,
    "pending": [],
-   "recent": [
-    {
-     "block": 36422636,
-     "tx": "0x1f1dd153de784a621e2560e8342149e41d64d5dfd411817cf09f9d09e23fba00",
-     "id": "0xb34e45727b92eb7c6e989e8d72a8dc2edd5de182b104f6a73863ee75575c9823",
-     "index": 0,
-     "target": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
-     "value": 0,
-     "selector": "0x46f943e9",
-     "delay": 86400,
-     "signature": "setRateLimits((uint32,uint256,uint256)[])",
-     "calls": 1,
-     "still_queued": false,
-     "queued_at": 1793364458,
-     "decoded": "parameter change"
-    }
-   ],
+   "recent": [],
    "discovered": true,
    "log_rpc": "https://rpc.plasma.to",
    "delay": 86400,
@@ -793,7 +760,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 0,
    "window_blocks": 3000000,
-   "window_days_est": 3.6,
+   "window_days_est": 3.5,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62"
@@ -813,7 +780,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 86400,
    "window_blocks": 3000000,
-   "window_days_est": 3.6,
+   "window_days_est": 3.5,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x14b107cf534239c59571b066cb6497a321da897c"
@@ -1027,7 +994,7 @@
    "transaction_index": 110
   },
   {
-   "name": "Squads v4 multisig 7FCP\u2026mvHk (7-of-16, time lock 0 s), found by the independent reader (1 tracked program)",
+   "name": "Squads v4 multisig 7FCP\u2026mvHk (7-of-15, time lock 0 s), found by the independent reader (1 tracked program)",
    "chain": "solana",
    "address": "7FCPipJWVbPbdHymVt1gJYwKciakkJz5GahdQySemvHk",
    "family": "squads",
@@ -1038,7 +1005,7 @@
    ],
    "delay": 0,
    "queued_events": 72,
-   "latest_queued": 1793808141,
+   "latest_queued": 1793978654,
    "pending": [],
    "recent": [
     {
@@ -1072,21 +1039,29 @@
      "decoded": "program upgrade",
      "what": "Upgrade of program MFv2hWf31Z9kbCa1snEPYctwafyhdvnV7FZnsebVacA",
      "touches_governed": true
-    }
-   ],
-   "active": [
+    },
     {
+     "id": "squads:7FCPipJWVbPbdHymVt1gJYwKciakkJz5GahdQySemvHk:131",
      "index": 131,
-     "approvals": 6,
-     "rejections": 0,
-     "since": 1793805569,
-     "account": "GiDrhFAJGHpfyfTtJexnJ61tboqTdJdSANTBGehERC1S"
+     "target": "4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8",
+     "value": 0,
+     "selector": null,
+     "signature": "Squads proposal #131: multisig configuration: remove member",
+     "still_queued": false,
+     "queued_at": 1793978654,
+     "executed_at": 1793978654,
+     "account": "GiDrhFAJGHpfyfTtJexnJ61tboqTdJdSANTBGehERC1S",
+     "undecoded": false,
+     "decoded": "multisig config",
+     "what": "multisig configuration: remove member",
+     "touches_governed": true
     }
    ],
+   "active": [],
    "proposals": {
-    "executed": 60,
+    "executed": 61,
     "cancelled": 1,
-    "active": 11
+    "active": 10
    },
    "transaction_index": 131
   },
@@ -1101,8 +1076,8 @@
     "dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH"
    ],
    "delay": 3600,
-   "queued_events": 145,
-   "latest_queued": 1793800621,
+   "queued_events": 147,
+   "latest_queued": 1793993513,
    "pending": [],
    "recent": [
     {
@@ -1215,13 +1190,28 @@
      "touches_governed": false
     }
    ],
-   "active": [],
+   "active": [
+    {
+     "index": 149,
+     "approvals": 1,
+     "rejections": 0,
+     "since": 1793993512,
+     "account": "CybCk46vFLgkRikVXQ7j2cdwwmPQzMyyrx7GpL2x5hkZ"
+    },
+    {
+     "index": 150,
+     "approvals": 1,
+     "rejections": 0,
+     "since": 1793993513,
+     "account": "EuzLSRfuhzcoR41LivEwKD3cUp3nuWVNrWPynAixDU6W"
+    }
+   ],
    "proposals": {
     "executed": 130,
-    "active": 4,
+    "active": 6,
     "rejected": 11
    },
-   "transaction_index": 148
+   "transaction_index": 150
   },
   {
    "name": "Squads v4 multisig 8Sr4\u2026zHQq (3-of-8, time lock 0 s), found by the independent reader (1 tracked program)",
@@ -1628,25 +1618,8 @@
    ],
    "delay": 43200,
    "queued_events": 61,
-   "latest_queued": 1793791116,
-   "pending": [
-    {
-     "id": "squads:J3mJ3wz6xkVUk3T8qHnuAYNxsRH3ixHsryYNZAU2vG8P:65",
-     "index": 65,
-     "target": "jupnw4B6Eqs7ft6rxpzYLJZYSnrpRgPcr589n5Kv4oc",
-     "value": 0,
-     "selector": null,
-     "signature": "Squads proposal #65: Upgrade of program jupnw4B6Eqs7ft6rxpzYLJZYSnrpRgPcr589n5Kv4oc (not the tracked program)",
-     "ready_at": 1793834316,
-     "state": "ready",
-     "approved_at": 1793791116,
-     "account": "AUZqenZA3Ev6ZgFxdJoumUW1CKxHskThW9nFPs6jDY7v",
-     "undecoded": false,
-     "decoded": "program upgrade",
-     "what": "Upgrade of program jupnw4B6Eqs7ft6rxpzYLJZYSnrpRgPcr589n5Kv4oc",
-     "touches_governed": false
-    }
-   ],
+   "latest_queued": 1793949528,
+   "pending": [],
    "recent": [
     {
      "id": "squads:J3mJ3wz6xkVUk3T8qHnuAYNxsRH3ixHsryYNZAU2vG8P:64",
@@ -1663,14 +1636,29 @@
      "decoded": "loader Close",
      "what": "Close of program GBZnPvzLWHjmCgkE3hYB8MmyMjmoq2HAyuseNBwtxFTg; Close of program vcxZRPheWRgCbEmot2szRBnXQ1usSTCh1eJdxAYxdZA; Close of program 8xzSSjxcQu13h6oPTSn6Pe1webcTUNtnx98eBFGTU84z",
      "touches_governed": false
+    },
+    {
+     "id": "squads:J3mJ3wz6xkVUk3T8qHnuAYNxsRH3ixHsryYNZAU2vG8P:65",
+     "index": 65,
+     "target": "jupnw4B6Eqs7ft6rxpzYLJZYSnrpRgPcr589n5Kv4oc",
+     "value": 0,
+     "selector": null,
+     "signature": "Squads proposal #65: Upgrade of program jupnw4B6Eqs7ft6rxpzYLJZYSnrpRgPcr589n5Kv4oc (not the tracked program)",
+     "still_queued": false,
+     "queued_at": 1793949528,
+     "executed_at": 1793949528,
+     "account": "AUZqenZA3Ev6ZgFxdJoumUW1CKxHskThW9nFPs6jDY7v",
+     "undecoded": false,
+     "decoded": "program upgrade",
+     "what": "Upgrade of program jupnw4B6Eqs7ft6rxpzYLJZYSnrpRgPcr589n5Kv4oc",
+     "touches_governed": false
     }
    ],
    "active": [],
    "proposals": {
-    "executed": 56,
+    "executed": 57,
     "active": 1,
-    "cancelled": 3,
-    "approved": 1
+    "cancelled": 3
    },
    "transaction_index": 65
   },
@@ -1756,7 +1744,7 @@
    "transaction_index": 72
   }
  ],
- "discovered_utc": "2026-11-06T06:53:05Z",
- "discovered": 15,
- "squads_utc": "2026-11-06T06:58:34Z"
+ "discovered_utc": "2026-11-06T19:37:22Z",
+ "discovered": 14,
+ "squads_utc": "2026-11-06T19:43:34Z"
 }

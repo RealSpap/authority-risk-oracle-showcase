@@ -289,6 +289,43 @@ def addr_of(word):
     return None if int(a, 16) == 0 else a
 
 
+def call_kind(w):
+    """How one eth_call answer reads: 'none' (the node gave no answer: rpc_batch leaves None), 'revert' (the contract reverted: rpc_batch leaves ""), 'empty' ("0x"),
+    'word' (exactly 32 bytes of hexadecimal), 'bad' (anything else: too short, too long, not hexadecimal)."""
+    if w is None: return "none"
+    if w == "": return "revert"
+    if w == "0x": return "empty"
+    if isinstance(w, str) and len(w) == 66 and w.startswith("0x"):
+        try: int(w, 16); return "word"
+        except ValueError: return "bad"
+    return "bad"
+
+
+def beside_role_set(si, cnt, mem, auth, getter):
+    """(first, total, extra, why) for a target whose holder was read through owner() or admin(): what its role set and its authority() add to that getter (31/10/2026).
+
+    The answers are those of supportsInterface(AccessControl), getRoleMemberCount(DEFAULT_ADMIN_ROLE), getRoleMember(DEFAULT_ADMIN_ROLE, 0) and authority().
+    The role set is judged by what the count and member 0 do, never by supportsInterface, which a contract can answer as it likes (a 0 or a revert beside an
+    enumerable role changes nothing). `why` is set when the set could not be read: a probe the node did not answer, an answer that is not a word, a count that
+    contradicts member 0. That is NOT READ, never 'no holder'. A contract that REVERTS the getters is not an enumerable role set: nothing is added.
+    first / total: member 0 and the count when the set is read (total None with `why`); extra: the AccessManager that authority() names, when it is not the getter's holder."""
+    kinds = [call_kind(x) for x in (si, cnt, mem, auth)]
+    extra = addr_of(auth) if kinds[3] == "word" else None
+    if extra and getter and extra.lower() == str(getter).lower(): extra = None
+    for k, name in zip(kinds, ("supportsInterface", "getRoleMemberCount", "getRoleMember", "authority")):
+        if k == "none": return None, None, extra, "%s was not answered by the node: the holders of the admin role are not read" % name
+        if k == "bad": return None, None, extra, "the answer to %s is not a word: the holders of the admin role are not read" % name
+    n = int(cnt, 16) if kinds[1] == "word" else None
+    first = addr_of(mem) if kinds[2] == "word" else None
+    if first:
+        if n is None: return first, None, extra, "getRoleMemberCount did not answer but getRoleMember(0) names a holder: the number of holders is not known"
+        if n == 0: return first, None, extra, "getRoleMemberCount says 0 but getRoleMember(0) names a holder: the number of holders is not known"
+        return first, n, extra, None
+    if n:   # a count above zero and no member 0
+        return None, None, extra, "getRoleMemberCount says %d but getRoleMember(0) names no holder: the holders of the admin role are not read" % min(n, 10 ** 9)
+    return None, None, extra, None
+
+
 # ---------------------------------------------------------------------------------------------------------------------------------------
 # CORROBORATION (29/10/2026). A score is the weakest of several authority paths of a target; this reader reads one path (the first hop), so a
 # score driven by ANOTHER path used to show as a disagreement. Here the reader reads MORE FACTS, with its own code, and a disagreement is
@@ -564,6 +601,7 @@ def main():
     try: prev_windows = json.load(open(a.out)).get("event_windows") or {}   # the last block whose events were read completely, per chain: a window the node refused is read again next run, none is lost
     except Exception: prev_windows = {}  # noqa: BLE001
     if not isinstance(prev_windows, dict): prev_windows = {}
+    beside = {}   # "<chain>:<target>" (lower case) -> the address followed through owner() or admin() on a target that is also an enumerable AccessControl (pass 1b): every role holder other than it is not weighed
     event_windows = {}; changes = []; upgrades = []; now_utc = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     def carry_since(rec, pr, moved):   # "admin unchanged since": the earliest run that read the same holder, carried from run to run
         rec["since"] = (pr.get("since") or prev_utc or now_utc) if (pr and not moved and pr.get("kind") not in (None, "unreadable", "native")) else now_utc
@@ -603,10 +641,16 @@ def main():
         # when enumerable, the first holder of DEFAULT_ADMIN_ROLE is the admin; AccessManaged: authority() is the AccessManager that holds every role.
         AC_IFACE = "0x01ffc9a7" + "7965db0b".ljust(64, "0"); AC_COUNT = "0xca15c873" + "0" * 64; AC_MEMBER = "0x9010d07c" + "0" * 128
         c1b_idx = [i for i, h in enumerate(holders) if not h[0] and h[2] is False and i not in native_idx]
-        ac_members, admin_answers = {}, {}   # the first member and the count of DEFAULT_ADMIN_ROLE per target, then the other members up to a bound
-        if c1b_idx:
+        # 31/10/2026: a target read through owner() or admin() may ALSO be an enumerable AccessControl, whose DEFAULT_ADMIN_ROLE holders have power the getter does
+        # not show. Those targets get the same four probes (supportsInterface, getRoleMemberCount, getRoleMember(0), authority()) in the same batch; the getter stays the holder that is
+        # followed, and every role holder and the AccessManager of authority() enter admin_members, so the gap and the trust rule see them. A probe that got no answer is NOT READ (beside_role_set).
+        beside_idx = [i for i, h in enumerate(holders) if h[0] and h[1] in ("owner()", "admin()") and i not in native_idx]
+        ac_members, admin_answers, beside_why, beside_extra = {}, {}, {}, {}   # the first member and the count of DEFAULT_ADMIN_ROLE per target, then the other members up to a bound; for the targets read through owner() or admin(): why their role set was not read, and the AccessManager authority() names
+        if c1b_idx or beside_idx:
             c1b = []
             for i in c1b_idx:
+                x = targets[i]["target"]; c1b += [("eth_call", [{"to": x, "data": AC_IFACE}, "latest"]), ("eth_call", [{"to": x, "data": AC_COUNT}, "latest"]), ("eth_call", [{"to": x, "data": AC_MEMBER}, "latest"]), ("eth_call", [{"to": x, "data": SEL["authority"]}, "latest"])]
+            for i in beside_idx:
                 x = targets[i]["target"]; c1b += [("eth_call", [{"to": x, "data": AC_IFACE}, "latest"]), ("eth_call", [{"to": x, "data": AC_COUNT}, "latest"]), ("eth_call", [{"to": x, "data": AC_MEMBER}, "latest"]), ("eth_call", [{"to": x, "data": SEL["authority"]}, "latest"])]
             r1b = rpc_batch(url, c1b); ac_note = {}
             for j, i in enumerate(c1b_idx):
@@ -615,6 +659,13 @@ def main():
                 if is_ac and addr_of(mem): holders[i] = (addr_of(mem), "DEFAULT_ADMIN_ROLE member 1 of %s (AccessControl)" % (n_members if n_members is not None else "?"), False); ac_members[i] = (addr_of(mem), n_members)
                 elif addr_of(auth): holders[i] = (addr_of(auth), "authority() (AccessManaged: the AccessManager holds every role)", False)
                 elif is_ac: ac_note[i] = "AccessControl (ERC-165) whose admin-role holders are not enumerable on-chain: read them from RoleGranted events; nothing for this reader to compare"
+            for j, i in enumerate(beside_idx):
+                si, cnt, mem, auth = r1b[4 * len(c1b_idx) + 4 * j:4 * len(c1b_idx) + 4 * j + 4]
+                first_, total_, extra_, why_ = beside_role_set(si, cnt, mem, auth, holders[i][0])
+                if first_ or why_ or extra_: beside[key + ":" + targets[i]["target"].lower()] = holders[i][0]
+                if first_ or why_: ac_members[i] = (first_, total_)   # holders to read; an unread set (total None) is admin_members_unread, never 'no holder'
+                if why_: beside_why[i] = why_
+                if extra_: beside_extra[i] = extra_
             for i, note in ac_note.items(): holders[i] = (None, note, False)
             calls_ = [(i, admin_member_calls(targets[i]["target"], n_)) for i, (m0_, n_) in ac_members.items() if isinstance(n_, int) and n_ > 1]
             flat_ = [c_ for _, cs_ in calls_ for c_ in cs_]; ans_ = rpc_batch(url, flat_) if flat_ else []; pos_ = 0
@@ -665,6 +716,14 @@ def main():
                    "self_delay_seconds": self_delays[i],   # timelock() on the contract itself (MetaMorpho vaults enforce 7 days on curator actions); None when there is no such getter
                    "scores_read_at": d.get("readAt") if isinstance(d.get("readAt"), int) else None, "read_gap_seconds": read_gap_seconds(d.get("readAt"), time.time()), "since_score_push_seconds": since_score_push_seconds(t.get("lastUpdated"), time.time())}   # seconds between the Watch's reading of the oracle and this reading (not a block gap: other networks)
             if i in ac_members: rec["admin_members"] = assemble_admin_members(ac_members[i][0], ac_members[i][1], admin_answers.get(i, []))   # every holder of DEFAULT_ADMIN_ROLE up to a bound, or how many were not read
+            if i in beside_why: rec["admin_members"]["note"] = beside_why[i][:160]
+            if i in beside_extra:   # authority() beside owner() or admin(): the AccessManager holds roles the getter does not show; it enters the members, so it is a holder that is not weighed
+                am_ = rec.get("admin_members") or {"members": [], "total": 0, "read": 0, "unread": 0, "note": None}
+                if beside_extra[i].lower() not in [m_.lower() for m_ in am_["members"]]:
+                    am_["members"].append(beside_extra[i]); am_["read"] = len(am_["members"])
+                    if isinstance(am_.get("total"), int): am_["total"] += 1
+                    am_["note"] = am_.get("note") or "authority() names an AccessManager beside the getter: it holds roles that this reader does not weigh"
+                rec["admin_members"] = am_
             if i in native_idx:
                 rec["kind"] = "native"; rec["why"] = "no code at this address on the chain's mainnet: a derived identifier for a native (non-EVM) entity such as HyperCore, or a contract that lives on another chain (a rollup's own L1 contracts); nothing for this reader to compare here"; native += 1; results.append(rec); continue
             if not addr or code in (None, "") or thr is None or own is None or dly is None or dly2 is None:   # a probe not answered is not a classification: fail closed, never guess "contract" (dly2 too, since 10/10: a Compound-style timelock read as "contract" on one flaky run was a false admin change)
@@ -803,7 +862,7 @@ def main():
         da_recs = [r_ for r_ in chain_recs if "default_admin" in (r_.get("pending_getters") or [])]
         da_ans = rpc_batch(url, [("eth_call", [{"to": r_["target"], "data": DEFAULT_ADMIN_DELAY_SEL}, "latest"]) for r_ in da_recs]) if da_recs else []
         mrecs = [r_ for r_ in chain_recs if isinstance(r_.get("admin_members"), dict) and r_["admin_members"].get("members") and r_.get("kind") not in ("unreadable", "native")]
-        first_member = lambda r_: r_["admin_members"]["members"][0]            # the holder BEFORE any hop (an Arbitrum alias is replaced by its L1 address in `holder`, not here)
+        first_member = lambda r_: beside.get(key + ":" + str(r_["target"]).lower()) or r_["admin_members"]["members"][0]            # the holder BEFORE any hop (an Arbitrum alias is replaced by its L1 address in `holder`, not here); for a target read through owner() or admin(), the address that getter answered
         mem_addrs = sorted({m_ for r_ in mrecs for m_ in r_["admin_members"]["members"] if m_.lower() != first_member(r_).lower()})
         mem_codes = rpc_batch(url, [("eth_getCode", [m_, "latest"]) for m_ in mem_addrs]) if mem_addrs else []
         member_kinds = {m_.lower(): (None if c_ is None else ("eoa" if is_plain(c_) else "contract")) for m_, c_ in zip(mem_addrs, mem_codes)}

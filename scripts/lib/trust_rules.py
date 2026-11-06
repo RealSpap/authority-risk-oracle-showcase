@@ -14,8 +14,8 @@ effect "info" for nothing. The status is the first line that matches, from the t
   DISPUTED     a dimension is disputed: an open public dispute, or the independent reader disagrees and nobody has reviewed it.
   STALE        a dimension is stale: the on-chain score is stale, a pause or Safe-activity state has not been readable for 3 days or more (or for a time that
                is not known), the Watch run itself is older than 8 hours, or the independent reader's file is from an earlier run than the Watch's.
-  UNVERIFIED   the independent reader did not read this target (no record, unreadable, or its input file missing) or there is nothing to read
-               independently (a native entity).
+  UNVERIFIED   the independent reader did not read this target (no record, unreadable, or its input file missing), there is nothing to read
+               independently (a native entity), or the score is dated later than the block it was read at (its staleness can never show).
   PARTIAL      something was checked and something was not: an incomplete reading (modules or admin members not all read, signers not classified, an admin
                the reader cannot contradict: a contract it did not resolve, a program-derived address), a method that differs or is fixed by decision, an
                alert not delivered, an unsigned run, a signing key that is not pinned (or cannot be compared), a broken journal, an input file that could not
@@ -62,6 +62,7 @@ REASONS = {
     "score_row_unreadable": ("reading", "unverified", "decides"),      # the row of the score file has no composite between 0 and 100: nothing to rely on
     "stale_flag_unknown": ("reading", "unverified", "decides"),         # the row says neither stale nor fresh (isStale is missing or not a boolean): unknown is never ok
     "block_not_honoured": ("reading", "unverified", "decides"),      # the node ignores the block tag (its probe answered for block 1 as for the head): a reading pinned to a block cannot be replayed
+    "score_future_dated": ("reading", "unverified", "decides"),      # lastUpdated is later than the time of the block read (future_dated in the score file): the on-chain staleness check measures from that date, so the score never turns stale
     "modules_truncated": ("reading", "partial", "degrades"),
     "modules_unread": ("reading", "partial", "degrades"),
     "reader_cannot_contradict": ("reading", "partial", "degrades"),
@@ -134,12 +135,13 @@ PERMANENT = frozenset({
     "dispute_open", "reader_disagrees", "reader_disagreement_acknowledged", "independent_read_missing", "independent_read_unreadable", "native_entity", "modules_truncated",
     "reader_cannot_contradict", "admin_members_not_weighed", "safe_signers_unclassified", "score_fixed_by_decision", "method_hash_differs", "run_unsigned", "signature_key_not_pinned",
     "journal_broken", "oracle_method_mixed", "method_version_unregistered", "executor_open", "pause_no_getter", "side_roles_not_covered", "money_unknown", "money_stale", "money_unread",
-    "money_out_of_scope", "block_not_honoured",
+    "money_out_of_scope", "block_not_honoured", "score_future_dated",
 })
 INPUT_DATE_FIELD = {"second_opinion": "generated_utc", "pause_state": "generated_utc", "safe_activity": "generated_utc", "side_roles": "generated_utc", "tvl": "generated_utc",
                     "held_assets": "generated_utc", "alerts": "evaluated_utc", "methodology": "generated_utc", "disputes": "run_utc"}
 INPUT_MAX_LAG_SECONDS = 3600   # every input is written AFTER latest.run_utc by the steps that follow the Watch (+10 to +25 minutes in the run of 29/10); one written more than an hour BEFORE it is the file of an earlier run (a step that failed leaves it in place)
 SEV = {"info": 0, "medium": 1, "high": 2}   # as scripts/evaluate_rules.py
+SCORE_FUTURE_TOLERANCE_SECONDS = 300   # as LASTUPDATED_FUTURE_TOLERANCE in scripts/lib/reader_audit.py: the pusher's clock can be a little ahead of the chain's
 
 
 def _epoch(utc):
@@ -147,6 +149,10 @@ def _epoch(utc):
         return calendar.timegm(time.strptime(utc, "%Y-%m-%dT%H:%M:%SZ"))
     except (TypeError, ValueError):
         return None
+
+
+def _is_int(x):
+    return isinstance(x, int) and not isinstance(x, bool)
 
 
 def _get(d, *path):
@@ -276,6 +282,9 @@ def derive_all(inputs, now, key_present, fixed_targets=frozenset(), evm_chains=N
                 rs["stale_flag_unknown"] = "the score row says neither stale nor fresh (isStale is missing or not true/false)"
             if t.get("stale") is True:
                 rs["score_stale"] = "the on-chain score is stale (isStale)"
+            lu, ref = t.get("lastUpdated"), (doc.get("block_time") if _is_int(doc.get("block_time")) else (doc.get("readAt") if _is_int(doc.get("readAt")) else None))
+            if norm_addr(t.get("target")) in {norm_addr(x) for x in (doc.get("future_dated") or []) if isinstance(x, str)} or (_is_int(lu) and ref is not None and lu > ref + SCORE_FUTURE_TOLERANCE_SECONDS):
+                rs["score_future_dated"] = "the score is dated later than the time it was read at (lastUpdated %s, read at %s): its staleness cannot show" % (lu, ref)
             h = t.get("methodologyHash")
             if dom and h and h != dom:
                 rs["method_hash_differs"] = "scored by a different method hash than the other targets of its oracle"

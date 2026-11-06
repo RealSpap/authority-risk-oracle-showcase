@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: write
+  actions: read   # the list of runs of this workflow, read once to place the previous state in time (step "The last successful run")
 
 concurrency:
   group: watch
@@ -37,14 +38,40 @@ jobs:
           WATCH_REQUIRE_SEED: ${{ github.repository == 'RealSpap/authority-risk-oracle-showcase' && '1' || '' }}
         run: bash scripts/watch_branch.sh prepare
 
+      - name: "The last successful run of this workflow (GitHub's own list of runs): the one record an older signed state put back on watch-data cannot rewrite"
+        id: anchor
+        env:
+          GH_TOKEN: ${{ github.token }}   # this step only: the scripts of the next step never see a token
+        run: |
+          t=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/watch.yml/runs?status=success&per_page=1" --jq '.workflow_runs[0].created_at // empty' 2>/dev/null || true)
+          case "$t" in
+            20[0-9][0-9]-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9]Z) echo "utc=$t" >> "$GITHUB_OUTPUT"; echo "the last successful run started $t" ;;
+            *) echo "::warning title=Rollback check::the list of runs could not be read (or holds no successful run yet): an older state put back on watch-data is not looked for in this run" ;;
+          esac
+
       - name: Read every EVM oracle and diff against the previous run
         id: run
+        env:
+          HAS_SIGNING_KEY: ${{ secrets.WATCH_SIGNING_KEY != '' }}   # whether a key exists, never the key: an unsigned previous run is then refused
+          WATCH_BOOTSTRAP: ${{ vars.WATCH_BOOTSTRAP }}   # "1" only for the first signed run, started by hand (workflow_dispatch), set by the owner as a repository variable and removed after it; a scheduled run ignores it (scripts/check_previous_state.py)
+          WATCH_LAST_SUCCESS_UTC: ${{ steps.anchor.outputs.utc }}   # empty when the list of runs could not be read
         run: |
           set +e
+          python3 scripts/check_previous_state.py --watch watch > watch/previous_state.txt 2>&1; p=$?   # before the run extends the files and signs them again: a change pushed between two runs must not be signed by the next one
+          cat watch/previous_state.txt; grep '^ALARM' watch/previous_state.txt > watch/run.log   # the alarm gate reads the ALARM lines of run.log
+          if grep -q '^ALARM' watch/previous_state.txt; then echo "prev_alarm=1" >> "$GITHUB_OUTPUT"; fi   # the switch used or left on, a refusal: an issue every time, whatever the gate remembers
+          if [ "$p" != 0 ]; then
+            echo "code=2" >> "$GITHUB_OUTPUT"
+            if [ "$p" = 3 ]; then echo "::error title=Previous state not checked::PyNaCl is not installed, so the signature of the state this run starts from could not be checked (pip install pynacl). This says nothing about the state; the run does not continue"
+            else echo "::error title=Previous state::the state this run starts from is not the one the previous run signed (a file changed, added or removed, the event log cut, signature.json gone, or an older state put back): this run does not continue it"; fi
+            { printf '# Alarm, %s\n\nThe Watch did not run: the state it starts from was refused. Nothing was recorded.\n\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)"; cat watch/previous_state.txt; } > watch/alarm.md
+            exit 1
+          fi
           head=$(python3 -c "import json;print(((json.load(open('watch/signature.json')) or {}).get('manifest') or {}).get('events_chain_head') or '')" 2>/dev/null || true)
-          if [ -n "$head" ]; then python3 scripts/verify_chain.py --events watch/events.jsonl --head "$head" || { echo "code=2" >> "$GITHUB_OUTPUT"; echo "::error title=Journal head::the event log no longer ends where the signed manifest of the previous run says it ends (or is gone): this run does not continue it"; exit 1; }; else echo "no pinned head in the previous manifest (first run, or an unsigned one): nothing to compare"; fi
+          if [ -n "$head" ]; then python3 scripts/verify_chain.py --events watch/events.jsonl --head "$head" || { echo "code=2" >> "$GITHUB_OUTPUT"; echo "prev_alarm=1" >> "$GITHUB_OUTPUT"; echo "ALARM previous state refused: the event log no longer ends at the signed head" >> watch/run.log; echo "::error title=Journal head::the event log no longer ends where the signed manifest of the previous run says it ends (or is gone): this run does not continue it"; exit 1; }; else echo "no pinned head in the previous manifest (first run, or an unsigned one): nothing to compare"; fi
           python3 scripts/watch_run.py 2>&1 | tee watch/run.log   # 2>&1: a crash prints its Traceback on stderr; without it run.log never held one, so a crash (exit 1) read as 'something unread', a warning, and the job stayed green (review 11/10)
           c=${PIPESTATUS[0]}; echo "code=$c" >> "$GITHUB_OUTPUT"
+          grep '^ALARM' watch/previous_state.txt >> watch/run.log   # the lines of the check that came before the run (the bootstrap switch used or left on): the alarm gate reads the ALARM lines of run.log
           if [ "$c" = 1 ] && ! grep -q Traceback watch/run.log; then echo "a target or an oracle was not read this run (exit 1), a warning shown on the page, not a failure" > watch/run.txt; elif [ "$c" != 0 ] && [ "$c" != 2 ]; then echo "exit code $c" > watch/run.txt; fi   # 2 = an alarm, 1 without a traceback = something unread, both known states
 
       - name: Which oracle turns stale, and when (EVM, Solana)
@@ -187,10 +214,15 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python3 scripts/main_activity.py --out watch/main_activity.json --issue-repo RealSpap/authority-risk-oracle --subject "${{ github.repository }}" > watch/main_activity.txt 2>&1 || echo "exit code $?" >> watch/main_activity.txt; cat watch/main_activity.txt
 
-      - name: "Sign the run (a manifest of every published file and the chain head, Ed25519): with WATCH_SIGNING_KEY the files can be checked against a key GitHub does not hold; without it the manifest says unsigned"
+      - name: "Sign the run (a manifest of every published file and the chain head, Ed25519): with WATCH_SIGNING_KEY the files can be checked against a key GitHub does not hold; without it the manifest says unsigned. A failure stops the job here: a state whose signature failed is not recorded (the next run would refuse it, and every run after it)"
+        id: sign
         env:
           WATCH_SIGNING_KEY: ${{ secrets.WATCH_SIGNING_KEY }}
-        run: python3 scripts/sign_run.py --watch watch > watch/signature.txt 2>&1 || { echo "exit code $?" >> watch/signature.txt; cat watch/signature.txt; }
+        run: |
+          python3 scripts/sign_run.py --watch watch > watch/signature.txt 2>&1 || {
+            c=$?; echo "exit code $c" >> watch/signature.txt; cat watch/signature.txt; echo "failed=1" >> "$GITHUB_OUTPUT"
+            echo "::error title=Signing failed::the run could not be signed, so it is not recorded on watch-data (the next run starts from the last signed state)"; exit 1
+          }
 
       - name: "One health record for the run (watch/status.json: ok / degraded / alarm with the reasons) and the integrity badge"
         run: python3 scripts/run_status.py --watch watch > watch/status.txt 2>&1 || echo "exit code $?" >> watch/status.txt; cat watch/status.txt
@@ -212,7 +244,7 @@ jobs:
         if: always()
         env:
           HAS_TOKEN: ${{ secrets.ISSUES_TOKEN != '' }}
-          ALARM_CONDITION: ${{ steps.run.outputs.code != '0' || steps.so.outputs.disagree != '0' || steps.so.outputs.upgraded != '0' || steps.meth.outputs.changed != '0' || steps.rq.outputs.overdue != '0' || steps.rules.outputs.hi_new != '0' }}   # the same condition as the Alarm step: the gate tells the end of an alarm only when it is false
+          ALARM_CONDITION: ${{ steps.run.outputs.code != '0' || steps.so.outputs.disagree != '0' || steps.so.outputs.upgraded != '0' || steps.meth.outputs.changed != '0' || steps.rq.outputs.overdue != '0' || steps.rules.outputs.hi_new != '0' || steps.run.outputs.prev_alarm == '1' || steps.sign.outputs.failed == '1' }}   # the same condition as the Alarm step: the gate tells the end of an alarm only when it is false
         run: |
           if [ "$HAS_TOKEN" = "true" ]; then W="--write"; else W=""; fi
           python3 scripts/alarm_gate.py --watch watch --run-log watch/run.log $W | tee -a "$GITHUB_OUTPUT"
@@ -236,12 +268,14 @@ jobs:
           WATCH_REMOTE: https://github.com/${{ github.repository }}.git
 
       - name: Alarm (an issue in the private repository, where the work happens; without ISSUES_TOKEN the alarm stays in this log)
-        if: always() && (steps.run.outputs.code == '2' || steps.so.outputs.disagree != '0' || steps.so.outputs.upgraded != '0' || steps.meth.outputs.changed != '0' || steps.rq.outputs.overdue != '0' || steps.rules.outputs.hi_new != '0') && steps.gate.outputs.mode != 'quiet'
+        if: always() && (steps.run.outputs.prev_alarm == '1' || steps.sign.outputs.failed == '1' || ((steps.run.outputs.code == '2' || steps.so.outputs.disagree != '0' || steps.so.outputs.upgraded != '0' || steps.meth.outputs.changed != '0' || steps.rq.outputs.overdue != '0' || steps.rules.outputs.hi_new != '0') && steps.gate.outputs.mode != 'quiet'))   # a refused previous state, the bootstrap switch left on or a failed signature always open an issue: the gate (and the alarm_state.json it reads, which is not signed) cannot make them quiet
         env:
           GH_TOKEN: ${{ secrets.ISSUES_TOKEN }}
           PRIVATE_REPO: RealSpap/authority-risk-oracle
         run: |
           [ -f watch/alarm.md ] || printf '# Alarm, %s\n\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > watch/alarm.md
+          if [ "${{ steps.sign.outputs.failed }}" = 1 ]; then printf '\nThe run could not be signed (watch/signature.txt, printed in the job log). Nothing was recorded on watch-data: the next run starts from the last signed state.\n' >> watch/alarm.md; fi
+          if [ "${{ steps.run.outputs.prev_alarm }}" = 1 ] && [ "${{ steps.run.outputs.code }}" != 2 ]; then { printf '\n'; grep '^ALARM' watch/previous_state.txt; } >> watch/alarm.md; fi   # the switch used or left on (a refusal already put its lines at the top of alarm.md)
           [ -f watch/second_opinion.md ] && { printf '\n' >> watch/alarm.md; cat watch/second_opinion.md >> watch/alarm.md; }   # the independent reader's disagreements travel with the alarm
           [ -f watch/methodology.md ] && { printf '\n' >> watch/alarm.md; cat watch/methodology.md >> watch/alarm.md; }   # a methodology change travels with the alarm
           [ -f watch/alerts_high.md ] && { printf '\n' >> watch/alarm.md; cat watch/alerts_high.md >> watch/alarm.md; }   # a new high alert (a drain, a pause, a change ready to execute) travels with the alarm: it needs no Discord or Telegram secret
@@ -270,7 +304,7 @@ jobs:
             timeout 35m python3 scripts/daily_digest.py --days 7 --out watch/digest.md --queue watch/review_queue.md > watch/digest.log 2>&1 || { c=$?; if [ "$c" = 124 ]; then echo "timed out at the step limit (124), previous file kept, a warning" >> watch/digest.log; else echo "exit code $c" >> watch/digest.log; fi; }
             python3 scripts/redact_signers.py --index "$RUNNER_TEMP/who_controls.json" --scores watch/scores watch/digest.md
             python3 scripts/redact_signers.py --index "$RUNNER_TEMP/who_controls.json" --scores watch/scores --check watch   # the guard again, before the commit: the report must not publish a signer
-            python3 scripts/sign_run.py --watch watch > watch/signature.txt 2>&1 || { echo "exit code $?" >> watch/signature.txt; echo "::warning title=Re-signing failed::the digest changed a published file and the manifest could not be signed again: it no longer matches what is committed"; }   # the report changed a published file: sign again so the manifest matches what is committed (a failure was hidden by '|| true')
+            python3 scripts/sign_run.py --watch watch > watch/signature.txt 2>&1 || { echo "exit code $?" >> watch/signature.txt; echo "::error title=Re-signing failed::the digest changed a published file and the manifest could not be signed again: the report is not recorded (the state on watch-data stays the one the run signed)"; exit 1; }   # the report changed a published file: sign again so the manifest matches what is committed; a failure ends the step BEFORE the record (recording it would leave a state the next run refuses)
             bash scripts/watch_branch.sh record "Daily report $(date -u +%Y-%m-%d)"
           fi
         env:

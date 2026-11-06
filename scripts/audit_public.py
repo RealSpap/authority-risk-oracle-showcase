@@ -141,6 +141,18 @@ def extract_ref(ref):
     return os.path.join(dest, "watch"), subprocess.run(["git", "-C", root, "rev-parse", "--short", ref], capture_output=True, text=True).stdout.strip()
 
 
+SCORE_FUTURE_TOLERANCE_SECONDS = 300   # = SCORE_FUTURE_TOLERANCE_SECONDS of scripts/lib/trust_rules.py (a test keeps the two equal)
+
+
+def future_dated_scores(d):
+    """The targets of a scores file dated later than the time it was read at: listed in `future_dated` by the Watch, or `lastUpdated` more than 300 seconds after
+    `block_time` (after `readAt` when the block time was not read). The contract measures staleness from `lastUpdated`, so such a score never turns stale (31/10/2026)."""
+    isint = lambda x: isinstance(x, int) and not isinstance(x, bool)
+    ref = d.get("block_time") if isint(d.get("block_time")) else (d.get("readAt") if isint(d.get("readAt")) else None)
+    listed = {x.lower() for x in (d.get("future_dated") or []) if isinstance(x, str)}
+    return [str(t.get("target")) for t in d.get("targets", []) if str(t.get("target")).lower() in listed or (isint(t.get("lastUpdated")) and ref is not None and t["lastUpdated"] > ref + SCORE_FUTURE_TOLERANCE_SECONDS)]
+
+
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--watch", default=None); ap.add_argument("--sample", type=int, default=8); ap.add_argument("--seed", type=int, default=None); ap.add_argument("--pin", action="append", default=[], help="a signing public key (64 hex characters) to trust in addition to the one pinned in this script")
     ap.add_argument("--allow-unsigned", action="store_true", help="accept a run that carries no signature (a run from before signed manifests existed): by default an unsigned run FAILS the audit")
@@ -232,6 +244,12 @@ def main():
         if live and n_old: old_kept.append("%s: %d" % (os.path.basename(f)[:-5], n_old))
     (PASS if not mixed else FAIL)("methodology: one hash per oracle" if not mixed else "methodology: mixed hashes on " + ", ".join(mixed))
     if old_kept: NOTE("methodology: stale entries that keep an older hash (retired, or not re-pushed yet), counted apart from the live ones: " + "; ".join(old_kept))
+    # 4b. dates of the scores (31/10/2026): a score dated later than the time it was read at is a signed file that can still hide a score that never turns stale
+    late = []
+    for f in sorted(glob.glob(os.path.join(watch, "scores", "*.json"))):
+        try: late += ["%s %s" % (os.path.basename(f)[:-5], t[:12]) for t in future_dated_scores(json.load(open(f)))]
+        except (OSError, ValueError, AttributeError, TypeError) as e: late.append("%s unreadable (%s)" % (os.path.basename(f)[:-5], str(e)[:40]))
+    (PASS if not late else FAIL)("score dates: no score dated later than the time it was read at" if not late else "score dates: %d target(s) dated later than the time they were read at, so their staleness can never show: %s" % (len(late), ", ".join(late[:5])))
     # 5. sample re-read from the oracles
     rows = []
     for f in sorted(glob.glob(os.path.join(watch, "scores", "*.json"))):

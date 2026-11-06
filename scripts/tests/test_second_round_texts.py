@@ -93,6 +93,13 @@ class TestApiAndSecurityTexts(unittest.TestCase):
         self.assertNotIn("the dashboard verifies it in the browser", self.A)
         self.assertIn("which does not verify signatures", self.A)
 
+    def test_the_squads_pending_line_does_not_say_that_a_stale_proposal_is_dead(self):
+        """05/11 (N-20): in Squads v4 an approved proposal past the stale index stays executable. The line says only what the Watch lists (approved and above the stale index) and
+        never that 'live' means 'not stale' or that a stale one is 'dead'. The sentence that said so must not come back."""
+        self.assertNotIn("approved and live (past the multisig's stale index", self.A)
+        self.assertNotIn("approved but dead", self.A)
+        self.assertIn("`pending` = approved and above the multisig's stale index (executable by any executor from `ready_at`", self.A)
+
     def test_compatibility_is_stated_for_consumers(self):
         self.assertIn("A consumer must refuse a `schemaVersion` it does not know", self.A)
 

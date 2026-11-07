@@ -79,6 +79,9 @@
      },
      "self_watch": {
       "description": "(observed as object on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "retired": {
+      "type": "integer"
      }
     }
    }
@@ -97,6 +100,41 @@
   },
   "note": {
    "type": "string"
+  },
+  "retired_total": {
+   "type": "integer"
+  },
+  "retired": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "oracle",
+     "target",
+     "note",
+     "since"
+    ],
+    "properties": {
+     "oracle": {
+      "type": "string"
+     },
+     "target": {
+      "type": "string"
+     },
+     "note": {
+      "type": "string"
+     },
+     "since": {
+      "type": "string"
+     },
+     "lastUpdated": {
+      "type": [
+       "integer",
+       "null"
+      ]
+     }
+    }
+   }
   }
  }
 }

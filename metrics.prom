@@ -1,6 +1,6 @@
 # HELP aro_run_timestamp_seconds UTC time of the last Watch run (Unix seconds)
 # TYPE aro_run_timestamp_seconds gauge
-aro_run_timestamp_seconds 1793993029
+aro_run_timestamp_seconds 1794031007
 # HELP aro_oracle_read 1 when the oracle was read at the last run, 0 when it was not (its targets are then unknown, not zero)
 # TYPE aro_oracle_read gauge
 aro_oracle_read{oracle="Robinhood Chain"} 1
@@ -26,7 +26,7 @@ aro_oracle_targets{oracle="Solana (Devnet)"} 26
 # HELP aro_oracle_stale_targets Targets of the oracle whose score is older than its maxStaleness
 # TYPE aro_oracle_stale_targets gauge
 aro_oracle_stale_targets{oracle="Robinhood Chain"} 0
-aro_oracle_stale_targets{oracle="Ethereum L1 (Sepolia)"} 1
+aro_oracle_stale_targets{oracle="Ethereum L1 (Sepolia)"} 0
 aro_oracle_stale_targets{oracle="Arbitrum (Sepolia)"} 0
 aro_oracle_stale_targets{oracle="Base (Sepolia)"} 0
 aro_oracle_stale_targets{oracle="Tempo (Moderato)"} 0
@@ -39,7 +39,7 @@ aro_oracle_stale_targets{oracle="Solana (Devnet)"} 0
 aro_targets 202
 # HELP aro_targets_stale Targets whose score is stale
 # TYPE aro_targets_stale gauge
-aro_targets_stale 1
+aro_targets_stale 0
 # HELP aro_status The run's health, one series per state, 1 for the current one
 # TYPE aro_status gauge
 aro_status{state="ok"} 0
@@ -53,15 +53,15 @@ aro_chain_ok 1
 aro_signed 1
 # HELP aro_alerts_active Alerts firing now, by severity
 # TYPE aro_alerts_active gauge
-aro_alerts_active{severity="high"} 2
-aro_alerts_active{severity="medium"} 5
+aro_alerts_active{severity="high"} 3
+aro_alerts_active{severity="medium"} 4
 aro_alerts_active{severity="info"} 0
 # HELP aro_second_opinion Targets by verdict of the independent reader
 # TYPE aro_second_opinion gauge
-aro_second_opinion{result="agree"} 134
+aro_second_opinion{result="agree"} 133
 aro_second_opinion{result="disagree"} 4
 aro_second_opinion{result="corroborated"} 8
-aro_second_opinion{result="unreadable"} 40
+aro_second_opinion{result="unreadable"} 41
 aro_second_opinion{result="native"} 16
 # HELP aro_contracts_paused Tracked contracts that answer paused() true now
 # TYPE aro_contracts_paused gauge
@@ -71,7 +71,7 @@ aro_contracts_paused 0
 aro_safes 42
 # HELP aro_safes_woke Admin Safes that executed after 14 days or more observed idle, at the last run
 # TYPE aro_safes_woke gauge
-aro_safes_woke 2
+aro_safes_woke 0
 # HELP aro_safes_never_executed Admin Safes still at nonce 0
 # TYPE aro_safes_never_executed gauge
 aro_safes_never_executed 2

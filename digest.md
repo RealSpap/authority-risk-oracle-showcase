@@ -52,7 +52,6 @@
 ## Timelock queue
 - **executable or waiting** Compound Governance Timelock: 0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6 sendMessage(address,bytes,uint32) ready at 2026-11-05 21:49Z (waiting)
 - **executable or waiting** ethereum-l1 timelock 0x2386…1f4c, found by the independent reader (1 tracked contract): 0x2386DC45AdDed673317eF068992F19421B481F4c fulfillBasicOrder_efficient_6GL6yc((address,uint256,uint256,address,address,address,uint256,uint256,uint8,uint256,uint256,bytes32,uint256,bytes32,bytes32,uint256,(uint256,address)[],bytes)) ready at 2026-11-03 23:20Z (waiting)
-- **executable or waiting** Squads v4 multisig 7FCP…mvHk (7-of-15, time lock 0 s), found by the independent reader (1 tracked program): 4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8 (no selector) ready at 2026-10-30 22:11Z (ready)
 - **executable or waiting** Squads v4 multisig C4aw…SuPk (4-of-9, time lock 86400 s), found by the independent reader (1 tracked program): 1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78 (no selector) ready at 2026-11-04 04:42Z (waiting)
 - cleared, queued 2026-10-31: Compound Governance Timelock -> 0x309a862bbC1A00e45506cB8A802D1ff10004c8C0 setProposalGuardian((address,uint96))
 - cleared, queued 2026-10-25: ethereum-l1 timelock 0x2386…1f4c, found by the independent reader (1 tracked contract) -> 0x2386DC45AdDed673317eF068992F19421B481F4c fulfillBasicOrder_efficient_6GL6yc((address,uint256,uint256,address,address,address,uint256,uint256,uint8,uint256,uint256,bytes32,uint256,bytes32,bytes32,uint256,(uint256,address)[],bytes))

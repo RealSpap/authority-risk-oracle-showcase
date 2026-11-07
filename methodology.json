@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-11-06T19:43:47Z",
+ "generated_utc": "2026-11-07T06:18:15Z",
  "method_version": "2026.11.2",
  "method_version_date": "2026-11-03",
  "registry_read": true,
@@ -28,14 +28,6 @@
    "targets": 38,
    "method_version": "2026.11.2",
    "method_version_date": "2026-11-03"
-  },
-  "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167": {
-   "oracles": {
-    "ethereum-l1-sepolia": 1
-   },
-   "targets": 1,
-   "method_version": "2026.09.0",
-   "method_version_date": "2026-09-24"
   },
   "0xb595576050a45dcdeeb0479747f6b283eaaca756e6cd7e70a176a194021bed65": {
    "oracles": {
@@ -86,15 +78,14 @@
    "method_version_date": "2026-11-02"
   }
  },
- "mixed": [
+ "mixed": [],
+ "changes": [],
+ "retired": [
   {
    "oracle": "ethereum-l1-sepolia",
-   "hashes": {
-    "0xa37efe09736cbdf0d29c1f49b85da3169704337c3b89e95453ef57079f9f6439": 38,
-    "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167": 1
-   }
+   "target": "0x2cc440b721d2cafd6d64908d6d8c4acc57f8afc3",
+   "hash": "0xac9104d9774a01ae1bbb28a4725f597425697a1d7e68b1d8cf915439eec6b167"
   }
  ],
- "changes": [],
  "what": "methodologyHash as read on each oracle (keccak256 of the scoring code and its version, set at the push): one hash per oracle is the normal state; a mix means a push half done or a target scored by an older method; a change (against the previous run) means every score of that oracle was produced by a new method: compare across it with care, the chained log keeps the date"
 }

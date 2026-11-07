@@ -1,54 +1,30 @@
 {
- "generated_utc": "2026-11-06T19:42:11Z",
+ "generated_utc": "2026-11-07T06:16:14Z",
  "wake_days": 14,
  "safes": 42,
  "read": 42,
- "woke": [
-  "robinhood:0x31c4\u20269693",
-  "tempo:0xe8c9\u20268008"
- ],
+ "woke": [],
  "changes": [
   {
-   "delta": 1,
-   "idle_days": 1.5,
+   "delta": 4,
+   "idle_days": 1.9,
    "woke": false,
-   "safe": "ethereum-l1:0xfa77\u20266a66",
+   "safe": "robinhood:0x0eea\u2026dfd8",
    "governs": [
-    "ethereum-l1:0xc5f0f7b66764f6ec8c8dff7ba683102295e16409"
+    "robinhood:0x1ac9db4a2608ba45d6127b1737949b51bb54b7f3"
    ],
-   "previous_run": "2026-11-06T06:57:23Z"
+   "previous_run": "2026-11-06T19:42:11Z"
   },
   {
-   "delta": 1,
-   "idle_days": 0.5,
+   "delta": 4,
+   "idle_days": 0.4,
    "woke": false,
    "safe": "robinhood:0x20d6\u2026be1a",
    "governs": [
     "robinhood:0x83341f891f898cb5e0cacc8a70501bba83d9cecf",
     "robinhood:0xa203a21dccb461e415daa342e8e635b6cee0ccb3"
    ],
-   "previous_run": "2026-11-06T06:57:23Z"
-  },
-  {
-   "delta": 1,
-   "idle_days": 18.0,
-   "woke": true,
-   "safe": "robinhood:0x31c4\u20269693",
-   "governs": [
-    "robinhood:0x128a800cbc615cc110bff16e475865c67631603a",
-    "robinhood:0xf28704c691290547924e2129d407da36bda8ce0f"
-   ],
-   "previous_run": "2026-11-06T06:57:23Z"
-  },
-  {
-   "delta": 1,
-   "idle_days": 26.9,
-   "woke": true,
-   "safe": "tempo:0xe8c9\u20268008",
-   "governs": [
-    "tempo:0x9a044ae05e5e6290dcf56afd69548565e957a626"
-   ],
-   "previous_run": "2026-11-06T06:57:23Z"
+   "previous_run": "2026-11-06T19:42:11Z"
   }
  ],
  "never_executed": [
@@ -308,10 +284,10 @@
    "never_executed": false
   },
   "robinhood:e8bf689e4f96ba54": {
-   "nonce": 506,
+   "nonce": 510,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-11-05T07:13:26Z",
-   "last_moved": "2026-11-05T07:13:26Z",
+   "idle_since": "2026-11-07T06:16:14Z",
+   "last_moved": "2026-11-07T06:16:14Z",
    "governs": [
     "robinhood:0x1ac9db4a2608ba45d6127b1737949b51bb54b7f3"
    ],
@@ -319,10 +295,10 @@
    "never_executed": false
   },
   "robinhood:3cb8c359ff7f85fd": {
-   "nonce": 656,
+   "nonce": 660,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-11-06T19:42:11Z",
-   "last_moved": "2026-11-06T19:42:11Z",
+   "idle_since": "2026-11-07T06:16:14Z",
+   "last_moved": "2026-11-07T06:16:14Z",
    "governs": [
     "robinhood:0x83341f891f898cb5e0cacc8a70501bba83d9cecf",
     "robinhood:0xa203a21dccb461e415daa342e8e635b6cee0ccb3"

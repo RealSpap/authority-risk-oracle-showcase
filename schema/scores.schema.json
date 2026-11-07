@@ -97,6 +97,9 @@
      },
      "previousRun": {
       "description": "UTC time of the previous watch run this score was compared to; null on a first read (the Solana targets had no previous run on 10/10). Not enforced: a documentation entry."
+     },
+     "retired": {
+      "type": "boolean"
      }
     }
    }

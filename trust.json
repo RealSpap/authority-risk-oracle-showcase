@@ -1,9 +1,9 @@
 {
  "schemaVersion": 1,
- "generated_utc": "2026-11-06T19:52:35Z",
+ "generated_utc": "2026-11-07T06:28:34Z",
  "rule_version": "1",
- "rule": "(version 1). For each target, every reason that applies is listed with its dimension, a state and an effect. A dimension takes the worst state\nof its reasons. For the status, a reason with effect \"decides\" counts for the state it carries, one with effect \"degrades\" counts for PARTIAL at most, one with\neffect \"info\" for nothing. The status is the first line that matches, from the top:\n\n  UNAVAILABLE  a dimension is unavailable: the oracle holding the target was not read this run, or the trust computation itself failed (trust_not_computed).\n  DISPUTED     a dimension is disputed: an open public dispute, or the independent reader disagrees and nobody has reviewed it.\n  STALE        a dimension is stale: the on-chain score is stale, a pause or Safe-activity state has not been readable for 3 days or more (or for a time that\n               is not known), the Watch run itself is older than 8 hours, or the independent reader's file is from an earlier run than the Watch's.\n  UNVERIFIED   the independent reader did not read this target (no record, unreadable, or its input file missing) or there is nothing to read\n               independently (a native entity).\n  PARTIAL      something was checked and something was not: an incomplete reading (modules or admin members not all read, signers not classified, an admin\n               the reader cannot contradict: a contract it did not resolve, a program-derived address), a method that differs or is fixed by decision, an\n               alert not delivered, an unsigned run, a signing key that is not pinned (or cannot be compared), a broken journal, an input file that could not\n               be read or is from an earlier run; the reasons say what.\n  VERIFIED     none of the above. It means the checks listed here passed: not that the contract is safe, and not that the score is right.\n\nA reason whose effect is \"info\" is listed and sets its dimension's state, but never moves the status (a contract with no pause getter, money that no\nsource figures). The eight dimensions: reading, coverage, method, signature, journal, notification, financial_exposure, surveillance.\nUnknown is never ok: an input that could not be read puts its dimension in \"unverified\", not in \"ok\".\n\nWHEN IT IS COMPUTED. trust.json is recomputed only when the Watch runs, right after the files of the run are written. If the Watch stops, the file that stays\npublished keeps its statuses: the rule cannot see its own silence. A consumer must compare `generated_utc` to the present time (the Watch runs every 6 hours;\na file older than about 8 hours says nothing about now).",
- "rule_sha256": "9dcada2b4e3586203b448d3016da77e201ad174577447ce223c425e5dbbb79e6",
+ "rule": "(version 1). For each target, every reason that applies is listed with its dimension, a state and an effect. A dimension takes the worst state\nof its reasons. For the status, a reason with effect \"decides\" counts for the state it carries, one with effect \"degrades\" counts for PARTIAL at most, one with\neffect \"info\" for nothing. The status is the first line that matches, from the top:\n\n  UNAVAILABLE  a dimension is unavailable: the oracle holding the target was not read this run, or the trust computation itself failed (trust_not_computed).\n  DISPUTED     a dimension is disputed: an open public dispute, or the independent reader disagrees and nobody has reviewed it.\n  STALE        a dimension is stale: the on-chain score is stale, a pause or Safe-activity state has not been readable for 3 days or more (or for a time that\n               is not known), the Watch run itself is older than 8 hours, the run or one of its input files is dated more than 10 minutes after the\n               present time (an age that is negative says nothing about now), or the independent reader's file is from an earlier run than the Watch's.\n  UNVERIFIED   the independent reader did not read this target (no record, unreadable, or its input file missing), there is nothing to read\n               independently (a native entity), or the score is dated later than the block it was read at (its staleness can never show).\n  PARTIAL      something was checked and something was not: an incomplete reading (modules or admin members not all read, signers not classified, an admin\n               the reader cannot contradict: a contract it did not resolve, a program-derived address), a method that differs or is fixed by decision, an\n               alert not delivered, an unsigned run, a signing key that is not pinned (or cannot be compared), a broken journal, an input file that could not\n               be read or is from an earlier run; the reasons say what.\n  VERIFIED     none of the above. It means the checks listed here passed: not that the contract is safe, and not that the score is right.\n\nA reason whose effect is \"info\" is listed and sets its dimension's state, but never moves the status (a contract with no pause getter, money that no\nsource figures). The eight dimensions: reading, coverage, method, signature, journal, notification, financial_exposure, surveillance.\nUnknown is never ok: an input that could not be read puts its dimension in \"unverified\", not in \"ok\".\n\nWHEN IT IS COMPUTED. trust.json is recomputed only when the Watch runs, right after the files of the run are written. If the Watch stops, the file that stays\npublished keeps its statuses: the rule cannot see its own silence. A consumer must compare `generated_utc` to the present time (the Watch runs every 6 hours;\na file older than about 8 hours says nothing about now).",
+ "rule_sha256": "7db37a8c0621d00911c42e3079c304f895a9dd8309df5c607133528d9a5c82c6",
  "error": null,
  "targets": 202,
  "counts": {
@@ -93,7 +93,7 @@
   "signature_key": "pinned",
   "journal": "ok",
   "alert_channels": 1,
-  "watch_run_utc": "2026-11-06T19:23:49Z",
+  "watch_run_utc": "2026-11-07T05:56:47Z",
   "inputs_unread": []
  },
  "by_target": {
@@ -1063,12 +1063,6 @@
    "status": "VERIFIED",
    "reasons": [
     {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
-    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -1097,12 +1091,6 @@
    "status": "VERIFIED",
    "reasons": [
     {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
-    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -1130,12 +1118,6 @@
   "ethereum-l1:0xbe286431454714f511008713973d3b053a2d38f3": {
    "status": "PARTIAL",
    "reasons": [
-    {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
@@ -1183,12 +1165,6 @@
      "detail": "retired or peripheral: carries none of its protocol's money"
     },
     {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
-    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -1223,12 +1199,6 @@
    "status": "VERIFIED",
    "reasons": [
     {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
-    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -1250,12 +1220,6 @@
   "ethereum-l1:0x73e35c5c35a274e34ade6eb13cc7f62aee323728": {
    "status": "VERIFIED",
    "reasons": [
-    {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
@@ -1285,12 +1249,6 @@
    "status": "VERIFIED",
    "reasons": [
     {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
-    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -1318,12 +1276,6 @@
   "ethereum-l1:0x211cc4dd073734da055fbf44a2b4667d5e5fe5d2": {
    "status": "VERIFIED",
    "reasons": [
-    {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
@@ -1353,12 +1305,6 @@
    "status": "VERIFIED",
    "reasons": [
     {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
-    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -1387,12 +1333,6 @@
    "status": "VERIFIED",
    "reasons": [
     {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
-    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -1414,12 +1354,6 @@
   "ethereum-l1:0x02c3ea4e34c0cbd694d2adfa2c690eecbc1793ee": {
    "status": "PARTIAL",
    "reasons": [
-    {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
@@ -1455,12 +1389,6 @@
    "status": "VERIFIED",
    "reasons": [
     {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
-    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -1488,12 +1416,6 @@
   "ethereum-l1:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb": {
    "status": "VERIFIED",
    "reasons": [
-    {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
@@ -1523,12 +1445,6 @@
    "status": "VERIFIED",
    "reasons": [
     {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
-    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -1550,12 +1466,6 @@
   "ethereum-l1:0xe3490297a08d6fc8da46edb7b6142e4f461b62d3": {
    "status": "VERIFIED",
    "reasons": [
-    {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
@@ -1591,12 +1501,6 @@
      "detail": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
     },
     {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
-    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -1625,12 +1529,6 @@
    "status": "VERIFIED",
    "reasons": [
     {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
-    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -1652,12 +1550,6 @@
   "ethereum-l1:0x6a8cbed756804b16e05e741edabd5cb544ae21bf": {
    "status": "PARTIAL",
    "reasons": [
-    {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
@@ -1699,12 +1591,6 @@
      "detail": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
     },
     {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
-    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -1739,12 +1625,6 @@
      "detail": "no source figures the money behind this contract"
     },
     {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
-    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -1772,12 +1652,6 @@
   "ethereum-l1:0xf403c135812408bfbe8713b5a23a04b3d48aae31": {
    "status": "VERIFIED",
    "reasons": [
-    {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
@@ -1807,12 +1681,6 @@
    "status": "VERIFIED",
    "reasons": [
     {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
-    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -1834,12 +1702,6 @@
   "ethereum-l1:0x94643e86aa5e38ddac6c7791c1297f4e40cd96c1": {
    "status": "VERIFIED",
    "reasons": [
-    {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
@@ -1863,12 +1725,6 @@
    "status": "VERIFIED",
    "reasons": [
     {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
-    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -1890,12 +1746,6 @@
   "ethereum-l1:0xbeef01735c132ada46aa9aa4c54623caa92a64cb": {
    "status": "VERIFIED",
    "reasons": [
-    {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
@@ -1919,12 +1769,6 @@
    "status": "VERIFIED",
    "reasons": [
     {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
-    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -1946,12 +1790,6 @@
   "ethereum-l1:0xbeef0c075da5d01112ae5cf34d257074fb5ddb2f": {
    "status": "VERIFIED",
    "reasons": [
-    {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
@@ -1987,12 +1825,6 @@
      "detail": "no source figures the money behind this contract"
     },
     {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
-    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -2025,12 +1857,6 @@
      "dimension": "financial_exposure",
      "effect": "info",
      "detail": "no source figures the money behind this contract"
-    },
-    {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
     }
    ],
    "dimensions": {
@@ -2053,12 +1879,6 @@
      "dimension": "financial_exposure",
      "effect": "info",
      "detail": "no source figures the money behind this contract"
-    },
-    {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
     },
     {
      "code": "reader_cannot_contradict",
@@ -2101,12 +1921,6 @@
      "detail": "no source figures the money behind this contract"
     },
     {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
-    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -2147,12 +1961,6 @@
      "detail": "no source figures the money behind this contract"
     },
     {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
-    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -2187,12 +1995,6 @@
      "detail": "no source figures the money behind this contract"
     },
     {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
-    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -2221,12 +2023,6 @@
      "detail": "no source figures the money behind this contract"
     },
     {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
-    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -2253,12 +2049,6 @@
      "dimension": "financial_exposure",
      "effect": "info",
      "detail": "no source figures the money behind this contract"
-    },
-    {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
     },
     {
      "code": "pause_no_getter",
@@ -2301,12 +2091,6 @@
      "detail": "no source figures the money behind this contract"
     },
     {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
-    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -2347,12 +2131,6 @@
      "detail": "no source figures the money behind this contract"
     },
     {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
-    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -2387,12 +2165,6 @@
      "detail": "no source figures the money behind this contract"
     },
     {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
-    },
-    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -2425,12 +2197,6 @@
      "dimension": "financial_exposure",
      "effect": "info",
      "detail": "no source figures the money behind this contract"
-    },
-    {
-     "code": "oracle_method_mixed",
-     "dimension": "method",
-     "effect": "info",
-     "detail": "the oracle holds more than one method hash"
     }
    ],
    "dimensions": {
@@ -2691,6 +2457,12 @@
      "detail": "the score says one key does everything (10), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisi"
     },
     {
+     "code": "safe_signers_unclassified",
+     "dimension": "reading",
+     "effect": "degrades",
+     "detail": "3 signer(s) of the Safe could not be classified (key, Safe, timelock, contract)"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -2805,6 +2577,12 @@
      "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
     },
     {
+     "code": "modules_unread",
+     "dimension": "reading",
+     "effect": "degrades",
+     "detail": "the modules of the Safe could not be read, or the reader did not say whether the list is complete (a module executes without the signatures)"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -2820,7 +2598,7 @@
      "code": "safe_signers_unclassified",
      "dimension": "reading",
      "effect": "degrades",
-     "detail": "8 signer(s) of the Safe could not be classified (key, Safe, timelock, contract)"
+     "detail": "5 signer(s) of the Safe could not be classified (key, Safe, timelock, contract)"
     },
     {
      "code": "side_roles_not_covered",
@@ -3049,6 +2827,12 @@
      "dimension": "reading",
      "effect": "decides",
      "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
+    },
+    {
+     "code": "independent_read_unreadable",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "holder probes not all answered (RPC)"
     },
     {
      "code": "pause_no_getter",

@@ -11,7 +11,7 @@ script/      Deploy.s.sol, the Foundry deploy script (Foundry's convention is a 
 scripts/     Python: the updater, the push guard, the watch tools, the audit, shared libraries (scripts/lib/) and their tests
 chains/      one folder per ecosystem: its scorer, its deploy record and push script, dated audits (chains/README.md is the map)
 data/        dated notes behind every number or claim: findings, corrections, backtests, snapshots (data/README.md is the index)
-watch/       the data contract and a note on the files; the files themselves are on the `watch-data` branch, rewritten every 6 hours (it reads, it never writes on-chain). watch/API.md describes each file
+watch/       the data contract and a note on the files; the files themselves are on the `watch-data` branch, rewritten at each run, scheduled every 6 hours and measured at about 2 a day since 4 Nov 2026 (2 to 4 from 31 Oct to 6 Nov) (it reads, it never writes on-chain). watch/API.md describes each file
 rules.json   the alert rules, forkable
 docs/        landscape and operations notes
 research/    standalone dated measurements, each with the command to replay it

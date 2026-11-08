@@ -17,7 +17,7 @@ Source: METHODOLOGY.md and https://eips.ethereum.org/EIPS/eip-1967
 **EOA.** An EOA, an externally owned account: a single key with no contract code. As the root of a target's authority it is the near-worst case.
 Source: METHODOLOGY.md
 
-**Hash-chained event log.** A hash-chained event log: the Watch's log in which each line carries the sha256 of the previous one, so a rewrite shows; its head is signed every six hours.
+**Hash-chained event log.** A hash-chained event log: the Watch's log in which each line carries the sha256 of the previous one, so a rewrite shows; its head is signed at each run.
 Source: /oracle/provenance/
 
 **Method hash.** The hash published with each push that ties a score to the exact code that produced it (methodologyHash).
@@ -59,5 +59,5 @@ Source: METHODOLOGY.md
 **Upgrade executed.** A Watch alert: the implementation behind a tracked contract changed since the previous run.
 Source: /oracle/watch/
 
-**Watch.** The public monitor of the oracles: it re-reads every 6 hours and publishes what it read as public files anyone can read.
+**Watch.** The public monitor of the oracles: it re-reads at each run (scheduled every 6 hours; about 2 runs a day since 4 Nov 2026, 2 to 4 from 31 Oct to 6 Nov) and publishes what it read as public files anyone can read.
 Source: /oracle/watch/

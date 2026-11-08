@@ -875,7 +875,7 @@ edges, not just its claims.
     disclosed gap, not a confirmed clean result for those.
 - **A live re-derivation only proves the state at the block it was read,
   not that nothing changes before the next scheduled run.** Robinhood
-  Chain's scores are pushed by hand, at the latest every nine days (the staleness limit); the Watch re-reads the tracked contracts every 6 hours
+  Chain's scores are pushed by hand, at the latest every nine days (the staleness limit); the Watch re-reads the tracked contracts at each run (scheduled every 6 hours; about 2 runs a day since 4 Nov 2026, 2 to 4 from 31 Oct to 6 Nov)
   and its independent reader flags a changed admin, but the on-chain score changes at the next push (or a manual `--dry-run`/push picks it up).
 - **A disagreement between the independent reader and a score is never settled automatically in favour of the higher score.** It is
   published as a finding to review (`second_opinion.json`). It leaves that list in only two ways: a person's dated note

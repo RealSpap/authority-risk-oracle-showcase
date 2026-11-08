@@ -1,10 +1,4 @@
-## Second opinion, 2026-11-07T22:00:27Z
-
-### 1 upgrade(s) executed since the previous run (2026-11-07T13:10:43Z)
-
-- **0xc3d688b66703497daa19211eedff47f25384cdc3** on ethereum-l1: implementation changed since the previous run: 0x63e749153baf1838f63ca22c275370bd2b1ceb15 -> 0x0b07565a8ef48170e15918b251ebd95109b23255 (EIP-1967 implementation slot); the score reads who may upgrade, this is an upgrade that happened
-
-The code behind a tracked proxy changed: read what the new implementation does before trusting the score (the private pipeline's implementation check names the selectors added and dropped).
+## Second opinion, 2026-11-08T06:10:42Z
 
 ### 4 disagreement(s) with the published score
 

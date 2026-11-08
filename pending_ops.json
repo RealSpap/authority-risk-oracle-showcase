@@ -501,7 +501,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 4171034,
+   "window_blocks": 3815772,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -553,7 +553,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 4171034,
+   "window_blocks": 3827848,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -573,7 +573,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 4171034,
+   "window_blocks": 3827848,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -621,7 +621,7 @@
    "address": "0x2386dc45added673317ef068992f19421b481f4c",
    "family": "compound",
    "status": "ok",
-   "queued_events": 2,
+   "queued_events": 1,
    "latest_queued": 1793661635,
    "pending": [
     {
@@ -641,21 +641,6 @@
     }
    ],
    "recent": [
-    {
-     "block": 26266480,
-     "tx": "0x8fe392e737fc6a5f8aed96a1d3f349121e5ff847e16f17dd95e6b8dc63562fd3",
-     "id": "0x2f84567a219ae4847ff318731574c22745b847ca24d183566db1ed994c21a34f",
-     "index": 0,
-     "target": "0x2386DC45AdDed673317eF068992F19421B481F4c",
-     "value": 0,
-     "eta": 1792979075,
-     "selector": "0x00000000",
-     "signature": "executePayload(address,string,bytes)",
-     "calls": 1,
-     "still_queued": false,
-     "queued_at": 1792892675,
-     "decoded": "nested timelock"
-    },
     {
      "block": 26330343,
      "tx": "0x313e1775aceb99e36a889317f682cc27dac38b5d0651b8f5eb02173239eb406b",
@@ -794,7 +779,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 0,
    "window_blocks": 3000000,
-   "window_days_est": 3.5,
+   "window_days_est": 3.6,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62"
@@ -1795,7 +1780,7 @@
    "transaction_index": 72
   }
  ],
- "discovered_utc": "2026-11-07T22:00:27Z",
+ "discovered_utc": "2026-11-08T06:10:42Z",
  "discovered": 15,
- "squads_utc": "2026-11-07T22:05:54Z"
+ "squads_utc": "2026-11-08T06:16:10Z"
 }

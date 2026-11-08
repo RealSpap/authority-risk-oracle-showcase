@@ -1,6 +1,6 @@
 {
- "evaluated_utc": "2026-11-08T13:39:22Z",
- "run_utc": "2026-11-08T13:22:25Z",
+ "evaluated_utc": "2026-11-08T22:22:32Z",
+ "run_utc": "2026-11-08T22:02:49Z",
  "rules": [
   "score dropped by 10 or more",
   "score fell under 40",
@@ -27,50 +27,108 @@
  ],
  "active": [
   {
-   "rule": "a queued change against this contract executes within 48 h",
-   "severity": "medium",
+   "rule": "an upgrade was executed: the implementation behind this contract changed since the previous run",
+   "severity": "high",
+   "chain": "Arbitrum",
+   "target": "0x9c4ec768c28520b50860ea7a15bd7213a9ff58bf",
+   "title": "Compound V3",
+   "score": 78,
+   "delta": 0,
+   "tvl_usd": 61377190.537314214,
+   "first_seen": "2026-11-08T22:22:32Z",
+   "new": true,
+   "evidence": [],
+   "reading": {
+    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
+    "oracle_block": 327366166,
+    "oracle_read_at": 1794175377,
+    "composite": 78,
+    "previous_composite": 78,
+    "score_last_updated": 1793654183,
+    "second_opinion": {
+     "kind": "timelock",
+     "path": "EIP-1967 admin -> ProxyAdmin owner()",
+     "block_start": 522488842,
+     "block_end": 522488871,
+     "read_gap_seconds": 794,
+     "since_score_push_seconds": 521988
+    },
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x9c4ec768c28520b50860ea7a15bd7213a9ff58bf --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 327366166",
+    "reproduce_exact": false
+   },
+   "previous_run": "2026-11-08T13:22:25Z",
+   "notified": true,
+   "delivered": []
+  },
+  {
+   "rule": "an upgrade was executed: the implementation behind this contract changed since the previous run",
+   "severity": "high",
    "chain": "Arbitrum",
    "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
    "title": "Fluid Lending",
    "score": 59,
    "delta": 0,
-   "tvl_usd": 125993461.9325628,
-   "first_seen": "2026-11-07T22:06:10Z",
-   "new": false,
-   "evidence": [
-    {
-     "timelock": "arbitrum timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
-     "timelock_address": "0x4d6ce4f4498d59eed397bcbc687805a07f9b2346",
-     "family": "oz",
-     "id": "0x05ea35a3cfbbb0e21ea641bd2c040c85b95336d3b1d8f7086e8657639bd73e55",
-     "chain": "arbitrum",
-     "tx": "0x19cba78c5830d684380d5c9ef364b549cbbdff7701687463699c3a566ec5585b",
-     "selector": "0xf0c01b42",
-     "signature": "addImplementation(address,bytes4[])",
-     "ready_at": 1794156562,
-     "state": "waiting"
-    }
-   ],
+   "tvl_usd": 125962208.5366844,
+   "first_seen": "2026-11-08T22:22:32Z",
+   "new": true,
+   "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 327257899,
-    "oracle_read_at": 1794144151,
+    "oracle_block": 327366166,
+    "oracle_read_at": 1794175377,
     "composite": 59,
     "previous_composite": 59,
     "score_last_updated": 1793654183,
     "second_opinion": {
      "kind": "timelock",
      "path": "EIP-1967 admin",
-     "block_start": 522379927,
-     "block_end": 522379945,
-     "read_gap_seconds": 683,
-     "since_score_push_seconds": 490651
+     "block_start": 522488842,
+     "block_end": 522488871,
+     "read_gap_seconds": 794,
+     "since_score_push_seconds": 521988
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x52aa899454998be5b000ad077a46bbe360f4e497 --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 327257899",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x52aa899454998be5b000ad077a46bbe360f4e497 --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 327366166",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-08T05:58:38Z",
-   "notified": true
+   "previous_run": "2026-11-08T13:22:25Z",
+   "notified": true,
+   "delivered": [
+    "telegram"
+   ]
+  },
+  {
+   "rule": "an upgrade was executed: the implementation behind this contract changed since the previous run",
+   "severity": "high",
+   "chain": "Base",
+   "target": "0xb125e6687d4313864e53df431d5425969c15eb2f",
+   "title": "Compound V3",
+   "score": 78,
+   "delta": 0,
+   "tvl_usd": 22524370.990685582,
+   "first_seen": "2026-11-08T22:22:32Z",
+   "new": true,
+   "evidence": [],
+   "reading": {
+    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
+    "oracle_block": 56267543,
+    "oracle_read_at": 1794175406,
+    "composite": 78,
+    "previous_composite": 78,
+    "score_last_updated": 1793652679,
+    "second_opinion": {
+     "kind": "timelock",
+     "path": "EIP-1967 admin -> ProxyAdmin owner()",
+     "block_start": 54929001,
+     "block_end": 54929087,
+     "read_gap_seconds": 790,
+     "since_score_push_seconds": 523517
+    },
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0xb125e6687d4313864e53df431d5425969c15eb2f --rpc-url https://sepolia.base.org --block 56267543",
+    "reproduce_exact": false
+   },
+   "previous_run": "2026-11-08T13:22:25Z",
+   "notified": true,
+   "delivered": []
   },
   {
    "rule": "the independent reader disagrees with the admin-key score, with money behind it",
@@ -80,63 +138,77 @@
    "title": "Kinetiq kmHYPE",
    "score": 4,
    "delta": 0,
-   "tvl_usd": 38100868.40599063,
+   "tvl_usd": 37701492.60960879,
    "first_seen": "2026-11-02T06:16:09Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 69076993,
-    "oracle_read_at": 1794144536,
+    "oracle_block": 69108754,
+    "oracle_read_at": 1794175788,
     "composite": 4,
     "previous_composite": 4,
     "score_last_updated": 1793654209,
     "second_opinion": {
      "kind": "safe",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 50719516,
-     "block_end": 50719524,
-     "read_gap_seconds": 366,
-     "since_score_push_seconds": 490693
+     "block_start": 50751387,
+     "block_end": 50751405,
+     "read_gap_seconds": 471,
+     "since_score_push_seconds": 522050
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec --rpc-url https://998.rpc.thirdweb.com --block 69076993",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec --rpc-url https://998.rpc.thirdweb.com --block 69108754",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-08T05:58:38Z",
+   "previous_run": "2026-11-08T13:22:25Z",
    "notified": true
   },
   {
-   "rule": "the independent reader disagrees with the admin-key score, with money behind it",
+   "rule": "a queued change against this contract executes within 48 h",
    "severity": "medium",
-   "chain": "Hyperliquid",
-   "target": "0x393d0b87ed38fc779fd9611144ae649ba6082109",
-   "title": "Kinetiq kHYPE",
-   "score": 4,
+   "chain": "Plasma",
+   "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
+   "title": "Fluid Lending",
+   "score": 59,
    "delta": 0,
-   "tvl_usd": 807281346.0895038,
-   "first_seen": "2026-11-05T20:19:51Z",
-   "new": false,
-   "evidence": [],
+   "tvl_usd": 26170923.669260345,
+   "first_seen": "2026-11-08T22:22:32Z",
+   "new": true,
+   "evidence": [
+    {
+     "timelock": "plasma timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
+     "timelock_address": "0x4d6ce4f4498d59eed397bcbc687805a07f9b2346",
+     "family": "oz",
+     "id": "0xb410170eac954552d1655a88da86970c8f27f26982586e569051b749da982087",
+     "chain": "plasma",
+     "tx": "0x1393bce0d963f1d3115d3a88f3830165858aee70143241ac369fa33225f791e5",
+     "selector": "0x01b88f86",
+     "signature": "updateUserBorrowConfigs((address,address,uint8,uint256,uint256,uint256,uint256)[])",
+     "ready_at": 1794237676,
+     "state": "waiting"
+    }
+   ],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 69076993,
-    "oracle_read_at": 1794144536,
-    "composite": 4,
-    "previous_composite": 4,
-    "score_last_updated": 1793654209,
+    "oracle_block": 38344706,
+    "oracle_read_at": 1794175414,
+    "composite": 59,
+    "previous_composite": 59,
+    "score_last_updated": 1793653056,
     "second_opinion": {
-     "kind": "safe",
-     "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 50719516,
-     "block_end": 50719524,
-     "read_gap_seconds": 366,
-     "since_score_push_seconds": 490693
+     "kind": "timelock",
+     "path": "EIP-1967 admin",
+     "block_start": 37232991,
+     "block_end": 37233005,
+     "read_gap_seconds": 898,
+     "since_score_push_seconds": 523256
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x393d0b87ed38fc779fd9611144ae649ba6082109 --rpc-url https://998.rpc.thirdweb.com --block 69076993",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x52aa899454998be5b000ad077a46bbe360f4e497 --rpc-url https://testnet-rpc.plasma.to --block 38344706",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-08T05:58:38Z",
-   "notified": true
+   "previous_run": "2026-11-08T13:22:25Z",
+   "notified": true,
+   "delivered": []
   },
   {
    "rule": "an admin transfer is in flight: a new owner or admin is designated and has not accepted yet (pendingOwner / pendingAdmin)",
@@ -152,23 +224,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 150442817,
-    "oracle_read_at": 1794144149,
+    "oracle_block": 150570621,
+    "oracle_read_at": 1794175372,
     "composite": 1,
     "previous_composite": 1,
     "score_last_updated": 1793654542,
     "second_opinion": {
      "kind": "eoa",
      "path": "owner()",
-     "block_start": 109264011,
-     "block_end": 109264431,
-     "read_gap_seconds": 860,
-     "since_score_push_seconds": 490467
+     "block_start": 109564622,
+     "block_end": 109565026,
+     "read_gap_seconds": 1001,
+     "since_score_push_seconds": 521831
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 150442817",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 150570621",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-08T05:58:38Z",
+   "previous_run": "2026-11-08T13:22:25Z",
    "notified": true
   },
   {
@@ -179,14 +251,14 @@
    "title": "Kamino Liquidity",
    "score": 54,
    "delta": 0,
-   "tvl_usd": 65522252.25725282,
+   "tvl_usd": 65412865.04820626,
    "first_seen": "2026-11-05T20:19:51Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "5VhiTAGLEViGgajhxPbzdWz7WLUAiRy42DY6qi6tYh4W",
     "oracle_block": null,
-    "oracle_read_at": 1794144536,
+    "oracle_read_at": 1794175789,
     "composite": 54,
     "previous_composite": 54,
     "score_last_updated": 1793656384,
@@ -201,7 +273,7 @@
     "reproduce": null,
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-08T05:58:38Z",
+   "previous_run": "2026-11-08T13:22:25Z",
    "notified": true
   },
   {
@@ -244,7 +316,7 @@
    "reading": {
     "oracle": "5VhiTAGLEViGgajhxPbzdWz7WLUAiRy42DY6qi6tYh4W",
     "oracle_block": null,
-    "oracle_read_at": 1794144536,
+    "oracle_read_at": 1794175789,
     "composite": 70,
     "previous_composite": 70,
     "score_last_updated": 1793656415,
@@ -259,7 +331,7 @@
     "reproduce": null,
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-08T05:58:38Z",
+   "previous_run": "2026-11-08T13:22:25Z",
    "notified": true
   }
  ],
@@ -272,8 +344,8 @@
    "target": "0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d",
    "title": "0xfe7e\u20269b0d",
    "first_seen": "2026-10-10T21:14:27Z",
-   "last_seen": "2026-11-08T13:39:22Z",
-   "times": 115,
+   "last_seen": "2026-11-08T22:22:32Z",
+   "times": 116,
    "score": 1,
    "delta": 0,
    "tvl_usd": null
@@ -286,11 +358,11 @@
    "target": "0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec",
    "title": "Kinetiq kmHYPE",
    "first_seen": "2026-11-02T06:16:09Z",
-   "last_seen": "2026-11-08T13:39:22Z",
-   "times": 111,
+   "last_seen": "2026-11-08T22:22:32Z",
+   "times": 112,
    "score": 4,
    "delta": 0,
-   "tvl_usd": 38100868.40599063
+   "tvl_usd": 37701492.60960879
   },
   {
    "key": "a queued change against this contract is ready to execute now|solana:1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78",
@@ -300,8 +372,8 @@
    "target": "1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78",
    "title": "1oopBo\u2026kF78",
    "first_seen": "2026-11-04T06:32:18Z",
-   "last_seen": "2026-11-08T13:39:22Z",
-   "times": 24,
+   "last_seen": "2026-11-08T22:22:32Z",
+   "times": 25,
    "score": 70,
    "delta": 0,
    "tvl_usd": null
@@ -314,11 +386,67 @@
    "target": "GKnHiWh3RRrE1zsNzWxRkomymHc374TvJPSTv2wPeYdB",
    "title": "Kamino Liquidity",
    "first_seen": "2026-11-05T20:19:51Z",
-   "last_seen": "2026-11-08T13:39:22Z",
-   "times": 114,
+   "last_seen": "2026-11-08T22:22:32Z",
+   "times": 115,
    "score": 54,
    "delta": 0,
-   "tvl_usd": 65522252.25725282
+   "tvl_usd": 65412865.04820626
+  },
+  {
+   "key": "a queued change against this contract executes within 48 h|plasma:0x52aa899454998be5b000ad077a46bbe360f4e497",
+   "rule": "a queued change against this contract executes within 48 h",
+   "severity": "medium",
+   "chain": "Plasma",
+   "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
+   "title": "Fluid Lending",
+   "first_seen": "2026-11-08T22:22:32Z",
+   "last_seen": "2026-11-08T22:22:32Z",
+   "times": 5,
+   "score": 59,
+   "delta": 0,
+   "tvl_usd": 26170923.669260345
+  },
+  {
+   "key": "an upgrade was executed: the implementation behind this contract changed since the previous run|arbitrum:0x9c4ec768c28520b50860ea7a15bd7213a9ff58bf",
+   "rule": "an upgrade was executed: the implementation behind this contract changed since the previous run",
+   "severity": "high",
+   "chain": "Arbitrum",
+   "target": "0x9c4ec768c28520b50860ea7a15bd7213a9ff58bf",
+   "title": "Compound V3",
+   "first_seen": "2026-11-08T22:22:32Z",
+   "last_seen": "2026-11-08T22:22:32Z",
+   "times": 1,
+   "score": 78,
+   "delta": 0,
+   "tvl_usd": 61377190.537314214
+  },
+  {
+   "key": "an upgrade was executed: the implementation behind this contract changed since the previous run|arbitrum:0x52aa899454998be5b000ad077a46bbe360f4e497",
+   "rule": "an upgrade was executed: the implementation behind this contract changed since the previous run",
+   "severity": "high",
+   "chain": "Arbitrum",
+   "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
+   "title": "Fluid Lending",
+   "first_seen": "2026-11-08T22:22:32Z",
+   "last_seen": "2026-11-08T22:22:32Z",
+   "times": 1,
+   "score": 59,
+   "delta": 0,
+   "tvl_usd": 125962208.5366844
+  },
+  {
+   "key": "an upgrade was executed: the implementation behind this contract changed since the previous run|base:0xb125e6687d4313864e53df431d5425969c15eb2f",
+   "rule": "an upgrade was executed: the implementation behind this contract changed since the previous run",
+   "severity": "high",
+   "chain": "Base",
+   "target": "0xb125e6687d4313864e53df431d5425969c15eb2f",
+   "title": "Compound V3",
+   "first_seen": "2026-11-08T22:22:32Z",
+   "last_seen": "2026-11-08T22:22:32Z",
+   "times": 1,
+   "score": 78,
+   "delta": 0,
+   "tvl_usd": 22524370.990685582
   },
   {
    "key": "the independent reader disagrees with the admin-key score, with money behind it|hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109",
@@ -3878,20 +4006,6 @@
    "score": 51,
    "delta": 0,
    "tvl_usd": null
-  },
-  {
-   "key": "a queued change against this contract executes within 48 h|plasma:0x52aa899454998be5b000ad077a46bbe360f4e497",
-   "rule": "a queued change against this contract executes within 48 h",
-   "severity": "medium",
-   "chain": "Plasma",
-   "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
-   "title": "Fluid Lending",
-   "first_seen": "2026-10-13T00:57:18Z",
-   "last_seen": "2026-10-13T18:50:24Z",
-   "times": 4,
-   "score": 59,
-   "delta": 0,
-   "tvl_usd": 36227354.11241204
   },
   {
    "key": "the contract's own balance fell by 30% to 70% since the previous run (totalAssets(), token units, $1M or more gone)|base:0xbeef2d50b428675a1921bc6bbf4bfb9d8cf1461a",

@@ -1209,10 +1209,12 @@
    "first_seen_utc": "2026-11-03T00:57:07Z",
    "due_utc": "2026-11-03T23:20:35Z",
    "notice_hours": 22.4,
-   "state": "queued",
+   "state": "resolved",
    "chain": "ethereum",
    "timelock": "ethereum-l1 timelock 0x2386\u20261f4c, found by the independent reader (1 tracked contract)",
-   "what": "nested timelock"
+   "what": "nested timelock",
+   "resolved_seen_utc": "2026-11-08T22:02:49Z",
+   "final_state": "unknown"
   },
   "solana:7qipzlr9j1jcvdxe1xjefgvoyfmgbpgw5hmdhbmpcjtm:squads:7qipzLR9j1JcvdxE1XJEFgvoyFmgBpgw5hMdHBMPcJtM:145": {
    "outcome": "warned",
@@ -1523,72 +1525,104 @@
    "first_seen_utc": "2026-11-07T21:48:45Z",
    "due_utc": "2026-11-08T19:03:03Z",
    "notice_hours": 21.2,
-   "state": "queued",
+   "state": "resolved",
    "chain": "arbitrum",
    "timelock": "arbitrum timelock 0x3fb4\u2026f88a, found by the independent reader (1 tracked contract)",
-   "what": "parameter change"
+   "what": "parameter change",
+   "resolved_seen_utc": "2026-11-08T22:02:49Z",
+   "final_state": "unknown"
   },
   "arbitrum:0x3fb4d38ea7ec20d91917c09591490eeda38cf88a:0x2e3d1317b67e547f610ba3c14c6b8b30738768f0254cbcc4662190fd764fdfa5": {
    "outcome": "warned",
    "first_seen_utc": "2026-11-07T21:48:45Z",
    "due_utc": "2026-11-08T19:03:03Z",
    "notice_hours": 21.2,
-   "state": "queued",
+   "state": "resolved",
    "chain": "arbitrum",
    "timelock": "arbitrum timelock 0x3fb4\u2026f88a, found by the independent reader (1 tracked contract)",
-   "what": "parameter change"
+   "what": "parameter change",
+   "resolved_seen_utc": "2026-11-08T22:02:49Z",
+   "final_state": "unknown"
   },
   "arbitrum:0x3fb4d38ea7ec20d91917c09591490eeda38cf88a:0xc686bc34dd777e0d023eaaa9128324ca2f0b5242cbd20ef8358949e72f806f87": {
    "outcome": "warned",
    "first_seen_utc": "2026-11-07T21:48:45Z",
    "due_utc": "2026-11-08T19:03:03Z",
    "notice_hours": 21.2,
-   "state": "queued",
+   "state": "resolved",
    "chain": "arbitrum",
    "timelock": "arbitrum timelock 0x3fb4\u2026f88a, found by the independent reader (1 tracked contract)",
-   "what": "upgrade"
+   "what": "upgrade",
+   "resolved_seen_utc": "2026-11-08T22:02:49Z",
+   "final_state": "unknown"
   },
   "arbitrum:0x3fb4d38ea7ec20d91917c09591490eeda38cf88a:0x9fdfd5c43bd6397f5950c4a4a5a1d4250e959a71cb465b81560fee514c02092f": {
    "outcome": "warned",
    "first_seen_utc": "2026-11-07T21:48:45Z",
    "due_utc": "2026-11-08T19:03:03Z",
    "notice_hours": 21.2,
-   "state": "queued",
+   "state": "resolved",
    "chain": "arbitrum",
    "timelock": "arbitrum timelock 0x3fb4\u2026f88a, found by the independent reader (1 tracked contract)",
-   "what": "parameter change"
+   "what": "parameter change",
+   "resolved_seen_utc": "2026-11-08T22:02:49Z",
+   "final_state": "unknown"
   },
   "arbitrum:0x3fb4d38ea7ec20d91917c09591490eeda38cf88a:0xce21d9311f5a6ac76765626c34d943e3b50f290e5607058136419e6304014b65": {
    "outcome": "warned",
    "first_seen_utc": "2026-11-07T21:48:45Z",
    "due_utc": "2026-11-08T19:03:03Z",
    "notice_hours": 21.2,
-   "state": "queued",
+   "state": "resolved",
    "chain": "arbitrum",
    "timelock": "arbitrum timelock 0x3fb4\u2026f88a, found by the independent reader (1 tracked contract)",
-   "what": "upgrade"
+   "what": "upgrade",
+   "resolved_seen_utc": "2026-11-08T22:02:49Z",
+   "final_state": "unknown"
   },
   "arbitrum:0x4d6ce4f4498d59eed397bcbc687805a07f9b2346:0x05ea35a3cfbbb0e21ea641bd2c040c85b95336d3b1d8f7086e8657639bd73e55": {
    "outcome": "warned",
    "first_seen_utc": "2026-11-07T21:48:45Z",
    "due_utc": "2026-11-08T16:49:22Z",
    "notice_hours": 19.0,
+   "state": "resolved",
+   "chain": "arbitrum",
+   "timelock": "arbitrum timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
+   "what": "upgrade",
+   "resolved_seen_utc": "2026-11-08T22:02:49Z",
+   "final_state": "unknown"
+  },
+  "arbitrum:0x4d6ce4f4498d59eed397bcbc687805a07f9b2346:0x4c502f73615e5a312e812eeef6b5b73667e29107e38eb0e3bd8c496cbc66756e": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-11-08T22:02:49Z",
+   "due_utc": "2026-11-09T15:42:33Z",
+   "notice_hours": 17.7,
    "state": "queued",
    "chain": "arbitrum",
    "timelock": "arbitrum timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
-   "what": "upgrade"
+   "what": "parameter change"
+  },
+  "plasma:0x4d6ce4f4498d59eed397bcbc687805a07f9b2346:0xb410170eac954552d1655a88da86970c8f27f26982586e569051b749da982087": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-11-08T22:02:49Z",
+   "due_utc": "2026-11-09T15:21:16Z",
+   "notice_hours": 17.3,
+   "state": "queued",
+   "chain": "plasma",
+   "timelock": "plasma timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
+   "what": "parameter change"
   }
  },
- "updated_utc": "2026-11-08T13:22:25Z",
+ "updated_utc": "2026-11-08T22:02:49Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
-  "warned": 62,
+  "warned": 64,
   "seen_without_notice": 5,
   "missed": 24,
   "baseline": 77,
-  "warned_with_a_known_notice": 62,
+  "warned_with_a_known_notice": 64,
   "shortest_notice_hours": 0.2,
-  "median_notice_hours": 21.8,
+  "median_notice_hours": 21.7,
   "note": "warned: seen while queued and not yet executable (the notice is real); seen_without_notice: still queued but already executable when first seen; missed: queued after the ledger started and already applied when first seen (faster than the 6-hour cadence); baseline: applied before the ledger started, counted as neither."
  }
 }

@@ -2,7 +2,7 @@
 
 **Where the files are.** The state of the Watch is committed to the [`watch-data` branch](https://github.com/RealSpap/authority-risk-oracle-showcase/tree/watch-data), not to `main` (the root of that branch is this folder). On `main` this folder keeps the documents written by hand and a few small notices at the old addresses (`status.json`, `latest.json`, `signature.json`, `badge.json`, `badge/integrity.json`, `alerts.xml`, `feed.xml`) so that an old link tells you where the live file is. Raw files: `https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/watch-data/latest.json`, and the same for every other file of that branch.
 
-The files a read-only GitHub Action rewrites every 6 hours (cron `17 */6 * * *` UTC): every deployed oracle re-read, the money behind each
+The files a read-only GitHub Action rewrites at each run (scheduled every 6 hours, cron `17 */6 * * *` UTC; about 2 runs a day since 4 Nov 2026, 2 to 4 from 31 Oct to 6 Nov): every deployed oracle re-read, the money behind each
 target, the queue of changes behind the watched timelocks, the rules that fire, why a score moved. The dashboard at
 https://realspap.github.io/oracle/ reads these files for what it shows, plus live RPC calls when you press “verify”.
 

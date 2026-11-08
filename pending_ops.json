@@ -343,83 +343,7 @@
    "status": "ok",
    "queued_events": 5,
    "latest_queued": 1794078183,
-   "pending": [
-    {
-     "block": 522164254,
-     "tx": "0x1f8f2d2b71f3f161c453b7d1c2c14e4338b2f08b2c895372560f21767529cac3",
-     "id": "0x91458dac5aad0d81e2d626190af7a937331804d064fbc4516ce0eeaf0da5f853",
-     "index": 0,
-     "target": "0xb21b06D71c75973babdE35b49fFDAc3F82Ad3775",
-     "value": 0,
-     "eta": 1794164583,
-     "selector": "0x00000000",
-     "signature": "updateAssetBorrowCollateralFactor(address,address,uint64)",
-     "calls": 1,
-     "ready_at": 1794164583,
-     "state": "waiting",
-     "decoded": "parameter change"
-    },
-    {
-     "block": 522164254,
-     "tx": "0x1f8f2d2b71f3f161c453b7d1c2c14e4338b2f08b2c895372560f21767529cac3",
-     "id": "0x2e3d1317b67e547f610ba3c14c6b8b30738768f0254cbcc4662190fd764fdfa5",
-     "index": 0,
-     "target": "0xb21b06D71c75973babdE35b49fFDAc3F82Ad3775",
-     "value": 0,
-     "eta": 1794164583,
-     "selector": "0x00000000",
-     "signature": "updateAssetSupplyCap(address,address,uint128)",
-     "calls": 1,
-     "ready_at": 1794164583,
-     "state": "waiting",
-     "decoded": "parameter change"
-    },
-    {
-     "block": 522164254,
-     "tx": "0x1f8f2d2b71f3f161c453b7d1c2c14e4338b2f08b2c895372560f21767529cac3",
-     "id": "0xc686bc34dd777e0d023eaaa9128324ca2f0b5242cbd20ef8358949e72f806f87",
-     "index": 0,
-     "target": "0xD10b40fF1D92e2267D099Da3509253D9Da4D715e",
-     "value": 0,
-     "eta": 1794164583,
-     "selector": "0x00000000",
-     "signature": "deployAndUpgradeTo(address,address)",
-     "calls": 1,
-     "ready_at": 1794164583,
-     "state": "waiting",
-     "decoded": "upgrade"
-    },
-    {
-     "block": 522164254,
-     "tx": "0x1f8f2d2b71f3f161c453b7d1c2c14e4338b2f08b2c895372560f21767529cac3",
-     "id": "0x9fdfd5c43bd6397f5950c4a4a5a1d4250e959a71cb465b81560fee514c02092f",
-     "index": 0,
-     "target": "0xb21b06D71c75973babdE35b49fFDAc3F82Ad3775",
-     "value": 0,
-     "eta": 1794164583,
-     "selector": "0x00000000",
-     "signature": "updateAssetBorrowCollateralFactor(address,address,uint64)",
-     "calls": 1,
-     "ready_at": 1794164583,
-     "state": "waiting",
-     "decoded": "parameter change"
-    },
-    {
-     "block": 522164254,
-     "tx": "0x1f8f2d2b71f3f161c453b7d1c2c14e4338b2f08b2c895372560f21767529cac3",
-     "id": "0xce21d9311f5a6ac76765626c34d943e3b50f290e5607058136419e6304014b65",
-     "index": 0,
-     "target": "0xD10b40fF1D92e2267D099Da3509253D9Da4D715e",
-     "value": 0,
-     "eta": 1794164583,
-     "selector": "0x00000000",
-     "signature": "deployAndUpgradeTo(address,address)",
-     "calls": 1,
-     "ready_at": 1794164583,
-     "state": "waiting",
-     "decoded": "upgrade"
-    }
-   ],
+   "pending": [],
    "recent": [
     {
      "block": 522164254,
@@ -432,7 +356,7 @@
      "selector": "0x00000000",
      "signature": "updateAssetBorrowCollateralFactor(address,address,uint64)",
      "calls": 1,
-     "still_queued": true,
+     "still_queued": false,
      "queued_at": 1794078183,
      "decoded": "parameter change"
     },
@@ -447,7 +371,7 @@
      "selector": "0x00000000",
      "signature": "updateAssetSupplyCap(address,address,uint128)",
      "calls": 1,
-     "still_queued": true,
+     "still_queued": false,
      "queued_at": 1794078183,
      "decoded": "parameter change"
     },
@@ -462,7 +386,7 @@
      "selector": "0x00000000",
      "signature": "deployAndUpgradeTo(address,address)",
      "calls": 1,
-     "still_queued": true,
+     "still_queued": false,
      "queued_at": 1794078183,
      "decoded": "upgrade"
     },
@@ -477,7 +401,7 @@
      "selector": "0x00000000",
      "signature": "updateAssetBorrowCollateralFactor(address,address,uint64)",
      "calls": 1,
-     "still_queued": true,
+     "still_queued": false,
      "queued_at": 1794078183,
      "decoded": "parameter change"
     },
@@ -492,7 +416,7 @@
      "selector": "0x00000000",
      "signature": "deployAndUpgradeTo(address,address)",
      "calls": 1,
-     "still_queued": true,
+     "still_queued": false,
      "queued_at": 1794078183,
      "decoded": "upgrade"
     }
@@ -501,7 +425,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 4382608,
+   "window_blocks": 4819123,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -514,23 +438,23 @@
    "address": "0x4d6ce4f4498d59eed397bcbc687805a07f9b2346",
    "family": "oz",
    "status": "ok",
-   "queued_events": 16,
-   "latest_queued": 1794070162,
+   "queued_events": 39,
+   "latest_queued": 1794152553,
    "pending": [
     {
-     "block": 522136032,
-     "tx": "0x19cba78c5830d684380d5c9ef364b549cbbdff7701687463699c3a566ec5585b",
-     "id": "0x05ea35a3cfbbb0e21ea641bd2c040c85b95336d3b1d8f7086e8657639bd73e55",
+     "block": 522407311,
+     "tx": "0xa2c2dce5703cc844f99b25104f7146bd088f50eb2d462c36a50b48b8ca1e8db9",
+     "id": "0x4c502f73615e5a312e812eeef6b5b73667e29107e38eb0e3bd8c496cbc66756e",
      "index": 0,
-     "target": "0x52Aa899454998Be5b000Ad077a46Bbe360F4e497",
+     "target": "0x87E765B0f76F9071B7Ff8bCa2A1EB8338AcD14C3",
      "value": 0,
-     "selector": "0xf0c01b42",
+     "selector": "0x77396ce5",
      "delay": 86400,
-     "signature": "addImplementation(address,bytes4[])",
-     "calls": 16,
-     "ready_at": 1794156562,
+     "signature": "updateAuth(address,uint256)",
+     "calls": 23,
+     "ready_at": 1794238953,
      "state": "waiting",
-     "decoded": "upgrade"
+     "decoded": "parameter change"
     }
    ],
    "recent": [
@@ -545,15 +469,30 @@
      "delay": 86400,
      "signature": "addImplementation(address,bytes4[])",
      "calls": 16,
-     "still_queued": true,
+     "still_queued": false,
      "queued_at": 1794070162,
      "decoded": "upgrade"
+    },
+    {
+     "block": 522407311,
+     "tx": "0xa2c2dce5703cc844f99b25104f7146bd088f50eb2d462c36a50b48b8ca1e8db9",
+     "id": "0x4c502f73615e5a312e812eeef6b5b73667e29107e38eb0e3bd8c496cbc66756e",
+     "index": 0,
+     "target": "0x87E765B0f76F9071B7Ff8bCa2A1EB8338AcD14C3",
+     "value": 0,
+     "selector": "0x77396ce5",
+     "delay": 86400,
+     "signature": "updateAuth(address,uint256)",
+     "calls": 23,
+     "still_queued": true,
+     "queued_at": 1794152553,
+     "decoded": "parameter change"
     }
    ],
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 4382608,
+   "window_blocks": 4819123,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -573,7 +512,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 4382608,
+   "window_blocks": 4819123,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -623,23 +562,7 @@
    "status": "ok",
    "queued_events": 1,
    "latest_queued": 1793661635,
-   "pending": [
-    {
-     "block": 26330343,
-     "tx": "0x313e1775aceb99e36a889317f682cc27dac38b5d0651b8f5eb02173239eb406b",
-     "id": "0xbe10c0ae8d096f2cb65fd4653e5f7c1a41db827de35957fcebf1a13c54be1a03",
-     "index": 0,
-     "target": "0x2386DC45AdDed673317eF068992F19421B481F4c",
-     "value": 0,
-     "eta": 1793748035,
-     "selector": "0x00000000",
-     "signature": "executePayload(address,string,bytes)",
-     "calls": 1,
-     "ready_at": 1793748035,
-     "state": "ready",
-     "decoded": "nested timelock"
-    }
-   ],
+   "pending": [],
    "recent": [
     {
      "block": 26330343,
@@ -652,7 +575,7 @@
      "selector": "0x00000000",
      "signature": "executePayload(address,string,bytes)",
      "calls": 1,
-     "still_queued": true,
+     "still_queued": false,
      "queued_at": 1793661635,
      "decoded": "nested timelock"
     }
@@ -661,7 +584,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/mainnet",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 100598,
+   "window_blocks": 100298,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -711,10 +634,42 @@
    "address": "0x4d6ce4f4498d59eed397bcbc687805a07f9b2346",
    "family": "oz",
    "status": "ok",
-   "queued_events": 0,
-   "latest_queued": null,
-   "pending": [],
-   "recent": [],
+   "queued_events": 2,
+   "latest_queued": 1794151276,
+   "pending": [
+    {
+     "block": 37207972,
+     "tx": "0x1393bce0d963f1d3115d3a88f3830165858aee70143241ac369fa33225f791e5",
+     "id": "0xb410170eac954552d1655a88da86970c8f27f26982586e569051b749da982087",
+     "index": 0,
+     "target": "0x52Aa899454998Be5b000Ad077a46Bbe360F4e497",
+     "value": 0,
+     "selector": "0x01b88f86",
+     "delay": 86400,
+     "signature": "updateUserBorrowConfigs((address,address,uint8,uint256,uint256,uint256,uint256)[])",
+     "calls": 2,
+     "ready_at": 1794237676,
+     "state": "waiting",
+     "decoded": "parameter change"
+    }
+   ],
+   "recent": [
+    {
+     "block": 37207972,
+     "tx": "0x1393bce0d963f1d3115d3a88f3830165858aee70143241ac369fa33225f791e5",
+     "id": "0xb410170eac954552d1655a88da86970c8f27f26982586e569051b749da982087",
+     "index": 0,
+     "target": "0x52Aa899454998Be5b000Ad077a46Bbe360F4e497",
+     "value": 0,
+     "selector": "0x01b88f86",
+     "delay": 86400,
+     "signature": "updateUserBorrowConfigs((address,address,uint8,uint256,uint256,uint256,uint256)[])",
+     "calls": 2,
+     "still_queued": true,
+     "queued_at": 1794151276,
+     "decoded": "parameter change"
+    }
+   ],
    "discovered": true,
    "log_rpc": "https://rpc.plasma.to",
    "delay": 86400,
@@ -779,7 +734,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 0,
    "window_blocks": 3000000,
-   "window_days_est": 3.7,
+   "window_days_est": 3.4,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62"
@@ -799,7 +754,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 86400,
    "window_blocks": 3000000,
-   "window_days_est": 3.7,
+   "window_days_est": 3.2,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x14b107cf534239c59571b066cb6497a321da897c"
@@ -1780,7 +1735,7 @@
    "transaction_index": 72
   }
  ],
- "discovered_utc": "2026-11-08T13:33:48Z",
+ "discovered_utc": "2026-11-08T22:16:03Z",
  "discovered": 15,
- "squads_utc": "2026-11-08T13:39:02Z"
+ "squads_utc": "2026-11-08T22:22:13Z"
 }

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Money at risk, by cause: watch/risk_by_cause.json. The dashboard says how much tracked money sits under low scores; this says
-why, from the independent reads of the run: behind a plain-key admin, behind a multisig made of plain keys only, with no delay on
-the admin path, behind an implementation with no verified source, frozen if one key is lost, with an upgrade approved and
-executable, with an admin transfer in flight. A contract can sit under several causes; money is counted once per protocol and
+why, from the independent reads of the run: behind a plain-key admin, behind a multisig made of plain keys only, behind an
+implementation with no verified source, frozen if one key is lost, with an upgrade approved and
+executable, with an admin transfer in flight. (The cause `no_delay` was withdrawn on 2026-11-08: see RETIRED.) A contract can sit under several causes; money is counted once per protocol and
 chain inside a cause (DefiLlama figures, the 08/10 rule). No RPC.
 
     python3 scripts/risk_by_cause.py --watch watch --out watch/risk_by_cause.json
@@ -19,8 +19,20 @@ def load(p):
     except Exception: return None  # noqa: BLE001
 
 
-CAUSES = [("side_role_plain_key", "a secondary role (curator, guardian, pauser) is held by a plain key"), ("plain_key_admin", "the admin is a plain key"), ("keys_only_multisig", "the admin multisig is made of plain keys only"), ("no_delay", "no delay on the admin path (no timelock, no Zodiac delay, no Squads time lock)"),
-          ("unverified_code", "the code behind the proxy has no verified source (Sourcify) or build (OtterSec)"), ("one_key_freezes", "one lost key freezes the admin multisig"), ("upgrade_executable", "an upgrade is approved and executable now"), ("transfer_in_flight", "an admin transfer is designated and not yet accepted"), ("module_on_safe", "a module is enabled on the admin Safe (executes without the signatures)")]
+CAUSES = [("side_role_plain_key", "a secondary role (curator, guardian, pauser) is held by a plain key"), ("plain_key_admin", "the admin is a plain key"), ("keys_only_multisig", "the admin multisig is made of plain keys only"), ("unverified_code", "the code behind the proxy has no verified source (Sourcify) or build (OtterSec)"), ("one_key_freezes", "one lost key freezes the admin multisig"), ("upgrade_executable", "an upgrade is approved and executable now"), ("transfer_in_flight", "an admin transfer is designated and not yet accepted"), ("module_on_safe", "a module is enabled on the admin Safe (executes without the signatures)")]
+
+
+# A label is withdrawn when the upper bound of the Wilson interval of its measured error rate is above 10 % (rule adopted 2026-11-08). `no_delay` ("no delay on the admin path") listed 67 contracts;
+# a replay of all 67 on chain on 2026-11-07 found a delay the reader did not recognise on 7 of them if the delay must sit on the owner or on the upgrade (what the
+# label says) and on 14 if a delay anywhere counts, and 2 it could not read: between 10 % and 21 % depending on the definition, a partial measure, and the upper
+# bound is above 10 % for both, so it cannot be shown to be under 10 %. The label is published as retired, with no count, no money and no single rate.
+RETIRED = {"no_delay": {
+    "status": "retired", "retired_on": "2026-11-08", "label": "no delay on the admin path",
+    "reason": "A replay of all 67 contracts this label listed, read from the chain on 2026-11-07, found a delay the reader does not recognise on 7 of them if the delay must sit on the owner or on the upgrade (what the label says) and on 14 of them if a delay anywhere counts; 2 could not be read. The rate is between 10 % and 21 % depending on the definition, a partial measure. The rule is that a label is withdrawn when the upper bound of the Wilson interval of its error rate is above 10 %, and it is for both definitions: the label cannot be shown to be under 10 %, so it is withdrawn until the reader is corrected. No score changed.",
+    "measured_error": {"partial": True, "threshold": 0.1, "rate_range": [0.104, 0.209], "replayed_on": "2026-11-07",
+                       "owner_or_upgrade": {"definition": "a delay on the owner or on the upgrade", "wrong": 7, "replayed": 67, "unreadable": 2},
+                       "anywhere": {"definition": "a delay anywhere", "wrong": 14, "replayed": 67, "unreadable": 2}},
+    "replay_command": None}}   # no public replay command yet: null, not a link to something that does not exist
 
 
 def money_once(kas, tvl, scope, held):
@@ -71,7 +83,6 @@ def main():
             if k == "contract" and b.get("kind"): k = b["kind"]; r = dict(r, delay_seconds=b.get("delay_seconds"), threshold=b.get("threshold"), owners=b.get("owners"), owners_kinds=None, modules_detail=None)
             if cid == "plain_key_admin": hit = k == "eoa"
             elif cid == "keys_only_multisig": hit = k in ("safe", "squads") and {kk for kk, v in (r.get("owners_kinds") or {}).items() if v} == {"eoa"}
-            elif cid == "no_delay": hit = k in ("eoa", "safe", "squads") and not (r.get("delay_seconds") or 0) and not (r.get("self_delay_seconds") or 0) and not (r.get("owners_kinds") or {}).get("timelock") and not any(m.get("kind") == "zodiac-delay" and m.get("cooldown_seconds") for m in (r.get("modules_detail") or []))   # a holder read as a bare "contract" may hide a delay the reader cannot see: not claimed
             elif cid == "unverified_code": hit = src.get("verified") is False
             elif cid == "one_key_freezes": hit = r.get("keys_lost_to_freeze") == 1
             elif cid == "upgrade_executable": hit = ka in upg_live
@@ -82,7 +93,7 @@ def main():
         money = money_once(hits, tvl, scope, held); hit_sets[cid] = set(hits)
         out[cid] = {"label": label, "contracts": len(hits), "with_tvl": sum(1 for ka in hits if (ka in tvl or (held.get(ka) or {}).get("held_usd")) and (scope.get(ka) or {}).get("scope") not in ("retired", "peripheral")), "out_of_scope": sum(1 for ka in hits if (scope.get(ka) or {}).get("scope") in ("retired", "peripheral")), "tvl_usd": round(money), "share_of_tracked": (round(money / total_money, 3) if total_money else None), "targets": sorted(hits)}
         out[cid]["money_source"] = {ka: money_source(ka, tvl, scope, held) for ka in hits}   # which kind of figure each contract's money is (protocol TVL, chain figure, contract figure, held by the contract, none)
-    rec = {"generated_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "tracked_tvl_usd": round(total_money), "contracts": len(targets), "causes": out,
+    rec = {"generated_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "tracked_tvl_usd": round(total_money), "contracts": len(targets), "causes": dict(out, **{k: dict(v) for k, v in RETIRED.items()}),
            "overlaps": cause_overlaps(hit_sets, lambda ks: money_once(ks, tvl, scope, held)),   # the contracts and the money that sit under two causes at once, and under at least one
            "what": "money at risk by cause, from the independent reads of the run (second_opinion.json, impl_sources.json, pending_ops.json) and DefiLlama (tvl.json, one figure per protocol and chain; a contract with no protocol match counts what it holds by its own account, held_assets.json); a contract can sit under several causes; read a cause as the money a single failure of that kind would expose, not as a sum across causes; written by scripts/risk_by_cause.py after every run"}
     tmp = a.out + ".tmp"; json.dump(rec, open(tmp, "w"), indent=1); os.replace(tmp, a.out)

@@ -3018,12 +3018,73 @@ class TestRiskByCause(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp: d, W = self.run_it(tmp)
         c = d["causes"]; x = self.X; ids = lambda cid: [t[-1] for t in c[cid]["targets"]]
         self.assertEqual((d["tracked_tvl_usd"], d["contracts"]), (1117, 11))   # p1 once (100), p2's total (1000) swallowing its 300 slice, the retired p3 nothing, the vault 7, p4 10
-        self.assertEqual([k for k, _ in risk_by_cause.CAUSES], list(c))   # every cause, in the documented order
+        self.assertEqual([k for k, _ in risk_by_cause.CAUSES] + list(risk_by_cause.RETIRED), list(c))   # every cause, in the documented order, the withdrawn ones last
         self.assertEqual(ids("plain_key_admin"), ["a", "d"]); self.assertEqual(ids("keys_only_multisig"), ["b"]); self.assertEqual(ids("unverified_code"), ["b"]); self.assertEqual(ids("one_key_freezes"), ["e"])
-        self.assertEqual(ids("no_delay"), ["a", "b", "d", "h"])   # a delay, a timelock among the owners, a self delay, a real Zodiac delay each take a contract out; a zero cooldown does not; a timelock holder is not asked
         self.assertEqual(ids("upgrade_executable"), ["a", "e", "k"]); self.assertEqual(ids("transfer_in_flight"), ["f"]); self.assertEqual(ids("side_role_plain_key"), ["e"]); self.assertEqual(ids("module_on_safe"), ["c", "f"])
-        self.assertEqual({cid: v["tvl_usd"] for cid, v in c.items()}, {"side_role_plain_key": 300, "plain_key_admin": 1100, "keys_only_multisig": 100, "no_delay": 1100, "unverified_code": 100, "one_key_freezes": 300, "upgrade_executable": 400, "transfer_in_flight": 7, "module_on_safe": 7})
+        self.assertEqual({cid: v["tvl_usd"] for cid, v in c.items() if v.get("status") != "retired"}, {"side_role_plain_key": 300, "plain_key_admin": 1100, "keys_only_multisig": 100, "unverified_code": 100, "one_key_freezes": 300, "upgrade_executable": 400, "transfer_in_flight": 7, "module_on_safe": 7})
         self.assertEqual(c["plain_key_admin"]["share_of_tracked"], round(1100 / 1117.4, 3)); self.assertIsInstance(d["tracked_tvl_usd"], int)   # the share uses the exact total, the published total is whole dollars
+
+    def test_a_label_wrong_above_ten_percent_is_published_as_retired_with_no_count_and_no_money(self):   # no_delay: a replay of 67 on chain found a delay the label did not see on 7 (owner or upgrade) to 14 (anywhere): 10 % to 21 %, partial; withdrawn when the upper Wilson bound is above 10 % (rule of 2026-11-08)
+        with tempfile.TemporaryDirectory() as tmp: d, W = self.run_it(tmp)
+        nd = d["causes"]["no_delay"]
+        self.assertEqual((nd["status"], nd["retired_on"]), ("retired", "2026-11-08"))
+        for k in ("contracts", "with_tvl", "tvl_usd", "share_of_tracked", "targets", "money_source", "out_of_scope"): self.assertNotIn(k, nd, "a withdrawn label publishes no count and no amount: " + k)
+        m = nd["measured_error"]; self.assertEqual(m["threshold"], 0.1); self.assertIs(m["partial"], True); self.assertNotIn("rate", m, "no single rate: the two definitions give a range")
+        n, a = m["owner_or_upgrade"], m["anywhere"]; self.assertEqual([(b["wrong"], b["replayed"], b["unreadable"]) for b in (n, a)], [(7, 67, 2), (14, 67, 2)]); self.assertNotIn("curator_only", a, "the split of the 14 is not published")
+        self.assertEqual(m["rate_range"], [0.104, 0.209]); self.assertAlmostEqual(n["wrong"] / 67, m["rate_range"][0], places=3); self.assertAlmostEqual(a["wrong"] / 67, m["rate_range"][1], places=3)
+        self.assertGreater(m["rate_range"][0], m["threshold"], "the point value is above 10 % for both definitions"); self.assertGreater(m["rate_range"][1], m["rate_range"][0])
+        for t in ("7 of", "14 of", "between 10 % and 21 %", "partial", "upper bound of the Wilson interval", "above 10 %", "under 10 %", "No score changed"): self.assertIn(t, nd["reason"], t)
+        for t in ("6 of", "13 of", "7 of the 13", "between 10 % and 19 %"): self.assertNotIn(t, nd["reason"], t)
+        self.assertIsNone(nd["replay_command"], "no public replay command exists: null, not an invented link")
+        self.assertNotIn("no_delay", json.dumps(d["overlaps"]), "a withdrawn cause is in no overlap")
+        import validate_schemas
+        schema = json.load(open(os.path.join(os.path.dirname(os.path.abspath(risk_by_cause.__file__)), "..", "watch", "schema", "risk_by_cause.schema.json"))); errs = []; validate_schemas.check(d, schema, "risk_by_cause", errs); self.assertEqual(errs, [])
+        broken = json.loads(json.dumps(d)); del broken["causes"]["no_delay"]["measured_error"]; errs = []; validate_schemas.check(broken, schema, "risk_by_cause", errs); self.assertTrue(errs, "a retired record without its measured error does not fit the schema")
+
+    def test_the_measured_error_is_a_range_with_two_definitions_and_the_schema_refuses_a_single_rate(self):
+        with tempfile.TemporaryDirectory() as tmp: d, W = self.run_it(tmp)
+        import validate_schemas
+        schema = json.load(open(os.path.join(os.path.dirname(os.path.abspath(risk_by_cause.__file__)), "..", "watch", "schema", "risk_by_cause.schema.json")))
+        def refused(edit, why):
+            broken = json.loads(json.dumps(d)); edit(broken["causes"]["no_delay"]["measured_error"]); errs = []; validate_schemas.check(broken, schema, "risk_by_cause", errs); self.assertTrue(errs, why)
+        refused(lambda m: m.update(rate=0.2), "a single rate is refused")
+        refused(lambda m: m["anywhere"].update(rate=0.2), "a rate inside a definition is refused")
+        refused(lambda m: m.pop("rate_range"), "the range is required")
+        refused(lambda m: m.pop("partial"), "the word partial is required")
+        refused(lambda m: m.pop("owner_or_upgrade"), "both definitions are required")
+        refused(lambda m: m["anywhere"].pop("unreadable"), "each definition carries wrong, replayed and unreadable")
+
+    def test_no_public_text_gives_the_rate_as_one_number_and_each_21_percent_sits_next_to_the_10(self):
+        with tempfile.TemporaryDirectory() as tmp: d, W = self.run_it(tmp)
+        root = os.path.join(os.path.dirname(os.path.abspath(risk_by_cause.__file__)), "..")
+        line = [l for l in open(os.path.join(root, "CHANGELOG.md"), encoding="utf-8") if "The cause `no_delay`" in l]; self.assertEqual(len(line), 1)
+        texts = {"CHANGELOG": line[0], "API.md": open(os.path.join(root, "watch", "API.md"), encoding="utf-8").read(), "risk_by_cause.json": json.dumps({k: v for k, v in d["causes"]["no_delay"].items() if k != "measured_error"}) + json.dumps({k: v for k, v in d["causes"]["no_delay"]["measured_error"].items() if k != "rate_range"})}   # rate_range is the one place where the two figures sit as numbers
+        for name, t in texts.items():
+            self.assertIsNone(re.search(r"20[.,]9|0[.]209|19[.,]4|0[.]194|10[.,]4|0[.]104", t), name + ": the rate is not given as one number")
+            self.assertIsNone(re.search(r"(?<![0-9])9 ?%|(?<![0-9])19 ?%|6 of 67|6 of them|13 of 67|13 of them", t), name + ": the old lower figure is gone")
+            for m in re.finditer(r"\b21 ?%", t): self.assertIn("10 %", t[max(0, m.start() - 40):m.start()], "%s: the upper figure is not preceded by the lower one" % name)
+        for t in ("between 10 % and 21 %", "partial", "upper bound of the Wilson interval", "under the 10 %", "7 of", "14 of"): self.assertIn(t, texts["CHANGELOG"], t)
+        for t in ("between 10 % and 21 %", "partial", "upper bound of the Wilson interval", "under 10 %"): self.assertIn(t, texts["API.md"], t)
+
+    def test_a_withdrawn_entry_that_carries_a_count_or_an_amount_does_not_fit_the_schema(self):
+        with tempfile.TemporaryDirectory() as tmp: d, W = self.run_it(tmp)
+        import validate_schemas
+        schema = json.load(open(os.path.join(os.path.dirname(os.path.abspath(risk_by_cause.__file__)), "..", "watch", "schema", "risk_by_cause.schema.json")))
+        for k, v in (("tvl_usd", 5e9), ("contracts", 67), ("targets", ["x"])):
+            broken = json.loads(json.dumps(d)); broken["causes"]["no_delay"][k] = v; errs = []; validate_schemas.check(broken, schema, "risk_by_cause", errs)
+            self.assertTrue(errs, "a retired entry with %s must be refused" % k)
+
+    def test_the_changelog_and_the_api_say_what_became_of_the_union_and_the_changelog_has_no_amount_for_the_label(self):
+        root = os.path.join(os.path.dirname(os.path.abspath(risk_by_cause.__file__)), "..")
+        line = [l for l in open(os.path.join(root, "CHANGELOG.md"), encoding="utf-8") if "The cause `no_delay`" in l]; self.assertEqual(len(line), 1); line = line[0]
+        self.assertEqual(re.findall(r"\$[0-9.]+B", line), ["$22.6B", "$17.4B"], "the only amounts of the entry are the two of the union: the withdrawn label publishes none")
+        for t in ("overlaps.any_cause", "100 contracts and $22.6B", "92 contracts and $17.4B", "from 16 to 10"): self.assertIn(t, line)
+        api = open(os.path.join(root, "watch", "API.md"), encoding="utf-8").read(); self.assertIn("`any_cause` went from 100 contracts and $22.6B to 92 and $17.4B", api)
+
+    def test_the_trend_line_carries_no_withdrawn_cause(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            d, W = self.run_it(tmp); out = os.path.join(tmp, "trend.jsonl"); run_main(trend, ["--watch", W, "--out", out]); line = json.loads(open(out).read().strip().split("\n")[-1])
+        self.assertNotIn("no_delay", line["causes"]); self.assertIn("plain_key_admin", line["causes"])
 
     def test_the_contract_counts_of_a_cause_separate_what_has_money_and_what_is_retired(self):
         with tempfile.TemporaryDirectory() as tmp:

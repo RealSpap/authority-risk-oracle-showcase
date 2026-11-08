@@ -34,7 +34,7 @@ def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--watch", default="watch"); ap.add_argument("--out", default="watch/trend.jsonl"); a = ap.parse_args(); W = a.watch
     rbc, so, cov, isrc, rq, lat = (load(os.path.join(W, f)) for f in ("risk_by_cause.json", "second_opinion.json", "coverage.json", "impl_sources.json", "review_queue.json", "latest.json"))
     line = {"run_utc": (lat or {}).get("run_utc") or time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "targets": (lat or {}).get("total_targets"), "stale": (lat or {}).get("stale_total")}
-    if rbc: line["tracked_tvl_usd"] = rbc.get("tracked_tvl_usd"); line["causes"] = {k: {"contracts": v.get("contracts"), "tvl_usd": v.get("tvl_usd")} for k, v in (rbc.get("causes") or {}).items()}
+    if rbc: line["tracked_tvl_usd"] = rbc.get("tracked_tvl_usd"); line["causes"] = {k: {"contracts": v.get("contracts"), "tvl_usd": v.get("tvl_usd")} for k, v in (rbc.get("causes") or {}).items() if v.get("status") != "retired"}
     if so:
         line.update({"agree": so.get("agree"), "disagree": so.get("disagree"), "corroborated": so.get("corroborated"), "unreadable": so.get("unreadable"), "changed": len(so.get("changed") or []), "upgrades": len(so.get("upgrades") or [])})
         sc = so.get("signer_composition") or {}; line["signers"] = {"multisigs": sc.get("safes"), "signers": sc.get("signers"), "plain_keys": (sc.get("by_kind") or {}).get("eoa"), "keys_only": sc.get("safes_of_plain_keys_only"), "frozen_by_one_key": sc.get("safes_frozen_by_one_lost_key")}

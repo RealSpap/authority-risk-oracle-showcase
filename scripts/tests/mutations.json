@@ -1911,24 +1911,6 @@
   },
   {
    "file": "scripts/risk_by_cause.py",
-   "old": "and not (r.get(\"self_delay_seconds\") or 0)",
-   "new": "",
-   "why": "a self delay is ignored for the no-delay cause"
-  },
-  {
-   "file": "scripts/risk_by_cause.py",
-   "old": "and not (r.get(\"owners_kinds\") or {}).get(\"timelock\")",
-   "new": "",
-   "why": "a timelock among the owners is ignored for the no-delay cause"
-  },
-  {
-   "file": "scripts/risk_by_cause.py",
-   "old": "m.get(\"kind\") == \"zodiac-delay\" and m.get(\"cooldown_seconds\")",
-   "new": "m.get(\"kind\") == \"zodiac-delay\"",
-   "why": "a Zodiac delay with a zero cooldown counts as a delay"
-  },
-  {
-   "file": "scripts/risk_by_cause.py",
    "old": "elif cid == \"unverified_code\": hit = src.get(\"verified\") is False",
    "new": "elif cid == \"unverified_code\": hit = not src.get(\"verified\")",
    "why": "an unread verification is called unverified"

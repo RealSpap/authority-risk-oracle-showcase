@@ -78,5 +78,37 @@ class TestResolverArbiter(unittest.TestCase):
             self.assertEqual((r["adminKeyScore"], r["multisigScore"], r["compositeScore"]), (20, 0, 8), kw)
 
 
+    def test_a_degraded_arbiter_is_held_back_by_the_push_guard_and_a_healthy_one_is_not(self):
+        # 2026-11-07: push_guard.is_degraded iterates `notes`; for a dict that yields the KEYS, so the marker must be a key.
+        pg = _load("aro_test_tempo_push_guard", "scripts/lib/push_guard.py")
+        for kw, held in (({}, False), ({"slot": 1}, True), ({"owner": (self.RES,)}, True), ({"code": bytes([0x00])}, True)):
+            r = self.run_score(**kw)
+            self.assertEqual(pg.is_degraded({"adminKeyScore": r["adminKeyScore"], "multisigScore": r["multisigScore"],
+                                             "timelockScore": r["timelockScore"], "notes": r["notes"]}), held, kw)
+
+    def test_the_proxy_slots_are_read_on_both_testnet_nodes(self):
+        seen = []
+
+        def rpc(url, method, params):
+            if method == "eth_getCode":
+                return "0x" + self.CODE.hex() if params[0] == self.ARB else "0x"
+            if method == "eth_getStorageAt":
+                seen.append(url)
+                return hex(1 if url == mt.TESTNET_RPCS[1] else 0)   # only the SECOND node reports a proxy slot
+            raise AssertionError(method)
+
+        def call(to, sig, arg_types=(), args=(), out_types=(), url=None):
+            return {"owner()": None, "resolver()": (self.RES,)}[sig]
+        old = (mt.rpc, mt.call, mt.HELD_ARBITER_CODE_HASH)
+        mt.rpc, mt.call, mt.HELD_ARBITER_CODE_HASH = rpc, call, mt.keccak(self.CODE).hex()
+        try:
+            r = mt.score_resolver_arbiter("x", self.ARB)
+        finally:
+            mt.rpc, mt.call, mt.HELD_ARBITER_CODE_HASH = old
+        self.assertEqual(set(seen), set(mt.TESTNET_RPCS))
+        self.assertFalse(r["reads"]["checks"]["noProxySlot"])
+        self.assertEqual(r["compositeScore"], 8)
+
+
 if __name__ == "__main__":
     unittest.main()

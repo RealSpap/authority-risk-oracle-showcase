@@ -103,7 +103,7 @@ step plasma evm-testnet-shared/.env "READ_RPC_URL=https://rpc.plasma.to ORACLE_R
 step monad evm-testnet-shared/.env "READ_RPC_URL=https://rpc.monad.xyz ORACLE_RPC_URL=https://testnet-rpc.monad.xyz/ ORACLE_ADDRESS=$SHARED_ORACLE python3 chains/monad/deploy/push_scores.py"
 step arbitrum evm-testnet-shared/.env "READ_RPC_URL=https://gateway.tenderly.co/public/arbitrum ORACLE_RPC_URL=https://sepolia-rollup.arbitrum.io/rpc ORACLE_ADDRESS=$SHARED_ORACLE python3 chains/arbitrum-ecosystem/deploy/push_scores.py"
 step l1 evm-testnet-shared/.env "READ_RPC_URL=https://gateway.tenderly.co/public/mainnet ORACLE_RPC_URL=https://ethereum-sepolia-rpc.publicnode.com ORACLE_ADDRESS=$L1_ORACLE python3 chains/ethereum-l1/deploy/update_scores_ethereum_l1.py"
-step tempo evm-testnet-shared/.env "ORACLE_RPC_URL=https://rpc.moderato.tempo.xyz ORACLE_ADDRESS=$SHARED_ORACLE python3 chains/tempo/deploy/push_scores.py"
+step tempo evm-testnet-shared/.env "ORACLE_RPC_URL=https://rpc.moderato.tempo.xyz ORACLE_ADDRESS=$SHARED_ORACLE python3 chains/tempo/deploy/push_scores_checked.py"
 step hyperliquid evm-testnet-shared/.env "ORACLE_RPC_URL=https://rpc.hyperliquid-testnet.xyz/evm ORACLE_ADDRESS=$SHARED_ORACLE python3 chains/hyperliquid/deploy/push_scores.py"
 
 # Solana (Devnet, native program): a keypair file, no PRIVATE_KEY value is read by this script.

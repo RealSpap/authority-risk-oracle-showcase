@@ -28,6 +28,7 @@ Usage:
 import json
 import subprocess
 import sys
+import time
 from concurrent.futures import ThreadPoolExecutor
 
 from eth_abi import decode, encode
@@ -173,7 +174,7 @@ _MORPHO_BLUE_OVERLAP_NOTE = (
 def rpc(url, method, params):
     body = json.dumps({"jsonrpc": "2.0", "id": 1, "method": method, "params": params})
     last = None
-    for _ in range(4):
+    for _try in range(12):
         r = subprocess.run(
             ["curl", "-s", "-m", "60", "-X", "POST", "-H", "Content-Type: application/json", "-d", body, url],
             capture_output=True, text=True,
@@ -187,6 +188,8 @@ def rpc(url, method, params):
             last = out["error"]
             if out["error"].get("code") == 3:  # execution reverted: deterministic
                 return None
+            if out["error"].get("code") == -32005:  # "rate limited, try again in 15ms": wait, the log scan sends ~440 windows over 12 threads
+                time.sleep(0.3 * (_try + 1))
             continue
         return out["result"]
     raise RuntimeError(f"{url} {method}: {last}")
@@ -934,7 +937,7 @@ def score_resolver_arbiter(label, arbiter):
     pinned = keccak(runtime).hex() == HELD_ARBITER_CODE_HASH
     no_opcode = _opcode_absent(runtime, (0xF2, 0xF4, 0xFF))   # CALLCODE, DELEGATECALL, SELFDESTRUCT
     no_owner = _testnet_call(arbiter, "owner()", ("address",)) is None
-    no_proxy = all(not int(rpc(TESTNET_RPCS[0], "eth_getStorageAt", [arbiter, slot, "latest"]), 16) for slot in (EIP1967_IMPL, EIP1967_ADMIN))
+    no_proxy = all(not int(rpc(u, "eth_getStorageAt", [arbiter, slot, "latest"]), 16) for u in TESTNET_RPCS for slot in (EIP1967_IMPL, EIP1967_ADMIN))   # both nodes, like the code and the calls
     resolver = _testnet_call(arbiter, "resolver()", ("address",))
     checks = {"codeHashPinned": pinned, "noDelegatecallCallcodeSelfdestruct": no_opcode, "noOwner": no_owner, "noProxySlot": no_proxy}
     root, key = [], None
@@ -948,6 +951,10 @@ def score_resolver_arbiter(label, arbiter):
     else:
         key = {"address": None, "kind": "unresolved (resolver unreadable)", "k": None, "n": None, "signers": [], "role": "resolver"}
         root.append(key)
+    notes = {"scope": "The code cannot be changed and has no owner. One immutable resolver key decides a disputed payment between the payer and the merchant for resolveWindow after the dispute, and cannot send funds anywhere else; after the window anyone can refund the payer. Read from a Tempo TESTNET contract: the other Tempo targets are mainnet. The composite is the result of the current method, which scores the resolver key as it is. CHANGELOG.md lists planned changes of method (Planned: method and standards, items 31, 32 and 36), so the number can move; no specific change is promised."}
+    if key["k"] is None:
+        # push_guard.is_degraded reads the KEYS of a dict `notes` (it iterates the dict): a key it recognises holds a degraded Held back; a marker only in a value is never seen.
+        notes["unresolved authority"] = "The checks above did not all hold, or the resolver could not be read: the target is scored as the unresolved key (20, 0, 0), not as a measurement of the arbiter."
     a, m, t = admin_key_score(key), multisig_score(key), timelock_score(0)
     return {
         "target": label, "address": arbiter, "kind": "Resolver arbiter (immutable code, one resolver key)",
@@ -956,7 +963,7 @@ def score_resolver_arbiter(label, arbiter):
         "weakestKey": {"k": key["k"], "n": key["n"], "address": key["address"], "role": "resolver"},
         "adminKeyScore": a, "multisigScore": m, "timelockScore": t, "oracleAuthorityScore": 100,
         "compositeScore": composite(a, m, t),
-        "notes": {"scope": "The code cannot be changed and has no owner. One immutable resolver key decides a disputed payment between the payer and the merchant for resolveWindow after the dispute, and cannot send funds anywhere else; after the window anyone can refund the payer. Read from a Tempo TESTNET contract: the other Tempo targets are mainnet. The composite is the result of the current method, which scores the resolver key as it is. CHANGELOG.md lists planned changes of method (Planned: method and standards, items 31, 32 and 36), so the number can move; no specific change is promised."},
+        "notes": notes,
     }
 
 

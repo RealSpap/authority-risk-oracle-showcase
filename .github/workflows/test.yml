@@ -3,6 +3,7 @@ name: Tests
 on:
   push:
   pull_request:
+  workflow_dispatch:
 
 # Nothing in this workflow writes to the repository: the token gets read access to the contents and no more (30/10/2026).
 permissions:
@@ -11,6 +12,7 @@ permissions:
 jobs:
   python-unit-tests:
     runs-on: ubuntu-latest
+    timeout-minutes: 30   # the job takes about 4 minutes: a hung step is cut instead of holding the runner for the 6 hour default
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262   # v4.4.0, pinned to its commit, as in the other workflows
 
@@ -46,14 +48,36 @@ jobs:
 
   solidity-tests:
     runs-on: ubuntu-latest
+    timeout-minutes: 30   # a normal run takes a few minutes: a hung download is cut instead of holding the runner for the 6 hour default
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262   # v4.4.0, pinned to its commit, as in the other workflows
 
+      # The download of Foundry sometimes fails on the network side (HTTP 504 during the download, seen from 04/11/2026 on): the failure is not in the tests.
+      # The install is therefore tried twice. The first try may fail without failing the job; the second try runs only after a failure of the first and is the one that counts.
       # v1 and v1.9.2 are lightweight tags of the same commit (read on 2026-10-30 with `git ls-remote https://github.com/foundry-rs/foundry-toolchain refs/tags/v1 refs/tags/v1.9.2`, no peeled line): pinned to that commit, as in the other workflows
-      - uses: foundry-rs/foundry-toolchain@dba66c27052e63476d886f22216e119ba7e615bf   # v1.9.2
+      - name: Install Foundry (first try)
+        id: foundry_first_try
+        continue-on-error: true
+        uses: foundry-rs/foundry-toolchain@dba66c27052e63476d886f22216e119ba7e615bf   # v1.9.2
 
-      - name: Install forge-std and OpenZeppelin
-        run: forge install foundry-rs/forge-std OpenZeppelin/openzeppelin-contracts --no-git
+      - name: Wait before the second try
+        if: steps.foundry_first_try.outcome == 'failure'
+        run: sleep 20
+
+      - name: Install Foundry (second try, only if the first failed)
+        if: steps.foundry_first_try.outcome == 'failure'
+        uses: foundry-rs/foundry-toolchain@dba66c27052e63476d886f22216e119ba7e615bf   # v1.9.2, same commit as the first try
+
+      # Three tries; the step fails for real when the three fail. Each try starts from an empty lib/ target so that a half-downloaded copy cannot make the next try fail.
+      - name: Install forge-std and OpenZeppelin (3 tries)
+        run: |
+          for i in 1 2 3; do
+            rm -rf lib/forge-std lib/openzeppelin-contracts
+            forge install foundry-rs/forge-std OpenZeppelin/openzeppelin-contracts --no-git && exit 0
+            echo "forge install failed (try $i of 3)"
+            sleep 20
+          done
+          exit 1
 
       - name: Run forge test
         run: forge test -vv

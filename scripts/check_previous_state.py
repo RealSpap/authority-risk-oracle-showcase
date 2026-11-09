@@ -79,16 +79,17 @@ def utc(text):
 ROLLBACK_SLACK_SECONDS = 300   # latest.json is stamped a few minutes after its run was created; the list of runs gives the creation time
 
 
-def check(watch, pins=(), require_signature=False, bootstrap=False, last_success=None, event="", bootstrap_env=False):
+def check(watch, pins=(), require_signature=False, bootstrap=False, last_success=None, event="", bootstrap_env=False, relay=False):
     """(code, lines): code 0 accepted, 1 refused, 3 incomplete; lines say why. A line starting with ALARM must reach the alarm even when the run goes on.
 
     bootstrap: the switch was given on the command line (a person at a prompt). bootstrap_env: WATCH_BOOTSTRAP=1 in the environment (the repository variable): it counts
-    only when `event` is workflow_dispatch, a run started by hand; any other event, or none, ignores it and says so."""
+    only when `event` is workflow_dispatch, a run started by hand, and `relay` is false: a run started with relay=true (by a script calling the API) is a workflow_dispatch too, but no person started it, so it never takes the switch;
+    any other event, or none, ignores it and says so."""
     out = []
     keyed = bool(pins) or require_signature   # this repository signs: a missing state is then a deleted one, not a new one
-    sw = bool(bootstrap) or (bool(bootstrap_env) and event == "workflow_dispatch")
+    sw = bool(bootstrap) or (bool(bootstrap_env) and event == "workflow_dispatch" and not relay)
     if bootstrap_env and not sw:
-        out.append("ALARM WATCH_BOOTSTRAP is set but this run was not started by hand (event %r): the switch is ignored. Remove the repository variable WATCH_BOOTSTRAP" % (event or "none"))
+        out.append("ALARM WATCH_BOOTSTRAP is set but this run was not started by hand (%s): the switch is ignored. Remove the repository variable WATCH_BOOTSTRAP" % ("started with relay=true by a script, not by a person" if relay and event == "workflow_dispatch" else "event %r" % (event or "none")))
     sp = os.path.join(watch, "signature.json")
     if not os.path.exists(sp):
         js = journal_state(watch)
@@ -180,7 +181,7 @@ def main(argv=None):
     if not raw and os.environ.get("GITHUB_REPOSITORY") == watch_location.REPO:
         raw = ["published"]   # the canonical repository: the previous run must be signed by the published key, whoever wrote signature.json
     pins = {k.lower() for p in raw for k in (audit_public.PINNED_KEYS if p.strip() == "published" else (p.strip(),))}
-    code, lines = check(a.watch, pins, a.require_signature, a.bootstrap, a.last_success_utc or None, os.environ.get("GITHUB_EVENT_NAME", ""), os.environ.get("WATCH_BOOTSTRAP") == "1")
+    code, lines = check(a.watch, pins, a.require_signature, a.bootstrap, a.last_success_utc or None, os.environ.get("GITHUB_EVENT_NAME", ""), os.environ.get("WATCH_BOOTSTRAP") == "1", os.environ.get("WATCH_RELAY", "") not in ("", "false"))   # a person: relay empty (not a dispatch) or exactly "false" (the default of a run started by hand); true, True, 1, yes, anything else is a script, so a value written another way never lets a script take the switch
     for l in lines:
         print(l)
     if code == 1:

@@ -411,7 +411,8 @@ class TestThePreviousStateIsCheckedBeforeTheRunExtendsIt(unittest.TestCase):
         step = text[i:text.index("      - name:", i + 10)]
         resign = next(l for l in step.splitlines() if "Re-signing failed" in l)
         self.assertIn("exit 1", resign)
-        self.assertLess(step.index("Re-signing failed"), step.index("watch_branch.sh record"))
+        self.assertLess(step.index("Re-signing failed"), step.rindex("watch_branch.sh record"))   # the record of the REPORT (the last one) follows the re-signature; the mark of the attempt is recorded alone, before the report is attempted
+        self.assertLess(step.index("watch_branch.sh record"), step.index("daily_digest.py"))
         ids = [l for l in text.splitlines() if "      - name: Record the run on the watch-data branch" in l]
         self.assertEqual(len(ids), 1)
         rec_i = text.index("      - name: Record the run on the watch-data branch")

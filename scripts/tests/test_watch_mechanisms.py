@@ -3427,7 +3427,8 @@ class TestWorkflowCallsAreReal(unittest.TestCase):
         import re
         p = os.path.join(self.ROOT, ".github", "workflows", "watch.yml")
         if not os.path.exists(p): self.skipTest("the workflow is not in this checkout")
-        text = open(p, encoding="utf-8").read(); limit = int(re.search(r"timeout-minutes: *(\d+)", text).group(1)); steps = re.split(r"\n      - name:", text)[1:]
+        text = open(p, encoding="utf-8").read(); limit = int(re.search(r"\n  watch:\n(?:    [^\n]*\n)*?    timeout-minutes: *(\d+)", text).group(1));   # the limit of the job `watch`, not the first one in the file (the job `guard` before it has its own, 5 minutes)
+        steps = re.split(r"\n      - name:", text)[1:]
         k = next(i for i, s in enumerate(steps) if s.lstrip().startswith("Record the run")); worst = sum(int(x) for s in steps[:k] for x in re.findall(r"\btimeout (\d+)m", s))
         self.assertGreater(worst, 60)   # the explicit timeouts were found (a pattern that matched nothing could not pass)
         self.assertLessEqual(worst, limit - 20, "the steps before the record can spend %d minutes in the worst case, the job limit is %d" % (worst, limit))   # 20 minutes left for the steps without a timeout of their own and for the commit
@@ -5232,7 +5233,9 @@ class TestWatchStateLivesOnItsOwnBranch(unittest.TestCase):
         if not os.path.exists(wf): self.skipTest("the workflow is not in this checkout")
         t = open(wf, encoding="utf-8").read()
         self.assertNotRegex(t, r"git [^\n]*\b(push|pull)\b", "the job must not push to or pull from main itself: the branch script does the only push")
-        self.assertEqual(t.count("watch_branch.sh prepare"), 1); self.assertEqual(t.count("watch_branch.sh record"), 2)   # the run, and the daily report
+        self.assertEqual(t.count("watch_branch.sh prepare"), 1); self.assertEqual(t.count("watch_branch.sh record"), 3)   # three calls: the run; the mark of the daily-report attempt, recorded alone BEFORE the attempt (a failed re-signature must not lose it); the daily report itself, recorded after it was signed again
+        self.assertEqual(t.count('record "Daily report attempt '), 1); self.assertEqual(t.count('record "Daily report $(date'), 1)
+        self.assertLess(t.index('record "Daily report attempt '), t.index("scripts/daily_digest.py")); self.assertLess(t.index("scripts/daily_digest.py"), t.index('record "Daily report $(date'))
         self.assertLess(t.index("watch_branch.sh prepare"), t.index("scripts/watch_run.py")); self.assertLess(t.index("watch_branch.sh prepare"), t.index("watch_branch.sh record"))
         self.assertIn("WATCH_REQUIRE_SEED", t); self.assertIn("ref: main", t)
 

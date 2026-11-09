@@ -1,11 +1,16 @@
 name: Watch
 
-# Reads every deployed oracle four times a day, records what moved on the watch-data branch (cloned into watch/ for the run; main receives no commit from this job), and opens an issue labelled
+# Reads every deployed oracle at each run (scheduled every 6 hours; a script outside GitHub may also start a run with the input relay=true), records what moved on the watch-data branch (cloned into watch/ for the run; main receives no commit from this job), and opens an issue labelled
 # "alarm" when a score drops, a target turns stale or an oracle stops answering. Read-only: no key, no transaction.
 on:
   schedule:
     - cron: "17 */6 * * *"
   workflow_dispatch:
+    inputs:
+      relay:
+        description: "Set to true by a script that starts a run through the API (a trigger outside the GitHub schedule); a run started by hand leaves it false"
+        type: string   # a string, not a boolean: gh workflow run -f relay=true sends text, and a string cannot be refused as the wrong type
+        default: "false"
 
 permissions:
   contents: write
@@ -16,7 +21,152 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  guard:
+    # Opening guard. A run that the SCHEDULE starts is cancelled here when another run of this workflow already served its slot, before the state is cloned, before anything is written: no commit on watch-data, nothing signed.
+    # The slot of a run is the last instant not after its creation that matches the cron that started it (github.event.schedule, UTC; scripts/cron_slot.py). A run is cancelled when an EARLIER run of this workflow, not cancelled or skipped, was created from 5 minutes
+    # before that slot (a script outside GitHub served it, or a late copy came first), or in the 45 minutes before this run (the first rule, kept). A run that FAILED in less than 10 minutes did not serve anything: the next run goes on.
+    # It ends cancelled, never green: the step "The last successful run" below takes the newest SUCCESSFUL run as its anchor against a rollback of the state, and a green run that did nothing would become that anchor.
+    # Any doubt (the list cannot be read, this run is not in it, the cron cannot be read, the cancel is refused) lets the run go on: a duplicate is harmless to the chain, a silent stop is not.
+    # The slot rule cancels late copies that may be the only run for hours when no script outside GitHub covers the nights: the repository variable WATCH_GUARD_SLOT=off gives the 45-minute window back without a new commit.
+    # Once the cancel is ACCEPTED the run does not go on: the output served makes the watch job skip, so a cancel that lands late never cuts a half-made run.
+    # No code of the repository runs here (no checkout): the slot calculator below is written out by this job and a test checks that it is the very text of scripts/cron_slot.py.
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: write   # this job alone may cancel a run; the watch job keeps contents: write and actions: read; this one never checks the code out and could not push
+    outputs:
+      served: ${{ steps.guard.outputs.served }}   # "true" once the cancel of this run was accepted: the watch job does not start
+    steps:
+      - name: "Opening guard: a scheduled run whose slot was already served by another run of this workflow is cancelled before it touches anything"
+        id: guard
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_NAME: ${{ github.event_name }}
+          SCHEDULE: ${{ github.event.schedule }}
+          GUARD_SLOT: ${{ vars.WATCH_GUARD_SLOT }}   # "off" (repository variable WATCH_GUARD_SLOT) turns the slot rule off and keeps the 45-minute window alone; anything else, or unset, leaves it on
+          RUN_ID: ${{ github.run_id }}
+          REPO: ${{ github.repository }}
+        run: |
+          if [ "$EVENT_NAME" != schedule ]; then echo "started by $EVENT_NAME, not by the schedule: no check"; exit 0; fi
+          T="${RUNNER_TEMP:-/tmp}"
+          if ! gh api "repos/$REPO/actions/workflows/watch.yml/runs?per_page=30" > "$T/guard_runs.json" 2> "$T/guard_err.txt"; then
+            echo "::warning title=Opening guard::the list of runs could not be read ($(head -c 120 "$T/guard_err.txt" | tr '\n' ' ')): this run goes on"; exit 0
+          fi
+          cat > "$T/cron_slot.py" <<'PY1'
+          """Last slot of a cron expression, in UTC, with no dependency: the latest instant that is not after `now` and matches the cron.
+          Usage: python3 -I cron_slot.py "<cron, 5 fields>" <epoch seconds>   prints the epoch of the last slot (exit 0); exit 1 and a message on stderr when the cron cannot be read or has no slot in 400 days.
+          Fields: minute 0-59, hour 0-23, day of month 1-31, month 1-12, day of week 0-7 (0 and 7 are Sunday). Each field: `*`, a number, `a-b`, `*/n`, `a-b/n`, `a/n` (a up to the maximum), or a comma list of these.
+          Like cron, when the day of month AND the day of week are both restricted, a day that fits either one is a slot. No names (MON, JAN), no @hourly, no `?`, `L`, `#`.
+          Limit: it looks back at most 400 days (a yearly cron, or the 29th of February, may have no slot: an error, never an invented value)."""
+          import datetime as dt, sys
+
+          BOUNDS = [(0, 59), (0, 23), (1, 31), (1, 12), (0, 7)]
+          MAX_DAYS = 400
+
+
+          def field(text, lo, hi):
+              """-> (set of values, wildcard). Raises ValueError when the field cannot be read or is out of bounds."""
+              if not isinstance(text, str) or text == "": raise ValueError("empty field")
+              out = set(); wild = text == "*"
+              for part in text.split(","):
+                  if part == "": raise ValueError("empty element in a list")
+                  span, _, step = part.partition("/")
+                  if "/" in part and not step.isdigit(): raise ValueError("unreadable step: %r" % part)
+                  p = int(step) if "/" in part else 1
+                  if p < 1: raise ValueError("zero step: %r" % part)
+                  if span == "*": a, b = lo, hi
+                  elif "-" in span:
+                      x, _, y = span.partition("-")
+                      if not (x.isdigit() and y.isdigit()): raise ValueError("unreadable range: %r" % part)
+                      a, b = int(x), int(y)
+                  elif span.isdigit(): a = int(span); b = hi if "/" in part else a
+                  else: raise ValueError("unreadable element: %r" % part)
+                  if a < lo or b > hi or a > b: raise ValueError("out of bounds or reversed: %r (%d to %d allowed)" % (part, lo, hi))
+                  out.update(range(a, b + 1, p))
+              return out, wild
+
+
+          def parse(cron):
+              f = cron.split() if isinstance(cron, str) else []
+              if len(f) != 5: raise ValueError("a cron with 5 fields is expected: %r" % (cron,))
+              (M, _), (H, _), (DM, dm_wild), (MO, _), (DW, dw_wild) = (field(f[i], *BOUNDS[i]) for i in range(5))
+              DW = {0 if d == 7 else d for d in DW}
+              return M, H, DM, dm_wild, MO, DW, dw_wild
+
+
+          def day_fits(day, DM, dm_wild, MO, DW, dw_wild):
+              if day.month not in MO: return False
+              wd = (day.weekday() + 1) % 7           # Monday=1 ... Sunday=0
+              if dm_wild and dw_wild: return True
+              if not dm_wild and not dw_wild: return day.day in DM or wd in DW
+              return (day.day in DM) if not dm_wild else (wd in DW)
+
+
+          def last_slot(cron, now):
+              """Epoch (UTC) of the last slot not after `now` (epoch); ValueError when the cron cannot be read or has no slot in 400 days."""
+              M, H, DM, dm_wild, MO, DW, dw_wild = parse(cron)
+              t = dt.datetime.fromtimestamp(int(now), dt.timezone.utc).replace(second=0, microsecond=0)
+              for k in range(MAX_DAYS + 1):
+                  day = (t - dt.timedelta(days=k)).replace(hour=0, minute=0)
+                  if not day_fits(day, DM, dm_wild, MO, DW, dw_wild): continue
+                  limit = (t.hour, t.minute) if k == 0 else (23, 59)
+                  for h in sorted(H, reverse=True):
+                      for m in sorted(M, reverse=True):
+                          if (h, m) <= limit: return int(day.replace(hour=h, minute=m).timestamp())
+              raise ValueError("no slot in %d days for %r" % (MAX_DAYS, cron))
+
+
+          if __name__ == "__main__":
+              if len(sys.argv) != 3: sys.exit('usage: cron_slot.py "<cron>" <epoch>')
+              try: print(last_slot(sys.argv[1], sys.argv[2]))
+              except (ValueError, OverflowError, OSError) as e: sys.stderr.write("cron unreadable: %s\n" % e); sys.exit(1)
+          PY1
+          cat > "$T/guard.py" <<'PY2'
+          import datetime, json, os, sys
+          import cron_slot
+          EARLY = 10 * 60    # a run that failed in less than this did not serve its slot
+          WINDOW = 45 * 60   # first rule, kept: any run created in the 45 minutes before this one
+          BEFORE = 5 * 60    # slot rule: any run created from 5 minutes before the slot of this one
+          SLOT = os.environ.get("GUARD_SLOT", "") != "off"
+          def t(s): return datetime.datetime.strptime(s, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=datetime.timezone.utc).timestamp()
+          def counts(r):
+              c = r.get("conclusion")
+              if c in ("cancelled", "skipped"): return False   # a run that was cancelled or skipped served nothing
+              if c in ("failure", "startup_failure"):          # a failure counts only when it ran 10 minutes or more
+                  try: return t(r["updated_at"]) - t(r["run_started_at"]) >= EARLY
+                  except Exception: return False               # a duration that cannot be read does not count: this run goes on
+              return True                                       # success, timed out, running, queued, waiting, pending, anything else
+          try:
+              runs = json.load(open(sys.argv[1]))["workflow_runs"]; me = int(sys.argv[2])
+              mine = [r for r in runs if r["id"] == me]
+              if not mine: print("unread: this run is not in the list"); sys.exit(0)
+              t0 = t(mine[0]["created_at"]); slot = cron_slot.last_slot(sys.argv[3], t0) if SLOT else 0
+              for r in runs:
+                  if r["id"] == me or not counts(r): continue
+                  t1 = t(r["created_at"])
+                  if (t1, r["id"]) >= (t0, me): continue       # only an EARLIER run counts: two runs never cancel each other
+                  rule = "slot" if SLOT and t1 >= slot - BEFORE else "window" if t0 - t1 <= WINDOW else ""
+                  if rule: print("served %d %d %s" % (r["id"], (t0 - t1) // 60, rule)); sys.exit(0)
+              print("go")
+          except Exception as e: print("unread: %s" % str(e)[:100])
+          PY2
+          v=$(python3 "$T/guard.py" "$T/guard_runs.json" "$RUN_ID" "$SCHEDULE" 2>&1) || v="unread: the check itself failed"
+          case "$v" in
+            served*)
+              read -r _ rid age rule <<< "$v"
+              echo "::notice title=Slot already served::run $rid of this workflow was created $age minutes before this one ($rule rule): this run is cancelled, nothing is cloned, signed or recorded"
+              if gh api -X POST "repos/$REPO/actions/runs/$RUN_ID/cancel" > /dev/null 2> "$T/guard_err.txt"; then
+                echo "served=true" >> "$GITHUB_OUTPUT"   # written as soon as the cancel is accepted: from here the watch job never starts, whatever the delay of the cancel
+                sleep 120   # the cancel reaches this job within seconds; the run ends cancelled
+                echo "::error title=Opening guard::the cancel was accepted but had not been applied after 2 minutes: the watch job is skipped and this run ends red; nothing was cloned, signed or recorded"; exit 1
+              else echo "::warning title=Opening guard::the cancel request was refused ($(head -c 120 "$T/guard_err.txt" | tr '\n' ' ')): this run goes on"; fi ;;
+            go) echo "no other run of this workflow served the slot of this one" ;;
+            *) echo "::warning title=Opening guard::the check could not be completed ($v): this run goes on" ;;
+          esac
+
   watch:
+    needs: guard
+    if: ${{ !cancelled() && needs.guard.outputs.served != 'true' }}   # a cancel of the guard cancels the whole run, so this job never starts after it, and a cancel that was accepted but lands late never cuts a half-made run (served); a guard that CRASHED (result failure, no output) does not stop the Watch
     runs-on: ubuntu-latest
     timeout-minutes: 150
     steps:
@@ -53,6 +203,7 @@ jobs:
         id: run
         env:
           HAS_SIGNING_KEY: ${{ secrets.WATCH_SIGNING_KEY != '' }}   # whether a key exists, never the key: an unsigned previous run is then refused
+          WATCH_RELAY: ${{ inputs.relay }}   # "true" when a script started this run through the API: a run nobody started by hand never takes the WATCH_BOOTSTRAP switch (scripts/check_previous_state.py)
           WATCH_BOOTSTRAP: ${{ vars.WATCH_BOOTSTRAP }}   # "1" only for the first signed run, started by hand (workflow_dispatch), set by the owner as a repository variable and removed after it; a scheduled run ignores it (scripts/check_previous_state.py)
           WATCH_LAST_SUCCESS_UTC: ${{ steps.anchor.outputs.utc }}   # empty when the list of runs could not be read
         run: |
@@ -334,18 +485,27 @@ jobs:
         run: python3 scripts/escalate.py --watch watch
 
       - name: "Daily report (first run of the day, about 20 minutes): stale oracles, Safe changes, queued operations, code changes"
+        id: digest
         run: |
-          if [ "$(date -u +%H)" -lt 6 ] || [ "${{ github.event_name }}" = workflow_dispatch ]; then
+          today=$(date -u +%F)
+          # the first run of the UTC day that reaches this step makes the report, at any hour: no report dated today AND no attempt marked today; a run started by hand forces it; a script does not: a person is a run whose relay input is empty or exactly false, any other value is a script
+          first=0; if ! grep -q "^# Authority risk digest, $today " watch/digest.md 2>/dev/null && [ "$(cat watch/.digest_attempt 2>/dev/null)" != "$today" ]; then first=1; fi
+          if [ "$first" = 1 ] || { [ "$EVENT_NAME" = workflow_dispatch ] && { [ -z "$RELAY" ] || [ "$RELAY" = false ]; }; }; then
+            echo "$today" > watch/.digest_attempt   # the mark of the attempt, written BEFORE it: a report that fails (exit code, 124, redaction, re-signature, record) is not tried again by every later run of the day
+            bash scripts/watch_branch.sh record "Daily report attempt $today" || { echo "::error title=Daily report::the mark of the attempt could not be recorded on the branch: the report is not attempted by this run"; exit 1; }   # recorded ALONE, before the attempt: here watch/ is the state the run already signed and recorded plus this one line (not in the signed manifest), so nothing unsigned is published; whatever stops the step later, one attempt a UTC day, never one per run
             timeout 35m python3 scripts/daily_digest.py --days 7 --out watch/digest.md --queue watch/review_queue.md > watch/digest.log 2>&1 || { c=$?; if [ "$c" = 124 ]; then echo "timed out at the step limit (124), previous file kept, a warning" >> watch/digest.log; else echo "exit code $c" >> watch/digest.log; fi; }
             python3 scripts/redact_signers.py --index "$RUNNER_TEMP/who_controls.json" --scores watch/scores watch/digest.md
             python3 scripts/redact_signers.py --index "$RUNNER_TEMP/who_controls.json" --scores watch/scores --check watch   # the guard again, before the commit: the report must not publish a signer
             python3 scripts/sign_run.py --watch watch > watch/signature.txt 2>&1 || { echo "exit code $?" >> watch/signature.txt; echo "::error title=Re-signing failed::the digest changed a published file and the manifest could not be signed again: the report is not recorded (the state on watch-data stays the one the run signed)"; exit 1; }   # the report changed a published file: sign again so the manifest matches what is committed; a failure ends the step BEFORE the record (recording it would leave a state the next run refuses)
             bash scripts/watch_branch.sh record "Daily report $(date -u +%Y-%m-%d)"
+            if [ "$first" = 1 ]; then echo "first=1" >> "$GITHUB_OUTPUT"; fi   # written AFTER the record: the Monday summary below goes out only with the run that made (and published) the day's report; a step that stopped before the report was recorded leaves no output (no Monday summary that day) and the mark stays published: no second attempt that day
           fi
         env:
           GITHUB_TOKEN: ${{ github.token }}
           WATCH_REMOTE: https://github.com/${{ github.repository }}.git
           WATCH_SIGNING_KEY: ${{ secrets.WATCH_SIGNING_KEY }}   # by env, never written into the script text
+          EVENT_NAME: ${{ github.event_name }}   # by env as well: a workflow input is never pasted into the shell
+          RELAY: ${{ inputs.relay }}
 
       - name: Daily summary on Telegram (only when the repository variable TELEGRAM_MODE is "daily"; first run of the day; nothing is sent without the two secrets)
         if: always() && vars.TELEGRAM_MODE == 'daily'
@@ -358,14 +518,14 @@ jobs:
             python3 scripts/telegram_digest.py --watch watch --daily || echo "::warning title=Daily Telegram summary::not sent (see the line above)"
           fi
 
-      - name: Weekly summary on Telegram (Monday, first run of the day; nothing is sent without the two secrets; replaced by the daily summary when TELEGRAM_MODE is "daily")
-        if: always() && vars.TELEGRAM_MODE != 'daily'
+      - name: Weekly summary on Telegram (Monday, with the first run of the UTC day that made the day's report, once; nothing is sent without the two secrets; replaced by the daily summary when TELEGRAM_MODE is "daily")
+        if: always() && vars.TELEGRAM_MODE != 'daily' && steps.digest.outputs.first == '1'
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           # the channel only speaks on an alarm, so a quiet week looked like a dead channel: once a week it says what the watch did (scripts/telegram_digest.py, built from the published files only)
-          if [ "$(date -u +%u)" = 1 ] && [ "$(date -u +%H)" -lt 6 ]; then
+          if [ "$(date -u +%u)" = 1 ]; then
             python3 scripts/telegram_digest.py --watch watch || echo "::warning title=Weekly Telegram summary::not sent (see the line above)"
           fi
 

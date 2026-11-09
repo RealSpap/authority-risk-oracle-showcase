@@ -9,9 +9,34 @@ oracle was not read, the run is unsigned, the chain could not be checked, a seco
 "alarm" when the watch raised an alarm (a score drop, a stale target, an oracle not answering, a role change on an oracle) or
 the chain is broken. The reasons are listed, so a monitor can alert on the state and a person can read why.
 """
-import argparse, json, os, time
+import argparse, datetime, json, os, time
 from watch_location import RAW  # noqa: E402
 import run_id  # noqa: E402
+
+
+SILENCE_H = 8   # a gap between two runs longer than this is added to the reasons (information, no change of state)
+SAME_RUN_SECONDS = 600   # only when latest.json is missing: trend.py then wrote this run's line with the clock of its own step, a few minutes before this script reads the clock again
+
+
+def _t(s):
+    try: return datetime.datetime.strptime(s, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=datetime.timezone.utc)
+    except (TypeError, ValueError): return None
+
+
+def cadence(W, run_utc, same_run_seconds=0):
+    """(runs in the 7 days up to and including this run, start of the run before it, hours between the two starts), read from trend.jsonl (one line per run, written before this step).
+    None for what cannot be read, never 0: the cadence is a measure of the past, a page that wants to know whether the Watch is late now compares run_utc with its own clock.
+    A line at most same_run_seconds before run_utc is this run's own line (it counts once, it is not the previous run); with latest.json the two times are equal and the value is 0."""
+    now = _t(run_utc); seen = set()
+    if now is None: return None, None, None
+    try:
+        for l in open(os.path.join(W, "trend.jsonl"), encoding="utf-8"):
+            try: t = _t(json.loads(l).get("run_utc"))
+            except (ValueError, AttributeError): t = None
+            if t is not None and t < now and (now - t).total_seconds() > same_run_seconds: seen.add(t)
+    except OSError: return None, None, None
+    prev = max(seen, default=None); seen.add(now)
+    return sum(1 for t in seen if t > now - datetime.timedelta(days=7)), prev, ((now - prev).total_seconds() / 3600 if prev else None)
 
 
 def load(path):
@@ -70,6 +95,9 @@ def main():
     if ma:
         rec["main_last_commit_age_days"] = ma.get("main_last_commit_age_days")
         if ma.get("level") == "warn": reasons.append("main has had no commit for %s days: GitHub disables the scheduled Watch after 60 days without repository activity (information, no change of state)" % ma.get("main_last_commit_age_days"))
+    n7, prev, gap = cadence(W, rec["run_utc"], 0 if (latest or {}).get("run_utc") else SAME_RUN_SECONDS)   # since 2026-11-08: what the Watch really did, so that no page has to write a count of runs by hand
+    rec["runs_7d"] = n7; rec["previous_run_utc"] = prev.strftime("%Y-%m-%dT%H:%M:%SZ") if prev else None; rec["hours_since_previous_run"] = round(gap, 1) if gap is not None else None
+    if gap is not None and gap > SILENCE_H: reasons.append("the Watch was silent for %.1f hours before this run (previous run %s, scheduled every 6 hours): information, no change of state" % (gap, rec["previous_run_utc"]))
     if run_id.current(): rec["run_id"] = run_id.current()
     tmp = os.path.join(W, "status.json.tmp"); json.dump(rec, open(tmp, "w"), indent=1); os.replace(tmp, os.path.join(W, "status.json"))
     os.makedirs(os.path.join(W, "badge"), exist_ok=True)

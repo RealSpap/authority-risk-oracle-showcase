@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-11-08T22:22:32Z",
+ "run_utc": "2026-11-09T06:42:41Z",
  "targets": 202,
  "moves_recorded": 39,
  "series": {
@@ -2442,14 +2442,14 @@
  },
  "calibration": {
   "window_days": 14,
-  "actions": 25,
+  "actions": 26,
   "excluded_undecoded": 1,
   "excluded_other_target": 0,
   "under_40": 9,
   "by_band": {
    "critical": 1,
    "weak": 8,
-   "moderate": 8,
+   "moderate": 9,
    "decent": 7,
    "strong": 1
   },
@@ -2678,6 +2678,15 @@
     "tx": null,
     "score_then": 78,
     "band_then": "decent"
+   },
+   {
+    "kind": "timelock op queued (parameter change)",
+    "key": "arbitrum:0x52aa899454998be5b000ad077a46bbe360f4e497",
+    "t": "2026-11-09T00:01:20Z",
+    "via": "arbitrum timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
+    "tx": "0x1f5665ed5ff54a4b3765d91d3afc91ac8a4e27dcd3bd96c49200bac9ed62332e",
+    "score_then": 59,
+    "band_then": "moderate"
    }
   ],
   "read_as": "every authority action the watch observed in the window (a timelock operation queued or executed against a tracked contract, an admin change read independently) and the composite score the contract carried at that moment. Small counts prove little; the file grows with every run and the chained log keeps every move"

@@ -7,18 +7,18 @@
    "events": [],
    "control": 52,
    "status": "ok",
-   "fromBlock": 103727827,
-   "toBlock": 109567440,
+   "fromBlock": 104016664,
+   "toBlock": 109857075,
    "days_read": 7
   },
   {
    "ecosystem": "ethereum-l1",
    "safes": 15,
    "events": [],
-   "control": 12,
+   "control": 13,
    "status": "ok",
-   "fromBlock": 26322883,
-   "toBlock": 26373121,
+   "fromBlock": 26325377,
+   "toBlock": 26375612,
    "days_read": 7
   },
   {
@@ -27,8 +27,8 @@
    "events": [],
    "control": 10,
    "status": "ok",
-   "fromBlock": 520396281,
-   "toBlock": 522490653,
+   "fromBlock": 520493930,
+   "toBlock": 522597216,
    "days_read": 7
   },
   {
@@ -37,8 +37,8 @@
    "events": [],
    "control": null,
    "status": "UNREAD (call budget exhausted)",
-   "fromBlock": 53391236,
-   "toBlock": 54931221,
+   "fromBlock": 53406233,
+   "toBlock": 55081188,
    "days_read": 7
   },
   {
@@ -46,11 +46,11 @@
    "safes": 4,
    "events": [],
    "control": 0,
-   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 49 execution(s) from other Safes on the window's tail)",
-   "fromBlock": 46987870,
-   "toBlock": 48092240,
+   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 73 execution(s) from other Safes on the window's tail)",
+   "fromBlock": 47042534,
+   "toBlock": 48147751,
    "days_read": 7,
-   "control_witness": 49
+   "control_witness": 73
   },
   {
    "ecosystem": "plasma",
@@ -58,8 +58,8 @@
    "events": [],
    "control": 6,
    "status": "ok",
-   "fromBlock": 36629682,
-   "toBlock": 37233639,
+   "fromBlock": 36659562,
+   "toBlock": 37263519,
    "days_read": 7
   },
   {
@@ -68,8 +68,8 @@
    "events": [],
    "control": 0,
    "status": "UNREAD (control returned 0 ExecutionSuccess events on the tracked Safes and none from any Safe on the window's tail: the RPC may be truncating, not the Safes being idle)",
-   "fromBlock": 120498908,
-   "toBlock": 120584434,
+   "fromBlock": 120597490,
+   "toBlock": 120683084,
    "days_read": 0.3,
    "control_witness": 0
   },
@@ -77,12 +77,11 @@
    "ecosystem": "hyperliquid",
    "safes": 5,
    "events": [],
-   "control": 0,
-   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 25 execution(s) from other Safes on the window's tail)",
-   "fromBlock": 50488897,
-   "toBlock": 50752357,
-   "days_read": 3.0,
-   "control_witness": 25
+   "control": 1,
+   "status": "ok",
+   "fromBlock": 50519229,
+   "toBlock": 50782690,
+   "days_read": 3.0
   }
  ]
 }

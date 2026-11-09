@@ -123,6 +123,32 @@ jobs:
       - name: "Squads proposal queues (Solana): the proposals of every multisig the independent reader resolved, merged into pending_ops.json"
         run: timeout 10m python3 scripts/squads_proposals.py --so watch/second_opinion.json --pending watch/pending_ops.json --recent-days 14 > watch/squads_proposals.txt 2>&1 || echo "exit code $?" >> watch/squads_proposals.txt
 
+      - name: "Some entries are not shown in the public view: they are taken out of pending_ops.json before any file is written from it. The list is the secret WATCH_WITHHOLD and is never printed; without it the Watch publishes as before and the private alarm says so"
+        id: withhold
+        env:
+          WATCH_WITHHOLD: ${{ secrets.WATCH_WITHHOLD }}
+          WATCH_WITHHOLD_REQUIRED: ${{ github.repository == 'RealSpap/authority-risk-oracle-showcase' && '1' || '' }}   # only the canonical repository expects the list: a fork without it says nothing
+          WATCH_WITHHOLD_PRIVATE: ${{ runner.temp }}/held_queue.json   # the full records, for the private watch: a runner file, never under watch/; the later steps and the record read it from the runner's temp folder
+        run: python3 scripts/withhold.py retain --watch watch > /dev/null 2>&1   # a crash with a list present fails the job (nothing is recorded)
+
+      - name: "What is not shown, for the private watch only: a comment on a private issue when it changed (nothing without ISSUES_TOKEN, nothing printed)"
+        env:
+          GH_TOKEN: ${{ secrets.ISSUES_TOKEN }}
+          PRIVATE_REPO: RealSpap/authority-risk-oracle
+        run: |
+          f="$RUNNER_TEMP/held_queue.json"
+          [ -n "$GH_TOKEN" ] && [ -s "$f" ] && [ "$(wc -c < "$f")" -gt 4 ] || exit 0
+          h=$(sha256sum "$f" | cut -c1-16)
+          n=$(gh issue list --repo "$PRIVATE_REPO" --label held-queue --state open --json number --jq '.[0].number // empty' 2>/dev/null || true)
+          if [ -n "$n" ]; then last=$(gh issue view "$n" --repo "$PRIVATE_REPO" --json comments --jq '.comments[-1].body // ""' 2>/dev/null | head -1 || true); [ "$last" = "held-queue sha256:$h" ] && exit 0; fi
+          { printf 'held-queue sha256:%s\n\n```json\n' "$h"; head -c 60000 "$f"; printf '\n```\n'; } > "$RUNNER_TEMP/held_comment.md"
+          if [ -z "$n" ]; then
+            gh label create held-queue --repo "$PRIVATE_REPO" --color 5319E7 --description "Entries left out of the public view (private)" > /dev/null 2>&1 || true
+            gh issue create --repo "$PRIVATE_REPO" --title "Entries not shown in the public view (private)" --label held-queue --body-file "$RUNNER_TEMP/held_comment.md" > /dev/null 2>&1 || true
+          else
+            gh issue comment "$n" --repo "$PRIVATE_REPO" --body-file "$RUNNER_TEMP/held_comment.md" > /dev/null 2>&1 || true
+          fi
+
       - name: "What each EVM timelock operation is (upgrade, authority change, pause, nested timelock, cross-chain message, parameter): named and classified"
         run: python3 scripts/classify_ops.py --pending watch/pending_ops.json --cache watch/selectors.json > watch/classify_ops.txt 2>&1 || echo "exit code $?" >> watch/classify_ops.txt
 
@@ -213,6 +239,15 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python3 scripts/main_activity.py --out watch/main_activity.json --issue-repo RealSpap/authority-risk-oracle --subject "${{ github.repository }}" > watch/main_activity.txt 2>&1 || echo "exit code $?" >> watch/main_activity.txt; cat watch/main_activity.txt
+
+      - name: "Nothing left out of the public view may appear in a published file: the feeds and the totals are written without it, then everything is checked (names the folder, never the string; a failure stops the job before the signature, so nothing is recorded)"
+        id: heldcheck
+        env:
+          WATCH_WITHHOLD: ${{ secrets.WATCH_WITHHOLD }}
+          WATCH_WITHHOLD_PRIVATE: ${{ runner.temp }}/held_queue.json
+        run: |
+          python3 scripts/withhold.py views --watch watch > /dev/null 2>&1 || { echo "::error title=Public view::the feeds could not be written without what is left out, so nothing was recorded"; exit 1; }
+          python3 scripts/withhold.py check --watch watch 2> watch/withhold.txt || { echo "::error title=Public view::a published file names something that is left out, so nothing was recorded"; exit 1; }
 
       - name: "Sign the run (a manifest of every published file and the chain head, Ed25519): with WATCH_SIGNING_KEY the files can be checked against a key GitHub does not hold; without it the manifest says unsigned. A failure stops the job here: a state whose signature failed is not recorded (the next run would refuse it, and every run after it)"
         id: sign
@@ -346,6 +381,24 @@ jobs:
           # Telegram refuses a message over 4096 characters and send_telegram_alert swallows the error: the alarm (12 KB with the independent reader's findings and the review queue) was never delivered
           alerts.send_telegram_alert(t if len(t) <= 4000 else t[:3900] + "\n... (cut at the Telegram limit of 4096 characters, the full text is in the private issue and the job log)")
           PY
+
+      - name: "Private alarm when the public view could not be written as intended (a check that failed, a step that stopped with a list present, a list that was not read): one issue a day in the private repository, nothing named"
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.ISSUES_TOKEN }}
+          PRIVATE_REPO: RealSpap/authority-risk-oracle
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          W_ALARM: ${{ steps.withhold.outputs.alarm }}
+          W_OUTCOME: ${{ steps.withhold.outcome }}
+          C_OUTCOME: ${{ steps.heldcheck.outcome }}
+        run: |
+          grep -q '^ALARM withhold' watch/run.log 2>/dev/null || [ "$W_ALARM" = 1 ] || [ "$W_OUTCOME" = failure ] || [ "$C_OUTCOME" = failure ] || exit 0
+          [ -n "$GH_TOKEN" ] || { echo "::warning::the public view could not be written as intended, and no ISSUES_TOKEN secret: no private issue opened"; exit 0; }
+          open=$(gh issue list --repo "$PRIVATE_REPO" --label public-view-alarm --state open --json number,createdAt --jq '[.[] | select((.createdAt | fromdateiso8601) > (now - 72000))] | length' 2>/dev/null || echo 0)
+          [ "${open:-0}" = 0 ] || exit 0
+          { printf 'The public view of the Watch could not be written as intended in this run (%s).\n\n' "$RUN_URL"; grep '^ALARM withhold' watch/run.log 2>/dev/null | head -5; printf '\nNothing is named here: read the job log, then the private issue "Entries not shown in the public view".\n'; } > "$RUNNER_TEMP/public_view_alarm.md"
+          gh label create public-view-alarm --repo "$PRIVATE_REPO" --color B60205 --description "The public view of the Watch could not be written as intended" > /dev/null 2>&1 || true
+          gh issue create --repo "$PRIVATE_REPO" --title "Public view alarm $(date -u '+%Y-%m-%d %H:%M') UTC" --label public-view-alarm --body-file "$RUNNER_TEMP/public_view_alarm.md" > /dev/null 2>&1 || true
 
       - name: "Red if any step failed (the logs are printed here, not committed)"
         if: always()

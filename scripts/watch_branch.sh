@@ -41,6 +41,9 @@ prepare() {
 
 record() {
   local msg="${1:?a commit message}"
+  if [ -n "${RUNNER_TEMP:-}" ] && [ -f "$RUNNER_TEMP/held_queue.json" ]; then   # some entries are not shown in the public view (scripts/withhold.py): no record, the daily report's included, without the check
+    python3 scripts/withhold.py check --watch watch 2>/dev/null || { echo "watch_branch: a published file names something left out of the public view: nothing is recorded" >&2; return 1; }
+  fi
   git -C watch add -A
   if git -C watch diff --cached --quiet; then echo "watch/: nothing to record"; return 0; fi
   git -C watch "${IDENT[@]}" commit -qm "$msg"

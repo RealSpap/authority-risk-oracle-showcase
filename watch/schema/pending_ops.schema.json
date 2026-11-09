@@ -140,9 +140,26 @@
      },
      "window_note": {
       "description": "(observed as string on 2026-10-10; not enforced: a documentation entry)"
+     },
+     "detail_withheld": {
+      "description": "(level `count` of a queue left out of the view, since 2026-11-09: true, and `pending` is empty; not enforced: a documentation entry)"
+     },
+     "pending_count": {
+      "type": [
+       "integer",
+       "null"
+      ],
+      "description": "(level `count`: how many operations the queue holds, null when it was not read)"
      }
     }
    }
+  },
+  "not_shown": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   },
+   "description": "(since 2026-11-09: the queue families that are not part of the public view; not enforced: a documentation entry)"
   }
  }
 }

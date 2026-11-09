@@ -761,6 +761,8 @@ an executor contract with a 1-day `delay()` whose roles are not read yet: it sta
   `eth_call` reads that slice their own answer (all of Hyperliquid's), or Solana and Zcash (no
   ABI).
 
+**Public view.** Some entries can be left out of the files the Watch publishes: they are not listed, no total counts them (a file whose total leaves them out says `not_shown`), and the lines of the event log that would name them are not written. The list is kept outside this repository. The files that state who controls a program still name the controller, because the next run compares its reads with them. What an earlier commit of `watch-data` shows stays in the history of the branch.
+
 ## Limitations - what this oracle cannot see, and where it isn't consistent yet
 
 Publishing this list is deliberate: a number nobody can falsify isn't worth

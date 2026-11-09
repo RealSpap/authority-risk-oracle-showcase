@@ -84,7 +84,7 @@ class TestInstalled(unittest.TestCase):
         sj = json.load(open(os.path.join(self.src, "server.json"))); self.assertEqual(sj["name"], pj["mcpName"]); self.assertEqual({p["registryType"] for p in sj["packages"]}, {"pypi", "npm"}); self.assertTrue(all(p["version"] == "0.1.0" and p["identifier"] == "authority-risk-mcp" for p in sj["packages"]))
         import re
         blob = "".join(open(f, encoding="utf-8", errors="ignore").read() for f in glob.glob(os.path.join(self.src, "**", "*"), recursive=True) if os.path.isfile(f) and not f.endswith((".tgz", ".pyc")) and "/_vendor/" not in f and "/npm/python/" not in f)
-        for needle in (r"@[A-Za-z0-9.-]+\.(com|org|net|io|ch|fr)\b", "/" + "Users/", "cer" + "veau|anthro" + "pic|Claude Code|Co-Authored|Generated with", r"\b(Spap)\b(?!\w)"):
+        for needle in (r"@[A-Za-z0-9.-]+\.(com|org|net|io|ch|fr)\b", "/" + "Users/", "cer" + "veau|anthro" + "pic|Claude Code|Co-Authored|Generated with", r"\b(S[p]ap)\b(?!\w)"):
             for m in re.finditer(needle, blob, re.I):
                 s = blob[max(0, m.start() - 30):m.end() + 30].replace("\n", " ")
                 self.assertTrue("github.com" in s or "RealSpap" in s or "example." in s or "noreply" in s or "mcp.so" in s, "private detail? %r" % s)

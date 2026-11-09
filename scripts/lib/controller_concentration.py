@@ -2,7 +2,7 @@
 
 ADDED 2026-09-25 (backlog item 2, `data/finding_2026-09-20-competitor-gaps-and-morpho-vault-layer.md:689-691`:
 "A signal per controller (threshold, signer overlap between its roles, number of vaults and chains it
-governs) would follow the same convention as the cross-exposure score"). GitHub tracker cards #9/#10 (`Spap
+governs) would follow the same convention as the cross-exposure score"). GitHub tracker cards #9/#10 (`RealSpap
 - research & outreach tracker`) list this as "retained" and note the concrete number that motivated it: two
 curator Safes were found (2026-09-20, over the WIDER Morpho ecosystem, via
 `chains/ethereum-l1/scripts/analyze_controllers.py`) to govern 46% of curated deposits. That script is prior

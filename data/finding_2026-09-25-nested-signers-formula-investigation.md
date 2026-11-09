@@ -55,7 +55,7 @@ building.
 ## Conclusion
 
 No code changed. No score is wrong today because of this pattern -- verified across every real case
-in the current registry, not assumed. If Spap wants a genuine "sub-committee dispersion" formula
+in the current registry, not assumed. If RealSpap wants a genuine "sub-committee dispersion" formula
 (crediting a nested Safe's own redundancy in some principled way, distinct from simply summing leaf
 keys), that is a new calibration choice worth a dedicated discussion, not a silent formula change.
 `scripts/lib/nested_signers.py` and `scripts/check_nested_signers.py` remain exactly as they were --

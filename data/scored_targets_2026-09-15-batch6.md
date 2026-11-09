@@ -59,7 +59,7 @@ explicitly flagged lower-confidence.
    Confirmed, new finding: whatever action this executor gates can be queued
    and executed with **zero** delay.
 
-**Why the score moved up, not down** (a live correction to what Spap was told mid-way): resolving an unknown toward "worst case" is not automatically
+**Why the score moved up, not down** (a live correction to what RealSpap was told mid-way): resolving an unknown toward "worst case" is not automatically
 what happened here. The admin-role holder is not a bare EOA and not an
 anonymous unresolved contract -- it resolves to a real, identifiable,
 mature Sky/MakerDAO governance pattern on Ethereum mainnet. That is a

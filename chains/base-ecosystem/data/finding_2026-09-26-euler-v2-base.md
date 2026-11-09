@@ -46,7 +46,7 @@ references. Adding this as a scored Base target would reuse the exact same patte
 tested, and proven in `score_euler_v2_evault_factory_plasma()` (swap in Base's own addresses from the
 official book above, re-verify the remaining role assignments live, retarget the RPC) -- not
 duplicated wholesale this pass for the same reason Fluid wasn't (a genuinely new ~150+ line scorer
-deserves its own dedicated test suite, not a rushed copy). Spap's go still needed to wire in a new
+deserves its own dedicated test suite, not a rushed copy). RealSpap's go still needed to wire in a new
 scored target.
 
 ## Verification

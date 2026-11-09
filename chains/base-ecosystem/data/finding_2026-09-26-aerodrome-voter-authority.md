@@ -3,7 +3,7 @@
 2026-09-26. Closes an open follow-up (Aerodrome voter() 0x1661...480A5: root of the
 AERO emissions confirmed live but not traced) -- the root was found live before but never
 followed further. Pure investigation, no scorer built (adding Aerodrome would be a new target on an
-already-tracked ecosystem, Spap's decision, not built unilaterally). `chains/base-ecosystem/
+already-tracked ecosystem, RealSpap's decision, not built unilaterally). `chains/base-ecosystem/
 scorers.py` has zero prior references to Aerodrome -- genuinely untouched ground before this pass.
 
 ## The three authorities, traced to real Safes, live-verified
@@ -47,8 +47,8 @@ structure than several targets already scored in this repo. Disclosed as a genui
 forced into a "gap found" narrative it doesn't support.
 
 **Not built, not scored, not added as a target** -- this is investigation only, per this project's
-standing rule that a new target on an already-tracked ecosystem is Spap's call, never unilateral.
-If Spap wants Aerodrome added: the read pattern above (governor/emergencyCouncil/team, all direct
+standing rule that a new target on an already-tracked ecosystem is RealSpap's call, never unilateral.
+If RealSpap wants Aerodrome added: the read pattern above (governor/emergencyCouncil/team, all direct
 zero-arg Safe-returning getters, no proxy hops needed) is straightforward to wire into
 `chains/base-ecosystem/scorers.py` using the exact same `read_address_getter`/
 `safe_owners_and_threshold` primitives every other Base scorer already uses -- no new pattern

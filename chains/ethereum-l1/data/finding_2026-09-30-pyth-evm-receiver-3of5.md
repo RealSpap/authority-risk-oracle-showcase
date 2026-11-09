@@ -32,5 +32,5 @@ none is Pyth's contract. No tracked target and no tracked Morpho market reads a 
 
 It is a real, recent change of authority shape for a major oracle provider (from a 13-of-19 external network to 3 of 5 of the provider's own
 keys, prices and upgrades), with an unannounced key rotation, and no source found tracks it. Nothing here depends on it today, so it is
-terrain, not a score. **Adding Pyth (or a Pyth consumer) as a target is Spap's decision.** Next steps if it becomes one: check Aave V3
+terrain, not a score. **Adding Pyth (or a Pyth consumer) as a target is RealSpap's decision.** Next steps if it becomes one: check Aave V3
 reserves (`getSourceOfAsset`) and non-Morpho lenders for Pyth wrappers; find the set-1 rotation transaction on an archive RPC.

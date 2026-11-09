@@ -1,7 +1,7 @@
 # Plasma Ecosystem -- deployment guide (Plasma Testnet, chain 9746)
 
 Phase: `deploy_testnet` -- **deployed for real on 2026-09-19.** The funding
-blocker documented in every earlier attempt below is resolved: Spap funded
+blocker documented in every earlier attempt below is resolved: RealSpap funded
 the shared deploy key on Plasma Testnet specifically via a proof-of-work
 faucet (`openfaucet.org` -- no wallet-connect/OAuth/mainnet-balance
 requirement, unlike QuickNode's and Chainstack's faucets, which both
@@ -256,7 +256,7 @@ convention:
 | 8 | Yuzu Money yzUSD, before that re-push | 20 | 100 | 55 | 100 | 100 | 55 |
 | 8 | Yuzu Money yzUSD, on the oracle since the 2026-09-20 re-push | **65** | **55** | **0** | 100 | 100 | **43** |
 
-Pushed by Spap on 2026-09-20 (Plasma testnet, tx `0x490f5bb8ec6c6a436bfde4aee358928e24b8ac5597e74b72cd2f0c5f01adbb1a`, block 34,083,939, status 1); the full 9-target scorer output read back identical to the oracle (0 differences). The Safes are
+Pushed by RealSpap on 2026-09-20 (Plasma testnet, tx `0x490f5bb8ec6c6a436bfde4aee358928e24b8ac5597e74b72cd2f0c5f01adbb1a`, block 34,083,939, status 1); the full 9-target scorer output read back identical to the oracle (0 differences). The Safes are
 registered as the group `yuzu` in the cross-ecosystem sweep registry (72 groups, no overlap found).
 
 ## 2026-09-20 (evening) re-push: Fluid Liquidity signer sets resolved, pushed on-chain

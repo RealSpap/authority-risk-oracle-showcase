@@ -201,7 +201,7 @@ def main():
             sys.exit("REFUSED: the publisher key file is marked exposed_in_git_history=true "
                      "(committed in clear in 40ca1a4). A broadcast signed by it proves nothing "
                      "about who published. Rotate to a fresh, never-committed key first "
-                     "(funding it is a manual action by Spap).")
+                     "(funding it is a manual action by RealSpap).")
     now = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     try:
         result = build(now)

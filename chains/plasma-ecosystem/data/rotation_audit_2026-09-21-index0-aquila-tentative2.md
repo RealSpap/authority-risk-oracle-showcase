@@ -36,7 +36,7 @@ Oracle half - Plasma testnet, chain 9746:
 (independent). `AuthorityRiskOracle 0x50840a7667baEa9D05ad4ae3dCeb384724b58720`,
 `trackedTargetsCount() = 9`, `trackedTargets(0) = 0x6c50b8ca8EeAa1c75dEe5b5EA79772AcAbc92F48`,
 `getScore(target) = (50, 50, 0, 100, 100, 35)`, `lastUpdated = 1789933100`
-(2026-09-20T19:38:20Z, the re-push Spap ran that evening), `isStale = false`,
+(2026-09-20T19:38:20Z, the re-push RealSpap ran that evening), `isStale = false`,
 `methodologyHash = 929c8482…a722cd`, identical to the hash carried by the
 index-1 entry. Byte-for-byte identical on both RPCs.
 
@@ -62,7 +62,7 @@ Derived from the mainnet state above, without reading `scorers.py` first:
 | crossExposureScore | no shared committee with another tracked target | 100 | 100 |
 | compositeScore | floor((4×50 + 3×50 + 3×0 + 5) / 10) | 35 | 35 |
 
-**No divergence.** Nothing to re-push on-chain, no script prepared for Spap,
+**No divergence.** Nothing to re-push on-chain, no script prepared for RealSpap,
 no new target proposed this pass.
 
 ## Falsifiability of the method

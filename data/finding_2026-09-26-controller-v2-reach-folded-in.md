@@ -12,7 +12,7 @@ several disclosed-only Vault V2 targets -- a reach invisible in a report scoped 
 V1 registry controller with its extra V2 TVL/vault count, purely informational -- never merged into
 `vault_count`/`tvl`/`ecosystems`, which stay scoped to the oracle's actually tracked/scored V1
 vaults (Vault V2 remains disclosed-only, no score, per `data/finding_2026-09-25-vault-v2-scoring-scope.md`,
-an open methodology decision that stays Spap's). `scripts/check_controller_concentration.py` wires
+an open methodology decision that stays RealSpap's). `scripts/check_controller_concentration.py` wires
 this in: fetches $20M+ Vault V2 targets on tracked ecosystems, matches each one's owner (following
 the same one-hop chase for a non-Safe intermediate) against the existing V1 registry, and prints the
 match as a clearly separate `<-- PLUS $X disclosed-only Vault V2 reach` annotation.
@@ -36,7 +36,7 @@ transfer read curl doesn't hit) -- same fix, shell out to curl with a browser Us
 ## What this is and isn't
 
 Disclosed only, same precedent as everything else this week: no score change, no `AuthorityScore`
-field. The Vault V2 scoring-scope question remains explicitly open for Spap -- this makes the
+field. The Vault V2 scoring-scope question remains explicitly open for RealSpap -- this makes the
 existing disclosure more honest about a controller's TRUE cross-layer reach, it doesn't answer
 whether or how V2 should ever be scored.
 

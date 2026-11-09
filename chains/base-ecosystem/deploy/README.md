@@ -7,7 +7,7 @@ Sepolia testnet.
 
 **Status as of 2026-09-18: deployed for real.** The funding blocker
 described in earlier revisions of this file is resolved -- the shared
-deployer was funded by Spap manually and the pipeline ran a real broadcast
+deployer was funded by RealSpap manually and the pipeline ran a real broadcast
 to Base Sepolia for the first time this same day. Summary (full detail in
 "Real deployment" below):
 
@@ -107,7 +107,7 @@ log; read from `keys/authority-risk-oracle/evm-testnet-shared/.env` (outside thi
 pipeline's local config directory) and passed only as the `PRIVATE_KEY`
 environment variable to `forge`/`cast`/`push_scores.py`.
 
-Funded by Spap manually (faucet) some time before 2026-09-18. Balance
+Funded by RealSpap manually (faucet) some time before 2026-09-18. Balance
 checked live on 2 independent public RPCs immediately before the real
 deploy:
 

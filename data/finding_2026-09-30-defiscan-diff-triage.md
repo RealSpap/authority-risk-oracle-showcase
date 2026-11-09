@@ -34,7 +34,7 @@ EmissionManager: bounded, small or brake-only.
 - Aave EmissionManager: its proxy admin is the PoolAddressesProvider, not itself.
 - (Earlier today) Steakhouse owner Safe is 5-of-10, not "5/8"; `0x0000aeB7` is an allocator, not the guardian.
 
-## Next, if wanted (Spap's call, none started)
+## Next, if wanted (RealSpap's call, none started)
 
 A disclosure line for the Ethena blacklist keys on the Ethena family, and for Umbrella on the Aave family; checking which tracked Morpho markets take
 sUSDe as collateral (a frozen holder could stall liquidations).

@@ -145,12 +145,12 @@ mechanically proved by claims 6 and 7.
 **a single distinct `lastUpdated` across every one of them**, 1789934379 =
 2026-09-20T19:59:39Z. Four targets appended one at a time would each carry
 their own timestamp; one shared timestamp is the signature of a full re-push of
-the whole set. Spap ran it after the 2026-09-20 run. Left uncorrected, the next
+the whole set. RealSpap ran it after the 2026-09-20 run. Left uncorrected, the next
 run would have started from a false count.
 
 **(b) The prepared push has already been executed.**
 `scripts/prepared_pushes/2026-09-20-robinhood-index16-4-new-targets.py` was
-left for Spap to broadcast. Its four targets now sit at indices 58 to 61 with
+left for RealSpap to broadcast. Its four targets now sit at indices 58 to 61 with
 exactly the six values the file declares - the expected values are parsed out
 of the file itself rather than retyped, so this compares the file on disk with
 the chain:

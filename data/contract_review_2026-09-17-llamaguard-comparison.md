@@ -83,7 +83,7 @@ assumed to be equivalent to a compile check.
 Item 9 also named a legal entity and a paid/contest-style audit as
 prerequisites for a real paid mandate. Both are real-world actions
 (registering a business entity, commissioning and paying for external
-review) that need Spap's own identity, banking, and judgment -- not
+review) that need RealSpap's own identity, banking, and judgment -- not
 something a coding session can do on his behalf. The market-reference data
 already gathered this pass (`BUSINESS.md`'s "Path to a real product",
 and the earlier `productization-path` research: boutique audits run

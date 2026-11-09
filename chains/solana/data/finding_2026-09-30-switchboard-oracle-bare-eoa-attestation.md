@@ -126,7 +126,7 @@ lending protocol's bare key**, and worse than every Squads-governed target alrea
 ## What this is not
 
 Not a score. `SOLGOV_LEADS`/`score_solgov_leads()` does not include Switchboard (or Hylo or Pyth) yet -- adding it as a real scored
-target is Spap's decision, same discipline as every other candidate in this file's lineage (see
+target is RealSpap's decision, same discipline as every other candidate in this file's lineage (see
 `finding_2026-09-26-solgov-registry-verified-live.md`, "nothing was added"). If added, METHODOLOGY 6.2's minimum-over-full-power-paths
 rule means Switchboard's composite would be dominated by whichever of the two weak paths scores lower under
 `_score_full_power_path` -- the bare EOA or the 1-of-4 -- not by the healthier 3-of-8 vault. Same shape as Solstice being dominated

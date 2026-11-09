@@ -58,7 +58,7 @@ adjustment) whose `underlyingFeed()` is a `TransparentUpgradeableProxy` for Mida
 
 Measured, live, read-only. Not shown: how each market's LLTV, liquidity and liquidation setup would limit the damage of a bad price, or whether the two narrow-range feeds
 are narrowed on purpose. The Monad feed's holders were not read. No score changed,
-no new target: rating a market oracle is a new target type and Spap's decision. The two EOAs above are added to the overlap registry (Ethereum, Base;
+no new target: rating a market oracle is a new target type and RealSpap's decision. The two EOAs above are added to the overlap registry (Ethereum, Base;
 Robinhood's registry is deliberately not touched), which lets `who_controls.py` answer for those addresses.
 
 ## Verification

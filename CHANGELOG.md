@@ -1302,9 +1302,9 @@ documented at [tempo.xyz/developers/docs/protocol/rpc](https://tempo.xyz/develop
 takes a single address and mints test pathUSD/AlphaUSD/BetaUSD/ThetaUSD --
 no captcha, no login, no real-value deposit -- so this pass called it
 directly (4 tx, all `status: 1`, confirmed via `eth_getTransactionReceipt`)
-instead of stopping to ask Spap, unlike every other ecosystem's faucet in
+instead of stopping to ask RealSpap, unlike every other ecosystem's faucet in
 this project (each of which needs a browser, a captcha, or a real-value
-deposit and is therefore left for Spap to run manually).
+deposit and is therefore left for RealSpap to run manually).
 
 **Real deployment, 2026-09-19**: `AuthorityRiskOracle` =
 [`0x50840a7667baEa9D05ad4ae3dCeb384724b58720`](https://explore.testnet.tempo.xyz/address/0x50840a7667baEa9D05ad4ae3dCeb384724b58720)

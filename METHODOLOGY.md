@@ -265,7 +265,7 @@ exception.
 
 ## oracleAuthorityScore for price consumers
 
-DECIDED by Spap on 2026-10-04, after `data/finding_2026-10-01-aave-capo-price-authority.md` and its
+DECIDED by RealSpap on 2026-10-04, after `data/finding_2026-10-01-aave-capo-price-authority.md` and its
 2026-10-04 addendum showed that a lending market's riskiest lever often sits outside its own governance:
 whoever can swap a Chainlink aggregator, re-point a rate provider or lift a price limit moves every
 borrower's health factor at once. Until that date the score was 100 for every EVM lending market and the
@@ -579,7 +579,7 @@ seize and pause functions by name; it is not folded into these scores.
 
 ## Morpho Vault V2 scoring
 
-ADDED 2026-09-26, on Spap's explicit go-ahead after `data/finding_2026-09-25-vault-v2-scoring-scope.md`
+ADDED 2026-09-26, on RealSpap's explicit go-ahead after `data/finding_2026-09-25-vault-v2-scoring-scope.md`
 scoped this as "a real methodology decision, not a mechanical extension" and deliberately left it
 unbuilt three weeks running rather than answer it unilaterally. V2's architecture differs from every
 V1 vault already scored here: per-function timelocks instead of one vault-wide delay, gates that can
@@ -598,7 +598,7 @@ bypass" treatment): pure fee setters (`setPerformanceFee`/`setManagementFee`/the
 `setIsAllocator`/`setForceDeallocatePenalty`, all correctly documented at 0-day delay by the vault's
 own design because an allocator or fee-setter cannot redirect principal or drain funds outright.
 
-**Clarification of 2026-10-04, confirmed by Spap the same day.** A fund-redirecting function that is permanently
+**Clarification of 2026-10-04, confirmed by RealSpap the same day.** A fund-redirecting function that is permanently
 abdicated (`abdicated(selector)` true) can never be called again, so its own timelock protects nothing
 and is left out of the minimum, exactly as an abdicated exit gate already is. Live case: 5 of the 6
 Robinhood Chain V2 vaults and both Ethereum L1 V2 vaults abdicated `setAdapterRegistry`; its own timelock
@@ -645,7 +645,7 @@ already-verified infrastructure, not introducing two brand-new unverified multis
 The remaining Vault V2 targets on Ethereum L1, Robinhood Chain, Monad and Tempo (per
 `data/finding_2026-09-25-vault-v2-inventory.md`'s $2.87B inventory) are the natural continuation of
 this same methodology, one verified vault at a time, not assumed to generalize automatically.
-**Robinhood Chain, 2026-10-04 (Spap's go).** Its 6 V2 vaults now follow decisions 1 to 3 with the same reader
+**Robinhood Chain, 2026-10-04 (RealSpap's go).** Its 6 V2 vaults now follow decisions 1 to 3 with the same reader
 and owner bands as Ethereum L1 (`scripts/lib/morpho_v2.py`, `scripts/lib/scorers.py::_v2_owner_admin_key`),
 each owner shape read live that day. A 1-of-1 Safe owner (NetNet) is one key and scores as a bare EOA (5), the
 convention the earlier manual analysis of these vaults used. Grove x Steakhouse's owner became, on 2026-10-02,

@@ -65,7 +65,7 @@ down is a different risk shape than a bare EOA or a weak multisig, and this proj
 yet), and whether Drift has a market-pause mechanism this project should also read before calling the risk "live" versus "frozen and
 therefore less exploitable, not more."
 
-**Flagged, not fixed**, in keeping with tonight's rule of not silently touching an already-published score without Spap looking at it
+**Flagged, not fixed**, in keeping with tonight's rule of not silently touching an already-published score without RealSpap looking at it
 first (this one is a bigger change than a headline-number sync: it could shift an actual `compositeScore` already on record, and might
 need a genuinely new scoring category, not just a number update). Concrete next step for whoever picks this up: decode the SpotMarket's
 status/pause flags (needs the struct layout, not derived this pass), and re-run the same `getProgramAccounts` scan the 2026-09-19

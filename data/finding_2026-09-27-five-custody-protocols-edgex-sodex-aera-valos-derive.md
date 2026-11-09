@@ -42,7 +42,7 @@ Re-read: Safe `0x169a99B9...` is **3-of-5, no module**; the USDC vault's `owner(
 ## What this adds to the picture
 
 Of the eleven custody contracts traced on 26 and 27/09 (six on 26/09, these five), plus wBETH's token proxy: the weakest authority is a **single bare key** at SoDEX ($68M), at Valos (a $105M receivable whose manager and borrower are one EOA) and at wBETH's proxy admin. Next come Safes with no delay: 5-of-9 at the Polygon bridge, 3-of-5 at USDT0 and Derive, 2-of-3 at edgeX, and Aera's 3-of-9 that sets the exchange rate with no delay (its owner-level paths are timelocked), all in the range the Safe-rooted convention scores low.
-Base's 2-of-2 of nested Safes needs the most signers but has no timelock either; ether.fi's 10-day upgrade timelock is the longest delay of the set, next to a no-delay 4-of-7 that can pause indefinitely. Spark's 1-of-2 allocator Safe is left out of this ranking because the proxy it controls holds nothing today. Nothing here has been scored, and adding any of them as a target is Spap's decision.
+Base's 2-of-2 of nested Safes needs the most signers but has no timelock either; ether.fi's 10-day upgrade timelock is the longest delay of the set, next to a no-delay 4-of-7 that can pause indefinitely. Spark's 1-of-2 allocator Safe is left out of this ranking because the proxy it controls holds nothing today. Nothing here has been scored, and adding any of them as a target is RealSpap's decision.
 
 ## Process note
 

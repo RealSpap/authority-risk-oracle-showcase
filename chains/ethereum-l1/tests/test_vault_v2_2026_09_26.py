@@ -1,5 +1,5 @@
 """
-Unit tests for the Morpho Vault V2 scoring added 2026-09-26 (Spap's go-ahead, see METHODOLOGY.md's
+Unit tests for the Morpho Vault V2 scoring added 2026-09-26 (RealSpap's go-ahead, see METHODOLOGY.md's
 "Morpho Vault V2 scoring" section for the 3 methodology decisions this code applies).
 
 Same FakeHelpers monkeypatch approach as test_new_targets_2026_09_25.py -- no network, no RPC. This

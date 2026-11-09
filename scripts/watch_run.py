@@ -350,7 +350,7 @@ def write_feed(events):
     updated = items[0]["run_utc"] if items else iso(time.time())
     out = ['<?xml version="1.0" encoding="utf-8"?>', '<feed xmlns="http://www.w3.org/2005/Atom">',
            "<title>Authority Risk Oracle: what moved</title>", f'<link href="{PAGE}"/>', f'<link rel="self" href="{RAW}feed.xml"/>',
-           f"<id>{PAGE}feed</id>", f"<updated>{updated}</updated>", "<author><name>Spap</name></author>"]
+           f"<id>{PAGE}feed</id>", f"<updated>{updated}</updated>", "<author><name>RealSpap</name></author>"]
     seen_ids = {}
     for e in items:
         k = e.get("kind")   # move (this watch), alarm (this watch), admin_change / admin_grew (the independent reader, appended after the run): only a move has field/before/after

@@ -1215,7 +1215,7 @@ class TestSimpleScorersList(unittest.TestCase):
     # 1337 USDC, Steakhouse USDT, Steakhouse USDC -- Morpho vault layer, `data/finding_2026-09-20-
     # competitor-gaps-and-morpho-vault-layer.md` backlog item 1, appended last).
     # UPDATED 2026-09-26: 22 -> 24 entries (2 Morpho Vault V2 targets -- Steakhouse Prime USDC and
-    # EURCV, on Spap's explicit go-ahead after `data/finding_2026-09-25-vault-v2-scoring-scope.md`
+    # EURCV, on RealSpap's explicit go-ahead after `data/finding_2026-09-25-vault-v2-scoring-scope.md`
     # scoped the methodology decisions -- see METHODOLOGY.md's "Morpho Vault V2 scoring" section).
     # This guard is deliberately an exact count AND an exact name set: it is the
     # one shared-file line an ecosystem worker has to touch when it adds a

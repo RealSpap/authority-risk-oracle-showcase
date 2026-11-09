@@ -47,7 +47,7 @@ dedicated test suite, is exactly the kind of shortcut this pass's own ponytail-a
 (consolidating duplicated test infrastructure) argues against introducing on the scorer side. Ready
 for a focused follow-up pass: copy the Plasma function's structure, retarget the RPC to
 `https://mainnet.base.org`, re-run its own test suite's assertions against the Base-specific mocks,
-and register it in `chains/base-ecosystem/scorers.py`'s own `SIMPLE_SCORERS` -- Spap's go still
+and register it in `chains/base-ecosystem/scorers.py`'s own `SIMPLE_SCORERS` -- RealSpap's go still
 needed before wiring in a new scored target, per this project's standing rule.
 
 ## Verification

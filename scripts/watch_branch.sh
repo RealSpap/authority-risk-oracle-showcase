@@ -14,7 +14,7 @@ set -euo pipefail
 BRANCH="${WATCH_DATA_BRANCH:-watch-data}"
 REMOTE="${WATCH_REMOTE:-$(git remote get-url origin 2>/dev/null || true)}"
 DOCS="API.md README.md .gitignore schema names.json"   # names.json: the on-chain names of the untitled targets, maintained by hand and read by the cards
-IDENT=(-c user.name=Spap -c user.email=335248717+RealSpap@users.noreply.github.com)
+IDENT=(-c user.name=RealSpap -c user.email=335248717+RealSpap@users.noreply.github.com)
 AUTH=()   # (bash 3.2 on a Mac: an empty array under set -u needs the +"" form below)
 if [ -n "${GITHUB_TOKEN:-}" ]; then AUTH=(-c "http.https://github.com/.extraheader=AUTHORIZATION: basic $(printf x-access-token:%s "$GITHUB_TOKEN" | base64 | tr -d '\n')"); fi
 [ -n "$REMOTE" ] || { echo "watch_branch: no remote to read the $BRANCH branch from (set WATCH_REMOTE)" >&2; exit 2; }

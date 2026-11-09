@@ -4,7 +4,7 @@ ARCHIVED, DO NOT RERUN OR COPY AS A TEMPLATE (2026-09-30): it publishes the old 
 (keccak of a label) without the commit check. Pushes since 2026-09-30 tie the hash to the code: see scripts/lib/methodology.py.
 
 PREPARED PUSH -- Robinhood Chain rotation audit, index 16 (2026-09-20).
-Four NEW targets. Run by Spap by hand (rule of 2026-09-20: the tooling prepares the exact command, Spap broadcasts it, the tooling re-reads the chain read-only afterwards).
+Four NEW targets. Run by RealSpap by hand (rule of 2026-09-20: the tooling prepares the exact command, RealSpap broadcasts it, the tooling re-reads the chain read-only afterwards).
 
 What it pushes
 --------------
@@ -39,7 +39,7 @@ Usage
   ORACLE_RPC_URL=https://rpc.testnet.chain.robinhood.com/rpc \
   python3 scripts/prepared_pushes/2026-09-20-robinhood-index16-4-new-targets.py
 
-  # real push -- Spap only
+  # real push -- RealSpap only
   ORACLE_RPC_URL=https://rpc.testnet.chain.robinhood.com/rpc \
   PRIVATE_KEY=0x... \
   python3 scripts/prepared_pushes/2026-09-20-robinhood-index16-4-new-targets.py --broadcast

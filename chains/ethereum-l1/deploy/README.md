@@ -8,7 +8,7 @@ closed -- the shared testnet key was rotated on 2026-09-18 (new address
 `0xA08a76457b758aFF9702dBf5b870679E1232B715`, which was flagged as possibly
 exposed in local working notes and is now abandoned with 0 funds --
 see `keys/authority-risk-oracle/evm-testnet-shared/.env`'s own `superseded_key_note` in the
-pipeline's local config, not in this repo) and funded by Spap manually via a
+pipeline's local config, not in this repo) and funded by RealSpap manually via a
 Sepolia faucet. `AuthorityRiskOracle` and `ExampleConsumer` were deployed for
 real to Sepolia, and the 9 scores below were pushed on-chain for real (not a
 dry run). See "Real deploy record" below for addresses, tx hashes and
@@ -20,7 +20,7 @@ already stale when written): the oracle was pushed THREE times on 2026-09-20
 retired Ethena minter, index 3, is the one that is not). Re-read live on two
 independent Sepolia endpoints during the 2026-09-21 rotation audit.
 
-**On-chain since 2026-09-20 18:37 UTC (maker-checker proposal, run by Spap):**
+**On-chain since 2026-09-20 18:37 UTC (maker-checker proposal, run by RealSpap):**
 four more targets, Lido stETH, EigenLayer StrategyManager, Curve Stableswap-NG factory
 and Rocket Pool RocketStorage, were appended as indexes 15 to 18 by one
 `updateScores()` transaction. They are rows 15 to 18 of the table below. The prepared
@@ -32,7 +32,7 @@ kept as history.
 **CORRECTED 2026-09-21 -- Aave V3 Horizon IS on-chain.** This paragraph used to read
 "Scored, not on-chain (2026-09-20)". Horizon (composite 47, 65 / 70 / 0 / 100, cross 80) is the 19th
 `score_all()` entry, appended last. It was merged into main on the owner's instruction while maker-checker
-proposal still had no verifier decision. Spap then pushed it: `trackedTargetsCount()` went from 19 to 20
+proposal still had no verifier decision. RealSpap then pushed it: `trackedTargetsCount()` went from 19 to 20
 at 2026-09-20 19:39:42 UTC (tx `0x07320bc3...822fcb`, block 11746235), read live on two Sepolia endpoints
 on 2026-09-21. See
 [`data/scored_targets_2026-09-20-aave-horizon.md`](../data/scored_targets_2026-09-20-aave-horizon.md).
@@ -79,7 +79,7 @@ Two pushes are recorded in this table. The second one (18:37 UTC, proposal, tx
 `0xc4873381005620ab0f560b5d8a1f998d316dd55081bba217297b95ad8e3cba46`, Sepolia block 11745959,
 status 1, gasUsed 661,920, 18 `ScoreUpdated` events) took the oracle from 15 to 19
 tracked targets; `getScore()` on all 18 scored targets equals the scorer output of
-commit `1481133` (0 differences), checked by Spap's run and again independently.
+commit `1481133` (0 differences), checked by RealSpap's run and again independently.
 The first one (00:16 UTC): 15 targets tracked, 14 refreshed. `updateScores()` tx
 `0x14b0466ab52a7bf6cab54253cda92c73d52ca1b88957632911d79136b99b7a98`
 (Sepolia block 11740952, status 1, gasUsed 353,396, `lastUpdated` 1789863398 =
@@ -248,7 +248,7 @@ cast balance 0x20630C6Ab4BA48a80edA46F77b9b6e987A8f32f5 --rpc-url https://ethere
 [`data/deploy_rehearsal_2026-09-17-run2.md`](../data/deploy_rehearsal_2026-09-17-run2.md)
 and [`data/deploy_status_2026-09-18.md`](../data/deploy_status_2026-09-18.md)
 for that history) was flagged as possibly exposed in local working notes.
-Spap funded the new address manually via a Sepolia faucet on 2026-09-18. The
+RealSpap funded the new address manually via a Sepolia faucet on 2026-09-18. The
 real deploy and score push below spent ~0.00222 ETH total, leaving
 ~0.01706 ETH on the address.
 

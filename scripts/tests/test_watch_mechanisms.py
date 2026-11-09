@@ -3211,7 +3211,7 @@ class TestGardeSupplement(unittest.TestCase):
     """garde_supplement.py: the pre-push guard reads the author, the message and the added TEXT lines; a forbidden word in a file NAME or inside a BINARY file passed it. These run on throw-away git repositories."""
     HERE = os.path.dirname(__file__); FILE = os.path.join(HERE, "..", "..", "..", "garde_supplement.py"); ORIGINAL = os.path.join(HERE, "..", "..", "..", "..", "2026-09-30-garde-publication", "garde_prepush.py")
     # the forbidden words are not in this file: see PUBLICATION_GUARD_WORDS above
-    ID = ["-c", "user.name=Spap", "-c", "user.email=335248717+RealSpap@users.noreply.github.com"]
+    ID = ["-c", "user.name=RealSpap", "-c", "user.email=335248717+RealSpap@users.noreply.github.com"]
 
     def load(self):
         if not (os.path.exists(self.FILE) and os.path.exists(self.ORIGINAL)): self.skipTest("garde_supplement.py and the guard it imports are not beside the surveillance folder in this checkout")
@@ -4965,7 +4965,7 @@ class TestReadItYourselfPage(unittest.TestCase):
 
 
 class TestSingleSourceForTheComparison(unittest.TestCase):
-    """12/10 (Spap: one source): compare/tools.json builds the Neighbouring tools page; the README carries a sentence and a link, never a hand-written table of competitors again."""
+    """12/10 (RealSpap: one source): compare/tools.json builds the Neighbouring tools page; the README carries a sentence and a link, never a hand-written table of competitors again."""
     HERE = os.path.dirname(__file__)
     TABLE = "| | On-chain, composable | Independent of the rated protocol | Authority risk specifically |\n|---|---|---|---|\n| Hypernative, Blockaid | no | yes | partial |\n| **This project** | **yes** | **yes** | **yes** |\n"
 
@@ -5144,7 +5144,7 @@ class TestWatchStateLivesOnItsOwnBranch(unittest.TestCase):
             self.assertEqual(int(self.git(origin, "rev-list", "--count", "watch-data")), n1)   # an unchanged state adds no empty commit
             open(os.path.join(work, "watch", "events.jsonl"), "a").write('{"n": 2}\n'); self.assertEqual(self.run_script(work, origin, "record", "Watch: second").returncode, 0)
             self.assertIn('{"n": 2}', self.git(origin, "show", "watch-data:events.jsonl"))
-            self.assertEqual(self.git(origin, "log", "-1", "--format=%an <%ae>|%s", "watch-data"), "Spap <335248717+RealSpap@users.noreply.github.com>|Watch: second")
+            self.assertEqual(self.git(origin, "log", "-1", "--format=%an <%ae>|%s", "watch-data"), "RealSpap <335248717+RealSpap@users.noreply.github.com>|Watch: second")
 
     def test_the_canonical_repository_refuses_a_cold_start(self):
         with tempfile.TemporaryDirectory() as tmp:

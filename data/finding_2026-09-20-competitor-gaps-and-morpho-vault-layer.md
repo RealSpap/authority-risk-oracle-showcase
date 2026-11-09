@@ -693,7 +693,7 @@ read as 0; the type is `(amount << 8) | decimals` with 8 trimmed decimals, and t
 1. **Scorers for the largest listed vaults, starting with Monad's V2 vaults and the Ethereum and Base ones**, using what actually differentiates them: per-function
    timelocks (fund-moving actions and the timelock-0 list), abdicated gates, and the signers behind owner, curator and
    guardian. `score_morpho_vault_generic` (V2) already reads curator, owner and authority-selector timelocks; it does not
-   read abdications or role-signer overlap. New targets on the Ethereum L1 and Base oracles need a push by Spap.
+   read abdications or role-signer overlap. New targets on the Ethereum L1 and Base oracles need a push by RealSpap.
 2. **Controller-level scoring.** The curator Safes above are the real concentration points (two Safes govern 46% of curated
    deposits), and a vault-by-vault target list hides that. A signal per controller (threshold, signer overlap between its
    roles, number of vaults and chains it governs) would follow the same convention as the cross-exposure score.

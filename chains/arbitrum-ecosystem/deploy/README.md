@@ -465,7 +465,7 @@ otherwise 50.
 | 0 | GMX V2 RoleStore, before that re-push | 10 | 0 | 60 | 100 | 100 | 22 |
 | 0 | GMX V2 RoleStore, on the oracle since the 2026-09-20 re-push | 10 | 0 | **50** | 100 | 100 | **19** |
 
-Pushed by Spap on 2026-09-20 (Arbitrum Sepolia, tx `0xd0437c358c6eb0a6e1b21ad13c433172ec4ccf9acd08d9e106bbb1ca66ecfafe`, block 310,866,307, status 1); the full 9-target scorer output read back identical to the oracle (0 differences), GMX now 10/0/50/100/100/19. Also done in
+Pushed by RealSpap on 2026-09-20 (Arbitrum Sepolia, tx `0xd0437c358c6eb0a6e1b21ad13c433172ec4ccf9acd08d9e106bbb1ca66ecfafe`, block 310,866,307, status 1); the full 9-target scorer output read back identical to the oracle (0 differences), GMX now 10/0/50/100/100/19. Also done in
 the same pass: Radiant's two Safes (pool admin 4-of-11, emergency admin 1-of-5) are now the registry group
 `radiant_pool_admin` in `scripts/lib/cross_ecosystem_overlap.py`, and the live sweep (71 groups, 7 ecosystems) finds
 no overlap involving them, so Radiant's `crossExposureScore` stays 100.
@@ -502,7 +502,7 @@ where `crossExposureScore` 80 comes from. `requestGov()` was checked and ruled o
 deliberately left for a decision rather than silently applied:
 `data/scored_targets_2026-09-20-maintenance-gmx-v1.md`.
 
-Push command, prepared and dry-run only (the send is Spap's, per the 2026-09-20 rule):
+Push command, prepared and dry-run only (the send is RealSpap's, per the 2026-09-20 rule):
 
 ```
 # read-only, no key, no transaction -- this is what was run

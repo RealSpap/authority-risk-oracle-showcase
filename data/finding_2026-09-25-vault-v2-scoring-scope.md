@@ -74,12 +74,12 @@ raw per-function timelock durations from Morpho's own API, same query shape `che
 already uses) is genuinely low-risk and reuses only already-settled conventions: no `timelockScore`/
 `adminKeyScore` computed, just the same "off-chain, disclosed, no score" pattern as the controller-
 concentration report and RISK_ADMIN discovery. Not built this pass -- flagged as the safe next step if
-Spap wants forward progress on this item without first resolving the three design questions above.
+RealSpap wants forward progress on this item without first resolving the three design questions above.
 
 ## Conclusion
 
 No new scorer added, no new score published. One documentation fix (Monad's V1 docstring, accurate
 scope). This is the third roadmap item today (after nested-signers and bounded-power-cap) where
-investigation-first discipline found a real question that deserves Spap's input rather than a
+investigation-first discipline found a real question that deserves RealSpap's input rather than a
 unilateral answer -- consistent, not a pattern of avoiding work: 5 other items were built and pushed
 today with real, verified findings.

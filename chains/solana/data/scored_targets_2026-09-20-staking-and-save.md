@@ -68,7 +68,7 @@ formula stands rather than tuned for these five.
 ## Not done
 
 - **Not on-chain yet.** The oracle still holds 13 targets. Pushing these five (and refreshing the other 13,
-  including Marinade's new cross-exposure) is a `update_scores_solana.py` run by Spap.
+  including Marinade's new cross-exposure) is a `update_scores_solana.py` run by RealSpap.
 - **No independent verifier has approved these five yet.** They were verified here by re-running the scouting
   reproduction commands and by tests. The routine's maintenance verifier should re-derive them before the
   phase moves.

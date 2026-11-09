@@ -1,7 +1,7 @@
 # Six large Ethereum L1 custody contracts: who can move them (investigation, nothing scored)
 
 2026-09-26. The L1 TVL-coverage run listed the biggest untracked Ethereum protocols. Six were traced read-only by a workflow (a tracer, then an independent verifier per
-protocol); five came back, and the sixth (the Base bridge, whose trace failed on its output schema) I then read directly, twice, on the same two RPCs. **No target is added and no score changes**: a new scored L1 target is Spap's decision. What follows separates what I re-read myself, on two
+protocol); five came back, and the sixth (the Base bridge, whose trace failed on its output schema) I then read directly, twice, on the same two RPCs. **No target is added and no score changes**: a new scored L1 target is RealSpap's decision. What follows separates what I re-read myself, on two
 public RPCs (publicnode and drpc, identical answers) from what only the verifier reported.
 
 ## The process finding first
@@ -74,7 +74,7 @@ Already tracked (Arbitrum's own registry: the 9-of-12 Security Council and the L
 
 ## What would come next (not done)
 
-Add USDT0, the Polygon PoS bridge, ether.fi and Maple as scored L1 targets, or leave them as disclosed: Spap's call. Each would need its signers in the overlap registry and the timelock queue watch would gain the
+Add USDT0, the Polygon PoS bridge, ether.fi and Maple as scored L1 targets, or leave them as disclosed: RealSpap's call. Each would need its signers in the overlap registry and the timelock queue watch would gain the
 Polygon and ether.fi timelocks. Not read at all: the Spark main ALM proxy, ether.fi's guardian Safe, the L2 side of both rollup bridges.
 
 ## Verification

@@ -38,7 +38,7 @@ Zcash has no DefiLlama chain page and is not measured.
 
 The match is by name: it misses renamed protocols and counts a protocol tracked on another chain as untracked (Morpho Blue on Hyperliquid, the Arbitrum bridge on Ethereum). DefiLlama's value is TVL, not custody risk: a $14B
 staking network is not custody: SSV's contract holds a few million SSV tokens and 400 ETH behind a 5-of-9 Safe (see `finding_2026-09-26-wbeth-and-ssv-authority.md`), and EigenCloud is EigenLayer, already a scored target. Nothing here adds a target; each candidate still needs an authority trace, a scorer and tests, and
-a new scored target is Spap's call.
+a new scored target is RealSpap's call.
 
 ## Reproduce
 

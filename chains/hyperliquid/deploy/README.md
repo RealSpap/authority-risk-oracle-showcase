@@ -5,7 +5,7 @@ Phase: `deploy_testnet` (per `ecosystems.json`, since the 2026-09-18
 README documents how the project's **existing** native EVM contract
 (`src/AuthorityRiskOracle.sol`, reused as-is, not modified for Hyperliquid)
 will be deployed to HyperEVM Testnet, and what has already been verified.
-**Status on 2026-09-20: DEPLOYED to HyperEVM Testnet** (launched by Spap,
+**Status on 2026-09-20: DEPLOYED to HyperEVM Testnet** (launched by RealSpap,
 record and read-back in "2026-09-20 -- real deploy on HyperEVM Testnet" at
 the end of this file). The 2026-09-18 and 2026-09-19 passes below stopped
 at an unfunded deployer key (0 wei on both the old and the current
@@ -217,7 +217,7 @@ Legacy fees never call `eth_feeHistory`.
 Record the resulting `AuthorityRiskOracle` and `ExampleConsumer` addresses
 (and update `push_scores.py`'s expected `ORACLE_ADDRESS` env var
 convention) once that phase actually runs, plus fund the deployer key
-first -- both blocked on Spap, not on anything this pass could resolve
+first -- both blocked on RealSpap, not on anything this pass could resolve
 autonomously (mainnet-deposit-gated faucet, no funding requested
 autonomously per this pipeline's rules). Both were done on 2026-09-20.
 
@@ -251,7 +251,7 @@ on all three. No deployment, no transaction, no funding requested.
 installed on the host that runs this pipeline (`~/.foundry` is gone, no other
 copy found), and installing it means downloading and running a binary, which
 this autonomous run does not do on its own. The anvil-fork rehearsal used by
-the Arbitrum/Base folders could not be replayed. **Spap: reinstall Foundry
+the Arbitrum/Base folders could not be replayed. **RealSpap: reinstall Foundry
 (`foundryup`) if you want the anvil path back.**
 
 **What was done instead: `rehearsal/rehearse_ethcall.py`.** The whole
@@ -307,14 +307,14 @@ also caps `eth_estimateGas` at 3M.
 addresses, tx hashes or blocks to record. The addresses the rehearsal prints
 are simulated CREATE addresses from the harness. The real deploy is still
 blocked on funding the deployer, which needs a mainnet deposit first and is
-Spap's call. Once funded, the path is the "Deploy command" above plus
+RealSpap's call. Once funded, the path is the "Deploy command" above plus
 `push_scores.py` (now collision-safe). Pushing each batch as its own
 transaction keeps every step under 3M gas.
 
 
-## 2026-09-20 -- real deploy on HyperEVM Testnet (launched by Spap)
+## 2026-09-20 -- real deploy on HyperEVM Testnet (launched by RealSpap)
 
-Run by Spap from `RealSpap/authority-risk-oracle` at `a1ecc05`, with the deployer
+Run by RealSpap from `RealSpap/authority-risk-oracle` at `a1ecc05`, with the deployer
 funded by hand (0.01 HYPE of testnet balance, through a faucet that requires a
 prior mainnet balance, see "Deploy key and current balance"). Same unmodified
 `src/AuthorityRiskOracle.sol` and `src/ExampleConsumer.sol` as every other EVM

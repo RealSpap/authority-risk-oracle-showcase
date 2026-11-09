@@ -2,7 +2,7 @@
 
 2026-09-25. Backlog item 2 of `data/finding_2026-09-20-competitor-gaps-and-morpho-vault-layer.md`
 ("A signal per controller... would follow the same convention as the cross-exposure score"),
-retained on the GitHub tracker board (`Spap - research & outreach tracker`, cards #9/#10) but never
+retained on the GitHub tracker board (`RealSpap - research & outreach tracker`, cards #9/#10) but never
 built. Built here as `scripts/lib/controller_concentration.py` + `scripts/check_controller_concentration.py`,
 off-chain only (no `AuthorityScore` field added, same precedent as `l1CappedComposite`,
 METHODOLOGY.md), over the 9 Morpho V1 vaults this oracle tracks on Ethereum L1, Base and Monad

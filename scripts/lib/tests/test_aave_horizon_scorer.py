@@ -538,7 +538,7 @@ class TestRegistry(unittest.TestCase):
     # (its own tests live in chains/ethereum-l1/tests/test_new_targets_2026_09_25.py); then 4 more
     # Morpho V1 vault scorers (commit 15543f2, same day) were appended after THAT -- found by
     # running the full suite before committing the controller-concentration work, not by re-reading
-    # that earlier diff. UPDATED 2026-09-26: 2 Morpho Vault V2 scorers appended after THAT (Spap's
+    # that earlier diff. UPDATED 2026-09-26: 2 Morpho Vault V2 scorers appended after THAT (RealSpap's
     # go-ahead, see METHODOLOGY.md's "Morpho Vault V2 scoring" section) -- found the same way, by
     # running the full suite before committing, not by re-reading this file's own assumption. Horizon
     # and Convex both keep their relative order, just further from the end now; pinned by position

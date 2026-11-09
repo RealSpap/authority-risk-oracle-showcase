@@ -35,7 +35,7 @@ about 9%. It is not zero: nine untracked protocols and two oracles weigh somethi
 | Pyth (oracle, "$7B secured") | n/a | 11 of 11 | no Squads v4 multisig listed (governance goes through Wormhole) | n/a |
 
 Nothing here is a score: it says the authority path of each is the same shape the existing Solana scorers already read (loader-v3 upgrade authority into a Squads v4 multisig, `_score_full_power_path`),
-so each is a scorer of the same kind as Jupiter Lend or Marinade, plus tests, and a push by the maintainer. A new target is Spap's decision; nothing was added.
+so each is a scorer of the same kind as Jupiter Lend or Marinade, plus tests, and a push by the maintainer. A new target is RealSpap's decision; nothing was added.
 
 ## What this does not say
 
@@ -64,4 +64,4 @@ of the 8 listed members, 4 carry mask 7 (Initiate+Vote+Execute) and 4 carry mask
 Switchboard's EOA above -- just smaller than the headline number suggests. A genuinely "checked, came back reasonably safe" result,
 which is a valid outcome, not a gap.
 
-Not added as a scorer (same standing rule as everything else in this file: that decision is Spap's).
+Not added as a scorer (same standing rule as everything else in this file: that decision is RealSpap's).

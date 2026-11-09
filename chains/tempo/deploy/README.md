@@ -149,7 +149,7 @@ not mean anything on a chain with no native gas token -- see the sentinel
 "Faucet" row above) was not called this pass, per `keys/evm-testnet-
 shared.json`'s "never request funding autonomously" instruction. Same
 open thread as every EVM sibling, just correctly framed for Tempo's own
-fee-token model: nothing to deploy for real until Spap funds the shared
+fee-token model: nothing to deploy for real until RealSpap funds the shared
 deployer with pathUSD on Moderato (or another whitelisted fee token),
 manually, if/when wanted.
 
@@ -310,7 +310,7 @@ what's native, not the key that signs the deploy tx.
 against the current shared key on Moderato -- a single JSON-RPC call with
 one `address` param, no captcha, no login, no real-value deposit, matching
 this pass's explicit instruction that a free, guardrail-free faucet path
-can be used directly rather than left for Spap. Returned 4 transaction
+can be used directly rather than left for RealSpap. Returned 4 transaction
 hashes (pathUSD, AlphaUSD, BetaUSD, ThetaUSD each minted), all confirmed
 `status: 1` via `eth_getTransactionReceipt`. Resulting pathUSD balance:
 1,000,000,000,000 raw units = 1,000,000 pathUSD (6 decimals), confirmed via

@@ -8,7 +8,7 @@ is a list of LEADS here, never trusted values: for every protocol this reads the
     python3 chains/solana/scripts/verify_solgov_leads.py [--out data/solgov_leads_2026-09-26.json]
 
 Solana mainnet through the public RPC (rate-limited: a failed read is UNREAD, never "matches"). It adds nothing to the oracle: a lead becomes a target only when a scorer,
-tests and a push exist, and a new target is Spap's decision.
+tests and a push exist, and a new target is RealSpap's decision.
 """
 import argparse
 import json

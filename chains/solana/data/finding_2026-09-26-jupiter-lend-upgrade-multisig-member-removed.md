@@ -22,7 +22,7 @@ score; disclosed, not a change of convention.)
 
 ## What it means
 
-- No scorer defect and nothing to fix in code: the next Solana re-push (Spap's; the Solana oracle turns stale 2026-10-05 07:18 UTC) will publish 87 / 56.
+- No scorer defect and nothing to fix in code: the next Solana re-push (RealSpap's; the Solana oracle turns stale 2026-10-05 07:18 UTC) will publish 87 / 56.
 - The routine's catch was real: rule B (no exit code read through a pipe) turned a hidden failure into a true finding.
 - The gap it exposes is timing: nothing watched Squads multisigs between pushes. `scripts/check_squads_changes.py` now diffs the state of every `*_MS` multisig the
   Solana scorers name (members with permission masks, threshold, time lock, config authority) against `data/squads_snapshot.json`; the digest can include it.

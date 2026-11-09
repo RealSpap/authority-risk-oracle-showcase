@@ -220,8 +220,8 @@ order, before stopping:
   Chainstack's requires the same 0.8 SOL real mainnet balance as
   QuickNode's.
 
-No funding was requested from Spap for this -- unlike Plasma's and Tempo's
-funding, which had Spap's live "go testnet, continue chain by chain"
+No funding was requested from RealSpap for this -- unlike Plasma's and Tempo's
+funding, which had RealSpap's live "go testnet, continue chain by chain"
 authorization already in hand, this dead end doesn't change that
 authorization's scope (still no-real-value, no-account paths only), it
 just means none of those paths are working against Solana Devnet's faucet

@@ -1,6 +1,6 @@
 # Solana: deploy_testnet status
 
-**Status on 2026-09-20: DEPLOYED to Solana Devnet** (launched by Spap, record
+**Status on 2026-09-20: DEPLOYED to Solana Devnet** (launched by RealSpap, record
 and read-back in "2026-09-20 -- real deploy on Devnet" at the end of this
 file). Everything dated 2026-09-19 below describes the state before the payer
 was funded: a full rehearsal on a localhost `solana-test-validator`, and a
@@ -119,7 +119,7 @@ before the real Devnet deploy.** If SIMD-0500 activates on Devnet first,
 rebuild with `cargo build-sbf --arch v3` and rehearse again, because the
 current `.so` will then be refused.
 
-## Replay the Devnet deploy once funded (manual funding by Spap first)
+## Replay the Devnet deploy once funded (manual funding by RealSpap first)
 
 ```bash
 export PATH="$HOME/.local/share/solana/install/active_release/bin:$HOME/.cargo/bin:$PATH"
@@ -204,9 +204,9 @@ upgrade authority. This has not been changed yet because it is a program
 change, not part of this deploy phase.
 
 
-## 2026-09-20 -- real deploy on Devnet (launched by Spap)
+## 2026-09-20 -- real deploy on Devnet (launched by RealSpap)
 
-Replay of the procedure above, run by Spap from `RealSpap/authority-risk-oracle`
+Replay of the procedure above, run by RealSpap from `RealSpap/authority-risk-oracle`
 at `a1ecc05` (the payer having been funded by hand, see "Devnet funding"
 above for why it was blocked). Deploy, `initialize` and the 13 `update_score`
 calls ran back to back (the open point below: `initialize` has no caller

@@ -50,7 +50,7 @@ the same convention as Sanctum's rebalance authority on Solana.
 
 ## Not done, and what the score does not claim
 
-- **Not on-chain.** The oracle does not track this target yet. By the 2026-09-20 rule the push is Spap's. The four
+- **Not on-chain.** The oracle does not track this target yet. By the 2026-09-20 rule the push is RealSpap's. The four
   targets it had to follow went on-chain at 18:37 UTC (proposal), so `trackedTargetsCount()` reads 19 today
   and would read 20 after it.
 - **No independent verifier has decided yet.** Proposal #136 was still without a decision when this was merged into

@@ -21,7 +21,7 @@ to re-derive every score live.
 | Public RPC (mainnet) | `https://rpc.monad.xyz` |
 | Explorer | `https://testnet.monadvision.com/address/` (the canonical `testnet.monadexplorer.com` URL 308-redirects here) |
 | Faucet that worked | [`openfaucet.org`](https://openfaucet.org) -- browser proof-of-work mining, "Monad / Testnet" listed directly, no wallet connection, no account, no real-value requirement. 0.002 MON per proof, 0.01 MON minimum claim, **0.05 MON maximum per mining session**. |
-| Faucet used for the 2026-09-19 top-up | The official Monad testnet faucet, used by Spap directly. That the source is the official faucet is Spap's report, NOT something the chain itself proves. What IS verified on-chain: one single +5.0 MON credit to the admin/updater key, tx [`0x36cba7481c7a67b298b91f5b6f276075f880c0e3e368f88935e135cbf68ca3bf`](https://testnet.monadvision.com/tx/0x36cba7481c7a67b298b91f5b6f276075f880c0e3e368f88935e135cbf68ca3bf) in Monad testnet block 63,949,181 (status success, sent by `0x3de8259a71a735b111bd5aebfce965c0d333fa88` through a 1,290-byte distributor contract `0x631a6a936485fa0cba53c37a671aaf505f16d08e`, recipient list = this key only), taking the balance from 0.009291 to 5.009291 MON. This replaces the multi-cycle 0.05-MON-per-session `openfaucet.org` route as the practical funding path. |
+| Faucet used for the 2026-09-19 top-up | The official Monad testnet faucet, used by RealSpap directly. That the source is the official faucet is RealSpap's report, NOT something the chain itself proves. What IS verified on-chain: one single +5.0 MON credit to the admin/updater key, tx [`0x36cba7481c7a67b298b91f5b6f276075f880c0e3e368f88935e135cbf68ca3bf`](https://testnet.monadvision.com/tx/0x36cba7481c7a67b298b91f5b6f276075f880c0e3e368f88935e135cbf68ca3bf) in Monad testnet block 63,949,181 (status success, sent by `0x3de8259a71a735b111bd5aebfce965c0d333fa88` through a 1,290-byte distributor contract `0x631a6a936485fa0cba53c37a671aaf505f16d08e`, recipient list = this key only), taking the balance from 0.009291 to 5.009291 MON. This replaces the multi-cycle 0.05-MON-per-session `openfaucet.org` route as the practical funding path. |
 
 ## Funding: real, but genuinely gas-constrained -- disclosed, not smoothed over
 
@@ -191,7 +191,7 @@ connection, no CAPTCHA) in two mining sessions -- 0.048 MON (24 proofs), then
 445,108 gas; at the live 102 gwei with this script's 1.25x buffer that is
 0.05675 MON, so the balance now covers it (a 4-target subset would need
 0.0393 MON). Nothing had been signed or sent when the paragraph above was written; the
-push was then run by Spap directly (the sandbox correctly refused this agent
+push was then run by RealSpap directly (the sandbox correctly refused this agent
 access to the key file, and no workaround was attempted), using
 `chains/monad/deploy/push_scores.py` without `--dry-run`, for all 9 targets:
 tx `0xd65b649d10c8a1a1b76c6a0848fbbc182c0e73e0fce7e4abeea066da3b529e35`,
@@ -306,7 +306,7 @@ decision (root `METHODOLOGY.md`, paragraph "Convention (decided 2026-09-20)"),
 so that decision moved no Monad score.
 
 The "Deliberately not re-pushed" reasoning of the fourth pass no longer held
-for this target once a live score had changed, and Spap ran the re-push. It
+for this target once a live score had changed, and RealSpap ran the re-push. It
 is a full 9-target `updateScores()`, so every target's `lastUpdated` moved to
 1789863496; the next 9-day staleness deadline is 2026-09-29 00:18:16 UTC.
 

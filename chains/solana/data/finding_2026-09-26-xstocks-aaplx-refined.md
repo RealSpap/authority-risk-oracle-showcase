@@ -51,7 +51,7 @@ mislabeling to correct, not asserted as a precise dollar figure without a live A
 ## What this is and isn't
 
 Pure investigation, no scorer built or changed -- xStocks/AAPLx is not a tracked target (adding it
-would be a new target on Solana, Spap's decision). Refines an already-largely-correct prior finding
+would be a new target on Solana, RealSpap's decision). Refines an already-largely-correct prior finding
 rather than overturning it.
 
 ## Verification

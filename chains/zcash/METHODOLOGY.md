@@ -562,13 +562,13 @@ and NOT yet generalized to other ecosystems (a general rule is a methodology dec
    the chain (here, key 388 had 36 transactions and was swept on 2026-06-05).
 6. A frozen target is retired (published as a legacy snapshot, never silently deleted) at the next anchor
    when its product is in a documented wind-down and its source cannot be refreshed. When that happens is
-   Spap's call. Reversal: independent evidence that the source is producing blocks again.
+   RealSpap's call. Reversal: independent evidence that the source is producing blocks again.
 
 `scripts/zenzec_status_check.py` reads the triggers that would reopen the question (the Solana authority
 chain of the zenZEC mint, the program's deployment slot, the mint authority's activity, the ZEC backing
 address, the zrchain tip).
 
-**Retired on 2026-09-20 (rule 6 applied, Spap's decision).** Target 7 is no longer part of the live set:
+**Retired on 2026-09-20 (rule 6 applied, RealSpap's decision).** Target 7 is no longer part of the live set:
 
 - `scorers.score_all()` returns the six live targets. `score_all(include_retired=True)` (or a set of ids) still
   returns the seventh, for one reason only: the two ARO2 anchors made before the retirement contain it, and
@@ -940,7 +940,7 @@ address and a valid ECDSA signature by that key over the commitment exists.
   public reads. A wrong score would be anchored exactly as faithfully as a right one;
   the anchor freezes and dates a claim, it does not audit it.
 - **Who published.** The key's private half was committed in clear in `40ca1a4` and
-  stays readable in the private repo's history. Spap's recorded decision (2026-09-19,
+  stays readable in the private repo's history. RealSpap's recorded decision (2026-09-19,
   in the out-of-repo key file's `send_guard_lifted`, not seen in chat by the session
   that ran this) accepted that risk for this key: a signature or a spend by it proves
   "someone with access to that history", not a specific publisher. Rotating the key or
@@ -959,7 +959,7 @@ address and a valid ECDSA signature by that key over the commitment exists.
 
 The 9.6 anchor was made by a key whose private half sits in this repository's git
 history (`40ca1a4`). It was rotated with two real Testnet transactions, no faucet
-involved (Spap's instruction: rotate if it can be done without manual funding, and
+involved (RealSpap's instruction: rotate if it can be done without manual funding, and
 the exposed key's send guard is lifted for this one key only):
 
 | Step | txid | Block (UTC) | What |
@@ -992,7 +992,7 @@ below together with this: the chain alone cannot show that only the maintainer h
   were made by the exposed key and stay as historic records: they prove integrity and
   timing only, not who published. They are not withdrawn, and the dashboard labels them.
 - The old private key is still readable in this repository's git history (history is
-  not rewritten). Spap's stated plan is that this is a test repository and a new one is
+  not rewritten). RealSpap's stated plan is that this is a test repository and a new one is
   created when the time comes (2026-09-20, chat), which would not carry that history.
 - "Who published" still means "whoever holds the key file", not a named legal identity,
   and the new key's secrecy rests on one file on one machine. That is proportionate for a
@@ -1004,7 +1004,7 @@ below together with this: the chain alone cannot show that only the maintainer h
   something the chain proves.
 - The sweep was built by a one-off script that is not committed (it would be a signing path for
   an exposed key). Its result is committed as raw transaction bytes, verifiable by anyone.
-- The send guard is active again: on 2026-09-20 Spap asked to reactivate the guard lifted on
+- The send guard is active again: on 2026-09-20 RealSpap asked to reactivate the guard lifted on
   2026-09-19. `publisher_key.load()` now refuses the legacy exposed key by identity (whatever the key
   file's flag says), `send` in `publish_batch.py` and `publish_attestation.py` also refuses any key flagged
   exposed, and plan modes only warn. The guard protects this project's scripts, not the key: anyone who

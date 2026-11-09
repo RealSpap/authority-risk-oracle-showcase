@@ -1,7 +1,7 @@
 # Bounded-power timelockScore cap: investigated across 8 files, no unfixed gap found
 
 2026-09-25. Roadmap item 2 (broad-review round 2), the second of the two items held back pending
-Spap's explicit go (received 2026-09-25). The earlier competitor-research synthesis described this
+RealSpap's explicit go (received 2026-09-25). The earlier competitor-research synthesis described this
 as the largest, most mechanical candidate: "dozens of occurrences" of a confirmed-bounded emergency
 power (pause/freeze, not upgrade/fund-redirect) bypassing a real timelock, not yet capped the way
 `score_fluid_liquidity_arbitrum`/`score_compound_v3_comet_*` already are (a real 55/60 cap, applied
@@ -53,7 +53,7 @@ already reasons through this explicitly: *"there is no existing convention in th
 stacking a second, independent bypass discount on top of a bypass already reflected in
 timelockScore, so one is not invented here."* This is a genuine, unresolved methodology question
 (should two independent bypasses on the same target compound, and how) -- not an oversight, and not
-something to resolve unilaterally by inventing a stacking convention. Flagged for Spap; not applied.
+something to resolve unilaterally by inventing a stacking convention. Flagged for RealSpap; not applied.
 
 ## Conclusion
 

@@ -6,8 +6,8 @@ is read live from the testnet oracle (`trackedTargets(16)`), every authority
 fact is re-derived from scratch on two independent mainnet RPCs (never re-read
 from `scripts/lib/scorers.py`'s own logic), then compared with `getScore()`.
 `trackedTargetsCount()` is 58 going in and is still 58 after this run, because
-nothing was pushed: the 4 new targets are prepared for Spap to broadcast (rule
-of 2026-09-20 -- the tooling prepares, Spap pushes).
+nothing was pushed: the 4 new targets are prepared for RealSpap to broadcast (rule
+of 2026-09-20 -- the tooling prepares, RealSpap pushes).
 
 ## Part 0 -- CORRECTION of this same run's first attempt
 
@@ -267,7 +267,7 @@ primary-source address and a resolvable root is what ran out, not the budget.
 ## Part 3 -- push, prepared not sent
 
 **Nothing was broadcast by this pass, on any chain.** Per the rule of
-2026-09-20, the push is prepared and left for Spap:
+2026-09-20, the push is prepared and left for RealSpap:
 
 `scripts/prepared_pushes/2026-09-20-robinhood-index16-4-new-targets.py`
 

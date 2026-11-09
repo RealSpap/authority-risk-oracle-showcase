@@ -1,6 +1,6 @@
 # Governance-capture concentration, quantified for the first time (Uniswap + Aave Governance V3 + Solend/Realms)
 
-Spap asked, across a live chat session on 2026-09-25: of the 5 scoring dimensions
+RealSpap asked, across a live chat session on 2026-09-25: of the 5 scoring dimensions
 (adminKeyScore, multisigScore, timelockScore, oracleAuthorityScore,
 crossExposureScore), where is a real, uncovered hole -- not a missing chain, a
 missing *concept*.
@@ -192,7 +192,7 @@ and refused indexed `getProgramAccounts` filters without a paid token, same
 class of limit as `ethereum.publicnode.com`'s archive-only `eth_getLogs`
 elsewhere in this project -- noted, not worked around a second way this pass.
 
-## Candidate, for Spap to scope, not built here
+## Candidate, for RealSpap to scope, not built here
 
 If wanted: a `notes`-only disclosure (same convention as every other
 "disclosed, not scored" item in this codebase) on `score_uniswap_v3_factory()`,
@@ -200,7 +200,7 @@ If wanted: a `notes`-only disclosure (same convention as every other
 target that reuses its `multisig = 100` convention), and
 `score_solend_realms_governance()` reporting top-K/total-votes coverage over
 recent proposals, refreshed each scoring pass -- deliberately NOT folded
-into a 0-100 sub-score without Spap's own call on the metric and its
+into a 0-100 sub-score without RealSpap's own call on the metric and its
 calibration, matching this project's existing discipline of disclosing
 facts before inventing scores for them. Would need, if built: a decision on
 N (proposal sample size per target), whether Aave's cross-chain voting

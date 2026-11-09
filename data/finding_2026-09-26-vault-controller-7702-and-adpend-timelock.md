@@ -33,7 +33,7 @@ Numbers if the Steakhouse convention were applied as is: composite `(4*5 + 3*0 +
 Reasons it may still be right to leave it at 0: owner and curator are one key with no guardian (nobody else can veto a pending change), the Steakhouse credit
 notes "guardian not independently resolved so not credited the higher band", and the vault is unlisted with deposits disabled and its assets in one impaired
 market. Reasons to change it: the delay is real against a compromised key that has to wait 14 days, and the same rule is applied to one family and not another.
-This is a calibration decision, so it is left as it is and put to Spap on the board; the note "no timelock layer" is imprecise either way (there is a vault timelock,
+This is a calibration decision, so it is left as it is and put to RealSpap on the board; the note "no timelock layer" is imprecise either way (there is a vault timelock,
 there is no external Timelock contract).
 
 ## Verification

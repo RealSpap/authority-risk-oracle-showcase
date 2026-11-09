@@ -123,7 +123,7 @@ def guard_key(refuse_exposed=True):
     if exposed and refuse_exposed:
         _die("REFUSED: the publisher key file is marked exposed_in_git_history=true. A broadcast "
              "signed by it proves nothing about who published. Rotate to a fresh, never-committed "
-             "key first (funding it is a manual action by Spap).")
+             "key first (funding it is a manual action by RealSpap).")
     if exposed:
         print("WARNING: key file marked exposed_in_git_history: this plan is a rehearsal only.", file=sys.stderr)
     if pub.hex() != publisher_key.PUBKEY_HEX or address != publisher_key.ADDRESS:

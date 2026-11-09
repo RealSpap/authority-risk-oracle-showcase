@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Has any tracked target's published AUTHORITY SCORE drifted from what its scorer computes live today?
 
-ADDED 2026-09-25 (Spap: "[backlog note]" -- a genuine
+ADDED 2026-09-25 (RealSpap: "[backlog note]" -- a genuine
 demand-driver feature, `data/finding_2026-09-20-competitor-gaps-and-morpho-vault-layer.md` backlog item
 12 "Posture-change alerts ranked by observed lead time"). This is a real gap DeFiScan and Foreshock both
 sell as a headline feature ("24/7 monitoring") that this project had never automated across every

@@ -3,7 +3,7 @@
 2026-09-26. Investigates an open follow-up (Extra Finance Lending
 `0xbb505c54...05fc71cbd` + Safe 2-of-3 `0x750f7153...740C9bd40A` confirmed via the Safe API, no timelock
 documented, ~32.7 M$ TVL). Pure investigation, no scorer built -- adding Extra Finance is a new
-target on an already-tracked ecosystem, Spap's decision.
+target on an already-tracked ecosystem, RealSpap's decision.
 
 ## `LendingPool.owner()` is a dead end for authority purposes -- a deployment factory, not governance
 

@@ -57,7 +57,7 @@ Disclosed only: no score, scorer or on-chain push reads any of this.
 ## Not done, on purpose
 
 No score changed and no new tracked target: rating a market's oracle would be a new target type and a calibration decision that
-is Spap's. Role-based admins on the custom aggregator feeds and the unread Katana/Arc/OP chains stay open.
+is RealSpap's. Role-based admins on the custom aggregator feeds and the unread Katana/Arc/OP chains stay open.
 
 ## Verification
 

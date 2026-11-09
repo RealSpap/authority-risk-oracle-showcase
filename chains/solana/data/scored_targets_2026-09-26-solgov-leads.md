@@ -1,8 +1,8 @@
 # Eight Solana targets scored from the SolGov leads (2026-09-26)
 
-Spap's "Go solana" after `finding_2026-09-26-solgov-registry-verified-live.md`: the registry lists 50+ protocols, we tracked 18, and nine of the
+RealSpap's "Go solana" after `finding_2026-09-26-solgov-registry-verified-live.md`: the registry lists 50+ protocols, we tracked 18, and nine of the
 missing ones were real candidates. Eight are now scored by `score_solgov_leads` in `chains/solana/scorers.py` (26 Solana targets, was 18).
-Nothing is pushed on-chain: the Solana oracle is Spap's to republish.
+Nothing is pushed on-chain: the Solana oracle is RealSpap's to republish.
 
 ## Scores (live 2026-09-26, Solana mainnet, every multisig re-derived offline)
 

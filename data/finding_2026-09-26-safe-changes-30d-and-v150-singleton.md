@@ -57,7 +57,7 @@ executor set was replayed from the `ExecutorUpdated` events (all pages) and matc
 8 executors on Ethereum, 7 on Base, 8 on Arbitrum, almost the same addresses, two of them also signers of the Safe. An executor runs only what the
 Safe's threshold confirmed. Monad has no explorer and was checked for `manager()` only. Added to `KNOWN_ANALYSES`, each with that caveat.
 
-## One methodology point for Spap (not changed)
+## One methodology point for RealSpap (not changed)
 
 `score_morpho_blue_l1` compares the committee by exact set equality with a 9-signer snapshot. The 10th signer makes the equality false, so the
 cross-ecosystem flag is dropped (crossExposureScore 80 -> 100) while 9 of the 10 signers remain shared with the Base, Robinhood and Tempo

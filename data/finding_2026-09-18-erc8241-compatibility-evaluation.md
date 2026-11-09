@@ -96,7 +96,7 @@ contract change (one new function, no change to existing `getScore()`/
 `updateScores()` behavior). **Not implemented in this pass**: it touches
 `src/AuthorityRiskOracle.sol`, the actual deployed/documented contract
 surface for this hackathon submission, and is the kind of change worth
-Spap's own sign-off before touching the submitted contract, not a
+RealSpap's own sign-off before touching the submitted contract, not a
 unilateral addition from a research task.
 
 ## Answer to the tracker item's question

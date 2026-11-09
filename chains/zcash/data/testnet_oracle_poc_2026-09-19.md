@@ -189,7 +189,7 @@ reproduced here for convenience:
 > transaction `f0780a09...75e5` itself is unaffected as a historical record (it is the one this project sent,
 > cross-checked above), but NO further publication may be made with this key: before any deploy_testnet
 > broadcast and before the repository goes public, either rotate to a fresh, never-committed key (funding its
-> address is a manual action by Spap) or add an off-chain signature of each batch by an unexposed key.
+> address is a manual action by RealSpap) or add an off-chain signature of each batch by an unexposed key.
 > `publish_attestation.py send` now refuses to broadcast with a key file marked `exposed_in_git_history`.
 >
 > **Update 2026-09-20:** the key was rotated and the ARO2 set re-anchored from a new key that was never

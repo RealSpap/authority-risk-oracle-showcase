@@ -61,7 +61,7 @@ that counted every bare-EOA power would be 4; not recommended, since the custody
 counterparty and the EOA distributor powers are bounded. Any unread role (POOL_MANAGER, ADMIN_ROLE,
 PROPOSER) or unresolved link degrades to 20/0/0 rather than being taken as "no such seat".
 
-Pushed on-chain the same day by Spap (Plasma testnet, tx `0x490f5bb8ec6c6a436bfde4aee358928e24b8ac5597e74b72cd2f0c5f01adbb1a`, block 34,083,939, status 1): the oracle reads 65/55/0/100/100/43 for yzUSD and all 9 Plasma targets read back identical to the scorer.
+Pushed on-chain the same day by RealSpap (Plasma testnet, tx `0x490f5bb8ec6c6a436bfde4aee358928e24b8ac5597e74b72cd2f0c5f01adbb1a`, block 34,083,939, status 1): the oracle reads 65/55/0/100/100/43 for yzUSD and all 9 Plasma targets read back identical to the scorer.
 
 ## 5. What the adversarial pass changed
 

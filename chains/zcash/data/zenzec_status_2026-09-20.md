@@ -101,7 +101,7 @@ actor is unidentified. It was first mistaken here for a Zenrock operation before
 - Do not substitute `t1g7BWs...` for it: its controller is unknown, so an authority score would be false
   precision. It is an unscored watch item.
 - Retire it, without deleting it, at the next anchor: publish it as a legacy snapshot and keep it out of
-  every live aggregate. **Done on 2026-09-20 on Spap's call** (`chains/zcash/METHODOLOGY.md` 4.8.1, "Retired on
+  every live aggregate. **Done on 2026-09-20 on RealSpap's call** (`chains/zcash/METHODOLOGY.md` 4.8.1, "Retired on
   2026-09-20"): `score_all()` no longer returns it, the legacy snapshot is
   `legacy_snapshot_zenzec_keyring_2026-09-20.json`, and the anchor of the same evening (txid `462de12bf72e5e635a1feed4a4cedb02c03f17745bd15176787f8f5f8fcd701c`, block
   4,371,248) covers the six live targets. The two anchors made before this date are unchanged and still contain it.

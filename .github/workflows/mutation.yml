@@ -30,5 +30,7 @@ jobs:
 
       - run: pip install -r scripts/requirements.txt
 
+      - run: pip install "PyYAML==6.0.2"   # scripts/tests/test_watch_cadence.py reads the workflow files with yaml.safe_load and the replay runs that suite; the Watch itself does not need it, so it is not in requirements.txt
+
       - name: The suite passes on the untouched tree, then every mutation is replayed on a copy
         run: python3 scripts/mutate.py --markdown "$GITHUB_STEP_SUMMARY"

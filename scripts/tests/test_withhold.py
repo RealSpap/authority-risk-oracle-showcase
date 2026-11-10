@@ -510,5 +510,148 @@ class TestRecord(unittest.TestCase):
     def test_the_message_is_neutral(self): open(os.path.join(self.d, "watch", "alerts.json"), "w").write(json.dumps({"x": H_ACCT})); self.assertIsNone(WORDS.search(self.record().stderr))
 
 
+# ---- revision 4: the files written after the queue step from the independent reader's page and from the queue state, with the shapes the Watch writes (made-up strings, real forms) ----
+PATH = "program -> ProgramData %s -> upgrade authority (a program-derived address, off the curve: a vault or a protocol PDA) -> Example multisig v4, vault 0, of multisig %s"
+
+
+def stale_alert(path):
+    """An alert that is about the age of a score and quotes the independent reader's path of control: it names the multisig inside a sentence, in its own case."""
+    return {"rule": "score pushed more than 7 days ago (the oracle marks it stale at 9)", "severity": "info", "target": OTHER_PROG, "title": "Example program", "new": True,
+            "reading": {"composite": 80, "second_opinion": {"kind": "multisig", "path": path, "block_start": None}}}
+
+
+def queue_alert():
+    return {"rule": "queued operation executable", "severity": "high", "target": HELD_PROG, "title": W.short(HELD_PROG), "new": False,
+            "evidence": [{"id": H_ID1, "signature": H_SIG, "timelock": HELD_NAME, "timelock_address": HELD_MS}, {"id": "example:%s:2" % OTHER_MS, "signature": "Example proposal #2: y", "timelock": OTHER_NAME}]}
+
+
+class TestCarriedFiles(Base):
+    """What the pass before the Watch's last steps leaves in the files that later steps write again (alerts, review queue, score series, reports): `views` reads them as `check` does and cleans what check refuses."""
+    def setUp(self):
+        super().setUp(); self.second = json.dumps({"results": [{"target": HELD_PROG, "multisig": HELD_MS, "path": PATH % (HELD_PROG, HELD_MS)}]}); open(os.path.join(self.w, "second_opinion.json"), "w").write(self.second)
+
+    def go(self, *puts):
+        for n, o in puts: self.put(n, o)
+        self.run_cli(); v = self.run_cli("views")[0]; return v, self.run_cli("check")[0]
+
+    def test_the_path_of_control_that_names_the_multisig_is_taken_out_with_no_mark_and_the_alert_stays(self):
+        v, c = self.go(("alerts.json", {"active": [stale_alert(PATH % (OTHER_PROG, HELD_MS)), stale_alert("no queue here")], "history": []}))
+        self.assertEqual((v.returncode, c.returncode), (0, 0)); a = self.get("alerts.json")["active"]; self.assertEqual(len(a), 2)
+        self.assertEqual(a[0]["reading"]["second_opinion"], {"kind": "multisig", "block_start": None})
+        self.assertEqual((a[0]["rule"], a[0]["target"], a[0]["reading"]["composite"]), (stale_alert("")["rule"], OTHER_PROG, 80))
+        self.assertNotIn(W.MASK, self.text("alerts.json")); self.assertEqual(a[1]["reading"]["second_opinion"]["path"], "no queue here")
+
+    def test_the_path_is_taken_out_of_the_history_entries_too_and_nothing_else_of_them(self):
+        e = dict(stale_alert(PATH % (OTHER_PROG, HELD_MS)), key="k"); v, c = self.go(("alerts.json", {"active": [], "history": [e]}))
+        h = self.get("alerts.json")["history"][0]; self.assertEqual((c.returncode, "path" in h["reading"]["second_opinion"], h["key"], h["rule"]), (0, False, "k", e["rule"]))
+
+    def test_a_number_that_does_not_count_the_list_is_left_as_it_is(self):
+        items = [{"text": "queued operation %s" % H_SIG}, {"text": "a stale score"}]; v, c = self.go(("review_queue.json", {"total": 99, "items": items}))
+        self.assertEqual((c.returncode, self.get("review_queue.json")["total"], len(self.get("review_queue.json")["items"])), (0, 99, 1))
+
+    def test_the_shortened_form_written_with_the_escaped_ellipsis_in_a_file_of_one_line_per_record_is_written_without_it(self):
+        open(os.path.join(self.w, "trend.jsonl"), "w").write(json.dumps({"run_utc": "a", "note": "see " + W.short(HELD_MS)}) + "\n"); self.assertIn("\\u2026", self.text("trend.jsonl"))
+        self.run_cli(); self.run_cli("views"); self.assertEqual(self.run_cli("check")[0].returncode, 0); self.assertEqual(json.loads(self.text("trend.jsonl").strip())["note"], "see " + W.MASK)
+
+    def test_a_bullet_that_names_the_queue_but_no_operation_stays_with_the_mark(self):
+        open(os.path.join(self.w, "review_queue.md"), "w").write("## Needs a person\n- **other** about %s\n- **stale** a score\n" % HELD_NAME); self.run_cli(); self.run_cli("views")
+        self.assertEqual(self.text("review_queue.md"), "## Needs a person\n- **other** about %s\n- **stale** a score\n" % W.MASK); self.assertEqual(self.run_cli("check")[0].returncode, 0)
+
+    def test_the_queue_file_listed_at_level_count_is_not_written_again_by_the_cleaning(self):
+        self.env["WATCH_WITHHOLD"] = json.dumps({"addresses": [HELD_MS], "level": "count"}); self.run_cli(); before = self.text("pending_ops.json"); v = self.run_cli("views")[0]
+        self.assertEqual((v.returncode, self.text("pending_ops.json")), (0, before)); self.assertEqual(self.run_cli("check")[0].returncode, 0)
+
+    def test_the_text_of_the_mark_is_fixed(self): self.assertEqual(W.MASK, "(not shown)")
+
+    def test_the_address_in_lowercase_in_a_sentence_elsewhere_than_in_a_path_is_written_with_the_mark(self):
+        v, c = self.go(("alerts.json", {"active": [dict(stale_alert("x"), title="controlled by %s since then" % HELD_MS.lower())], "history": []}))
+        self.assertEqual(c.returncode, 0); self.assertEqual(self.get("alerts.json")["active"][0]["title"], "controlled by %s since then" % W.MASK)
+
+    def test_the_two_shortened_forms_are_written_without_it(self):
+        v, c = self.go(("alerts.json", {"active": [dict(stale_alert("x"), title="%s and %s" % (W.shorts(HELD_MS)[0], W.shorts(HELD_MS)[1]))], "history": []}))
+        self.assertEqual(c.returncode, 0); self.assertEqual(self.get("alerts.json")["active"][0]["title"], "%s and %s" % (W.MASK, W.MASK))
+
+    def test_a_file_written_with_the_escaped_ellipsis_is_cleaned_too(self):
+        open(os.path.join(self.w, "alerts.json"), "w").write(json.dumps({"active": [dict(stale_alert("x"), title=W.short(HELD_MS))], "history": []}))   # json.dumps writes …
+        self.assertIn("\\u2026", self.text("alerts.json")); self.run_cli(); self.run_cli("views"); self.assertEqual(self.run_cli("check")[0].returncode, 0)
+
+    def test_without_the_cleaning_check_stops_on_it(self):
+        self.put("alerts.json", {"active": [stale_alert(PATH % (OTHER_PROG, HELD_MS))], "history": []}); self.run_cli(); r = self.run_cli("check")[0]; self.assertEqual(r.returncode, 1); self.assertIn("alerts.json", r.stderr)
+
+    def test_an_alert_that_quotes_an_operation_of_the_queue_leaves_and_the_others_stay(self):
+        v, c = self.go(("alerts.json", {"active": [queue_alert(), stale_alert("x")], "history": []}))
+        self.assertEqual(c.returncode, 0); self.assertEqual([x["rule"] for x in self.get("alerts.json")["active"]], [stale_alert("")["rule"]])
+
+    def test_an_evidence_that_names_only_the_other_queue_stays_in_its_alert(self):
+        a = queue_alert(); a["evidence"] = [a["evidence"][1]]; v, c = self.go(("alerts.json", {"active": [a], "history": []}))
+        self.assertEqual(self.get("alerts.json")["active"][0]["evidence"][0]["id"], "example:%s:2" % OTHER_MS)
+
+    def test_the_items_of_the_review_queue_that_name_an_operation_leave_and_the_total_is_counted_again(self):
+        items = [{"text": "queued operation %s: %s" % (HELD_NAME, H_SIG)}, {"text": "a stale score"}, {"text": "queued operation %s" % OTHER_NAME}]
+        v, c = self.go(("review_queue.json", {"total": 3, "items": items}))
+        self.assertEqual(c.returncode, 0); d = self.get("review_queue.json"); self.assertEqual((d["total"], [i["text"] for i in d["items"]]), (2, ["a stale score", "queued operation %s" % OTHER_NAME]))
+
+    def test_the_bullets_of_the_review_page_that_name_an_operation_leave_and_a_line_that_names_the_multisig_is_written_without_it(self):
+        open(os.path.join(self.w, "review_queue.md"), "w").write("## Needs a person\n- **queued** %s: %s\n- **stale** a score\n- **other** %s\nsee %s\n" % (HELD_NAME, H_SIG, OTHER_NAME, HELD_MS))
+        self.run_cli(); self.run_cli("views"); self.assertEqual(self.run_cli("check")[0].returncode, 0)
+        self.assertEqual(self.text("review_queue.md"), "## Needs a person\n- **stale** a score\n- **other** %s\nsee %s\n" % (OTHER_NAME, W.MASK))
+
+    def test_the_actions_of_the_calibration_that_name_a_transaction_leave_and_the_count_follows(self):
+        lst = [{"kind": "Example proposal executed", "key": "solana:x", "via": HELD_NAME, "tx": H_TX}, {"kind": "admin changed", "key": "solana:x", "via": None, "tx": None}]
+        v, c = self.go(("score_series.json", {"series": {}, "calibration": {"actions": 2, "list": lst}}))
+        d = self.get("score_series.json")["calibration"]; self.assertEqual((c.returncode, d["actions"], [x["kind"] for x in d["list"]]), (0, 1, ["admin changed"]))
+
+    def test_an_operation_named_in_a_value_outside_any_list_is_written_without_it(self):
+        v, c = self.go(("review_queue.json", {"total": 0, "note": "see %s" % H_TX, "items": []}))
+        self.assertEqual((c.returncode, self.get("review_queue.json")["note"]), (0, "see " + W.MASK))
+
+    def test_an_entry_keyed_by_the_multisig_leaves_the_file(self):
+        v, c = self.go(("score_series.json", {"series": {"solana:" + HELD_MS.lower(): [1], "solana:other": [2]}}))
+        self.assertEqual((c.returncode, list(self.get("score_series.json")["series"])), (0, ["solana:other"]))
+
+    def test_a_key_inside_an_entry_is_written_without_it(self):
+        v, c = self.go(("alerts.json", {"active": [{"rule": "r", "counts": {HELD_MS: 2, "other": 1}}], "history": []}))
+        self.assertEqual((c.returncode, self.get("alerts.json")["active"][0]["counts"]), (0, {W.MASK: 2, "other": 1}))
+
+    def test_the_whole_name_of_the_queue_is_written_as_one_mark_not_around_its_shortened_form(self):
+        v, c = self.go(("alerts.json", {"active": [dict(stale_alert("x"), title=HELD_NAME)], "history": []}))
+        self.assertEqual((c.returncode, self.get("alerts.json")["active"][0]["title"]), (0, W.MASK))
+
+    def test_a_line_of_a_file_of_one_line_per_record_is_written_without_it_and_stays(self):
+        open(os.path.join(self.w, "trend.jsonl"), "w").write(json.dumps({"run_utc": "a", "note": HELD_MS}) + "\n" + json.dumps({"run_utc": "b"}) + "\n")
+        self.run_cli(); self.run_cli("views"); ls = self.text("trend.jsonl").split("\n"); self.assertEqual((len([l for l in ls if l]), json.loads(ls[0])["note"]), (2, W.MASK)); self.assertEqual(self.run_cli("check")[0].returncode, 0)
+
+    def test_the_structure_files_are_not_touched_by_the_default_pass(self):
+        self.go(("alerts.json", {"active": [stale_alert(PATH % (OTHER_PROG, HELD_MS))], "history": []})); self.assertEqual(self.text("second_opinion.json"), self.second)
+
+    def test_a_file_with_nothing_to_clean_is_not_written_again(self):
+        self.put("review_queue.json", {"total": 1, "items": [{"text": "a stale score"}]}); open(os.path.join(self.w, "review_queue.json"), "a").write("\n"); before = self.text("review_queue.json"); self.run_cli(); self.run_cli("views"); self.assertEqual(self.text("review_queue.json"), before)
+
+    def test_a_second_pass_changes_nothing_more(self):
+        self.go(("alerts.json", {"active": [queue_alert(), stale_alert(PATH % (OTHER_PROG, HELD_MS))], "history": []})); once = self.text("alerts.json"); self.run_cli("views"); self.assertEqual(self.text("alerts.json"), once)
+
+    def test_a_scored_program_in_the_list_is_not_written_without_its_address(self):
+        os.makedirs(os.path.join(self.w, "scores")); self.put("scores/s.json", {"targets": [{"target": OTHER_PROG}]})
+        self.env["WATCH_WITHHOLD"] = json.dumps({"addresses": [HELD_MS, OTHER_PROG]}); v, c = self.go(("alerts.json", {"active": [stale_alert("x")], "history": []}))
+        self.assertEqual((c.returncode, self.get("alerts.json")["active"][0]["target"]), (0, OTHER_PROG))
+
+    def test_a_published_file_that_cannot_be_read_stops_the_job_instead_of_publishing_it(self):
+        self.run_cli(); open(os.path.join(self.w, "alerts.json"), "w").write("{broken " + HELD_MS); v = self.run_cli("views")[0]
+        self.assertEqual(v.returncode, 2); self.assertNotIn(HELD_MS, v.stdout + v.stderr); self.assertIn("ALARM withhold", self.text("run.log"))
+
+    def test_without_a_list_nothing_is_cleaned(self):
+        self.put("alerts.json", {"active": [stale_alert(PATH % (OTHER_PROG, HELD_MS))], "history": []}); before = self.text("alerts.json")
+        self.run_cli(env={"PATH": os.environ.get("PATH", ""), "WATCH_WITHHOLD_PRIVATE": os.path.join(self.d, "none.json")}); self.run_cli("views", env={"PATH": os.environ.get("PATH", ""), "WATCH_WITHHOLD_PRIVATE": os.path.join(self.d, "none.json")}); self.assertEqual(self.text("alerts.json"), before)
+
+    def test_the_message_of_a_run_that_cleaned_something_names_nothing(self):
+        self.put("alerts.json", {"active": [queue_alert()], "history": []}); self.run_cli(); v = self.run_cli("views")[0]; self.assertEqual((v.stdout, v.stderr), ("", ""))
+
+
+class TestCarriedFilesEvents(EventsBase):
+    def test_the_event_log_is_never_rewritten_by_the_cleaning(self):
+        chain_append(self.ev, [ev("admin_change", HELD_PROG, "example %s" % W.short(HELD_MS))]); self.sign(verify_chain.check(self.ev)["head"]); self.append([ev("move", OTHER_PROG)])
+        self.run_cli(); before = self.text("events.jsonl"); v = self.run_cli("views")[0]; self.assertEqual((v.returncode, self.text("events.jsonl")), (0, before)); self.assertEqual(self.run_cli("check")[0].returncode, 0)
+
+
 if __name__ == "__main__":
     unittest.main()

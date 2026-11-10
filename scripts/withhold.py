@@ -21,7 +21,10 @@ is computed without them; (2) takes out of watch/events.jsonl the lines THIS run
 lines that stay again (the lines of earlier runs are never touched: they are what the signature of the previous run pins); (3) removes from watch/second_opinion.json and
 second_opinion.md the per-run lines `upgraded` and `changed` of those programs; (4) removes from the files that carry state from run to run (alerts.json history, warning_ledger.json,
 digest.md) what earlier runs wrote about the queues. The full records, lines and fields go to FILE (a runner file, never under watch/) for the private watch. Nothing is printed.
-views: drops from the Atom feeds and paper_trail.json what names a string left out, and says `not_shown` in the files whose counts would otherwise read 0.
+views: drops from the Atom feeds and paper_trail.json what names a string left out, and says `not_shown` in the files whose counts would otherwise read 0. It then reads every published file the way `check` does
+and cleans what `check` would refuse: in a JSON file an entry (of a list) that names an operation of a queue left out is dropped, and any other string that names one of the strings left out (an address in a
+sentence, in a path, in a key, in its shortened form, in any case) is written without it; in a text file the line is dropped (a bullet that names an operation) or written without it. An alert that quotes the path of control of a program
+(`reading.second_opinion.path`) and names a string left out loses that one field, with no mark in its place.
 Fails closed: with a list present, a crash, an unreadable queue file or an unknown head of the event log stops the job and writes one ALARM line to watch/run.log (the private alarm).
 With the list absent or unreadable the Watch publishes as before and the same alarm says so; it names nobody.
 A configured address that is a scored target (a program the oracle tracks) stays a scored target. An address that is a controller (a multisig, a vault) stays in the files that state who
@@ -38,6 +41,7 @@ QUEUE_DIRS = ("feed",)
 UNPUBLISHED = ("alarm.md", "alerts_high.md", "alarm_state.json", "who_controls.json")
 EXT = (".json", ".jsonl", ".xml", ".md", ".ics", ".csv", ".prom")
 MAX_SECRET = 48000   # bytes: GitHub refuses a secret over 48 KB
+MASK = "(not shown)"   # what stands where a string left out was written in a published file
 ABSENT = "ALARM withhold list not read (WATCH_WITHHOLD is absent): the public view is written as before"
 INVALID = "ALARM withhold list not read (WATCH_WITHHOLD is not a valid list): the public view is written as before"
 NOHEAD = "ALARM withhold stopped the run (the head of the previous event log is unknown, so the event log cannot be written without the lines left out)"
@@ -304,6 +308,7 @@ def views(watch, private, cfg):
             d = _load(p)
             if isinstance(d, dict) and isinstance(d.get("index"), dict) and any(k.lower() in set(every) for k in d["index"]):
                 d["index"] = {k: v for k, v in d["index"].items() if k.lower() not in set(every)}; _save(p, d)
+    scrub(watch, priv, cfg)
     fams = sorted((cfg or {}).get("categories") or ())
     if not fams: return 0
     chains = {str(r.get("chain")) for r in priv["queues"] if str(r.get("family")) in fams and r.get("chain")}
@@ -341,29 +346,106 @@ def new_event_lines(watch):
     return None if idx is None else lines[idx + 1:]
 
 
+def _sets(watch, priv, cfg):
+    """(operation strings, identity strings, other strings left out), lowercased: the three kinds of string `check` looks for and `scrub` removes. The other strings are the configured addresses that are not
+    scored targets, with their shortened forms."""
+    ident, ops = tokens(priv["queues"])
+    terms = [t for t in ((cfg or {}).get("addresses") or ()) if len(t) >= 8 and t not in targets(watch)]
+    return [t.lower() for t in ops], [t.lower() for t in ident], [x.lower() for t in terms for x in [t] + shorts(t)]
+
+
+def _looked_for(rel, ops, ident, terms, level, strict):
+    """The strings a published file must not name, by its place: (operation strings, strings that name a queue or an address)."""
+    if level == "count" and rel == "pending_ops.json": return ops, []   # the queue is listed there on purpose, with its identity and a number
+    queue_class = rel in QUEUE_FILES or rel.split("/")[0] in QUEUE_DIRS or rel == "events.jsonl"
+    names = ([] if is_structure(rel) and not strict else list(ident)) + (list(terms) if strict or queue_class else [])
+    return ops, names
+
+
+def _plain_of(p):
+    try: return plain(open(p, encoding="utf-8", errors="ignore").read())
+    except OSError: return None
+
+
+def _text_of(p, rel, new):
+    t = _plain_of(p)
+    return plain("\n".join(new)) if rel == "events.jsonl" and t is not None else t
+
+
 def check(watch, private, cfg=None, strict=False):
     """Published files that still name a string left out. Operation strings of a queue left out: nowhere. The identity of a queue that names a configured address: nowhere but the structure files
     (and, at level count, its own record). A configured address that is not a scored target: in the queue files and the new event lines; with strict, in every file."""
     priv = _private_load(private) if private else {"queues": []}; cfg = _config_of(cfg, priv); recs = priv["queues"]
     if not recs and not cfg: return []
-    ident, ops = tokens(recs); ident = [t.lower() for t in ident]; ops = [t.lower() for t in ops]
-    level = cfg["level"] if cfg else "hide"
-    terms = [t for t in ((cfg or {}).get("addresses") or ()) if len(t) >= 8 and t not in targets(watch)]; terms = [x.lower() for t in terms for x in [t] + shorts(t)]
+    ops, ident, terms = _sets(watch, priv, cfg); level = cfg["level"] if cfg else "hide"
     new = new_event_lines(watch); bad = []
     for p in published(watch):
         rel = os.path.relpath(p, watch).replace(os.sep, "/")
-        try: t = plain(open(p, encoding="utf-8", errors="ignore").read())
-        except OSError: continue
-        if rel == "events.jsonl":
-            if new is None: continue   # the head is unknown: the lines of earlier runs cannot be told from this run's
-            t = plain("\n".join(new))
-        if level == "count" and rel == "pending_ops.json":   # the queue is listed there on purpose, with its identity and a number
-            hit = any(x in t for x in ops)
-        else:
-            queue_class = rel in QUEUE_FILES or rel.split("/")[0] in QUEUE_DIRS or rel == "events.jsonl"
-            hit = any(x in t for x in ops) or (not (is_structure(rel) and not strict) and any(x in t for x in ident)) or ((strict or queue_class) and any(x in t for x in terms))
-        if hit: bad.append(rel)
+        if rel == "events.jsonl" and new is None: continue   # the head is unknown: the lines of earlier runs cannot be told from this run's
+        t = _text_of(p, rel, new)
+        if t is None: continue
+        o, n = _looked_for(rel, ops, ident, terms, level, strict)
+        if any(x in t for x in o + n): bad.append(rel)
     return sorted(bad)
+
+
+def _mask(text, words):
+    """`text` without any of `words` (any case, longest first)."""
+    return re.sub("|".join(re.escape(w) for w in sorted(words, key=len, reverse=True)), MASK, text, flags=re.I) if words else text
+
+
+def _naming(v, words):
+    return any(w in plain(json.dumps(v, ensure_ascii=False)) for w in words)
+
+
+def _clean_json(v, ops, names, in_list=False):
+    """A copy of `v` without what names a string left out. The first list met on the way down is a list of entries (alerts, items, actions, points): an entry that names an operation is dropped, and the
+    number that counted the list (`total`, `count`, `actions`) is counted again; everywhere else a string is written without the words, and so is a key."""
+    words = ops + names
+    if isinstance(v, str): return _mask(v, [w for w in words if w in plain(v)])
+    if isinstance(v, list): return [_clean_json(x, ops, names, True) for x in v if in_list or not _naming(x, ops)]
+    if not isinstance(v, dict): return v
+    out, shrunk = {}, []   # ponytail: only `total`, `count` and `actions` are counted again; a file with other counts (by_priority, by_band) is written again by its own step after `retain`, this is the net under it
+    for k, x in v.items():
+        hit = [w for w in words if w in plain(str(k))]
+        if hit and not in_list: continue   # an entry keyed by a string left out
+        if k == "second_opinion" and isinstance(x, dict) and isinstance(x.get("path"), str) and any(w in plain(x["path"]) for w in words):
+            x = {kk: vv for kk, vv in x.items() if kk != "path"}   # taken out, not written with a mark: a mark would show where the string was
+        y = _clean_json(x, ops, names, in_list); out[_mask(str(k), hit) if hit else k] = y
+        if isinstance(x, list) and len(y) != len(x): shrunk.append((len(x), len(y)))
+    for c in ("total", "count", "actions"):
+        for was, now in shrunk:
+            if v.get(c) == was and c in out: out[c] = now
+    return out
+
+
+def _clean_text(text, ops, names, drop):
+    """A text file without what names a string left out: a bullet about an operation goes (not in a file of one line per record), any other line is written without the words."""
+    out = []
+    for l in text.split("\n"):
+        low = plain(l)
+        if drop and l.lstrip().startswith(("- ", "* ")) and any(o in low for o in ops): continue
+        if any(w in low for w in ops + names): l = _mask(l.replace("\\u2026", "…"), ops + names)
+        out.append(l)
+    return "\n".join(out)
+
+
+def scrub(watch, priv, cfg):
+    """What `check` would refuse, cleaned: see `views`. Only the files `check` refuses are read again and written again."""
+    if not priv["queues"] and not cfg: return
+    ops, ident, terms = _sets(watch, priv, cfg); level = cfg["level"] if cfg else "hide"
+    for p in published(watch):
+        rel = os.path.relpath(p, watch).replace(os.sep, "/")
+        if rel in ("events.jsonl", "pending_ops.json", "pending_ops.ics"): continue   # the log is never rewritten here, the queue file is cleaned by `retain`
+        o, n = _looked_for(rel, ops, ident, terms, level, False)
+        if not (o or n) or not any(x in (_plain_of(p) or "") for x in o + n): continue
+        if p.endswith(".json"):
+            d = _load(p)
+            if d is None: raise ValueError("a published JSON file could not be read")
+            _save(p, _clean_json(d, o, n))
+        else:
+            text = _clean_text(open(p, encoding="utf-8", errors="ignore").read(), o, n, not p.endswith(".jsonl"))   # read before the file is opened for writing
+            open(p, "w", encoding="utf-8").write(text)
 
 
 def main(argv=None):

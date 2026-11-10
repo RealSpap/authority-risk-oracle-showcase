@@ -378,8 +378,68 @@ class TestPublicTexts(unittest.TestCase):
         self.assertGreaterEqual(len(steps), 4); self.assertEqual([s[:60] for s in steps if WORDS.search(s)], [])
     def test_the_schema_entries_are_neutral(self): self.assertIsNone(WORDS.search(json.dumps({k: v for k, v in json.load(open(os.path.join(ROOT, "watch", "schema", "pending_ops.schema.json")))["properties"].items() if k == "not_shown"})))
     def test_the_commit_message_when_the_checkout_has_history_is_neutral(self):
-        r = subprocess.run(["git", "log", "-1", "--format=%B", "--", "scripts/withhold.py"], cwd=ROOT, capture_output=True, text=True)
-        if r.returncode == 0 and r.stdout.strip(): self.assertIsNone(WORDS.search(r.stdout))
+        m = introducing_message(ROOT, "scripts/withhold.py")
+        if m is None: self.skipTest("the checkout is shallow or has no history: the commit that added the file is not known")
+        self.assertIsNone(WORDS.search(m))
+
+
+def introducing_message(root, path):
+    """The message of the commit that added `path`, not of the last commit that touched it (later commits are about other things). None when the checkout is shallow: its oldest commit would be read as the
+    one that added every file. None too when there is no history."""
+    def git(*a): return subprocess.run(["git", *a], cwd=root, capture_output=True, text=True)
+    if git("rev-parse", "--is-shallow-repository").stdout.strip() != "false": return None
+    r = git("log", "--diff-filter=A", "--format=%B", "--", path)
+    return r.stdout if r.returncode == 0 and r.stdout.strip() else None
+
+
+STEMS = [w for w in WORDS.pattern.split("|") if w.isalpha()]; BAD = STEMS[0]   # the words of the list above, taken from it: a message with one of them is not neutral
+
+
+class TestIntroducingMessage(unittest.TestCase):
+    """The lookup above, on repositories made here: the commit that added the file is read, a later one is not, and a shallow clone is not guessed."""
+    def setUp(self):
+        self.d = tempfile.mkdtemp(); self.addCleanup(shutil.rmtree, self.d, True); self.r = os.path.join(self.d, "r"); os.makedirs(os.path.join(self.r, "scripts"))
+        self.git("init", "-q", "-b", "main")
+
+    def git(self, *a, cwd=None): return subprocess.run(["git", "-c", "user.name=t", "-c", "user.email=t@example.invalid", *a], cwd=cwd or self.r, capture_output=True, text=True, check=True)
+    def commit(self, text, message, name="withhold.py"):
+        open(os.path.join(self.r, "scripts", name), "w").write(text); self.git("add", "-A"); self.git("commit", "-q", "-m", message)
+
+    def test_the_commit_that_added_the_file_is_read_and_a_later_one_is_not(self):
+        self.commit("a", "Add the module"); self.commit("b", "Change the cadence, %s" % BAD); self.assertEqual(introducing_message(self.r, "scripts/withhold.py").strip(), "Add the module")
+
+    def test_a_message_of_the_commit_that_added_the_file_with_one_of_the_words_is_found(self):
+        for w in STEMS:
+            with self.subTest(word=w): self.commit(w, "Add the module, %s" % w, name="m_%s.py" % w.replace(" ", "_")); self.assertIsNotNone(WORDS.search(introducing_message(self.r, "scripts/m_%s.py" % w.replace(" ", "_"))))
+
+    def test_a_file_added_by_another_commit_than_the_last_one_is_read_by_its_own_commit(self):
+        self.commit("a", "Add the module"); self.commit("b", "Add another file", name="other.py"); self.assertEqual(introducing_message(self.r, "scripts/withhold.py").strip(), "Add the module")
+
+    def test_a_shallow_checkout_is_not_guessed(self):
+        self.commit("a", "Add the module"); self.commit("b", "Change the cadence, %s" % BAD); c = os.path.join(self.d, "c")
+        self.git("clone", "-q", "--depth", "1", "file://" + self.r, c, cwd=self.d); self.assertIsNone(introducing_message(c, "scripts/withhold.py"))
+
+    def test_the_list_of_words_is_not_emptied(self): self.assertGreaterEqual(len(STEMS), 6)
+
+    def outcome(self, root):
+        """(failures, errors, skips) of the test of the repository, run with `root` as the repository."""
+        from unittest import mock
+        res = unittest.TestResult()
+        with mock.patch.object(sys.modules[__name__], "ROOT", root): TestPublicTexts("test_the_commit_message_when_the_checkout_has_history_is_neutral").run(res)
+        return len(res.failures), len(res.errors), len(res.skipped)
+
+    def test_the_test_of_the_repository_passes_when_the_adding_commit_is_neutral_whatever_comes_after(self):
+        self.commit("a", "Add the module"); self.commit("b", "Change the cadence, %s" % BAD); self.assertEqual(self.outcome(self.r), (0, 0, 0))
+
+    def test_the_test_of_the_repository_fails_when_the_adding_commit_is_not_neutral(self): self.commit("a", "Add the module, %s" % BAD); self.assertEqual(self.outcome(self.r), (1, 0, 0))
+
+    def test_the_test_of_the_repository_is_skipped_on_a_shallow_checkout(self):
+        self.commit("a", "Add the module, %s" % BAD); self.commit("b", "Change the cadence"); c = os.path.join(self.d, "c")
+        self.git("clone", "-q", "--depth", "1", "file://" + self.r, c, cwd=self.d); self.assertEqual(self.outcome(c), (0, 0, 1))
+
+    def test_the_test_of_the_repository_is_skipped_without_a_repository(self): self.assertEqual(self.outcome(self.d), (0, 0, 1))
+    def test_a_folder_that_is_not_a_repository_has_no_message(self): self.assertIsNone(introducing_message(self.d, "scripts/withhold.py"))
+    def test_a_file_that_was_never_added_has_no_message(self): self.commit("a", "Add the module"); self.assertIsNone(introducing_message(self.r, "scripts/none.py"))
 
 
 class TestPublicView(Base):

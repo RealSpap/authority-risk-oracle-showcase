@@ -15,12 +15,16 @@ jobs:
     timeout-minutes: 30   # the job takes about 4 minutes: a hung step is cut instead of holding the runner for the 6 hour default
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262   # v4.4.0, pinned to its commit, as in the other workflows
+        with:
+          fetch-depth: 0   # a test reads the commit that added a file: with the default depth of 1 the one commit it sees is taken for the one that added everything
 
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065   # v5.6.0, pinned to its commit, as in the other workflows
         with:
           python-version: "3.11"
 
       - run: pip install -r scripts/requirements.txt
+
+      - run: pip install "PyYAML==6.0.2"   # scripts/tests/test_watch_cadence.py reads the workflow files with yaml.safe_load; the Watch itself does not need it, so it is not in requirements.txt
 
       - name: Run scripts/lib/tests (pure logic, no live RPC)
         run: python3 -m unittest discover -s scripts/lib/tests -v

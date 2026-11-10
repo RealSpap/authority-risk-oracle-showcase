@@ -1,7 +1,7 @@
 {
- "run_utc": "2026-11-09T06:42:41Z",
+ "run_utc": "2026-11-10T22:13:02Z",
  "targets": 202,
- "moves_recorded": 39,
+ "moves_recorded": 40,
  "series": {
   "arbitrum:0x3c3d99fd298f679dbc2cecd132b4ec4d0f5e6e72": [
    {
@@ -1821,7 +1821,7 @@
   ],
   "solana:JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4": [
    {
-    "t": "2026-11-02T21:52:51Z",
+    "t": "2026-11-10T21:46:36Z",
     "composite": 47,
     "from": "push",
     "method_break": false
@@ -1829,7 +1829,7 @@
   ],
   "solana:7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF": [
    {
-    "t": "2026-11-02T21:52:52Z",
+    "t": "2026-11-10T21:46:37Z",
     "composite": 56,
     "from": "push",
     "method_break": false
@@ -1837,7 +1837,7 @@
   ],
   "solana:7sf3tcWm58vhtkJMwuw2P3T6UBX7UE5VKxPMnXJUZ1Hn": [
    {
-    "t": "2026-11-02T21:52:58Z",
+    "t": "2026-11-10T21:46:43Z",
     "composite": 2,
     "from": "push",
     "method_break": false
@@ -1845,7 +1845,7 @@
   ],
   "solana:dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH": [
    {
-    "t": "2026-11-02T21:53:00Z",
+    "t": "2026-11-10T21:46:45Z",
     "composite": 48,
     "from": "push",
     "method_break": false
@@ -1853,7 +1853,7 @@
   ],
   "solana:CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK": [
    {
-    "t": "2026-11-02T21:53:01Z",
+    "t": "2026-11-10T21:46:47Z",
     "composite": 14,
     "from": "push",
     "method_break": false
@@ -1877,27 +1877,33 @@
     }
    },
    {
-    "t": "2026-11-02T21:53:02Z",
+    "t": "2026-11-10T21:46:48Z",
     "composite": 32,
     "from": "push",
     "method_break": true,
     "method_change": {
-     "from": "0x58be578c4ad50dbee98dc0666a228ec6d0b36c7dc71bb1506393477156219fa5",
-     "to": "0x0b14b26691934fd7c0fbb1f87efb539d99df562e1f78cdc2711db3a5ad9f18c2"
+     "from": "0x0b14b26691934fd7c0fbb1f87efb539d99df562e1f78cdc2711db3a5ad9f18c2",
+     "to": "0x35be9749403c55797c13ba37ef7df5a6291129781661a3125987ae151296a3c9"
     }
    }
   ],
   "solana:GKnHiWh3RRrE1zsNzWxRkomymHc374TvJPSTv2wPeYdB": [
    {
-    "t": "2026-11-02T21:53:04Z",
+    "t": "2026-11-10T21:49:51Z",
     "composite": 54,
-    "from": "push",
+    "from": "first",
+    "method_break": false
+   },
+   {
+    "t": "2026-11-10T21:49:51Z",
+    "composite": 62,
+    "from": "watch",
     "method_break": false
    }
   ],
   "solana:H4ND9aYttUVLFmNypZqLjZ52FYiGvdEB45GmwNoKEjTj": [
    {
-    "t": "2026-11-02T21:53:05Z",
+    "t": "2026-11-10T21:46:57Z",
     "composite": 46,
     "from": "push",
     "method_break": false
@@ -1931,19 +1937,19 @@
     }
    },
    {
-    "t": "2026-11-02T21:53:11Z",
+    "t": "2026-11-10T21:46:58Z",
     "composite": 55,
     "from": "push",
     "method_break": true,
     "method_change": {
-     "from": "0x58be578c4ad50dbee98dc0666a228ec6d0b36c7dc71bb1506393477156219fa5",
-     "to": "0x0b14b26691934fd7c0fbb1f87efb539d99df562e1f78cdc2711db3a5ad9f18c2"
+     "from": "0x0b14b26691934fd7c0fbb1f87efb539d99df562e1f78cdc2711db3a5ad9f18c2",
+     "to": "0x35be9749403c55797c13ba37ef7df5a6291129781661a3125987ae151296a3c9"
     }
    }
   ],
   "solana:ADyA8hdefvWN2dbGGWFotbzWxrAvLW83WG6QCVXvJKqw": [
    {
-    "t": "2026-11-02T21:53:13Z",
+    "t": "2026-11-10T21:47:00Z",
     "composite": 43,
     "from": "push",
     "method_break": false
@@ -1951,7 +1957,7 @@
   ],
   "solana:cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG": [
    {
-    "t": "2026-11-02T21:53:16Z",
+    "t": "2026-11-10T21:47:05Z",
     "composite": 2,
     "from": "push",
     "method_break": false
@@ -1959,7 +1965,7 @@
   ],
   "solana:2LecshUwdy9xi7meFgHtFJQNSKk4KdTrcpvaB56dP2NQ": [
    {
-    "t": "2026-11-02T21:53:18Z",
+    "t": "2026-11-10T21:47:07Z",
     "composite": 2,
     "from": "push",
     "method_break": false
@@ -1967,7 +1973,7 @@
   ],
   "solana:8szGkuLTAux9XMgZ2vtY39jVSowEcpBfFfD8hXSEqdGC": [
    {
-    "t": "2026-11-02T21:53:19Z",
+    "t": "2026-11-10T21:47:09Z",
     "composite": 45,
     "from": "push",
     "method_break": false
@@ -1975,7 +1981,7 @@
   ],
   "solana:So1endDq2YkqhipRh3WViPa8hdiSpxWy6z3Z6tMCpAo": [
    {
-    "t": "2026-11-02T21:53:23Z",
+    "t": "2026-11-10T21:47:12Z",
     "composite": 2,
     "from": "push",
     "method_break": false
@@ -1983,7 +1989,7 @@
   ],
   "solana:SPoo1Ku8WFXoNDMHPsrGSTSG1Y47rzgn41SLUNakuHy": [
    {
-    "t": "2026-11-02T21:53:26Z",
+    "t": "2026-11-10T21:47:14Z",
     "composite": 54,
     "from": "push",
     "method_break": false
@@ -1991,7 +1997,7 @@
   ],
   "solana:Jito4APyf642JPZPx3hGc6WWJ8zPKtRbRs4P815Awbb": [
    {
-    "t": "2026-11-02T21:53:27Z",
+    "t": "2026-11-10T21:47:15Z",
     "composite": 54,
     "from": "push",
     "method_break": false
@@ -1999,7 +2005,7 @@
   ],
   "solana:5ocnV1qiCgaQR8Jb8xWnVbApfaygJ8tNoZfgPwsgx9kx": [
    {
-    "t": "2026-11-02T21:53:28Z",
+    "t": "2026-11-10T21:47:16Z",
     "composite": 46,
     "from": "push",
     "method_break": false
@@ -2007,7 +2013,7 @@
   ],
   "solana:SP12tWFxD9oJsVWNavTTBZvMbA6gkAmxtVgxdqvyvhY": [
    {
-    "t": "2026-11-02T21:53:29Z",
+    "t": "2026-11-10T21:47:18Z",
     "composite": 54,
     "from": "push",
     "method_break": false
@@ -2015,7 +2021,7 @@
   ],
   "solana:USXyiSTsPEWz55pSK7sZoUL79ntoVGQbaTDT57tH6bx": [
    {
-    "t": "2026-11-02T21:53:31Z",
+    "t": "2026-11-10T21:47:20Z",
     "composite": 35,
     "from": "push",
     "method_break": false
@@ -2023,7 +2029,7 @@
   ],
   "solana:Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo": [
    {
-    "t": "2026-11-02T21:53:34Z",
+    "t": "2026-11-10T21:47:22Z",
     "composite": 51,
     "from": "push",
     "method_break": false
@@ -2031,7 +2037,7 @@
   ],
   "solana:1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78": [
    {
-    "t": "2026-11-02T21:53:35Z",
+    "t": "2026-11-10T21:47:24Z",
     "composite": 70,
     "from": "push",
     "method_break": false
@@ -2039,7 +2045,7 @@
   ],
   "solana:HumaXepHnjaRCpjYTokxY4UtaJcmx41prQ8cxGmFC5fn": [
    {
-    "t": "2026-11-02T21:53:37Z",
+    "t": "2026-11-10T21:47:26Z",
     "composite": 66,
     "from": "push",
     "method_break": false
@@ -2047,7 +2053,7 @@
   ],
   "solana:FL3X2pRsQ9zHENpZSKDRREtccwJuei8yg9fwDu9UN69Q": [
    {
-    "t": "2026-11-02T21:53:38Z",
+    "t": "2026-11-10T21:47:27Z",
     "composite": 38,
     "from": "push",
     "method_break": false
@@ -2055,7 +2061,7 @@
   ],
   "solana:ExponentnaRg3CQbW6dqQNZKXp7gtZ9DGMp1cwC4HAS7": [
    {
-    "t": "2026-11-02T21:53:41Z",
+    "t": "2026-11-10T21:47:30Z",
     "composite": 51,
     "from": "push",
     "method_break": false
@@ -2063,7 +2069,7 @@
   ],
   "solana:FLASH6Lo6h3iasJKWDs2F8TkW2UKf3s15C8PMGuVfgBn": [
    {
-    "t": "2026-11-02T21:53:42Z",
+    "t": "2026-11-10T21:47:32Z",
     "composite": 39,
     "from": "push",
     "method_break": false
@@ -2071,7 +2077,7 @@
   ],
   "solana:sSo1iU21jBrU9VaJ8PJib1MtorefUV4fzC9GURa2KNn": [
    {
-    "t": "2026-11-02T21:53:45Z",
+    "t": "2026-11-10T21:47:34Z",
     "composite": 40,
     "from": "push",
     "method_break": false
@@ -2442,36 +2448,18 @@
  },
  "calibration": {
   "window_days": 14,
-  "actions": 26,
-  "excluded_undecoded": 1,
+  "actions": 18,
+  "excluded_undecoded": 0,
   "excluded_other_target": 0,
-  "under_40": 9,
+  "under_40": 4,
   "by_band": {
-   "critical": 1,
-   "weak": 8,
-   "moderate": 9,
-   "decent": 7,
+   "critical": 0,
+   "weak": 4,
+   "moderate": 8,
+   "decent": 5,
    "strong": 1
   },
   "list": [
-   {
-    "kind": "upgrade executed (Squads proposal)",
-    "key": "solana:7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF",
-    "t": "2026-10-26T17:11:59Z",
-    "via": "Squads v4 multisig 6hhB\u2026fQbM (5-of-10, time lock 86400 s), found by the independent reader (1 tracked program)",
-    "tx": "7HsbszYYeE5wGVNaUPJtzbrareWzCAr8ZxP78Jn52zSZ",
-    "score_then": 56,
-    "band_then": "moderate"
-   },
-   {
-    "kind": "upgrade executed",
-    "key": "solana:7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF",
-    "t": "2026-10-26T19:06:50Z",
-    "via": "slot 461744249",
-    "tx": null,
-    "score_then": 56,
-    "band_then": "moderate"
-   },
    {
     "kind": "upgrade executed",
     "key": "solana:JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
@@ -2489,33 +2477,6 @@
     "tx": null,
     "score_then": 81,
     "band_then": "strong"
-   },
-   {
-    "kind": "Squads proposal executed",
-    "key": "solana:2LecshUwdy9xi7meFgHtFJQNSKk4KdTrcpvaB56dP2NQ",
-    "t": "2026-11-02T03:10:14Z",
-    "via": "Squads v4 multisig BQsD\u2026iEjF (5-of-13, time lock 86400 s), found by the independent reader (1 tracked program)",
-    "tx": "2h351R7Zu84xcjZknffkVPCN1xPYSsX4jpWUKQUuSeZP",
-    "score_then": 2,
-    "band_then": "critical"
-   },
-   {
-    "kind": "upgrade executed (Squads proposal)",
-    "key": "solana:H4ND9aYttUVLFmNypZqLjZ52FYiGvdEB45GmwNoKEjTj",
-    "t": "2026-11-04T02:19:01Z",
-    "via": "Squads v4 multisig AxkJ\u2026UUSm (4-of-8, time lock 86400 s), found by the independent reader (1 tracked program)",
-    "tx": "4yrfWv5zTsJfGSz3a3HtzPe6g3u6buyZTbebVkHVsj4X",
-    "score_then": 46,
-    "band_then": "moderate"
-   },
-   {
-    "kind": "upgrade executed (Squads proposal)",
-    "key": "solana:1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78",
-    "t": "2026-11-04T04:52:42Z",
-    "via": "Squads v4 multisig C4aw\u2026SuPk (4-of-9, time lock 86400 s), found by the independent reader (1 tracked program)",
-    "tx": "Hrv2eKm6L8ehAq1GXBQUzpWt6YALHKBhtrKL73CchWzh",
-    "score_then": 70,
-    "band_then": "decent"
    },
    {
     "kind": "upgrade executed",
@@ -2536,24 +2497,6 @@
     "band_then": "decent"
    },
    {
-    "kind": "Squads proposal executed",
-    "key": "solana:4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8",
-    "t": "2026-11-04T15:18:12Z",
-    "via": "Squads v4 multisig 7FCP\u2026mvHk (7-of-15, time lock 0 s), found by the independent reader (1 tracked program)",
-    "tx": "66gsynJhTjD2CQ88t9j6dUDKfwHsc85FSvxvCvJceiLz",
-    "score_then": 32,
-    "band_then": "weak"
-   },
-   {
-    "kind": "upgrade executed (Squads proposal)",
-    "key": "solana:4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8",
-    "t": "2026-11-04T16:02:21Z",
-    "via": "Squads v4 multisig 7FCP\u2026mvHk (7-of-15, time lock 0 s), found by the independent reader (1 tracked program)",
-    "tx": "EPuxo6r3L6u8vrbu1PRwhHu9RQ9NzxT55EqJg1V8ww4g",
-    "score_then": 32,
-    "band_then": "weak"
-   },
-   {
     "kind": "admin changed (independent read)",
     "key": "solana:4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8",
     "t": "2026-11-04T20:18:29Z",
@@ -2572,15 +2515,6 @@
     "band_then": "weak"
    },
    {
-    "kind": "Squads proposal executed",
-    "key": "solana:4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8",
-    "t": "2026-11-06T15:24:14Z",
-    "via": "Squads v4 multisig 7FCP\u2026mvHk (7-of-15, time lock 0 s), found by the independent reader (1 tracked program)",
-    "tx": "GiDrhFAJGHpfyfTtJexnJ61tboqTdJdSANTBGehERC1S",
-    "score_then": 32,
-    "band_then": "weak"
-   },
-   {
     "kind": "admin changed (independent read)",
     "key": "solana:4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8",
     "t": "2026-11-06T19:37:22Z",
@@ -2588,24 +2522,6 @@
     "tx": null,
     "score_then": 32,
     "band_then": "weak"
-   },
-   {
-    "kind": "upgrade executed (Squads proposal)",
-    "key": "solana:FL3X2pRsQ9zHENpZSKDRREtccwJuei8yg9fwDu9UN69Q",
-    "t": "2026-11-06T21:28:34Z",
-    "via": "Squads v4 multisig 8Sr4\u2026zHQq (3-of-8, time lock 0 s), found by the independent reader (1 tracked program)",
-    "tx": "FTVUbgvjPKnzcPoYuBxWCA3TBBERL7ujBMws5La7WFo9",
-    "score_then": 38,
-    "band_then": "weak"
-   },
-   {
-    "kind": "upgrade executed (Squads proposal)",
-    "key": "solana:1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78",
-    "t": "2026-11-07T04:57:25Z",
-    "via": "Squads v4 multisig C4aw\u2026SuPk (4-of-9, time lock 86400 s), found by the independent reader (1 tracked program)",
-    "tx": "6QK8PJ2hFHKcYwoDqfhRUX9JReY1u9Q2FZYw4QRvPj37",
-    "score_then": 70,
-    "band_then": "decent"
    },
    {
     "kind": "upgrade executed",
@@ -2686,6 +2602,24 @@
     "via": "arbitrum timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
     "tx": "0x1f5665ed5ff54a4b3765d91d3afc91ac8a4e27dcd3bd96c49200bac9ed62332e",
     "score_then": 59,
+    "band_then": "moderate"
+   },
+   {
+    "kind": "timelock op queued (parameter change)",
+    "key": "arbitrum:0x52aa899454998be5b000ad077a46bbe360f4e497",
+    "t": "2026-11-09T18:37:59Z",
+    "via": "arbitrum timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
+    "tx": "0x834e41bcfb2c49ef49d3f3e8c9570cccf2ca539bdb8882209d9d219e5dc50ef6",
+    "score_then": 59,
+    "band_then": "moderate"
+   },
+   {
+    "kind": "upgrade executed",
+    "key": "robinhood:0x14b107cf534239c59571b066cb6497a321da897c",
+    "t": "2026-11-10T22:06:24Z",
+    "via": "0x08fc299b608c6c37a601834152e2eab986d4db34",
+    "tx": null,
+    "score_then": 40,
     "band_then": "moderate"
    }
   ],

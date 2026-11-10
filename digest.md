@@ -3,7 +3,6 @@
 ## Needs a person, 2026-11-03T22:24:51Z: 25 item(s) (priority 1: 3, priority 2: 19, priority 3: 3); oldest 24.0 d
 
 ### Something happened: read before trusting the score (3)
-- **queued operation executable within 48 h** solana 1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78 (0.3 d): program upgrade: Squads proposal #1029: Upgrade of program 1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78 via Squads v4 multisig C4aw…SuPk (4-of-9, time lock 86400 s), found by the independent reader (1 tracked program). To do: read the call before it lands. (pending_ops.json)
 - **admin transfer in flight** robinhood 0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d (0.0 d): 0x9db4…1a53 designated (pendingOwner() on the contract (Ownable2Step), a contract). To do: identify the designated admin; when it accepts, the admin read changes. (second_opinion.json pending_admin)
 - **methodology changed** ethereum-l1  (0.0 d): Ethereum L1 (Sepolia): 0xf1bcef2ca2 -> 0xa37efe0973 on 38 target(s). To do: expected after a release of the scorer; otherwise a push by a key that should not hold the updater role. (methodology.json)
 
@@ -51,24 +50,9 @@
 ## Timelock queue
 - **executable or waiting** Compound Governance Timelock: 0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6 sendMessage(address,bytes,uint32) ready at 2026-11-05 21:49Z (waiting)
 - **executable or waiting** ethereum-l1 timelock 0x2386…1f4c, found by the independent reader (1 tracked contract): 0x2386DC45AdDed673317eF068992F19421B481F4c fulfillBasicOrder_efficient_6GL6yc((address,uint256,uint256,address,address,address,uint256,uint256,uint8,uint256,uint256,bytes32,uint256,bytes32,bytes32,uint256,(uint256,address)[],bytes)) ready at 2026-11-03 23:20Z (waiting)
-- **executable or waiting** Squads v4 multisig C4aw…SuPk (4-of-9, time lock 86400 s), found by the independent reader (1 tracked program): 1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78 (no selector) ready at 2026-11-04 04:42Z (waiting)
 - cleared, queued 2026-10-31: Compound Governance Timelock -> 0x309a862bbC1A00e45506cB8A802D1ff10004c8C0 setProposalGuardian((address,uint96))
 - cleared, queued 2026-10-25: ethereum-l1 timelock 0x2386…1f4c, found by the independent reader (1 tracked contract) -> 0x2386DC45AdDed673317eF068992F19421B481F4c fulfillBasicOrder_efficient_6GL6yc((address,uint256,uint256,address,address,address,uint256,uint256,uint8,uint256,uint256,bytes32,uint256,bytes32,bytes32,uint256,(uint256,address)[],bytes))
 - cleared, queued 2026-10-30: plasma timelock 0xabd3…5072, found by the independent reader (1 tracked contract) -> 0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34 setRateLimits((uint32,uint256,uint256)[])
-- cleared, queued 2026-10-26: Squads v4 multisig 6hhB…fQbM (5-of-10, time lock 86400 s), found by the independent reader (1 tracked program) -> KvauGMspG5k6rtzrqqn7WNn3oZdyKqLKwK2XWQ8FLjd (no selector)
-- cleared, queued 2026-10-26: Squads v4 multisig 6hhB…fQbM (5-of-10, time lock 86400 s), found by the independent reader (1 tracked program) -> verifycLy8mB96wd9wqq3WDXQwM4oU6r42Th37Db9fC (no selector)
-- cleared, queued 2026-10-26: Squads v4 multisig 6hhB…fQbM (5-of-10, time lock 86400 s), found by the independent reader (1 tracked program) -> 7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF (no selector)
-- cleared, queued 2026-10-30: Squads v4 multisig 7qip…cJtM (4-of-7, time lock 3600 s), found by the independent reader (1 tracked program) -> vELoC1audYbSYVRXn1vPaV8Axoa9oU6BYmNGZZBDZ1P (no selector)
-- cleared, queued 2026-11-02: Squads v4 multisig 7qip…cJtM (4-of-7, time lock 3600 s), found by the independent reader (1 tracked program) -> vELoC1audYbSYVRXn1vPaV8Axoa9oU6BYmNGZZBDZ1P (no selector)
-- cleared, queued 2026-11-03: Squads v4 multisig 7qip…cJtM (4-of-7, time lock 3600 s), found by the independent reader (1 tracked program) -> ProgM6JCCvbYkfKqJYHePx4xxSUSqJp7rh8Lyv7nk7S (no selector)
-- cleared, queued 2026-11-03: Squads v4 multisig 7qip…cJtM (4-of-7, time lock 3600 s), found by the independent reader (1 tracked program) -> dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH (no selector)
-- cleared, queued 2026-10-21: Squads v4 multisig AEb1…dJGf (3-of-7, time lock 86400 s), found by the independent reader (1 tracked program) -> USXyiSTsPEWz55pSK7sZoUL79ntoVGQbaTDT57tH6bx (no selector)
-- cleared, queued 2026-11-02: Squads v4 multisig BQsD…iEjF (5-of-13, time lock 86400 s), found by the independent reader (1 tracked program) -> 2LecshUwdy9xi7meFgHtFJQNSKk4KdTrcpvaB56dP2NQ (no selector)
-- cleared, queued 2026-10-21: Squads v4 multisig CxnE…unP1 (4-of-7, time lock 600 s), found by the independent reader (1 tracked program) -> Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo (no selector)
-- cleared, queued 2026-10-28: Squads v4 multisig J3mJ…vG8P (4-of-6, time lock 43200 s), found by the independent reader (1 tracked program) -> GBZnPvzLWHjmCgkE3hYB8MmyMjmoq2HAyuseNBwtxFTg (no selector)
-- cleared, queued 2026-10-22: Squads v4 multisig tr8r…Hb4u (3-of-4, time lock 0 s), found by the independent reader (1 tracked program) -> CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK (no selector)
-- cleared, queued 2026-10-31: Squads v4 multisig tr8r…Hb4u (3-of-4, time lock 0 s), found by the independent reader (1 tracked program) -> CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C (no selector)
-- cleared, queued 2026-11-03: Squads v4 multisig uGLh…r7gX (5-of-9, time lock 43200 s), found by the independent reader (1 tracked program) -> EVQ4s1b6N1vmWFDv8PRNc77kufBP8HcrSNWXQAhRsJq9 (no selector)
 
 ## Code behind tracked targets
 - [CHANGED] Robinhood Chain:0x94bab9693ba2f6358507effcbd372b0660afff9d
@@ -78,13 +62,9 @@
 - 15 target(s) added since that snapshot are not fingerprinted yet (informational)
 
 ## Solana Squads v4 multisigs (members, threshold, time lock)
-- [CHANGED] 51smH7pBDKJDgmVnVks3gMWaPQFfmQ5s4Fc223yHcjuH (EXPONENT_MS): time lock (s) 14400 -> 36000
 - [CHANGED] 5JZFPx6Qkg9PAgYMn9wHWirsiEQBfeJuE667MWeRBLPN (REWARD_SUPER_MS): member added 86mC…iMLg (permissions 6); member added CjEM…LZKY (permissions 7); member added FbcW…vHW7 (permissions 7); member removed 6Li1…ueL9; member removed BWyV…1w9C
 - [CHANGED] 5Y93cxqp8rGtjDhxGkehewfhFdxLkrCfPDWookCGeASF (JL_ADMIN_MS, ADMIN_MS): member removed 4Sqa…4Jqp; threshold 5 -> 4
 - [CHANGED] 7VVPGwvWh37LyhL1tVm6pGUzm3S1u6p17H6ttT9ZEFex (DELEGATE_MS): member added DAk1…KiMf (permissions 7)
-- [CHANGED] AEb1u8FK8EuXLcPtprCy8s4NkqBNoP5mfbuEEop2dJGf (SOLSTICE_MS): member added 5kVC…SK1G (permissions 7); member added GG2k…Ub8E (permissions 7)
-- [CHANGED] BQsDWkL417U4tVE2sDnPks469pKdm6YzFgKH77doiEjF (UPGRADE_MS): member added 6M7B…99HV (permissions 2); member added CjEM…LZKY (permissions 5); member removed 2NfC…7gXb; member removed 9FtD…ZMn4
-- [CHANGED] J3mJ3wz6xkVUk3T8qHnuAYNxsRH3ixHsryYNZAU2vG8P (JL_UPGRADE_MS, UPGRADE_MS): member added 5tjC…LKzv (permissions 7); member removed 8BR8…rz9H
 
 ## Signer accounts (plain EOA, EIP-7702 delegation, contract)
 - [CHANGED] base:0x8769…5838: eoa -> contract

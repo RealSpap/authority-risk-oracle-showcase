@@ -21,39 +21,152 @@
   "causes": {
    "type": "object",
    "additionalProperties": {
-    "type": "object",
-    "required": [
-     "label",
-     "contracts",
-     "tvl_usd",
-     "targets"
-    ],
-    "properties": {
-     "label": {
-      "type": "string"
-     },
-     "contracts": {
-      "type": "integer"
-     },
-     "with_tvl": {
-      "type": "integer"
-     },
-     "tvl_usd": {
-      "type": "number"
-     },
-     "share_of_tracked": {
-      "type": [
-       "number",
-       "null"
-      ]
-     },
-     "targets": {
-      "type": "array",
-      "items": {
-       "type": "string"
+    "oneOf": [
+     {
+      "type": "object",
+      "required": [
+       "label",
+       "contracts",
+       "tvl_usd",
+       "targets"
+      ],
+      "properties": {
+       "label": {
+        "type": "string"
+       },
+       "contracts": {
+        "type": "integer"
+       },
+       "with_tvl": {
+        "type": "integer"
+       },
+       "tvl_usd": {
+        "type": "number"
+       },
+       "share_of_tracked": {
+        "type": [
+         "number",
+         "null"
+        ]
+       },
+       "targets": {
+        "type": "array",
+        "items": {
+         "type": "string"
+        }
+       }
       }
+     },
+     {
+      "type": "object",
+      "required": [
+       "status",
+       "retired_on",
+       "label",
+       "reason",
+       "measured_error"
+      ],
+      "properties": {
+       "status": {
+        "enum": [
+         "retired"
+        ]
+       },
+       "retired_on": {
+        "type": "string"
+       },
+       "label": {
+        "type": "string"
+       },
+       "reason": {
+        "type": "string"
+       },
+       "measured_error": {
+        "type": "object",
+        "required": [
+         "partial",
+         "threshold",
+         "rate_range",
+         "owner_or_upgrade",
+         "anywhere"
+        ],
+        "properties": {
+         "partial": {
+          "type": "boolean"
+         },
+         "threshold": {
+          "type": "number"
+         },
+         "rate_range": {
+          "type": "array",
+          "items": {
+           "type": "number"
+          }
+         },
+         "replayed_on": {
+          "type": "string"
+         },
+         "owner_or_upgrade": {
+          "type": "object",
+          "required": [
+           "definition",
+           "wrong",
+           "replayed",
+           "unreadable"
+          ],
+          "properties": {
+           "definition": {
+            "type": "string"
+           },
+           "wrong": {
+            "type": "integer"
+           },
+           "replayed": {
+            "type": "integer"
+           },
+           "unreadable": {
+            "type": "integer"
+           }
+          },
+          "additionalProperties": false
+         },
+         "anywhere": {
+          "type": "object",
+          "required": [
+           "definition",
+           "wrong",
+           "replayed",
+           "unreadable"
+          ],
+          "properties": {
+           "definition": {
+            "type": "string"
+           },
+           "wrong": {
+            "type": "integer"
+           },
+           "replayed": {
+            "type": "integer"
+           },
+           "unreadable": {
+            "type": "integer"
+           }
+          },
+          "additionalProperties": false
+         }
+        },
+        "additionalProperties": false
+       },
+       "replay_command": {
+        "type": [
+         "string",
+         "null"
+        ]
+       }
+      },
+      "additionalProperties": false
      }
-    }
+    ]
    }
   }
  }

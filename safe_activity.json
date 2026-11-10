@@ -1,30 +1,64 @@
 {
- "generated_utc": "2026-11-09T06:41:10Z",
+ "generated_utc": "2026-11-10T22:11:18Z",
  "wake_days": 14,
  "safes": 42,
  "read": 42,
- "woke": [],
+ "woke": [
+  "monad:0x8b73\u2026788b",
+  "robinhood:0x81b8\u202641bd"
+ ],
  "changes": [
   {
    "delta": 1,
-   "idle_days": 7.3,
+   "idle_days": 4.1,
    "woke": false,
-   "safe": "hyperliquid:0x18a8\u2026f8f1",
+   "safe": "ethereum-l1:0xfa77\u20266a66",
    "governs": [
-    "hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109",
-    "hyperliquid:0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec"
+    "ethereum-l1:0xc5f0f7b66764f6ec8c8dff7ba683102295e16409"
    ],
-   "previous_run": "2026-11-08T22:20:46Z"
+   "previous_run": "2026-11-09T06:41:10Z"
   },
   {
    "delta": 1,
-   "idle_days": 2.0,
-   "woke": false,
-   "safe": "robinhood:0x0eea\u2026dfd8",
+   "idle_days": 16.1,
+   "woke": true,
+   "safe": "monad:0x8b73\u2026788b",
    "governs": [
-    "robinhood:0x1ac9db4a2608ba45d6127b1737949b51bb54b7f3"
+    "monad:0xd651346d7c789536ebf06dc72ae3c8502cd695cc"
    ],
-   "previous_run": "2026-11-08T22:20:46Z"
+   "previous_run": "2026-11-09T06:41:10Z"
+  },
+  {
+   "delta": 1,
+   "idle_days": 1.9,
+   "woke": false,
+   "safe": "robinhood:0x6fa4\u20264657",
+   "governs": [
+    "robinhood:0xe51960f1b45f1c9fb6d166e6a884f866fc70433b"
+   ],
+   "previous_run": "2026-11-09T06:41:10Z"
+  },
+  {
+   "delta": 2,
+   "idle_days": 31.0,
+   "woke": true,
+   "safe": "robinhood:0x81b8\u202641bd",
+   "governs": [
+    "robinhood:0x4472c69d299382f8847ebce4fc6ed8e295510e3e",
+    "robinhood:0x925f92f055edb79c42b5d45e64a1b74143b90ea0",
+    "robinhood:0x9c3663fa9ab976e67b42939486ec4966cb41a0bb"
+   ],
+   "previous_run": "2026-11-09T06:41:10Z"
+  },
+  {
+   "delta": 2,
+   "idle_days": 5.6,
+   "woke": false,
+   "safe": "robinhood:0xfa20\u20266047",
+   "governs": [
+    "robinhood:0x0bfbcf9fa4f9c56b0f40a671ad40e0805a091865"
+   ],
+   "previous_run": "2026-11-09T06:41:10Z"
   }
  ],
  "never_executed": [
@@ -188,10 +222,10 @@
    "never_executed": false
   },
   "ethereum-l1:701af90d53a786de": {
-   "nonce": 2197,
+   "nonce": 2198,
    "observed_since": "2026-10-11T06:47:22Z",
-   "idle_since": "2026-11-06T19:42:11Z",
-   "last_moved": "2026-11-06T19:42:11Z",
+   "idle_since": "2026-11-10T22:11:18Z",
+   "last_moved": "2026-11-10T22:11:18Z",
    "governs": [
     "ethereum-l1:0xc5f0f7b66764f6ec8c8dff7ba683102295e16409"
    ],
@@ -222,10 +256,10 @@
    "never_executed": false
   },
   "monad:d104c354d63359d9": {
-   "nonce": 79,
+   "nonce": 80,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-10-25T18:57:02Z",
-   "last_moved": "2026-10-25T18:57:02Z",
+   "idle_since": "2026-11-10T22:11:18Z",
+   "last_moved": "2026-11-10T22:11:18Z",
    "governs": [
     "monad:0xd651346d7c789536ebf06dc72ae3c8502cd695cc"
    ],
@@ -354,10 +388,10 @@
    "never_executed": false
   },
   "robinhood:247592577c4194ab": {
-   "nonce": 20,
+   "nonce": 21,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-11-08T22:20:46Z",
-   "last_moved": "2026-11-08T22:20:46Z",
+   "idle_since": "2026-11-10T22:11:18Z",
+   "last_moved": "2026-11-10T22:11:18Z",
    "governs": [
     "robinhood:0xe51960f1b45f1c9fb6d166e6a884f866fc70433b"
    ],
@@ -376,9 +410,10 @@
    "never_executed": false
   },
   "robinhood:7a113b1bf8b8d018": {
-   "nonce": 12,
+   "nonce": 14,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-10-10T21:12:49Z",
+   "idle_since": "2026-11-10T22:11:18Z",
+   "last_moved": "2026-11-10T22:11:18Z",
    "governs": [
     "robinhood:0x4472c69d299382f8847ebce4fc6ed8e295510e3e",
     "robinhood:0x925f92f055edb79c42b5d45e64a1b74143b90ea0",
@@ -443,10 +478,10 @@
    "never_executed": false
   },
   "robinhood:d2822dd3a9cf19ee": {
-   "nonce": 53,
+   "nonce": 55,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-11-05T07:13:26Z",
-   "last_moved": "2026-11-05T07:13:26Z",
+   "idle_since": "2026-11-10T22:11:18Z",
+   "last_moved": "2026-11-10T22:11:18Z",
    "governs": [
     "robinhood:0x0bfbcf9fa4f9c56b0f40a671ad40e0805a091865"
    ],

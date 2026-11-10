@@ -1,9 +1,40 @@
 {
- "generated_utc": "2026-11-09T06:42:42Z",
+ "generated_utc": "2026-11-10T22:13:04Z",
  "compared": 202,
- "new_this_run": 0,
+ "new_this_run": 1,
  "first_seen_oracles": [],
  "moves": [
+  {
+   "run_utc": "2026-11-10T22:13:04Z",
+   "oracle": "solana-devnet",
+   "target": "GKnHiWh3RRrE1zsNzWxRkomymHc374TvJPSTv2wPeYdB",
+   "composite": [
+    54,
+    62
+   ],
+   "methodology_changed": false,
+   "axes": [
+    {
+     "axis": "adminKeyScore",
+     "label": "admin key",
+     "from": 60,
+     "to": 70,
+     "why": "admin power moved to a larger group (60 \u2192 70)"
+    },
+    {
+     "axis": "timelockScore",
+     "label": "timelock",
+     "from": 0,
+     "to": 13,
+     "why": "a delay before changes apply was added (0 \u2192 13)"
+    }
+   ],
+   "block": null,
+   "lastUpdated": [
+    1793656384,
+    1794347211
+   ]
+  },
   {
    "run_utc": "2026-11-03T01:13:39Z",
    "oracle": "robinhood-chain",

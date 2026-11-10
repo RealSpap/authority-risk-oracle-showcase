@@ -1,33 +1,33 @@
 {
  "schemaVersion": 1,
- "generated_utc": "2026-11-09T06:53:00Z",
+ "generated_utc": "2026-11-10T22:23:51Z",
  "rule_version": "1",
  "rule": "(version 1). For each target, every reason that applies is listed with its dimension, a state and an effect. A dimension takes the worst state\nof its reasons. For the status, a reason with effect \"decides\" counts for the state it carries, one with effect \"degrades\" counts for PARTIAL at most, one with\neffect \"info\" for nothing. The status is the first line that matches, from the top:\n\n  UNAVAILABLE  a dimension is unavailable: the oracle holding the target was not read this run, or the trust computation itself failed (trust_not_computed).\n  DISPUTED     a dimension is disputed: an open public dispute, or the independent reader disagrees and nobody has reviewed it.\n  STALE        a dimension is stale: the on-chain score is stale, a pause or Safe-activity state has not been readable for 3 days or more (or for a time that\n               is not known), the Watch run itself is older than 8 hours, the run or one of its input files is dated more than 10 minutes after the\n               present time (an age that is negative says nothing about now), or the independent reader's file is from an earlier run than the Watch's.\n  UNVERIFIED   the independent reader did not read this target (no record, unreadable, or its input file missing), there is nothing to read\n               independently (a native entity), or the score is dated later than the block it was read at (its staleness can never show).\n  PARTIAL      something was checked and something was not: an incomplete reading (modules or admin members not all read, signers not classified, an admin\n               the reader cannot contradict: a contract it did not resolve, a program-derived address), a method that differs or is fixed by decision, an\n               alert not delivered, an unsigned run, a signing key that is not pinned (or cannot be compared), a broken journal, an input file that could not\n               be read or is from an earlier run; the reasons say what.\n  VERIFIED     none of the above. It means the checks listed here passed: not that the contract is safe, and not that the score is right.\n\nA reason whose effect is \"info\" is listed and sets its dimension's state, but never moves the status (a contract with no pause getter, money that no\nsource figures). The eight dimensions: reading, coverage, method, signature, journal, notification, financial_exposure, surveillance.\nUnknown is never ok: an input that could not be read puts its dimension in \"unverified\", not in \"ok\".\n\nWHEN IT IS COMPUTED. trust.json is recomputed only when the Watch runs, right after the files of the run are written. If the Watch stops, the file that stays\npublished keeps its statuses: the rule cannot see its own silence. A consumer must compare `generated_utc` to the present time (the Watch runs every 6 hours;\na file older than about 8 hours says nothing about now).",
  "rule_sha256": "7db37a8c0621d00911c42e3079c304f895a9dd8309df5c607133528d9a5c82c6",
  "error": null,
  "targets": 202,
  "counts": {
-  "VERIFIED": 98,
-  "PARTIAL": 42,
+  "VERIFIED": 67,
+  "PARTIAL": 76,
   "STALE": 1,
-  "DISPUTED": 4,
-  "UNVERIFIED": 57,
+  "DISPUTED": 3,
+  "UNVERIFIED": 55,
   "UNAVAILABLE": 0
  },
  "dimension_counts": {
   "reading": {
-   "ok": 118,
+   "ok": 120,
    "not_applicable": 0,
-   "partial": 22,
-   "unverified": 57,
+   "partial": 23,
+   "unverified": 55,
    "stale": 1,
-   "disputed": 4,
+   "disputed": 3,
    "unavailable": 0
   },
   "coverage": {
-   "ok": 174,
+   "ok": 117,
    "not_applicable": 0,
-   "partial": 28,
+   "partial": 85,
    "unverified": 0,
    "stale": 0,
    "disputed": 0,
@@ -79,9 +79,9 @@
    "unavailable": 0
   },
   "surveillance": {
-   "ok": 180,
+   "ok": 101,
    "not_applicable": 0,
-   "partial": 22,
+   "partial": 101,
    "unverified": 0,
    "stale": 0,
    "disputed": 0,
@@ -93,7 +93,7 @@
   "signature_key": "pinned",
   "journal": "ok",
   "alert_channels": 1,
-  "watch_run_utc": "2026-11-09T06:23:57Z",
+  "watch_run_utc": "2026-11-10T21:49:51Z",
   "inputs_unread": []
  },
  "by_target": {
@@ -2215,22 +2215,28 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "native_entity",
      "dimension": "reading",
      "effect": "decides",
      "detail": "no contract code at this address: nothing for the independent reader to read"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2247,7 +2253,7 @@
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -2255,12 +2261,6 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "money_unknown",
      "dimension": "financial_exposure",
      "effect": "info",
@@ -2273,10 +2273,22 @@
      "detail": "no contract code at this address: nothing for the independent reader to read"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2293,7 +2305,7 @@
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "unverified",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -2301,12 +2313,6 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "money_unknown",
      "dimension": "financial_exposure",
      "effect": "info",
@@ -2319,10 +2325,22 @@
      "detail": "no contract code at this address: nothing for the independent reader to read"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2339,7 +2357,7 @@
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "unverified",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -2347,12 +2365,6 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "money_unknown",
      "dimension": "financial_exposure",
      "effect": "info",
@@ -2365,10 +2377,22 @@
      "detail": "no contract code at this address: nothing for the independent reader to read"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2385,7 +2409,7 @@
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "unverified",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -2393,12 +2417,6 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "money_unknown",
      "dimension": "financial_exposure",
      "effect": "info",
@@ -2411,10 +2429,22 @@
      "detail": "no contract code at this address: nothing for the independent reader to read"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2431,7 +2461,7 @@
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "unverified",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -2445,10 +2475,10 @@
      "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
     },
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
     },
     {
      "code": "pause_no_getter",
@@ -2463,10 +2493,10 @@
      "detail": "the score says one key does everything (10), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisi"
     },
     {
-     "code": "safe_signers_unclassified",
-     "dimension": "reading",
+     "code": "scan_gap",
+     "dimension": "surveillance",
      "effect": "degrades",
-     "detail": "2 signer(s) of the Safe could not be classified (key, Safe, timelock, contract)"
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2483,7 +2513,7 @@
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -2495,12 +2525,6 @@
      "dimension": "coverage",
      "effect": "degrades",
      "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
-    },
-    {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
     },
     {
      "code": "independent_read_unreadable",
@@ -2515,10 +2539,22 @@
      "detail": "no source figures the money behind this contract"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2535,7 +2571,7 @@
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "unverified",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -2549,22 +2585,28 @@
      "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
     },
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "independent_read_unreadable",
      "dimension": "reading",
      "effect": "decides",
      "detail": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2581,7 +2623,7 @@
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -2595,10 +2637,10 @@
      "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
     },
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
     },
     {
      "code": "pause_no_getter",
@@ -2613,10 +2655,10 @@
      "detail": "the score says one key does everything (10), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisi"
     },
     {
-     "code": "safe_signers_unclassified",
-     "dimension": "reading",
+     "code": "scan_gap",
+     "dimension": "surveillance",
      "effect": "degrades",
-     "detail": "4 signer(s) of the Safe could not be classified (key, Safe, timelock, contract)"
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2633,7 +2675,7 @@
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -2641,22 +2683,28 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "native_entity",
      "dimension": "reading",
      "effect": "decides",
      "detail": "no contract code at this address: nothing for the independent reader to read"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2673,7 +2721,7 @@
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -2681,22 +2729,28 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "native_entity",
      "dimension": "reading",
      "effect": "decides",
      "detail": "no contract code at this address: nothing for the independent reader to read"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2713,7 +2767,7 @@
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -2721,22 +2775,28 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "native_entity",
      "dimension": "reading",
      "effect": "decides",
      "detail": "no contract code at this address: nothing for the independent reader to read"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2753,7 +2813,7 @@
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -2761,22 +2821,28 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "native_entity",
      "dimension": "reading",
      "effect": "decides",
      "detail": "no contract code at this address: nothing for the independent reader to read"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2793,7 +2859,7 @@
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -2801,22 +2867,28 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "native_entity",
      "dimension": "reading",
      "effect": "decides",
      "detail": "no contract code at this address: nothing for the independent reader to read"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2833,12 +2905,12 @@
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
   "hyperliquid:0x72c98246a98bfe64022a3190e7710e157497170c": {
-   "status": "UNVERIFIED",
+   "status": "PARTIAL",
    "reasons": [
     {
      "code": "admin_events_unread",
@@ -2847,10 +2919,10 @@
      "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
     },
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
     },
     {
      "code": "pause_no_getter",
@@ -2865,6 +2937,12 @@
      "detail": "the admin is a contract the reader did not resolve to a key, a Safe or a timelock: its agreement with the score checks nothing"
     },
     {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -2872,19 +2950,19 @@
     }
    ],
    "dimensions": {
-    "reading": "unverified",
+    "reading": "partial",
     "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
   "hyperliquid:0xffaa4a3d97fe9107cef8a3f48c069f577ff76cc1": {
-   "status": "UNVERIFIED",
+   "status": "PARTIAL",
    "reasons": [
     {
      "code": "admin_events_unread",
@@ -2893,22 +2971,28 @@
      "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
     },
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "money_unknown",
      "dimension": "financial_exposure",
      "effect": "info",
      "detail": "no source figures the money behind this contract"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2918,16 +3002,16 @@
     }
    ],
    "dimensions": {
-    "reading": "unverified",
+    "reading": "ok",
     "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "unverified",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "monad:0xd691b0afed67f96cec28ab6308cbe5b2c103b7e9": {
    "status": "UNVERIFIED",
@@ -3614,35 +3698,71 @@
    "retry_may_help": false
   },
   "robinhood:0xbeeff033f34c046626b8d0a041844c5d1a5409dd": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     }
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0x1f7d7550b1b028f7571e69a784071f0205fd2efa": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -3653,24 +3773,42 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0x8366a39cc670b4001a1121b8f6a443a643e40951": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -3681,19 +3819,31 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0x94bab9693ba2f6358507effcbd372b0660afff9d": {
    "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
@@ -3707,6 +3857,12 @@
      "detail": "the admin is a contract the reader did not resolve to a key, a Safe or a timelock: its agreement with the score checks nothing"
     },
     {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -3715,19 +3871,25 @@
    ],
    "dimensions": {
     "reading": "partial",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
   "robinhood:0x000000007a1c8e570011eedf86a2a35593013cba": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
     {
      "code": "money_unknown",
      "dimension": "financial_exposure",
@@ -3735,10 +3897,22 @@
      "detail": "no source figures the money behind this contract"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -3749,24 +3923,42 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "unverified",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0xde770c84fe66e063336b31737cfe9790f18c4087": {
    "status": "PARTIAL",
    "reasons": [
     {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "score_fixed_by_decision",
@@ -3783,24 +3975,42 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "partial",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
   "robinhood:0x544bf81c855ae84c1e8b65d5e38770898d01eee2": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -3811,24 +4021,42 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0x8271e06e5887fe5ba05234f5315c19f3ec90e8ad": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -3839,19 +4067,25 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0x00000000000014aa86c5d3c41765bb24e11bd701": {
    "status": "UNVERIFIED",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
     {
      "code": "independent_read_unreadable",
      "dimension": "reading",
@@ -3859,10 +4093,22 @@
      "detail": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -3873,13 +4119,13 @@
    ],
    "dimensions": {
     "reading": "unverified",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -3887,16 +4133,34 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
      "code": "independent_read_unreadable",
      "dimension": "reading",
      "effect": "decides",
      "detail": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -3907,24 +4171,42 @@
    ],
    "dimensions": {
     "reading": "unverified",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
   "robinhood:0x9c3663fa9ab976e67b42939486ec4966cb41a0bb": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -3935,24 +4217,42 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0x925f92f055edb79c42b5d45e64a1b74143b90ea0": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -3963,24 +4263,42 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0x4472c69d299382f8847ebce4fc6ed8e295510e3e": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -3991,19 +4309,25 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0x322f0929c4625ed5bad873c95208d54e1c003b2d": {
    "status": "UNVERIFIED",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
     {
      "code": "independent_read_unreadable",
      "dimension": "reading",
@@ -4017,6 +4341,18 @@
      "detail": "no source figures the money behind this contract"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -4025,13 +4361,13 @@
    ],
    "dimensions": {
     "reading": "unverified",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "unverified",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -4039,6 +4375,12 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
      "code": "independent_read_unreadable",
      "dimension": "reading",
      "effect": "decides",
@@ -4051,6 +4393,18 @@
      "detail": "no source figures the money behind this contract"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -4059,13 +4413,13 @@
    ],
    "dimensions": {
     "reading": "unverified",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "unverified",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -4073,6 +4427,12 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
      "code": "independent_read_unreadable",
      "dimension": "reading",
      "effect": "decides",
@@ -4085,6 +4445,18 @@
      "detail": "no source figures the money behind this contract"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -4093,13 +4465,13 @@
    ],
    "dimensions": {
     "reading": "unverified",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "unverified",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -4107,6 +4479,12 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
      "code": "independent_read_unreadable",
      "dimension": "reading",
      "effect": "decides",
@@ -4119,6 +4497,18 @@
      "detail": "no source figures the money behind this contract"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -4127,13 +4517,13 @@
    ],
    "dimensions": {
     "reading": "unverified",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "unverified",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -4141,6 +4531,12 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
      "code": "independent_read_unreadable",
      "dimension": "reading",
      "effect": "decides",
@@ -4153,6 +4549,18 @@
      "detail": "no source figures the money behind this contract"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -4161,90 +4569,162 @@
    ],
    "dimensions": {
     "reading": "unverified",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "unverified",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
   "robinhood:0x99347d5f70d3838763f6bddcf80304c8aa953b57": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     }
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0x37788ff0c1d4e45a7fe06bc7e71e0cc00121d0a8": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     }
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0xbeeff0fb1dc19344a87b8479dab60a2e16160737": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     }
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0x026df18fbd2a7639089d0a16293383ec687a5ca1": {
    "status": "PARTIAL",
    "reasons": [
     {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "score_fixed_by_decision",
@@ -4255,13 +4735,13 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "partial",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -4269,10 +4749,28 @@
    "status": "PARTIAL",
    "reasons": [
     {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "score_fixed_by_decision",
@@ -4283,13 +4781,13 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "partial",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -4297,10 +4795,28 @@
    "status": "PARTIAL",
    "reasons": [
     {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "score_fixed_by_decision",
@@ -4311,13 +4827,13 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "partial",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -4331,10 +4847,22 @@
      "detail": "no contract code at this address: nothing for the independent reader to read"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -4351,7 +4879,7 @@
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -4365,10 +4893,22 @@
      "detail": "no contract code at this address: nothing for the independent reader to read"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -4385,7 +4925,7 @@
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -4399,10 +4939,22 @@
      "detail": "no contract code at this address: nothing for the independent reader to read"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -4419,7 +4971,7 @@
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -4433,10 +4985,22 @@
      "detail": "no contract code at this address: nothing for the independent reader to read"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -4453,7 +5017,7 @@
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -4467,10 +5031,22 @@
      "detail": "no contract code at this address: nothing for the independent reader to read"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -4487,7 +5063,7 @@
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -4501,10 +5077,22 @@
      "detail": "no contract code at this address: nothing for the independent reader to read"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -4521,7 +5109,7 @@
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -4529,16 +5117,34 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
      "code": "independent_read_unreadable",
      "dimension": "reading",
      "effect": "decides",
      "detail": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "score_fixed_by_decision",
@@ -4555,13 +5161,13 @@
    ],
    "dimensions": {
     "reading": "unverified",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "partial",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -4569,16 +5175,34 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
      "code": "independent_read_unreadable",
      "dimension": "reading",
      "effect": "decides",
      "detail": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "score_fixed_by_decision",
@@ -4595,13 +5219,13 @@
    ],
    "dimensions": {
     "reading": "unverified",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "partial",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -4609,10 +5233,28 @@
    "status": "PARTIAL",
    "reasons": [
     {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "score_fixed_by_decision",
@@ -4629,13 +5271,13 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "partial",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -4643,10 +5285,28 @@
    "status": "PARTIAL",
    "reasons": [
     {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "score_fixed_by_decision",
@@ -4663,13 +5323,13 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "partial",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -4677,6 +5337,12 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
      "code": "independent_read_unreadable",
      "dimension": "reading",
      "effect": "decides",
@@ -4689,10 +5355,22 @@
      "detail": "no source figures the money behind this contract"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -4703,13 +5381,13 @@
    ],
    "dimensions": {
     "reading": "unverified",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "unverified",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -4717,6 +5395,18 @@
    "status": "PARTIAL",
    "reasons": [
     {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -4729,6 +5419,12 @@
      "detail": "the admin is a contract the reader did not resolve to a key, a Safe or a timelock: its agreement with the score checks nothing"
     },
     {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -4737,13 +5433,13 @@
    ],
    "dimensions": {
     "reading": "partial",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -4751,6 +5447,18 @@
    "status": "PARTIAL",
    "reasons": [
     {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -4763,6 +5471,12 @@
      "detail": "the admin is a contract the reader did not resolve to a key, a Safe or a timelock: its agreement with the score checks nothing"
     },
     {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -4771,13 +5485,13 @@
    ],
    "dimensions": {
     "reading": "partial",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -4785,6 +5499,18 @@
    "status": "PARTIAL",
    "reasons": [
     {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -4797,6 +5523,12 @@
      "detail": "the admin is a contract the reader did not resolve to a key, a Safe or a timelock: its agreement with the score checks nothing"
     },
     {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -4805,24 +5537,42 @@
    ],
    "dimensions": {
     "reading": "partial",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
   "robinhood:0x0bfbcf9fa4f9c56b0f40a671ad40e0805a091865": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -4833,24 +5583,42 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0xe51960f1b45f1c9fb6d166e6a884f866fc70433b": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -4861,34 +5629,71 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0x292fc50e4eb66c3f6514b9e402dbc25961824d62": {
-   "status": "VERIFIED",
-   "reasons": [],
+   "status": "PARTIAL",
+   "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
+    }
+   ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0x0dc846db6a4ec7b5a3e542f7db88049e9add2541": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
+    },
     {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
@@ -4898,20 +5703,32 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0x159a113e012593d9b3cc63ad45e30f0467e13ef3": {
    "status": "PARTIAL",
    "reasons": [
     {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -4924,6 +5741,12 @@
      "detail": "the admin is a contract the reader did not resolve to a key, a Safe or a timelock: its agreement with the score checks nothing"
     },
     {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -4932,24 +5755,42 @@
    ],
    "dimensions": {
     "reading": "partial",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
   "robinhood:0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -4960,19 +5801,37 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0x1195c074f898b7644ba732407619c9804dfe6dce": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
+    },
     {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
@@ -4982,19 +5841,25 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0x02a84c1b3bbd7401a5f7fa98a384ebc70bb5749e": {
    "status": "UNVERIFIED",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
     {
      "code": "independent_read_unreadable",
      "dimension": "reading",
@@ -5002,10 +5867,22 @@
      "detail": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -5016,63 +5893,105 @@
    ],
    "dimensions": {
     "reading": "unverified",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
   "robinhood:0xbeeff039907422219fb367e525954ddc092854d9": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     }
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0xbeefff136e3684273e6aa75a1669b784b373a4fd": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     }
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0xfd2fd4b046136b540a56c11c75ac679ae7d1db24": {
    "status": "UNVERIFIED",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
     {
      "code": "independent_read_unreadable",
      "dimension": "reading",
@@ -5080,10 +5999,22 @@
      "detail": "AccessControl (ERC-165) whose admin-role holders are not enumerable on-chain: read them from RoleGranted events; nothing for this reader to compare"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "score_fixed_by_decision",
@@ -5100,24 +6031,42 @@
    ],
    "dimensions": {
     "reading": "unverified",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "partial",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
   "robinhood:0xd540f47f214dc7d6d244e62a6ae7e06b586ef44a": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -5128,24 +6077,42 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0x9d53d5e3bd5e8d4cbfa6db1ca238aea02e651010": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -5156,24 +6123,42 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0x7f03effbd7ceb22a3f80dd468f67ef27826acd85": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -5184,24 +6169,42 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0xf28704c691290547924e2129d407da36bda8ce0f": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -5212,19 +6215,25 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0x14b107cf534239c59571b066cb6497a321da897c": {
    "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
     {
      "code": "admin_members_not_weighed",
      "dimension": "reading",
@@ -5232,10 +6241,22 @@
      "detail": "the score and this reading follow one holder; 2 other holder(s) of DEFAULT_ADMIN_ROLE read (0 plain key(s), 2 contract(s))"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -5246,19 +6267,37 @@
    ],
    "dimensions": {
     "reading": "partial",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
   "robinhood:0xd5c6c79692715145098a65d1eb1f2a10c524f8e8": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
+    },
     {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
@@ -5268,19 +6307,25 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0x1ac9db4a2608ba45d6127b1737949b51bb54b7f3": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
     {
      "code": "money_unknown",
      "dimension": "financial_exposure",
@@ -5288,10 +6333,22 @@
      "detail": "no source figures the money behind this contract"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -5302,19 +6359,25 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "unverified",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0x16494a80e08bcb9285d87b67149d7b01774d82f8": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
     {
      "code": "money_unknown",
      "dimension": "financial_exposure",
@@ -5322,10 +6385,22 @@
      "detail": "no source figures the money behind this contract"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -5336,19 +6411,25 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "unverified",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0xb24b143ad6bb5be9559ccc75f34a2261b7456904": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
     {
      "code": "money_unknown",
      "dimension": "financial_exposure",
@@ -5356,10 +6437,22 @@
      "detail": "no source figures the money behind this contract"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -5370,19 +6463,25 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "unverified",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0x128a800cbc615cc110bff16e475865c67631603a": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
     {
      "code": "money_unknown",
      "dimension": "financial_exposure",
@@ -5390,10 +6489,22 @@
      "detail": "no source figures the money behind this contract"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -5404,24 +6515,42 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "unverified",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0x5c98b2d892b37c9a1d3b69472bddc172a64cdc09": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
     {
      "code": "money_unknown",
      "dimension": "financial_exposure",
      "effect": "info",
      "detail": "no source figures the money behind this contract"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -5432,24 +6561,42 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "unverified",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0xd01c774d4a66408326bc65728ac5ae5aaf004032": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
     {
      "code": "money_unknown",
      "dimension": "financial_exposure",
      "effect": "info",
      "detail": "no source figures the money behind this contract"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -5460,24 +6607,36 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "unverified",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d": {
-   "status": "VERIFIED",
+   "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
     {
      "code": "money_unknown",
      "dimension": "financial_exposure",
      "effect": "info",
      "detail": "no source figures the money behind this contract"
+    },
+    {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
     },
     {
      "code": "pause_no_getter",
@@ -5486,6 +6645,12 @@
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
     },
     {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -5494,19 +6659,25 @@
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "unverified",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "robinhood:0xd42174d3db28b0fa2bd25381c3521b18ae9db490": {
    "status": "UNVERIFIED",
    "reasons": [
+    {
+     "code": "admin_events_unread",
+     "dimension": "coverage",
+     "effect": "degrades",
+     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
+    },
     {
      "code": "independent_read_unreadable",
      "dimension": "reading",
@@ -5514,10 +6685,22 @@
      "detail": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
     },
     {
+     "code": "oracle_self_watch_unread",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events was not read"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "scan_gap",
+     "dimension": "surveillance",
+     "effect": "degrades",
+     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -5528,13 +6711,13 @@
    ],
    "dimensions": {
     "reading": "unverified",
-    "coverage": "ok",
+    "coverage": "partial",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
     "notification": "ok",
     "financial_exposure": "ok",
-    "surveillance": "ok"
+    "surveillance": "partial"
    },
    "retry_may_help": false
   },
@@ -5677,23 +6860,17 @@
    "retry_may_help": false
   },
   "solana:GKnHiWh3RRrE1zsNzWxRkomymHc374TvJPSTv2wPeYdB": {
-   "status": "DISPUTED",
+   "status": "VERIFIED",
    "reasons": [
     {
      "code": "money_unknown",
      "dimension": "financial_exposure",
      "effect": "info",
      "detail": "no source figures the money behind this contract"
-    },
-    {
-     "code": "reader_disagrees",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the timelock score says no delay (0), the Squads multisig enforces a native time lock of 24 h"
     }
    ],
    "dimensions": {
-    "reading": "disputed",
+    "reading": "ok",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",

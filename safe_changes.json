@@ -5,30 +5,30 @@
    "ecosystem": "robinhood",
    "safes": 25,
    "events": [],
-   "control": 52,
+   "control": 48,
    "status": "ok",
-   "fromBlock": 104016664,
-   "toBlock": 109857075,
+   "fromBlock": 105402575,
+   "toBlock": 111221256,
    "days_read": 7
   },
   {
    "ecosystem": "ethereum-l1",
    "safes": 15,
    "events": [],
-   "control": 13,
+   "control": 7,
    "status": "ok",
-   "fromBlock": 26325377,
-   "toBlock": 26375612,
+   "fromBlock": 26337194,
+   "toBlock": 26387427,
    "days_read": 7
   },
   {
    "ecosystem": "arbitrum",
    "safes": 14,
    "events": [],
-   "control": 10,
+   "control": 11,
    "status": "ok",
-   "fromBlock": 520493930,
-   "toBlock": 522597216,
+   "fromBlock": 520997465,
+   "toBlock": 523105883,
    "days_read": 7
   },
   {
@@ -37,8 +37,8 @@
    "events": [],
    "control": null,
    "status": "UNREAD (call budget exhausted)",
-   "fromBlock": 53406233,
-   "toBlock": 55081188,
+   "fromBlock": 53477347,
+   "toBlock": 55792325,
    "days_read": 7
   },
   {
@@ -46,11 +46,11 @@
    "safes": 4,
    "events": [],
    "control": 0,
-   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 73 execution(s) from other Safes on the window's tail)",
-   "fromBlock": 47042534,
-   "toBlock": 48147751,
+   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 78 execution(s) from other Safes on the window's tail)",
+   "fromBlock": 47298949,
+   "toBlock": 48411789,
    "days_read": 7,
-   "control_witness": 73
+   "control_witness": 78
   },
   {
    "ecosystem": "plasma",
@@ -58,20 +58,19 @@
    "events": [],
    "control": 6,
    "status": "ok",
-   "fromBlock": 36659562,
-   "toBlock": 37263519,
+   "fromBlock": 36801544,
+   "toBlock": 37405682,
    "days_read": 7
   },
   {
    "ecosystem": "monad",
    "safes": 13,
    "events": [],
-   "control": 0,
-   "status": "UNREAD (control returned 0 ExecutionSuccess events on the tracked Safes and none from any Safe on the window's tail: the RPC may be truncating, not the Safes being idle)",
-   "fromBlock": 120597490,
-   "toBlock": 120683084,
-   "days_read": 0.3,
-   "control_witness": 0
+   "control": 1,
+   "status": "ok",
+   "fromBlock": 121066315,
+   "toBlock": 121151501,
+   "days_read": 0.3
   },
   {
    "ecosystem": "hyperliquid",
@@ -79,8 +78,8 @@
    "events": [],
    "control": 1,
    "status": "ok",
-   "fromBlock": 50519229,
-   "toBlock": 50782690,
+   "fromBlock": 50663793,
+   "toBlock": 50927313,
    "days_read": 3.0
   }
  ]

@@ -74,7 +74,7 @@ def main():
     for r in so.get("upgrades", []):
         src = isrc.get(r["chain"] + ":" + str(r["target"]).lower()) or {}
         add(1, "upgrade executed", r["chain"], r["target"], r.get("upgraded"), ("read what the new implementation does before trusting the score (the private pipeline's implementation check names selectors added and dropped)" + ("; its source is verified on Sourcify (%s)" % (src.get("name") or "unnamed") if src.get("verified") else "; NO verified source on Sourcify for the new implementation: read the bytecode, or find a verified source on the chain's explorer" if src.get("verified") is False else "")), "second_opinion.json upgrades")
-    for r in so.get("changed", []): add(1, "admin read changed", r["chain"], r["target"], r.get("changed"), "confirm the new admin path and whether the score should move before the weekly push", "second_opinion.json changed")
+    for r in so.get("changed", []): add(1, "admin read changed", r["chain"], r["target"], r.get("changed"), "confirm the new admin path and whether the score should move before the next push", "second_opinion.json changed")
     for r in so.get("results", []):
         if r.get("oracle_self"): continue
         if r.get("pending_admin"): add(1, "admin transfer in flight", r["chain"], r["target"], "%s designated (%s)" % (r["pending_admin"], r.get("pending_via")), "identify the designated admin; when it accepts, the admin read changes", "second_opinion.json pending_admin")

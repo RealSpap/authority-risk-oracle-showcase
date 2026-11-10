@@ -99,4 +99,4 @@ The history of this repository was rewritten on 30 September 2026, and every com
 
 Attribution for data and text: "Authority Risk Oracle, realspap.github.io/oracle" with a link. Earlier copies were released under the MIT licence.
 
-**Signing key of the Watch** (Ed25519, public): `11baca3ef6a69de4901c185f6cbbd3f93318fbb74f9961a8d39aead841adf409`. The same key is written in [`watch/API.md`](watch/API.md), in `scripts/audit_public.py` and on [realspap.github.io/oracle/key/](https://realspap.github.io/oracle/key/); compare the copies, then check a run with `python3 scripts/audit_public.py`. A key change would be announced first (see [KEY-ROTATION](docs/KEY-ROTATION.md)).
+**Signing key of the Watch** (Ed25519, public): `11baca3ef6a69de4901c185f6cbbd3f93318fbb74f9961a8d39aead841adf409`. The same key is written in [`watch/API.md`](watch/API.md), in `scripts/audit_public.py` and on [realspap.github.io/oracle/provenance/](https://realspap.github.io/oracle/provenance/); compare the copies, then check a run with `python3 scripts/audit_public.py`. A key change would be announced first (see [KEY-ROTATION](docs/KEY-ROTATION.md)).

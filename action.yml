@@ -20,7 +20,7 @@ inputs:
     required: false
     default: "0"
   max-drop:
-    description: "Fail when the score fell by this many points or more since the previous run of the Watch (every 6 hours, not since your last build): a drop pushed more than six hours ago is no longer visible. Empty means no check."
+    description: "Fail when the score fell by this many points or more since the previous run of the Watch (scheduled every 6 hours, started late by a variable amount, not since your last build): a drop already present at that previous run is no longer visible. Empty means no check."
     required: false
     default: ""
   allow-unread:

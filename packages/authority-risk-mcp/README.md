@@ -1,7 +1,7 @@
 <!-- mcp-name: io.github.RealSpap/authority-risk-mcp -->
 # authority-risk-mcp
 
-A read-only [MCP](https://modelcontextprotocol.io) server that tells an AI agent who can change a smart contract, how fast, and how strong the setup is, before the agent depends on it. It reads the files that the [Authority Risk Oracle Watch](https://github.com/RealSpap/authority-risk-oracle-showcase) publishes every six hours, and **checks them against the Watch's signed manifest** before it answers.
+A read-only [MCP](https://modelcontextprotocol.io) server that tells an AI agent who can change a smart contract, how fast, and how strong the setup is, before the agent depends on it. It reads the files that the [Authority Risk Oracle Watch](https://github.com/RealSpap/authority-risk-oracle-showcase) publishes at each run (scheduled every six hours, started late by GitHub by a variable amount), and **checks them against the Watch's signed manifest** before it answers.
 
 No account, no key, no wallet, no transaction. The scores are published on **testnet** oracles for contracts of the networks named in each answer. A score is a reading of public data taken at the time shown: not an audit and not investment advice.
 

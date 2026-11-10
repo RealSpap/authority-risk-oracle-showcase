@@ -2,7 +2,7 @@
 """Decide whether this run opens an alarm issue: a new finding opens one, a standing state is a reminder at most once a day, an unchanged one is quiet.
 
 The Alarm step's condition stays true as long as a finding stands: 12 unreviewed second-opinion disagreements, an overdue review item.
-Without a gate the job opened a new private issue on every 6-hour run for the same state, four a day (seen 10/10 before the first run).
+Without a gate the job opened a new private issue on every run for the same state (seen 10/10 before the first run).
 
     python3 scripts/alarm_gate.py --watch watch --run-log watch/run.log [--write]      # prints mode=new|reminder|escalation|quiet|recovered|unrecognised (the last two modes need ALARM_CONDITION=true|false from the workflow)
 

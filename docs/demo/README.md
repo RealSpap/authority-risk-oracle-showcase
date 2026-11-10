@@ -37,7 +37,7 @@ Try R1 without any chain: `python3 -I reader.py --rpc http://127.0.0.1:1 --targe
 ## What this is not
 
 - The reader does not check that a target is a multisig. `DemoAuthority` is not one: it stores just three numbers, and the demo says so. The three numbers are three separate `eth_call` requests at the same block number, not one atomic read of a real multisig.
-- It is the reader and the lock check on a local chain. It is not the Watch, which reads the tracked contracts every 6 hours, and it blocks no transaction.
+- It is the reader and the lock check on a local chain. It is not the Watch, which reads the tracked contracts at each run, scheduled every 6 hours, and it blocks no transaction.
 - The contracts are made up and the setters can be called by anyone. On a real chain, weakening a multisig needs valid signatures from its signers.
 - The lock check is a local script that a CI job could run; none is set up here. The checker and the lock file in this folder are examples written for this demo.
 - No agent runs: a short script stands in for the rule, and no wallet is involved.

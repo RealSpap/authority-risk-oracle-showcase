@@ -4,7 +4,7 @@ timelock and of the default admin, an executor that anyone can use, and the hold
 Nothing here reads the chain or writes a file: every function takes what was read and returns what to say. The caller (scripts/second_opinion.py) does the reads.
 No scoring file, no hashed file imports this module.
 
-THE WINDOW. A transfer of the admin that is started and cancelled between two runs (about 6 hours) is invisible to a reader that only reads state. The reader now also
+THE WINDOW. A transfer of the admin that is started and cancelled between two runs (6 hours on paper, longer when GitHub starts a run late) is invisible to a reader that only reads state. The reader now also
 reads the EVENTS of the contract over the blocks between the previous record and this one (`window_for`), in chunks (`scan_logs`): OwnershipTransferStarted,
 OwnershipTransferred, DefaultAdminTransferScheduled, DefaultAdminTransferCanceled on the target, MinDelayChange (OpenZeppelin) and NewDelay (Compound) on its timelock.
 A window that could not be read completely is said so (`complete: false`); it is never an empty list. A first run has no window (`null`, with the reason).

@@ -11,8 +11,8 @@ import time
 
 # ---------------------------------------------------------------- [107] a hole in the oracle's own role-event scan
 
-STALL_REPEAT_RUNS = 4   # a stall that goes on is said again every 4 runs (once a day)
-SCAN_STALL_RUNS = 2   # runs (12 hours at four a day) in which the scanned-to marker did not move while the chain did, before it is an alert
+STALL_REPEAT_RUNS = 4   # a stall that goes on is said again every 4 runs (once a day when runs are 6 hours apart)
+SCAN_STALL_RUNS = 2   # runs (12 hours when runs are 6 hours apart) in which the scanned-to marker did not move while the chain did, before it is an alert
 
 
 def scan_progress(prev_doc, cur_doc):
@@ -611,7 +611,7 @@ def transfer_outcome(prev_pending, holder_now, pending_now, short=lambda a: str(
     return "cleared" if fam is not None and fam in (clean_families or ()) else "unread"
 
 
-PENDING_FOLLOW_NOTE = ("a transfer of the admin is read as a state at every run (about every 6 hours) and, since the second part of the readers, the events of the target contract and of its timelock "
+PENDING_FOLLOW_NOTE = ("a transfer of the admin is read as a state at every run (scheduled every 6 hours) and, since the second part of the readers, the events of the target contract and of its timelock "
                        "since the last block read are read too (`admin_events`, `event_windows`): a transfer started and cancelled on the TARGET inside a window that was read completely is seen as events. "
                        "Not read as events: the ProxyAdmin's own transfers, EIP-1967 AdminChanged, Compound NewPendingAdmin, RoleGranted and RoleRevoked; a window that could not be read completely "
                        "(`complete: false`) is read again at the next run; the outcome of a transfer that was seen is told at the next run (accepted, replaced, cleared or unread), by comparing the two readings; "

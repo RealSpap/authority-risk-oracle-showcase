@@ -1,7 +1,7 @@
 """LangChain tools for the Authority Risk Oracle watch: four read-only questions an agent asks before it depends on a contract.
 
     pip install langchain-core
-    git clone --depth 1 -b watch-data https://github.com/RealSpap/authority-risk-oracle-showcase.git watch-data   # the state of the Watch, refreshed every 6 hours
+    git clone --depth 1 -b watch-data https://github.com/RealSpap/authority-risk-oracle-showcase.git watch-data   # the state of the Watch, refreshed at each run, scheduled every 6 hours
     from integrations.langchain_authority_risk import authority_risk_tools   # from the root of this repository, as in integrations/README.md
     tools = authority_risk_tools("watch-data")                            # a list of StructuredTool: hand it to an agent
 

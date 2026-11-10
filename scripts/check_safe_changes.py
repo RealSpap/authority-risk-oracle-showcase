@@ -38,7 +38,7 @@ LOG_RPC = {"ethereum-l1": "https://gateway.tenderly.co/public/mainnet", "base": 
 # tried whole, then halved.
 WINDOW = {"base": 1000, "hyperliquid": 1000, "robinhood": 100000, "monad": 100}  # HyperEVM: "query exceeds max block range 1000"; Robinhood: 100,000 with an address filter (30,000 without), measured 2026-10-10; Monad: every public RPC (rpc, rpc1, drpc) answers 413 or "block range too large" above 100 blocks, measured 2026-10-10
 # Where 100 blocks per call is all a chain gives, 7 days would take 20,000 calls: the window is capped and the record says how many days were read.
-DAYS_CAP = {"monad": 0.3, "hyperliquid": 3.0}   # Monad: about 86,000 blocks in 100-block calls, under the 1,200-call budget; read every 6 hours, so the 7-hour window overlaps the schedule
+DAYS_CAP = {"monad": 0.3, "hyperliquid": 3.0}   # Monad: about 86,000 blocks in 100-block calls, under the 1,200-call budget; read at each run (scheduled every 6 hours), so the 7-hour window overlaps the schedule when runs are on time
 # Monad's RPC answers 413 to a long address list; a smaller batch is accepted.
 BATCH_BY_ECOSYSTEM = {}   # Monad's 413 was about the block range (100 blocks max), not the address list: 13 addresses with 9 topics pass in one call (measured 2026-10-10); one batch keeps the call count within the budget
 # Seconds between calls where the public RPC rate-limits a long scan (HyperEVM answered 'rate limited' after a few hundred calls).

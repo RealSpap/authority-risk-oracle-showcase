@@ -5,7 +5,7 @@
 
 A Prometheus (or Grafana Agent, or VictoriaMetrics) can scrape the raw file over HTTPS; the alert that matters most is the Watch stopping:
 
-    time() - aro_run_timestamp_seconds > 8 * 3600       # a run every 6 hours: two missed runs
+    time() - aro_run_timestamp_seconds > 8 * 3600       # 8 hours without a run (scheduled every 6 hours; a late start by GitHub can make it fire on a normal day)
 
 Other alerts: aro_status{state="alarm"} == 1, aro_alerts_active{severity="high"} > 0, aro_oracle_read == 0, aro_safes_woke > 0.
 

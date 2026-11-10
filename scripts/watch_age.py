@@ -5,7 +5,7 @@
     python3 scripts/watch_age.py --max-hours 14 --json
     python3 scripts/watch_age.py --file watch/latest.json  # a local copy instead of the network
 
-The Watch runs every 6 hours on GitHub; when the workflow stops (a disabled schedule after 60 days of inactivity, a revoked token, an Actions outage) nothing inside the repository can say so:
+The Watch is scheduled every 6 hours on GitHub (and GitHub can start a run hours late); when the workflow stops (a disabled schedule after 60 days of inactivity, a revoked token, an Actions outage) nothing inside the repository can say so:
 the files simply stop changing, and a dashboard that says "checked 11 min ago" is reading the last file there is. This reads the published `run_utc` and compares it with the clock.
 Exit codes: 0 the last run is younger than --max-hours (default 14: two missed runs of slack); 1 it is older; 2 the age could NOT be established (no network, an unreadable file, a date that is
 not a date, a date in the future): an unknown age is never reported as fresh. Standard library only.

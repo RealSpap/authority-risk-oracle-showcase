@@ -1943,7 +1943,7 @@
 
   function shortAddr(a) { return a.slice(0, 6) + '…' + a.slice(-4); }
   function shortHash(h) { return h.slice(0, 10) + '…' + h.slice(-6); }
-  // The Watch is a set of files rewritten every 6 hours on the watch-data branch. Two of them are shown next to the scores: trust.json (an evidence status per target, distinct from
+  // The Watch is a set of files rewritten at each run (scheduled every 6 hours) on the watch-data branch. Two of them are shown next to the scores: trust.json (an evidence status per target, distinct from
   // the score) and latest.json (oracles[].freshness: four ages side by side). The statuses are VERIFIED, PARTIAL, STALE, DISPUTED, UNVERIFIED and UNAVAILABLE. A status that was not read,
   // a file that cannot be parsed, one that carries an error or one older than 8 hours is shown as "not read": a missing status is NEVER shown as VERIFIED.
   var WATCH_BASE = 'https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/watch-data/';

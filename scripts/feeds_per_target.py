@@ -89,7 +89,7 @@ def main():
                         es.append((e["run_utc"], entry("alarm", "alarm:" + hashlib.sha1(json.dumps(e, sort_keys=True).encode()).hexdigest()[:16], e["run_utc"], str(e.get("text"))[:400], link)))
             for x in alerts:
                 if norm(x.get("target")) == n and same_chain(x.get("chain")):
-                    # dated at its first appearance, not at last_seen: an alert still active moved last_seen and its counter every run, so six feeds were rewritten every 6 hours with nothing new (seen 10/10)
+                    # dated at its first appearance, not at last_seen: an alert still active moved last_seen and its counter every run, so six feeds were rewritten at every run with nothing new (seen 10/10)
                     es.append((x.get("first_seen") or x.get("last_seen"), entry("%s alert: %s" % (x.get("severity"), x.get("rule")), "alert:" + hashlib.sha1(str(x.get("key")).encode()).hexdigest()[:16],
                                                                                x.get("first_seen") or x.get("last_seen"), "%s%s, first seen %s" % (x.get("rule"), (" (" + detail_text(x) + ")") if detail_text(x) else "", x.get("first_seen")), link)))
             for op in ops:

@@ -21,7 +21,7 @@ The scores are published on **testnet** oracles for contracts of the networks na
 
 ## Get the data
 
-The state of the Watch lives on the `watch-data` branch, refreshed at each Watch run (scheduled every 6 hours; about 2 runs a day since 4 Nov 2026, 2 to 4 from 31 Oct to 6 Nov):
+The state of the Watch lives on the `watch-data` branch, refreshed at each Watch run (scheduled every 6 hours, started late by GitHub by a variable amount: the real gap is `hours_since_previous_run` in `status.json`):
 
 ```bash
 git clone --depth 1 -b watch-data https://github.com/RealSpap/authority-risk-oracle-showcase.git watch-data

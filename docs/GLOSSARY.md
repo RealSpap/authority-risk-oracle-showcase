@@ -59,5 +59,5 @@ Source: METHODOLOGY.md
 **Upgrade executed.** A Watch alert: the implementation behind a tracked contract changed since the previous run.
 Source: /oracle/watch/
 
-**Watch.** The public monitor of the oracles: it re-reads at each run (scheduled every 6 hours; about 2 runs a day since 4 Nov 2026, 2 to 4 from 31 Oct to 6 Nov) and publishes what it read as public files anyone can read.
+**Watch.** The public monitor of the oracles: it re-reads at each run (scheduled every 6 hours, started late by GitHub by a variable amount: the real gap is `hours_since_previous_run` in `status.json`) and publishes what it read as public files anyone can read.
 Source: /oracle/watch/

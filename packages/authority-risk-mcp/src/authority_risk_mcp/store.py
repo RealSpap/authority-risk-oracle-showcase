@@ -154,7 +154,7 @@ class Store:
 
     # ------------------------------------------------------------------ the verified folder the tools read
     def sync(self):
-        """(path of a folder holding verified files, integrity record). Re-reads the manifest when the earlier one is older than the time to live. The Watch commits every six hours: a mismatch that
+        """(path of a folder holding verified files, integrity record). Re-reads the manifest when the earlier one is older than the time to live. The Watch commits at each run (scheduled every six hours): a mismatch that
         appears while a new run lands between two reads is given one more try with a fresh manifest, and only a second mismatch is an integrity failure."""
         if self._dir and self.now() - self._stamp < self.ttl: return self._dir, self._integrity
         try: return self._sync_once()

@@ -28,8 +28,8 @@ source figures). The eight dimensions: reading, coverage, method, signature, jou
 Unknown is never ok: an input that could not be read puts its dimension in "unverified", not in "ok".
 
 WHEN IT IS COMPUTED. trust.json is recomputed only when the Watch runs, right after the files of the run are written. If the Watch stops, the file that stays
-published keeps its statuses: the rule cannot see its own silence. A consumer must compare `generated_utc` to the present time (the Watch runs every 6 hours;
-a file older than about 8 hours says nothing about now).
+published keeps its statuses: the rule cannot see its own silence. A consumer must compare `generated_utc` to the present time and decide how old is too old for its use (the Watch is scheduled every 6 hours, but GitHub can start a
+run hours late, so a file a few hours old can still be the latest one).
 """
 import calendar
 import time

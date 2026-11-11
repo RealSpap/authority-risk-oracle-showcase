@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generated_utc": "2026-11-11T06:44:52Z",
+ "generated_utc": "2026-11-11T15:00:38Z",
  "rule_version": "1",
  "rule": "(version 1). For each target, every reason that applies is listed with its dimension, a state and an effect. A dimension takes the worst state\nof its reasons. For the status, a reason with effect \"decides\" counts for the state it carries, one with effect \"degrades\" counts for PARTIAL at most, one with\neffect \"info\" for nothing. The status is the first line that matches, from the top:\n\n  UNAVAILABLE  a dimension is unavailable: the oracle holding the target was not read this run, or the trust computation itself failed (trust_not_computed).\n  DISPUTED     a dimension is disputed: an open public dispute, or the independent reader disagrees and nobody has reviewed it.\n  STALE        a dimension is stale: the on-chain score is stale, a pause or Safe-activity state has not been readable for 3 days or more (or for a time that\n               is not known), the Watch run itself is older than 8 hours, the run or one of its input files is dated more than 10 minutes after the\n               present time (an age that is negative says nothing about now), or the independent reader's file is from an earlier run than the Watch's.\n  UNVERIFIED   the independent reader did not read this target (no record, unreadable, or its input file missing), there is nothing to read\n               independently (a native entity), or the score is dated later than the block it was read at (its staleness can never show).\n  PARTIAL      something was checked and something was not: an incomplete reading (modules or admin members not all read, signers not classified, an admin\n               the reader cannot contradict: a contract it did not resolve, a program-derived address), a method that differs or is fixed by decision, an\n               alert not delivered, an unsigned run, a signing key that is not pinned (or cannot be compared), a broken journal, an input file that could not\n               be read or is from an earlier run; the reasons say what.\n  VERIFIED     none of the above. It means the checks listed here passed: not that the contract is safe, and not that the score is right.\n\nA reason whose effect is \"info\" is listed and sets its dimension's state, but never moves the status (a contract with no pause getter, money that no\nsource figures). The eight dimensions: reading, coverage, method, signature, journal, notification, financial_exposure, surveillance.\nUnknown is never ok: an input that could not be read puts its dimension in \"unverified\", not in \"ok\".\n\nWHEN IT IS COMPUTED. trust.json is recomputed only when the Watch runs, right after the files of the run are written. If the Watch stops, the file that stays\npublished keeps its statuses: the rule cannot see its own silence. A consumer must compare `generated_utc` to the present time and decide how old is too old for its use (the Watch is scheduled every 6 hours, but GitHub can start a\nrun hours late, so a file a few hours old can still be the latest one).",
  "rule_sha256": "26c6a093628a5caa399392e83ec9d8c01604fd5af4dc7b585bad91e43eed64b2",
@@ -10,8 +10,8 @@
   "VERIFIED": 99,
   "PARTIAL": 42,
   "STALE": 1,
-  "DISPUTED": 2,
-  "UNVERIFIED": 58,
+  "DISPUTED": 3,
+  "UNVERIFIED": 57,
   "UNAVAILABLE": 0
  },
  "dimension_counts": {
@@ -19,15 +19,15 @@
    "ok": 119,
    "not_applicable": 0,
    "partial": 22,
-   "unverified": 58,
+   "unverified": 57,
    "stale": 1,
-   "disputed": 2,
+   "disputed": 3,
    "unavailable": 0
   },
   "coverage": {
-   "ok": 174,
+   "ok": 180,
    "not_applicable": 0,
-   "partial": 28,
+   "partial": 22,
    "unverified": 0,
    "stale": 0,
    "disputed": 0,
@@ -93,7 +93,7 @@
   "signature_key": "pinned",
   "journal": "ok",
   "alert_channels": 1,
-  "watch_run_utc": "2026-11-11T06:15:05Z",
+  "watch_run_utc": "2026-11-11T14:26:57Z",
   "inputs_unread": []
  },
  "by_target": {
@@ -1063,6 +1063,12 @@
    "status": "VERIFIED",
    "reasons": [
     {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -1091,6 +1097,12 @@
    "status": "VERIFIED",
    "reasons": [
     {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -1118,6 +1130,12 @@
   "ethereum-l1:0xbe286431454714f511008713973d3b053a2d38f3": {
    "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
@@ -1199,6 +1217,12 @@
    "status": "VERIFIED",
    "reasons": [
     {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -1220,6 +1244,12 @@
   "ethereum-l1:0x73e35c5c35a274e34ade6eb13cc7f62aee323728": {
    "status": "VERIFIED",
    "reasons": [
+    {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
@@ -1249,6 +1279,12 @@
    "status": "VERIFIED",
    "reasons": [
     {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -1276,6 +1312,12 @@
   "ethereum-l1:0x211cc4dd073734da055fbf44a2b4667d5e5fe5d2": {
    "status": "VERIFIED",
    "reasons": [
+    {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
@@ -1305,6 +1347,12 @@
    "status": "VERIFIED",
    "reasons": [
     {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -1333,6 +1381,12 @@
    "status": "VERIFIED",
    "reasons": [
     {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -1354,6 +1408,12 @@
   "ethereum-l1:0x02c3ea4e34c0cbd694d2adfa2c690eecbc1793ee": {
    "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
@@ -1389,6 +1449,12 @@
    "status": "VERIFIED",
    "reasons": [
     {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -1416,6 +1482,12 @@
   "ethereum-l1:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb": {
    "status": "VERIFIED",
    "reasons": [
+    {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
@@ -1445,6 +1517,12 @@
    "status": "VERIFIED",
    "reasons": [
     {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -1466,6 +1544,12 @@
   "ethereum-l1:0xe3490297a08d6fc8da46edb7b6142e4f461b62d3": {
    "status": "VERIFIED",
    "reasons": [
+    {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
@@ -1501,6 +1585,12 @@
      "detail": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
     },
     {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -1529,6 +1619,12 @@
    "status": "VERIFIED",
    "reasons": [
     {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -1550,6 +1646,12 @@
   "ethereum-l1:0x6a8cbed756804b16e05e741edabd5cb544ae21bf": {
    "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
@@ -1591,6 +1693,12 @@
      "detail": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
     },
     {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -1618,6 +1726,12 @@
   "ethereum-l1:0x5d39e06b825c1f2b80bf2756a73e28efaa128ba0": {
    "status": "VERIFIED",
    "reasons": [
+    {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
     {
      "code": "money_unknown",
      "dimension": "financial_exposure",
@@ -1653,6 +1767,12 @@
    "status": "VERIFIED",
    "reasons": [
     {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -1681,6 +1801,12 @@
    "status": "VERIFIED",
    "reasons": [
     {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -1702,6 +1828,12 @@
   "ethereum-l1:0x94643e86aa5e38ddac6c7791c1297f4e40cd96c1": {
    "status": "VERIFIED",
    "reasons": [
+    {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
@@ -1725,6 +1857,12 @@
    "status": "VERIFIED",
    "reasons": [
     {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -1746,6 +1884,12 @@
   "ethereum-l1:0xbeef01735c132ada46aa9aa4c54623caa92a64cb": {
    "status": "VERIFIED",
    "reasons": [
+    {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
@@ -1769,6 +1913,12 @@
    "status": "VERIFIED",
    "reasons": [
     {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
+    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
@@ -1790,6 +1940,12 @@
   "ethereum-l1:0xbeef0c075da5d01112ae5cf34d257074fb5ddb2f": {
    "status": "VERIFIED",
    "reasons": [
+    {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
     {
      "code": "pause_no_getter",
      "dimension": "coverage",
@@ -1817,6 +1973,12 @@
      "dimension": "reading",
      "effect": "decides",
      "detail": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+    },
+    {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
     },
     {
      "code": "money_unknown",
@@ -1853,6 +2015,12 @@
    "status": "VERIFIED",
    "reasons": [
     {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
+    {
      "code": "money_unknown",
      "dimension": "financial_exposure",
      "effect": "info",
@@ -1874,6 +2042,12 @@
   "ethereum-l1:0xdac17f958d2ee523a2206206994597c13d831ec7": {
    "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
     {
      "code": "money_unknown",
      "dimension": "financial_exposure",
@@ -1913,6 +2087,12 @@
      "dimension": "reading",
      "effect": "decides",
      "detail": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
+    },
+    {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
     },
     {
      "code": "money_unknown",
@@ -1955,6 +2135,12 @@
      "detail": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
     },
     {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
+    {
      "code": "money_unknown",
      "dimension": "financial_exposure",
      "effect": "info",
@@ -1989,6 +2175,12 @@
    "status": "VERIFIED",
    "reasons": [
     {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
+    {
      "code": "money_unknown",
      "dimension": "financial_exposure",
      "effect": "info",
@@ -2017,6 +2209,12 @@
    "status": "VERIFIED",
    "reasons": [
     {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
+    {
      "code": "money_unknown",
      "dimension": "financial_exposure",
      "effect": "info",
@@ -2044,6 +2242,12 @@
   "ethereum-l1:0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a": {
    "status": "PARTIAL",
    "reasons": [
+    {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
     {
      "code": "money_unknown",
      "dimension": "financial_exposure",
@@ -2085,6 +2289,12 @@
    "status": "VERIFIED",
    "reasons": [
     {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
+    {
      "code": "money_unknown",
      "dimension": "financial_exposure",
      "effect": "info",
@@ -2125,6 +2335,12 @@
      "detail": "no admin slot, owner(), admin(), DEFAULT_ADMIN_ROLE member or authority() answered"
     },
     {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
+    {
      "code": "money_unknown",
      "dimension": "financial_exposure",
      "effect": "info",
@@ -2159,6 +2375,12 @@
    "status": "VERIFIED",
    "reasons": [
     {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
+    {
      "code": "money_unknown",
      "dimension": "financial_exposure",
      "effect": "info",
@@ -2192,6 +2414,12 @@
   "ethereum-l1:0x49048044d57e1c92a77f79988d21fa8faf74e97e": {
    "status": "VERIFIED",
    "reasons": [
+    {
+     "code": "method_version_unregistered",
+     "dimension": "method",
+     "effect": "info",
+     "detail": "this method hash has no version in data/method_versions.json"
+    },
     {
      "code": "money_unknown",
      "dimension": "financial_exposure",
@@ -2439,12 +2667,6 @@
    "status": "DISPUTED",
    "reasons": [
     {
-     "code": "admin_events_unread",
-     "dimension": "coverage",
-     "effect": "degrades",
-     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
-    },
-    {
      "code": "block_not_honoured",
      "dimension": "reading",
      "effect": "decides",
@@ -2471,7 +2693,7 @@
    ],
    "dimensions": {
     "reading": "disputed",
-    "coverage": "partial",
+    "coverage": "ok",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
@@ -2484,12 +2706,6 @@
   "hyperliquid:0x8888888c43cbb7e1c4132542e46831bffd866ed3": {
    "status": "UNVERIFIED",
    "reasons": [
-    {
-     "code": "admin_events_unread",
-     "dimension": "coverage",
-     "effect": "degrades",
-     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
-    },
     {
      "code": "block_not_honoured",
      "dimension": "reading",
@@ -2523,7 +2739,7 @@
    ],
    "dimensions": {
     "reading": "unverified",
-    "coverage": "partial",
+    "coverage": "ok",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
@@ -2536,12 +2752,6 @@
   "hyperliquid:0x8888888192a4a0593c13532ba48449fc24c3beda": {
    "status": "UNVERIFIED",
    "reasons": [
-    {
-     "code": "admin_events_unread",
-     "dimension": "coverage",
-     "effect": "degrades",
-     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
-    },
     {
      "code": "block_not_honoured",
      "dimension": "reading",
@@ -2569,7 +2779,7 @@
    ],
    "dimensions": {
     "reading": "unverified",
-    "coverage": "partial",
+    "coverage": "ok",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
@@ -2580,14 +2790,8 @@
    "retry_may_help": false
   },
   "hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109": {
-   "status": "UNVERIFIED",
+   "status": "DISPUTED",
    "reasons": [
-    {
-     "code": "admin_events_unread",
-     "dimension": "coverage",
-     "effect": "degrades",
-     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
-    },
     {
      "code": "block_not_honoured",
      "dimension": "reading",
@@ -2595,16 +2799,22 @@
      "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
     },
     {
-     "code": "independent_read_unreadable",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "holder probes not all answered (RPC)"
-    },
-    {
      "code": "pause_no_getter",
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "reader_disagrees",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the score says one key does everything (10), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisi"
+    },
+    {
+     "code": "safe_signers_unclassified",
+     "dimension": "reading",
+     "effect": "degrades",
+     "detail": "8 signer(s) of the Safe could not be classified (key, Safe, timelock, contract)"
     },
     {
      "code": "side_roles_not_covered",
@@ -2614,8 +2824,8 @@
     }
    ],
    "dimensions": {
-    "reading": "unverified",
-    "coverage": "partial",
+    "reading": "disputed",
+    "coverage": "ok",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
@@ -2829,22 +3039,10 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
-     "code": "admin_events_unread",
-     "dimension": "coverage",
-     "effect": "degrades",
-     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
-    },
-    {
      "code": "block_not_honoured",
      "dimension": "reading",
      "effect": "decides",
      "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
-     "code": "independent_read_unreadable",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "holder probes not all answered (RPC)"
     },
     {
      "code": "pause_no_getter",
@@ -2861,7 +3059,7 @@
    ],
    "dimensions": {
     "reading": "unverified",
-    "coverage": "partial",
+    "coverage": "ok",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
@@ -2875,22 +3073,10 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
-     "code": "admin_events_unread",
-     "dimension": "coverage",
-     "effect": "degrades",
-     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
-    },
-    {
      "code": "block_not_honoured",
      "dimension": "reading",
      "effect": "decides",
      "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
-     "code": "independent_read_unreadable",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "holder probes not all answered (RPC)"
     },
     {
      "code": "money_unknown",
@@ -2913,7 +3099,7 @@
    ],
    "dimensions": {
     "reading": "unverified",
-    "coverage": "partial",
+    "coverage": "ok",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",

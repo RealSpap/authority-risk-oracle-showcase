@@ -18,7 +18,7 @@
 - **timelock queue unread** robinhood 0x826aeaeee9233fa8ba199518dd8621a5962b1d02 (31.4 d): robinhood timelock 0x826a…1d02, found by the independent reader (1 tracked contract): UNREAD (ContractLogicError: ('execution reverted', '0x')). To do: find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen. (pending_ops.json)
 - **timelock queue unread** base 0xcc3e7c85bb0ee4f09380e041fee95a0caedd4a02 (24.5 d): base timelock 0xcc3e…4a02, found by the independent reader (1 tracked contract): UNREAD (RetryError: HTTPSConnectionPool(host='base.rpc.sentio.xyz', port=443): Max retries exceeded with url: / (Caused . To do: find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen. (pending_ops.json)
 - **second opinion disagrees** hyperliquid 0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec (9.0 d): the score says one key does everything (10), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisig (0), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(). To do: review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json. (second_opinion.json disagreements)
-- **timelock queue unread** hyperliquid 0xc5ded4f7f53919c714059a17d31371ae847e23d2 (3.4 d): hyperliquid timelock 0xc5de…23d2, found by the independent reader (1 tracked contract): UNREAD (Web3RPCError: {'code': -32005, 'message': 'rate limited'}). To do: find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen. (pending_ops.json)
+- **timelock queue unread** hyperliquid 0xc5de…23d2 (3.4 d): hyperliquid timelock 0xc5de…23d2, found by the independent reader (1 tracked contract): UNREAD (Web3RPCError: {'code': -32005, 'message': 'rate limited'}). To do: find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen. (pending_ops.json)
 
 ### Coverage to extend (4)
 - **admin Safe never used** robinhood 0x9d53d5e3bd5e8d4cbfa6db1ca238aea02e651010 (31.4 d): robinhood:0x0605…9728 has executed no transaction (nonce 0). To do: an admin path nobody has exercised: confirm the signers can still act. (safe_activity.json)
@@ -68,16 +68,11 @@
 - 15 target(s) added since that snapshot are not fingerprinted yet (informational)
 
 ## Solana Squads v4 multisigs (members, threshold, time lock)
-- [CHANGED] 51smH7pBDKJDgmVnVks3gMWaPQFfmQ5s4Fc223yHcjuH (EXPONENT_MS): time lock (s) 14400 -> 36000
 - [CHANGED] 5JZFPx6Qkg9PAgYMn9wHWirsiEQBfeJuE667MWeRBLPN (REWARD_SUPER_MS): member added 86mC…iMLg (permissions 6); member added CjEM…LZKY (permissions 7); member added FbcW…vHW7 (permissions 7); member removed 6Li1…ueL9; member removed BWyV…1w9C
 - [CHANGED] 5Y93cxqp8rGtjDhxGkehewfhFdxLkrCfPDWookCGeASF (JL_ADMIN_MS, ADMIN_MS): member removed 4Sqa…4Jqp; threshold 5 -> 4
 - [CHANGED] 74QKjjvoSrq2cGqFzzQNN8ox3gomYS1mBwcLsbiYaH8j (ADMIN_MS): member added 6vRh…apm9 (permissions 7); member removed 3Cxn…MEMB; member removed FwZd…YJCX
-- [CHANGED] 7FCPipJWVbPbdHymVt1gJYwKciakkJz5GahdQySemvHk (UPGRADE_MS): member added 6vRh…apm9 (permissions 7); member removed 3Cxn…MEMB
 - [CHANGED] 7VVPGwvWh37LyhL1tVm6pGUzm3S1u6p17H6ttT9ZEFex (DELEGATE_MS): member added DAk1…KiMf (permissions 7)
-- [CHANGED] AEb1u8FK8EuXLcPtprCy8s4NkqBNoP5mfbuEEop2dJGf (SOLSTICE_MS): member added 5kVC…SK1G (permissions 7); member added GG2k…Ub8E (permissions 7)
-- [CHANGED] BQsDWkL417U4tVE2sDnPks469pKdm6YzFgKH77doiEjF (UPGRADE_MS): member added 6M7B…99HV (permissions 2); member added CjEM…LZKY (permissions 5); member removed 2NfC…7gXb; member removed 9FtD…ZMn4
 - [CHANGED] HvYoRSJdVcj6WRWV57yLu2Vmwh1ccqJRdkCwhNsSfRu4 (ADMIN_MS): time lock (s) 0 -> 21600
-- [CHANGED] J3mJ3wz6xkVUk3T8qHnuAYNxsRH3ixHsryYNZAU2vG8P (JL_UPGRADE_MS, UPGRADE_MS): member added 5tjC…LKzv (permissions 7); member removed 8BR8…rz9H
 
 ## Signer accounts (plain EOA, EIP-7702 delegation, contract)
 - [CHANGED] base:0x8769…5838: eoa -> contract

@@ -667,18 +667,28 @@
    "chain": "arbitrum",
    "timelock": "arbitrum timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
    "what": "parameter change"
+  },
+  "plasma:0x2130457539612ae9838e0314cda1a8abbdb7cfbc:0x343f91460311dfd8424e64a6aa7ddf2d5f3c9d879ed420874bf663c337da65a1": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-11-11T14:26:57Z",
+   "due_utc": "2026-11-13T09:03:27Z",
+   "notice_hours": 42.6,
+   "state": "queued",
+   "chain": "plasma",
+   "timelock": "plasma timelock 0x2130\u2026cfbc, found by the independent reader (1 tracked contract)",
+   "what": "authority change"
   }
  },
- "updated_utc": "2026-11-11T06:15:05Z",
+ "updated_utc": "2026-11-11T14:26:57Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
-  "warned": 39,
+  "warned": 40,
   "seen_without_notice": 0,
   "missed": 1,
   "baseline": 26,
-  "warned_with_a_known_notice": 39,
+  "warned_with_a_known_notice": 40,
   "shortest_notice_hours": 14.0,
-  "median_notice_hours": 22.1,
+  "median_notice_hours": 22.2,
   "note": "warned: seen while queued and not yet executable (the notice is real); seen_without_notice: still queued but already executable when first seen; missed: queued after the ledger started and already applied when first seen (faster than the 6-hour cadence); baseline: applied before the ledger started, counted as neither."
  }
 }

@@ -1,9 +1,33 @@
 {
- "generated_utc": "2026-11-10T22:13:04Z",
+ "generated_utc": "2026-11-11T06:34:23Z",
  "compared": 202,
  "new_this_run": 1,
  "first_seen_oracles": [],
  "moves": [
+  {
+   "run_utc": "2026-11-11T06:34:23Z",
+   "oracle": "plasma",
+   "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
+   "composite": [
+    59,
+    59
+   ],
+   "methodology_changed": false,
+   "axes": [
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 52,
+     "to": 20,
+     "why": "the price feed moved under fewer hands (52 \u2192 20)"
+    }
+   ],
+   "block": 38546982,
+   "lastUpdated": [
+    1793653056,
+    1794350227
+   ]
+  },
   {
    "run_utc": "2026-11-10T22:13:04Z",
    "oracle": "solana-devnet",

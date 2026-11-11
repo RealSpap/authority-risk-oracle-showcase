@@ -1,14 +1,14 @@
 {
- "run_utc": "2026-11-10T21:49:51Z",
+ "run_utc": "2026-11-11T06:15:05Z",
  "state": "alarm",
  "reasons": [
-  "4 alarm(s) raised by the watch",
+  "2 alarm(s) raised by the watch",
   "1 retired target(s) listed apart, not counted stale (information, no change of state; names in latest.json `retired`)",
   "1 upgrade(s) executed on tracked contracts since the previous run",
-  "3 second-opinion disagreement(s) to review",
-  "9 second-opinion disagreement(s) corroborated: the reader itself read and verified a second, weaker authority path on chain (listed in second_opinion.json under corroborated_disagreements with the facts read, recomputed at every run, not counted as a disagreement to review)",
+  "2 second-opinion disagreement(s) to review",
+  "8 second-opinion disagreement(s) corroborated: the reader itself read and verified a second, weaker authority path on chain (listed in second_opinion.json under corroborated_disagreements with the facts read, recomputed at every run, not counted as a disagreement to review)",
   "1 high alert(s) from the rules firing now (an upgrade was executed: the implementation behind this contract changed since the previous run)",
-  "the Watch was silent for 39.4 hours before this run (previous run 2026-11-09T06:23:57Z, scheduled every 6 hours): information, no change of state"
+  "the Watch was silent for 8.4 hours before this run (previous run 2026-11-10T21:49:51Z, scheduled every 6 hours): information, no change of state"
  ],
  "data_location": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/watch-data/",
  "checks": {
@@ -17,28 +17,28 @@
   "targets": 202,
   "stale": 0,
   "retired": 1,
-  "alarms": 4,
+  "alarms": 2,
   "chain_ok": true,
-  "chain_entries": 263,
+  "chain_entries": 267,
   "signed": true,
   "signature_status": "signed",
   "signing_key": "11baca3ef6a69de4901c185f6cbbd3f93318fbb74f9961a8d39aead841adf409",
   "second_opinion": {
-   "agree": 135,
-   "disagree": 3,
-   "corroborated": 9,
+   "agree": 134,
+   "disagree": 2,
+   "corroborated": 8,
    "acknowledged": 0,
-   "unreadable": 39,
+   "unreadable": 42,
    "native": 16
   },
   "methodology_mixed": 0,
   "disputes_open": 0,
-  "review_items": 19
+  "review_items": 15
  },
  "what": "the run's health in one record: ok / degraded / alarm with the reasons; written by scripts/run_status.py after every Watch run",
  "main_last_commit_age_days": 0,
- "runs_7d": 16,
- "previous_run_utc": "2026-11-09T06:23:57Z",
- "hours_since_previous_run": 39.4,
- "run_id": "42908738597.1"
+ "runs_7d": 15,
+ "previous_run_utc": "2026-11-10T21:49:51Z",
+ "hours_since_previous_run": 8.4,
+ "run_id": "42971062662.1"
 }

@@ -518,53 +518,6 @@
   }
  },
  {
-  "name": "Loopscale",
-  "tvl": "$125M",
-  "category": "Lending",
-  "version": "Squads V4",
-  "threshold": "4",
-  "members": "9",
-  "timelock_s": "86400",
-  "multisig": "C4awuufiuL8DNT5wMDP27HneKKqbgynrsbCa4XYGSuPk",
-  "authority": "DwBXwJDZ4Av4miT62sEssWJUinkzwkmPPB4Fg3fKEfft",
-  "programs": [
-   {
-    "name": "Loopscale",
-    "id": "1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78",
-    "authority": "DwBXwJDZ4Av4miT62sEssWJUinkzwkmPPB4Fg3fKEfft"
-   },
-   {
-    "name": "Beam",
-    "id": "beamVVkNmKeXcuZ6zLpC9eM5YgVyAn4Z9xdPrz3gCW2",
-    "authority": "DwBXwJDZ4Av4miT62sEssWJUinkzwkmPPB4Fg3fKEfft"
-   }
-  ],
-  "programs_live": [
-   {
-    "name": "Loopscale",
-    "id": "1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78",
-    "authority": "DwBXwJDZ4Av4miT62sEssWJUinkzwkmPPB4Fg3fKEfft",
-    "live_authority": "DwBXwJDZ4Av4miT62sEssWJUinkzwkmPPB4Fg3fKEfft",
-    "same_as_solgov": true
-   },
-   {
-    "name": "Beam",
-    "id": "beamVVkNmKeXcuZ6zLpC9eM5YgVyAn4Z9xdPrz3gCW2",
-    "authority": "DwBXwJDZ4Av4miT62sEssWJUinkzwkmPPB4Fg3fKEfft",
-    "live_authority": "DwBXwJDZ4Av4miT62sEssWJUinkzwkmPPB4Fg3fKEfft",
-    "same_as_solgov": true
-   }
-  ],
-  "multisig_live": {
-   "threshold": 4,
-   "members": 9,
-   "time_lock_s": 86400,
-   "vault0": "DwBXwJDZ4Av4miT62sEssWJUinkzwkmPPB4Fg3fKEfft",
-   "vault0_is_solgov_authority": true,
-   "same_shape_as_solgov": true
-  }
- },
- {
   "name": "Exponent",
   "tvl": "$76M",
   "category": "Yield",

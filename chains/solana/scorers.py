@@ -2657,7 +2657,6 @@ def score_sanctum_validator_lsts(url) -> dict:
 SOLSTICE_MS = "AEb1u8FK8EuXLcPtprCy8s4NkqBNoP5mfbuEEop2dJGf"
 SOLSTICE_AUX_MS = "BPdkMGWnttz4izo6RD6pXpcbVgGiqD2GR3Jds7HvaXEE"
 GMSOL_MS = "CxnEVpQQcYa628TywzHGXeJ2jdVmbU51rnERat9xunP1"
-LOOPSCALE_MS = "C4awuufiuL8DNT5wMDP27HneKKqbgynrsbCa4XYGSuPk"
 HUMA_MS = "uGLhzjot32i9nNKZKUoCzr7sG8bFAXQRN3uZPTUr7gX"
 LULO_MS = "8Sr4rQJL2aQT3EL97mbrk1T9VMw4pCS2mxMPp2QBzHQq"
 EXPONENT_MS = "51smH7pBDKJDgmVnVks3gMWaPQFfmQ5s4Fc223yHcjuH"
@@ -2674,9 +2673,6 @@ SOLGOV_LEADS = (
             ("Core", "Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo"), ("Exchange", "GTuvYD5SxkTq4FLG6JV1FQ5dkczr1AfgDcBHaFsBdtBg"),
             ("LP Manager", "LPMWczEVgXyQ3979XaqqEttanCXmYGvtJqPVtw1PvC8"), ("Router", "2AxuNr6euZPKQbTwNsLBjzFTZFAevA85F4PW9m9Dv8pc"),
             ("TimeBQ", "TimeBQ7gQyWyQMD3bTteAdy7hTVDNWSwELdSVZHfSXL"), ("12cJK", "12cJKgP9r2bcaruqu3XsCS1hxLqsHrmZhqG5Qy2TWRap")))),
-    ("Loopscale", "1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78", "Loopscale (Loopscale, Beam)", tuple(
-        (n, pid, LOOPSCALE_MS, 0) for n, pid in (
-            ("Loopscale", "1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78"), ("Beam", "beamVVkNmKeXcuZ6zLpC9eM5YgVyAn4Z9xdPrz3gCW2")))),
     ("Huma Finance", "HumaXepHnjaRCpjYTokxY4UtaJcmx41prQ8cxGmFC5fn", "Huma Finance (Permissionless, Institutional)", tuple(
         (n, pid, HUMA_MS, 0) for n, pid in (
             ("Permissionless", "HumaXepHnjaRCpjYTokxY4UtaJcmx41prQ8cxGmFC5fn"), ("Institutional", "EVQ4s1b6N1vmWFDv8PRNc77kufBP8HcrSNWXQAhRsJq9")))),

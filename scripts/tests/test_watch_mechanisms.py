@@ -2187,9 +2187,9 @@ class TestMutationWorkflowAndReport(unittest.TestCase):
 
     def test_the_workflow_is_weekly_read_only_bounded_and_runs_the_tool_with_a_summary(self):
         t = self.wf("mutation.yml")
-        for want in ('cron: "41 4 * * 1"', "workflow_dispatch:", "permissions:\n  contents: read", "timeout-minutes: 150", 'python3 scripts/mutate.py --markdown "$GITHUB_STEP_SUMMARY"', "persist-credentials: false", "python-version: \"3.11\""): self.assertIn(want, t)
+        for want in ('cron: "41 4 * * 1"', "workflow_dispatch:", "permissions:\n  contents: read", "timeout-minutes: 180", 'python3 -u scripts/mutate.py --jobs 4 --markdown "$GITHUB_STEP_SUMMARY"', "persist-credentials: false", "python-version: \"3.11\""): self.assertIn(want, t)
         self.assertNotIn("contents: write", t); self.assertNotIn("secrets.", t)   # it reads, it needs no secret
-        self.assertIn('run: python3 scripts/mutate.py --markdown "$GITHUB_STEP_SUMMARY"\n', t + "\n"); self.assertNotIn("|| true", t); self.assertNotIn("continue-on-error", t)   # a surviving mutant must turn the workflow red
+        self.assertIn('run: python3 -u scripts/mutate.py --jobs 4 --markdown "$GITHUB_STEP_SUMMARY"\n', t + "\n"); self.assertNotIn("|| true", t); self.assertNotIn("continue-on-error", t)   # a surviving mutant must turn the workflow red
 
     def test_its_actions_are_pinned_to_the_same_commits_as_the_watch_workflow(self):
         import re
@@ -2547,12 +2547,16 @@ class TestMutantsAreJudgedByTheRealTests(unittest.TestCase):
     and was counted caught although no behavioural test noticed (an equivalent mutant looked caught)."""
     def test_the_replay_tells_the_suite_it_runs_on_a_mutant(self):
         seen = {}
-        class R: returncode = 0; stdout = ""; stderr = ""
-        def fake(cmd, **kw): seen.update(kw); return R()
-        old = mutate.subprocess.run; mutate.subprocess.run = fake
+        class P:   # the suite is started with Popen since the replay kills a hung mutant with its whole process group
+            returncode = 0; pid = 1
+            def __init__(self, cmd, **kw): seen.update(kw)
+            def communicate(self, timeout=None): return "", ""
+        old = mutate.subprocess.Popen; mutate.subprocess.Popen = P
         try: mutate.run_suite("/nonexistent")
-        finally: mutate.subprocess.run = old
+        finally: mutate.subprocess.Popen = old
         self.assertEqual(seen["env"]["ARO_MUTATING"], "1"); self.assertIn("PATH", seen["env"])   # and the rest of the environment is kept
+        self.assertNotEqual(seen["env"]["TMPDIR"], os.environ.get("TMPDIR"))   # its own temporary folder: two suites at once do not share the system one
+        self.assertTrue(seen["start_new_session"])   # its own process group, so that a timeout can kill what the suite started
 
     def test_the_anchor_test_stands_aside_under_a_replay_and_runs_otherwise(self):
         t = TestMutationSpec("test_every_mutation_still_applies_exactly_once_and_compiles")

@@ -921,8 +921,8 @@
   },
   {
    "file": ".github/workflows/mutation.yml",
-   "old": "run: python3 scripts/mutate.py --markdown \"$GITHUB_STEP_SUMMARY\"",
-   "new": "run: python3 scripts/mutate.py --markdown \"$GITHUB_STEP_SUMMARY\" || true",
+   "old": "run: python3 -u scripts/mutate.py --jobs 4 --markdown \"$GITHUB_STEP_SUMMARY\"",
+   "new": "run: python3 -u scripts/mutate.py --jobs 4 --markdown \"$GITHUB_STEP_SUMMARY\" || true",
    "why": "a surviving mutant does not turn the workflow red"
   },
   {
@@ -2550,6 +2550,30 @@
    "old": "if self_w.get(\"read\"): return max(block, since)",
    "new": "if self_w.get(\"read\"): return block",
    "why": "the role-scan marker moves back when the fallback node is behind (the same window is scanned and logged twice)"
+  },
+  {
+   "file": "scripts/mutate.py",
+   "old": "    return max(floor, factor * base_seconds)",
+   "new": "    return factor * base_seconds",
+   "why": "the clock of a mutant has no floor: a fast suite gives a mutant a clock it cannot meet"
+  },
+  {
+   "file": "scripts/mutate.py",
+   "old": "if a.jobs < 1 or (a.jobs > 1 and a.in_place):",
+   "new": "if a.jobs < 1:",
+   "why": "--jobs with --in-place is accepted: the workers would write to the same files"
+  },
+  {
+   "file": "scripts/mutate.py",
+   "old": "(r[\"verdict\"] == \"TIMEOUT\" or r.get(\"seconds\", 0) >= slow_after)]",
+   "new": "(r.get(\"seconds\", 0) >= slow_after)]",
+   "why": "a mutant stopped by its clock is not in the table of the slow ones"
+  },
+  {
+   "file": "scripts/mutate.py",
+   "old": "env=dict(os.environ, ARO_MUTATING=\"1\", TMPDIR=tmp))",
+   "new": "env=dict(os.environ, ARO_MUTATING=\"1\"))",
+   "why": "the suites of two workers share the system temporary folder"
   }
  ]
 }

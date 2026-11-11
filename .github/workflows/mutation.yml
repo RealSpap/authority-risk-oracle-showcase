@@ -18,7 +18,7 @@ concurrency:
 jobs:
   mutation:
     runs-on: ubuntu-latest
-    timeout-minutes: 180   # the run of 11/10 evening was cancelled at its 150 minutes, with an empty log until the end; the cause is not established. A fixed 300 s for each mutant that loops, a log buffered until the end and a child process left running by a stopped mutant could have contributed. The replay now derives the clock of a mutant from the untouched suite, runs 4 at a time, prints each result and stops a mutant with its process group; 180 is the margin above the estimate, and the estimate grows with every mutation added
+    timeout-minutes: 360   # the run of 11 November (180 minutes) stopped with 270 of 429 mutants replayed, every one caught, each taking about 157 s because the untouched suite takes about 143 s on the runner and a caught mutant still runs it to the end; 429 mutants at 4 workers need about 280 minutes, under the 360 minutes that GitHub allows a hosted job; the estimate grows with every mutation added, so a run that needs more than 330 minutes must be reduced, not given a longer limit
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262   # v4.4.0, pinned to its commit: a moved tag cannot change what runs here
         with:

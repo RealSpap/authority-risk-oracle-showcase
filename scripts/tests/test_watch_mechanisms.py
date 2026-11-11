@@ -2187,7 +2187,7 @@ class TestMutationWorkflowAndReport(unittest.TestCase):
 
     def test_the_workflow_is_weekly_read_only_bounded_and_runs_the_tool_with_a_summary(self):
         t = self.wf("mutation.yml")
-        for want in ('cron: "41 4 * * 1"', "workflow_dispatch:", "permissions:\n  contents: read", "timeout-minutes: 180", 'python3 -u scripts/mutate.py --jobs 4 --markdown "$GITHUB_STEP_SUMMARY"', "persist-credentials: false", "python-version: \"3.11\""): self.assertIn(want, t)
+        for want in ('cron: "41 4 * * 1"', "workflow_dispatch:", "permissions:\n  contents: read", "timeout-minutes: 360", 'python3 -u scripts/mutate.py --jobs 4 --markdown "$GITHUB_STEP_SUMMARY"', "persist-credentials: false", "python-version: \"3.11\""): self.assertIn(want, t)
         self.assertNotIn("contents: write", t); self.assertNotIn("secrets.", t)   # it reads, it needs no secret
         self.assertIn('run: python3 -u scripts/mutate.py --jobs 4 --markdown "$GITHUB_STEP_SUMMARY"\n', t + "\n"); self.assertNotIn("|| true", t); self.assertNotIn("continue-on-error", t)   # a surviving mutant must turn the workflow red
 

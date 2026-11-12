@@ -18,7 +18,7 @@ concurrency:
 jobs:
   mutation:
     runs-on: ubuntu-latest
-    timeout-minutes: 360   # the run of 11 November (180 minutes) stopped with 270 of 429 mutants replayed, every one caught, each taking about 157 s because the untouched suite takes about 143 s on the runner and a caught mutant still runs it to the end; 429 mutants at 4 workers need about 280 minutes, under the 360 minutes that GitHub allows a hosted job; the estimate grows with every mutation added, so a run that needs more than 330 minutes must be reduced, not given a longer limit
+    timeout-minutes: 360   # the run of 11 November (180 minutes) stopped with 270 of 429 mutants replayed, every one caught, each taking about 157 s: the whole suite (about 143 s on the runner) ran for every mutant. Now a mutant meets first the test modules that name its file, stopping at the first failure, and the whole suite only if they pass (a mutant is called survived only after the whole suite). On a laptop, not on the runner, the first 270 mutants took 10.5 s each on average where the whole suite took about 222 s; the 429 are estimated at 20 to 55 minutes at 4 workers on the runner, not measured there. The limit stays at 360 minutes, the longest GitHub allows a hosted job; the estimate grows with every mutation added, so a run that needs more than 330 minutes must be reduced, not given a longer limit
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262   # v4.4.0, pinned to its commit: a moved tag cannot change what runs here
         with:

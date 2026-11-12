@@ -228,7 +228,11 @@ jobs:
       - name: Which oracle turns stale, and when (EVM, Solana)
         run: |
           set +e
-          python3 scripts/oracle_freshness.py --warn-hours 48 > watch/freshness.txt 2>&1 || { c=$?; if grep -q Traceback watch/freshness.txt; then echo "exit code $c" >> watch/freshness.txt; else echo "stale or unreadable oracle (exit $c): a warning, not a failure; the dashboard shows it, the digest lists it" >> watch/freshness.txt; fi; }   # a stale oracle is a known state shown on the page, not a red job
+          # One retry, this step only. Not in plan 12.4 (its row 1 asks to read the cause of the failures before any correction): added by the work order of 12 Nov. Why this step: it is the one RPC read that writes nothing but its own log (eth_call and getAccountInfo, no state of the Watch, no file read back by a later step), so a second pass cannot double-write anything. Never copy this to a step that writes state (watch_run.py, second_opinion.py, pause_state.py, the record step, an issue).
+          # The second pass runs only when the first one could not READ an oracle (UNREADABLE) or crashed (Traceback); a stale oracle (exit 1 without those words) is a known state and is not read twice.
+          python3 scripts/oracle_freshness.py --warn-hours 48 > watch/freshness.txt 2>&1; c=$?
+          if [ "$c" != 0 ] && grep -qE 'UNREADABLE|Traceback' watch/freshness.txt; then echo "::notice title=Freshness read::an oracle could not be read, one more read in 30 seconds"; sleep 30; python3 scripts/oracle_freshness.py --warn-hours 48 > watch/freshness.txt 2>&1; c=$?; fi
+          if [ "$c" != 0 ]; then if grep -q Traceback watch/freshness.txt; then echo "exit code $c" >> watch/freshness.txt; else echo "stale or unreadable oracle (exit $c): a warning, not a failure; the dashboard shows it, the digest lists it" >> watch/freshness.txt; fi; fi   # a stale oracle is a known state shown on the page, not a red job
 
       - name: What is queued behind the watched timelocks, and what just went through
         run: timeout 15m python3 scripts/check_pending_ops.py --days 90 --recent-days 14 --out watch/pending_ops.json > watch/pending_ops.txt 2>&1 || { c=$?; if [ "$c" = 124 ]; then echo "timed out at the step limit (124), previous file kept, a warning" >> watch/pending_ops.txt; else echo "exit code $c" >> watch/pending_ops.txt; fi; }
@@ -565,3 +569,33 @@ jobs:
         run: |
           { cat watch/run.log watch/freshness.txt 2>/dev/null; grep -H 'exit code' watch/*.txt watch/*.log 2>/dev/null; } | sed 's/^/  /' || true   # never digest.log or safe_changes.log here: they hold text from before the redaction, and Actions logs of a public repository are public
           if grep -lq 'exit code' watch/*.txt watch/*.log 2>/dev/null; then echo "::error::a step failed, see the logs above"; exit 1; fi
+
+      - name: "Failure report: a failed run opens one issue in the repository named by the variable ALERT_REPO, never in this repository"
+        # Plan 12.4, row 1: the cause of the failures since 4 Nov is unread. This step does not correct anything: it makes each failed run reach a private place with its link, so the cause is read from the run itself.
+        # Target: the repository variable ALERT_REPO (owner/name, set by the owner). Empty, unreadable or equal to this repository: no issue, a warning in the job summary, the step ends green. The token is the existing secret ISSUES_TOKEN (the alarm steps use it); nothing is written here.
+        # The issue holds the workflow name, the UTC time, the link of the run and the number of the last failed step: no name, no address, no data of the oracles. One issue per run (the run id is in the title).
+        # Limit, not checked on GitHub: a job stopped by its time limit may not run this step.
+        if: failure()
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.ISSUES_TOKEN }}
+          READ_TOKEN: ${{ github.token }}   # read-only use: the list of steps of this run (permission actions: read)
+          ALERT_REPO: ${{ vars.ALERT_REPO }}
+          THIS_REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          WORKFLOW_NAME: ${{ github.workflow }}
+        run: |
+          S="${GITHUB_STEP_SUMMARY:-/dev/null}"
+          skip() { echo "::warning title=Failure report::$1"; printf '### Failure report not sent\n\n%s\n' "$1" >> "$S"; exit 0; }
+          [ -n "$ALERT_REPO" ] || skip "the repository variable ALERT_REPO is empty: no issue was opened (this run failed, read its log)."
+          printf '%s' "$ALERT_REPO" | grep -Eq '^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$' || skip "ALERT_REPO is not of the form owner/name: no issue was opened."
+          [ "$(printf '%s' "$ALERT_REPO" | tr 'A-Z' 'a-z')" != "$(printf '%s' "$THIS_REPO" | tr 'A-Z' 'a-z')" ] || skip "ALERT_REPO is this repository: no issue is opened here, the repository is public."
+          [ -n "$GH_TOKEN" ] || skip "no ISSUES_TOKEN secret: no issue was opened."
+          n=$(GH_TOKEN="$READ_TOKEN" gh api "repos/$THIS_REPO/actions/runs/$RUN_ID/jobs" --jq '[.jobs[] | select(.name == "watch") | .steps[] | select(.conclusion == "failure") | select(.name | startswith("Red if any step failed") | not)] | last | .number // empty' 2>/dev/null || true)
+          case "$n" in ''|*[!0-9]*) last="none other than the final check step (a step wrote its failure into its file)";; *) last="step number $n of the job";; esac
+          dup=$(gh issue list --repo "$ALERT_REPO" --label watch-failure --state all --search "run $RUN_ID in:title" --json number --jq 'length' 2>/dev/null || echo 0)
+          [ "${dup:-0}" = 0 ] || { echo "an issue for this run already exists"; exit 0; }
+          { printf 'Workflow: %s\nTime: %s UTC\nRun: %s\nLast failed step: %s\n\nNothing else is written here: read the log of the run.\n' "$WORKFLOW_NAME" "$(date -u '+%Y-%m-%d %H:%M')" "$RUN_URL" "$last"; } > "$RUNNER_TEMP/failure_report.md"
+          gh label create watch-failure --repo "$ALERT_REPO" --color B60205 --description "A Watch run failed" > /dev/null 2>&1 || true
+          gh issue create --repo "$ALERT_REPO" --title "Watch run failed $(date -u '+%Y-%m-%d %H:%M') UTC, run $RUN_ID" --label watch-failure --body-file "$RUNNER_TEMP/failure_report.md" > /dev/null 2>&1 || skip "the issue could not be opened in ALERT_REPO (token or permission): read the log of the run."

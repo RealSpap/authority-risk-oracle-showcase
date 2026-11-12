@@ -1,7 +1,7 @@
 name: Mutation
 
 # Replays scripts/tests/mutations.json: breaks the code one way at a time and checks that the test suite notices.
-# Weekly and by hand. Read-only: no key, no write. Red when a mutant survives (a gap in the tests), when a mutation no longer applies
+# Weekly and by hand. Read-only: no key, no write except its cache of verdicts (below). Red when a mutant survives (a gap in the tests), when a mutation no longer applies
 # (the code it targets moved) or when a mutant does not run (it is never counted as caught). The report is the job summary.
 on:
   schedule:
@@ -32,5 +32,14 @@ jobs:
 
       - run: pip install "PyYAML==6.0.2"   # scripts/tests/test_watch_cadence.py reads the workflow files with yaml.safe_load and the replay runs that suite; the Watch itself does not need it, so it is not in requirements.txt
 
+      # The verdicts CAUGHT of the last green run, kept for 7 days and only for an identical tree (scripts/mutate.py --cache): a run by hand within 7 days of a green run, on a tree that did not change, can replay only the suite itself; a weekly run mostly replays, since an entry is 7 days old at best and a new release of a package changes every key.
+      # The file is outside the checkout (the workers copy the checkout, a cached file is never a test input); the cache is saved by the post step of this action only when the job succeeded,
+      # and scripts/mutate.py writes the file only for a run with no survivor, invalid, stale or hung mutant. The key is new each run (a cache is never overwritten), the restore takes the latest one.
+      - uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684   # v4.2.3, pinned to its commit, as the other actions
+        with:
+          path: ${{ runner.temp }}/mutation-verdicts
+          key: mutation-cache-${{ github.run_id }}
+          restore-keys: mutation-cache-
+
       - name: The suite passes on the untouched tree, then every mutation is replayed on a copy
-        run: python3 -u scripts/mutate.py --jobs 4 --markdown "$GITHUB_STEP_SUMMARY"
+        run: python3 -u scripts/mutate.py --jobs 4 --cache "$RUNNER_TEMP/mutation-verdicts/verdicts.json" --markdown "$GITHUB_STEP_SUMMARY"

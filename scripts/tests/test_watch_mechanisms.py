@@ -2187,14 +2187,23 @@ class TestMutationWorkflowAndReport(unittest.TestCase):
 
     def test_the_workflow_is_weekly_read_only_bounded_and_runs_the_tool_with_a_summary(self):
         t = self.wf("mutation.yml")
-        for want in ('cron: "41 4 * * 1"', "workflow_dispatch:", "permissions:\n  contents: read", "timeout-minutes: 360", 'python3 -u scripts/mutate.py --jobs 4 --markdown "$GITHUB_STEP_SUMMARY"', "persist-credentials: false", "python-version: \"3.11\""): self.assertIn(want, t)
+        for want in ('cron: "41 4 * * 1"', "workflow_dispatch:", "permissions:\n  contents: read", "timeout-minutes: 360", 'python3 -u scripts/mutate.py --jobs 4 --cache "$RUNNER_TEMP/mutation-verdicts/verdicts.json" --markdown "$GITHUB_STEP_SUMMARY"', "persist-credentials: false", "python-version: \"3.11\""): self.assertIn(want, t)
         self.assertNotIn("contents: write", t); self.assertNotIn("secrets.", t)   # it reads, it needs no secret
-        self.assertIn('run: python3 -u scripts/mutate.py --jobs 4 --markdown "$GITHUB_STEP_SUMMARY"\n', t + "\n"); self.assertNotIn("|| true", t); self.assertNotIn("continue-on-error", t)   # a surviving mutant must turn the workflow red
+        self.assertIn('run: python3 -u scripts/mutate.py --jobs 4 --cache "$RUNNER_TEMP/mutation-verdicts/verdicts.json" --markdown "$GITHUB_STEP_SUMMARY"\n', t + "\n"); self.assertNotIn("|| true", t); self.assertNotIn("continue-on-error", t)   # a surviving mutant must turn the workflow red
 
     def test_its_actions_are_pinned_to_the_same_commits_as_the_watch_workflow(self):
         import re
         pin = lambda t: sorted(re.findall(r"uses: (actions/[a-z-]+@[0-9a-f]{40})", t)); m, w = pin(self.wf("mutation.yml")), pin(self.wf("watch.yml"))
-        self.assertEqual(len(m), 2); self.assertTrue(all(x in w for x in m), (m, w))   # a moved tag cannot change what runs
+        self.assertEqual(len(m), 3); shared = [x for x in m if not x.startswith("actions/cache@")]; self.assertEqual(len(shared), 2); self.assertTrue(all(x in w for x in shared), (m, w))   # a moved tag cannot change what runs; the cache action is the one this workflow adds, pinned to a commit as well
+
+    def test_the_verdict_cache_is_outside_the_checkout_new_each_run_and_never_written_by_a_failed_job(self):
+        import re
+        t = self.wf("mutation.yml")
+        self.assertIn("uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 ", t)   # v4.2.3: this commit and no other (a moved pin is a change of what runs)
+        for want in ("path: ${{ runner.temp }}/mutation-verdicts", "key: mutation-cache-${{ github.run_id }}", "restore-keys: mutation-cache-\n", 'permissions:\n  contents: read'): self.assertIn(want, t)   # the key changes every run: a cache is never overwritten; the path is outside the workspace the workers copy
+        self.assertIn('--cache "$RUNNER_TEMP/mutation-verdicts/verdicts.json"', t)   # the file the tool writes is inside the folder that is cached
+        self.assertLess(t.index("uses: actions/cache@"), t.index("scripts/mutate.py --jobs 4"))   # restored before the tool reads and writes the file
+        for never in ("actions: write", "pull_request", "actions/cache/save", "save-always", "if: always()", "if: failure()", "contents: write", "github.workspace"): self.assertNotIn(never, t)   # saved by the post step of a successful job only
 
     def test_the_markdown_report_lists_what_failed_and_folds_what_was_caught(self):
         res = [{"verdict": "CAUGHT", "file": "scripts/a.py", "why": "a is broken", "detail": ""}, {"verdict": "SURVIVED", "file": "scripts/b.py", "why": "b is broken", "detail": ""},

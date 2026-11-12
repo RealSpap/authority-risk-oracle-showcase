@@ -184,7 +184,7 @@ def cache_key(root, m, names, top="scripts", tree=None):
 class Cache:
     """Verdicts CAUGHT kept from the last green run, by content (the key holds the digest of the whole tree when `tree` is given, as the tool does: a finer key would miss callers, data files and scripts started by a test): {key: {at, catcher, catcher_sha}}. A hit needs the same key, an entry younger than `max_age_days`, and the module that caught the mutant
     (it may not be a linked one) unchanged. Only CAUGHT is ever stored: a survivor, a hang, an invalid or a stale mutation is always replayed. A run that is not green writes nothing. The file lives
-    outside the repository (a branch or an artifact of the workflow), never in main."""
+    outside the repository (the Actions cache of the workflow), never in main."""
     def __init__(self, path, now=time.time, max_age_days=7, top="scripts", tree=None):
         self.path, self.now, self.max_age, self.top, self.tree, self.pending = path, now, max_age_days * 86400, top, tree, {}
         try: e = json.load(open(path, encoding="utf-8")).get("entries", {})
@@ -195,7 +195,7 @@ class Cache:
 
     def hit(self, key, root):
         e = self.entries.get(key)
-        if not e or not isinstance(e.get("at"), (int, float)) or self.now() - e["at"] > self.max_age: return False
+        if not e or not isinstance(e.get("at"), (int, float)) or not 0 <= self.now() - e["at"] <= self.max_age: return False   # an entry dated in the future is never a hit
         return e.get("catcher_sha") is not None and e.get("catcher_sha") == self._sha(root, e.get("catcher"))
 
     def put(self, key, catcher, root):
@@ -204,7 +204,8 @@ class Cache:
 
     def save(self, green=True):
         if not green: return
-        keep = {k: v for k, v in {**self.entries, **self.pending}.items() if isinstance(v.get("at"), (int, float)) and self.now() - v["at"] <= self.max_age}
+        keep = {k: v for k, v in {**self.entries, **self.pending}.items() if isinstance(v.get("at"), (int, float)) and 0 <= self.now() - v["at"] <= self.max_age}
+        os.makedirs(os.path.dirname(os.path.abspath(self.path)), exist_ok=True)   # the folder of a restored cache of the workflow may not exist on the first run
         tmp = self.path + ".tmp"; json.dump({"version": 1, "entries": keep}, open(tmp, "w", encoding="utf-8")); os.replace(tmp, self.path)
 
 

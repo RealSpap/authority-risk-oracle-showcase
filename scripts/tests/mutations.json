@@ -921,8 +921,8 @@
   },
   {
    "file": ".github/workflows/mutation.yml",
-   "old": "run: python3 -u scripts/mutate.py --jobs 4 --markdown \"$GITHUB_STEP_SUMMARY\"",
-   "new": "run: python3 -u scripts/mutate.py --jobs 4 --markdown \"$GITHUB_STEP_SUMMARY\" || true",
+   "old": "run: python3 -u scripts/mutate.py --jobs 4 --cache \"$RUNNER_TEMP/mutation-verdicts/verdicts.json\" --markdown \"$GITHUB_STEP_SUMMARY\"",
+   "new": "run: python3 -u scripts/mutate.py --jobs 4 --cache \"$RUNNER_TEMP/mutation-verdicts/verdicts.json\" --markdown \"$GITHUB_STEP_SUMMARY\" || true",
    "why": "a surviving mutant does not turn the workflow red"
   },
   {

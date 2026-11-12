@@ -224,6 +224,13 @@ class Cache(Env):
         c = self.stored(); self.now += 28 * 86400 - 1; self.assertTrue(self.cache().hit(self.key(), self.root))
         self.now += 2; self.assertFalse(self.cache().hit(self.key(), self.root))
 
+    def test_an_entry_dated_in_the_future_is_never_a_hit_and_is_not_kept(self):
+        c = self.stored(); self.now -= 3600; self.assertFalse(self.cache().hit(self.key(), self.root))   # the clock of the run is before the date of the entry
+        c2 = self.cache(); c2.put(self.key(mut("a + b", "a + a")), "tests.test_calc", self.root); c2.save(); self.assertEqual(len(json.load(open(self.path))["entries"]), 1)
+
+    def test_the_file_is_written_in_a_folder_that_does_not_exist_yet(self):
+        self.path = os.path.join(self.tmp.name, "new", "folder", "cache.json"); self.stored(); self.assertTrue(self.cache().hit(self.key(), self.root))
+
     def test_an_expired_entry_is_dropped_from_the_file_at_the_next_green_save(self):
         self.stored(); self.now += 29 * 86400; c = self.cache(); c.put(self.key(mut("a + b", "a + a")), "tests.test_calc", self.root); c.save()
         self.assertEqual(len(json.load(open(self.path))["entries"]), 1)

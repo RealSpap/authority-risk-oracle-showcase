@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-11-12T01:01:53Z",
+ "run_utc": "2026-11-12T16:01:10Z",
  "targets": 202,
  "moves_recorded": 40,
  "series": {
@@ -2496,24 +2496,15 @@
   "actions": 19,
   "excluded_undecoded": 0,
   "excluded_other_target": 0,
-  "under_40": 4,
+  "under_40": 5,
   "by_band": {
    "critical": 0,
-   "weak": 4,
-   "moderate": 9,
+   "weak": 5,
+   "moderate": 8,
    "decent": 5,
    "strong": 1
   },
   "list": [
-   {
-    "kind": "upgrade executed",
-    "key": "solana:JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
-    "t": "2026-10-29T13:15:42Z",
-    "via": "slot 462802085",
-    "tx": null,
-    "score_then": 47,
-    "band_then": "moderate"
-   },
    {
     "kind": "admin changed (independent read)",
     "key": "ethereum-l1:0x6a8cbed756804b16e05e741edabd5cb544ae21bf",
@@ -2675,6 +2666,15 @@
     "tx": null,
     "score_then": 47,
     "band_then": "moderate"
+   },
+   {
+    "kind": "admin changed (independent read)",
+    "key": "solana:4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8",
+    "t": "2026-11-12T15:54:00Z",
+    "via": null,
+    "tx": null,
+    "score_then": 32,
+    "band_then": "weak"
    }
   ],
   "read_as": "every authority action the watch observed in the window (a timelock operation queued or executed against a tracked contract, an admin change read independently) and the composite score the contract carried at that moment. Small counts prove little; the file grows with every run and the chained log keeps every move"

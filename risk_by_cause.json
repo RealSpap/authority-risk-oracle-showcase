@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-11-11T14:47:27Z",
- "tracked_tvl_usd": 104792074217,
+ "generated_utc": "2026-11-12T01:01:41Z",
+ "tracked_tvl_usd": 105323858982,
  "contracts": 202,
  "causes": {
   "side_role_plain_key": {
@@ -8,7 +8,7 @@
    "contracts": 4,
    "with_tvl": 3,
    "out_of_scope": 0,
-   "tvl_usd": 1114532260,
+   "tvl_usd": 1124032301,
    "share_of_tracked": 0.011,
    "targets": [
     "base:0xbeef010f9cb27031ad51e3333f9af9c6b1228183",
@@ -28,7 +28,7 @@
    "contracts": 16,
    "with_tvl": 12,
    "out_of_scope": 0,
-   "tvl_usd": 2584560986,
+   "tvl_usd": 2602990469,
    "share_of_tracked": 0.025,
    "targets": [
     "ethereum-l1:0x55555815a5595991c3a0ff119b59aef6c8b55555",
@@ -70,10 +70,10 @@
   "keys_only_multisig": {
    "label": "the admin multisig is made of plain keys only",
    "contracts": 58,
-   "with_tvl": 41,
+   "with_tvl": 40,
    "out_of_scope": 1,
-   "tvl_usd": 10755598982,
-   "share_of_tracked": 0.103,
+   "tvl_usd": 10742289850,
+   "share_of_tracked": 0.102,
    "targets": [
     "arbitrum:0x1a3c9b1d2f0529d97f2afc5136cc23e58f1fd35b",
     "arbitrum:0x888888888889758f76e7103c6cbf23abbf58f946",
@@ -163,7 +163,7 @@
     "robinhood:0x83341f891f898cb5e0cacc8a70501bba83d9cecf": "chain_figure",
     "robinhood:0xa203a21dccb461e415daa342e8e635b6cee0ccb3": "chain_figure",
     "robinhood:0x292fc50e4eb66c3f6514b9e402dbc25961824d62": "chain_figure",
-    "robinhood:0x0dc846db6a4ec7b5a3e542f7db88049e9add2541": "protocol_total",
+    "robinhood:0x0dc846db6a4ec7b5a3e542f7db88049e9add2541": "none",
     "robinhood:0xd540f47f214dc7d6d244e62a6ae7e06b586ef44a": "chain_figure",
     "robinhood:0x9d53d5e3bd5e8d4cbfa6db1ca238aea02e651010": "chain_figure",
     "robinhood:0xf28704c691290547924e2129d407da36bda8ce0f": "chain_figure",
@@ -198,10 +198,10 @@
   "unverified_code": {
    "label": "the code behind the proxy has no verified source (Sourcify) or build (OtterSec)",
    "contracts": 40,
-   "with_tvl": 27,
+   "with_tvl": 26,
    "out_of_scope": 0,
-   "tvl_usd": 6687249945,
-   "share_of_tracked": 0.064,
+   "tvl_usd": 6631671394,
+   "share_of_tracked": 0.063,
    "targets": [
     "hyperliquid:0x8888888c43cbb7e1c4132542e46831bffd866ed3",
     "monad:0xd651346d7c789536ebf06dc72ae3c8502cd695cc",
@@ -256,7 +256,7 @@
     "robinhood:0x925f92f055edb79c42b5d45e64a1b74143b90ea0": "chain_figure",
     "robinhood:0x4472c69d299382f8847ebce4fc6ed8e295510e3e": "chain_figure",
     "robinhood:0x292fc50e4eb66c3f6514b9e402dbc25961824d62": "chain_figure",
-    "robinhood:0x0dc846db6a4ec7b5a3e542f7db88049e9add2541": "protocol_total",
+    "robinhood:0x0dc846db6a4ec7b5a3e542f7db88049e9add2541": "none",
     "robinhood:0x14b107cf534239c59571b066cb6497a321da897c": "chain_figure",
     "robinhood:0xd5c6c79692715145098a65d1eb1f2a10c524f8e8": "chain_figure",
     "robinhood:0x16494a80e08bcb9285d87b67149d7b01774d82f8": "none",
@@ -292,7 +292,7 @@
    "contracts": 4,
    "with_tvl": 2,
    "out_of_scope": 0,
-   "tvl_usd": 68752539,
+   "tvl_usd": 68796154,
    "share_of_tracked": 0.001,
    "targets": [
     "arbitrum:0xffa10065ce1d1c42fabc46e06b84ed8ffeb4bae5",
@@ -381,15 +381,15 @@
   "pairs": {
    "side_role_plain_key + plain_key_admin": {
     "contracts": 3,
-    "tvl_usd": 1009200131
+    "tvl_usd": 1018729717
    },
    "side_role_plain_key + keys_only_multisig": {
     "contracts": 1,
-    "tvl_usd": 105332129
+    "tvl_usd": 105302584
    },
    "plain_key_admin + unverified_code": {
     "contracts": 3,
-    "tvl_usd": 68328717
+    "tvl_usd": 67946713
    },
    "plain_key_admin + transfer_in_flight": {
     "contracts": 1,
@@ -397,11 +397,11 @@
    },
    "keys_only_multisig + unverified_code": {
     "contracts": 21,
-    "tvl_usd": 3639890097
+    "tvl_usd": 3623491254
    },
    "keys_only_multisig + one_key_freezes": {
     "contracts": 3,
-    "tvl_usd": 68752539
+    "tvl_usd": 68796154
    },
    "keys_only_multisig + module_on_safe": {
     "contracts": 1,
@@ -414,7 +414,7 @@
   },
   "any_cause": {
    "contracts": 91,
-   "tvl_usd": 16319191099
+   "tvl_usd": 16285513746
   }
  },
  "what": "money at risk by cause, from the independent reads of the run (second_opinion.json, impl_sources.json, pending_ops.json) and DefiLlama (tvl.json, one figure per protocol and chain; a contract with no protocol match counts what it holds by its own account, held_assets.json); a contract can sit under several causes; read a cause as the money a single failure of that kind would expose, not as a sum across causes; written by scripts/risk_by_cause.py after every run",

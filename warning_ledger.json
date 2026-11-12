@@ -545,10 +545,12 @@
    "first_seen_utc": "2026-11-05T19:56:18Z",
    "due_utc": "2026-11-06T09:54:59Z",
    "notice_hours": 14.0,
-   "state": "queued",
+   "state": "resolved",
    "chain": "ethereum",
    "timelock": "Ethena Timelock",
-   "what": "parameter change"
+   "what": "parameter change",
+   "resolved_seen_utc": "2026-11-12T00:41:53Z",
+   "final_state": "executed"
   },
   "arbitrum:0x3fb4d38ea7ec20d91917c09591490eeda38cf88a:0x91458dac5aad0d81e2d626190af7a937331804d064fbc4516ce0eeaf0da5f853": {
    "outcome": "warned",
@@ -679,7 +681,7 @@
    "what": "authority change"
   }
  },
- "updated_utc": "2026-11-11T14:26:57Z",
+ "updated_utc": "2026-11-12T00:41:53Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
   "warned": 40,

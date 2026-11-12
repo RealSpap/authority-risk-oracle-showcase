@@ -234,41 +234,9 @@
    "status": "ok",
    "queued_events": 276,
    "latest_queued": 1793872499,
-   "pending": [
-    {
-     "block": 26347868,
-     "tx": "0x5691cd6a28fee2fd56365d0b8841c7afd804c08213fabb22204c93e212d390f8",
-     "id": "0x82596935daa38f4baed4b90080d5c611baf58d6d50fc0a5f7968f0d2a26d576e",
-     "index": 0,
-     "target": "0xE8Dc0Fab349EA169283C48Ccfd09d797E6DB7c94",
-     "value": 0,
-     "selector": "0x973821a6",
-     "delay": 86400,
-     "signature": "addToWhitelist(address,bytes4)",
-     "calls": 3,
-     "ready_at": 1793958899,
-     "state": "ready",
-     "decoded": "parameter change"
-    }
-   ],
+   "pending": [],
    "recent": [
     {
-     "block": 26292158,
-     "tx": "0x50b1c3d1aa1fb0fa428913e4cf726ea3d246b557d84f5e45f4eb1e9ca2f440c1",
-     "id": "0xd4801b79df7225e163cfaed0fd5ec408c53254c6f6f6cf459e980ea980c2de2f",
-     "index": 0,
-     "target": "0x5D057706405B00a396745ED0fd598248e7F4ec7C",
-     "value": 0,
-     "selector": "0x0e18b681",
-     "delay": 86400,
-     "signature": "acceptAdmin()",
-     "calls": 16,
-     "still_queued": false,
-     "final_state": "executed",
-     "queued_at": 1793201663,
-     "decoded": "authority change"
-    },
-    {
      "block": 26347868,
      "tx": "0x5691cd6a28fee2fd56365d0b8841c7afd804c08213fabb22204c93e212d390f8",
      "id": "0x82596935daa38f4baed4b90080d5c611baf58d6d50fc0a5f7968f0d2a26d576e",
@@ -279,8 +247,8 @@
      "delay": 86400,
      "signature": "addToWhitelist(address,bytes4)",
      "calls": 3,
-     "still_queued": true,
-     "final_state": null,
+     "still_queued": false,
+     "final_state": "executed",
      "queued_at": 1793872499,
      "decoded": "parameter change"
     }
@@ -425,7 +393,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 4496654,
+   "window_blocks": 3815772,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -506,7 +474,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 4513432,
+   "window_blocks": 3803773,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -526,7 +494,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 4513432,
+   "window_blocks": 3803773,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -598,11 +566,28 @@
    "log_rpc": "https://gateway.tenderly.co/public/mainnet",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 100800,
+   "window_blocks": 100699,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
     "0x52aa899454998be5b000ad077a46bbe360f4e497"
+   ]
+  },
+  {
+   "name": "hyperliquid timelock 0xc5de\u202623d2, found by the independent reader (1 tracked contract)",
+   "chain": "hyperliquid",
+   "address": "0xc5ded4f7f53919c714059a17d31371ae847e23d2",
+   "family": "oz",
+   "status": "UNREAD (Web3RPCError: {'code': -32005, 'message': 'rate limited'})",
+   "queued_events": null,
+   "latest_queued": null,
+   "pending": [],
+   "recent": [],
+   "discovered": true,
+   "log_rpc": "https://rpc.hyperliquid.xyz/evm",
+   "delay": 172800,
+   "governs": [
+    "0xffaa4a3d97fe9107cef8a3f48c069f577ff76cc1"
    ]
   },
   {
@@ -747,7 +732,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 0,
    "window_blocks": 3000000,
-   "window_days_est": 4.0,
+   "window_days_est": 3.7,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62"
@@ -767,7 +752,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 86400,
    "window_blocks": 3000000,
-   "window_days_est": 3.4,
+   "window_days_est": 3.6,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x14b107cf534239c59571b066cb6497a321da897c"
@@ -808,9 +793,9 @@
    ]
   }
  ],
- "discovered_utc": "2026-11-11T14:41:21Z",
- "discovered": 14,
- "squads_utc": "2026-11-11T14:47:27Z",
+ "discovered_utc": "2026-11-12T00:55:24Z",
+ "discovered": 15,
+ "squads_utc": "2026-11-12T01:01:41Z",
  "not_shown": [
   "squads"
  ]

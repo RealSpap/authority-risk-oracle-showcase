@@ -1,12 +1,8 @@
 # Authority risk digest, 2026-11-11 06:44 UTC
 
-## Needs a person, 2026-11-11T06:44:52Z: 15 item(s) (priority 1: 3, priority 2: 8, priority 3: 4); oldest 31.4 d
+## Needs a person, 2026-11-11T06:44:52Z: 14 item(s) (priority 1: 2, priority 2: 8, priority 3: 4); oldest 31.4 d
 
-### Overdue: 1 priority-1 item(s) waiting for more than 2 day(s), back in the alarm
-- **queued operation executable** ethereum 0xE8Dc0Fab349EA169283C48Ccfd09d797E6DB7c94 (4.5 d): parameter change: addToWhitelist(address,bytes4) via Ethena Timelock
-
-### Something happened: read before trusting the score (3)
-- **queued operation executable** ethereum 0xE8Dc0Fab349EA169283C48Ccfd09d797E6DB7c94 (4.5 d): parameter change: addToWhitelist(address,bytes4) via Ethena Timelock. To do: read the call before it lands. (pending_ops.json)
+### Something happened: read before trusting the score (2)
 - **admin transfer in flight** robinhood 0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d (0.0 d): 0x9db4…1a53 designated (pendingOwner() on the contract (Ownable2Step), a contract). To do: identify the designated admin; when it accepts, the admin read changes. (second_opinion.json pending_admin)
 - **upgrade executed** solana JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4 (0.0 d): program redeployed since the previous run: slot 462802085 -> 468023491 (2026-11-11T06:31:04Z); the score reads who may upgrade, this is an upgrade that happened. To do: read what the new implementation does before trusting the score (the private pipeline's implementation check names selectors added and dropped); NO verified source on Sourcify for the new implementation: read the bytecode, or find a verified source on the chain's explorer. (second_opinion.json upgrades)
 

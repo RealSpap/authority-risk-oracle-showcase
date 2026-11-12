@@ -1,10 +1,64 @@
 {
- "generated_utc": "2026-11-11T14:46:05Z",
+ "generated_utc": "2026-11-12T01:00:18Z",
  "wake_days": 14,
  "safes": 42,
  "read": 42,
  "woke": [],
- "changes": [],
+ "changes": [
+  {
+   "delta": 1,
+   "idle_days": 13.4,
+   "woke": false,
+   "safe": "base:0xe6a4\u20262075",
+   "governs": [
+    "base:0x5e7bb104d84c7cb9b682aac2f3d509f5f406809a"
+   ],
+   "previous_run": "2026-11-11T14:46:05Z"
+  },
+  {
+   "delta": 6,
+   "idle_days": 2.7,
+   "woke": false,
+   "safe": "robinhood:0x0eea\u2026dfd8",
+   "governs": [
+    "robinhood:0x1ac9db4a2608ba45d6127b1737949b51bb54b7f3"
+   ],
+   "previous_run": "2026-11-11T14:46:05Z"
+  },
+  {
+   "delta": 1,
+   "idle_days": 4.7,
+   "woke": false,
+   "safe": "robinhood:0x20d6\u2026be1a",
+   "governs": [
+    "robinhood:0x83341f891f898cb5e0cacc8a70501bba83d9cecf",
+    "robinhood:0xa203a21dccb461e415daa342e8e635b6cee0ccb3"
+   ],
+   "previous_run": "2026-11-11T14:46:05Z"
+  },
+  {
+   "delta": 2,
+   "idle_days": 1.1,
+   "woke": false,
+   "safe": "robinhood:0x81b8\u202641bd",
+   "governs": [
+    "robinhood:0x4472c69d299382f8847ebce4fc6ed8e295510e3e",
+    "robinhood:0x925f92f055edb79c42b5d45e64a1b74143b90ea0",
+    "robinhood:0x9c3663fa9ab976e67b42939486ec4966cb41a0bb"
+   ],
+   "previous_run": "2026-11-11T14:46:05Z"
+  },
+  {
+   "delta": 1,
+   "idle_days": 8.9,
+   "woke": false,
+   "safe": "robinhood:0x8c45\u2026f5d5",
+   "governs": [
+    "robinhood:0x0dc846db6a4ec7b5a3e542f7db88049e9add2541"
+   ],
+   "previous_run": "2026-11-11T14:46:05Z"
+  }
+ ],
  "never_executed": [
   "robinhood:0x0605\u20269728",
   "tempo:0x6458\u2026fbbc"
@@ -88,10 +142,10 @@
    "never_executed": false
   },
   "base:813d4f2afbe04aad": {
-   "nonce": 2749,
+   "nonce": 2750,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-10-29T13:22:01Z",
-   "last_moved": "2026-10-29T13:22:01Z",
+   "idle_since": "2026-11-12T01:00:18Z",
+   "last_moved": "2026-11-12T01:00:18Z",
    "governs": [
     "base:0x5e7bb104d84c7cb9b682aac2f3d509f5f406809a"
    ],
@@ -182,7 +236,6 @@
    "idle_since": "2026-11-09T06:41:10Z",
    "last_moved": "2026-11-09T06:41:10Z",
    "governs": [
-    "hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109",
     "hyperliquid:0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec"
    ],
    "safe": "hyperliquid:0x18a8\u2026f8f1",
@@ -263,10 +316,10 @@
    "never_executed": false
   },
   "robinhood:e8bf689e4f96ba54": {
-   "nonce": 511,
+   "nonce": 517,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-11-09T06:41:10Z",
-   "last_moved": "2026-11-09T06:41:10Z",
+   "idle_since": "2026-11-12T01:00:18Z",
+   "last_moved": "2026-11-12T01:00:18Z",
    "governs": [
     "robinhood:0x1ac9db4a2608ba45d6127b1737949b51bb54b7f3"
    ],
@@ -274,10 +327,10 @@
    "never_executed": false
   },
   "robinhood:3cb8c359ff7f85fd": {
-   "nonce": 660,
+   "nonce": 661,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-11-07T06:16:14Z",
-   "last_moved": "2026-11-07T06:16:14Z",
+   "idle_since": "2026-11-12T01:00:18Z",
+   "last_moved": "2026-11-12T01:00:18Z",
    "governs": [
     "robinhood:0x83341f891f898cb5e0cacc8a70501bba83d9cecf",
     "robinhood:0xa203a21dccb461e415daa342e8e635b6cee0ccb3"
@@ -354,10 +407,10 @@
    "never_executed": false
   },
   "robinhood:7a113b1bf8b8d018": {
-   "nonce": 14,
+   "nonce": 16,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-11-10T22:11:18Z",
-   "last_moved": "2026-11-10T22:11:18Z",
+   "idle_since": "2026-11-12T01:00:18Z",
+   "last_moved": "2026-11-12T01:00:18Z",
    "governs": [
     "robinhood:0x4472c69d299382f8847ebce4fc6ed8e295510e3e",
     "robinhood:0x925f92f055edb79c42b5d45e64a1b74143b90ea0",
@@ -377,10 +430,10 @@
    "never_executed": false
   },
   "robinhood:5bc57b3e77fe7019": {
-   "nonce": 15,
+   "nonce": 16,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-11-03T01:12:13Z",
-   "last_moved": "2026-11-03T01:12:13Z",
+   "idle_since": "2026-11-12T01:00:18Z",
+   "last_moved": "2026-11-12T01:00:18Z",
    "governs": [
     "robinhood:0x0dc846db6a4ec7b5a3e542f7db88049e9add2541"
    ],

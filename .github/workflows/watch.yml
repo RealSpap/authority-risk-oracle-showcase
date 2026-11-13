@@ -5,6 +5,7 @@ name: Watch
 on:
   schedule:
     - cron: "17 */6 * * *"
+    - cron: "47 */6 * * *"   # a second slot 30 minutes after the first: GitHub skips scheduled runs now and then (the 12:17 UTC run of 5 and 6 November did not happen), and one skipped run then no longer leaves the Watch silent; the opening guard below cancels this run when the first slot was served, and counts slots per cron, so it is unchanged
   workflow_dispatch:
     inputs:
       relay:

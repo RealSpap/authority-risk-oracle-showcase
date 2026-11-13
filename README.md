@@ -60,19 +60,33 @@ cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 \
 
 **The composite on the chain is not the cap.** For the contracts that rest on the Robinhood Chain rollup, the project also computes `l1CappedComposite` (57 for the Uniswap v3 factory of command 2, whose composite on the chain is 85). It is published in `api/scores.json` and is not on the chain; read it before you gate on the composite alone (METHODOLOGY.md, rollup section).
 
-**3. Gate a decision on a label in 18 lines** (the label below describes the Uniswap v3 factory on Robinhood Chain mainnet, chain ID 4663):
+**3. Gate a decision on a label, with an age limit and the strict mode** (the label below describes the Uniswap v3 factory on Robinhood Chain mainnet, chain ID 4663; `integrations/authority_facts_gate_strict.py`, 46 lines, built on the simple gate `integrations/authority_facts_gate.py`, which is written in 18 lines and checks neither the age of the push nor the number of keys):
 
 ```bash
-python3 integrations/authority_facts_gate.py https://realspap.github.io/oracle/p/robinhood-0x1f7d7550b1b028f7571e69a784071f0205fd2efa.json
+python3 integrations/authority_facts_gate_strict.py https://realspap.github.io/oracle/p/robinhood-0x1f7d7550b1b028f7571e69a784071f0205fd2efa.json --max-age-hours 72 --strict
 ```
+
+```text
+keys to move not read, and you asked for them
+```
+
+The label is the Uniswap v3 factory `0x1f7d7550B1b028f7571E69A784071F0205FD2EfA` on Robinhood Chain mainnet (chain ID 4663); its score is published by the oracle on Robinhood Chain testnet (chain ID 46630). I ran both gates on it on 12 November 2026 at 21:45 UTC: the simple one printed `ok: Robinhood Chain 85 (strong), 48 h to react` (exit code 0), the strict one printed the line above (exit code 1, refused). Without `--strict`, the same command with only `--max-age-hours 72` prints `the last push is older than 72.0 hours`: this label was built on 22 October from a push of 19 October, and the oracle itself was pushed again on 10 November. A refusal is a message, never a score. With `--max-age-hours 72` the gate refuses a label whose last push is older than 72 hours, and `--strict` also requires the number of keys to be known (the refusal shown above) and refuses a label that lists something it left unread.
+
+**Who can replace the oracle itself.** On Solana devnet (not mainnet), the oracle program `5VhiTAGLEViGgajhxPbzdWz7WLUAiRy42DY6qi6tYh4W` is upgradeable, and its upgrade authority is `BcwteMtYL5wL8dvMYWedPT2V6oh1hTgd8vgKEkQyy9yx`, a plain account with no code. The same account is the admin and the updater in the registry of the program: one signature can push the scores and replace the program. I read this on 12 November 2026 at 21:48 UTC (devnet genesis hash `EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG`; the program does not exist on Solana mainnet-beta). I have kept this setup because moving the authority to a multisig only helps with at least two distinct members, and I do not have a second one yet. Replay, on Solana devnet:
+
+```bash
+curl -s https://api.devnet.solana.com -H 'content-type: application/json' -d '{"jsonrpc":"2.0","id":1,"method":"getAccountInfo","params":["5hBzvoKRvW4kd8HneUoK1wLogjLmjZiFuJY7rWPTDwSx",{"encoding":"jsonParsed"}]}' | python3 -c 'import json,sys;print(json.load(sys.stdin)["result"]["value"]["data"]["parsed"]["info"]["authority"])'
+```
+
+It prints the upgrade authority of the program (the account `5hBzvoKRvW4kd8HneUoK1wLogjLmjZiFuJY7rWPTDwSx` on Solana devnet holds the program data). The EVM oracles (eight testnets) are not upgradeable, and the one account that holds their admin and updater roles per chain is a plain key too: see [docs/LIMITS.md](docs/LIMITS.md), "The oracle's own composite, by chain".
 
 ## Two ways in
 
 | If you decide: delegates, risk managers, DAO committees | If you build: developers, integrators |
 |---|---|
 | 1. Open the [dashboard](https://realspap.github.io/oracle/): 202 contracts on 9 oracles (8 EVM testnets and Solana devnet; Zcash is separate, 6 targets attested by on-chain commitments). The oracles publish on those test networks and the 202 targets they score are on mainnet: each record names its network, see [the networks](watch/API.md). The dashboard also shows the money behind the contracts where one was read, and the delay before a change applies. | 1. Read a score from a contract: `getScore(address)` and `isStale(address)`, as in command 2 ([`ExampleConsumer.sol`](src/ExampleConsumer.sol)). |
-| 2. Read [one contract's label](https://realspap.github.io/oracle/p/robinhood-0x1f7d7550b1b028f7571e69a784071f0205fd2efa.html) (a Uniswap v3 factory on Robinhood Chain mainnet, chain ID 4663): who can move it, how many keys, how long everyone else has to react, and what the label leaves out. The format is open: [Authority Facts v0.1](docs/AUTHORITY-FACTS-SPEC.md). | 2. Gate on a label in 18 lines (command 3): [`integrations/authority_facts_gate.py`](integrations/authority_facts_gate.py). |
-| 3. Follow a protocol on every chain: one Atom feed per protocol, or, after `bash scripts/watch_branch.sh prepare` (it fetches the Watch's data), `python3 scripts/brief.py morpho-blue` for a one-page brief. | 3. Put it in CI: `uses: RealSpap/authority-risk-oracle-showcase@main` with `chain`, `address`, `min-score` ([`action.yml`](action.yml)), or an agent through the local MCP server. |
+| 2. Read [one contract's label](https://realspap.github.io/oracle/p/robinhood-0x1f7d7550b1b028f7571e69a784071f0205fd2efa.html) (a Uniswap v3 factory on Robinhood Chain mainnet, chain ID 4663): who can move it, how many keys, how long everyone else has to react, and what the label leaves out. The format is open: [Authority Facts v0.1](docs/AUTHORITY-FACTS-SPEC.md). | 2. Gate on a label (command 3): [`integrations/authority_facts_gate_strict.py`](integrations/authority_facts_gate_strict.py), with an age limit and a strict mode. |
+| 3. Follow a protocol on every chain: one Atom feed per protocol, or, after `bash scripts/watch_branch.sh prepare` (it fetches the Watch's data), `python3 scripts/brief.py morpho-blue` for a one-page brief. | 3. Put it in CI: `uses: RealSpap/authority-risk-oracle-showcase@c325c8b2208d81749c6cf9140edc4695bdd87748` (the last commit that changed the action, so the action you run cannot change under you; `@main` follows the latest code) with `chain`, `address`, `min-score` ([`action.yml`](action.yml)), or an agent through the local MCP server. |
 
 ## Everything else
 

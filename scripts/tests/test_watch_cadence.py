@@ -22,8 +22,8 @@ def daily_step():
 class TestWatchYml(unittest.TestCase):
     def setUp(self): self.d = load_wf("watch.yml"); self.text = open(os.path.join(WFDIR, "watch.yml"), encoding="utf-8").read()
 
-    def test_the_schedule_is_unchanged_and_the_manual_start_knows_the_relay_flag(self):
-        self.assertEqual([x["cron"] for x in self.d["on"]["schedule"]], ["17 */6 * * *"])
+    def test_the_schedule_is_the_first_slot_plus_a_second_one_30_minutes_later_and_the_manual_start_knows_the_relay_flag(self):
+        self.assertEqual([x["cron"] for x in self.d["on"]["schedule"]], ["17 */6 * * *", "47 */6 * * *"])
         inp = self.d["on"]["workflow_dispatch"]["inputs"]["relay"]; self.assertEqual((inp["type"], inp["default"]), ("string", "false"))
 
     def test_the_header_no_longer_promises_four_a_day(self):
@@ -519,6 +519,20 @@ class TestOpeningGuard(unittest.TestCase):
             self.T0 = t0
             got, out = self.decide([self.rid(4000, self.ago(when))])
             self.assertEqual(got, cancelled, (str(t0), str(when), out))
+
+    def test_the_second_slot_goes_on_when_the_first_was_skipped_and_is_cancelled_when_the_first_ran(self):
+        # GitHub skipped the 12:17 run; the 12:47 run must be the one that serves the slot
+        self.T0 = self.utc(2026, 11, 10, 12, 49, 0)
+        self.assertFalse(self.decide([self.rid(4000, self.ago(self.utc(2026, 11, 10, 6, 20, 0)))], schedule="47 */6 * * *")[0])        # the last run is the 06:17 one: nothing served this slot
+        got, out = self.decide([self.rid(4000, self.ago(self.utc(2026, 11, 10, 12, 20, 0)))], schedule="47 */6 * * *")                 # the 12:17 run was created at 12:20: 29 minutes before
+        self.assertTrue(got, out)
+        self.assertFalse(self.decide([self.rid(4000, self.ago(self.utc(2026, 11, 10, 12, 20, 0)), conclusion="failure", ran=120)], schedule="47 */6 * * *")[0])   # a first run that failed in 2 minutes served nothing: the second one goes on
+
+    def test_a_late_copy_of_the_first_slot_is_cancelled_by_the_run_of_the_second_slot(self):
+        self.T0 = self.utc(2026, 11, 10, 12, 58, 0)       # the 12:17 copy arrives late, after the 12:47 run was created
+        got, out = self.decide([self.rid(4000, self.ago(self.utc(2026, 11, 10, 12, 49, 0)))], schedule="17 */6 * * *")
+        self.assertTrue(got, out); self.assertIn("slot", out)
+        self.assertEqual(self.guard_step().get("name", "")[:13], "Opening guard")
 
     def test_the_cron_of_the_event_decides_the_slot_not_a_constant(self):
         self.T0 = self.utc(2026, 11, 8, 14, 22, 56)       # the real daily run of 8 Nov (cron 23 7 * * *)

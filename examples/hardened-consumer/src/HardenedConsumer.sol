@@ -13,8 +13,9 @@ interface IAuthorityOracle {
 }
 
 /// @title HardenedConsumer
-/// @notice The example consumer of the repository, with two more refusals: a score older than the consumer's OWN age limit, and a score written under a
-///         method version the consumer does not know. A score is a number under a rule; if the rule changes (a new methodologyHash), the same number can mean
+/// @notice The example consumer of the repository, with three more refusals: a score older than the consumer's OWN age limit, and a score written under a
+///         method version the consumer does not know. A third refusal covers a `lastUpdated` later than the block time: the oracle's updater writes
+///         that timestamp itself, so a value in the future would otherwise pass every age check. A score is a number under a rule; if the rule changes (a new methodologyHash), the same number can mean
 ///         something else, so the consumer refuses until a person has read the new method and deployed a version that lists its hash.
 ///         Trade-off (stated, not hidden): the list is fixed at deployment. Adding a hash means a new deployment; an admin function would put a key in front of
 ///         the very thing this contract exists to distrust. Demo code, not a lending market; nothing here is deployed.
@@ -28,6 +29,7 @@ contract HardenedConsumer {
 
     error StaleScore(address target);
     error TooOld(address target, uint64 ageSeconds);
+    error FutureTimestamp(address target, uint64 lastUpdated);
     error UnknownMethod(bytes32 methodologyHash);
 
     constructor(address oracle, uint64 maxAgeSeconds, bytes32[] memory knownHashes) {
@@ -38,7 +40,8 @@ contract HardenedConsumer {
     function collateralFactorBps(address target) external view returns (uint256) {
         if (ORACLE.isStale(target)) revert StaleScore(target);
         IAuthorityOracle.AuthorityScore memory s = ORACLE.getScore(target);
-        if (block.timestamp > s.lastUpdated && block.timestamp - s.lastUpdated > MAX_AGE) revert TooOld(target, uint64(block.timestamp - s.lastUpdated));
+        if (s.lastUpdated > block.timestamp) revert FutureTimestamp(target, s.lastUpdated);
+        if (block.timestamp - s.lastUpdated > MAX_AGE) revert TooOld(target, uint64(block.timestamp - s.lastUpdated));
         if (!knownMethod[s.methodologyHash]) revert UnknownMethod(s.methodologyHash);
         if (s.compositeScore < MIN_SAFE_SCORE) return 0;
         return MIN_FACTOR_BPS + (uint256(s.compositeScore - MIN_SAFE_SCORE) * (MAX_FACTOR_BPS - MIN_FACTOR_BPS)) / (100 - MIN_SAFE_SCORE);

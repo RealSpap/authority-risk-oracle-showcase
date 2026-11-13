@@ -16,7 +16,8 @@ class TestReadme(unittest.TestCase):
 
     def test_the_gate_line_count_is_the_real_one_everywhere(self):
         n = len(read("integrations", "authority_facts_gate.py").splitlines())
-        self.assertEqual(self.R.count("in %d lines" % n), 2)
+        self.assertEqual(self.R.count("in %d lines" % n), 1)   # the strict gate is the one used in the commands; the simple gate is named once, with its line count
+        self.assertRegex(self.R, r"(?<![0-9])%d lines" % len(read("integrations", "authority_facts_gate_strict.py").splitlines()))
         self.assertNotIn("14 lines", self.R)
 
     def test_a_score_is_not_a_status_and_the_chain_composite_is_not_the_cap(self):

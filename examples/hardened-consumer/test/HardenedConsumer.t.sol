@@ -3,7 +3,7 @@ pragma solidity ^0.8.24;
 import {HardenedConsumer} from "../src/HardenedConsumer.sol";
 import {MockOracle} from "../src/MockOracle.sol";
 
-interface Vm { function warp(uint256) external; function expectRevert(bytes calldata) external; }
+interface Vm { function warp(uint256) external; function expectRevert(bytes calldata) external; function expectRevert() external; }
 
 /// Tests without forge-std (not installed here): the two cheat codes used are declared above.
 contract HardenedConsumerTest {
@@ -22,4 +22,7 @@ contract HardenedConsumerTest {
     function testRed_oracleSaysStale() public { o.set(T, 90, uint64(block.timestamp - 10 days), H3, true); vm.expectRevert(abi.encodeWithSelector(HardenedConsumer.StaleScore.selector, T)); c.collateralFactorBps(T); }
     function testRed_olderThanTheConsumersOwnLimitEvenIfNotStale() public { o.set(T, 90, uint64(block.timestamp - 8 days), H3, false); vm.expectRevert(abi.encodeWithSelector(HardenedConsumer.TooOld.selector, T, uint64(8 days))); c.collateralFactorBps(T); }
     function testGreen_exactlyAtTheAgeLimitPasses() public { o.set(T, 90, uint64(block.timestamp - 7 days), H3, false); _check(c.collateralFactorBps(T) > 0, "7 days ok"); }
+    function testRed_aLastUpdatedInTheFutureIsRefused() public { o.set(T, 90, uint64(block.timestamp + 1 days), H3, false); vm.expectRevert(); c.collateralFactorBps(T); }
+    function testRed_aLastUpdatedInTheFutureIsRefusedByName() public { uint64 f = uint64(block.timestamp + 1); o.set(T, 90, f, H3, false); vm.expectRevert(abi.encodeWithSelector(HardenedConsumer.FutureTimestamp.selector, T, f)); c.collateralFactorBps(T); }
+    function testGreen_aLastUpdatedOfTheCurrentSecondPasses() public { o.set(T, 90, uint64(block.timestamp), H3, false); _check(c.collateralFactorBps(T) > 0, "now ok"); }
 }

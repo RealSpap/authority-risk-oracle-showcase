@@ -190,3 +190,11 @@ These limits of the verification tools and of the alert code are stated so that 
 **A chat channel counts as delivered on a success status.** The body of the answer is not read. Confirm receipt in the channel itself.
 
 Written in: this page.
+
+## The block we show is not the block the score was computed at
+
+The scores are published on test networks (Sepolia, Arbitrum Sepolia, Base Sepolia, Monad testnet, Plasma testnet, Tempo Moderato, HyperEVM testnet, Robinhood Chain testnet, Solana devnet), and the contracts they describe are on mainnet. The `block`, `reference_block` and `rpc` of a `scores/*.json` file belong to the test network that holds the oracle. Since 13 November 2026 each record also names the network of its targets, the chain id read there, and the head (number, hash, time) of that network at the moment the Watch read the oracle. That head is not the block the scorer read: the scorer reads the targets live while it runs, over many minutes, and it does not record the block it read. A reader who replays a score therefore reads a later block than the scorer did.
+
+What this changes for a reader: a target's network and chain id are read, and each target is placed on its network by what is read there (the code at its address for the EVM chains, the account for Solana, the Hyperliquid API for the HyperCore objects); the block of the score's own computation is not published. Closing that gap means changing the scorers to write the block they read, which changes the methodology hash and is a method version of its own.
+
+Written in: watch/API.md (the networks).

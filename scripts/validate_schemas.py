@@ -21,6 +21,14 @@ def check(d, s, path, errs):
         if not any(isinstance(d, TYPES[x]) and not (x in ("integer", "number") and isinstance(d, bool)) for x in ts):
             errs.append("%s: %s is not %s" % (path, type(d).__name__, ts)); return
     if "enum" in s and d not in s["enum"]: errs.append("%s: %r not in enum" % (path, d))
+    rw = s.get("requiredWhen")   # fields required only in a record that carries a marker field: a record written before the marker existed stays valid, whatever its date
+    if isinstance(d, dict) and isinstance(rw, dict) and d.get(rw["field"]) is not None:
+        for r in [r for r in rw["required"] if r not in d]: errs.append("%s: required %s missing (the record carries %s)" % (path, r, rw["field"]))
+    rp = ((s.get("properties") or {}).get("targets") or {}).get("items", {}).get("requiredFromParent") if isinstance(d, dict) else None   # a record that names its target network names it for EVERY target
+    if rp and rp["parent"] in d and isinstance(d.get("targets"), list):
+        for i, t in enumerate(d["targets"]):
+            for r in [r for r in rp["required"] if isinstance(t, dict) and r not in t]:
+                errs.append("%s.targets[%d]: required %s missing (the record says %s)" % (path, i, r, rp["parent"]))
     if isinstance(d, dict):
         for r in s.get("required", []):
             if r not in d: errs.append("%s: required %s missing" % (path, r))

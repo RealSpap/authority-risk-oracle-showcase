@@ -43,9 +43,11 @@ OK         Authority Facts v0.1: 202 JSON twins of the site conform (conformance
 8 OK, 0 DIFFERENCE, 0 UNREAD in 3 s. Does not prove: that the scores are right, that they predict an incident, that the oracles' administrator keys are safe.
 ```
 
-**2. Read a score from the chain** (needs [Foundry](https://getfoundry.sh); Robinhood Chain testnet, a tracked Uniswap v3 factory):
+**2. Read a score from the chain** (needs [Foundry](https://getfoundry.sh)). The oracle is on Robinhood Chain testnet (chain ID 46630); the contract it scores here, a Uniswap v3 factory, is on Robinhood Chain mainnet (chain ID 4663), so the score is read on the testnet and the contract it describes lives on the mainnet (both chain IDs checked with `eth_chainId` on 13 November 2026, read at 10:59Z):
 
 ```bash
+# oracle 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 on Robinhood Chain testnet (chain ID 46630)
+# target 0x1f7d7550B1b028f7571E69A784071F0205FD2EfA on Robinhood Chain mainnet (chain ID 4663)
 cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 \
   "getScore(address)(uint8,uint8,uint8,uint8,uint8,uint8,uint64,bytes32)" \
   0x1f7d7550B1b028f7571E69A784071F0205FD2EfA \
@@ -58,7 +60,7 @@ cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 \
 
 **The composite on the chain is not the cap.** For the contracts that rest on the Robinhood Chain rollup, the project also computes `l1CappedComposite` (57 for the Uniswap v3 factory of command 2, whose composite on the chain is 85). It is published in `api/scores.json` and is not on the chain; read it before you gate on the composite alone (METHODOLOGY.md, rollup section).
 
-**3. Gate a decision on a label in 18 lines:**
+**3. Gate a decision on a label in 18 lines** (the label below describes the Uniswap v3 factory on Robinhood Chain mainnet, chain ID 4663):
 
 ```bash
 python3 integrations/authority_facts_gate.py https://realspap.github.io/oracle/p/robinhood-0x1f7d7550b1b028f7571e69a784071f0205fd2efa.json
@@ -68,8 +70,8 @@ python3 integrations/authority_facts_gate.py https://realspap.github.io/oracle/p
 
 | If you decide: delegates, risk managers, DAO committees | If you build: developers, integrators |
 |---|---|
-| 1. Open the [dashboard](https://realspap.github.io/oracle/): 202 contracts on 9 oracles (8 EVM testnets and Solana devnet; Zcash is separate, 6 targets attested by on-chain commitments), the money behind them where one was read, the delay before a change applies. | 1. Read a score from a contract: `getScore(address)` and `isStale(address)`, as in command 2 ([`ExampleConsumer.sol`](src/ExampleConsumer.sol)). |
-| 2. Read [one contract's label](https://realspap.github.io/oracle/p/robinhood-0x1f7d7550b1b028f7571e69a784071f0205fd2efa.html): who can move it, how many keys, how long everyone else has to react, what was not read. The format is open: [Authority Facts v0.1](docs/AUTHORITY-FACTS-SPEC.md). | 2. Gate on a label in 18 lines (command 3): [`integrations/authority_facts_gate.py`](integrations/authority_facts_gate.py). |
+| 1. Open the [dashboard](https://realspap.github.io/oracle/): 202 contracts on 9 oracles (8 EVM testnets and Solana devnet; Zcash is separate, 6 targets attested by on-chain commitments). The oracles publish on those test networks and the 202 targets they score are on mainnet: each record names its network, see [the networks](watch/API.md). The dashboard also shows the money behind the contracts where one was read, and the delay before a change applies. | 1. Read a score from a contract: `getScore(address)` and `isStale(address)`, as in command 2 ([`ExampleConsumer.sol`](src/ExampleConsumer.sol)). |
+| 2. Read [one contract's label](https://realspap.github.io/oracle/p/robinhood-0x1f7d7550b1b028f7571e69a784071f0205fd2efa.html) (a Uniswap v3 factory on Robinhood Chain mainnet, chain ID 4663): who can move it, how many keys, how long everyone else has to react, and what the label leaves out. The format is open: [Authority Facts v0.1](docs/AUTHORITY-FACTS-SPEC.md). | 2. Gate on a label in 18 lines (command 3): [`integrations/authority_facts_gate.py`](integrations/authority_facts_gate.py). |
 | 3. Follow a protocol on every chain: one Atom feed per protocol, or, after `bash scripts/watch_branch.sh prepare` (it fetches the Watch's data), `python3 scripts/brief.py morpho-blue` for a one-page brief. | 3. Put it in CI: `uses: RealSpap/authority-risk-oracle-showcase@main` with `chain`, `address`, `min-score` ([`action.yml`](action.yml)), or an agent through the local MCP server. |
 
 ## Everything else

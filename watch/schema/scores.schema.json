@@ -1,6 +1,6 @@
 {
  "$schema": "https://json-schema.org/draft/2020-12/schema",
- "title": "watch/scores/<oracle-slug>.json v1",
+ "title": "watch/scores/<oracle-slug>.json v1 (with the networks)",
  "type": "object",
  "required": [
   "name",
@@ -100,7 +100,52 @@
      },
      "retired": {
       "type": "boolean"
+     },
+     "target_network": {
+      "type": "string",
+      "description": "the network this target was placed on, or 'unplaced (...)' with the reason: never a default"
+     },
+     "target_chain_id": {
+      "type": [
+       "integer",
+       "null"
+      ]
+     },
+     "code_on_target_network": {
+      "type": [
+       "boolean",
+       "null"
+      ],
+      "description": "true when code exists at the address on the network the target was placed on (read at target_read_block); false when the main network of the oracle has none and no other network was found; null when not applicable (HyperCore) or the read failed"
+     },
+     "account_on_target_network": {
+      "type": [
+       "boolean",
+       "null"
+      ],
+      "description": "Solana: true when an account exists at the address on mainnet-beta, false when not, null when the read failed"
+     },
+     "target_network_read": {
+      "type": [
+       "string",
+       "null"
+      ],
+      "description": "what was read to place the target on that network, and where (code at a block on a host, a genesis, a HyperCore role)"
+     },
+     "target_read_block": {
+      "type": [
+       "integer",
+       "null"
+      ],
+      "description": "the block (Solana: slot) of the network the target was placed on at which its code or account was read; null for a HyperCore object, which has no block"
      }
+    },
+    "requiredFromParent": {
+     "parent": "target_network",
+     "required": [
+      "target_network"
+     ],
+     "description": "when the record carries target_network, every target carries its own network"
     }
    }
   },
@@ -109,6 +154,93 @@
   },
   "self": {
    "description": "the oracle's own authority since the previous run: role events, code hash, hasRole of the known holders, and the error when a read failed. Not enforced: a documentation entry."
+  },
+  "oracle_network": {
+   "type": "string",
+   "description": "the network the ORACLE contract lives on (a test network: Sepolia, devnet, Moderato...), written only once its chain id or genesis was read and is the expected one; otherwise 'unplaced (read impossible)'"
+  },
+  "oracle_chain_id": {
+   "type": [
+    "integer",
+    "null"
+   ],
+   "description": "eth_chainId READ on the oracle RPC (null for Solana, or when the read failed: see oracle_chain_read_error)"
+  },
+  "oracle_chain_read_error": {
+   "type": "string"
+  },
+  "oracle_genesis": {
+   "type": "string",
+   "description": "Solana only: the genesis hash read on the oracle RPC"
+  },
+  "target_network": {
+   "type": "string",
+   "description": "the network the scored TARGETS live on (mainnet), written only once its chain id or genesis was read and is the expected one; otherwise 'unplaced (read impossible)'"
+  },
+  "target_chain_id": {
+   "type": [
+    "integer",
+    "null"
+   ],
+   "description": "eth_chainId READ on the target network's RPC (null for Solana: see target_genesis)"
+  },
+  "target_genesis": {
+   "type": "string"
+  },
+  "target_block": {
+   "type": [
+    "integer",
+    "null"
+   ],
+   "description": "head (EVM block number, Solana slot) of the TARGET network when the Watch read the oracle. NOT the block the scorer read."
+  },
+  "target_block_hash": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "target_block_time": {
+   "type": [
+    "integer",
+    "null"
+   ]
+  },
+  "target_block_kind": {
+   "type": "string"
+  },
+  "target_rpc": {
+   "type": [
+    "string",
+    "null"
+   ],
+   "description": "host only"
+  },
+  "target_read_error": {
+   "type": "string",
+   "description": "why the target network could not be read; the fields stay null, never zero"
+  },
+  "target_code_read_error": {
+   "type": "string"
+  },
+  "target_fallback_errors": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   },
+   "description": "why a second network (Ethereum for the Robinhood rollup contracts, Arbitrum One for the Hyperliquid bridge) could not be read"
+  },
+  "networks_version": {
+   "type": "integer",
+   "description": "1 in every record written with the network fields (the Watch writes it even when a network could not be read, with the cause). A record without it was written before and stays valid."
   }
+ },
+ "requiredWhen": {
+  "field": "networks_version",
+  "required": [
+   "oracle_network",
+   "target_network"
+  ],
+  "description": "a record that carries networks_version names the network of the oracle and of its targets"
  }
 }

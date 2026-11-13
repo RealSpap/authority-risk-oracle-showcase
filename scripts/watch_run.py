@@ -35,6 +35,7 @@ import retired as retired_targets  # noqa: E402   # data/retired_targets.json: t
 import run_id  # noqa: E402  -- the Actions run of this passage, written in latest.json so that files can be shown to belong to one run (scripts/check_run_id.py)
 from lib.reader_audit import block_honoured, evaluation_of, freshness_record, future_dated, last_updated_alerts, scan_progress  # noqa: E402  -- scan stall, lastUpdated checks, freshness
 import solana_oracle_reader  # noqa: E402
+import target_networks  # noqa: E402  -- the network of the oracle (test) and of each target (mainnet), read, never assumed
 
 def _dump_json(obj, path, indent=None):
     """Write the file only once the whole object is serialised: a crash half-way never leaves a truncated JSON behind
@@ -324,6 +325,54 @@ def fixed_scorer_targets():
         return set()
 
 
+def _sol_rpc(url, method, params):
+    req = urllib.request.Request(url, data=json.dumps({"jsonrpc": "2.0", "id": 1, "method": method, "params": params}).encode(), headers={"content-type": "application/json", "user-agent": "watch_run/1"})
+    with urllib.request.urlopen(req, timeout=25) as r: out = json.load(r)
+    if "error" in out: raise RuntimeError(str(out["error"])[:100])
+    return out["result"]
+
+
+def _post_json(url, body):
+    req = urllib.request.Request(url, data=json.dumps(body).encode(), headers={"content-type": "application/json", "user-agent": "watch_run/1"})
+    with urllib.request.urlopen(req, timeout=25) as r: return json.load(r)
+
+
+NETWORKS_BUDGET_S = 300   # the network reads are an extra of the run: once they have taken this many seconds IN TOTAL (the time of the oracle reads is not counted), the next ones are written as unplaced with that cause
+_NETWORKS_SPENT = [0.0]   # seconds spent inside add_networks since begin_networks_pass()
+
+
+def begin_networks_pass():
+    """called once at the start of a pass of the Watch: the budget of the network reads starts again"""
+    _NETWORKS_SPENT[0] = 0.0
+
+
+def add_networks(name, doc):
+    """The network of the oracle and of each target, with the block of the target network that was read. A failed read is written as a cause (never a zero, never a default
+    "mainnet": a network name is written only once its chain id was read) and never stops the run. The record is marked `networks_version`: from then on the schema requires the networks."""
+    t0 = time.time()
+    try:
+        if _NETWORKS_SPENT[0] >= NETWORKS_BUDGET_S:
+            raise RuntimeError("the time budget of %d s for the network reads is spent" % NETWORKS_BUDGET_S)
+        if doc.get("kind") == "solana":
+            mod, per = target_networks.solana_fields(doc["targets"], _sol_rpc)
+            try:
+                og = _sol_rpc(doc["rpc"], "getGenesisHash", []); mod["oracle_genesis"] = og
+                if og == target_networks.GENESIS[target_networks.SOLANA[0]]: mod["oracle_network"] = target_networks.SOLANA[0]
+                else: mod["oracle_chain_read_error"] = "the oracle RPC answers genesis %s, expected devnet" % str(og)[:8]
+            except Exception as e: mod["oracle_chain_read_error"] = str(e)[:100]  # noqa: BLE001
+        else:
+            mod, per = target_networks.evm_fields(name, doc["rpc"], doc["targets"], lambda url, calls: rpc(url, calls, tries=1), batched, _post_json)
+        target_networks.apply(doc, mod, per)
+    except Exception as e:  # noqa: BLE001
+        doc["target_read_error"] = "networks could not be obtained: %s" % str(e)[:160]
+        doc.setdefault("oracle_network", target_networks.UNREAD); doc.setdefault("target_network", target_networks.UNREAD)
+        for t in doc.get("targets", []): t.setdefault("target_network", target_networks.UNREAD)
+    finally:
+        _NETWORKS_SPENT[0] += time.time() - t0
+    doc["networks_version"] = 1
+    return doc
+
+
 def read_solana():
     reg = solana_oracle_reader.read_oracle()
     now = int(time.time())
@@ -421,6 +470,7 @@ def main():
         pass
     prev_ok = {o["slug"] for o in prev_latest.get("oracles", []) if o.get("read_ok")}
 
+    begin_networks_pass()   # budget of the network reads (add_networks)
     readers = [(name, lambda since, n=name, o=oracle, u=url: read_evm_any(n, o, u, since)) for name, oracle, url in ORACLES] + [("Solana (Devnet)", lambda since: read_solana())]
     for name, reader in readers:
         s = slug(name)
@@ -448,6 +498,7 @@ def main():
         if prev is not None and len(cur["targets"]) < len(prev):   # the contract cannot remove a target: a smaller list is an RPC answer not to trust
             alerts.append(f"{name}: {len(cur['targets'])} targets read, {len(prev)} last run: the oracle cannot remove a target, this RPC answer is not trusted")
             cur["targets"] = restore_dropped_targets(cur["targets"], prev)   # QA 11/10: the short list used to be written as it was, and the targets that came back next run were announced as new ones, for ever in the chained log
+        add_networks(name, cur)   # oracle network (test) and target network (mainnet), read; after the dropped targets came back, so that every target of the file carries its network
         ret_here, woken = retired_targets.apply(s, cur["targets"], RETIRED)   # retired: kept out of the stale count and the methodology hashes in use, listed apart; woken: written again, counted as a normal target
         for t in woken: alerts.append(f"{name}: retired target {t['target'][:6]}…{t['target'][-4:]} was written again (last update {iso(t['lastUpdated'])}, retired at {iso(RETIRED[s + ':' + t['target'].lower()]['last_update_at_retirement'])}): counted as a normal target until data/retired_targets.json is edited")
         retired_all += retired_targets.listing(s, ret_here, RETIRED)

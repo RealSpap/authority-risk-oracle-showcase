@@ -76,19 +76,22 @@ class TestTheRun(unittest.TestCase):
         os.makedirs(os.path.join(tmp, "scores")); rp = os.path.join(tmp, "retired.json")
         if prev is not None: json.dump({"name": "Ethereum L1 (Sepolia)", "oracle": "0x" + "09" * 20, "targets": prev}, open(os.path.join(tmp, "scores", "ethereum-l1-sepolia.json"), "w"))
         if registry_obj is not None: open(rp, "w").write(json.dumps(registry_obj))
-        saved = (watch_run.WATCH, watch_run.ORACLES, watch_run.read_evm_any, watch_run.read_solana, watch_run.block_time_of, watch_run.scan_progress, retired.load)
+        saved = (watch_run.WATCH, watch_run.ORACLES, watch_run.read_evm_any, watch_run.read_solana, watch_run.block_time_of, watch_run.scan_progress, retired.load, watch_run.target_networks.evm_fields)
         real_load = retired.load
         doc = {"name": "Ethereum L1 (Sepolia)", "kind": "evm", "oracle": "0x" + "09" * 20, "rpc": "http://x", "block": 5, "maxStaleness": 777600, "readAt": 1793800000, "targets": targets}
         watch_run.WATCH = tmp; watch_run.ORACLES = [("Ethereum L1 (Sepolia)", doc["oracle"], "http://x")]
         watch_run.read_evm_any = lambda name, oracle, url, since: json.loads(json.dumps(doc)); watch_run.read_solana = lambda since=None: (_ for _ in ()).throw(RuntimeError("no solana here"))
         watch_run.block_time_of = lambda rpc, block: 1793800000; watch_run.scan_progress = lambda prev, cur: (0, [])
         retired.load = lambda: real_load(rp)
+        watch_run.target_networks.evm_fields = lambda name, oracle_url, tg, rpc, batched=None, post_json=None: (   # no network in a test: the networks a read would give
+            {"oracle_network": "Ethereum Sepolia (testnet)", "oracle_chain_id": 11155111, "target_network": "Ethereum mainnet", "target_chain_id": 1, "target_block": 7},
+            {t["target"].lower(): {"target_network": "Ethereum mainnet", "target_chain_id": 1} for t in tg})
         try:
             with contextlib.redirect_stdout(io.StringIO()):
                 try: watch_run.main()
                 except SystemExit: pass
         finally:
-            (watch_run.WATCH, watch_run.ORACLES, watch_run.read_evm_any, watch_run.read_solana, watch_run.block_time_of, watch_run.scan_progress, retired.load) = saved
+            (watch_run.WATCH, watch_run.ORACLES, watch_run.read_evm_any, watch_run.read_solana, watch_run.block_time_of, watch_run.scan_progress, retired.load, watch_run.target_networks.evm_fields) = saved
         return tmp
 
     def read(self, tmp, name): return json.load(open(os.path.join(tmp, name)))
@@ -101,6 +104,9 @@ class TestTheRun(unittest.TestCase):
         o = [x for x in latest["oracles"] if x.get("read_ok")][0]; self.assertEqual((o["targets"], o["stale"], o["retired"]), (2, 0, 1))
         hist = [json.loads(l) for l in open(os.path.join(tmp, "history.jsonl")) if l.strip()][-1]; self.assertEqual((hist["stale"], hist["retired"]), (0, 1))
         sc = {t["target"]: t for t in self.read(tmp, "scores/ethereum-l1-sepolia.json")["targets"]}; self.assertTrue(sc[RET]["retired"]); self.assertTrue(sc[RET]["stale"])   # still honest: it IS old
+        written = self.read(tmp, "scores/ethereum-l1-sepolia.json")   # the run writes the networks, marks the record, and names a network for every target (retired ones too)
+        self.assertEqual((written["networks_version"], written["oracle_network"], written["target_network"]), (1, "Ethereum Sepolia (testnet)", "Ethereum mainnet"))
+        self.assertEqual({t["target_network"] for t in written["targets"]}, {"Ethereum mainnet"})
         self.assertEqual(self.read(tmp, "badge/ethereum-l1-sepolia/%s.json" % RET)["message"], "10/100 (retired)")
 
     def test_without_the_file_the_same_target_is_stale_again_and_the_badge_keeps_its_old_text(self):

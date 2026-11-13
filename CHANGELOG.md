@@ -12,6 +12,31 @@ One entry per method version, named `YYYY.MM.N` (`data/method_versions.json`). `
 - 2026-10-13: A Watch alert about a change waiting in a timelock queue shows the same score, whatever that change does. A change to a price-feed setting and a full replacement of the core program are shown with the same score. The severity of the alert depends on how soon the change can run, not on what it does.
 - 2026-10-30: Known gap, first described on 18 September 2026 in data/finding_2026-09-18-scorers-hardcoded-score-literals.md, still open on 30 October 2026. For nine targets on Robinhood Chain (the scorers `score_ramses_clv2`, 4 targets, `score_longbow_vault`, 3 targets, and the two Spark scorers, 1 target each), the scorer reads owners, thresholds or delays into its notes, but some sub-scores are fixed values set by hand: all three for Ramses and Longbow, the admin and multisig scores for the two Spark scorers. If the configuration changes, or a read fails, the notes change and those sub-scores do not (except that the Spark ALM proxy scorer gives 20, 0 and 0 if its executor loses the admin role). This list comes from a sweep that did not read every scorer line by line; one more scorer, `score_rollup_l1_authority`, sets its admin and multisig scores (78 and 75) after reading the Safe that holds the executor role, whatever threshold it reads.
 
+### Renewal pushes of 10 and 11 November 2026 (no version name registered for Ethereum L1)
+
+| Oracle | methodologyHash | Pushed |
+|---|---|---|
+| Robinhood Chain | `0xe2625fb9e688dcffeb302e7cdb5f05f662f60c3d2d439f4fbbe7c3ac4d453d1e` (63 targets) | 2026-11-10 22:35Z |
+| Ethereum L1 | `0xae1451a64f7891c1002ccc93316ccb5050594a277078a4c857debf895f9bb9bb` (38 targets) | 2026-11-11 13:04Z |
+| Arbitrum | `0xdfdfedc34ca78e3d78ae1b009e983795c193ba2a39a8e926ae2a6036f755d5a1` (13 targets) | 2026-11-10 22:28Z |
+| Base | `0x39ed8891e019d83889c7b6f2e853ef182a57190fd394f4f1a7167fee1a741bc0` (13 targets) | 2026-11-10 22:00Z |
+| Plasma | `0x3aa3cbf80cdcf7d08aaa4e4a4441cfe56dea15f1a7ea336e20662dc4f262d4ac` (9 targets) | 2026-11-10 22:37Z |
+| Monad | `0x0ecf34c47dbe50b94fd1882dd54ae9adf4c44f8a47b142a1e0cbac17e59c0fbd` (9 targets) | 2026-11-11 00:41Z |
+| Hyperliquid | `0xb595576050a45dcdeeb0479747f6b283eaaca756e6cd7e70a176a194021bed65` (16 targets) | 2026-11-10 22:29Z |
+| Tempo | `0x4b8b9f250720ac31fdabaebb0a869cf64699eed816cb0f02de3ef13bcf637368` (14 targets) | 2026-11-10 21:51Z |
+| Solana | `0x35be9749403c55797c13ba37ef7df5a6291129781661a3125987ae151296a3c9` (26 targets) | 2026-11-10 21:47Z |
+
+Between 10 November 2026 at 21:46 UTC and 11 November at 13:04 UTC I pushed the nine oracles again. This entry was written afterwards: I read each oracle on chain on 13 November 2026 between 15:48 and 15:52 UTC (`getScore()` on each EVM oracle, the accounts of the program on Solana). The "Pushed" column is the latest `lastUpdated` of the entries that carry the hash; on Solana the 26 entries were written between 21:46 and 21:47 UTC.
+
+- **Eight oracles keep the hashes of 2026.11.1.** Robinhood Chain, Arbitrum, Base, Plasma, Monad, Hyperliquid, Tempo and Solana show, on every entry, the hash listed under 2026.11.1 below. The digest of their scoring files is the same as on 2 November, so the push renewed their entries and changed no method. Monad was pushed later than the other seven oracles of 10 November, on 11 November at 00:41 UTC.
+- **Ethereum L1 carries a new hash on its 38 live entries.** `data/method_versions.json` has no version name for it, and this entry gives none: the rule above says that a change which moves the hash is named, so the entry will carry its name when that file lists one. The hash is the one I computed before the send from the scoring files in which the stored list of Fluid's team multisig owners has 12 addresses, the 10 of 2026.11.2 and two more that joined. The entry of the retired minter keeps its older hash and its last write of 23 September 2026 at 16:16 UTC, as published.
+
+**How I checked.** On 13 November 2026 I read the entries of the nine oracles: 63 on Robinhood Chain, 39 on Ethereum L1 (38 with the new hash and the retired entry), 13 on Arbitrum, 13 on Base, 14 on Tempo, 9 on Plasma, 9 on Monad, 16 on Hyperliquid and 26 on Solana, 202 in all. Each count equals the targets of the table, and no entry carries a hash other than the one of its row, except the retired entry above. `python3 scripts/prove.py` compares this table with the chain.
+
+**What is not in this repository yet.** The scoring code behind the hashes of this table is not published here: on 13 November 2026 I recomputed the nine hashes with `scripts/lib/methodology.py` from the files of this repository and none of them equals the one on chain, so these hashes cannot yet be recomputed from this repository alone.
+
+**Freshness.** Entries expire nine days after their push. The first to expire are those of Solana, on 19 November 2026 at 21:46 UTC, and the last are those of Ethereum L1, on 20 November 2026 at 13:04 UTC.
+
 ### 2026.11.2 (2026-11-03, on Ethereum L1 only)
 
 | Oracle | methodologyHash | Pushed |

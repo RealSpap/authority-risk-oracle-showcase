@@ -1,9 +1,8 @@
 # Authority risk digest, 2026-11-13 00:09 UTC
 
-## Needs a person, 2026-11-13T00:09:08Z: 32 item(s) (priority 1: 20, priority 2: 9, priority 3: 3); oldest 33.1 d
+## Needs a person, 2026-11-13T00:09:08Z: 31 item(s) (priority 1: 19, priority 2: 9, priority 3: 3); oldest 33.1 d
 
-### Something happened: read before trusting the score (20)
-- **queued operation executable within 48 h** plasma 0x31672dE4726227fEb22f2dfbCfa985c71bEA86b2 (1.4 d): authority change: acceptOwnership() via plasma timelock 0x2130…cfbc, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
+### Something happened: read before trusting the score (19)
 - **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (1.0 d): AddedOwner 0x61C2…0e44 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (1.0 d): AddedOwner 0x2694…CbF1 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (1.0 d): AddedOwner 0xb291…Afef (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)

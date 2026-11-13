@@ -1,6 +1,6 @@
 {
- "run_utc": "2026-11-13T06:43:11Z",
- "previous_run_utc": "2026-11-12T23:38:04Z",
+ "run_utc": "2026-11-13T19:40:29Z",
+ "previous_run_utc": "2026-11-13T06:43:11Z",
  "schedule": "every 6 hours (GitHub Actions, cron 17 */6 * * *)",
  "oracles": [
   {
@@ -9,16 +9,16 @@
    "kind": "evm",
    "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
    "read_ok": true,
-   "block": 152671941,
+   "block": 152905501,
    "targets": 63,
    "stale": 0,
    "retired": 0,
    "lastUpdated": 1794350120,
    "maxStaleness": 777600,
    "freshness": {
-    "watch_read_at": 1794552194,
-    "block": 152671941,
-    "block_time": 1794552190,
+    "watch_read_at": 1794598835,
+    "block": 152905501,
+    "block_time": 1794598828,
     "newest_push": 1794350120,
     "oldest_push": 1794350120
    },
@@ -45,16 +45,16 @@
    "kind": "evm",
    "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
    "read_ok": true,
-   "block": 12124252,
+   "block": 12128105,
    "targets": 39,
    "stale": 0,
    "retired": 1,
    "lastUpdated": 1794402258,
    "maxStaleness": 777600,
    "freshness": {
-    "watch_read_at": 1794552195,
-    "block": 12124252,
-    "block_time": 1794552192,
+    "watch_read_at": 1794598837,
+    "block": 12128105,
+    "block_time": 1794598824,
     "newest_push": 1794402258,
     "oldest_push": 1790180194
    },
@@ -81,16 +81,16 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 328744695,
+   "block": 328917605,
    "targets": 13,
    "stale": 0,
    "retired": 0,
    "lastUpdated": 1794349702,
    "maxStaleness": 777600,
    "freshness": {
-    "watch_read_at": 1794552198,
-    "block": 328744695,
-    "block_time": 1794552194,
+    "watch_read_at": 1794598843,
+    "block": 328917605,
+    "block_time": 1794598837,
     "newest_push": 1794349702,
     "oldest_push": 1794349702
    },
@@ -117,16 +117,16 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 58151650,
+   "block": 58384875,
    "targets": 13,
    "stale": 0,
    "retired": 0,
    "lastUpdated": 1794348023,
    "maxStaleness": 777600,
    "freshness": {
-    "watch_read_at": 1794552228,
-    "block": 58151650,
-    "block_time": 1794552198,
+    "watch_read_at": 1794598873,
+    "block": 58384875,
+    "block_time": 1794598843,
     "newest_push": 1794348023,
     "oldest_push": 1794348023
    },
@@ -144,7 +144,7 @@
       "updater": false
      }
     },
-    "error": "getLogs: window of 127508 blocks needs more than 120 calls at 200 blocks each"
+    "error": "getLogs: window of 233225 blocks needs more than 120 calls at 200 blocks each"
    }
   },
   {
@@ -153,16 +153,16 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 43942452,
+   "block": 44025819,
    "targets": 14,
    "stale": 0,
    "retired": 0,
    "lastUpdated": 1794347490,
    "maxStaleness": 777600,
    "freshness": {
-    "watch_read_at": 1794552231,
-    "block": 43942452,
-    "block_time": 1794552228,
+    "watch_read_at": 1794598877,
+    "block": 44025819,
+    "block_time": 1794598872,
     "newest_push": 1794347490,
     "oldest_push": 1794347490
    },
@@ -189,16 +189,16 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 38721469,
+   "block": 38768115,
    "targets": 9,
    "stale": 0,
    "retired": 0,
    "lastUpdated": 1794350227,
    "maxStaleness": 777600,
    "freshness": {
-    "watch_read_at": 1794552238,
-    "block": 38721469,
-    "block_time": 1794552231,
+    "watch_read_at": 1794598884,
+    "block": 38768115,
+    "block_time": 1794598877,
     "newest_push": 1794350227,
     "oldest_push": 1794350227
    },
@@ -225,16 +225,16 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 79320305,
+   "block": 79468603,
    "targets": 9,
    "stale": 0,
    "retired": 0,
    "lastUpdated": 1794357672,
    "maxStaleness": 777600,
    "freshness": {
-    "watch_read_at": 1794552428,
-    "block": 79320305,
-    "block_time": 1794552238,
+    "watch_read_at": 1794599066,
+    "block": 79468603,
+    "block_time": 1794598884,
     "newest_push": 1794357672,
     "oldest_push": 1794357672
    },
@@ -252,7 +252,7 @@
       "updater": false
      }
     },
-    "error": "getLogs: window of 81049 blocks needs more than 120 calls at 100 blocks each"
+    "error": "getLogs: window of 148298 blocks needs more than 120 calls at 100 blocks each"
    }
   },
   {
@@ -261,16 +261,16 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 69491207,
+   "block": 69538538,
    "targets": 16,
    "stale": 0,
    "retired": 0,
    "lastUpdated": 1794349795,
    "maxStaleness": 777600,
    "freshness": {
-    "watch_read_at": 1794552604,
-    "block": 69491207,
-    "block_time": 1794552443,
+    "watch_read_at": 1794599284,
+    "block": 69538538,
+    "block_time": 1794599080,
     "newest_push": 1794349795,
     "oldest_push": 1794349795
    },
@@ -304,7 +304,7 @@
    "lastUpdated": 1794347254,
    "maxStaleness": 777600,
    "freshness": {
-    "watch_read_at": 1794552605,
+    "watch_read_at": 1794599285,
     "block": null,
     "block_time": null,
     "newest_push": 1794347254,
@@ -327,10 +327,10 @@
  ],
  "movers": [],
  "alerts": [
-  "Base (Sepolia): the scan of the oracle's own role events gave up a window of 127508 blocks; a RoleGranted or RoleRevoked inside it was not seen",
-  "Monad: the scan of the oracle's own role events gave up a window of 81049 blocks; a RoleGranted or RoleRevoked inside it was not seen"
+  "Base (Sepolia): the scan of the oracle's own role events gave up a window of 233225 blocks; a RoleGranted or RoleRevoked inside it was not seen",
+  "Monad: the scan of the oracle's own role events gave up a window of 148298 blocks; a RoleGranted or RoleRevoked inside it was not seen"
  ],
  "unread": [],
  "note": "The Zcash commitments are verified by the dashboard itself. An oracle in `unread` has unknown targets, not zero.",
- "run_id": "43380592608.1"
+ "run_id": "43494354254.1"
 }

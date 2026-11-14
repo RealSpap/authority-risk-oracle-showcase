@@ -114,18 +114,11 @@
 - 15 target(s) added since that snapshot are not fingerprinted yet (informational)
 
 ## Solana Squads v4 multisigs (members, threshold, time lock)
-- [CHANGED] 51smH7pBDKJDgmVnVks3gMWaPQFfmQ5s4Fc223yHcjuH (EXPONENT_MS): time lock (s) 14400 -> 36000
 - [CHANGED] 5JZFPx6Qkg9PAgYMn9wHWirsiEQBfeJuE667MWeRBLPN (REWARD_SUPER_MS): member added 86mC…iMLg (permissions 6); member added CjEM…LZKY (permissions 7); member added FbcW…vHW7 (permissions 7); member removed 6Li1…ueL9; member removed BWyV…1w9C
 - [CHANGED] 5Y93cxqp8rGtjDhxGkehewfhFdxLkrCfPDWookCGeASF (JL_ADMIN_MS, ADMIN_MS): member removed 4Sqa…4Jqp; threshold 5 -> 4
 - [CHANGED] 74QKjjvoSrq2cGqFzzQNN8ox3gomYS1mBwcLsbiYaH8j (ADMIN_MS): member added 6vRh…apm9 (permissions 7); member removed 3Cxn…MEMB; member removed FwZd…YJCX
-- [CHANGED] 7FCPipJWVbPbdHymVt1gJYwKciakkJz5GahdQySemvHk (UPGRADE_MS): member added 6vRh…apm9 (permissions 7); member removed 3Cxn…MEMB; member removed FwZd…YJCX
 - [CHANGED] 7VVPGwvWh37LyhL1tVm6pGUzm3S1u6p17H6ttT9ZEFex (DELEGATE_MS): member added DAk1…KiMf (permissions 7)
-- [CHANGED] 7qipzLR9j1JcvdxE1XJEFgvoyFmgBpgw5hMdHBMPcJtM (DRIFT_MS): member removed 3mpT…qAfS
-- [CHANGED] 8Sr4rQJL2aQT3EL97mbrk1T9VMw4pCS2mxMPp2QBzHQq (LULO_MS): member added 9uyE…Jiuy (permissions 7); member added ENbm…tNmU (permissions 7); member added Ggin…bCjh (permissions 7); member added GqRN…1qYz (permissions 7); member added HKzQ…Yhz5 (permissions 7); member removed 2dMW…AYPT; member removed 2fqV…uiBD; member removed 5c9e…A2A4; member removed 6r76…So9G; member removed 9RDE…g8RZ; member removed At3T…MWTh; member removed BQZ9…JUpk; member removed DvJu…KPZk
-- [CHANGED] AEb1u8FK8EuXLcPtprCy8s4NkqBNoP5mfbuEEop2dJGf (SOLSTICE_MS): member added 5kVC…SK1G (permissions 7); member added GG2k…Ub8E (permissions 7)
-- [CHANGED] BQsDWkL417U4tVE2sDnPks469pKdm6YzFgKH77doiEjF (UPGRADE_MS): member added 6M7B…99HV (permissions 2); member added CjEM…LZKY (permissions 5); member removed 2NfC…7gXb; member removed 9FtD…ZMn4
 - [CHANGED] HvYoRSJdVcj6WRWV57yLu2Vmwh1ccqJRdkCwhNsSfRu4 (ADMIN_MS): time lock (s) 0 -> 21600
-- [CHANGED] J3mJ3wz6xkVUk3T8qHnuAYNxsRH3ixHsryYNZAU2vG8P (JL_UPGRADE_MS, UPGRADE_MS): member added 5tjC…LKzv (permissions 7); member removed 8BR8…rz9H
 
 ## Signer accounts (plain EOA, EIP-7702 delegation, contract)
 - [CHANGED] base:0x8769…5838: eoa -> contract

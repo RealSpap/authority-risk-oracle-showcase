@@ -731,18 +731,38 @@
    "chain": "arbitrum",
    "timelock": "Arbitrum L2 Core Governor Timelock",
    "what": "parameter change"
+  },
+  "ethereum:0x6d903f6003cca6255d85cca4d3b5e5146dc33925:0x6ccf445ab6cb86cebb24bf575eeae41c7c0cc209f3a6b5ea7900e667e2f29e98": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-11-14T17:59:40Z",
+   "due_utc": "2026-11-16T12:26:59Z",
+   "notice_hours": 42.5,
+   "state": "queued",
+   "chain": "ethereum",
+   "timelock": "Compound Governance Timelock",
+   "what": "parameter change"
+  },
+  "ethereum:0x6d903f6003cca6255d85cca4d3b5e5146dc33925:0xe772d7b272e3ae67f912612d11f57c397243e892068741f3942e6ad7a750230f": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-11-14T17:59:40Z",
+   "due_utc": "2026-11-16T12:26:59Z",
+   "notice_hours": 42.5,
+   "state": "queued",
+   "chain": "ethereum",
+   "timelock": "Compound Governance Timelock",
+   "what": "cross-chain message"
   }
  },
- "updated_utc": "2026-11-14T06:20:14Z",
+ "updated_utc": "2026-11-14T17:59:40Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
-  "warned": 45,
+  "warned": 47,
   "seen_without_notice": 0,
   "missed": 1,
   "baseline": 26,
-  "warned_with_a_known_notice": 45,
+  "warned_with_a_known_notice": 47,
   "shortest_notice_hours": 14.0,
-  "median_notice_hours": 22.4,
+  "median_notice_hours": 23.9,
   "note": "warned: seen while queued and not yet executable (the notice is real); seen_without_notice: still queued but already executable when first seen; missed: queued after the ledger started and already applied when first seen (faster than the 6-hour cadence); baseline: applied before the ledger started, counted as neither."
  }
 }

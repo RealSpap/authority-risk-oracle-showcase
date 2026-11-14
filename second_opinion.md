@@ -1,10 +1,4 @@
-## Second opinion, 2026-11-14T06:33:20Z
-
-### 1 admin change(s) since the previous run (2026-11-13T19:55:26Z)
-
-- **FL3X2pRsQ9zHENpZSKDRREtccwJuei8yg9fwDu9UN69Q** on solana: admin read changed since the previous run: squads FP1AgtaWxArMHtJqDZkxqMSUCCTwGLC3xgt85by9a1zs 3-of-8 (8 voters), time lock 0s -> squads FP1AgtaWxArMHtJqDZkxqMSUCCTwGLC3xgt85by9a1zs 3-of-5 (5 voters), time lock 0s (via program -> ProgramData 4J4gnm… -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly) -> Squads v4 vault 0 of multisig 8Sr4rQJL2aQT3EL97mbrk1T9VMw4pCS2mxMPp2QBzHQq)
-
-The live admin of a tracked contract moved between two watch runs: the published score may be out of date before the next push. Read the case now.
+## Second opinion, 2026-11-14T18:12:40Z
 
 ### 3 disagreement(s) with the published score
 

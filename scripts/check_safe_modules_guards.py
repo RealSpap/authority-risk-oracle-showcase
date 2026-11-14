@@ -34,16 +34,7 @@ def safe_owners_and_threshold(w3, address, retries=4):
 
 
 
-RPC = {
-    "robinhood": "https://rpc.mainnet.chain.robinhood.com",
-    "ethereum-l1": "https://ethereum-rpc.publicnode.com",
-    "arbitrum": "https://arb1.arbitrum.io/rpc",
-    "base": "https://mainnet.base.org",
-    "plasma": "https://rpc.plasma.to",
-    "monad": "https://rpc.monad.xyz",
-    "tempo": "https://rpc.tempo.xyz",
-    "hyperliquid": "https://rpc.hyperliquid.xyz/evm",
-}
+from second_opinion import MAINNET as RPC  # noqa: E402  -- the one table of public mainnet RPCs; the eight values this script used to carry are the same
 GROUPS = {
     "robinhood": ROBINHOOD_GROUPS, "ethereum-l1": ETHEREUM_L1_GROUPS, "arbitrum": ARBITRUM_GROUPS,
     "base": BASE_GROUPS, "plasma": PLASMA_GROUPS, "monad": MONAD_GROUPS, "tempo": TEMPO_GROUPS,

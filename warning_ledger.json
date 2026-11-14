@@ -721,18 +721,28 @@
    "chain": "ethereum",
    "timelock": "Ethena Timelock",
    "what": "parameter change"
+  },
+  "arbitrum:0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0:0x2f037893252a8e160a3d92258189f0432202ad41d7fe7747b591c899faa96a1f": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-11-14T06:20:14Z",
+   "due_utc": "2026-11-22T00:55:21Z",
+   "notice_hours": 186.6,
+   "state": "queued",
+   "chain": "arbitrum",
+   "timelock": "Arbitrum L2 Core Governor Timelock",
+   "what": "parameter change"
   }
  },
- "updated_utc": "2026-11-13T19:40:29Z",
+ "updated_utc": "2026-11-14T06:20:14Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
-  "warned": 44,
+  "warned": 45,
   "seen_without_notice": 0,
   "missed": 1,
   "baseline": 26,
-  "warned_with_a_known_notice": 44,
+  "warned_with_a_known_notice": 45,
   "shortest_notice_hours": 14.0,
-  "median_notice_hours": 22.2,
+  "median_notice_hours": 22.4,
   "note": "warned: seen while queued and not yet executable (the notice is real); seen_without_notice: still queued but already executable when first seen; missed: queued after the ledger started and already applied when first seen (faster than the 6-hour cadence); baseline: applied before the ledger started, counted as neither."
  }
 }

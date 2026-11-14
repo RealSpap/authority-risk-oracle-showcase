@@ -1,6 +1,6 @@
 {
- "evaluated_utc": "2026-11-13T20:01:56Z",
- "run_utc": "2026-11-13T19:40:29Z",
+ "evaluated_utc": "2026-11-14T06:39:31Z",
+ "run_utc": "2026-11-14T06:20:14Z",
  "rules": [
   "score dropped by 10 or more",
   "score fell under 40",
@@ -34,9 +34,9 @@
    "title": "Ethena USDe",
    "score": 73,
    "delta": 0,
-   "tvl_usd": 4889744241.945307,
+   "tvl_usd": 4909847739.914477,
    "first_seen": "2026-11-13T20:01:56Z",
-   "new": true,
+   "new": false,
    "evidence": [
     {
      "timelock": "Ethena Timelock",
@@ -65,25 +65,24 @@
    ],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12128105,
-    "oracle_read_at": 1794598837,
+    "oracle_block": 12131284,
+    "oracle_read_at": 1794637221,
     "composite": 73,
     "previous_composite": 73,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "timelock",
      "path": "owner()",
-     "block_start": 26408275,
-     "block_end": 26408276,
-     "read_gap_seconds": 959,
-     "since_score_push_seconds": 197538
+     "block_start": 26411455,
+     "block_end": 26411457,
+     "read_gap_seconds": 834,
+     "since_score_push_seconds": 235797
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xe3490297a08d6fc8da46edb7b6142e4f461b62d3 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12128105",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xe3490297a08d6fc8da46edb7b6142e4f461b62d3 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12131284",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-13T06:43:11Z",
-   "notified": true,
-   "delivered": []
+   "previous_run": "2026-11-13T19:40:29Z",
+   "notified": true
   },
   {
    "rule": "the independent reader disagrees with the admin-key score, with money behind it",
@@ -93,31 +92,30 @@
    "title": "Kinetiq kmHYPE",
    "score": 4,
    "delta": 0,
-   "tvl_usd": 35834824.45005403,
+   "tvl_usd": 33824991.04158294,
    "first_seen": "2026-11-13T20:01:56Z",
-   "new": true,
+   "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 69538538,
-    "oracle_read_at": 1794599284,
+    "oracle_block": 69577467,
+    "oracle_read_at": 1794637640,
     "composite": 4,
     "previous_composite": 4,
     "score_last_updated": 1794349795,
     "second_opinion": {
      "kind": "safe",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 51181952,
-     "block_end": 51181976,
-     "read_gap_seconds": 542,
-     "since_score_push_seconds": 250031
+     "block_start": 51220848,
+     "block_end": null,
+     "read_gap_seconds": 440,
+     "since_score_push_seconds": 288285
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec --rpc-url https://998.rpc.thirdweb.com --block 69538538",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec --rpc-url https://998.rpc.thirdweb.com --block 69577467",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-13T06:43:11Z",
-   "notified": true,
-   "delivered": []
+   "previous_run": "2026-11-13T19:40:29Z",
+   "notified": true
   },
   {
    "rule": "the independent reader disagrees with the admin-key score, with money behind it",
@@ -127,29 +125,29 @@
    "title": "Kinetiq kHYPE",
    "score": 4,
    "delta": 0,
-   "tvl_usd": 722068281.9768343,
+   "tvl_usd": 686210525.8412433,
    "first_seen": "2026-11-12T16:01:10Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 69538538,
-    "oracle_read_at": 1794599284,
+    "oracle_block": 69577467,
+    "oracle_read_at": 1794637640,
     "composite": 4,
     "previous_composite": 4,
     "score_last_updated": 1794349795,
     "second_opinion": {
      "kind": "safe",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 51181952,
-     "block_end": 51181976,
-     "read_gap_seconds": 542,
-     "since_score_push_seconds": 250031
+     "block_start": 51220848,
+     "block_end": null,
+     "read_gap_seconds": 445,
+     "since_score_push_seconds": 288290
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x393d0b87ed38fc779fd9611144ae649ba6082109 --rpc-url https://998.rpc.thirdweb.com --block 69538538",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x393d0b87ed38fc779fd9611144ae649ba6082109 --rpc-url https://998.rpc.thirdweb.com --block 69577467",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-13T06:43:11Z",
+   "previous_run": "2026-11-13T19:40:29Z",
    "notified": true
   },
   {
@@ -166,47 +164,47 @@
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 152905501,
-    "oracle_read_at": 1794598835,
+    "oracle_block": 153078599,
+    "oracle_read_at": 1794637220,
     "composite": 1,
     "previous_composite": 1,
     "score_last_updated": 1794350120,
     "second_opinion": {
      "kind": "eoa",
      "path": "owner()",
-     "block_start": 113614951,
-     "block_end": 113615403,
-     "read_gap_seconds": 1118,
-     "since_score_push_seconds": 249833
+     "block_start": 113968602,
+     "block_end": 113969010,
+     "read_gap_seconds": 983,
+     "since_score_push_seconds": 288083
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 152905501",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 153078599",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-13T06:43:11Z",
+   "previous_run": "2026-11-13T19:40:29Z",
    "notified": true
   },
   {
    "rule": "the live admin of this contract changed since the previous run (independent read)",
    "severity": "high",
    "chain": "Solana",
-   "target": "dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH",
-   "title": "Drift Trade",
-   "score": 48,
+   "target": "FL3X2pRsQ9zHENpZSKDRREtccwJuei8yg9fwDu9UN69Q",
+   "title": "FL3X2p\u2026N69Q",
+   "score": 38,
    "delta": 0,
-   "tvl_usd": 636383.0766037246,
-   "first_seen": "2026-11-13T20:01:56Z",
+   "tvl_usd": null,
+   "first_seen": "2026-11-14T06:39:31Z",
    "new": true,
    "evidence": [],
    "reading": {
     "oracle": "5VhiTAGLEViGgajhxPbzdWz7WLUAiRy42DY6qi6tYh4W",
     "oracle_block": null,
-    "oracle_read_at": 1794599285,
-    "composite": 48,
-    "previous_composite": 48,
-    "score_last_updated": 1794347205,
+    "oracle_read_at": 1794637643,
+    "composite": 38,
+    "previous_composite": 38,
+    "score_last_updated": 1794347247,
     "second_opinion": {
      "kind": "squads",
-     "path": "program -> ProgramData 7dLgmt\u2026 -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly) -> Squads v4 vault 0 of multisig 7qipzLR9j1JcvdxE1XJEFgvoyFmgBpgw5hMdHBMPcJtM",
+     "path": "program -> ProgramData 4J4gnm\u2026 -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly) -> Squads v4 vault 0 of multisig 8Sr4rQJL2aQT3EL97mbrk1T9VMw4pCS2mxMPp2QBzHQq",
      "block_start": null,
      "block_end": null,
      "read_gap_seconds": null,
@@ -215,7 +213,7 @@
     "reproduce": null,
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-13T06:43:11Z",
+   "previous_run": "2026-11-13T19:40:29Z",
    "notified": true,
    "delivered": []
   }
@@ -229,8 +227,8 @@
    "target": "0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d",
    "title": "0xfe7e\u20269b0d",
    "first_seen": "2026-10-10T21:14:27Z",
-   "last_seen": "2026-11-13T20:01:56Z",
-   "times": 125,
+   "last_seen": "2026-11-14T06:39:31Z",
+   "times": 126,
    "score": 1,
    "delta": 0,
    "tvl_usd": null
@@ -243,11 +241,11 @@
    "target": "0x393d0b87ed38fc779fd9611144ae649ba6082109",
    "title": "Kinetiq kHYPE",
    "first_seen": "2026-11-12T16:01:10Z",
-   "last_seen": "2026-11-13T20:01:56Z",
-   "times": 111,
+   "last_seen": "2026-11-14T06:39:31Z",
+   "times": 112,
    "score": 4,
    "delta": 0,
-   "tvl_usd": 722068281.9768343
+   "tvl_usd": 686210525.8412433
   },
   {
    "key": "the independent reader disagrees with the admin-key score, with money behind it|hyperliquid:0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec",
@@ -257,11 +255,11 @@
    "target": "0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec",
    "title": "Kinetiq kmHYPE",
    "first_seen": "2026-11-13T20:01:56Z",
-   "last_seen": "2026-11-13T20:01:56Z",
-   "times": 120,
+   "last_seen": "2026-11-14T06:39:31Z",
+   "times": 121,
    "score": 4,
    "delta": 0,
-   "tvl_usd": 35834824.45005403
+   "tvl_usd": 33824991.04158294
   },
   {
    "key": "a queued change against this contract executes within 48 h|ethereum-l1:0xe3490297a08d6fc8da46edb7b6142e4f461b62d3",
@@ -271,11 +269,25 @@
    "target": "0xe3490297a08d6fc8da46edb7b6142e4f461b62d3",
    "title": "Ethena USDe",
    "first_seen": "2026-11-13T20:01:56Z",
-   "last_seen": "2026-11-13T20:01:56Z",
-   "times": 1,
+   "last_seen": "2026-11-14T06:39:31Z",
+   "times": 2,
    "score": 73,
    "delta": 0,
-   "tvl_usd": 4889744241.945307
+   "tvl_usd": 4909847739.914477
+  },
+  {
+   "key": "the live admin of this contract changed since the previous run (independent read)|solana:FL3X2pRsQ9zHENpZSKDRREtccwJuei8yg9fwDu9UN69Q",
+   "rule": "the live admin of this contract changed since the previous run (independent read)",
+   "severity": "high",
+   "chain": "Solana",
+   "target": "FL3X2pRsQ9zHENpZSKDRREtccwJuei8yg9fwDu9UN69Q",
+   "title": "FL3X2p\u2026N69Q",
+   "first_seen": "2026-11-14T06:39:31Z",
+   "last_seen": "2026-11-14T06:39:31Z",
+   "times": 1,
+   "score": 38,
+   "delta": 0,
+   "tvl_usd": null
   },
   {
    "key": "the live admin of this contract changed since the previous run (independent read)|solana:dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH",

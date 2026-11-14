@@ -1,0 +1,1895 @@
+{
+ "version": "0.1",
+ "about": "Claims of the public pages of the Authority Risk Oracle, with the four elements of Replay Grade v0.1 that each page holds. The grade is computed by scripts/replay_grade.py, never written here.",
+ "claims": [
+  {
+   "id": "R01",
+   "page": "README.md",
+   "where": "line 21, 51-56",
+   "claim": "A contract can read the score on-chain with `getScore(address)`",
+   "command": "`cast call ORACLE \"getScore(address)(...)\" TARGET --rpc-url RPC`",
+   "elements": {
+    "cmd": 1,
+    "pt": 0,
+    "ex": 1,
+    "net": 1,
+    "src": 1
+   },
+   "to_next": "name the block (`--block N`) instead of a date"
+  },
+  {
+   "id": "R02",
+   "page": "README.md",
+   "where": "line 21",
+   "claim": "55 incident write-ups read, 7 about who controls a contract, 2 flagged",
+   "command": "`python3 scripts/prove.py` (line 31)",
+   "elements": {
+    "cmd": 1,
+    "pt": 0,
+    "ex": 1,
+    "net": null,
+    "src": 1
+   },
+   "to_next": "name the commit the output was produced at"
+  },
+  {
+   "id": "R03",
+   "page": "README.md",
+   "where": "line 23",
+   "claim": "Command 1 needs no key, only public RPCs, and takes about ten seconds",
+   "command": "`python3 scripts/prove.py`",
+   "elements": {
+    "cmd": 1,
+    "pt": 0,
+    "ex": 1,
+    "net": null,
+    "src": 1
+   },
+   "to_next": "write one number, with the date of the run"
+  },
+  {
+   "id": "R04",
+   "page": "README.md",
+   "where": "line 35",
+   "claim": "63 + 39 + 13 + 13 + 14 + 9 + 9 + 16 targets on 8 oracles equal the Watch",
+   "command": "`python3 scripts/prove.py`",
+   "elements": {
+    "cmd": 1,
+    "pt": 0,
+    "ex": 1,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "name the block of each oracle and the chain ID of each"
+  },
+  {
+   "id": "R05",
+   "page": "README.md",
+   "where": "line 36",
+   "claim": "176 targets: six sub-scores, push date and methodology hash identical on the chain and in the Watch",
+   "command": "`python3 scripts/prove.py`",
+   "elements": {
+    "cmd": 1,
+    "pt": 0,
+    "ex": 1,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "name the blocks, write the chain IDs"
+  },
+  {
+   "id": "R06",
+   "page": "README.md",
+   "where": "line 37",
+   "claim": "Solana devnet: 26 accounts, scores and hash identical to the Watch's",
+   "command": "`python3 scripts/prove.py`",
+   "elements": {
+    "cmd": 1,
+    "pt": 0,
+    "ex": 1,
+    "net": 1,
+    "src": 1
+   },
+   "to_next": "name the slot"
+  },
+  {
+   "id": "R07",
+   "page": "README.md",
+   "where": "line 38",
+   "claim": "8 EVM oracles: hash, target count and push date equal the CHANGELOG",
+   "command": "`python3 scripts/prove.py`",
+   "elements": {
+    "cmd": 1,
+    "pt": 0,
+    "ex": 1,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "name the blocks, write the chain IDs"
+  },
+  {
+   "id": "R08",
+   "page": "README.md",
+   "where": "line 39",
+   "claim": "`getScore` of the example contract is 80, 100, 75, 100, 80, 85",
+   "command": "`python3 scripts/prove.py`",
+   "elements": {
+    "cmd": 1,
+    "pt": 0,
+    "ex": 1,
+    "net": 1,
+    "src": 1
+   },
+   "to_next": "replace the printed run by a current one, with the block"
+  },
+  {
+   "id": "R09",
+   "page": "README.md",
+   "where": "line 42",
+   "claim": "Authority Facts v0.1: 202 JSON twins of the site conform",
+   "command": "`python3 scripts/prove.py`",
+   "elements": {
+    "cmd": 1,
+    "pt": 0,
+    "ex": 1,
+    "net": null,
+    "src": 1
+   },
+   "to_next": "name the commit and the site version read"
+  },
+  {
+   "id": "R10",
+   "page": "README.md",
+   "where": "line 46",
+   "claim": "Oracle on Robinhood Chain testnet (chain ID 46630), target on Robinhood Chain mainnet (chain ID 4663), checked with `eth_chainId` on 13 November (10:59, in UTC)",
+   "command": "none written (method name only)",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 1,
+    "net": 1,
+    "src": 1
+   },
+   "to_next": "add `cast chain-id --rpc-url RPC` once for each network"
+  },
+  {
+   "id": "R11",
+   "page": "README.md",
+   "where": "line 56",
+   "claim": "The fifth value was 80 on 22 October and changed with the push of 27 October, method 2026.10.4 (the history)",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 1,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "cite the CHANGELOG entry and a `cast call` at a block before and after the push"
+  },
+  {
+   "id": "R39",
+   "page": "README.md",
+   "where": "line 56",
+   "claim": "The fifth value of `getScore` is 40 now (read with the `cast call` of lines 51-54)",
+   "command": "`cast call ORACLE \"getScore(address)(...)\" TARGET --rpc-url RPC` (lines 51-54)",
+   "elements": {
+    "cmd": 1,
+    "pt": 0,
+    "ex": 1,
+    "net": 1,
+    "src": 1
+   },
+   "to_next": "name the block (`--block N`)"
+  },
+  {
+   "id": "R12",
+   "page": "README.md",
+   "where": "line 59",
+   "claim": "A contract can score 100 and still carry the lowest trust status of `watch/trust.json`",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "add the command that reads `trust.json` for one contract and the expected status"
+  },
+  {
+   "id": "R13",
+   "page": "README.md",
+   "where": "line 59",
+   "claim": "None of the three commands reads the status yet",
+   "command": "none (the commands are on the page)",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "add a line that shows each command's output has no status field"
+  },
+  {
+   "id": "R14",
+   "page": "README.md",
+   "where": "line 61",
+   "claim": "`l1CappedComposite` is 57 for the Uniswap v3 factory; it is in `api/scores.json`, not on the chain",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "add the `curl` of `api/scores.json` and the field to compare"
+  },
+  {
+   "id": "R40",
+   "page": "README.md",
+   "where": "line 61",
+   "claim": "The composite of the Uniswap v3 factory on the chain is 85",
+   "command": "`cast call ORACLE \"getScore(address)(...)\" TARGET --rpc-url RPC` (lines 51-54)",
+   "elements": {
+    "cmd": 1,
+    "pt": 0,
+    "ex": 1,
+    "net": 1,
+    "src": 1
+   },
+   "to_next": "name the block (`--block N`)"
+  },
+  {
+   "id": "R15",
+   "page": "README.md",
+   "where": "line 63",
+   "claim": "The strict gate is 46 lines and the simple gate is 18 lines",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 1
+   },
+   "to_next": "add `wc -l` for the two files, with the commit"
+  },
+  {
+   "id": "R41",
+   "page": "README.md",
+   "where": "line 63",
+   "claim": "The simple gate checks neither the age of the push nor the number of keys",
+   "command": "none (the file `integrations/authority_facts_gate.py` is named)",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 1
+   },
+   "to_next": "add the command line of the simple gate on a label older than 72 hours and the line it prints"
+  },
+  {
+   "id": "R16",
+   "page": "README.md",
+   "where": "line 66-73",
+   "claim": "The strict gate refuses the label of the Uniswap v3 factory with `keys to move not read, and you asked for them` (exit code 1), run on 12 November (21:45, in UTC)",
+   "command": "`python3 integrations/authority_facts_gate_strict.py LABEL_URL --max-age-hours 72 --strict`",
+   "elements": {
+    "cmd": 1,
+    "pt": 1,
+    "ex": 1,
+    "net": 1,
+    "src": 1
+   },
+   "to_next": "already A"
+  },
+  {
+   "id": "R17",
+   "page": "README.md",
+   "where": "line 73",
+   "claim": "The simple gate prints `ok: Robinhood Chain 85 (strong), 48 h to react` on the same label (exit code 0)",
+   "command": "described, not written with its arguments",
+   "elements": {
+    "cmd": 0,
+    "pt": 1,
+    "ex": 1,
+    "net": 1,
+    "src": 1
+   },
+   "to_next": "write the command line"
+  },
+  {
+   "id": "R42",
+   "page": "README.md",
+   "where": "line 73",
+   "claim": "Without `--strict`, the same command with only `--max-age-hours 72` prints `the last push is older than 72.0 hours` (run on 12 November, at 21:45 in UTC)",
+   "command": "described, not written with its arguments",
+   "elements": {
+    "cmd": 0,
+    "pt": 1,
+    "ex": 1,
+    "net": 1,
+    "src": 1
+   },
+   "to_next": "write the command line, with the label address"
+  },
+  {
+   "id": "R18",
+   "page": "README.md",
+   "where": "line 73",
+   "claim": "The label was built on 22 October from a push of 19 October; the oracle was pushed again on 10 November",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "cite the CHANGELOG entry and the label fields `last_pushed`"
+  },
+  {
+   "id": "R19",
+   "page": "README.md",
+   "where": "line 75",
+   "claim": "The Solana devnet oracle program is upgradeable and its upgrade authority is a given account",
+   "command": "`curl ... getAccountInfo ... | python3 -c ...` (line 78)",
+   "elements": {
+    "cmd": 1,
+    "pt": 0,
+    "ex": 1,
+    "net": 1,
+    "src": 1
+   },
+   "to_next": "write the slot of the response"
+  },
+  {
+   "id": "R20",
+   "page": "README.md",
+   "where": "line 75",
+   "claim": "That authority account is a plain account with no code",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 0
+   },
+   "to_next": "add `getAccountInfo` on the authority account and the expected owner and size"
+  },
+  {
+   "id": "R21",
+   "page": "README.md",
+   "where": "line 75",
+   "claim": "The same account is admin and updater in the registry of the program: one signature can push scores and replace the program",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 0
+   },
+   "to_next": "name the registry account and add the call that decodes it"
+  },
+  {
+   "id": "R22",
+   "page": "README.md",
+   "where": "line 75",
+   "claim": "The devnet genesis hash is written, and the program does not exist on Solana mainnet-beta",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 0
+   },
+   "to_next": "add `getGenesisHash` and the `getAccountInfo` on mainnet-beta with the expected null"
+  },
+  {
+   "id": "R23",
+   "page": "README.md",
+   "where": "line 81",
+   "claim": "The eight EVM oracles are not upgradeable; one plain key holds their admin and updater roles per chain (see `docs/LIMITS.md`, section \"The oracle's own composite, by chain\")",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "add the `cast call` for the owner of one oracle, per chain"
+  },
+  {
+   "id": "R24",
+   "page": "README.md",
+   "where": "line 87",
+   "claim": "202 contracts on 9 oracles (8 EVM testnets and Solana devnet)",
+   "command": "`python3 scripts/prove.py`",
+   "elements": {
+    "cmd": 1,
+    "pt": 0,
+    "ex": 1,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "name the blocks, write the chain IDs"
+  },
+  {
+   "id": "R25",
+   "page": "README.md",
+   "where": "line 87",
+   "claim": "Zcash is separate, 6 targets attested by on-chain commitments",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 0
+   },
+   "to_next": "link the attestation and the command that reads it"
+  },
+  {
+   "id": "R26",
+   "page": "README.md",
+   "where": "line 87",
+   "claim": "Each record names the network of its targets (see `watch/API.md`)",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "add the `curl` of one `scores/*.json` file and the field to read"
+  },
+  {
+   "id": "R27",
+   "page": "README.md",
+   "where": "line 87",
+   "claim": "The dashboard shows the money behind the contracts where one was read, and the delay before a change applies",
+   "command": "none (a link)",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "name a contract and give the value the page should show"
+  },
+  {
+   "id": "R28",
+   "page": "README.md",
+   "where": "line 88",
+   "claim": "One contract's label says who can move it, how many keys, how long others have to react",
+   "command": "none (a link)",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "add the `curl` of the JSON twin and the fields to read"
+  },
+  {
+   "id": "R29",
+   "page": "README.md",
+   "where": "line 89",
+   "claim": "`scripts/brief.py morpho-blue` gives a one-page brief",
+   "command": "`python3 scripts/brief.py morpho-blue`",
+   "elements": {
+    "cmd": 1,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 1
+   },
+   "to_next": "show the first lines of the output"
+  },
+  {
+   "id": "R43",
+   "page": "README.md",
+   "where": "line 89",
+   "claim": "An agent can use it through the local MCP server",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 0
+   },
+   "to_next": "link the server file and give the command that starts it"
+  },
+  {
+   "id": "R30",
+   "page": "README.md",
+   "where": "line 89",
+   "claim": "One Atom feed per protocol",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 0
+   },
+   "to_next": "link one feed and say what its first entry should hold"
+  },
+  {
+   "id": "R31",
+   "page": "README.md",
+   "where": "line 89",
+   "claim": "The pinned commit of the action is the last commit that changed it",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 1,
+    "ex": 0,
+    "net": null,
+    "src": 1
+   },
+   "to_next": "add `git log -1 -- action.yml`"
+  },
+  {
+   "id": "R32",
+   "page": "README.md",
+   "where": "line 97",
+   "claim": "Submitted to Colosseum's Crypto World's Fair on 12 October 2026",
+   "command": "none (a link)",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 1
+   },
+   "to_next": "link the submission page itself"
+  },
+  {
+   "id": "R33",
+   "page": "README.md",
+   "where": "line 102",
+   "claim": "The dated transactions of the oracles do not depend on git (table in `docs/HISTORY.md`)",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "add one `cast tx` and the expected block"
+  },
+  {
+   "id": "R44",
+   "page": "README.md",
+   "where": "line 102",
+   "claim": "Every commit up to 6 October 2026 is a snapshot or carries a round time",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 0
+   },
+   "to_next": "add `git log` with the dates of the first commits"
+  },
+  {
+   "id": "R45",
+   "page": "README.md",
+   "where": "line 102",
+   "claim": "The Watch keeps a hash-chained event log since 10 October 2026",
+   "command": "none (the file is not linked in that sentence)",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 0
+   },
+   "to_next": "link `events.jsonl` and say what its first line holds"
+  },
+  {
+   "id": "R46",
+   "page": "README.md",
+   "where": "line 102",
+   "claim": "The Watch signs its manifests since 11 October 2026",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 0
+   },
+   "to_next": "link one signed manifest and the command that checks the signature"
+  },
+  {
+   "id": "R34",
+   "page": "README.md",
+   "where": "line 102",
+   "claim": "The methodology hash is tied to the scoring code for every push after 30 September 2026",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 0
+   },
+   "to_next": "cite `scripts/lib/methodology.py` and which pushes it recomputes"
+  },
+  {
+   "id": "R35",
+   "page": "README.md",
+   "where": "line 118",
+   "claim": "The signing key of the Watch is the same in `watch/API.md`, in `scripts/audit_public.py` and on the provenance page",
+   "command": "`python3 scripts/audit_public.py` (checks a run)",
+   "elements": {
+    "cmd": 1,
+    "pt": 0,
+    "ex": 1,
+    "net": null,
+    "src": 1
+   },
+   "to_next": "show the line the script prints when the key matches"
+  },
+  {
+   "id": "R36",
+   "page": "README.md",
+   "where": "line 21",
+   "claim": "A DeFi contract that can be upgraded or reconfigured has someone who can do it",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 0
+   },
+   "to_next": "none: keep as a premise or cut"
+  },
+  {
+   "id": "R37",
+   "page": "README.md",
+   "where": "line 21, 97",
+   "claim": "The score reads exposure, how much one compromise can do; it does not predict who gets hit",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 0
+   },
+   "to_next": "cite the back-test line of command 1 (R02) next to it"
+  },
+  {
+   "id": "R47",
+   "page": "README.md",
+   "where": "line 21",
+   "claim": "Live on testnets today",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 0
+   },
+   "to_next": "link the Watch page that lists the oracles and their networks"
+  },
+  {
+   "id": "R38",
+   "page": "README.md",
+   "where": "line 27",
+   "claim": "The script reads the chain with its own code, separate from the Watch's",
+   "command": "none (the file is named)",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 1
+   },
+   "to_next": "add the list of files each reader imports"
+  },
+  {
+   "id": "H01",
+   "page": "/oracle/",
+   "where": "home, intro",
+   "claim": "202 contracts on 9 chains",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 0
+   },
+   "to_next": "write the link to the JSON index `p/index.json` next to the count, and name the file's commit",
+   "replay": "`curl -s https://realspap.github.io/oracle/p/index.json` and compare the count field"
+  },
+  {
+   "id": "H02",
+   "page": "/oracle/",
+   "where": "home, intro",
+   "claim": "47 critical, 28 weak, 74 moderate, 35 decent, 18 strong",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 0
+   },
+   "to_next": "link the JSON index, name the field that holds each band",
+   "replay": "same file, count the bands"
+  },
+  {
+   "id": "H03",
+   "page": "/oracle/",
+   "where": "home, intro",
+   "claim": "The oracles run on testnets; the contracts they score are real deployments",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 0
+   },
+   "to_next": "write each network and chain ID and add `eth_chainId` once per network",
+   "replay": "`curl -s -X POST RPC -H 'content-type: application/json' -d '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"eth_chainId\",\"params\":[]}'`"
+  },
+  {
+   "id": "H04",
+   "page": "/oracle/",
+   "where": "home, 15 lowest",
+   "claim": "15 contracts listed with a score and a band, each linked to its own page (x15)",
+   "command": "none (the linked page holds the call)",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "move the `getScore` call next to the list, with a named block",
+   "replay": "open the linked page, run its prefilled call"
+  },
+  {
+   "id": "H05",
+   "page": "/oracle/",
+   "where": "home, alerts",
+   "claim": "8 alerts firing at build time (admin transfer in flight; independent reader disagrees with the admin-key score)",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 0
+   },
+   "to_next": "link `alerts.json` at the sentence",
+   "replay": "`curl -s https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/watch-data/alerts.json` and count"
+  },
+  {
+   "id": "H06",
+   "page": "/oracle/",
+   "where": "home, intro and neighbours",
+   "claim": "The home page states the schedule of the Watch and how many runs it makes a day, over two dated periods",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 0
+   },
+   "to_next": "add the `gh run list` command with the date it was run",
+   "replay": "`gh run list --repo RealSpap/authority-risk-oracle-showcase --workflow Watch --limit 50 --json createdAt`"
+  },
+  {
+   "id": "H07",
+   "page": "/oracle/",
+   "where": "home, guards against",
+   "claim": "Drift Protocol, 1 April 2026, 285M USD: an admin key compromised after months of social engineering allowed the price oracles to be manipulated (4 parts: amount, date, cause, attribution)",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 0
+   },
+   "to_next": "link the incident report and the transaction",
+   "replay": "open the cited report; the page gives none"
+  },
+  {
+   "id": "H08",
+   "page": "/oracle/",
+   "where": "home, guards against",
+   "claim": "KelpDAO, 18 April 2026, 292M USD: a 1-of-1 verifier let 116,500 unbacked rsETH be minted, about 18% of the supply (4 parts)",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 0
+   },
+   "to_next": "link the post-mortem, write the chain, the block of the mint and the transaction",
+   "replay": "none to propose without the source"
+  },
+  {
+   "id": "H09",
+   "page": "/oracle/",
+   "where": "home, Safe calculator",
+   "claim": "Four incidents, five Safes: Humanity Protocol lost funds from two Safes in one event",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 0
+   },
+   "to_next": "link the incident and the five Safe addresses with chain IDs",
+   "replay": "none to propose without the source"
+  },
+  {
+   "id": "H10",
+   "page": "/oracle/",
+   "where": "home, neighbours",
+   "claim": "Nine third-party tools are described on the page, each by its name there: closed dashboards, paid by the protocols, no published score, one stopped in 2026 (8 parts, one link to docs/LANDSCAPE.md)",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "write the page and date read for each tool next to the sentence",
+   "replay": "open docs/LANDSCAPE.md in the repository, then each tool's page"
+  },
+  {
+   "id": "H11",
+   "page": "/oracle/",
+   "where": "home, neighbours",
+   "claim": "The score is published on-chain (getScore, isStale on 8 EVM chains, an account read on Solana, a hash commitment on Zcash)",
+   "command": "method names only",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "write one `cast call` for one chain with its chain ID and a named block",
+   "replay": "see H18 for the calls"
+  },
+  {
+   "id": "H12",
+   "page": "/oracle/",
+   "where": "home, independence",
+   "claim": "Disputes are public issues with the evidence attached",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 0
+   },
+   "to_next": "link the issue list",
+   "replay": "`curl -s https://api.github.com/repos/RealSpap/authority-risk-oracle-showcase/issues?state=all` (60 calls an hour without a token)"
+  },
+  {
+   "id": "H13",
+   "page": "/oracle/",
+   "where": "home, independence",
+   "claim": "The data, the rules and the scripts are in the repository",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 0
+   },
+   "to_next": "put the link at the sentence",
+   "replay": "`git clone https://github.com/RealSpap/authority-risk-oracle-showcase` then `ls`"
+  },
+  {
+   "id": "H14",
+   "page": "/oracle/",
+   "where": "home, own scale",
+   "claim": "The scores are pushed on-chain by one updater key, with no timelock",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 0
+   },
+   "to_next": "add the `owner()` and `hasRole` calls for one oracle, with chain ID and block",
+   "replay": "same calls as page verify, steps 3b and 4"
+  },
+  {
+   "id": "H15",
+   "page": "/oracle/",
+   "where": "home, own scale",
+   "claim": "On this very scale the oracle would score 2 out of 100 on each of its nine oracles (1 by the convention in the scoring code)",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 0
+   },
+   "to_next": "link the scoring rule and the command that computes it",
+   "replay": "none to propose without the rule's location"
+  },
+  {
+   "id": "H16",
+   "page": "/oracle/",
+   "where": "home, own scale",
+   "claim": "A direct read of 30 October 2026 shows the known updater keys hold these roles, not that no other account does",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 0
+   },
+   "to_next": "name the block and the chain of each of the nine reads",
+   "replay": "none to propose without the blocks"
+  },
+  {
+   "id": "H17",
+   "page": "/oracle/",
+   "where": "home, own scale",
+   "claim": "Every score can be re-read from the chain in the browser, the authority chain of every target can be read live, the method hash is on-chain with each score",
+   "command": "buttons on the page, no command",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 0
+   },
+   "to_next": "write the equivalent `curl` for one target",
+   "replay": "see page verify"
+  },
+  {
+   "id": "H18",
+   "page": "/oracle/",
+   "where": "home, method notes",
+   "claim": "Every chain tab reads `getScore(address)` (selector 0xd47875d0), enumerates `trackedTargets(uint256)` (0x9481e5e0) up to `trackedTargetsCount()` (0x835e2172)",
+   "command": "selectors only",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 0
+   },
+   "to_next": "write one call with the oracle address, endpoint, chain ID and block",
+   "replay": "R-1's keccak: `python3 -I -c` over the three signatures (result: matches)"
+  },
+  {
+   "id": "H19",
+   "page": "/oracle/",
+   "where": "home, method notes",
+   "claim": "Not-applicable sub-scores read 100 by convention",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 0
+   },
+   "to_next": "link the rule in METHODOLOGY.md at a commit",
+   "replay": "none to propose without the rule's location"
+  },
+  {
+   "id": "H20",
+   "page": "/oracle/",
+   "where": "home, Zcash",
+   "claim": "Zcash has no contract VM: a signed off-chain attestation with its commitment hash anchored in a Zcash testnet OP_RETURN output, decoded and recomputed in the browser (3 parts)",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 0
+   },
+   "to_next": "write the transaction id, the network and the command that decodes the output",
+   "replay": "none to propose without the transaction id"
+  },
+  {
+   "id": "H21",
+   "page": "/oracle/",
+   "where": "home, Zcash",
+   "claim": "Three publications are verified; two legacy files are linked at a pinned commit (the keyring snapshot and the 19 September batch)",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 1,
+    "ex": 0,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "add the command that recomputes the commitment",
+   "replay": "open the two linked files at that commit"
+  },
+  {
+   "id": "H22",
+   "page": "/oracle/",
+   "where": "home, Zcash",
+   "claim": "The first anchor and the early proof of concept were signed by a publisher key later found in the repository history",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 0
+   },
+   "to_next": "name the key, the commit where it appears and the command that finds it",
+   "replay": "`git log -S` on the key, once the key is named"
+  },
+  {
+   "id": "H23",
+   "page": "/oracle/",
+   "where": "home, cross-exposure",
+   "claim": "100 means no shared signer; 20 off per additional group sharing a root signer; a committee identical to another ecosystem's is capped at 80; the cap is the minimum of the two",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 1,
+    "ex": 0,
+    "net": null,
+    "src": 1
+   },
+   "to_next": "add the one-line `grep` that finds the rule at that commit",
+   "replay": "open the link at the pinned commit"
+  },
+  {
+   "id": "H24",
+   "page": "/oracle/",
+   "where": "home, cross-exposure",
+   "claim": "As of 2026-09-20 the EVM tabs and Tempo fold the committees they hold a dated snapshot of; a target with no snapshot reports 100, which means no overlap was checked",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 0
+   },
+   "to_next": "list the targets without a snapshot with a link",
+   "replay": "none to propose without the list"
+  },
+  {
+   "id": "H25",
+   "page": "/oracle/",
+   "where": "home, cross-exposure",
+   "claim": "Values pushed on-chain on 2026-09-20 to six oracles (Ethereum L1, Arbitrum, Plasma, Monad, Tempo, Robinhood Chain); Base had no change and was not pushed again",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 0
+   },
+   "to_next": "write one transaction per oracle with its chain ID",
+   "replay": "`getScore` at a block before and after, once the blocks are written"
+  },
+  {
+   "id": "H26",
+   "page": "/oracle/",
+   "where": "home, cross-exposure",
+   "claim": "The Arbitrum and Base tabs caught that Aave's emergency-guardian Safe is the identical 9-signer committee on both chains at different addresses",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 0
+   },
+   "to_next": "write the two Safe addresses with chain IDs and the two `getOwners()` calls at a block",
+   "replay": "`getOwners()` on each Safe, once the addresses are written"
+  },
+  {
+   "id": "H27",
+   "page": "/oracle/",
+   "where": "home, footer",
+   "claim": "Submitted to Colosseum's Crypto World's Fair on 12 October 2026",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 1
+   },
+   "to_next": "link the submission page",
+   "replay": "open the event link"
+  },
+  {
+   "id": "H28",
+   "page": "/oracle/",
+   "where": "home, headings",
+   "claim": "Five real losses, 2.3B USD, replayed on this scale; a warning ledger of what the watch gave and missed",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 0
+   },
+   "to_next": "link `backtest/` at the heading",
+   "replay": "open `backtest/` (see its own table)"
+  },
+  {
+   "id": "H29",
+   "page": "/oracle/",
+   "where": "home, intro",
+   "claim": "This interactive dashboard needs JavaScript; everything below does not",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 0
+   },
+   "to_next": "none: add the `curl` that shows the list is in the HTML",
+   "replay": "`curl -s https://realspap.github.io/oracle/ | grep -c 'p/robinhood-'`"
+  },
+  {
+   "id": "H30",
+   "page": "/oracle/",
+   "where": "home, browser",
+   "claim": "141 requests in all (counted on 7 Nov 2026), none carrying anything about you beyond your IP; no analytics, no cookies, no tracking pixel; fonts embedded",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 0
+   },
+   "to_next": "write the browser and the command that lists the requests",
+   "replay": "a headless browser with a request log, run once per claim"
+  },
+  {
+   "id": "H31",
+   "page": "/oracle/",
+   "where": "home, build",
+   "claim": "Page generated on 2026-10-22 from the dashboard at commit 957621b of the repository",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 1,
+    "ex": 0,
+    "net": null,
+    "src": 0
+   },
+   "to_next": "link the commit",
+   "replay": "`git show 957621b --stat` in a clone"
+  },
+  {
+   "id": "S01",
+   "page": "/oracle/security/",
+   "where": "security, scope",
+   "claim": "The oracle contract is deployed on 8 EVM testnets (eight networks named); the live addresses are in the README",
+   "command": "none (names the README)",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "write the chain IDs and one `eth_chainId` call",
+   "replay": "see H03"
+  },
+  {
+   "id": "S02",
+   "page": "/oracle/security/",
+   "where": "security, scope",
+   "claim": "The Anchor program on Solana devnet is the program written on the page (full address)",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 1,
+    "src": 0
+   },
+   "to_next": "add `getAccountInfo` with the expected owner and the genesis hash",
+   "replay": "`getAccountInfo` on the program, cluster devnet"
+  },
+  {
+   "id": "S03",
+   "page": "/oracle/security/",
+   "where": "security, scope",
+   "claim": "The scoring pipeline and the watch job hold no funds and have no privileged on-chain role beyond the updater key",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 0
+   },
+   "to_next": "name the Watch's secrets and link the workflow file at a commit",
+   "replay": "ECARTS row 52 read the workflow secrets: no chain key"
+  },
+  {
+   "id": "S04",
+   "page": "/oracle/security/",
+   "where": "security, at stake",
+   "claim": "Every deployment is on a testnet and the contracts hold no user funds",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 0
+   },
+   "to_next": "write the balance call with chain ID and block",
+   "replay": "`eth_getBalance` at a named block for each oracle"
+  },
+  {
+   "id": "S05",
+   "page": "/oracle/security/",
+   "where": "security, at stake",
+   "claim": "The scores are published by one updater key with no timelock",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 0
+   },
+   "to_next": "see H14",
+   "replay": "see H14"
+  },
+  {
+   "id": "S07",
+   "page": "/oracle/security/",
+   "where": "security, severity",
+   "claim": "The Immunefi Vulnerability Severity Classification System (smart contracts table) is used as is",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 0
+   },
+   "to_next": "link the table at a date",
+   "replay": "open the table"
+  },
+  {
+   "id": "S08",
+   "page": "/oracle/security/",
+   "where": "security, rewards",
+   "claim": "There is no funded bug bounty programme today",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 0
+   },
+   "to_next": "link the list of programmes read at a date",
+   "replay": "none to propose"
+  },
+  {
+   "id": "S09",
+   "page": "/oracle/security/",
+   "where": "security, report",
+   "claim": "A private GitHub security advisory can be opened on the repository",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 0
+   },
+   "to_next": "link the advisory form",
+   "replay": "open the repository's Security tab"
+  },
+  {
+   "id": "W01",
+   "page": "/oracle/watch/",
+   "where": "watch, intro",
+   "claim": "The Watch page states the schedule of the Watch and how many runs it makes a day, over two dated periods",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 0
+   },
+   "to_next": "see H06",
+   "replay": "see H06"
+  },
+  {
+   "id": "W02",
+   "page": "/oracle/watch/",
+   "where": "watch, state",
+   "claim": "Status line: degraded; 1 of 202 targets stale; 13 second-opinion disagreements; hashes mixed on 1 oracle; 9 hashes not in the registry (5 parts)",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 1,
+    "ex": 0,
+    "net": null,
+    "src": 1
+   },
+   "to_next": "write the command that prints each of the five values",
+   "replay": "`curl -s https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/watch-data/status.json`"
+  },
+  {
+   "id": "W03",
+   "page": "/oracle/watch/",
+   "where": "watch, state",
+   "claim": "Last run, targets (202 on 9 oracles, 1 stale), hash chain intact, signed yes, page built (5 parts)",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 1,
+    "ex": 0,
+    "net": null,
+    "src": 1
+   },
+   "to_next": "same",
+   "replay": "same file plus `scripts/verify_chain.py`"
+  },
+  {
+   "id": "W04",
+   "page": "/oracle/watch/",
+   "where": "watch, alerts",
+   "claim": "Seven alerts shown with their kind and the date they started; one more not previewed and linked in `alerts.json`",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 1,
+    "ex": 0,
+    "net": null,
+    "src": 1
+   },
+   "to_next": "write the `curl` of `alerts.json` next to the list",
+   "replay": "`curl -s https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/watch-data/alerts.json`"
+  },
+  {
+   "id": "W05",
+   "page": "/oracle/watch/",
+   "where": "watch, alerts",
+   "claim": "Amounts at stake on six alerts (from 39M to 827M USD)",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 0
+   },
+   "to_next": "name the source and the date read",
+   "replay": "none to propose without the source"
+  },
+  {
+   "id": "W06",
+   "page": "/oracle/watch/",
+   "where": "watch, oracles",
+   "claim": "Eight oracle rows with read status, target count, stale count and the block read (x8)",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 1,
+    "ex": 0,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "write the chain ID and the `getScore` call per row",
+   "replay": "`trackedTargetsCount()` at the block written in the row"
+  },
+  {
+   "id": "W07",
+   "page": "/oracle/watch/",
+   "where": "watch, oracles",
+   "claim": "Solana devnet row: read ok, 26 targets, 0 stale",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 1,
+    "src": 1
+   },
+   "to_next": "write the slot of the read",
+   "replay": "`getAccountInfo` on the registry, cluster devnet"
+  },
+  {
+   "id": "W08",
+   "page": "/oracle/watch/",
+   "where": "watch, files",
+   "claim": "Nine public files, each with a one-line description of what it holds (x9)",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 1
+   },
+   "to_next": "link each file at a commit",
+   "replay": "`curl -s` of each file"
+  },
+  {
+   "id": "V01",
+   "page": "/oracle/verify/",
+   "where": "verify, intro",
+   "claim": "The independent reader shares no code with the scorer",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 0
+   },
+   "to_next": "link the two source files at a commit and the command that lists their imports",
+   "replay": "`grep -n import` over the two files, once linked"
+  },
+  {
+   "id": "V02",
+   "page": "/oracle/verify/",
+   "where": "verify, EVM calls",
+   "claim": "The reader makes plain JSON-RPC calls, listed on the page, which a reader can repeat (the template `curl`)",
+   "command": "one `curl` template with TARGET and RPC to fill",
+   "elements": {
+    "cmd": 1,
+    "pt": 0,
+    "ex": 1,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "write a block number in the template and name a network",
+   "replay": "run the template on any contract"
+  },
+  {
+   "id": "V03",
+   "page": "/oracle/verify/",
+   "where": "verify, EVM calls",
+   "claim": "Six steps (code at the target; proxy admin slot; owner of the ProxyAdmin; owner of the target; role of the holder; code at the holder), each with its call and how to read the answer (x6)",
+   "command": "call + argument per step",
+   "elements": {
+    "cmd": 1,
+    "pt": 0,
+    "ex": 1,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "write `BLOCK` in each call",
+   "replay": "see V02"
+  },
+  {
+   "id": "V04",
+   "page": "/oracle/verify/",
+   "where": "verify, step 5",
+   "claim": "What the holder's code answer means: 0x is a plain key; 0xef0100 plus 20 bytes is a key with an EIP-7702 delegation; longer code is a contract (3 parts)",
+   "command": "reading rule",
+   "elements": {
+    "cmd": 1,
+    "pt": 0,
+    "ex": 1,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "same",
+   "replay": "`eth_getCode` on a holder"
+  },
+  {
+   "id": "V05",
+   "page": "/oracle/verify/",
+   "where": "verify, step 5",
+   "claim": "The selectors and slots printed on the page are those of the named functions and slots (13 values)",
+   "command": "none (the page says they come from the reader's source)",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 0
+   },
+   "to_next": "give the keccak command on the page",
+   "replay": "R-1's keccak over each name"
+  },
+  {
+   "id": "V06",
+   "page": "/oracle/verify/",
+   "where": "verify, measured example",
+   "claim": "USDtb at an Ethereum block: admin slot, ProxyAdmin owner, holder code, `hasRole` yes and the witness no (6 rows)",
+   "command": "template + block named",
+   "elements": {
+    "cmd": 1,
+    "pt": 1,
+    "ex": 1,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "write chain ID 1",
+   "replay": "run the template at the block written"
+  },
+  {
+   "id": "V07",
+   "page": "/oracle/verify/",
+   "where": "verify, measured example",
+   "claim": "Two other holders at the same block: an `owner()`, an EIP-7702 delegation to a code of 11185 bytes, a Safe with threshold 5 and 10 owners (4 rows)",
+   "command": "template + block named",
+   "elements": {
+    "cmd": 1,
+    "pt": 1,
+    "ex": 1,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "write chain ID 1",
+   "replay": "run the template at the block written"
+  },
+  {
+   "id": "V08",
+   "page": "/oracle/verify/",
+   "where": "verify, Solana",
+   "claim": "Solana: three `getAccountInfo` calls read the upgrade authority; owner must be the upgradeable loader; null means immutable (4 steps)",
+   "command": "template with PROGRAM to fill",
+   "elements": {
+    "cmd": 1,
+    "pt": 0,
+    "ex": 1,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "write the cluster genesis hash and a slot",
+   "replay": "run the three calls on a program"
+  },
+  {
+   "id": "V09",
+   "page": "/oracle/verify/",
+   "where": "verify, Solana",
+   "claim": "Measured 28 October: Jupiter's upgrade authority is off the curve; Save's is on the curve (2 rows)",
+   "command": "calls + date",
+   "elements": {
+    "cmd": 1,
+    "pt": 0,
+    "ex": 1,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "write the slot and the genesis hash",
+   "replay": "`getAccountInfo` then the curve function of the page"
+  },
+  {
+   "id": "V10",
+   "page": "/oracle/verify/",
+   "where": "verify, Solana",
+   "claim": "The Python curve check on the page tells on-curve from off-curve",
+   "command": "runnable code on the page",
+   "elements": {
+    "cmd": 1,
+    "pt": 0,
+    "ex": 1,
+    "net": null,
+    "src": 1
+   },
+   "to_next": "name the commit that holds the same function",
+   "replay": "run the function on the two addresses of V09"
+  },
+  {
+   "id": "V11",
+   "page": "/oracle/verify/",
+   "where": "verify, numbers",
+   "claim": "203 reads by holder kind: safe 48, unreadable 39, contract 36, timelock 24, squads 17, eoa 16, native 16, pda 7",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 1
+   },
+   "to_next": "write the `curl` and the field to count",
+   "replay": "`curl -s https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/watch-data/second_opinion.json` and count by kind"
+  },
+  {
+   "id": "V12",
+   "page": "/oracle/verify/",
+   "where": "verify, blind spots",
+   "claim": "Control behind governance(), gov(), feeToSetter() or upgradeAdmin() is outside the reader's steps; an owner chain longer than two hops stops at the second; found by checking twelve pages on 12 October",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 0
+   },
+   "to_next": "link the twelve checks",
+   "replay": "none to propose"
+  },
+  {
+   "id": "O01",
+   "page": "/oracle/roles/",
+   "where": "roles, intro",
+   "claim": "46 call forms probed on 14 AccessControl contracts, three contracts by hand and 26 Ownable owners on Ethereum: the holder shown executes what the role is named for, 0 divergences",
+   "command": "none for the whole; one case below",
+   "elements": {
+    "cmd": 0,
+    "pt": 1,
+    "ex": 0,
+    "net": 0,
+    "src": 0
+   },
+   "to_next": "link the 14 contracts and the forms",
+   "replay": "see O05 for the one case with commands"
+  },
+  {
+   "id": "O02",
+   "page": "/oracle/roles/",
+   "where": "roles, measured",
+   "claim": "Of 171 EVM targets classified: 121 without AccessControl, 14 measured, 10 Tempo precompiles, 16 without code, 6 roles held elsewhere, 4 holders unreadable (6 counts)",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 1,
+    "ex": 0,
+    "net": 0,
+    "src": 0
+   },
+   "to_next": "link the classification file at a commit",
+   "replay": "none to propose without the file"
+  },
+  {
+   "id": "O03",
+   "page": "/oracle/roles/",
+   "where": "roles, measured",
+   "claim": "8 of the 46 forms had no executor among the holders; none counted as a divergence",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 1,
+    "ex": 0,
+    "net": 0,
+    "src": 0
+   },
+   "to_next": "list the 8 forms",
+   "replay": "none to propose without the list"
+  },
+  {
+   "id": "O04",
+   "page": "/oracle/roles/",
+   "where": "roles, case",
+   "claim": "On Ethereum mainnet (chain id 1) the Ethena minting contract's GATEKEEPER_ROLE is held by four accounts without code, which can switch off minting and redeeming with no delay",
+   "command": "three `curl` calls below",
+   "elements": {
+    "cmd": 1,
+    "pt": 1,
+    "ex": 1,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "write chain ID 1",
+   "replay": "the three calls of the page, run at the block written"
+  },
+  {
+   "id": "O05",
+   "page": "/oracle/roles/",
+   "where": "roles, case",
+   "claim": "disableMintRedeem(), removeMinterRole(address) and removeRedeemerRole(address) are executed by the four accounts only; five other calls only by the 24-hour timelock; one Safe executes none (4 rows)",
+   "command": "one `curl` (disableMintRedeem) for the three",
+   "elements": {
+    "cmd": 1,
+    "pt": 1,
+    "ex": 1,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "write the other two calls",
+   "replay": "the third call of the page, run per holder"
+  },
+  {
+   "id": "O06",
+   "page": "/oracle/roles/",
+   "where": "roles, case",
+   "claim": "The twenty minter and redeemer accounts act through signed orders, not measured; the collateral-manager Safe's power is not measured (2 limits)",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 0
+   },
+   "to_next": "none: a limit has nothing to replay",
+   "replay": "none"
+  },
+  {
+   "id": "O07",
+   "page": "/oracle/roles/",
+   "where": "roles, source",
+   "claim": "Replayed independently the same day by a script that shares no code with the first: the four holders rebuilt from events, each simulated on both nodes, a stranger refused",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 0
+   },
+   "to_next": "link the script at a commit",
+   "replay": "none to propose without the script"
+  },
+  {
+   "id": "O08",
+   "page": "/oracle/roles/",
+   "where": "roles, source",
+   "claim": "One contract out of the 197 tracked on 12 October (202 today)",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 0
+   },
+   "to_next": "link the tracked list at a commit",
+   "replay": "`p/index.json` count (see H01)"
+  },
+  {
+   "id": "P01",
+   "page": "/oracle/provenance/",
+   "where": "provenance, intro",
+   "claim": "At each run the Watch signs a list of the sha256 of every file it publishes, of its own code, the commit it ran from and the head of a hash-chained log",
+   "command": "commands below",
+   "elements": {
+    "cmd": 1,
+    "pt": 0,
+    "ex": 1,
+    "net": null,
+    "src": 1
+   },
+   "to_next": "write the commit in the intro",
+   "replay": "`python3 scripts/sign_run.py --watch watch --verify`"
+  },
+  {
+   "id": "P02",
+   "page": "/oracle/provenance/",
+   "where": "provenance, table",
+   "claim": "Last signed run, files hashed (1042), code files hashed (94), repository commit signed over (linked), head of the event-log chain, signing key (6 rows)",
+   "command": "`audit_public.py --ref COMMIT` and three more, below",
+   "elements": {
+    "cmd": 1,
+    "pt": 1,
+    "ex": 1,
+    "net": null,
+    "src": 1
+   },
+   "to_next": "already A",
+   "replay": "`python3 scripts/audit_public.py --ref` with the commit of the row"
+  },
+  {
+   "id": "P03",
+   "page": "/oracle/provenance/",
+   "where": "provenance, table",
+   "claim": "On-chain pushes, first to last",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 1,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "add the `getScore` call and the block of the last push",
+   "replay": "`getScore` on an oracle, read the push time"
+  },
+  {
+   "id": "P04",
+   "page": "/oracle/provenance/",
+   "where": "provenance, third-party clocks",
+   "claim": "Three dates the project does not control: the block time of each push, a Zcash testnet anchor, the contracts' creation on their explorers (3 parts)",
+   "command": "none (a contract page and the README anchor are linked)",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": 0,
+    "src": 1
+   },
+   "to_next": "write the Zcash transaction id and one creation transaction",
+   "replay": "open the linked page and run its call"
+  },
+  {
+   "id": "P05",
+   "page": "/oracle/provenance/",
+   "where": "provenance, worth",
+   "claim": "The event log starts on 10 October 2026; before that date it proves nothing",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 0
+   },
+   "to_next": "add `head -1 events.jsonl` with the expected line",
+   "replay": "`curl -s .../watch-data/events.jsonl | head -1`"
+  },
+  {
+   "id": "P06",
+   "page": "/oracle/provenance/",
+   "where": "provenance, worth",
+   "claim": "The public history was rewritten on 30 September 2026, so a commit date before 10 October dates a snapshot",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 0
+   },
+   "to_next": "link the clean-up commit",
+   "replay": "`git log --reverse --format=%cI | head -1`"
+  },
+  {
+   "id": "P07",
+   "page": "/oracle/provenance/",
+   "where": "provenance, worth",
+   "claim": "The signed manifest proves the published files are those the key signed at that run; it does not say who holds the key",
+   "command": "none",
+   "elements": {
+    "cmd": 0,
+    "pt": 0,
+    "ex": 0,
+    "net": null,
+    "src": 0
+   },
+   "to_next": "none: the command above is the replay",
+   "replay": "see P01"
+  }
+ ]
+}

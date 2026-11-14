@@ -41,7 +41,8 @@ contract HardenedConsumer {
         if (ORACLE.isStale(target)) revert StaleScore(target);
         IAuthorityOracle.AuthorityScore memory s = ORACLE.getScore(target);
         if (s.lastUpdated > block.timestamp) revert FutureTimestamp(target, s.lastUpdated);
-        if (block.timestamp - s.lastUpdated > MAX_AGE) revert TooOld(target, uint64(block.timestamp - s.lastUpdated));
+        uint64 age = uint64(block.timestamp - s.lastUpdated);
+        if (age > MAX_AGE) revert TooOld(target, age);
         if (!knownMethod[s.methodologyHash]) revert UnknownMethod(s.methodologyHash);
         if (s.compositeScore < MIN_SAFE_SCORE) return 0;
         return MIN_FACTOR_BPS + (uint256(s.compositeScore - MIN_SAFE_SCORE) * (MAX_FACTOR_BPS - MIN_FACTOR_BPS)) / (100 - MIN_SAFE_SCORE);

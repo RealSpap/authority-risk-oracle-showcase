@@ -338,20 +338,22 @@ def _post_json(url, body):
 
 
 NETWORKS_BUDGET_S = 300   # the network reads are an extra of the run: once they have taken this many seconds IN TOTAL (the time of the oracle reads is not counted), the next ones are written as unplaced with that cause
-_NETWORKS_SPENT = [0.0]   # seconds spent inside add_networks since begin_networks_pass()
+_NETWORKS_SPENT = 0.0   # seconds spent inside add_networks since begin_networks_pass()
 
 
 def begin_networks_pass():
     """called once at the start of a pass of the Watch: the budget of the network reads starts again"""
-    _NETWORKS_SPENT[0] = 0.0
+    global _NETWORKS_SPENT
+    _NETWORKS_SPENT = 0.0
 
 
 def add_networks(name, doc):
     """The network of the oracle and of each target, with the block of the target network that was read. A failed read is written as a cause (never a zero, never a default
     "mainnet": a network name is written only once its chain id was read) and never stops the run. The record is marked `networks_version`: from then on the schema requires the networks."""
+    global _NETWORKS_SPENT
     t0 = time.time()
     try:
-        if _NETWORKS_SPENT[0] >= NETWORKS_BUDGET_S:
+        if _NETWORKS_SPENT >= NETWORKS_BUDGET_S:
             raise RuntimeError("the time budget of %d s for the network reads is spent" % NETWORKS_BUDGET_S)
         if doc.get("kind") == "solana":
             mod, per = target_networks.solana_fields(doc["targets"], _sol_rpc)
@@ -368,7 +370,7 @@ def add_networks(name, doc):
         doc.setdefault("oracle_network", target_networks.UNREAD); doc.setdefault("target_network", target_networks.UNREAD)
         for t in doc.get("targets", []): t.setdefault("target_network", target_networks.UNREAD)
     finally:
-        _NETWORKS_SPENT[0] += time.time() - t0
+        _NETWORKS_SPENT += time.time() - t0
     doc["networks_version"] = 1
     return doc
 

@@ -255,7 +255,7 @@ class WatchStep(unittest.TestCase):
         calls = []; old = tn.evm_fields
         tn.evm_fields = lambda *a, **k: calls.append(1) or ({"oracle_network": "x", "target_network": "y"}, {})
         try:
-            watch_run._NETWORKS_SPENT[0] = watch_run.NETWORKS_BUDGET_S + 1
+            watch_run._NETWORKS_SPENT = watch_run.NETWORKS_BUDGET_S + 1
             skipped = watch_run.add_networks("Base (Sepolia)", {"kind": "evm", "rpc": BASE_ORACLE, "targets": [{"target": A1}]})
             watch_run.begin_networks_pass()
             read = watch_run.add_networks("Base (Sepolia)", {"kind": "evm", "rpc": BASE_ORACLE, "targets": [{"target": A1}]})
@@ -267,7 +267,7 @@ class WatchStep(unittest.TestCase):
         import watch_run
         calls = []; old = tn.evm_fields
         tn.evm_fields = lambda *a, **k: calls.append(1) or ({}, {})
-        watch_run._NETWORKS_SPENT[0] = watch_run.NETWORKS_BUDGET_S + 1
+        watch_run._NETWORKS_SPENT = watch_run.NETWORKS_BUDGET_S + 1
         try:
             doc = watch_run.add_networks("Base (Sepolia)", {"kind": "evm", "rpc": BASE_ORACLE, "targets": [{"target": A1}]})
         finally:
@@ -283,7 +283,7 @@ class WatchStep(unittest.TestCase):
             def boom(*a, **k): raise RuntimeError("down")
             tn.evm_fields = boom
             bad = watch_run.add_networks("Base (Sepolia)", {"kind": "evm", "rpc": BASE_ORACLE, "targets": [{"target": A1}]})
-            watch_run._NETWORKS_SPENT[0] = watch_run.NETWORKS_BUDGET_S + 1
+            watch_run._NETWORKS_SPENT = watch_run.NETWORKS_BUDGET_S + 1
             late = watch_run.add_networks("Base (Sepolia)", {"kind": "evm", "rpc": BASE_ORACLE, "targets": [{"target": A1}]})
         finally:
             tn.evm_fields = old; watch_run.begin_networks_pass()

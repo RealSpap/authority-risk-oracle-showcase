@@ -346,6 +346,7 @@ jobs:
           python3 scripts/feeds_per_target.py --scores watch/scores --events watch/events.jsonl --alerts watch/alerts.json --pending watch/pending_ops.json --out watch/feed > watch/feeds.txt 2>&1 || echo "exit code $?" >> watch/feeds.txt
           python3 scripts/badges_protocol.py --watch watch --out watch/badge/protocol >> watch/feeds.txt 2>&1 || echo "exit code $?" >> watch/feeds.txt   # one shields.io badge per protocol (its weakest tracked deployment), for a protocol's own README
           python3 scripts/watch_run.py --feed-only >> watch/feeds.txt 2>&1 || echo "exit code $?" >> watch/feeds.txt   # the global feed.xml again, now with the independent reader's findings
+          python3 scripts/construire_flux_watch.py watch/events.jsonl watch/authority-changes.json --scores watch/scores >> watch/feeds.txt 2>&1 || echo "exit code $?" >> watch/feeds.txt   # the JSON Feed of authority changes (admin_change, upgraded), facts only; written before the withhold step, so it is cleaned and checked like every published file
 
       - name: Why each score moved (five sub-scores against the previous run) and the requirement badges
         run: |

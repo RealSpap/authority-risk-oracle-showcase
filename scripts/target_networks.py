@@ -55,6 +55,25 @@ def _int(h):
     return int(h, 16) if isinstance(h, str) and h.startswith("0x") else None
 
 
+def _t(network=UNREAD, chain_id=None, read=None, block=None, present=None, flag="code_on_target_network"):
+    """the five fields of one target, in the order the published files have always carried them; `flag` is the name of the last one (an account on Solana, code on EVM)"""
+    return {"target_network": network, "target_chain_id": chain_id, "target_network_read": read, "target_read_block": block, flag: present}
+
+
+def _record(kind):
+    """the nine fields of the record before anything is read; only the wording of `target_block_kind` differs between EVM and Solana"""
+    return {"oracle_network": UNREAD, "oracle_chain_id": None, "target_network": UNREAD, "target_chain_id": None, "target_block": None, "target_block_hash": None,
+            "target_block_time": None, "target_block_kind": kind, "target_rpc": None}
+
+
+def _addresses(targets):
+    return [t["target"] if isinstance(t, dict) else t for t in targets]
+
+
+def _cause(errors):
+    return "; ".join(errors)[:300] or "no RPC"
+
+
 def _head(urls, expected_id, rpc, errors):
     """(url, chain id, block number, hash, time) of the first RPC that answers the expected chain id, or None; the causes go to `errors`"""
     for u in urls:
@@ -77,8 +96,7 @@ def evm_fields(name, oracle_url, targets, rpc, batched=None, post_json=None):
     if name not in TABLE:
         raise KeyError("oracle without an established network in the table: " + name)
     o_net, o_id, t_net, t_id, urls = TABLE[name]
-    mod = {"oracle_network": UNREAD, "oracle_chain_id": None, "target_network": UNREAD, "target_chain_id": None, "target_block": None, "target_block_hash": None,
-           "target_block_time": None, "target_block_kind": "head of the target network when the Watch read the oracle (not the block the scorer read)", "target_rpc": None}
+    mod = _record("head of the target network when the Watch read the oracle (not the block the scorer read)")
     try:
         mod["oracle_chain_id"] = _int(rpc(oracle_url, [("eth_chainId", [])])[0])
     except Exception as e:  # noqa: BLE001
@@ -90,16 +108,16 @@ def evm_fields(name, oracle_url, targets, rpc, batched=None, post_json=None):
     errors = []
     head = _head(urls, t_id, rpc, errors)
     if head is None:
-        mod["target_read_error"] = "; ".join(errors)[:300] or "no RPC"
+        mod["target_read_error"] = _cause(errors)
     else:
         mod.update(target_network=t_net, target_chain_id=head[1], target_block=head[2], target_block_hash=head[3], target_block_time=head[4], target_rpc=_host(head[0]))
-    addresses = [t["target"] if isinstance(t, dict) else t for t in targets]
+    addresses = _addresses(targets)
     out = {}
     for a in addresses:
-        out[a.lower()] = {"target_network": UNREAD, "target_chain_id": None, "target_network_read": None, "target_read_block": None, "code_on_target_network": None}
+        out[a.lower()] = _t()
     todo = [a for a in addresses if a.lower() != HELD]
     if HELD in out:   # the one target on a test network: its code is read on the oracle's own RPC
-        r = {"target_network": UNREAD, "target_chain_id": None, "target_network_read": None, "target_read_block": None, "code_on_target_network": None}
+        r = out[HELD]
         try:
             num = _int(rpc(oracle_url, [("eth_blockNumber", [])])[0]); code = rpc(oracle_url, [("eth_getCode", [HELD, hex(num)])])[0]
             r["code_on_target_network"] = isinstance(code, str) and len(code) > 2; r["target_read_block"] = num
@@ -109,7 +127,6 @@ def evm_fields(name, oracle_url, targets, rpc, batched=None, post_json=None):
             else: r["target_network"] = NOT_ESTABLISHED + " (the RPC does not answer chain %d)" % HELD_NETWORK[1]
         except Exception as e:  # noqa: BLE001
             r.update(target_network=UNREAD, target_network_read=str(e)[:80])
-        out[HELD] = r
     if head is not None and todo:
         try:
             codes = batched(head[0], [("eth_getCode", [a, hex(head[2])]) for a in todo])
@@ -120,9 +137,9 @@ def evm_fields(name, oracle_url, targets, rpc, batched=None, post_json=None):
             if codes is None or not isinstance(codes[i], str):
                 continue
             if len(codes[i]) > 2:
-                out[k] = {"target_network": t_net, "target_chain_id": t_id, "target_network_read": "code at block %d on %s" % (head[2], _host(head[0])), "target_read_block": head[2], "code_on_target_network": True}
+                out[k] = _t(t_net, t_id, "code at block %d on %s" % (head[2], _host(head[0])), head[2], True)
             else:
-                out[k] = {"target_network": NOT_ESTABLISHED + " (no code at this address on " + t_net + ")", "target_chain_id": None, "target_network_read": None, "target_read_block": head[2], "code_on_target_network": False}
+                out[k] = _t(NOT_ESTABLISHED + " (no code at this address on " + t_net + ")", None, None, head[2], False)
         rest = [a for a in todo if out[a.lower()]["code_on_target_network"] is False]
         for f_net, f_id, f_urls in FALLBACK.get(name, []):
             if not rest:
@@ -171,8 +188,7 @@ def solana_fields(targets, rpc_json):
     """Solana has no chain id: the genesis hash read names the network. `rpc_json(url, method, params)` returns the result. A target is on mainnet-beta when its
     account exists there (getMultipleAccounts, 100 at a time)."""
     o_net, t_net, urls = SOLANA
-    mod = {"oracle_network": UNREAD, "oracle_chain_id": None, "target_network": UNREAD, "target_chain_id": None, "target_block": None, "target_block_hash": None, "target_block_time": None,
-           "target_block_kind": "slot of the target network when the Watch read the oracle (Solana has no chain id: the genesis hash names the network)", "target_rpc": None}
+    mod = _record("slot of the target network when the Watch read the oracle (Solana has no chain id: the genesis hash names the network)")
     errors, url = [], None
     for u in urls:
         try:
@@ -183,8 +199,8 @@ def solana_fields(targets, rpc_json):
         except Exception as e:  # noqa: BLE001
             errors.append("%s: %s" % (_host(u), str(e)[:80]))
     if url is None:
-        mod["target_read_error"] = "; ".join(errors)[:300] or "no RPC"
-    addresses = [t["target"] if isinstance(t, dict) else t for t in targets]
+        mod["target_read_error"] = _cause(errors)
+    addresses = _addresses(targets)
     out = {}
     for i in range(0, len(addresses), 100):
         lot = addresses[i:i + 100]
@@ -194,11 +210,11 @@ def solana_fields(targets, rpc_json):
             seen = None
         for j, a in enumerate(lot):
             if seen is None or len(seen) != len(lot):
-                out[a] = {"target_network": UNREAD, "target_chain_id": None, "target_network_read": None, "target_read_block": None, "account_on_target_network": None}
+                out[a] = _t(flag="account_on_target_network")
             elif seen[j]:
-                out[a] = {"target_network": t_net, "target_chain_id": None, "target_network_read": "account exists on %s (genesis %s)" % (_host(url), g[:8]), "target_read_block": mod["target_block"], "account_on_target_network": True}
+                out[a] = _t(t_net, None, "account exists on %s (genesis %s)" % (_host(url), g[:8]), mod["target_block"], True, "account_on_target_network")
             else:
-                out[a] = {"target_network": NOT_ESTABLISHED + " (no account at this address on " + t_net + ")", "target_chain_id": None, "target_network_read": None, "target_read_block": mod["target_block"], "account_on_target_network": False}
+                out[a] = _t(NOT_ESTABLISHED + " (no account at this address on " + t_net + ")", None, None, mod["target_block"], False, "account_on_target_network")
     return mod, out
 
 

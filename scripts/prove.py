@@ -26,13 +26,13 @@ SEL_COUNT, SEL_TARGET, SEL_SCORE = "0x835e2172", "0x9481e5e0", "0xd47875d0"   # 
 # (Watch file, CHANGELOG name, oracle, public RPC). Same list as scripts/live_target_counts.py (several ecosystems share one oracle address: the same deployer key was at the same nonce).
 O2 = "0x50840a7667baEa9D05ad4ae3dCeb384724b58720"
 ORACLES = [
-    ("robinhood-chain", "Robinhood Chain", "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52", "https://rpc.testnet.chain.robinhood.com/rpc"),
-    ("ethereum-l1-sepolia", "Ethereum L1", "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906", "https://ethereum-sepolia-rpc.publicnode.com"),
-    ("arbitrum-sepolia", "Arbitrum", O2, "https://sepolia-rollup.arbitrum.io/rpc"),
-    ("base-sepolia", "Base", O2, "https://sepolia.base.org"),
-    ("tempo-moderato", "Tempo", O2, "https://rpc.moderato.tempo.xyz"),
+    ("robinhood-chain", "Robinhood Chain", "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52", "https://rpc.testnet.chain.robinhood.com/rpc|https://rpc.testnet.chain.robinhood.com"),   # one operator: two paths of the same host, no second operator known
+    ("ethereum-l1-sepolia", "Ethereum L1", "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906", "https://ethereum-sepolia-rpc.publicnode.com|https://sepolia.gateway.tenderly.co|https://rpc.sepolia.ethpandaops.io"),
+    ("arbitrum-sepolia", "Arbitrum", O2, "https://sepolia-rollup.arbitrum.io/rpc|https://arbitrum-sepolia-rpc.publicnode.com"),
+    ("base-sepolia", "Base", O2, "https://sepolia.base.org|https://base-sepolia-rpc.publicnode.com"),
+    ("tempo-moderato", "Tempo", O2, "https://rpc.moderato.tempo.xyz|https://rpc.testnet.tempo.xyz"),
     ("plasma", "Plasma", O2, "https://testnet-rpc.plasma.to"),
-    ("monad", "Monad", O2, "https://testnet-rpc.monad.xyz/"),
+    ("monad", "Monad", O2, "https://testnet-rpc.monad.xyz/|https://monad-testnet.drpc.org|https://rpc.ankr.com/monad_testnet"),
     ("hyperliquid-hyperevm", "Hyperliquid", O2, "https://rpc.hyperliquid-testnet.xyz/evm|https://998.rpc.thirdweb.com"),   # the first endpoint rate-limits (429): the second is tried when it does not answer
 ]
 SUBS = ("adminKeyScore", "multisigScore", "timelockScore", "oracleAuthorityScore", "crossExposureScore", "compositeScore")
@@ -103,11 +103,15 @@ def decode_score(h):
     return dict(zip(SUBS, w[:6]), lastUpdated=w[6], methodologyHash="0x" + b[224:256].hex())
 
 
+SILENT = []   # (hosts tried, ...) of every oracle that no endpoint answered: named in the last line of the report
+
+
 def read_evm(rpc_urls, oracle):
     """Tries each public endpoint (separated by |) in turn. -> {"count": n, "targets": {address: score dict}} or None when none answered every call."""
     for u in rpc_urls.split("|"):
         r = read_evm_one(u, oracle)
         if r is not None: return r
+    SILENT.append(sorted({u.split("/")[2] for u in rpc_urls.split("|")}))
     return None
 
 
@@ -270,7 +274,8 @@ def cmp_twins(results):
 def gather(log=lambda *_: None):
     names = {slug: name for slug, name, _o, _r in ORACLES}
     with cf.ThreadPoolExecutor(12) as ex:
-        f_chain = {slug: ex.submit(read_evm, rpc, o) for slug, _n, o, rpc in ORACLES}
+        own = lambda slug: os.environ.get("PROVE_RPC_" + slug.upper().replace("-", "_"))   # your own node first: PROVE_RPC_BASE_SEPOLIA=https://...
+        f_chain = {slug: ex.submit(read_evm, (own(slug) + "|" if own(slug) else "") + rpc, o) for slug, _n, o, rpc in ORACLES}
         f_sol = ex.submit(read_solana)
         f_watch = {slug: ex.submit(http_json, "%s/watch-data/scores/%s.json" % (RAW, slug)) for slug in list(names) + ["solana-devnet"]}
         f_inc = ex.submit(http_json, SITE + "/backtest/incidents.json"); f_page = ex.submit(http_text, SITE + "/backtest/"); f_idx = ex.submit(http_json, SITE + "/p/index.json")
@@ -305,9 +310,10 @@ def lines(data):
     return out
 
 
-def render(res, secs):
+def render(res, secs, silent=()):
     w = {OK: "OK        ", DIFF: "DIFFERENCE", UNREAD: "UNREAD    "}
     rows = ["%s %s" % (w[s], t) for s, t in res]
+    if silent: rows.append("Silent public nodes (no answer, hence the UNREAD lines; not a failed check): " + "; ".join(", ".join(h) for h in silent) + ". Run again later, or use your own node: PROVE_RPC_<ORACLE>=https://your-node (for example PROVE_RPC_BASE_SEPOLIA).")
     n = {k: sum(1 for s, _t in res if s == k) for k in (OK, DIFF, UNREAD)}
     rows.append("%d OK, %d DIFFERENCE, %d UNREAD in %.0f s. Does not prove: that the scores are right, that they predict an incident, that the oracles' administrator keys are safe." % (n[OK], n[DIFF], n[UNREAD], secs))
     return rows, (1 if n[DIFF] else (2 if n[UNREAD] else 0))
@@ -335,12 +341,21 @@ def selftest():
     page = "flagged 1, missed 0, and could not be applied to 0 $1.2B $200.0M $200.0M of the $"
     assert cmp_backtest(inc, page)[0] == OK and cmp_backtest(inc, page.replace("flagged 1", "flagged 2"))[0] == DIFF and cmp_backtest(None, page)[0] == UNREAD
     assert render([(OK, "a"), (UNREAD, "b")], 1)[1] == 2 and render([(OK, "a"), (DIFF, "b"), (UNREAD, "c")], 1)[1] == 1 and render([(OK, "a")], 1)[1] == 0
+    # a silent first node falls through to the second; every node silent is UNREAD and is named
+    global rpc_batch
+    keep = rpc_batch
+    try:
+        rpc_batch = lambda url, calls, tries=3: None if "silent" in url else ["0x" + "00" * 31 + "00"] * len(calls)
+        assert read_evm("https://silent.example/rpc|https://ok.example/rpc", "0x" + "aa" * 20)["count"] == 0
+        SILENT.clear(); assert read_evm("https://silent.example/rpc|https://silent2.example/x", "0x" + "aa" * 20) is None and SILENT == [["silent.example", "silent2.example"]]
+        assert "silent.example" in render([(UNREAD, "x")], 1, SILENT)[0][-2] and render([(UNREAD, "x")], 1, SILENT)[1] == 2
+    finally: rpc_batch = keep; SILENT.clear()
     print("selftest ok")
 
 
 def main():
     if "--selftest" in sys.argv: selftest(); return 0
-    t0 = time.time(); data = gather(); res = lines(data); rows, code = render(res, time.time() - t0)
+    t0 = time.time(); data = gather(); res = lines(data); rows, code = render(res, time.time() - t0, SILENT)
     print("\n".join(rows)); return code
 
 

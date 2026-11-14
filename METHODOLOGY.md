@@ -684,8 +684,7 @@ an executor contract with a 1-day `delay()` whose roles are not read yet: it sta
   target's own keys never moves it. Library versions (web3, eth_abi, Python) are not
   covered. A real push pins the digest before scoring, refuses to run unless the files
   equal the HEAD commit, and refuses again if they change during the run, so every
-  published hash matches a commit (reproducible by others once that commit is on
-  GitHub). **Before that date the hash was a hand-typed label that was never bumped**:
+  published hash matches a commit. That is true of the nine hashes on chain today, in the working copy of the code that produced the pushes. It cannot be checked from this repository today: none of the nine hashes recomputed from a fresh clone of this repository on 15 November equals the one on chain, because the commits behind them are not in it yet. **Before that date the hash was a hand-typed label that was never bumped**:
   of the 22 composite changes published under an unchanged hash up to 2026-09-30 on the
   6 oracles with a fast log source, 21 were fixes of our own scorer and 1 was mixed
   (Morpho Blue: a real Safe change that also flipped an exact-committee comparison of
@@ -907,10 +906,7 @@ Every number printed is re-derived from live chain state in that run - never
 replayed from a cached value. See `scripts/update_scores.py --dry-run` for
 the same re-derivation against the exact code path a real push runs (pushes are run by hand, at the latest every nine days, the staleness limit; the workflow `update_scores.yml` of the working repository, which pushes Robinhood Chain testnet and stops at the same guards, so a held or missing target fails it instead of being sent, is switched off).
 
-To check which code produced a published score, check out the commit recorded with the
-push (`methodologyCommit` in `api/scores.json` for Robinhood Chain, in the push record
-for Solana, in the push log otherwise) and recompute the hash; it must equal the
-`methodologyHash` returned by `getScore()`:
+To check which code produced a published score, a reader needs the commit that was recorded with the push (`methodologyCommit` in `api/scores.json` for Robinhood Chain, in the push record for Solana, in the push log otherwise) and the files of that commit. **From this repository alone, this step cannot be replayed today.** On 15 November I ran the command below on a fresh clone of this repository for each of the nine oracles: none of the nine hashes equals the one read on chain. In the working copy of the code that produced the pushes, the same command gives the hash on chain for all nine at one commit, and for Robinhood Chain at the commit that `api/scores.json` names. That commit is not in this repository, so these hashes cannot be recomputed from here today. For now the command below shows the procedure; it is not a result you can reproduce from this clone:
 
 ```bash
 python3 scripts/lib/methodology.py arbitrum-ecosystem --label authority-risk-oracle-arbitrum-ecosystem-v1

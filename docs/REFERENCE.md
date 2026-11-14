@@ -118,7 +118,7 @@ flowchart LR
 | The scores a consumer reads | contract storage | `getScore(target)` |
 | Who may write a score | `UPDATER_ROLE` | `hasRole(UPDATER_ROLE, address)` |
 | A score is not too old | contract | `isStale(target)` |
-| Which code produced a batch | `methodologyHash` | recompute with `python3 scripts/lib/methodology.py <ecosystem> --label <label>` from a commit of the private working repository; the digest of this public copy differs (see "Built during the hackathon") |
+| Which code produced a batch | `methodologyHash` | recompute with `python3 scripts/lib/methodology.py ECOSYSTEM --label LABEL` from a commit of the private working repository; the digest of this public copy differs (on 15 November I recomputed the nine hashes from a fresh clone of this repository and none equals the one on chain; the CHANGELOG, "What is not in this repository yet", says why) |
 | Zcash scores | OP_RETURN commitments on Zcash testnet | [`chains/zcash/`](../chains/zcash/) |
 | The inputs (keys, thresholds, delays) | public chain state, re-read at scoring time | each scorer and every dated audit in `data/` |
 | The classification rules | documented heuristics, tested | [`METHODOLOGY.md`](../METHODOLOGY.md) |

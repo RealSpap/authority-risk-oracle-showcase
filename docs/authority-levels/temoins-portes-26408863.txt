@@ -1,0 +1,9 @@
+block 26408863 nodes tenderly + blastapi read 2026-11-13T22:19:47Z
+tenderly | Pool 0x87870bca3f3fd6335c3f4ce8392d69350b4fa4e2 | implementation slot 0x4295fe69b3e978eb511e4558b4407ad871612fcb
+  SUSPEND  PoolConfigurator.setPoolPause(true) | holder 0x2cfe3e..aa30: ok | stranger: revert: execution reverted
+  CODE     PoolAddressesProvider.setPoolImpl(current implementation) | holder 0x5300a1..192a: revert: execution reverted | stranger: revert: execution reverted: Ownable: caller is not the owner
+  ORACLE   PoolAddressesProvider.setPriceOracle(current oracle) | holder 0x5300a1..192a: ok | stranger: revert: execution reverted: Ownable: caller is not the owner
+blastapi | Pool 0x87870bca3f3fd6335c3f4ce8392d69350b4fa4e2 | implementation slot 0x4295fe69b3e978eb511e4558b4407ad871612fcb
+  SUSPEND  PoolConfigurator.setPoolPause(true) | holder 0x2cfe3e..aa30: ok | stranger: revert: execution reverted
+  CODE     PoolAddressesProvider.setPoolImpl(current implementation) | holder 0x5300a1..192a: revert: execution reverted | stranger: revert: execution reverted: Ownable: caller is not the owner
+  ORACLE   PoolAddressesProvider.setPriceOracle(current oracle) | holder 0x5300a1..192a: ok | stranger: revert: execution reverted: Ownable: caller is not the owner

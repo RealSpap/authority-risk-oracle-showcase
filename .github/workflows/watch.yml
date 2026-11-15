@@ -24,22 +24,23 @@ concurrency:
 
 jobs:
   guard:
-    # Opening guard. A run that the SCHEDULE starts is cancelled here when another run of this workflow already served its slot, before the state is cloned, before anything is written: no commit on watch-data, nothing signed.
-    # The slot of a run is the last instant not after its creation that matches the cron that started it (github.event.schedule, UTC; scripts/cron_slot.py). A run is cancelled when an EARLIER run of this workflow, not cancelled or skipped, was created from 5 minutes
+    # Opening guard. A run that the SCHEDULE starts does nothing when another run of this workflow already served its slot: the watch job is skipped, before the state is cloned, before anything is written (no commit on watch-data, nothing signed).
+    # The slot of a run is the last instant not after its creation that matches the cron that started it (github.event.schedule, UTC; scripts/cron_slot.py). A run defers when an EARLIER run of this workflow, whose watch job ran, was created from 5 minutes
     # before that slot (a script outside GitHub served it, or a late copy came first), or in the 45 minutes before this run (the first rule, kept). A run that FAILED in less than 10 minutes did not serve anything: the next run goes on.
-    # It ends cancelled, never green: the step "The last successful run" below takes the newest SUCCESSFUL run as its anchor against a rollback of the state, and a green run that did nothing would become that anchor.
-    # Any doubt (the list cannot be read, this run is not in it, the cron cannot be read, the cancel is refused) lets the run go on: a duplicate is harmless to the chain, a silent stop is not.
-    # The slot rule cancels late copies that may be the only run for hours when no script outside GitHub covers the nights: the repository variable WATCH_GUARD_SLOT=off gives the 45-minute window back without a new commit.
-    # Once the cancel is ACCEPTED the run does not go on: the output served makes the watch job skip, so a cancel that lands late never cuts a half-made run.
-    # No code of the repository runs here (no checkout): the slot calculator below is written out by this job and a test checks that it is the very text of scripts/cron_slot.py.
+    # It ends GREEN (success, watch job skipped), never cancelled: GitHub's badge of the workflow shows the last COMPLETED run and reads a cancelled one as failing, so a cancelled copy turned the README badge red after every doubled slot
+    # (15 November: the green run of 18:49Z, then the copy of 19:08Z cancelled, badge red). A green run that did nothing must not become the anchor against a rollback (the step "The last successful run" below keeps only runs whose watch job
+    # succeeded) nor serve a later slot (the guard asks the jobs of the earlier runs it would defer to). When the run it defers to FAILED, this copy ends red too, so that the badge never hides a failure behind a copy that did nothing.
+    # Any doubt (the list cannot be read, this run is not in it, the cron cannot be read, the jobs of a run cannot be read) lets the run go on: a duplicate is harmless to the chain, a silent stop is not.
+    # The slot rule defers late copies that may be the only run for hours when no script outside GitHub covers the nights: the repository variable WATCH_GUARD_SLOT=off gives the 45-minute window back without a new commit.
+    # No code of the repository runs here (no checkout): the slot calculator below is written out by this job and a test checks that it is the very text of scripts/cron_slot.py. The job only reads (actions: read): it no longer cancels anything.
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
-      actions: write   # this job alone may cancel a run; the watch job keeps contents: write and actions: read; this one never checks the code out and could not push
+      actions: read   # the list of runs and the jobs of a run; it never cancels (no actions: write); the watch job keeps contents: write and actions: read; this one never checks the code out and could not push
     outputs:
-      served: ${{ steps.guard.outputs.served }}   # "true" once the cancel of this run was accepted: the watch job does not start
+      served: ${{ steps.guard.outputs.served }}   # "true" when another run served the slot of this one: the watch job does not start
     steps:
-      - name: "Opening guard: a scheduled run whose slot was already served by another run of this workflow is cancelled before it touches anything"
+      - name: "Opening guard: a scheduled run whose slot was already served by another run of this workflow does nothing (green, watch job skipped) before it touches anything"
         id: guard
         env:
           GH_TOKEN: ${{ github.token }}
@@ -124,51 +125,55 @@ jobs:
               except (ValueError, OverflowError, OSError) as e: sys.stderr.write("cron unreadable: %s\n" % e); sys.exit(1)
           PY1
           cat > "$T/guard.py" <<'PY2'
-          import datetime, json, os, sys
+          import datetime, json, os, subprocess, sys
           import cron_slot
           EARLY = 10 * 60    # a run that failed in less than this did not serve its slot
           WINDOW = 45 * 60   # first rule, kept: any run created in the 45 minutes before this one
           BEFORE = 5 * 60    # slot rule: any run created from 5 minutes before the slot of this one
           SLOT = os.environ.get("GUARD_SLOT", "") != "off"
           def t(s): return datetime.datetime.strptime(s, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=datetime.timezone.utc).timestamp()
+          def watch_job(r):
+              """Conclusion of the job `watch` of run r ("success", "skipped", ...), or None when the jobs cannot be read."""
+              try:
+                  o = subprocess.run(["gh", "api", "repos/%s/actions/runs/%d/jobs" % (os.environ["REPO"], r["id"]), "--jq", '[.jobs[] | select(.name == "watch") | .conclusion][0] // "none"'], capture_output=True, text=True, timeout=60)
+                  return o.stdout.strip() if o.returncode == 0 and o.stdout.strip() else None
+              except Exception: return None
           def counts(r):
               c = r.get("conclusion")
               if c in ("cancelled", "skipped"): return False   # a run that was cancelled or skipped served nothing
               if c in ("failure", "startup_failure"):          # a failure counts only when it ran 10 minutes or more
                   try: return t(r["updated_at"]) - t(r["run_started_at"]) >= EARLY
                   except Exception: return False               # a duration that cannot be read does not count: this run goes on
-              return True                                       # success, timed out, running, queued, waiting, pending, anything else
+              if c == "success": return watch_job(r) == "success"   # a green run whose watch job was skipped only deferred to another one (this very rule): it served nothing; a jobs list that cannot be read is a doubt, not a serve
+              return True                                       # timed out, running, queued, waiting, pending, anything else
           try:
               runs = json.load(open(sys.argv[1]))["workflow_runs"]; me = int(sys.argv[2])
               mine = [r for r in runs if r["id"] == me]
               if not mine: print("unread: this run is not in the list"); sys.exit(0)
               t0 = t(mine[0]["created_at"]); slot = cron_slot.last_slot(sys.argv[3], t0) if SLOT else 0
               for r in runs:
-                  if r["id"] == me or not counts(r): continue
+                  if r["id"] == me: continue
                   t1 = t(r["created_at"])
-                  if (t1, r["id"]) >= (t0, me): continue       # only an EARLIER run counts: two runs never cancel each other
+                  if (t1, r["id"]) >= (t0, me): continue       # only an EARLIER run counts: two runs never defer to each other
                   rule = "slot" if SLOT and t1 >= slot - BEFORE else "window" if t0 - t1 <= WINDOW else ""
-                  if rule: print("served %d %d %s" % (r["id"], (t0 - t1) // 60, rule)); sys.exit(0)
+                  if rule and counts(r): print("served %d %d %s %s" % (r["id"], (t0 - t1) // 60, rule, "failed" if r.get("conclusion") in ("failure", "startup_failure", "timed_out") else "ok")); sys.exit(0)
               print("go")
           except Exception as e: print("unread: %s" % str(e)[:100])
           PY2
           v=$(python3 "$T/guard.py" "$T/guard_runs.json" "$RUN_ID" "$SCHEDULE" 2>&1) || v="unread: the check itself failed"
           case "$v" in
             served*)
-              read -r _ rid age rule <<< "$v"
-              echo "::notice title=Slot already served::run $rid of this workflow was created $age minutes before this one ($rule rule): this run is cancelled, nothing is cloned, signed or recorded"
-              if gh api -X POST "repos/$REPO/actions/runs/$RUN_ID/cancel" > /dev/null 2> "$T/guard_err.txt"; then
-                echo "served=true" >> "$GITHUB_OUTPUT"   # written as soon as the cancel is accepted: from here the watch job never starts, whatever the delay of the cancel
-                sleep 120   # the cancel reaches this job within seconds; the run ends cancelled
-                echo "::error title=Opening guard::the cancel was accepted but had not been applied after 2 minutes: the watch job is skipped and this run ends red; nothing was cloned, signed or recorded"; exit 1
-              else echo "::warning title=Opening guard::the cancel request was refused ($(head -c 120 "$T/guard_err.txt" | tr '\n' ' ')): this run goes on"; fi ;;
+              read -r _ rid age rule how <<< "$v"
+              echo "::notice title=Slot already served::run $rid of this workflow was created $age minutes before this one ($rule rule): this run does nothing, the watch job is skipped, nothing is cloned, signed or recorded"
+              echo "served=true" >> "$GITHUB_OUTPUT"   # the watch job does not start; the run ends green, never cancelled (a cancelled run is a red badge)
+              if [ "$how" = failed ]; then echo "::error title=Opening guard::run $rid, which served this slot, FAILED: this copy ends red too, so that the badge does not hide it"; exit 1; fi ;;
             go) echo "no other run of this workflow served the slot of this one" ;;
             *) echo "::warning title=Opening guard::the check could not be completed ($v): this run goes on" ;;
           esac
 
   watch:
     needs: guard
-    if: ${{ !cancelled() && needs.guard.outputs.served != 'true' }}   # a cancel of the guard cancels the whole run, so this job never starts after it, and a cancel that was accepted but lands late never cuts a half-made run (served); a guard that CRASHED (result failure, no output) does not stop the Watch
+    if: ${{ !cancelled() && needs.guard.outputs.served != 'true' }}   # a run cancelled by hand or by the concurrency group never starts this job; a slot served by another run (served) skips it and the run ends green; a guard that CRASHED (result failure, no output) does not stop the Watch
     runs-on: ubuntu-latest
     timeout-minutes: 150
     steps:
@@ -195,10 +200,15 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}   # this step only: the scripts of the next step never see a token
         run: |
-          t=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/watch.yml/runs?status=success&per_page=1" --jq '.workflow_runs[0].created_at // empty' 2>/dev/null || true)
+          # the newest successful run whose `watch` job succeeded: a run the guard ended green with its watch job skipped wrote nothing and is no anchor (ten runs are looked at, the newest first)
+          t=""
+          while read -r id created; do
+            w=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$id/jobs" --jq '[.jobs[] | select(.name == "watch") | .conclusion][0] // empty' 2>/dev/null || true)
+            if [ "$w" = success ]; then t="$created"; break; fi
+          done < <(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/watch.yml/runs?status=success&per_page=10" --jq '.workflow_runs[] | "\(.id) \(.created_at)"' 2>/dev/null || true)
           case "$t" in
             20[0-9][0-9]-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9]Z) echo "utc=$t" >> "$GITHUB_OUTPUT"; echo "the last successful run started $t" ;;
-            *) echo "::warning title=Rollback check::the list of runs could not be read (or holds no successful run yet): an older state put back on watch-data is not looked for in this run" ;;
+            *) echo "::warning title=Rollback check::the list of runs could not be read (or holds no run whose watch job succeeded yet): an older state put back on watch-data is not looked for in this run" ;;
           esac
 
       - name: Read every EVM oracle and diff against the previous run

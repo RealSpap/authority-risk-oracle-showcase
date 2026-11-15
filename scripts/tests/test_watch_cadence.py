@@ -385,53 +385,53 @@ class TestOpeningGuard(unittest.TestCase):
 
     def me(self): return self.rid(self.ME, 0, None, "in_progress", event="schedule")
 
-    def run_guard(self, runs, event="schedule", raw=None, list_fails=False, cancel_fails=False, me_in_list=True, schedule="17 */6 * * *", guard_slot=""):
+    def run_guard(self, runs, event="schedule", raw=None, list_fails=False, jobs_fail=False, watch_jobs=None, me_in_list=True, schedule="17 */6 * * *", guard_slot=""):
         step = self.guard_step()
         with tempfile.TemporaryDirectory() as cwd:
             os.makedirs(os.path.join(cwd, "bin"))
-            open(os.path.join(cwd, "bin", "gh"), "w").write('#!/bin/bash\necho "gh $*" >> "$CALLS"\ncase "$*" in\n *"-X POST"*) [ "${CANCEL_FAILS:-}" != 1 ] || { echo "HTTP 403: Resource not accessible by integration" >&2; exit 1; }; exit 0 ;;\n *"/runs?per_page=30"*) [ "${LIST_FAILS:-}" != 1 ] || { echo "HTTP 502: bad gateway" >&2; exit 1; }; cat "$RUNS_FILE"; exit 0 ;;\nesac\nexit 9\n')
+            open(os.path.join(cwd, "bin", "gh"), "w").write('#!/bin/bash\necho "gh $*" >> "$CALLS"\ncase "$*" in\n *"-X POST"*) echo "a cancel was asked: the guard no longer cancels" >&2; exit 1 ;;\n *"/runs?per_page=30"*) [ "${LIST_FAILS:-}" != 1 ] || { echo "HTTP 502: bad gateway" >&2; exit 1; }; cat "$RUNS_FILE"; exit 0 ;;\n *"/jobs"*) [ "${JOBS_FAIL:-}" != 1 ] || { echo "HTTP 502: bad gateway" >&2; exit 1; }; id=$(echo "$*" | sed -E "s#.*/runs/([0-9]+)/jobs.*#\\1#"); python3 -c "import json,os,sys; print(json.load(open(os.environ[\'JOBS_FILE\'])).get(sys.argv[1], \'success\'))" "$id"; exit 0 ;;\nesac\nexit 9\n')
             open(os.path.join(cwd, "bin", "sleep"), "w").write('#!/bin/bash\necho "sleep $*" >> "$CALLS"\necho "output-at-sleep: $(tr \'\\n\' , < "$GITHUB_OUTPUT")" >> "$CALLS"\nexit 0\n')
             for n in ("gh", "sleep"): q = os.path.join(cwd, "bin", n); os.chmod(q, os.stat(q).st_mode | stat.S_IEXEC)
             body = raw if raw is not None else json.dumps({"total_count": len(runs) + 1, "workflow_runs": ([self.me()] if me_in_list else []) + runs})
             open(os.path.join(cwd, "runs.json"), "w").write(body)
-            calls = os.path.join(cwd, "calls.log")
+            calls = os.path.join(cwd, "calls.log"); open(os.path.join(cwd, "jobs.json"), "w").write(json.dumps({str(k): v for k, v in (watch_jobs or {}).items()}))   # conclusion of the `watch` job of a run; a run not listed here ran its watch job to success
             out = os.path.join(cwd, "github_output.txt"); open(out, "w").close()
             env = dict(os.environ, PATH=os.path.join(cwd, "bin") + os.pathsep + os.environ["PATH"], CALLS=calls, RUNS_FILE=os.path.join(cwd, "runs.json"), RUNNER_TEMP=cwd, GH_TOKEN="x", EVENT_NAME=event, SCHEDULE=schedule, RUN_ID=str(self.ME), REPO="RealSpap/authority-risk-oracle-showcase",
-                       GITHUB_OUTPUT=out, GUARD_SLOT=guard_slot, LIST_FAILS="1" if list_fails else "", CANCEL_FAILS="1" if cancel_fails else "")
+                       GITHUB_OUTPUT=out, GUARD_SLOT=guard_slot, LIST_FAILS="1" if list_fails else "", JOBS_FAIL="1" if jobs_fail else "", JOBS_FILE=os.path.join(cwd, "jobs.json"))
             r = subprocess.run(["bash", "-e", "-c", step["run"]], cwd=cwd, env=env, capture_output=True, text=True)
             c = open(calls).read().splitlines() if os.path.exists(calls) else []
             self.gh_output = open(out).read()   # what the step wrote to $GITHUB_OUTPUT
+            if "served=true" in self.gh_output: c.append("SERVED")   # the signal the cases below read: this run does nothing (the watch job is skipped)
         return r.returncode, r.stdout + r.stderr, c
 
-    CANCEL = "gh api -X POST repos/RealSpap/authority-risk-oracle-showcase/actions/runs/5000/cancel"
+    CANCEL = "SERVED"   # since 16/11: a served slot is no longer cancelled, the run ends GREEN with the watch job skipped (a cancelled run turned the README badge red after every doubled slot)
 
-    def test_a_scheduled_run_whose_slot_was_served_20_minutes_ago_is_cancelled_with_a_notice(self):
+    def test_a_scheduled_run_whose_slot_was_served_20_minutes_ago_ends_green_doing_nothing(self):
         rc, out, calls = self.run_guard([self.rid(4000, 20 * 60)])
-        self.assertEqual([c for c in calls if "POST" in c], [self.CANCEL])
+        self.assertEqual([c for c in calls if c == "SERVED"], ["SERVED"])
+        self.assertEqual([c for c in calls if "POST" in c or c.startswith("sleep") or "cancel" in c], [])      # no cancel and no wait: a cancelled run is read as failing by GitHub's badge
         self.assertIn("::notice title=Slot already served::run 4000", out); self.assertIn("20 minutes", out); self.assertIn("(slot rule)", out)
-        self.assertEqual([c for c in calls if c.startswith("sleep")], ["sleep 120"])             # it waits for the cancel to land
-        # the fake cancel does not stop the shell: the fallback is the end of the job in RED, never "this run goes on" (the watch job is skipped through the output)
-        self.assertEqual(rc, 1, out); self.assertIn("::error title=Opening guard::the cancel was accepted but had not been applied after 2 minutes", out); self.assertNotIn("this run goes on", out)
+        self.assertEqual(rc, 0, out); self.assertNotIn("::error", out); self.assertNotIn("this run goes on", out)
         self.assertEqual(self.gh_output, "served=true\n")
 
     def test_the_window_is_45_minutes_included_and_a_second_more_is_a_run(self):
         for sec, cancelled in ((44 * 60 + 59, True), (45 * 60, True), (45 * 60 + 1, False), (3 * 3600, False), (13 * 3600, False)):
             rc, out, calls = self.run_guard([self.rid(4000, sec)])
-            self.assertEqual(rc, 1 if cancelled else 0, (sec, out)); self.assertEqual(bool([c for c in calls if "POST" in c]), cancelled, sec)
+            self.assertEqual(rc, 0, (sec, out)); self.assertEqual(bool([c for c in calls if c == "SERVED"]), cancelled, sec)
 
     def test_a_run_that_served_nothing_does_not_count_and_any_other_run_does(self):
         for concl, status, cancelled in (("cancelled", "completed", False), ("skipped", "completed", False), ("success", "completed", True), ("failure", "completed", True), ("timed_out", "completed", True),
                                          (None, "in_progress", True), (None, "queued", True), (None, "pending", True), (None, "waiting", True)):
             rc, out, calls = self.run_guard([self.rid(4000, 600, concl, status)])
-            self.assertEqual(bool([c for c in calls if "POST" in c]), cancelled, (concl, status))
+            self.assertEqual(bool([c for c in calls if c == "SERVED"]), cancelled, (concl, status))
 
     def test_two_runs_never_cancel_each_other_only_an_earlier_one_counts(self):
         rc, out, calls = self.run_guard([self.rid(6000, -300)])          # created 5 minutes AFTER this run: it is the other's business
-        self.assertEqual([c for c in calls if "POST" in c], []); self.assertIn("no other run", out)
+        self.assertEqual([c for c in calls if c == "SERVED"], []); self.assertIn("no other run", out)
         rc, out, calls = self.run_guard([self.rid(6000, 0)])             # same second, a later id: not earlier
-        self.assertEqual([c for c in calls if "POST" in c], [])
+        self.assertEqual([c for c in calls if c == "SERVED"], [])
         rc, out, calls = self.run_guard([self.rid(4000, 0)])             # same second, an earlier id: earlier
-        self.assertEqual([c for c in calls if "POST" in c], [self.CANCEL])
+        self.assertEqual([c for c in calls if c == "SERVED"], [self.CANCEL])
 
     def test_a_run_started_by_hand_or_a_push_is_never_checked(self):
         for ev in ("workflow_dispatch", "push", "workflow_run", ""):
@@ -444,16 +444,37 @@ class TestOpeningGuard(unittest.TestCase):
                  "no date": dict(runs=[{"id": 4000, "status": "completed", "conclusion": "success"}]), "no id": dict(runs=[{"status": "completed", "conclusion": "success", "created_at": "2026-11-10T12:40:00Z"}])}
         for name, kw in cases.items():
             rc, out, calls = self.run_guard(**kw)
-            self.assertEqual(rc, 0, (name, out)); self.assertEqual([c for c in calls if "POST" in c], [], name); self.assertIn("::warning title=Opening guard::", out, name); self.assertIn("this run goes on", out, name)
+            self.assertEqual(rc, 0, (name, out)); self.assertEqual([c for c in calls if c == "SERVED"], [], name); self.assertIn("::warning title=Opening guard::", out, name); self.assertIn("this run goes on", out, name)
 
-    def test_a_refused_cancel_lets_the_run_go_on_and_says_so(self):
-        rc, out, calls = self.run_guard([self.rid(4000, 600)], cancel_fails=True)
-        self.assertEqual(rc, 0, out); self.assertIn("the cancel request was refused", out); self.assertIn("this run goes on", out); self.assertEqual([c for c in calls if c.startswith("sleep")], [])
+    def test_a_copy_that_defers_to_a_run_that_FAILED_ends_red_so_the_badge_never_hides_it(self):
+        for concl in ("failure", "timed_out"):
+            rc, out, calls = self.run_guard([self.rid(4000, 600, concl, ran=1500)])
+            self.assertEqual(rc, 1, (concl, out)); self.assertEqual(self.gh_output, "served=true\n"); self.assertIn("::error title=Opening guard::run 4000", out); self.assertIn("FAILED", out)   # the watch job is still skipped
+        for concl, status in (("success", "completed"), (None, "in_progress"), (None, "queued")):
+            rc, out, calls = self.run_guard([self.rid(4000, 600, concl, status)]); self.assertEqual((rc, self.gh_output), (0, "served=true\n"), (concl, out))
+
+    def test_a_green_run_that_only_deferred_to_another_serves_nothing(self):
+        # a run the guard ended green with its watch job skipped is `success` for the API: it must not make the next copy defer to a run that wrote nothing
+        rc, out, calls = self.run_guard([self.rid(4000, 600, "success")], watch_jobs={4000: "skipped"})
+        self.assertEqual((rc, self.gh_output), (0, "")); self.assertIn("no other run", out)
+        rc, out, calls = self.run_guard([self.rid(4000, 600, "success")], watch_jobs={4000: "success"}); self.assertEqual((rc, self.gh_output), (0, "served=true\n"))
+        rc, out, calls = self.run_guard([self.rid(4000, 600, "success"), self.rid(3900, 900, "success")], watch_jobs={4000: "skipped", 3900: "success"}); self.assertIn("run 3900", out)   # the older real run still serves
+        rc, out, calls = self.run_guard([self.rid(4000, 600, "success")], jobs_fail=True)      # the jobs of the run cannot be read: any doubt lets this run go on
+        self.assertEqual((rc, self.gh_output), (0, "")); self.assertEqual([c for c in calls if c.startswith("sleep") or "POST" in c], [])
+
+    def test_the_jobs_of_a_run_are_asked_only_for_the_earlier_runs_of_the_window(self):
+        rc, out, calls = self.run_guard([self.rid(4000, 600, "success"), self.rid(3000, 30 * 3600, "success"), self.rid(6000, -300, "success")])
+        asked = [c for c in calls if "/jobs" in c]
+        self.assertEqual(len(asked), 1, calls); self.assertIn("/runs/4000/jobs", asked[0])      # not the old run, not the later one: no useless API call
+
+    def test_the_guard_text_has_no_cancel_and_no_wait(self):
+        text = self.guard_step()["run"]
+        for word in ("/cancel", "-X POST", "sleep"): self.assertNotIn(word, text, word)
 
     def test_the_guard_job_is_first_alone_in_having_actions_write_and_cannot_write_anything_else(self):
         wf = load_wf("watch.yml"); jobs = wf["jobs"]
         self.assertEqual(list(jobs), ["guard", "watch"])
-        self.assertEqual(jobs["guard"]["permissions"], {"actions": "write"})                           # no contents: it could not push to watch-data or main
+        self.assertEqual(jobs["guard"]["permissions"], {"actions": "read"})                            # read only since 16/11 (it no longer cancels), no contents: it could not push to watch-data or main
         self.assertNotIn("permissions", jobs["watch"])                                                 # the watch job keeps the workflow's: contents write, actions read
         self.assertEqual(wf["permissions"], {"contents": "write", "actions": "read"})
         self.assertEqual(jobs["watch"]["needs"], "guard"); self.assertEqual(jobs["watch"]["if"], "${{ !cancelled() && needs.guard.outputs.served != 'true' }}")
@@ -465,20 +486,33 @@ class TestOpeningGuard(unittest.TestCase):
         self.assertEqual(g["env"]["EVENT_NAME"], "${{ github.event_name }}"); self.assertEqual(g["env"]["SCHEDULE"], "${{ github.event.schedule }}"); self.assertEqual(g["env"]["GUARD_SLOT"], "${{ vars.WATCH_GUARD_SLOT }}"); self.assertNotIn("${{", text)   # every context value goes through env
         self.assertLessEqual(jobs["guard"]["timeout-minutes"], 5)
 
-    def test_the_cancelled_run_is_never_the_anchor_of_the_rollback_check(self):
-        # the anchor step takes the newest run with status=success: a run the guard cancelled is `cancelled`, so the anchor is still the last run that really published
+    def anchor_of(self, runs, jobs):
+        """Runs the anchor step with a gh that answers like GitHub: the list filtered by the URL, then the --jq of the call; `jobs`: run id -> conclusion of its watch job."""
         wf = load_wf("watch.yml"); step = next(s for s in wf["jobs"]["watch"]["steps"] if s.get("id") == "anchor")
-        self.assertIn("status=success", step["run"])
-        runs = [self.rid(5000, 0, "cancelled"), self.rid(4000, 30 * 60, "success"), self.rid(3000, 6 * 3600, "success")]     # newest first, like the API
         with tempfile.TemporaryDirectory() as cwd:
             os.makedirs(os.path.join(cwd, "bin"))
-            # a `gh` that applies the filter of the URL like GitHub does, then the --jq of the step: first run's created_at
-            open(os.path.join(cwd, "bin", "gh"), "w").write('#!/bin/bash\npython3 - "$2" <<\'PY\'\nimport json, os, sys\nruns = json.load(open(os.environ["RUNS_FILE"]))\nif "status=success" in sys.argv[1]: runs = [r for r in runs if r["conclusion"] == "success"]\nprint(runs[0]["created_at"] if runs else "")\nPY\n')
-            q = os.path.join(cwd, "bin", "gh"); os.chmod(q, os.stat(q).st_mode | stat.S_IEXEC)
-            open(os.path.join(cwd, "runs.json"), "w").write(json.dumps(runs)); out = os.path.join(cwd, "out.txt"); open(out, "w").close()
-            env = dict(os.environ, PATH=os.path.join(cwd, "bin") + os.pathsep + os.environ["PATH"], RUNS_FILE=os.path.join(cwd, "runs.json"), GITHUB_OUTPUT=out, GITHUB_REPOSITORY="x/y", GH_TOKEN="x")
+            fake = ("#!/bin/bash\npython3 - \"$2\" <<'PY'\nimport json, os, sys\nurl = sys.argv[1]\nruns = json.load(open(os.environ['RUNS_FILE'])); jobs = json.load(open(os.environ['JOBS_FILE']))\n"
+                    "if '/jobs' in url:\n    print(jobs.get(url.split('/runs/')[1].split('/')[0], 'none'))\nelse:\n    if 'status=success' in url: runs = [r for r in runs if r['conclusion'] == 'success']\n"
+                    "    for r in runs: print('%s %s' % (r['id'], r['created_at']))\nPY\n")
+            open(os.path.join(cwd, "bin", "gh"), "w").write(fake); q = os.path.join(cwd, "bin", "gh"); os.chmod(q, os.stat(q).st_mode | stat.S_IEXEC)
+            open(os.path.join(cwd, "runs.json"), "w").write(json.dumps(runs)); open(os.path.join(cwd, "jobs.json"), "w").write(json.dumps({str(k): v for k, v in jobs.items()}))
+            out = os.path.join(cwd, "out.txt"); open(out, "w").close()
+            env = dict(os.environ, PATH=os.path.join(cwd, "bin") + os.pathsep + os.environ["PATH"], RUNS_FILE=os.path.join(cwd, "runs.json"), JOBS_FILE=os.path.join(cwd, "jobs.json"), GITHUB_OUTPUT=out, GITHUB_REPOSITORY="x/y", GH_TOKEN="x")
             r = subprocess.run(["bash", "-e", "-c", step["run"]], cwd=cwd, env=env, capture_output=True, text=True); self.assertEqual(r.returncode, 0, r.stderr)
-            self.assertEqual(open(out).read().strip(), "utc=" + runs[1]["created_at"])                 # the run at -30 min, not the cancelled one at 0
+            return open(out).read().strip(), r.stdout + r.stderr
+
+    def test_the_anchor_of_the_rollback_check_is_the_last_run_whose_watch_job_succeeded(self):
+        # a run the guard ended green with its watch job skipped is `success` for the list of runs but wrote nothing: it must never be the anchor
+        runs = [self.rid(5000, 0, "success"), self.rid(4900, 5 * 60, "success"), self.rid(4000, 30 * 60, "success"), self.rid(3000, 6 * 3600, "success")]     # newest first, like the API
+        got, out = self.anchor_of(runs, {5000: "skipped", 4900: "skipped", 4000: "success", 3000: "success"})
+        self.assertEqual(got, "utc=" + runs[2]["created_at"], out)                                  # the run at -30 min, not the two that did nothing
+        got, out = self.anchor_of(runs, {5000: "success", 4900: "skipped", 4000: "success", 3000: "success"}); self.assertEqual(got, "utc=" + runs[0]["created_at"])
+        got, out = self.anchor_of([self.rid(5000, 0, "cancelled"), self.rid(4000, 600, "success")], {4000: "success"}); self.assertEqual(got, "utc=" + self.rid(4000, 600)["created_at"])   # a cancelled run (by hand, by concurrency) is not in the list
+
+    def test_the_anchor_says_so_when_no_run_can_be_trusted_and_never_invents_one(self):
+        got, out = self.anchor_of([self.rid(5000, 0, "success")], {5000: "skipped"})
+        self.assertEqual(got, ""); self.assertIn("::warning title=Rollback check::", out)
+        got, out = self.anchor_of([], {}); self.assertEqual(got, ""); self.assertIn("::warning title=Rollback check::", out)
 
 
     # ---- revision 4: the rule per slot, the early failure, the cancel accepted but late, the calculator written out by the job
@@ -491,7 +525,7 @@ class TestOpeningGuard(unittest.TestCase):
     def decide(self, runs, **kw):
         """-> (cancelled: bool, output of the step)"""
         rc, out, calls = self.run_guard(runs, **kw)
-        return bool([c for c in calls if "POST" in c]), out
+        return bool([c for c in calls if c == "SERVED"]), out
 
     def test_the_slot_rule_catches_a_run_created_hours_before_which_the_45_minutes_never_saw(self):
         # the real case of 8 Nov 2026: the late copy of the 00:17 slot is created at 05:58:22; a script run created at 00:43 served that slot 5 hours earlier
@@ -576,7 +610,7 @@ class TestOpeningGuard(unittest.TestCase):
         self.assertTrue(self.decide([self.rid(4000, at, "startup_failure", ran=700)])[0])
         for broken in ({"updated_at": None}, {"run_started_at": None}, {"updated_at": "yesterday"}, {"run_started_at": "yesterday"}):
             rc, out, calls = self.run_guard([self.rid(4000, at, "failure", **broken)])
-            self.assertEqual(rc, 0, out); self.assertEqual([c for c in calls if "POST" in c], [], broken)    # not counted: this run goes on
+            self.assertEqual(rc, 0, out); self.assertEqual([c for c in calls if c == "SERVED"], [], broken)    # not counted: this run goes on
         r = self.rid(4000, at, "failure"); del r["updated_at"]
         self.assertFalse(self.decide([r])[0])
 
@@ -604,15 +638,11 @@ class TestOpeningGuard(unittest.TestCase):
     def test_an_unreadable_cron_lets_the_run_go_on_with_a_warning_even_when_the_window_would_cancel(self):
         for bad in ("", "@hourly", "61 * * * *", "17 */6 * *", "MON * * * *"):
             rc, out, calls = self.run_guard([self.rid(4000, 600)], schedule=bad)
-            self.assertEqual(rc, 0, (bad, out)); self.assertEqual([c for c in calls if "POST" in c], [], bad)
+            self.assertEqual(rc, 0, (bad, out)); self.assertEqual([c for c in calls if c == "SERVED"], [], bad)
             self.assertIn("::warning title=Opening guard::the check could not be completed", out); self.assertIn("this run goes on", out); self.assertEqual(self.gh_output, "")
 
-    def test_the_output_served_is_written_only_when_the_cancel_was_accepted_and_before_the_wait(self):
-        rc, out, calls = self.run_guard([self.rid(4000, 600)])
-        self.assertEqual(self.gh_output, "served=true\n")
-        at_sleep = [c for c in calls if c.startswith("output-at-sleep:")]
-        self.assertEqual(at_sleep, ["output-at-sleep: served=true,"])                      # already there when the wait begins: a cancel that lands during it still leaves the watch job skipped
-        rc, out, calls = self.run_guard([self.rid(4000, 600)], cancel_fails=True); self.assertEqual(self.gh_output, "")        # a refused cancel: the run goes on, the watch job starts
+    def test_the_output_served_is_written_only_when_a_run_served_the_slot(self):
+        rc, out, calls = self.run_guard([self.rid(4000, 600)]); self.assertEqual(self.gh_output, "served=true\n")
         rc, out, calls = self.run_guard([]); self.assertEqual((rc, self.gh_output), (0, ""))                                    # nothing served
         rc, out, calls = self.run_guard([self.rid(4000, 600)], event="workflow_dispatch"); self.assertEqual((rc, self.gh_output), (0, ""))
 
@@ -640,7 +670,7 @@ class TestOpeningGuard(unittest.TestCase):
             self.assertEqual(self.decide([slot_only], guard_slot=value)[0], want_slot, value)
             self.assertEqual(self.decide([window], guard_slot=value)[0], want_window, value)
         rc, out, calls = self.run_guard([self.rid(4100, self.ago(self.utc(2026, 11, 10, 13, 0, 0)))], guard_slot="off", schedule="not a cron")      # off: the cron is not even read
-        self.assertEqual([c for c in calls if "POST" in c], [self.CANCEL])
+        self.assertEqual([c for c in calls if c == "SERVED"], [self.CANCEL])
 
     def test_the_real_runs_of_7_and_8_november_with_a_script_run_at_slot_plus_26_minutes(self):
         # the script ("net") serves each slot at about +26 minutes; the real late copies arrive later: all of them are duplicates, none is the only run of its slot

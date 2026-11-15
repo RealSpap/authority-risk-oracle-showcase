@@ -369,9 +369,12 @@ class TestThePreviousStateIsCheckedBeforeTheRunExtendsIt(unittest.TestCase):
         return r.returncode, open(out).read(), r.stdout + r.stderr
 
     def test_the_anchor_step_passes_on_the_date_of_the_last_successful_run(self):
-        rc, out, text = self.anchor_step("echo 2026-10-30T12:17:03Z")
+        # since 16/11 the step asks the list of successful runs ("id created_at" lines), then the jobs of each: the date kept is that of the first run whose `watch` job succeeded
+        rc, out, text = self.anchor_step('case "$*" in *"/jobs"*) echo success ;; *) echo "123 2026-10-30T12:17:03Z" ;; esac')
         self.assertEqual(rc, 0, text)
         self.assertEqual(out.strip(), "utc=2026-10-30T12:17:03Z")
+        rc, out, text = self.anchor_step('case "$*" in *"/jobs"*) echo skipped ;; *) echo "123 2026-10-30T12:17:03Z" ;; esac')   # a green run whose watch job was skipped wrote nothing: no anchor
+        self.assertEqual((rc, out.strip()), (0, "")); self.assertIn("::warning title=Rollback check", text)
 
     def test_the_anchor_step_says_so_when_the_list_cannot_be_read_and_never_stops_the_run(self):
         for body in ("exit 1", "echo null", "echo", "echo 'rate limit exceeded'"):

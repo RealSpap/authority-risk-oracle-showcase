@@ -975,14 +975,14 @@
   },
   {
    "file": "scripts/watch_run.py",
-   "old": "for a in range(since_block + 1, block + 1, span):",
-   "new": "for a in range(since_block, block + 1, span):",
+   "old": "found, pos, answered, bad, dead, last, spans = [], since + 1, 0,",
+   "new": "found, pos, answered, bad, dead, last, spans = [], since, 0,",
    "why": "the window starts on the already scanned block"
   },
   {
    "file": "scripts/watch_run.py",
-   "old": "b = min(a + span - 1, block)",
-   "new": "b = min(a + span, block)",
+   "old": "b = min(pos + span - 1, block)",
+   "new": "b = min(pos + span, block)",
    "why": "windows overlap by one block"
   },
   {
@@ -1011,9 +1011,9 @@
   },
   {
    "file": "scripts/watch_run.py",
-   "old": "if not out[\"read\"]: out[\"error\"] =",
-   "new": "if False: out[\"error\"] =",
-   "why": "a failed getLogs window leaves no error"
+   "old": "out[\"unread_blocks\"] = block - upto",
+   "new": "out[\"unread_blocks\"] = 0",
+   "why": "what is left unread after a partial scan is not counted"
   },
   {
    "file": "scripts/watch_run.py",
@@ -2574,6 +2574,24 @@
    "old": "env=dict(os.environ, ARO_MUTATING=\"1\", TMPDIR=tmp))",
    "new": "env=dict(os.environ, ARO_MUTATING=\"1\"))",
    "why": "the suites of two workers share the system temporary folder"
+  },
+  {
+   "file": "scripts/watch_run.py",
+   "old": "and upto > since: return min(upto, max(block, since))",
+   "new": "and upto > since: return since",
+   "why": "a window read in part does not move the marker: the next run reads it again and logs its events twice"
+  },
+  {
+   "file": "scripts/watch_run.py",
+   "old": "while pos <= block and answered < LOG_CALL_CAP:",
+   "new": "while pos <= block:",
+   "why": "the number of calls of a run is no longer bounded"
+  },
+  {
+   "file": "scripts/watch_run.py",
+   "old": "if isinstance(e, RateLimited) or not RANGE_REFUSED.search(str(e)): dead.add(u)",
+   "new": "pass",
+   "why": "a node that is down is asked again at every slice"
   }
  ]
 }

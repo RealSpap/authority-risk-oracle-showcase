@@ -586,9 +586,11 @@ class TestOracleSelfScanContinuity(unittest.TestCase):
         self.assertEqual(watch_run.scanned_to({"read": False, "error": "getLogs: rate limited"}, 100, 200), 100)   # the lost window stays to be read
         self.assertEqual(watch_run.scanned_to({"read": False}, None, 200), 200)                                      # no earlier block: nothing to scan before the first read
 
-    def test_a_window_too_large_to_scan_is_given_up_and_said_so(self):
-        w = {"read": False, "error": "getLogs: window of 900000 blocks needs more than 120 calls at 100 blocks each"}
-        self.assertEqual(watch_run.scanned_to(w, 100, 900100), 900100); self.assertEqual(w["gap_blocks"], 900000)   # otherwise the window would grow for ever and never be read
+    def test_a_window_read_in_part_moves_the_marker_to_what_was_read_and_is_never_given_up(self):
+        w = {"read": False, "scanned_upto": 12100, "unread_blocks": 888000, "error": "getLogs: 888000 blocks left after 120 calls, read by the next run"}
+        self.assertEqual(watch_run.scanned_to(w, 100, 900100), 12100); self.assertNotIn("gap_blocks", w)   # since 16/11 nothing is jumped over: the next run goes on from the last block read
+        self.assertEqual(watch_run.scanned_to({"read": False, "scanned_upto": 50, "error": "x"}, 100, 900100), 100)    # no progress: the start stays
+        self.assertEqual(watch_run.scanned_to({"read": False, "scanned_upto": 999999999, "error": "x"}, 100, 900100), 900100)   # a marker never goes beyond the head of this run
 
     def test_two_runs_in_a_row_the_first_failing(self):
         doc1 = {"kind": "evm", "block": 200, "self_scanned_to": watch_run.scanned_to({"read": False, "error": "x"}, 100, 200)}   # run 1 failed: still scanned to 100
@@ -2436,10 +2438,11 @@ class TestOracleReads(unittest.TestCase):
         self.assertFalse(w["read"]); self.assertEqual(w["role_events"], []); self.assertIn("getLogs: range too large", w["error"])
         self.assertEqual(watch_run.scanned_to(w, 1000, 2000), 1000)   # and the next run starts again from the same block
 
-    def test_a_window_needing_too_many_calls_is_given_up_and_said(self):
-        calls = self.chain(); big = watch_run.LOG_CALL_CAP * watch_run.LOG_SPANS[0] + 10; w = watch_run.self_watch(self.ORACLE, "u", 0, big)
-        self.assertFalse(w["read"]); self.assertIn("window of", w["error"]); self.assertLessEqual(len(calls), watch_run.LOG_CALL_CAP)
-        self.assertEqual(watch_run.scanned_to(w, 0, big), big); self.assertEqual(w["gap_blocks"], big)
+    def test_a_window_needing_too_many_calls_is_read_in_part_and_the_rest_is_left_to_the_next_run(self):
+        calls = self.chain(); s = watch_run.LOG_SPANS[0]; big = watch_run.LOG_CALL_CAP * s + 10; w = watch_run.self_watch(self.ORACLE, "u", 0, big)
+        self.assertFalse(w["read"]); self.assertIn("blocks left after", w["error"]); self.assertEqual(len(calls), watch_run.LOG_CALL_CAP)
+        self.assertEqual(w["scanned_upto"], watch_run.LOG_CALL_CAP * s); self.assertEqual(w["unread_blocks"], 10); self.assertNotIn("gap_blocks", w)
+        self.assertEqual(watch_run.scanned_to(w, 0, big), watch_run.LOG_CALL_CAP * s)                 # the marker moves to the last block read; the 10 blocks left are the next run's
 
     def test_a_revoked_holder_shows_in_the_direct_reads_without_any_log(self):
         self.chain(holders=False); w = watch_run.self_watch(self.ORACLE, "u", None, 10)

@@ -56,7 +56,12 @@ SEL_COUNT, SEL_TARGET, SEL_SCORE, SEL_STALE, SEL_MAX = "0x835e2172", "0x9481e5e0
 TOPIC_GRANTED, TOPIC_REVOKED = "0x2f8788117e7eff1d82e926ec794901d17c78024a50270940304540a733656f0d", "0xf6391f5c32d9c69d2a47ea670b442974b53935d1edc7fd64eb21e047a839171b"
 ROLE_NAMES = {"0x" + "0" * 64: "DEFAULT_ADMIN_ROLE", "0x73e573f9566d61418a34d5de3ff49360f9c51fec37f7486551670290f6285dab": "UPDATER_ROLE"}
 LOG_SPANS = (5000, 1000, 200, 100)   # blocks per eth_getLogs call, tried from the widest: Base Sepolia allows 200, Monad 100, HyperEVM 1000
-LOG_CALL_CAP = 120                    # at most this many eth_getLogs calls per oracle per run; beyond it the window is reported unread, never as "no event"
+LOG_CALL_CAP = 120                    # at most this many eth_getLogs calls that ANSWER per oracle per run; what is left after it is read by the next run (`unread_blocks`), never given up and never reported as "no event"
+# the nodes asked for the logs of an oracle, widest first, keyed by the node the oracle is read on. A node that refuses a range (413, "block range too large") is given the next smaller span, then the next node takes the slice. Measured on 15 November 2026 with
+# the oracle's own eth_getLogs filter: sepolia.base.org answers 100 blocks, base-sepolia-rpc.publicnode.com 50000, base-sepolia.gateway.tenderly.co 100000 and more; testnet-rpc.monad.xyz 100, monad-testnet.gateway.tenderly.co 1000 (10000 was refused), ankr and monadinfra 100.
+LOG_NODES = {"https://sepolia.base.org": ["https://base-sepolia-rpc.publicnode.com", "https://base-sepolia.gateway.tenderly.co", "https://sepolia.base.org"],
+             "https://testnet-rpc.monad.xyz/": ["https://monad-testnet.gateway.tenderly.co", "https://testnet-rpc.monad.xyz/", "https://rpc-testnet.monadinfra.com", "https://rpc.ankr.com/monad_testnet"]}
+RANGE_REFUSED = re.compile(r"range|too large|exceed|limit|payload|too many|maximum|unsupported|\b413\b|\b400\b", re.I)   # the words a node uses to refuse the SIZE of a request: the next smaller span is tried on the same node; any other failure (timeout, 5xx, rate limit) leaves the node for the rest of the scan
 # role holders confirmed on-chain on 2026-10-10 (hasRole on every oracle): the shared updater key of the seven testnet oracles, and
 # Robinhood's own. Read directly at every run (hasRole), so a revoked or added role is seen even where eth_getLogs is not usable.
 KNOWN_HOLDERS = {"0x20630C6Ab4BA48a80edA46F77b9b6e987A8f32f5": "shared updater (seven oracles)", "0x646968c33D8F6d5A343B68a6F8b1Ce52F13414ba": "Robinhood updater"}
@@ -232,10 +237,12 @@ def scan_start(prev_doc):
 
 def scanned_to(self_w, since, block):
     """The block up to which the role events have now been scanned: this run's block when the scan worked (or there was nothing before to scan: the first read is a baseline, the hasRole reads give
-    the current state), the old start when it failed, so the next run covers the lost window too. A window too large to scan at all would never close, so it is given up, said so (`gap_blocks`) and the start moves on."""
+    the current state), the old start when it failed, so the next run covers the lost window too. A window that could not be read whole is read in part: the marker moves to the last block read (`scanned_upto`), what is left is `unread_blocks` and is read by the next run.
+    Before 16 November 2026 a window of more than LOG_CALL_CAP calls was given up (`gap_blocks`) and the marker jumped over it, so a role event inside it was never looked at; that is gone, `gap_blocks` is only still read in the files of older runs."""
     if since is None: return block
     if self_w.get("read"): return max(block, since)   # a fallback node that is behind (block < since) must not move the marker back: the next run would scan the same window again and log a RoleGranted twice
-    if "window of" in str(self_w.get("error")): self_w["gap_blocks"] = block - since; return block
+    upto = self_w.get("scanned_upto")
+    if isinstance(upto, int) and not isinstance(upto, bool) and upto > since: return min(upto, max(block, since))   # a window read in part (or too long for one run): the marker moves to what was read, the events of that part are in this run, the rest is read next time
     return since
 
 
@@ -259,29 +266,43 @@ def self_watch(oracle, url, since_block, block):
         out["error"] = f"hasRole: {str(e)[:120]}"
     if since_block is None or since_block >= block:
         out["read"] = since_block is not None and "roles" in out; return out
-    def scan(span):
-        found, calls = [], 0
-        for a in range(since_block + 1, block + 1, span):
-            calls += 1
-            if calls > LOG_CALL_CAP: raise RuntimeError(f"window of {block - since_block} blocks needs more than {LOG_CALL_CAP} calls at {span} blocks each")
-            b = min(a + span - 1, block)
-            for l in rpc(url, [("eth_getLogs", [{"address": oracle, "fromBlock": hex(a), "toBlock": hex(b), "topics": [[TOPIC_GRANTED, TOPIC_REVOKED]]}])])[0] or []:
-                t = l.get("topics") or []
-                if len(t) < 3: continue
-                found.append({"event": "RoleGranted" if t[0].lower() == TOPIC_GRANTED else "RoleRevoked", "role": ROLE_NAMES.get(t[1].lower(), t[1]),
-                              "account": "0x" + t[2][-40:], "sender": ("0x" + t[3][-40:]) if len(t) > 3 else None, "block": int(l["blockNumber"], 16), "tx": l.get("transactionHash")})
-        return found
-    last = None
-    for span in LOG_SPANS:
-        try:
-            out["role_events"] = scan(span); out["read"] = "roles" in out; out["log_span"] = span; break
-        except Exception as e:  # noqa: BLE001
-            last = e
-            if "window of" in str(e): break   # a smaller span would only need more calls
+    found, upto, last = scan_logs(oracle, LOG_NODES.get(url, [url]), since_block, block)
+    out["role_events"] = found; out["scanned_upto"] = upto
+    if upto >= block: out["read"] = "roles" in out
     else:
-        pass
-    if not out["read"]: out["error"] = (out.get("error") + "; " if out.get("error") else "") + f"getLogs: {str(last)[:120]}"
+        out["read"] = False; out["unread_blocks"] = block - upto
+        out["error"] = (out.get("error") + "; " if out.get("error") else "") + (f"getLogs: {str(last)[:120]}" if last else f"getLogs: {block - upto} blocks left after {LOG_CALL_CAP} calls, read by the next run")
     return out
+
+
+def scan_logs(oracle, nodes, since, block):
+    """(role events, last block scanned, last error) for the blocks since+1 .. block. The window is cut in slices of the widest span a node accepts; a node that refuses a slice is given a smaller span (a refusal is asked once, not at every slice),
+    then the next node of the list takes it; a node that fails for another reason is left for the rest of the scan. What was read is kept: when no node answers or LOG_CALL_CAP answers were used, the last block read is returned and the window
+    is continued by the next run. Every block is asked once, in order: no hole and no overlap."""
+    found, pos, answered, bad, dead, last, spans = [], since + 1, 0, set(), set(), None, list(LOG_SPANS)
+    while pos <= block and answered < LOG_CALL_CAP:
+        done = False
+        for span in spans:
+            for u in nodes:
+                if u in dead or (u, span) in bad: continue
+                b = min(pos + span - 1, block)
+                try:
+                    logs = rpc(u, [("eth_getLogs", [{"address": oracle, "fromBlock": hex(pos), "toBlock": hex(b), "topics": [[TOPIC_GRANTED, TOPIC_REVOKED]]}])], tries=2)[0] or []
+                except Exception as e:  # noqa: BLE001 -- the next span or node; the error of the last attempt is the one reported
+                    last = e; bad.add((u, span))
+                    if isinstance(e, RateLimited) or not RANGE_REFUSED.search(str(e)): dead.add(u)
+                    continue
+                for l in logs:
+                    t = l.get("topics") or []
+                    if len(t) < 3: continue
+                    found.append({"event": "RoleGranted" if t[0].lower() == TOPIC_GRANTED else "RoleRevoked", "role": ROLE_NAMES.get(t[1].lower(), t[1]),
+                                  "account": "0x" + t[2][-40:], "sender": ("0x" + t[3][-40:]) if len(t) > 3 else None, "block": int(l["blockNumber"], 16), "tx": l.get("transactionHash")})
+                pos, answered, done = b + 1, answered + 1, True
+                spans = [x for x in spans if x <= span]   # the next slice starts at the span that worked: a wider one was refused
+                break
+            if done: break
+        if not done: break
+    return found, pos - 1, last
 
 
 def read_evm(name, oracle, url, since_block=None):
@@ -548,7 +569,7 @@ def main():
         summary.append({"name": name, "slug": s, "kind": cur["kind"], "oracle": cur["oracle"], "read_ok": True, "block": cur["block"],
                         "targets": len(cur["targets"]), "stale": len(stale), "retired": len(ret_here), "lastUpdated": last_push, "maxStaleness": cur["maxStaleness"],
                         "freshness": freshness_record(cur.get("readAt"), cur.get("block"), cur.get("block_time"), cur["targets"]),   # when the Watch read it, the block and its time, the newest and the oldest push, side by side
-                        "self_watch": ({"read": bool(sw.get("read")), "role_events": len(sw.get("role_events", [])), "code_hash": (sw.get("code_hash") or "")[:16], "roles": sw.get("roles"), "error": sw.get("error")} if sw else None)})
+                        "self_watch": ({"read": bool(sw.get("read")), "role_events": len(sw.get("role_events", [])), "code_hash": (sw.get("code_hash") or "")[:16], "roles": sw.get("roles"), "error": sw.get("error"), "unread_blocks": sw.get("unread_blocks")} if sw else None)})
         _dump_json(cur, path, indent=1)
         # one shields.io endpoint per target, so a protocol can show its own score in its README
         bdir = os.path.join(WATCH, "badge", s)

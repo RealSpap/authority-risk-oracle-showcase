@@ -1,7 +1,7 @@
 # Re-push of all nine oracles, 2026-09-20 evening
 
 Run by the maintainer with `scripts/repush_all_oracles.sh` (two terminals: the eight shared-key oracles, and
-Robinhood on its own key), read back by the assistant with plain `eth_call` and `getProgramAccounts`, no key.
+Robinhood on its own key), read back with plain `eth_call` and `getProgramAccounts`, no key.
 Every step recomputed each target live before sending one `updateScores` transaction per oracle.
 
 | Oracle | tracked targets after | transaction | block | first entry turns stale |

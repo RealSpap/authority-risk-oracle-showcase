@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-11-15T13:41:08Z",
+ "run_utc": "2026-11-15T19:08:48Z",
  "targets": 202,
  "moves_recorded": 40,
  "series": {
@@ -2587,15 +2587,6 @@
     "band_then": "decent"
    },
    {
-    "kind": "timelock op queued (parameter change)",
-    "key": "plasma:0x52aa899454998be5b000ad077a46bbe360f4e497",
-    "t": "2026-11-08T15:21:16Z",
-    "via": "plasma timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
-    "tx": "0x1393bce0d963f1d3115d3a88f3830165858aee70143241ac369fa33225f791e5",
-    "score_then": 59,
-    "band_then": "moderate"
-   },
-   {
     "kind": "upgrade executed",
     "key": "arbitrum:0x9c4ec768c28520b50860ea7a15bd7213a9ff58bf",
     "t": "2026-11-08T22:16:03Z",
@@ -2719,6 +2710,15 @@
     "via": "slot 469669929",
     "tx": null,
     "score_then": 54,
+    "band_then": "moderate"
+   },
+   {
+    "kind": "upgrade executed",
+    "key": "solana:ADyA8hdefvWN2dbGGWFotbzWxrAvLW83WG6QCVXvJKqw",
+    "t": "2026-11-15T19:02:16Z",
+    "via": "slot 469811067",
+    "tx": null,
+    "score_then": 43,
     "band_then": "moderate"
    }
   ],

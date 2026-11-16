@@ -1,49 +1,24 @@
-<p align="center">
-  <img src="docs/assets/logo.svg" width="96" alt="Authority Risk Oracle logo">
-</p>
+# Authority Risk Oracle
 
-<h1 align="center">Authority Risk Oracle</h1>
+**Who can really move a DeFi protocol's funds? Read the answer on-chain, and check it yourself.**
 
-<p align="center"><b>Who can really move a DeFi protocol's funds? Read the answer on-chain, and check it yourself.</b></p>
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-blue)](LICENSE) [![Code: MIT](https://img.shields.io/badge/Code-MIT-blue)](LICENSE-CODE) [![Tests](https://github.com/RealSpap/authority-risk-oracle-showcase/actions/workflows/test.yml/badge.svg)](.github/workflows/test.yml) [![Watch](https://github.com/RealSpap/authority-risk-oracle-showcase/actions/workflows/watch.yml/badge.svg)](.github/workflows/watch.yml)
 
-<p align="center">
-  <a href="LICENSE"><img alt="License: CC BY 4.0" src="https://img.shields.io/badge/License-CC%20BY%204.0-blue"></a>
-  <a href="LICENSE-CODE"><img alt="Code: MIT" src="https://img.shields.io/badge/Code-MIT-blue"></a>
-  <a href=".github/workflows/test.yml"><img alt="Tests" src="https://github.com/RealSpap/authority-risk-oracle-showcase/actions/workflows/test.yml/badge.svg"></a>
-  <a href=".github/workflows/watch.yml"><img alt="Watch" src="https://github.com/RealSpap/authority-risk-oracle-showcase/actions/workflows/watch.yml/badge.svg"></a>
-  <a href=".github/workflows/mutation.yml"><img alt="Mutation" src="https://github.com/RealSpap/authority-risk-oracle-showcase/actions/workflows/mutation.yml/badge.svg"></a>
-  <img alt="Ecosystems" src="https://img.shields.io/badge/ecosystems-10%20%289%20oracles%20%2B%20Zcash%29-informational">
-  <a href="https://realspap.github.io/oracle/"><img alt="Targets read by the watch" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FRealSpap%2Fauthority-risk-oracle-showcase%2Fwatch-data%2Fbadge.json"></a>
-  <img alt="Network" src="https://img.shields.io/badge/deployed-testnets-orange">
-  <a href="watch/API.md"><img alt="Watch integrity" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FRealSpap%2Fauthority-risk-oracle-showcase%2Fwatch-data%2Fbadge%2Fintegrity.json"></a>
-</p>
+A DeFi contract that can be upgraded or reconfigured has someone who can do it: a key, a multisig, a vote. I read from public chain state who that is, how fast they can act and what stands in the way (keys, a multisig, a timelock), and publish the answer as a score that any contract can read on-chain. It measures exposure, not the chance of an attack. Live on testnets today. Not an audit, not investment advice.
 
-A DeFi contract that can be upgraded or reconfigured has someone who can do it: a key, a multisig, a vote. This project reads from public chain state who that is, how fast they can act and what stands in the way (keys, a multisig, a timelock), and publishes the answer as a score that any contract can read on-chain, so a lending market, a DAO or a wallet does not have to trust anyone's website. It measures exposure, not the chance of an attack: we read 55 incident write-ups, 7 were about who controls a contract, and our published requirements flagged 2 of them ([what the score says and does not say](docs/WHAT-THE-SCORE-SAYS.md)). Live on testnets today. Not an audit, not investment advice.
-
-**Don't trust us. Redo it.** Command 1 below re-reads the chain and compares it with what we publish: no key, public RPCs, about ten seconds. The output shown is the run of 22 October 2026; the readings of the day may have moved. A difference is useful, see [CONTRIBUTING.md](CONTRIBUTING.md).
+**Don't trust me. Redo it.** Command 1 re-reads the chain and compares it with what I publish: no key, public RPCs, about ten seconds.
 
 ## Three commands
 
-**1. Check our numbers against the chain** (no key, public RPCs, about ten seconds). The script reads the chain with its own code, separate from the Watch's, so a difference is worth checking. Output of the run of 22 October 2026:
+**1. Check my numbers against the chain.**
 
 ```bash
-git clone https://github.com/RealSpap/authority-risk-oracle-showcase && cd authority-risk-oracle-showcase
-python3 scripts/prove.py
+git clone https://github.com/RealSpap/authority-risk-oracle-showcase && cd authority-risk-oracle-showcase && python3 scripts/prove.py
 ```
 
-```text
-OK         8 oracles: targets per oracle on the chain = Watch (63 + 39 + 13 + 13 + 14 + 9 + 9 + 16)
-OK         176 targets: six sub-scores, push date and methodology hash identical on the chain and in the Watch
-OK         Solana (devnet): 26 accounts read, scores and hash identical to the Watch's
-OK         8 EVM oracles: methodology hash, target count and push date = CHANGELOG (1 target(s) keep an older hash, which the CHANGELOG says)
-OK         README example: getScore(0x1f7d…2efa) = 80, 100, 75, 100, 80, 85
-OK         api/scores.json = the chain (63 Robinhood targets)
-OK         back-test: 55 incidents read, 7 are about who controls a contract: 2 flagged, 2 missed, 3 not measurable; rate 2/7 flagged (2/4 of the measurable cases)
-OK         Authority Facts v0.1: 202 JSON twins of the site conform (conformance.py)
-8 OK, 0 DIFFERENCE, 0 UNREAD in 3 s. Does not prove: that the scores are right, that they predict an incident, that the oracles' administrator keys are safe.
-```
+Every line says OK, DIFFERENCE or UNREAD. It does not prove that the scores are right, that they predict an incident, or that the oracles' administrator keys are safe.
 
-**2. Read a score from the chain** (needs [Foundry](https://getfoundry.sh)). The oracle is on Robinhood Chain testnet (chain ID 46630); the contract it scores here, a Uniswap v3 factory, is on Robinhood Chain mainnet (chain ID 4663), so the score is read on the testnet and the contract it describes lives on the mainnet (both chain IDs checked with `eth_chainId` on 13 November 2026, read at 10:59Z):
+**2. Read a score from the chain** (needs [Foundry](https://getfoundry.sh)). The oracle is on Robinhood Chain testnet (chain ID 46630); the contract it scores here is on Robinhood Chain mainnet (chain ID 4663):
 
 ```bash
 # oracle 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 on Robinhood Chain testnet (chain ID 46630)
@@ -56,50 +31,32 @@ cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 \
 # 80, 100, 75, 100, 40, 85, 1793136187, 0x05ae8b25...   (read live on 2026-10-28; the fifth value, crossExposure, was 80 on 22 October and is 40 since the push of 27 October with method 2026.10.4, and the time and the hash change at every push)
 ```
 
-**A score is not a status.** The composite says how strong an authority setup looks. `watch/trust.json` says how much of that was checked, how old it is and whether anything contradicts it (`VERIFIED`, `PARTIAL`, `STALE`, `DISPUTED`, `UNVERIFIED`, `UNAVAILABLE`, see [watch/API.md](watch/API.md)). A contract can score 100 and be `UNVERIFIED`. None of the three commands below reads the status yet: a consumer that decides on money reads it itself and refuses anything that is not `VERIFIED` and fresh.
-
-**The composite on the chain is not the cap.** For the contracts that rest on the Robinhood Chain rollup, the project also computes `l1CappedComposite` (57 for the Uniswap v3 factory of command 2, whose composite on the chain is 85). It is published in `api/scores.json` and is not on the chain; read it before you gate on the composite alone (METHODOLOGY.md, rollup section).
-
-**3. Gate a decision on a label, with an age limit and the strict mode** (the label below describes the Uniswap v3 factory on Robinhood Chain mainnet, chain ID 4663; `integrations/authority_facts_gate_strict.py`, 46 lines, built on the simple gate `integrations/authority_facts_gate.py`, which is written in 18 lines and checks neither the age of the push nor the number of keys):
+**3. Gate a decision on a label**, with an age limit and the strict mode:
 
 ```bash
 python3 integrations/authority_facts_gate_strict.py https://realspap.github.io/oracle/p/robinhood-0x1f7d7550b1b028f7571e69a784071f0205fd2efa.json --max-age-hours 72 --strict
+# label of a Uniswap v3 factory on Robinhood Chain mainnet (chain ID 4663)
 ```
 
-```text
-keys to move not read, and you asked for them
-```
-
-The label is the Uniswap v3 factory `0x1f7d7550B1b028f7571E69A784071F0205FD2EfA` on Robinhood Chain mainnet (chain ID 4663); its score is published by the oracle on Robinhood Chain testnet (chain ID 46630). I ran both gates on it on 12 November 2026 at 21:45 UTC: the simple one printed `ok: Robinhood Chain 85 (strong), 48 h to react` (exit code 0), the strict one printed the line above (exit code 1, refused). Without `--strict`, the same command with only `--max-age-hours 72` prints `the last push is older than 72.0 hours`: this label was built on 22 October from a push of 19 October, and the oracle itself was pushed again on 10 November. A refusal is a message, never a score. With `--max-age-hours 72` the gate refuses a label whose last push is older than 72 hours, and `--strict` also requires the number of keys to be known (the refusal shown above) and refuses a label that lists something it left unread.
-
-**Who can replace the oracle itself.** On Solana devnet (not mainnet), the oracle program `5VhiTAGLEViGgajhxPbzdWz7WLUAiRy42DY6qi6tYh4W` is upgradeable, and its upgrade authority is `BcwteMtYL5wL8dvMYWedPT2V6oh1hTgd8vgKEkQyy9yx`, a plain account with no code. The same account is the admin and the updater in the registry of the program: one signature can push the scores and replace the program. I read this on 12 November 2026 at 21:48 UTC (devnet genesis hash `EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG`; the program does not exist on Solana mainnet-beta). I have kept this setup because moving the authority to a multisig only helps with at least two distinct members, and I do not have a second one yet. Replay, on Solana devnet:
-
-```bash
-curl -s https://api.devnet.solana.com -H 'content-type: application/json' -d '{"jsonrpc":"2.0","id":1,"method":"getAccountInfo","params":["5hBzvoKRvW4kd8HneUoK1wLogjLmjZiFuJY7rWPTDwSx",{"encoding":"jsonParsed"}]}' | python3 -c 'import json,sys;print(json.load(sys.stdin)["result"]["value"]["data"]["parsed"]["info"]["authority"])'
-```
-
-It prints the upgrade authority of the program (the account `5hBzvoKRvW4kd8HneUoK1wLogjLmjZiFuJY7rWPTDwSx` on Solana devnet holds the program data). The EVM oracles (eight testnets) are not upgradeable, and the one account that holds their admin and updater roles per chain is a plain key too: see [docs/LIMITS.md](docs/LIMITS.md), "The oracle's own composite, by chain".
+The label is that same Uniswap v3 factory on Robinhood Chain mainnet (chain ID 4663).
 
 ## Two ways in
 
-| If you decide: delegates, risk managers, DAO committees | If you build: developers, integrators |
+| If you decide | If you build |
 |---|---|
-| 1. Open the [dashboard](https://realspap.github.io/oracle/): 202 contracts on 9 oracles (8 EVM testnets and Solana devnet; Zcash is separate, 6 targets attested by on-chain commitments). The oracles publish on those test networks and the 202 targets they score are on mainnet: each record names its network, see [the networks](watch/API.md). The dashboard also shows the money behind the contracts where one was read, and the delay before a change applies. | 1. Read a score from a contract: `getScore(address)` and `isStale(address)`, as in command 2 ([`ExampleConsumer.sol`](src/ExampleConsumer.sol)). |
-| 2. Read [one contract's label](https://realspap.github.io/oracle/p/robinhood-0x1f7d7550b1b028f7571e69a784071f0205fd2efa.html) (a Uniswap v3 factory on Robinhood Chain mainnet, chain ID 4663): who can move it, how many keys, how long everyone else has to react, and what the label leaves out. The format is open: [Authority Facts v0.1](docs/AUTHORITY-FACTS-SPEC.md). | 2. Gate on a label (command 3): [`integrations/authority_facts_gate_strict.py`](integrations/authority_facts_gate_strict.py), with an age limit and a strict mode. |
-| 3. Follow a protocol on every chain: one Atom feed per protocol, or, after `bash scripts/watch_branch.sh prepare` (it fetches the Watch's data), `python3 scripts/brief.py morpho-blue` for a one-page brief. | 3. Put it in CI: `uses: RealSpap/authority-risk-oracle-showcase@c325c8b2208d81749c6cf9140edc4695bdd87748` (the last commit that changed the action, so the action you run cannot change under you; `@main` follows the latest code) with `chain`, `address`, `min-score` ([`action.yml`](action.yml)), or an agent through the local MCP server. |
+| Open the [dashboard](https://realspap.github.io/oracle/): 202 contracts on 9 oracles (8 EVM testnets and Solana devnet), each record names its network | Read a score: `getScore(address)` and `isStale(address)`, see [src/ExampleConsumer.sol](src/ExampleConsumer.sol) |
+| Read one contract's label (the Uniswap v3 factory on Robinhood Chain mainnet, chain ID 4663; [page](https://realspap.github.io/oracle/p/robinhood-0x1f7d7550b1b028f7571e69a784071f0205fd2efa.html)): who can move it, how many keys, how long everyone else has to react | Gate on a label: [integrations](integrations) ; the open format is [Authority Facts v0.1](docs/AUTHORITY-FACTS-SPEC.md) |
+| Follow a protocol: one Atom feed per protocol | Put it in CI with [action.yml](action.yml), or use the local MCP server in [packages](packages) |
 
 ## Everything else
 
-[Reference](docs/REFERENCE.md) (what it scores, deployed oracles, how it works, limits) · [All the tools](docs/TOOLS.md) · [Methodology](METHODOLOGY.md) · [How it compares](docs/LANDSCAPE.md) · [Operate it](docs/OPERATIONS.md) · [What a score says and does not say](docs/WHAT-THE-SCORE-SAYS.md)
+[Reference](docs/REFERENCE.md) · [Methodology](METHODOLOGY.md) · [What a score says and does not say](docs/WHAT-THE-SCORE-SAYS.md) · [Limits](docs/LIMITS.md) · [How it compares](docs/LANDSCAPE.md) · [Data contract](watch/API.md) · [History of this repository](docs/HISTORY.md)
 
-[What we do not read](docs/LIMITS.md) | [Provenance and licences](docs/PROVENANCE.md) | [Key rotation](docs/KEY-ROTATION.md) | [What your browser contacts](docs/PRIVACY.md) | [Proxy and authority coverage](docs/PROOF-COVERAGE.md)
+The history of this repository was rewritten on 30 September 2026, and every commit up to 6 October 2026 is a snapshot or carries a round time, so the dates of these commits prove nothing. [docs/HISTORY.md](docs/HISTORY.md) says what can still be checked.
 
-The score reads **exposure**, how much one compromise can do. It does not predict who gets hit. Submitted to Colosseum's [Crypto World's Fair](https://colosseum.com/worldsfair) on 12 October 2026. Code MIT, data and text CC BY 4.0: see Licences below.
+## Help
 
-
-## History of this repository
-
-The history of this repository was rewritten on 30 September 2026, and every commit up to 6 October 2026 is a snapshot or carries a round time, so the dates of these commits prove nothing; the first snapshot summarises work done from 15 September 2026. What can still be checked is the dated transactions of the oracles on their chains, which do not depend on git (table in docs/HISTORY.md), the hash-chained event log of the Watch since 10 October 2026, its signed manifests since 11 October 2026, and the methodology hash, tied to the scoring code for every push after 30 September 2026.
+Propose a target, dispute a score, report a reading error: use the issue forms, see [CONTRIBUTING](CONTRIBUTING.md). Security reports: [SECURITY](SECURITY.md). Cite with [CITATION.cff](CITATION.cff).
 
 ## Licences
 

@@ -1,13 +1,11 @@
 {
- "run_utc": "2026-11-16T06:25:50Z",
- "state": "alarm",
+ "run_utc": "2026-11-16T07:21:39Z",
+ "state": "degraded",
  "reasons": [
-  "3 alarm(s) raised by the watch",
   "1 retired target(s) listed apart, not counted stale (information, no change of state; names in latest.json `retired`)",
-  "1 upgrade(s) executed on tracked contracts since the previous run",
   "3 second-opinion disagreement(s) to review",
   "9 second-opinion disagreement(s) corroborated: the reader itself read and verified a second, weaker authority path on chain (listed in second_opinion.json under corroborated_disagreements with the facts read, recomputed at every run, not counted as a disagreement to review)",
-  "2 high alert(s) from the rules firing now (a queued change against this contract is ready to execute now; an upgrade was executed: the implementation behind this contract changed since the previous run)",
+  "1 high alert(s) from the rules firing now (a queued change against this contract is ready to execute now)",
   "method hash not in registry on 1 oracle(s): no version is shown for it (data/method_versions.json)"
  ],
  "data_location": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/watch-data/",
@@ -17,7 +15,7 @@
   "targets": 202,
   "stale": 0,
   "retired": 1,
-  "alarms": 3,
+  "alarms": 0,
   "chain_ok": true,
   "chain_entries": 305,
   "signed": true,
@@ -33,12 +31,12 @@
   },
   "methodology_mixed": 0,
   "disputes_open": 0,
-  "review_items": 37
+  "review_items": 36
  },
  "what": "the run's health in one record: ok / degraded / alarm with the reasons; written by scripts/run_status.py after every Watch run",
  "main_last_commit_age_days": 0,
- "runs_7d": 17,
- "previous_run_utc": "2026-11-16T01:00:45Z",
- "hours_since_previous_run": 5.4,
- "run_id": "43816623780.1"
+ "runs_7d": 18,
+ "previous_run_utc": "2026-11-16T06:25:50Z",
+ "hours_since_previous_run": 0.9,
+ "run_id": "43823243420.1"
 }

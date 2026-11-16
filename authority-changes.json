@@ -1,0 +1,618 @@
+{
+ "version": "https://jsonfeed.org/version/1.1",
+ "title": "Authority Risk Oracle: authority changes",
+ "home_page_url": "https://realspap.github.io/oracle/",
+ "feed_url": "https://raw.githubusercontent.com/RealSpap/authority-risk-oracle-showcase/watch-data/authority-changes.json",
+ "description": "Each time the Watch reads a changed admin or a new implementation on a followed contract. Facts only, no score. Source: the hash-chained journal events.jsonl.",
+ "language": "en",
+ "items": [
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-299",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=ADyA8hdefvWN2dbGGWFotbzWxrAvLW83WG6QCVXvJKqw",
+   "title": "Implementation upgraded: ADyA8hdefv…XvJKqw on Solana mainnet-beta",
+   "content_text": "Network: Solana mainnet-beta. upgrade executed on solana ADyA8hdefv: program redeployed since the previous run: slot 458921517 -> 469811067 (2026-11-15T17:20:20Z)",
+   "date_published": "2026-11-15T19:02:16Z",
+   "tags": [
+    "upgraded",
+    "solana"
+   ],
+   "_aro": {
+    "seq": 299,
+    "kind": "upgraded",
+    "network": "Solana mainnet-beta"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-296",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=Jito4APyf642JPZPx3hGc6WWJ8zPKtRbRs4P815Awbb",
+   "title": "Implementation upgraded: Jito4APyf6…15Awbb on Solana mainnet-beta",
+   "content_text": "Network: Solana mainnet-beta. upgrade executed on solana Jito4APyf6: program redeployed since the previous run: slot 429882117 -> 469669929 (2026-11-15T08:54:43Z)",
+   "date_published": "2026-11-15T13:34:47Z",
+   "tags": [
+    "upgraded",
+    "solana"
+   ],
+   "_aro": {
+    "seq": 296,
+    "kind": "upgraded",
+    "network": "Solana mainnet-beta"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-295",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=SPoo1Ku8WFXoNDMHPsrGSTSG1Y47rzgn41SLUNakuHy",
+   "title": "Implementation upgraded: SPoo1Ku8WF…NakuHy on Solana mainnet-beta",
+   "content_text": "Network: Solana mainnet-beta. upgrade executed on solana SPoo1Ku8WF: program redeployed since the previous run: slot 429882117 -> 469669929 (2026-11-15T08:54:43Z)",
+   "date_published": "2026-11-15T13:34:47Z",
+   "tags": [
+    "upgraded",
+    "solana"
+   ],
+   "_aro": {
+    "seq": 295,
+    "kind": "upgraded",
+    "network": "Solana mainnet-beta"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-285",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=FL3X2pRsQ9zHENpZSKDRREtccwJuei8yg9fwDu9UN69Q",
+   "title": "Admin changed: FL3X2pRsQ9…9UN69Q on Solana mainnet-beta",
+   "content_text": "Network: Solana mainnet-beta. admin read changed since the previous run: squads FP1Agt…a1zs 3-of-8 (8 voters), time lock 0s -> squads FP1Agt…a1zs 3-of-5 (5 voters), time lock 0s (via program -> ProgramData 4J4gnm… -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly) -> Squads v4 vault 0 of multisig 8Sr4rQ…zHQq)",
+   "date_published": "2026-11-14T06:33:20Z",
+   "tags": [
+    "admin_change",
+    "solana"
+   ],
+   "_aro": {
+    "seq": 285,
+    "kind": "admin_change",
+    "network": "Solana mainnet-beta"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-282",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH",
+   "title": "Admin changed: dRiftyHA39…cn33UH on Solana mainnet-beta",
+   "content_text": "Network: Solana mainnet-beta. admin read changed since the previous run: squads 8jj7zJ…BMai 4-of-7 (6 voters), time lock 3600s -> squads 8jj7zJ…BMai 4-of-6 (5 voters), time lock 3600s (via program -> ProgramData 7dLgmt… -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly) -> Squads v4 vault 0 of multisig 7qipzL…cJtM)",
+   "date_published": "2026-11-13T19:55:26Z",
+   "tags": [
+    "admin_change",
+    "solana"
+   ],
+   "_aro": {
+    "seq": 282,
+    "kind": "admin_change",
+    "network": "Solana mainnet-beta"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-275",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8",
+   "title": "Admin changed: 4qp6Fx6tnZ…3rdAG8 on Solana mainnet-beta",
+   "content_text": "Network: Solana mainnet-beta. admin read changed since the previous run: squads J3oBkT…FD47 7-of-15 (15 voters), time lock 0s -> squads J3oBkT…FD47 7-of-14 (14 voters), time lock 0s (via account owned by program MFv2hWf3… -> program -> ProgramData 4Q8u2n… -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly) -> Squads v4 vault 0 of multisig 7FCPip…mvHk)",
+   "date_published": "2026-11-12T15:54:00Z",
+   "tags": [
+    "admin_change",
+    "solana"
+   ],
+   "_aro": {
+    "seq": 275,
+    "kind": "admin_change",
+    "network": "Solana mainnet-beta"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-267",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+   "title": "Implementation upgraded: JUP6LkbZbj…yVTaV4 on Solana mainnet-beta",
+   "content_text": "Network: Solana mainnet-beta. upgrade executed on solana JUP6LkbZbj: program redeployed since the previous run: slot 462802085 -> 468023491 (2026-11-11T06:31:04Z)",
+   "date_published": "2026-11-11T06:27:58Z",
+   "tags": [
+    "upgraded",
+    "solana"
+   ],
+   "_aro": {
+    "seq": 267,
+    "kind": "upgraded",
+    "network": "Solana mainnet-beta"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-263",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=0x14b107cf534239c59571b066cb6497a321da897c",
+   "title": "Implementation upgraded: 0x14b107cf…da897c on Robinhood Chain mainnet (chain ID 4663)",
+   "content_text": "Network: Robinhood Chain mainnet (chain ID 4663). upgrade executed on robinhood 0x14b107cf: implementation changed since the previous run: 0x71fc…6319 -> 0x08fc…db34 (EIP-1967 implementation slot)",
+   "date_published": "2026-11-10T22:06:24Z",
+   "tags": [
+    "upgraded",
+    "robinhood"
+   ],
+   "_aro": {
+    "seq": 263,
+    "kind": "upgraded",
+    "network": "Robinhood Chain mainnet (chain ID 4663)"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-253",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=0xb125e6687d4313864e53df431d5425969c15eb2f",
+   "title": "Implementation upgraded: 0xb125e668…15eb2f on Base mainnet (chain ID 8453)",
+   "content_text": "Network: Base mainnet (chain ID 8453). upgrade executed on base 0xb125e668: implementation changed since the previous run: 0xc145…82a7 -> 0xb6ef…8f3e (EIP-1967 implementation slot)",
+   "date_published": "2026-11-08T22:16:03Z",
+   "tags": [
+    "upgraded",
+    "base"
+   ],
+   "_aro": {
+    "seq": 253,
+    "kind": "upgraded",
+    "network": "Base mainnet (chain ID 8453)"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-252",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=0x52aa899454998be5b000ad077a46bbe360f4e497",
+   "title": "Implementation upgraded: 0x52aa8994…f4e497 on Arbitrum One mainnet (chain ID 42161)",
+   "content_text": "Network: Arbitrum One mainnet (chain ID 42161). upgrade executed on arbitrum 0x52aa8994: implementation changed since the previous run: 0xa57d…29f6 -> 0x8bdd…afe7 (EIP-1967 implementation slot)",
+   "date_published": "2026-11-08T22:16:03Z",
+   "tags": [
+    "upgraded",
+    "arbitrum"
+   ],
+   "_aro": {
+    "seq": 252,
+    "kind": "upgraded",
+    "network": "Arbitrum One mainnet (chain ID 42161)"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-251",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=0x9c4ec768c28520b50860ea7a15bd7213a9ff58bf",
+   "title": "Implementation upgraded: 0x9c4ec768…ff58bf on Arbitrum One mainnet (chain ID 42161)",
+   "content_text": "Network: Arbitrum One mainnet (chain ID 42161). upgrade executed on arbitrum 0x9c4ec768: implementation changed since the previous run: 0x5d3d…758b -> 0x9398…1b7a (EIP-1967 implementation slot)",
+   "date_published": "2026-11-08T22:16:03Z",
+   "tags": [
+    "upgraded",
+    "arbitrum"
+   ],
+   "_aro": {
+    "seq": 251,
+    "kind": "upgraded",
+    "network": "Arbitrum One mainnet (chain ID 42161)"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-244",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=0xc3d688b66703497daa19211eedff47f25384cdc3",
+   "title": "Implementation upgraded: 0xc3d688b6…84cdc3 on Ethereum mainnet (chain ID 1)",
+   "content_text": "Network: Ethereum mainnet (chain ID 1). upgrade executed on ethereum-l1 0xc3d688b6: implementation changed since the previous run: 0x63e7…eb15 -> 0x0b07…3255 (EIP-1967 implementation slot)",
+   "date_published": "2026-11-07T22:00:27Z",
+   "tags": [
+    "upgraded",
+    "ethereum-l1"
+   ],
+   "_aro": {
+    "seq": 244,
+    "kind": "upgraded",
+    "network": "Ethereum mainnet (chain ID 1)"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-239",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=FL3X2pRsQ9zHENpZSKDRREtccwJuei8yg9fwDu9UN69Q",
+   "title": "Implementation upgraded: FL3X2pRsQ9…9UN69Q on Solana mainnet-beta",
+   "content_text": "Network: Solana mainnet-beta. upgrade executed on solana FL3X2pRsQ9: program redeployed since the previous run: slot 450363903 -> 466260432 (2026-11-06T21:28:34Z)",
+   "date_published": "2026-11-07T06:10:48Z",
+   "tags": [
+    "upgraded",
+    "solana"
+   ],
+   "_aro": {
+    "seq": 239,
+    "kind": "upgraded",
+    "network": "Solana mainnet-beta"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-238",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78",
+   "title": "Implementation upgraded: 1oopBoJG58…oHkF78 on Solana mainnet-beta",
+   "content_text": "Network: Solana mainnet-beta. upgrade executed on solana 1oopBoJG58: program redeployed since the previous run: slot 465174374 -> 466386064 (2026-11-07T04:57:25Z)",
+   "date_published": "2026-11-07T06:10:48Z",
+   "tags": [
+    "upgraded",
+    "solana"
+   ],
+   "_aro": {
+    "seq": 238,
+    "kind": "upgraded",
+    "network": "Solana mainnet-beta"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-235",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8",
+   "title": "Admin changed: 4qp6Fx6tnZ…3rdAG8 on Solana mainnet-beta",
+   "content_text": "Network: Solana mainnet-beta. admin read changed since the previous run: squads J3oBkT…FD47 7-of-16 (16 voters), time lock 0s -> squads J3oBkT…FD47 7-of-15 (15 voters), time lock 0s (via account owned by program MFv2hWf3… -> program -> ProgramData 4Q8u2n… -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly) -> Squads v4 vault 0 of multisig 7FCPip…mvHk)",
+   "date_published": "2026-11-06T19:37:22Z",
+   "tags": [
+    "admin_change",
+    "solana"
+   ],
+   "_aro": {
+    "seq": 235,
+    "kind": "admin_change",
+    "network": "Solana mainnet-beta"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-227",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8",
+   "title": "Implementation upgraded: 4qp6Fx6tnZ…3rdAG8 on Solana mainnet-beta",
+   "content_text": "Network: Solana mainnet-beta. upgrade executed on solana 4qp6Fx6tnZ: program redeployed since the previous run: slot 456093551 -> 465361726 (2026-11-04T16:02:21Z)",
+   "date_published": "2026-11-04T20:18:29Z",
+   "tags": [
+    "upgraded",
+    "solana"
+   ],
+   "_aro": {
+    "seq": 227,
+    "kind": "upgraded",
+    "network": "Solana mainnet-beta"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-226",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8",
+   "title": "Admin changed: 4qp6Fx6tnZ…3rdAG8 on Solana mainnet-beta",
+   "content_text": "Network: Solana mainnet-beta. admin read changed since the previous run: squads J3oBkT…FD47 7-of-15 (15 voters), time lock 0s -> squads J3oBkT…FD47 7-of-16 (16 voters), time lock 0s (via account owned by program MFv2hWf3… -> program -> ProgramData 4Q8u2n… -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly) -> Squads v4 vault 0 of multisig 7FCPip…mvHk)",
+   "date_published": "2026-11-04T20:18:29Z",
+   "tags": [
+    "admin_change",
+    "solana"
+   ],
+   "_aro": {
+    "seq": 226,
+    "kind": "admin_change",
+    "network": "Solana mainnet-beta"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-225",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78",
+   "title": "Implementation upgraded: 1oopBoJG58…oHkF78 on Solana mainnet-beta",
+   "content_text": "Network: Solana mainnet-beta. upgrade executed on solana 1oopBoJG58: program redeployed since the previous run: slot 440130674 -> 465174374 (2026-11-04T04:52:42Z)",
+   "date_published": "2026-11-04T06:27:18Z",
+   "tags": [
+    "upgraded",
+    "solana"
+   ],
+   "_aro": {
+    "seq": 225,
+    "kind": "upgraded",
+    "network": "Solana mainnet-beta"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-224",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=H4ND9aYttUVLFmNypZqLjZ52FYiGvdEB45GmwNoKEjTj",
+   "title": "Implementation upgraded: H4ND9aYttU…oKEjTj on Solana mainnet-beta",
+   "content_text": "Network: Solana mainnet-beta. upgrade executed on solana H4ND9aYttU: program redeployed since the previous run: slot 413092478 -> 465131236 (2026-11-04T02:19:01Z)",
+   "date_published": "2026-11-04T06:27:18Z",
+   "tags": [
+    "upgraded",
+    "solana"
+   ],
+   "_aro": {
+    "seq": 224,
+    "kind": "upgraded",
+    "network": "Solana mainnet-beta"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-202",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=0x6a8cbed756804b16e05e741edabd5cb544ae21bf",
+   "title": "Admin changed: 0x6a8cbed7…ae21bf on Ethereum mainnet (chain ID 1)",
+   "content_text": "Network: Ethereum mainnet (chain ID 1). admin read changed since the previous run: contract 0x4090…9968 -> contract 0xeda0…7187 (via admin())",
+   "date_published": "2026-10-29T22:55:05Z",
+   "tags": [
+    "admin_change",
+    "ethereum-l1"
+   ],
+   "_aro": {
+    "seq": 202,
+    "kind": "admin_change",
+    "network": "Ethereum mainnet (chain ID 1)"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-201",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+   "title": "Implementation upgraded: JUP6LkbZbj…yVTaV4 on Solana mainnet-beta",
+   "content_text": "Network: Solana mainnet-beta. upgrade executed on solana JUP6LkbZbj: program redeployed since the previous run: slot 459479624 -> 462802085 (2026-10-29T07:47:21Z)",
+   "date_published": "2026-10-29T13:15:42Z",
+   "tags": [
+    "upgraded",
+    "solana"
+   ],
+   "_aro": {
+    "seq": 201,
+    "kind": "upgraded",
+    "network": "Solana mainnet-beta"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-137",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF",
+   "title": "Implementation upgraded: 7u3HeHxYDL…Av5PfF on Solana mainnet-beta",
+   "content_text": "Network: Solana mainnet-beta. upgrade executed on solana 7u3HeHxYDL: program redeployed since the previous run: slot 458858791 -> 461744249 (2026-10-26T17:11:59Z)",
+   "date_published": "2026-10-26T19:06:50Z",
+   "tags": [
+    "upgraded",
+    "solana"
+   ],
+   "_aro": {
+    "seq": 137,
+    "kind": "upgraded",
+    "network": "Solana mainnet-beta"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-136",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=0x0bfbcf9fa4f9c56b0f40a671ad40e0805a091865",
+   "title": "Admin changed: 0x0bfbcf9f…091865 on Robinhood Chain mainnet (chain ID 4663)",
+   "content_text": "Network: Robinhood Chain mainnet (chain ID 4663). admin read changed since the previous run: contract 0x543a…1c2a -> contract 0x0f6f…410c (via owner())",
+   "date_published": "2026-10-24T19:00:10Z",
+   "tags": [
+    "admin_change",
+    "robinhood"
+   ],
+   "_aro": {
+    "seq": 136,
+    "kind": "admin_change",
+    "network": "Robinhood Chain mainnet (chain ID 4663)"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-135",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=0xee8f4ec5672f09119b96ab6fb59c27e1b7e44b61",
+   "title": "Admin changed: 0xee8f4ec5…e44b61 on Base mainnet (chain ID 8453)",
+   "content_text": "Network: Base mainnet (chain ID 8453). admin read changed since the previous run: safe 0x5a4e…d4d0 4-of-6 [contract timelock 604800s] [signers: 6 eoa] -> safe 0x5a4e…d4d0 4-of-7 [contract timelock 604800s] (via owner()); signer composition changed since the previous run: 6 eoa -> 7 eoa (this holder governs 2 tracked contract(s) in all, about $0M behind them)",
+   "date_published": "2026-10-23T18:57:31Z",
+   "tags": [
+    "admin_change",
+    "base"
+   ],
+   "_aro": {
+    "seq": 135,
+    "kind": "admin_change",
+    "network": "Base mainnet (chain ID 8453)"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-134",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+   "title": "Implementation upgraded: CAMMCzo5YL…KgrWqK on Solana mainnet-beta",
+   "content_text": "Network: Solana mainnet-beta. upgrade executed on solana CAMMCzo5YL: program redeployed since the previous run: slot 451479902 -> 459932378 (2026-10-22T06:24:28Z)",
+   "date_published": "2026-10-22T07:01:59Z",
+   "tags": [
+    "upgraded",
+    "solana"
+   ],
+   "_aro": {
+    "seq": 134,
+    "kind": "upgraded",
+    "network": "Solana mainnet-beta"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-133",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=0x83341f891f898cb5e0cacc8a70501bba83d9cecf",
+   "title": "Implementation upgraded: 0x83341f89…d9cecf on Robinhood Chain mainnet (chain ID 4663)",
+   "content_text": "Network: Robinhood Chain mainnet (chain ID 4663). upgrade executed on robinhood 0x83341f89: implementation changed since the previous run: 0xcc61…6efb -> 0x4c1b…26d7 (EIP-1967 implementation slot)",
+   "date_published": "2026-10-22T01:01:55Z",
+   "tags": [
+    "upgraded",
+    "robinhood"
+   ],
+   "_aro": {
+    "seq": 133,
+    "kind": "upgraded",
+    "network": "Robinhood Chain mainnet (chain ID 4663)"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-132",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
+   "title": "Implementation upgraded: Gmso1uvJnL…MDucLo on Solana mainnet-beta",
+   "content_text": "Network: Solana mainnet-beta. upgrade executed on solana Gmso1uvJnL: program redeployed since the previous run: slot 459537822 -> 459556802 (2026-10-21T08:08:01Z)",
+   "date_published": "2026-10-21T13:00:50Z",
+   "tags": [
+    "upgraded",
+    "solana"
+   ],
+   "_aro": {
+    "seq": 132,
+    "kind": "upgraded",
+    "network": "Solana mainnet-beta"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-131",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo",
+   "title": "Implementation upgraded: Gmso1uvJnL…MDucLo on Solana mainnet-beta",
+   "content_text": "Network: Solana mainnet-beta. upgrade executed on solana Gmso1uvJnL: program redeployed since the previous run: slot 438769784 -> 459537822 (2026-10-21T06:59:41Z)",
+   "date_published": "2026-10-21T07:03:23Z",
+   "tags": [
+    "upgraded",
+    "solana"
+   ],
+   "_aro": {
+    "seq": 131,
+    "kind": "upgraded",
+    "network": "Solana mainnet-beta"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-130",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+   "title": "Implementation upgraded: JUP6LkbZbj…yVTaV4 on Solana mainnet-beta",
+   "content_text": "Network: Solana mainnet-beta. upgrade executed on solana JUP6LkbZbj: program redeployed since the previous run: slot 454465850 -> 459479624 (2026-10-21T03:30:22Z)",
+   "date_published": "2026-10-21T07:03:23Z",
+   "tags": [
+    "upgraded",
+    "solana"
+   ],
+   "_aro": {
+    "seq": 130,
+    "kind": "upgraded",
+    "network": "Solana mainnet-beta"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-129",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=0xd540f47f214dc7d6d244e62a6ae7e06b586ef44a",
+   "title": "Admin changed: 0xd540f47f…6ef44a on Robinhood Chain mainnet (chain ID 4663)",
+   "content_text": "Network: Robinhood Chain mainnet (chain ID 4663). admin read changed since the previous run: safe 0xf806…a5f7 2-of-3 [signers: 3 eoa] -> safe 0xf806…a5f7 2-of-5 (via owner()); signer composition changed since the previous run: 3 eoa -> 5 eoa",
+   "date_published": "2026-10-20T06:59:16Z",
+   "tags": [
+    "admin_change",
+    "robinhood"
+   ],
+   "_aro": {
+    "seq": 129,
+    "kind": "admin_change",
+    "network": "Robinhood Chain mainnet (chain ID 4663)"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-96",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=ADyA8hdefvWN2dbGGWFotbzWxrAvLW83WG6QCVXvJKqw",
+   "title": "Implementation upgraded: ADyA8hdefv…XvJKqw on Solana mainnet-beta",
+   "content_text": "Network: Solana mainnet-beta. upgrade executed on solana ADyA8hdefv: program redeployed since the previous run: slot 454596406 -> 458921517 (2026-10-19T17:47:20Z)",
+   "date_published": "2026-10-19T19:00:48Z",
+   "tags": [
+    "upgraded",
+    "solana"
+   ],
+   "_aro": {
+    "seq": 96,
+    "kind": "upgraded",
+    "network": "Solana mainnet-beta"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-95",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF",
+   "title": "Implementation upgraded: 7u3HeHxYDL…Av5PfF on Solana mainnet-beta",
+   "content_text": "Network: Solana mainnet-beta. upgrade executed on solana 7u3HeHxYDL: program redeployed since the previous run: slot 440486775 -> 458858791 (2026-10-19T14:00:16Z)",
+   "date_published": "2026-10-19T19:00:48Z",
+   "tags": [
+    "upgraded",
+    "solana"
+   ],
+   "_aro": {
+    "seq": 95,
+    "kind": "upgraded",
+    "network": "Solana mainnet-beta"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-94",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=0x14b107cf534239c59571b066cb6497a321da897c",
+   "title": "Implementation upgraded: 0x14b107cf…da897c on Robinhood Chain mainnet (chain ID 4663)",
+   "content_text": "Network: Robinhood Chain mainnet (chain ID 4663). upgrade executed on robinhood 0x14b107cf: implementation changed since the previous run: 0x44c6…bf78 -> 0x71fc…6319 (EIP-1967 implementation slot)",
+   "date_published": "2026-10-15T18:59:13Z",
+   "tags": [
+    "upgraded",
+    "robinhood"
+   ],
+   "_aro": {
+    "seq": 94,
+    "kind": "upgraded",
+    "network": "Robinhood Chain mainnet (chain ID 4663)"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-93",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=2LecshUwdy9xi7meFgHtFJQNSKk4KdTrcpvaB56dP2NQ",
+   "title": "Implementation upgraded: 2LecshUwdy…6dP2NQ on Solana mainnet-beta",
+   "content_text": "Network: Solana mainnet-beta. upgrade executed on solana 2LecshUwdy: program redeployed since the previous run: slot 440170207 -> 457152296 (2026-10-15T07:22:05Z)",
+   "date_published": "2026-10-15T13:02:22Z",
+   "tags": [
+    "upgraded",
+    "solana"
+   ],
+   "_aro": {
+    "seq": 93,
+    "kind": "upgraded",
+    "network": "Solana mainnet-beta"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-92",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG",
+   "title": "Implementation upgraded: cpamdpZCGK…En1sGG on Solana mainnet-beta",
+   "content_text": "Network: Solana mainnet-beta. upgrade executed on solana cpamdpZCGK: program redeployed since the previous run: slot 445230614 -> 457080014 (2026-10-15T03:00:13Z)",
+   "date_published": "2026-10-15T07:01:04Z",
+   "tags": [
+    "upgraded",
+    "solana"
+   ],
+   "_aro": {
+    "seq": 92,
+    "kind": "upgraded",
+    "network": "Solana mainnet-beta"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-91",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=ExponentnaRg3CQbW6dqQNZKXp7gtZ9DGMp1cwC4HAS7",
+   "title": "Implementation upgraded: Exponentna…C4HAS7 on Solana mainnet-beta",
+   "content_text": "Network: Solana mainnet-beta. upgrade executed on solana Exponentna: program redeployed since the previous run: slot 419311653 -> 456483984 (2026-10-13T15:01:25Z)",
+   "date_published": "2026-10-13T18:46:07Z",
+   "tags": [
+    "upgraded",
+    "solana"
+   ],
+   "_aro": {
+    "seq": 91,
+    "kind": "upgraded",
+    "network": "Solana mainnet-beta"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-80",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8",
+   "title": "Implementation upgraded: 4qp6Fx6tnZ…3rdAG8 on Solana mainnet-beta",
+   "content_text": "Network: Solana mainnet-beta. upgrade executed on solana 4qp6Fx6tnZ: program redeployed since the previous run: slot 444313123 -> 456093551 (2026-10-12T15:18:53Z)",
+   "date_published": "2026-10-12T18:45:12Z",
+   "tags": [
+    "upgraded",
+    "solana"
+   ],
+   "_aro": {
+    "seq": 80,
+    "kind": "upgraded",
+    "network": "Solana mainnet-beta"
+   }
+  },
+  {
+   "id": "tag:realspap.github.io,2026:watch:seq-79",
+   "url": "https://realspap.github.io/oracle/#chain=all&q=7s1da8DduuBFqGra5bJBjpnvL5E9mGzCuMk1Qkh4or2Z",
+   "title": "Admin changed: 7s1da8Dduu…h4or2Z on Solana mainnet-beta",
+   "content_text": "Network: Solana mainnet-beta. admin read changed since the previous run: squads 4MsgBB…ZMSJ 4-of-7 (7 voters), time lock 43200s -> squads 4MsgBB…ZMSJ 4-of-6 (6 voters), time lock 43200s (via account owned by program jupeiUmn… -> program -> ProgramData J6Ry5y… -> upgrade authority (a program-derived address, off the curve: a Squads vault or a protocol PDA, no key can sign for it directly) -> Squads v4 vault 0 of multisig J3mJ3w…vG8P)",
+   "date_published": "2026-10-12T18:45:12Z",
+   "tags": [
+    "admin_change",
+    "solana"
+   ],
+   "_aro": {
+    "seq": 79,
+    "kind": "admin_change",
+    "network": "Solana mainnet-beta"
+   }
+  }
+ ]
+}

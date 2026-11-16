@@ -1,0 +1,26 @@
+name: Structure
+
+# Refuses a root that grew, a forbidden file name, a README over 80 lines or with a dash. Read-only, standard library.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  structure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262   # v4.4.0, pinned to its commit, as in the other workflows
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065   # v5.6.0, pinned to its commit, as in the other workflows
+        with:
+          python-version: "3.11"
+      - name: Check the structure
+        run: python3 scripts/check_structure.py
+      - name: Check the structure check against its own faults
+        run: python3 -m unittest discover -s scripts/tests -p test_check_structure.py -v

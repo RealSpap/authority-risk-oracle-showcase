@@ -1,10 +1,4 @@
-## Second opinion, 2026-11-16T19:12:04Z
-
-### 1 upgrade(s) executed since the previous run (2026-11-16T13:15:00Z)
-
-- **JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4** on solana: program redeployed since the previous run: slot 468023491 -> 470226883 (2026-11-16T18:09:13Z); the score reads who may upgrade, this is an upgrade that happened
-
-The code behind a tracked proxy changed: read what the new implementation does before trusting the score (the private pipeline's implementation check names the selectors added and dropped).
+## Second opinion, 2026-11-16T20:25:27Z
 
 ### 3 disagreement(s) with the published score
 

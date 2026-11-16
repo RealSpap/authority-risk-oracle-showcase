@@ -1,75 +1,79 @@
-# Authority risk digest, 2026-11-16 01:33 UTC
+# Authority risk digest, 2026-11-16 20:41 UTC
 
-## Needs a person, 2026-11-16T01:33:23Z: 32 item(s) (priority 1: 21, priority 2: 8, priority 3: 3); oldest 36.2 d
+## Needs a person, 2026-11-16T20:41:47Z: 36 item(s) (priority 1: 24, priority 2: 9, priority 3: 3); oldest 37.0 d
 
 ### Overdue: 18 priority-1 item(s) waiting for more than 2 day(s), back in the alarm
-- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.0 d): AddedOwner 0x61C2…0e44 (aave_payloads_guardian)
-- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.0 d): AddedOwner 0x2694…CbF1 (aave_payloads_guardian)
-- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.0 d): AddedOwner 0xb291…Afef (aave_payloads_guardian)
-- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.0 d): AddedOwner 0x985F…f235 (aave_payloads_guardian)
-- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.0 d): AddedOwner 0x9EF7…0403 (aave_payloads_guardian)
-- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.0 d): RemovedOwner 0xebED…FE29 (aave_payloads_guardian)
-- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.0 d): RemovedOwner 0xbd4D…f1F7 (aave_payloads_guardian)
-- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.0 d): RemovedOwner 0x936C…9EF3 (aave_payloads_guardian)
-- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.0 d): RemovedOwner 0x0D23…c0E9 (aave_payloads_guardian)
-- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.0 d): RemovedOwner 0x4C30…099f (aave_payloads_guardian)
-- **Safe AddedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (3.4 d): AddedOwner 0x25f9…7f85 (gmx_timelock_multisig, gmx_v1_vault)
-- **Safe AddedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (3.4 d): AddedOwner 0x936C…2a4e (gmx_timelock_multisig, gmx_v1_vault)
-- **Safe AddedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (3.4 d): AddedOwner 0x6091…a6F5 (gmx_timelock_multisig, gmx_v1_vault)
-- **Safe RemovedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (3.4 d): RemovedOwner 0x49C9…2Da3 (gmx_timelock_multisig, gmx_v1_vault)
-- **Safe RemovedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (3.4 d): RemovedOwner 0xD794…b398 (gmx_timelock_multisig, gmx_v1_vault)
-- **Safe RemovedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (3.4 d): RemovedOwner 0xeAA5…12Ea (gmx_timelock_multisig, gmx_v1_vault)
-- **Safe AddedOwner** arbitrum 0x58F582455b54d7c83d03BCeed95FAf72B37fdDD7 (3.1 d): AddedOwner 0xcBFa…2c2e (gmx_v1_vault)
-- **Safe RemovedOwner** arbitrum 0x58F582455b54d7c83d03BCeed95FAf72B37fdDD7 (3.1 d): RemovedOwner 0xeAA5…12Ea (gmx_v1_vault)
+- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.8 d): AddedOwner 0x61C2…0e44 (aave_payloads_guardian)
+- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.8 d): AddedOwner 0x2694…CbF1 (aave_payloads_guardian)
+- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.8 d): AddedOwner 0xb291…Afef (aave_payloads_guardian)
+- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.8 d): AddedOwner 0x985F…f235 (aave_payloads_guardian)
+- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.8 d): AddedOwner 0x9EF7…0403 (aave_payloads_guardian)
+- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.8 d): RemovedOwner 0xebED…FE29 (aave_payloads_guardian)
+- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.8 d): RemovedOwner 0xbd4D…f1F7 (aave_payloads_guardian)
+- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.8 d): RemovedOwner 0x936C…9EF3 (aave_payloads_guardian)
+- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.8 d): RemovedOwner 0x0D23…c0E9 (aave_payloads_guardian)
+- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.8 d): RemovedOwner 0x4C30…099f (aave_payloads_guardian)
+- **Safe AddedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (4.2 d): AddedOwner 0x25f9…7f85 (gmx_timelock_multisig, gmx_v1_vault)
+- **Safe AddedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (4.2 d): AddedOwner 0x936C…2a4e (gmx_timelock_multisig, gmx_v1_vault)
+- **Safe AddedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (4.2 d): AddedOwner 0x6091…a6F5 (gmx_timelock_multisig, gmx_v1_vault)
+- **Safe RemovedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (4.2 d): RemovedOwner 0x49C9…2Da3 (gmx_timelock_multisig, gmx_v1_vault)
+- **Safe RemovedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (4.2 d): RemovedOwner 0xD794…b398 (gmx_timelock_multisig, gmx_v1_vault)
+- **Safe RemovedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (4.2 d): RemovedOwner 0xeAA5…12Ea (gmx_timelock_multisig, gmx_v1_vault)
+- **Safe AddedOwner** arbitrum 0x58F582455b54d7c83d03BCeed95FAf72B37fdDD7 (3.9 d): AddedOwner 0xcBFa…2c2e (gmx_v1_vault)
+- **Safe RemovedOwner** arbitrum 0x58F582455b54d7c83d03BCeed95FAf72B37fdDD7 (3.9 d): RemovedOwner 0xeAA5…12Ea (gmx_v1_vault)
 
-### Something happened: read before trusting the score (21)
-- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.0 d): AddedOwner 0x61C2…0e44 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.0 d): AddedOwner 0x2694…CbF1 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.0 d): AddedOwner 0xb291…Afef (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.0 d): AddedOwner 0x985F…f235 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.0 d): AddedOwner 0x9EF7…0403 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.0 d): RemovedOwner 0xebED…FE29 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.0 d): RemovedOwner 0xbd4D…f1F7 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.0 d): RemovedOwner 0x936C…9EF3 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.0 d): RemovedOwner 0x0D23…c0E9 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.0 d): RemovedOwner 0x4C30…099f (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (3.4 d): AddedOwner 0x25f9…7f85 (gmx_timelock_multisig, gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (3.4 d): AddedOwner 0x936C…2a4e (gmx_timelock_multisig, gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (3.4 d): AddedOwner 0x6091…a6F5 (gmx_timelock_multisig, gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (3.4 d): RemovedOwner 0x49C9…2Da3 (gmx_timelock_multisig, gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (3.4 d): RemovedOwner 0xD794…b398 (gmx_timelock_multisig, gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (3.4 d): RemovedOwner 0xeAA5…12Ea (gmx_timelock_multisig, gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** arbitrum 0x58F582455b54d7c83d03BCeed95FAf72B37fdDD7 (3.1 d): AddedOwner 0xcBFa…2c2e (gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** arbitrum 0x58F582455b54d7c83d03BCeed95FAf72B37fdDD7 (3.1 d): RemovedOwner 0xeAA5…12Ea (gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+### Something happened: read before trusting the score (24)
+- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.8 d): AddedOwner 0x61C2…0e44 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.8 d): AddedOwner 0x2694…CbF1 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.8 d): AddedOwner 0xb291…Afef (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.8 d): AddedOwner 0x985F…f235 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.8 d): AddedOwner 0x9EF7…0403 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.8 d): RemovedOwner 0xebED…FE29 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.8 d): RemovedOwner 0xbd4D…f1F7 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.8 d): RemovedOwner 0x936C…9EF3 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.8 d): RemovedOwner 0x0D23…c0E9 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (4.8 d): RemovedOwner 0x4C30…099f (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (4.2 d): AddedOwner 0x25f9…7f85 (gmx_timelock_multisig, gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (4.2 d): AddedOwner 0x936C…2a4e (gmx_timelock_multisig, gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (4.2 d): AddedOwner 0x6091…a6F5 (gmx_timelock_multisig, gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (4.2 d): RemovedOwner 0x49C9…2Da3 (gmx_timelock_multisig, gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (4.2 d): RemovedOwner 0xD794…b398 (gmx_timelock_multisig, gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (4.2 d): RemovedOwner 0xeAA5…12Ea (gmx_timelock_multisig, gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** arbitrum 0x58F582455b54d7c83d03BCeed95FAf72B37fdDD7 (3.9 d): AddedOwner 0xcBFa…2c2e (gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** arbitrum 0x58F582455b54d7c83d03BCeed95FAf72B37fdDD7 (3.9 d): RemovedOwner 0xeAA5…12Ea (gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **queued operation executable** arbitrum 0x6A075E9a02eef6978DD66cB63DE430a8c0C419E9 (0.8 d): value transfer or empty call: 0x via Arbitrum L2 Treasury Timelock. To do: read the call before it lands. (pending_ops.json)
+- **queued operation executable** arbitrum 0xF3FC178157fb3c87548bAA86F9d24BA38E649B58 (0.8 d): parameter change: transfer(address,address,uint256) via Arbitrum L2 Treasury Timelock. To do: read the call before it lands. (pending_ops.json)
 - **admin transfer in flight** robinhood 0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d (0.0 d): 0x9db4…1a53 designated (pendingOwner() on the contract (Ownable2Step), a contract). To do: identify the designated admin; when it accepts, the admin read changes. (second_opinion.json pending_admin)
-- **queued operation executable** arbitrum 0x6A075E9a02eef6978DD66cB63DE430a8c0C419E9 (0.0 d): value transfer or empty call: 0x via Arbitrum L2 Treasury Timelock. To do: read the call before it lands. (pending_ops.json)
-- **queued operation executable** arbitrum 0xF3FC178157fb3c87548bAA86F9d24BA38E649B58 (0.0 d): parameter change: transfer(address,address,uint256) via Arbitrum L2 Treasury Timelock. To do: read the call before it lands. (pending_ops.json)
+- **queued operation executable within 48 h** arbitrum 0x5126A82E52F78B73fdE29B0D9800170e77AbfdcA (0.0 d): parameter change: setLzDelegate(address) via arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
+- **queued operation executable within 48 h** plasma 0x5126A82E52F78B73fdE29B0D9800170e77AbfdcA (0.0 d): parameter change: setLzDelegate(address) via plasma timelock 0x4d6c…2346, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
+- **queued operation executable within 48 h** plasma 0x9926955e0Dd681Dc303370C52f4Ad0a4dd061687 (0.0 d): parameter change: updateMaster() via plasma timelock 0x4d6c…2346, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
 
-### Decide (8)
-- **Safe guard to identify** ethereum-l1 0x2cc440b721d2cafd6d64908d6d8c4acc57f8afc3 (36.2 d): 0x74ab…8d29: contract, owned by 0xa075…c344. To do: say what this guard checks and who can change it. (second_opinion.json guard_detail)
-- **second opinion disagrees** plasma 0xa9c251f8304b1b3fc2b9e8fcae78d94eff82ac66 (36.2 d): the timelock score says no delay (0), the contract enforces its own timelock of 24 h (timelock()). To do: review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json. (second_opinion.json disagreements)
-- **timelock queue unread** base 0xf93b7122450a50af3e5a76e1d546e95ac1d0f579 (36.2 d): base timelock 0xf93b…f579, found by the independent reader (1 tracked contract): UNREAD (ContractLogicError: ('execution reverted', 'no data')). To do: find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen. (pending_ops.json)
-- **timelock queue unread** robinhood 0x5ff98717a18833de1a49e11b498866d6fa1c9296 (36.2 d): robinhood timelock 0x5ff9…9296, found by the independent reader (1 tracked contract): UNREAD (ContractLogicError: ('execution reverted', '0x')). To do: find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen. (pending_ops.json)
-- **timelock queue unread** robinhood 0x826aeaeee9233fa8ba199518dd8621a5962b1d02 (36.2 d): robinhood timelock 0x826a…1d02, found by the independent reader (1 tracked contract): UNREAD (ContractLogicError: ('execution reverted', '0x')). To do: find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen. (pending_ops.json)
-- **timelock queue unread** base 0xcc3e7c85bb0ee4f09380e041fee95a0caedd4a02 (29.3 d): base timelock 0xcc3e…4a02, found by the independent reader (1 tracked contract): UNREAD (RetryError: HTTPSConnectionPool(host='base.rpc.sentio.xyz', port=443): Max retries exceeded with url: / (Caused . To do: find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen. (pending_ops.json)
-- **second opinion disagrees** hyperliquid 0x393d0b87ed38fc779fd9611144ae649ba6082109 (0.3 d): the score says one key does everything (10), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisig (0), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(). To do: review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json. (second_opinion.json disagreements)
-- **second opinion disagrees** hyperliquid 0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec (0.3 d): the score says one key does everything (10), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisig (0), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(). To do: review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json. (second_opinion.json disagreements)
+### Decide (9)
+- **Safe guard to identify** ethereum-l1 0x2cc440b721d2cafd6d64908d6d8c4acc57f8afc3 (37.0 d): 0x74ab…8d29: contract, owned by 0xa075…c344. To do: say what this guard checks and who can change it. (second_opinion.json guard_detail)
+- **second opinion disagrees** plasma 0xa9c251f8304b1b3fc2b9e8fcae78d94eff82ac66 (37.0 d): the timelock score says no delay (0), the contract enforces its own timelock of 24 h (timelock()). To do: review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json. (second_opinion.json disagreements)
+- **timelock queue unread** base 0xf93b7122450a50af3e5a76e1d546e95ac1d0f579 (37.0 d): base timelock 0xf93b…f579, found by the independent reader (1 tracked contract): UNREAD (ContractLogicError: ('execution reverted', 'no data')). To do: find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen. (pending_ops.json)
+- **timelock queue unread** robinhood 0x5ff98717a18833de1a49e11b498866d6fa1c9296 (37.0 d): robinhood timelock 0x5ff9…9296, found by the independent reader (1 tracked contract): UNREAD (ContractLogicError: ('execution reverted', '0x')). To do: find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen. (pending_ops.json)
+- **timelock queue unread** robinhood 0x826aeaeee9233fa8ba199518dd8621a5962b1d02 (37.0 d): robinhood timelock 0x826a…1d02, found by the independent reader (1 tracked contract): UNREAD (ContractLogicError: ('execution reverted', '0x')). To do: find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen. (pending_ops.json)
+- **timelock queue unread** base 0xcc3e7c85bb0ee4f09380e041fee95a0caedd4a02 (30.1 d): base timelock 0xcc3e…4a02, found by the independent reader (1 tracked contract): UNREAD (RetryError: HTTPSConnectionPool(host='base.rpc.sentio.xyz', port=443): Max retries exceeded with url: / (Caused . To do: find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen. (pending_ops.json)
+- **second opinion disagrees** hyperliquid 0x393d0b87ed38fc779fd9611144ae649ba6082109 (1.1 d): the score says one key does everything (10), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisig (0), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(). To do: review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json. (second_opinion.json disagreements)
+- **timelock queue unread** hyperliquid 0xc5ded4f7f53919c714059a17d31371ae847e23d2 (0.6 d): hyperliquid timelock 0xc5de…23d2, found by the independent reader (1 tracked contract): UNREAD (Web3RPCError: {'code': -32005, 'message': 'rate limited'}). To do: find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen. (pending_ops.json)
+- **second opinion disagrees** hyperliquid 0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec (0.0 d): the score says one key does everything (10), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisig (0), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(). To do: review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json. (second_opinion.json disagreements)
 
 ### Coverage to extend (3)
-- **admin Safe never used** robinhood 0x9d53d5e3bd5e8d4cbfa6db1ca238aea02e651010 (36.2 d): robinhood:0x0605…9728 has executed no transaction (nonce 0). To do: an admin path nobody has exercised: confirm the signers can still act. (safe_activity.json)
-- **admin Safe never used** tempo 0x10ee9aac980a180dd4dcfc96c746d60b0ea88f97 (36.2 d): tempo:0x6458…fbbc has executed no transaction (nonce 0). To do: an admin path nobody has exercised: confirm the signers can still act. (safe_activity.json)
-- **admin role holder seen** robinhood 0xfd2fd4b046136b540a56c11c75ac679ae7d1db24 (36.2 d): 1 known contract(s) hold DEFAULT_ADMIN_ROLE; the list is not complete. To do: compare with the published admin-key score; holders cannot be listed on this contract. (admin_probe.json)
+- **admin Safe never used** robinhood 0x9d53d5e3bd5e8d4cbfa6db1ca238aea02e651010 (37.0 d): robinhood:0x0605…9728 has executed no transaction (nonce 0). To do: an admin path nobody has exercised: confirm the signers can still act. (safe_activity.json)
+- **admin Safe never used** tempo 0x10ee9aac980a180dd4dcfc96c746d60b0ea88f97 (37.0 d): tempo:0x6458…fbbc has executed no transaction (nonce 0). To do: an admin path nobody has exercised: confirm the signers can still act. (safe_activity.json)
+- **admin role holder seen** robinhood 0xfd2fd4b046136b540a56c11c75ac679ae7d1db24 (37.0 d): 1 known contract(s) hold DEFAULT_ADMIN_ROLE; the list is not complete. To do: compare with the published admin-key score; holders cannot be listed on this contract. (admin_probe.json)
 
 ## Act now: oracles turning stale
-- **ACT NOW** Solana (Devnet): 26 targets, first entry turns stale in 92 h (2026-11-19 21:46 UTC); oldest update 2026-11-10 21:46 UTC
-- **ACT NOW** Tempo (Moderato): 14 targets, first entry turns stale in 92 h (2026-11-19 21:51 UTC); oldest update 2026-11-10 21:51 UTC
-- **ACT NOW** Base (Sepolia): 13 targets, first entry turns stale in 92 h (2026-11-19 22:00 UTC); oldest update 2026-11-10 22:00 UTC
-- **ACT NOW** Arbitrum (Sepolia): 13 targets, first entry turns stale in 93 h (2026-11-19 22:28 UTC); oldest update 2026-11-10 22:28 UTC
-- **ACT NOW** Hyperliquid (HyperEVM): 16 targets, first entry turns stale in 93 h (2026-11-19 22:29 UTC); oldest update 2026-11-10 22:29 UTC
-- **ACT NOW** Robinhood Chain: 63 targets, first entry turns stale in 93 h (2026-11-19 22:35 UTC); oldest update 2026-11-10 22:35 UTC
-- **ACT NOW** Plasma: 9 targets, first entry turns stale in 93 h (2026-11-19 22:37 UTC); oldest update 2026-11-10 22:37 UTC
-- **ACT NOW** Monad: 9 targets, first entry turns stale in 95 h (2026-11-20 00:41 UTC); oldest update 2026-11-11 00:41 UTC
-- Ethereum L1 (Sepolia): 39 targets, first entry turns stale in 108 h (2026-11-20 13:04 UTC); oldest update 2026-11-11 13:04 UTC
+- **ACT NOW** Solana (Devnet): 26 targets, first entry turns stale in 73 h (2026-11-19 21:46 UTC); oldest update 2026-11-10 21:46 UTC
+- **ACT NOW** Tempo (Moderato): 14 targets, first entry turns stale in 73 h (2026-11-19 21:51 UTC); oldest update 2026-11-10 21:51 UTC
+- **ACT NOW** Base (Sepolia): 13 targets, first entry turns stale in 73 h (2026-11-19 22:00 UTC); oldest update 2026-11-10 22:00 UTC
+- **ACT NOW** Arbitrum (Sepolia): 13 targets, first entry turns stale in 74 h (2026-11-19 22:28 UTC); oldest update 2026-11-10 22:28 UTC
+- **ACT NOW** Hyperliquid (HyperEVM): 16 targets, first entry turns stale in 74 h (2026-11-19 22:29 UTC); oldest update 2026-11-10 22:29 UTC
+- **ACT NOW** Robinhood Chain: 63 targets, first entry turns stale in 74 h (2026-11-19 22:35 UTC); oldest update 2026-11-10 22:35 UTC
+- **ACT NOW** Plasma: 9 targets, first entry turns stale in 74 h (2026-11-19 22:37 UTC); oldest update 2026-11-10 22:37 UTC
+- **ACT NOW** Monad: 9 targets, first entry turns stale in 76 h (2026-11-20 00:41 UTC); oldest update 2026-11-11 00:41 UTC
+- **ACT NOW** Ethereum L1 (Sepolia): 39 targets, first entry turns stale in 88 h (2026-11-20 13:04 UTC); oldest update 2026-11-11 13:04 UTC
 
 ## Safe authority changes, last 7 days
 - ethereum-l1: RemovedOwner 0xebED…FE29 on 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (aave_payloads_guardian), tx 388febf169649d55ae77665754ee44226d5f201ea03d1655602201bb090231a6
@@ -93,13 +97,15 @@
 - not attempted: tempo (public RPC returned no control events); monad (public RPC caps eth_getLogs near 100 blocks); hyperliquid (public RPC rate-limits the query)
 
 ## Timelock queue
-- **executable or waiting** Compound Governance Timelock: 0xD28d21422f5fA74E3d4414626c774bDA274b7Ca9 execTransaction(address,uint256,bytes,uint8,uint256,uint256,uint256,address,address,bytes) ready at 2026-11-16 12:26Z (waiting)
-- **executable or waiting** Compound Governance Timelock: 0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2 sendMessageToChild(address,bytes) ready at 2026-11-16 12:26Z (waiting)
-- **executable or waiting** Ethena Timelock: 0xe3490297a08d6fC8Da46Edb7B6142E4F461b62D3 addSupportedAsset(address,(uint8,bool,uint128,uint128)) ready at 2026-11-14 10:20Z (ready)
-- **executable or waiting** Ethena Timelock: 0xe3490297a08d6fC8Da46Edb7B6142E4F461b62D3 addSupportedAsset(address,(uint8,bool,uint128,uint128)) ready at 2026-11-14 10:22Z (ready)
 - **executable or waiting** Arbitrum L2 Core Governor Timelock: 0x0000000000000000000000000000000000000064 sendTxToL1(address,bytes) ready at 2026-11-22 00:55Z (waiting)
 - **executable or waiting** Arbitrum L2 Treasury Timelock: 0x6A075E9a02eef6978DD66cB63DE430a8c0C419E9 0x ready at 2026-11-15 22:38Z (ready)
 - **executable or waiting** Arbitrum L2 Treasury Timelock: 0xF3FC178157fb3c87548bAA86F9d24BA38E649B58 transfer(address,address,uint256) ready at 2026-11-15 22:50Z (ready)
+- **executable or waiting** arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract): 0x5126A82E52F78B73fdE29B0D9800170e77AbfdcA setLzDelegate(address) ready at 2026-11-17 16:07Z (waiting)
+- **executable or waiting** plasma timelock 0x4d6c…2346, found by the independent reader (1 tracked contract): 0x9926955e0Dd681Dc303370C52f4Ad0a4dd061687 updateMaster() ready at 2026-11-17 16:10Z (waiting)
+- **executable or waiting** plasma timelock 0x4d6c…2346, found by the independent reader (1 tracked contract): 0x5126A82E52F78B73fdE29B0D9800170e77AbfdcA setLzDelegate(address) ready at 2026-11-17 16:11Z (waiting)
+- cleared, queued 2026-11-14: Compound Governance Timelock -> 0xD28d21422f5fA74E3d4414626c774bDA274b7Ca9 execTransaction(address,uint256,bytes,uint8,uint256,uint256,uint256,address,address,bytes)
+- cleared, queued 2026-11-14: Compound Governance Timelock -> 0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2 sendMessageToChild(address,bytes)
+- cleared, queued 2026-11-13: Ethena Timelock -> 0xe3490297a08d6fC8Da46Edb7B6142E4F461b62D3 addSupportedAsset(address,(uint8,bool,uint128,uint128))
 - cleared, queued 2026-11-07: arbitrum timelock 0x3fb4…f88a, found by the independent reader (1 tracked contract) -> 0xb21b06D71c75973babdE35b49fFDAc3F82Ad3775 fulfillBasicOrder_efficient_6GL6yc((address,uint256,uint256,address,address,address,uint256,uint256,uint8,uint256,uint256,bytes32,uint256,bytes32,bytes32,uint256,(uint256,address)[],bytes))
 - cleared, queued 2026-11-07: arbitrum timelock 0x3fb4…f88a, found by the independent reader (1 tracked contract) -> 0xD10b40fF1D92e2267D099Da3509253D9Da4D715e fulfillBasicOrder_efficient_6GL6yc((address,uint256,uint256,address,address,address,uint256,uint256,uint8,uint256,uint256,bytes32,uint256,bytes32,bytes32,uint256,(uint256,address)[],bytes))
 - cleared, queued 2026-11-07: arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract) -> 0x52Aa899454998Be5b000Ad077a46Bbe360F4e497 addImplementation(address,bytes4[])
@@ -120,11 +126,18 @@
 - 15 target(s) added since that snapshot are not fingerprinted yet (informational)
 
 ## Solana Squads v4 multisigs (members, threshold, time lock)
+- [CHANGED] 51smH7pBDKJDgmVnVks3gMWaPQFfmQ5s4Fc223yHcjuH (EXPONENT_MS): time lock (s) 14400 -> 36000
 - [CHANGED] 5JZFPx6Qkg9PAgYMn9wHWirsiEQBfeJuE667MWeRBLPN (REWARD_SUPER_MS): member added 86mC…iMLg (permissions 6); member added CjEM…LZKY (permissions 7); member added FbcW…vHW7 (permissions 7); member removed 6Li1…ueL9; member removed BWyV…1w9C
 - [CHANGED] 5Y93cxqp8rGtjDhxGkehewfhFdxLkrCfPDWookCGeASF (JL_ADMIN_MS, ADMIN_MS): member removed 4Sqa…4Jqp; threshold 5 -> 4
 - [CHANGED] 74QKjjvoSrq2cGqFzzQNN8ox3gomYS1mBwcLsbiYaH8j (ADMIN_MS): member added 6vRh…apm9 (permissions 7); member removed 3Cxn…MEMB; member removed FwZd…YJCX
+- [CHANGED] 7FCPipJWVbPbdHymVt1gJYwKciakkJz5GahdQySemvHk (UPGRADE_MS): member added 6vRh…apm9 (permissions 7); member removed 3Cxn…MEMB; member removed FwZd…YJCX
 - [CHANGED] 7VVPGwvWh37LyhL1tVm6pGUzm3S1u6p17H6ttT9ZEFex (DELEGATE_MS): member added DAk1…KiMf (permissions 7)
+- [CHANGED] 7qipzLR9j1JcvdxE1XJEFgvoyFmgBpgw5hMdHBMPcJtM (DRIFT_MS): member removed 3mpT…qAfS
+- [CHANGED] 8Sr4rQJL2aQT3EL97mbrk1T9VMw4pCS2mxMPp2QBzHQq (LULO_MS): member added 9uyE…Jiuy (permissions 7); member added ENbm…tNmU (permissions 7); member added Ggin…bCjh (permissions 7); member added GqRN…1qYz (permissions 7); member added HKzQ…Yhz5 (permissions 7); member removed 2dMW…AYPT; member removed 2fqV…uiBD; member removed 5c9e…A2A4; member removed 6r76…So9G; member removed 9RDE…g8RZ; member removed At3T…MWTh; member removed BQZ9…JUpk; member removed DvJu…KPZk
+- [CHANGED] AEb1u8FK8EuXLcPtprCy8s4NkqBNoP5mfbuEEop2dJGf (SOLSTICE_MS): member added 5kVC…SK1G (permissions 7); member added GG2k…Ub8E (permissions 7)
+- [CHANGED] BQsDWkL417U4tVE2sDnPks469pKdm6YzFgKH77doiEjF (UPGRADE_MS): member added 6M7B…99HV (permissions 2); member added CjEM…LZKY (permissions 5); member removed 2NfC…7gXb; member removed 9FtD…ZMn4
 - [CHANGED] HvYoRSJdVcj6WRWV57yLu2Vmwh1ccqJRdkCwhNsSfRu4 (ADMIN_MS): time lock (s) 0 -> 21600
+- [CHANGED] J3mJ3wz6xkVUk3T8qHnuAYNxsRH3ixHsryYNZAU2vG8P (JL_UPGRADE_MS, UPGRADE_MS): member added 5tjC…LKzv (permissions 7); member removed 8BR8…rz9H
 
 ## Signer accounts (plain EOA, EIP-7702 delegation, contract)
 - [CHANGED] base:0x8769…5838: eoa -> contract
@@ -162,9 +175,10 @@
 - Safe changes, base: UNREAD (call budget exhausted)
 - Timelock queue, base timelock 0xcc3e…4a02, found by the independent reader (1 tracked contract): UNREAD (RetryError: HTTPSConnectionPool(host='base.rpc.sentio.xyz', port=443): Max retries exceeded with url: / (Caused by ResponseError('to)
 - Timelock queue, base timelock 0xf93b…f579, found by the independent reader (1 tracked contract): UNREAD (ContractLogicError: ('execution reverted', 'no data'))
+- Timelock queue, hyperliquid timelock 0xc5de…23d2, found by the independent reader (1 tracked contract): UNREAD (Web3RPCError: {'code': -32005, 'message': 'rate limited'})
 - Timelock queue, robinhood timelock 0x5ff9…9296, found by the independent reader (1 tracked contract): UNREAD (ContractLogicError: ('execution reverted', '0x'))
 - Timelock queue, robinhood timelock 0x826a…1d02, found by the independent reader (1 tracked contract): UNREAD (ContractLogicError: ('execution reverted', '0x'))
 
 Posture drift (published score vs live scorer) is not part of this digest; the dashboard's verify-all recomputes every score live.
 
-**37 item(s) above; 5 source(s) not read.** Safe events are not covered for: tempo, monad, hyperliquid.
+**37 item(s) above; 6 source(s) not read.** Safe events are not covered for: tempo, monad, hyperliquid.

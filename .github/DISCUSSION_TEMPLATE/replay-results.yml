@@ -1,0 +1,16 @@
+title: "Replay: "
+body:
+  - type: input
+    id: command
+    attributes:
+      label: The command you ran
+      description: The exact command, from the repository root, for example python3 scripts/prove.py.
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: What it printed
+      description: The last lines, with the date you ran it. A difference is useful; say which line.
+    validations:
+      required: true

@@ -1,0 +1,16 @@
+title: "Move: "
+body:
+  - type: input
+    id: contract
+    attributes:
+      label: The contract and its network
+      description: The address, the network and the chain ID, as an explorer shows them.
+    validations:
+      required: true
+  - type: textarea
+    id: move
+    attributes:
+      label: What moved
+      description: A key rotated, a signer replaced, a delay changed. Give a transaction hash or a block number anyone can re-read. Never paste a private key or private data.
+    validations:
+      required: true

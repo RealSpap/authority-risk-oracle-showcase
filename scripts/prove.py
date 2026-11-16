@@ -6,7 +6,7 @@
 
 Every line says OK, DIFFERENCE or UNREAD. An RPC error or a missing file is UNREAD, never a zero and never a pass. Exit 0: everything read and equal. Exit 1: at least one DIFFERENCE. Exit 2: nothing differs but something was UNREAD.
 
-What it replays (the block at the top of the README shows its expected output):
+What it replays:
   1. the Watch's published numbers against the chain: targets per oracle, methodology hash, push date, every sub-score of every target (eight EVM oracles and the Solana program, read with eth_call and getProgramAccounts);
   2. the same chain reads against CHANGELOG.md (hash, push date, target count per oracle) and against the README's example and api/scores.json;
   3. the published back-test (backtest/incidents.json on the site): its counts, its loss sums, its rate;

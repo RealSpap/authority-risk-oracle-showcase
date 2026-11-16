@@ -40,12 +40,16 @@ python3 integrations/authority_facts_gate_strict.py https://realspap.github.io/o
 
 The label is that same Uniswap v3 factory on Robinhood Chain mainnet (chain ID 4663).
 
+- **A score is not a status.** A contract can score 100 and be `UNVERIFIED`, and none of these commands reads the status: [details](docs/LIMITS.md#a-score-is-not-a-status).
+- **The composite on the chain is not the cap.** For Robinhood Chain rollup contracts, `l1CappedComposite` (57 against 85 for command 2) is published in `api/scores.json` only: [details](docs/LIMITS.md#the-composite-on-the-chain-is-not-the-cap).
+- **One key can replace the Solana devnet program.** Its upgrade authority is a plain account (`BcwteMtYL5wL8dvMYWedPT2V6oh1hTgd8vgKEkQyy9yx`), so one signature can push the scores and replace the program: [replay](docs/LIMITS.md#who-can-replace-the-oracle-itself).
+
 ## Two ways in
 
 | If you decide | If you build |
 |---|---|
 | Open the [dashboard](https://realspap.github.io/oracle/): 202 contracts on 9 oracles (8 EVM testnets and Solana devnet), each record names its network | Read a score: `getScore(address)` and `isStale(address)`, see [src/ExampleConsumer.sol](src/ExampleConsumer.sol) |
-| Read one contract's label (the Uniswap v3 factory on Robinhood Chain mainnet, chain ID 4663; [page](https://realspap.github.io/oracle/p/robinhood-0x1f7d7550b1b028f7571e69a784071f0205fd2efa.html)): who can move it, how many keys, how long everyone else has to react | Gate on a label: [integrations](integrations) ; the open format is [Authority Facts v0.1](docs/AUTHORITY-FACTS-SPEC.md) |
+| Read one contract's label (the Uniswap v3 factory on Robinhood Chain mainnet, chain ID 4663; [page](https://realspap.github.io/oracle/p/robinhood-0x1f7d7550b1b028f7571e69a784071f0205fd2efa.html)): who can move it, how many keys, how long everyone else has to react | Gate on a label: [integrations](integrations); the open format is [Authority Facts v0.1](docs/AUTHORITY-FACTS-SPEC.md) |
 | Follow a protocol: one Atom feed per protocol | Put it in CI with [action.yml](action.yml), or use the local MCP server in [packages](packages) |
 
 ## Everything else

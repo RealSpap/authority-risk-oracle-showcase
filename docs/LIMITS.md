@@ -208,3 +208,21 @@ The scores are published on test networks (Sepolia, Arbitrum Sepolia, Base Sepol
 What this changes for a reader: a target's network and chain id are read, and each target is placed on its network by what is read there (the code at its address for the EVM chains, the account for Solana, the Hyperliquid API for the HyperCore objects); the block of the score's own computation is not published. Closing that gap means changing the scorers to write the block they read, which changes the methodology hash and is a method version of its own.
 
 Written in: watch/API.md (the networks).
+
+## A score is not a status
+
+The composite says how strong an authority setup looks. `watch/trust.json` says how much of that was checked, how old it is and whether anything contradicts it (`VERIFIED`, `PARTIAL`, `STALE`, `DISPUTED`, `UNVERIFIED`, `UNAVAILABLE`, see [watch/API.md](../watch/API.md)). A contract can score 100 and be `UNVERIFIED`. None of the three commands in the README reads the status yet: a consumer that decides on money reads it itself and refuses anything that is not `VERIFIED` and fresh.
+
+## The composite on the chain is not the cap
+
+For the contracts that rest on the Robinhood Chain rollup, the project also computes `l1CappedComposite` (57 for the Uniswap v3 factory of command 2, whose composite on the chain is 85). It is published in `api/scores.json` and is not on the chain; read it before you gate on the composite alone (METHODOLOGY.md, rollup section).
+
+## Who can replace the oracle itself
+
+On Solana devnet (not mainnet), the oracle program `5VhiTAGLEViGgajhxPbzdWz7WLUAiRy42DY6qi6tYh4W` is upgradeable, and its upgrade authority is `BcwteMtYL5wL8dvMYWedPT2V6oh1hTgd8vgKEkQyy9yx`, a plain account with no code. The same account is the admin and the updater in the registry of the program: one signature can push the scores and replace the program. I read this on 20 November 2026 at 18:57 UTC (devnet genesis hash `EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG`; the program does not exist on Solana mainnet-beta). I have kept this setup because moving the authority to a multisig only helps with at least two distinct members, and I do not have a second one yet. Replay, on Solana devnet:
+
+```bash
+curl -s https://api.devnet.solana.com -H 'content-type: application/json' -d '{"jsonrpc":"2.0","id":1,"method":"getAccountInfo","params":["5hBzvoKRvW4kd8HneUoK1wLogjLmjZiFuJY7rWPTDwSx",{"encoding":"jsonParsed"}]}' | python3 -c 'import json,sys;print(json.load(sys.stdin)["result"]["value"]["data"]["parsed"]["info"]["authority"])'
+```
+
+It prints the upgrade authority of the program (the account `5hBzvoKRvW4kd8HneUoK1wLogjLmjZiFuJY7rWPTDwSx` on Solana devnet holds the program data). The EVM oracles (eight testnets) are not upgradeable, and the one account that holds their admin and updater roles per chain is a plain key too: see "The oracle's own composite, by chain" on this page.

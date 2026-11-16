@@ -707,20 +707,24 @@
    "first_seen_utc": "2026-11-13T19:40:29Z",
    "due_utc": "2026-11-14T10:20:35Z",
    "notice_hours": 14.7,
-   "state": "queued",
+   "state": "resolved",
    "chain": "ethereum",
    "timelock": "Ethena Timelock",
-   "what": "parameter change"
+   "what": "parameter change",
+   "resolved_seen_utc": "2026-11-16T13:00:45Z",
+   "final_state": "executed"
   },
   "ethereum:0xe8dc0fab349ea169283c48ccfd09d797e6db7c94:0x0ca0fcc4856b87f3df9a74532bd60db58d1310c27c17e7d9bfa8a56846f57a90": {
    "outcome": "warned",
    "first_seen_utc": "2026-11-13T19:40:29Z",
    "due_utc": "2026-11-14T10:22:23Z",
    "notice_hours": 14.7,
-   "state": "queued",
+   "state": "resolved",
    "chain": "ethereum",
    "timelock": "Ethena Timelock",
-   "what": "parameter change"
+   "what": "parameter change",
+   "resolved_seen_utc": "2026-11-16T13:00:45Z",
+   "final_state": "executed"
   },
   "arbitrum:0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0:0x2f037893252a8e160a3d92258189f0432202ad41d7fe7747b591c899faa96a1f": {
    "outcome": "warned",
@@ -737,23 +741,27 @@
    "first_seen_utc": "2026-11-14T17:59:40Z",
    "due_utc": "2026-11-16T12:26:59Z",
    "notice_hours": 42.5,
-   "state": "queued",
+   "state": "resolved",
    "chain": "ethereum",
    "timelock": "Compound Governance Timelock",
-   "what": "parameter change"
+   "what": "parameter change",
+   "resolved_seen_utc": "2026-11-16T13:00:45Z",
+   "final_state": "executed"
   },
   "ethereum:0x6d903f6003cca6255d85cca4d3b5e5146dc33925:0xe772d7b272e3ae67f912612d11f57c397243e892068741f3942e6ad7a750230f": {
    "outcome": "warned",
    "first_seen_utc": "2026-11-14T17:59:40Z",
    "due_utc": "2026-11-16T12:26:59Z",
    "notice_hours": 42.5,
-   "state": "queued",
+   "state": "resolved",
    "chain": "ethereum",
    "timelock": "Compound Governance Timelock",
-   "what": "cross-chain message"
+   "what": "cross-chain message",
+   "resolved_seen_utc": "2026-11-16T13:00:45Z",
+   "final_state": "executed"
   }
  },
- "updated_utc": "2026-11-16T07:21:39Z",
+ "updated_utc": "2026-11-16T13:00:45Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
   "warned": 47,

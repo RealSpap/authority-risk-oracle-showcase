@@ -1,19 +1,19 @@
 {
- "generated_utc": "2026-11-16T13:19:44Z",
+ "generated_utc": "2026-11-16T19:17:09Z",
  "wake_days": 14,
  "safes": 42,
  "read": 42,
  "woke": [],
  "changes": [
   {
-   "delta": 1,
-   "idle_days": 0.2,
+   "delta": 2,
+   "idle_days": 4.1,
    "woke": false,
-   "safe": "ethereum-l1:0x3b0a\u20261862",
+   "safe": "monad:0x8b73\u2026788b",
    "governs": [
-    "ethereum-l1:0x2cc440b721d2cafd6d64908d6d8c4acc57f8afc3"
+    "monad:0xd651346d7c789536ebf06dc72ae3c8502cd695cc"
    ],
-   "previous_run": "2026-11-16T07:38:50Z"
+   "previous_run": "2026-11-16T13:19:44Z"
   }
  ],
  "never_executed": [
@@ -192,7 +192,8 @@
    "observed_since": "2026-11-15T19:07:04Z",
    "idle_since": "2026-11-15T19:07:04Z",
    "governs": [
-    "hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109"
+    "hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109",
+    "hyperliquid:0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec"
    ],
    "safe": "hyperliquid:0x18a8\u2026f8f1",
    "never_executed": false
@@ -209,10 +210,10 @@
    "never_executed": false
   },
   "monad:d104c354d63359d9": {
-   "nonce": 81,
+   "nonce": 83,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-11-12T15:59:18Z",
-   "last_moved": "2026-11-12T15:59:18Z",
+   "idle_since": "2026-11-16T19:17:09Z",
+   "last_moved": "2026-11-16T19:17:09Z",
    "governs": [
     "monad:0xd651346d7c789536ebf06dc72ae3c8502cd695cc"
    ],

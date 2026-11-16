@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-11-16T13:21:29Z",
+ "run_utc": "2026-11-16T19:19:18Z",
  "targets": 202,
  "moves_recorded": 40,
  "series": {
@@ -2493,14 +2493,14 @@
  },
  "calibration": {
   "window_days": 14,
-  "actions": 25,
+  "actions": 26,
   "excluded_undecoded": 0,
   "excluded_other_target": 0,
   "under_40": 6,
   "by_band": {
    "critical": 0,
    "weak": 6,
-   "moderate": 12,
+   "moderate": 13,
    "decent": 7,
    "strong": 0
   },
@@ -2728,6 +2728,15 @@
     "via": "slot 469964062",
     "tx": null,
     "score_then": 54,
+    "band_then": "moderate"
+   },
+   {
+    "kind": "upgrade executed",
+    "key": "solana:JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+    "t": "2026-11-16T19:12:04Z",
+    "via": "slot 470226883",
+    "tx": null,
+    "score_then": 47,
     "band_then": "moderate"
    }
   ],

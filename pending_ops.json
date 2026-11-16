@@ -538,7 +538,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 4335483,
+   "window_blocks": 4274204,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -551,9 +551,25 @@
    "address": "0x4d6ce4f4498d59eed397bcbc687805a07f9b2346",
    "family": "oz",
    "status": "ok",
-   "queued_events": 44,
-   "latest_queued": 1794249479,
-   "pending": [],
+   "queued_events": 45,
+   "latest_queued": 1794845271,
+   "pending": [
+    {
+     "block": 524795322,
+     "tx": "0x1fa9b1023b635f2a78ba24c3be0fc9bb7813c27f6c988acb2b1a790188e72154",
+     "id": "0xe7f3cd54d77c68bb907bd096fa6d8623f06110fbb6ccb3d29063fe15f3f7649d",
+     "index": 0,
+     "target": "0x5126A82E52F78B73fdE29B0D9800170e77AbfdcA",
+     "value": 0,
+     "selector": "0xd59b2fdb",
+     "delay": 86400,
+     "signature": "setLzDelegate(address)",
+     "calls": 1,
+     "ready_at": 1794931671,
+     "state": "waiting",
+     "decoded": "parameter change"
+    }
+   ],
    "recent": [
     {
      "block": 522136032,
@@ -614,12 +630,27 @@
      "still_queued": false,
      "queued_at": 1794249479,
      "decoded": "parameter change"
+    },
+    {
+     "block": 524795322,
+     "tx": "0x1fa9b1023b635f2a78ba24c3be0fc9bb7813c27f6c988acb2b1a790188e72154",
+     "id": "0xe7f3cd54d77c68bb907bd096fa6d8623f06110fbb6ccb3d29063fe15f3f7649d",
+     "index": 0,
+     "target": "0x5126A82E52F78B73fdE29B0D9800170e77AbfdcA",
+     "value": 0,
+     "selector": "0xd59b2fdb",
+     "delay": 86400,
+     "signature": "setLzDelegate(address)",
+     "calls": 1,
+     "still_queued": true,
+     "queued_at": 1794845271,
+     "decoded": "parameter change"
     }
    ],
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 4335483,
+   "window_blocks": 4274204,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -639,7 +670,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 4320000,
+   "window_blocks": 4289361,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -711,7 +742,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/mainnet",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 100598,
+   "window_blocks": 100398,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -777,10 +808,72 @@
    "address": "0x4d6ce4f4498d59eed397bcbc687805a07f9b2346",
    "family": "oz",
    "status": "ok",
-   "queued_events": 0,
-   "latest_queued": null,
-   "pending": [],
-   "recent": [],
+   "queued_events": 2,
+   "latest_queued": 1794845506,
+   "pending": [
+    {
+     "block": 37902050,
+     "tx": "0xdab19286beeabb1c3b30315045ac74ae6db139b8c1db533344ca5b0b712300e2",
+     "id": "0xad439f3c48e2b1cf9de9b2448c5ccd48f96f48ae5d8accf2b0eda662866e4215",
+     "index": 0,
+     "target": "0x9926955e0Dd681Dc303370C52f4Ad0a4dd061687",
+     "value": 0,
+     "selector": "0xcf1a0ddc",
+     "delay": 86400,
+     "signature": "updateMaster()",
+     "calls": 1,
+     "ready_at": 1794931834,
+     "state": "waiting",
+     "decoded": "parameter change"
+    },
+    {
+     "block": 37902122,
+     "tx": "0x90fde7d5ffca20a2eb747b78d29e146f4886f774884174bd717c208b9508bcf4",
+     "id": "0x848414b8c617be83c29d04227e86fdc1cfff4c8611b63d3c3254ffd97930c04d",
+     "index": 0,
+     "target": "0x5126A82E52F78B73fdE29B0D9800170e77AbfdcA",
+     "value": 0,
+     "selector": "0xd59b2fdb",
+     "delay": 86400,
+     "signature": "setLzDelegate(address)",
+     "calls": 1,
+     "ready_at": 1794931906,
+     "state": "waiting",
+     "decoded": "parameter change"
+    }
+   ],
+   "recent": [
+    {
+     "block": 37902050,
+     "tx": "0xdab19286beeabb1c3b30315045ac74ae6db139b8c1db533344ca5b0b712300e2",
+     "id": "0xad439f3c48e2b1cf9de9b2448c5ccd48f96f48ae5d8accf2b0eda662866e4215",
+     "index": 0,
+     "target": "0x9926955e0Dd681Dc303370C52f4Ad0a4dd061687",
+     "value": 0,
+     "selector": "0xcf1a0ddc",
+     "delay": 86400,
+     "signature": "updateMaster()",
+     "calls": 1,
+     "still_queued": true,
+     "queued_at": 1794845434,
+     "decoded": "parameter change"
+    },
+    {
+     "block": 37902122,
+     "tx": "0x90fde7d5ffca20a2eb747b78d29e146f4886f774884174bd717c208b9508bcf4",
+     "id": "0x848414b8c617be83c29d04227e86fdc1cfff4c8611b63d3c3254ffd97930c04d",
+     "index": 0,
+     "target": "0x5126A82E52F78B73fdE29B0D9800170e77AbfdcA",
+     "value": 0,
+     "selector": "0xd59b2fdb",
+     "delay": 86400,
+     "signature": "setLzDelegate(address)",
+     "calls": 1,
+     "still_queued": true,
+     "queued_at": 1794845506,
+     "decoded": "parameter change"
+    }
+   ],
    "discovered": true,
    "log_rpc": "https://rpc.plasma.to",
    "delay": 86400,
@@ -906,9 +999,9 @@
    ]
   }
  ],
- "discovered_utc": "2026-11-16T13:15:00Z",
+ "discovered_utc": "2026-11-16T19:12:04Z",
  "discovered": 15,
- "squads_utc": "2026-11-16T13:21:11Z",
+ "squads_utc": "2026-11-16T19:18:57Z",
  "not_shown": [
   "squads"
  ]

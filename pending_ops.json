@@ -538,7 +538,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 3876923,
+   "window_blocks": 4351079,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -650,7 +650,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 3876923,
+   "window_blocks": 4351079,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -670,7 +670,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 3864536,
+   "window_blocks": 4366787,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -726,7 +726,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/mainnet",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 100498,
+   "window_blocks": 100298,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -922,7 +922,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 0,
    "window_blocks": 3000000,
-   "window_days_est": 3.7,
+   "window_days_est": 3.5,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62"
@@ -942,7 +942,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 86400,
    "window_blocks": 3000000,
-   "window_days_est": 3.7,
+   "window_days_est": 3.4,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x14b107cf534239c59571b066cb6497a321da897c"
@@ -983,9 +983,9 @@
    ]
   }
  ],
- "discovered_utc": "2026-11-17T07:11:46Z",
+ "discovered_utc": "2026-11-17T13:12:05Z",
  "discovered": 15,
- "squads_utc": "2026-11-17T07:18:35Z",
+ "squads_utc": "2026-11-17T13:18:22Z",
  "not_shown": [
   "squads"
  ]

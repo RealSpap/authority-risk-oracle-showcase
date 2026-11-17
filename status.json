@@ -1,10 +1,11 @@
 {
- "run_utc": "2026-11-17T13:01:08Z",
+ "run_utc": "2026-11-17T19:00:44Z",
  "state": "degraded",
  "health": {
   "state": "degraded",
   "reasons": [
-   "role scan incomplete on 1 oracle(s) (hyperliquid-hyperevm), 87604 blocks not read yet: a role event inside them was not seen yet"
+   "1 alarm(s) about the Watch's own reading (a hole in the role scan, an oracle not read)",
+   "role scan incomplete on 1 oracle(s) (hyperliquid-hyperevm), 109560 blocks not read yet: a role event inside them was not seen yet"
   ]
  },
  "findings": {
@@ -14,7 +15,8 @@
   ]
  },
  "reasons": [
-  "role scan incomplete on 1 oracle(s) (hyperliquid-hyperevm), 87604 blocks not read yet: a role event inside them was not seen yet",
+  "1 alarm(s) about the Watch's own reading (a hole in the role scan, an oracle not read)",
+  "role scan incomplete on 1 oracle(s) (hyperliquid-hyperevm), 109560 blocks not read yet: a role event inside them was not seen yet",
   "1 retired target(s) listed apart, not counted stale (information, no change of state; names in latest.json `retired`)",
   "3 second-opinion disagreement(s) to review",
   "9 second-opinion disagreement(s) corroborated: the reader itself read and verified a second, weaker authority path on chain (listed in second_opinion.json under corroborated_disagreements with the facts read, recomputed at every run, not counted as a disagreement to review)",
@@ -27,11 +29,11 @@
   "targets": 202,
   "stale": 0,
   "retired": 1,
-  "alarms": 0,
+  "alarms": 1,
   "unread": [],
-  "role_scan_behind_blocks": 87604,
+  "role_scan_behind_blocks": 109560,
   "chain_ok": true,
-  "chain_entries": 309,
+  "chain_entries": 310,
   "signed": true,
   "signature_status": "signed",
   "signing_key": "11baca3ef6a69de4901c185f6cbbd3f93318fbb74f9961a8d39aead841adf409",
@@ -45,12 +47,12 @@
   },
   "methodology_mixed": 0,
   "disputes_open": 0,
-  "review_items": 46
+  "review_items": 50
  },
  "what": "the run's health in one record: ok / degraded / alarm with the reasons; written by scripts/run_status.py after every Watch run",
  "main_last_commit_age_days": 1,
- "runs_7d": 24,
- "previous_run_utc": "2026-11-17T07:00:51Z",
+ "runs_7d": 25,
+ "previous_run_utc": "2026-11-17T13:01:08Z",
  "hours_since_previous_run": 6.0,
- "run_id": "44088434195.1"
+ "run_id": "44153886215.1"
 }

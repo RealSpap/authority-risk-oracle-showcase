@@ -1,6 +1,6 @@
 {
- "evaluated_utc": "2026-11-17T13:18:38Z",
- "run_utc": "2026-11-17T13:01:08Z",
+ "evaluated_utc": "2026-11-17T19:18:50Z",
+ "run_utc": "2026-11-17T19:00:44Z",
  "rules": [
   "score dropped by 10 or more",
   "score fell under 40",
@@ -27,6 +27,124 @@
  ],
  "active": [
   {
+   "rule": "a queued change against this contract executes within 48 h",
+   "severity": "medium",
+   "chain": "Ethereum L1",
+   "target": "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34",
+   "title": "Ethena USDe",
+   "score": 57,
+   "delta": 0,
+   "tvl_usd": 4850739025.79722,
+   "first_seen": "2026-11-17T19:18:50Z",
+   "new": true,
+   "evidence": [
+    {
+     "timelock": "Ethena Timelock",
+     "timelock_address": "0xE8Dc0Fab349EA169283C48Ccfd09d797E6DB7c94",
+     "family": "oz",
+     "id": "0x108ea49a961a00e8992ad4aed2e1faea43b0a47982e0c62d63f9db03ddb4d0f4",
+     "chain": "ethereum",
+     "tx": "0x955de27d8c6ddd9ba6441d13b4e2f835565de992bddf7b973daeaf07c1050619",
+     "selector": "0x46f943e9",
+     "signature": "setRateLimits((uint32,uint256,uint256)[])",
+     "ready_at": 1795013567,
+     "state": "waiting"
+    }
+   ],
+   "reading": {
+    "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
+    "oracle_block": 12156335,
+    "oracle_read_at": 1794942059,
+    "composite": 57,
+    "previous_composite": 57,
+    "score_last_updated": 1794402258,
+    "second_opinion": {
+     "kind": "timelock",
+     "path": "owner()",
+     "block_start": 26436777,
+     "block_end": 26436779,
+     "read_gap_seconds": 716,
+     "since_score_push_seconds": 540517
+    },
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12156335",
+    "reproduce_exact": false
+   },
+   "previous_run": "2026-11-17T13:01:08Z",
+   "notified": true,
+   "delivered": []
+  },
+  {
+   "rule": "a queued change against this contract executes within 48 h",
+   "severity": "medium",
+   "chain": "Ethereum L1",
+   "target": "0xe3490297a08d6fc8da46edb7b6142e4f461b62d3",
+   "title": "Ethena USDe",
+   "score": 73,
+   "delta": 0,
+   "tvl_usd": 4850739025.79722,
+   "first_seen": "2026-11-17T19:18:50Z",
+   "new": true,
+   "evidence": [
+    {
+     "timelock": "Ethena Timelock",
+     "timelock_address": "0xE8Dc0Fab349EA169283C48Ccfd09d797E6DB7c94",
+     "family": "oz",
+     "id": "0xb0289f92009409e09b8b87150e10486ab753b7c13d049702caca3221a622d81a",
+     "chain": "ethereum",
+     "tx": "0xbcf11bd519b40a4b7532729e94bf586230e3357619a29d4ad219dff671214d44",
+     "selector": "0x6c2cd30f",
+     "signature": "setGlobalMaxMintPerBlock(uint128)",
+     "ready_at": 1795011647,
+     "state": "waiting"
+    },
+    {
+     "timelock": "Ethena Timelock",
+     "timelock_address": "0xE8Dc0Fab349EA169283C48Ccfd09d797E6DB7c94",
+     "family": "oz",
+     "id": "0xca0563b0bebee6c971db36df24ef8c5802ad4007f7fb42bff2f553141c8ed835",
+     "chain": "ethereum",
+     "tx": "0xf741fef303c8d26fce0ce84892312255d3ea6279540581ec80f1a32f5ae8e48d",
+     "selector": "0x1c46bc6f",
+     "signature": "removeSupportedAsset(address)",
+     "ready_at": 1795011731,
+     "state": "waiting"
+    },
+    {
+     "timelock": "Ethena Timelock",
+     "timelock_address": "0xE8Dc0Fab349EA169283C48Ccfd09d797E6DB7c94",
+     "family": "oz",
+     "id": "0x070a0ab4df4b4d69e23ed817c62481d267dae887ed7f7b5fbc7cffa5ff64228d",
+     "chain": "ethereum",
+     "tx": "0x86e7822351b7e364e57cee07a3f2274e3edcb44eabd4f77f8a053098d43f654f",
+     "selector": "0x4be7a64b",
+     "signature": "addCustodianAddress(address)",
+     "ready_at": 1795013615,
+     "state": "waiting"
+    }
+   ],
+   "reading": {
+    "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
+    "oracle_block": 12156335,
+    "oracle_read_at": 1794942059,
+    "composite": 73,
+    "previous_composite": 73,
+    "score_last_updated": 1794402258,
+    "second_opinion": {
+     "kind": "timelock",
+     "path": "owner()",
+     "block_start": 26436777,
+     "block_end": 26436779,
+     "read_gap_seconds": 716,
+     "since_score_push_seconds": 540517
+    },
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xe3490297a08d6fc8da46edb7b6142e4f461b62d3 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12156335",
+    "reproduce_exact": false
+   },
+   "previous_run": "2026-11-17T13:01:08Z",
+   "notified": true,
+   "delivered": []
+  },
+  {
    "rule": "the independent reader disagrees with the admin-key score, with money behind it",
    "severity": "medium",
    "chain": "Hyperliquid",
@@ -34,31 +152,30 @@
    "title": "Kinetiq kmHYPE",
    "score": 4,
    "delta": 0,
-   "tvl_usd": 33945903.90420028,
+   "tvl_usd": 33605654.13174922,
    "first_seen": "2026-11-17T13:18:38Z",
-   "new": true,
+   "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 69865174,
-    "oracle_read_at": 1794920659,
+    "oracle_block": 69887130,
+    "oracle_read_at": 1794942257,
     "composite": 4,
     "previous_composite": 4,
     "score_last_updated": 1794349795,
     "second_opinion": {
      "kind": "safe",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 51508644,
-     "block_end": 51508654,
-     "read_gap_seconds": 551,
-     "since_score_push_seconds": 571415
+     "block_start": 51530590,
+     "block_end": 51530599,
+     "read_gap_seconds": 539,
+     "since_score_push_seconds": 593001
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec --rpc-url https://998.rpc.thirdweb.com --block 69865174",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec --rpc-url https://998.rpc.thirdweb.com --block 69887130",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-17T07:00:51Z",
-   "notified": true,
-   "delivered": []
+   "previous_run": "2026-11-17T13:01:08Z",
+   "notified": true
   },
   {
    "rule": "the independent reader disagrees with the admin-key score, with money behind it",
@@ -68,31 +185,30 @@
    "title": "Kinetiq kHYPE",
    "score": 4,
    "delta": 0,
-   "tvl_usd": 688481548.8249625,
+   "tvl_usd": 679372450.5097091,
    "first_seen": "2026-11-17T13:18:38Z",
-   "new": true,
+   "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 69865174,
-    "oracle_read_at": 1794920659,
+    "oracle_block": 69887130,
+    "oracle_read_at": 1794942257,
     "composite": 4,
     "previous_composite": 4,
     "score_last_updated": 1794349795,
     "second_opinion": {
      "kind": "safe",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 51508644,
-     "block_end": 51508654,
-     "read_gap_seconds": 555,
-     "since_score_push_seconds": 571419
+     "block_start": 51530590,
+     "block_end": 51530599,
+     "read_gap_seconds": 543,
+     "since_score_push_seconds": 593005
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x393d0b87ed38fc779fd9611144ae649ba6082109 --rpc-url https://998.rpc.thirdweb.com --block 69865174",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x393d0b87ed38fc779fd9611144ae649ba6082109 --rpc-url https://998.rpc.thirdweb.com --block 69887130",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-17T07:00:51Z",
-   "notified": true,
-   "delivered": []
+   "previous_run": "2026-11-17T13:01:08Z",
+   "notified": true
   },
   {
    "rule": "an admin transfer is in flight: a new owner or admin is designated and has not accepted yet (pendingOwner / pendingAdmin)",
@@ -108,23 +224,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 154524649,
-    "oracle_read_at": 1794920470,
+    "oracle_block": 154638133,
+    "oracle_read_at": 1794942054,
     "composite": 1,
     "previous_composite": 1,
     "score_last_updated": 1794350120,
     "second_opinion": {
      "kind": "eoa",
      "path": "owner()",
-     "block_start": 116603720,
-     "block_end": 116604177,
-     "read_gap_seconds": 871,
-     "since_score_push_seconds": 571221
+     "block_start": 116815450,
+     "block_end": 116816045,
+     "read_gap_seconds": 886,
+     "since_score_push_seconds": 592820
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 154524649",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 154638133",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-17T07:00:51Z",
+   "previous_run": "2026-11-17T13:01:08Z",
    "notified": true
   }
  ],
@@ -137,8 +253,8 @@
    "target": "0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d",
    "title": "0xfe7e\u20269b0d",
    "first_seen": "2026-10-10T21:14:27Z",
-   "last_seen": "2026-11-17T13:18:38Z",
-   "times": 141,
+   "last_seen": "2026-11-17T19:18:50Z",
+   "times": 142,
    "score": 1,
    "delta": 0,
    "tvl_usd": null
@@ -151,11 +267,11 @@
    "target": "0x393d0b87ed38fc779fd9611144ae649ba6082109",
    "title": "Kinetiq kHYPE",
    "first_seen": "2026-11-17T13:18:38Z",
-   "last_seen": "2026-11-17T13:18:38Z",
-   "times": 125,
+   "last_seen": "2026-11-17T19:18:50Z",
+   "times": 126,
    "score": 4,
    "delta": 0,
-   "tvl_usd": 688481548.8249625
+   "tvl_usd": 679372450.5097091
   },
   {
    "key": "the independent reader disagrees with the admin-key score, with money behind it|hyperliquid:0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec",
@@ -165,11 +281,39 @@
    "target": "0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec",
    "title": "Kinetiq kmHYPE",
    "first_seen": "2026-11-17T13:18:38Z",
-   "last_seen": "2026-11-17T13:18:38Z",
-   "times": 133,
+   "last_seen": "2026-11-17T19:18:50Z",
+   "times": 134,
    "score": 4,
    "delta": 0,
-   "tvl_usd": 33945903.90420028
+   "tvl_usd": 33605654.13174922
+  },
+  {
+   "key": "a queued change against this contract executes within 48 h|ethereum-l1:0xe3490297a08d6fc8da46edb7b6142e4f461b62d3",
+   "rule": "a queued change against this contract executes within 48 h",
+   "severity": "medium",
+   "chain": "Ethereum L1",
+   "target": "0xe3490297a08d6fc8da46edb7b6142e4f461b62d3",
+   "title": "Ethena USDe",
+   "first_seen": "2026-11-17T19:18:50Z",
+   "last_seen": "2026-11-17T19:18:50Z",
+   "times": 3,
+   "score": 73,
+   "delta": 0,
+   "tvl_usd": 4850739025.79722
+  },
+  {
+   "key": "a queued change against this contract executes within 48 h|ethereum-l1:0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34",
+   "rule": "a queued change against this contract executes within 48 h",
+   "severity": "medium",
+   "chain": "Ethereum L1",
+   "target": "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34",
+   "title": "Ethena USDe",
+   "first_seen": "2026-11-17T19:18:50Z",
+   "last_seen": "2026-11-17T19:18:50Z",
+   "times": 1,
+   "score": 57,
+   "delta": 0,
+   "tvl_usd": 4850739025.79722
   },
   {
    "key": "an upgrade was executed: the implementation behind this contract changed since the previous run|solana:JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
@@ -254,20 +398,6 @@
    "score": 54,
    "delta": 0,
    "tvl_usd": 732292509.0536165
-  },
-  {
-   "key": "a queued change against this contract executes within 48 h|ethereum-l1:0xe3490297a08d6fc8da46edb7b6142e4f461b62d3",
-   "rule": "a queued change against this contract executes within 48 h",
-   "severity": "medium",
-   "chain": "Ethereum L1",
-   "target": "0xe3490297a08d6fc8da46edb7b6142e4f461b62d3",
-   "title": "Ethena USDe",
-   "first_seen": "2026-11-13T20:01:56Z",
-   "last_seen": "2026-11-14T06:39:31Z",
-   "times": 2,
-   "score": 73,
-   "delta": 0,
-   "tvl_usd": 4909847739.914477
   },
   {
    "key": "the live admin of this contract changed since the previous run (independent read)|solana:FL3X2pRsQ9zHENpZSKDRREtccwJuei8yg9fwDu9UN69Q",

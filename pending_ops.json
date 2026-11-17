@@ -248,9 +248,70 @@
    "address": "0xE8Dc0Fab349EA169283C48Ccfd09d797E6DB7c94",
    "family": "oz",
    "status": "ok",
-   "queued_events": 236,
-   "latest_queued": 1794565343,
-   "pending": [],
+   "queued_events": 249,
+   "latest_queued": 1794927215,
+   "pending": [
+    {
+     "block": 26435324,
+     "tx": "0xbcf11bd519b40a4b7532729e94bf586230e3357619a29d4ad219dff671214d44",
+     "id": "0xb0289f92009409e09b8b87150e10486ab753b7c13d049702caca3221a622d81a",
+     "index": 0,
+     "target": "0xe3490297a08d6fC8Da46Edb7B6142E4F461b62D3",
+     "value": 0,
+     "selector": "0x6c2cd30f",
+     "delay": 86400,
+     "signature": "setGlobalMaxMintPerBlock(uint128)",
+     "calls": 9,
+     "ready_at": 1795011647,
+     "state": "waiting",
+     "decoded": "parameter change"
+    },
+    {
+     "block": 26435331,
+     "tx": "0xf741fef303c8d26fce0ce84892312255d3ea6279540581ec80f1a32f5ae8e48d",
+     "id": "0xca0563b0bebee6c971db36df24ef8c5802ad4007f7fb42bff2f553141c8ed835",
+     "index": 0,
+     "target": "0xe3490297a08d6fC8Da46Edb7B6142E4F461b62D3",
+     "value": 0,
+     "selector": "0x1c46bc6f",
+     "delay": 86400,
+     "signature": "removeSupportedAsset(address)",
+     "calls": 1,
+     "ready_at": 1795011731,
+     "state": "waiting",
+     "decoded": "parameter change"
+    },
+    {
+     "block": 26435484,
+     "tx": "0x955de27d8c6ddd9ba6441d13b4e2f835565de992bddf7b973daeaf07c1050619",
+     "id": "0x108ea49a961a00e8992ad4aed2e1faea43b0a47982e0c62d63f9db03ddb4d0f4",
+     "index": 0,
+     "target": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+     "value": 0,
+     "selector": "0x46f943e9",
+     "delay": 86400,
+     "signature": "setRateLimits((uint32,uint256,uint256)[])",
+     "calls": 2,
+     "ready_at": 1795013567,
+     "state": "waiting",
+     "decoded": "parameter change"
+    },
+    {
+     "block": 26435488,
+     "tx": "0x86e7822351b7e364e57cee07a3f2274e3edcb44eabd4f77f8a053098d43f654f",
+     "id": "0x070a0ab4df4b4d69e23ed817c62481d267dae887ed7f7b5fbc7cffa5ff64228d",
+     "index": 0,
+     "target": "0xe3490297a08d6fC8Da46Edb7B6142E4F461b62D3",
+     "value": 0,
+     "selector": "0x4be7a64b",
+     "delay": 86400,
+     "signature": "addCustodianAddress(address)",
+     "calls": 1,
+     "ready_at": 1795013615,
+     "state": "waiting",
+     "decoded": "parameter change"
+    }
+   ],
    "recent": [
     {
      "block": 26347868,
@@ -298,6 +359,70 @@
      "still_queued": false,
      "final_state": "executed",
      "queued_at": 1794565343,
+     "decoded": "parameter change"
+    },
+    {
+     "block": 26435324,
+     "tx": "0xbcf11bd519b40a4b7532729e94bf586230e3357619a29d4ad219dff671214d44",
+     "id": "0xb0289f92009409e09b8b87150e10486ab753b7c13d049702caca3221a622d81a",
+     "index": 0,
+     "target": "0xe3490297a08d6fC8Da46Edb7B6142E4F461b62D3",
+     "value": 0,
+     "selector": "0x6c2cd30f",
+     "delay": 86400,
+     "signature": "setGlobalMaxMintPerBlock(uint128)",
+     "calls": 9,
+     "still_queued": true,
+     "final_state": null,
+     "queued_at": 1794925247,
+     "decoded": "parameter change"
+    },
+    {
+     "block": 26435331,
+     "tx": "0xf741fef303c8d26fce0ce84892312255d3ea6279540581ec80f1a32f5ae8e48d",
+     "id": "0xca0563b0bebee6c971db36df24ef8c5802ad4007f7fb42bff2f553141c8ed835",
+     "index": 0,
+     "target": "0xe3490297a08d6fC8Da46Edb7B6142E4F461b62D3",
+     "value": 0,
+     "selector": "0x1c46bc6f",
+     "delay": 86400,
+     "signature": "removeSupportedAsset(address)",
+     "calls": 1,
+     "still_queued": true,
+     "final_state": null,
+     "queued_at": 1794925331,
+     "decoded": "parameter change"
+    },
+    {
+     "block": 26435484,
+     "tx": "0x955de27d8c6ddd9ba6441d13b4e2f835565de992bddf7b973daeaf07c1050619",
+     "id": "0x108ea49a961a00e8992ad4aed2e1faea43b0a47982e0c62d63f9db03ddb4d0f4",
+     "index": 0,
+     "target": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+     "value": 0,
+     "selector": "0x46f943e9",
+     "delay": 86400,
+     "signature": "setRateLimits((uint32,uint256,uint256)[])",
+     "calls": 2,
+     "still_queued": true,
+     "final_state": null,
+     "queued_at": 1794927167,
+     "decoded": "parameter change"
+    },
+    {
+     "block": 26435488,
+     "tx": "0x86e7822351b7e364e57cee07a3f2274e3edcb44eabd4f77f8a053098d43f654f",
+     "id": "0x070a0ab4df4b4d69e23ed817c62481d267dae887ed7f7b5fbc7cffa5ff64228d",
+     "index": 0,
+     "target": "0xe3490297a08d6fC8Da46Edb7B6142E4F461b62D3",
+     "value": 0,
+     "selector": "0x4be7a64b",
+     "delay": 86400,
+     "signature": "addCustodianAddress(address)",
+     "calls": 1,
+     "still_queued": true,
+     "final_state": null,
+     "queued_at": 1794927215,
      "decoded": "parameter change"
     }
    ],
@@ -538,7 +663,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 4351079,
+   "window_blocks": 3780000,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -566,7 +691,7 @@
      "signature": "setLzDelegate(address)",
      "calls": 1,
      "ready_at": 1794931671,
-     "state": "waiting",
+     "state": "ready",
      "decoded": "parameter change"
     }
    ],
@@ -650,7 +775,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 4351079,
+   "window_blocks": 3768224,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -670,7 +795,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 4366787,
+   "window_blocks": 3756521,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -726,7 +851,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/mainnet",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 100298,
+   "window_blocks": 100498,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -807,7 +932,7 @@
      "signature": "updateMaster()",
      "calls": 1,
      "ready_at": 1794931834,
-     "state": "waiting",
+     "state": "ready",
      "decoded": "parameter change"
     },
     {
@@ -822,7 +947,7 @@
      "signature": "setLzDelegate(address)",
      "calls": 1,
      "ready_at": 1794931906,
-     "state": "waiting",
+     "state": "ready",
      "decoded": "parameter change"
     }
    ],
@@ -922,7 +1047,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 0,
    "window_blocks": 3000000,
-   "window_days_est": 3.5,
+   "window_days_est": 3.6,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62"
@@ -942,7 +1067,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 86400,
    "window_blocks": 3000000,
-   "window_days_est": 3.4,
+   "window_days_est": 3.6,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x14b107cf534239c59571b066cb6497a321da897c"
@@ -983,9 +1108,9 @@
    ]
   }
  ],
- "discovered_utc": "2026-11-17T13:12:05Z",
+ "discovered_utc": "2026-11-17T19:11:42Z",
  "discovered": 15,
- "squads_utc": "2026-11-17T13:18:22Z",
+ "squads_utc": "2026-11-17T19:18:38Z",
  "not_shown": [
   "squads"
  ]

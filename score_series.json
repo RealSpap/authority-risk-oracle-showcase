@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-11-17T13:18:38Z",
+ "run_utc": "2026-11-17T19:18:50Z",
  "targets": 202,
  "moves_recorded": 40,
  "series": {
@@ -2493,15 +2493,15 @@
  },
  "calibration": {
   "window_days": 14,
-  "actions": 26,
+  "actions": 30,
   "excluded_undecoded": 0,
   "excluded_other_target": 0,
   "under_40": 6,
   "by_band": {
    "critical": 0,
    "weak": 6,
-   "moderate": 13,
-   "decent": 7,
+   "moderate": 14,
+   "decent": 10,
    "strong": 0
   },
   "list": [
@@ -2738,6 +2738,42 @@
     "tx": null,
     "score_then": 47,
     "band_then": "moderate"
+   },
+   {
+    "kind": "timelock op queued (parameter change)",
+    "key": "ethereum-l1:0xe3490297a08d6fc8da46edb7b6142e4f461b62d3",
+    "t": "2026-11-17T14:20:47Z",
+    "via": "Ethena Timelock",
+    "tx": "0xbcf11bd519b40a4b7532729e94bf586230e3357619a29d4ad219dff671214d44",
+    "score_then": 73,
+    "band_then": "decent"
+   },
+   {
+    "kind": "timelock op queued (parameter change)",
+    "key": "ethereum-l1:0xe3490297a08d6fc8da46edb7b6142e4f461b62d3",
+    "t": "2026-11-17T14:22:11Z",
+    "via": "Ethena Timelock",
+    "tx": "0xf741fef303c8d26fce0ce84892312255d3ea6279540581ec80f1a32f5ae8e48d",
+    "score_then": 73,
+    "band_then": "decent"
+   },
+   {
+    "kind": "timelock op queued (parameter change)",
+    "key": "ethereum-l1:0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34",
+    "t": "2026-11-17T14:52:47Z",
+    "via": "Ethena Timelock",
+    "tx": "0x955de27d8c6ddd9ba6441d13b4e2f835565de992bddf7b973daeaf07c1050619",
+    "score_then": 57,
+    "band_then": "moderate"
+   },
+   {
+    "kind": "timelock op queued (parameter change)",
+    "key": "ethereum-l1:0xe3490297a08d6fc8da46edb7b6142e4f461b62d3",
+    "t": "2026-11-17T14:53:35Z",
+    "via": "Ethena Timelock",
+    "tx": "0x86e7822351b7e364e57cee07a3f2274e3edcb44eabd4f77f8a053098d43f654f",
+    "score_then": 73,
+    "band_then": "decent"
    }
   ],
   "read_as": "every authority action the watch observed in the window (a timelock operation queued or executed against a tracked contract, an admin change read independently) and the composite score the contract carried at that moment. Small counts prove little; the file grows with every run and the chained log keeps every move"

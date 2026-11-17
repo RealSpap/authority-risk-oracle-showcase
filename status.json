@@ -1,22 +1,22 @@
 {
- "run_utc": "2026-11-17T01:00:45Z",
+ "run_utc": "2026-11-17T07:00:51Z",
  "state": "degraded",
  "health": {
   "state": "degraded",
   "reasons": [
-   "role scan incomplete on 1 oracle(s) (hyperliquid-hyperevm), 43729 blocks not read yet: a role event inside them was not seen yet"
+   "role scan incomplete on 1 oracle(s) (hyperliquid-hyperevm), 65630 blocks not read yet: a role event inside them was not seen yet"
   ]
  },
  "findings": {
   "state": "degraded",
   "reasons": [
-   "3 second-opinion disagreement(s) to review"
+   "1 second-opinion disagreement(s) to review"
   ]
  },
  "reasons": [
-  "role scan incomplete on 1 oracle(s) (hyperliquid-hyperevm), 43729 blocks not read yet: a role event inside them was not seen yet",
+  "role scan incomplete on 1 oracle(s) (hyperliquid-hyperevm), 65630 blocks not read yet: a role event inside them was not seen yet",
   "1 retired target(s) listed apart, not counted stale (information, no change of state; names in latest.json `retired`)",
-  "3 second-opinion disagreement(s) to review",
+  "1 second-opinion disagreement(s) to review",
   "9 second-opinion disagreement(s) corroborated: the reader itself read and verified a second, weaker authority path on chain (listed in second_opinion.json under corroborated_disagreements with the facts read, recomputed at every run, not counted as a disagreement to review)",
   "method hash not in registry on 1 oracle(s): no version is shown for it (data/method_versions.json)"
  ],
@@ -29,28 +29,28 @@
   "retired": 1,
   "alarms": 0,
   "unread": [],
-  "role_scan_behind_blocks": 43729,
+  "role_scan_behind_blocks": 65630,
   "chain_ok": true,
   "chain_entries": 309,
   "signed": true,
   "signature_status": "signed",
   "signing_key": "11baca3ef6a69de4901c185f6cbbd3f93318fbb74f9961a8d39aead841adf409",
   "second_opinion": {
-   "agree": 135,
-   "disagree": 3,
+   "agree": 134,
+   "disagree": 1,
    "corroborated": 9,
    "acknowledged": 0,
-   "unreadable": 39,
+   "unreadable": 42,
    "native": 16
   },
   "methodology_mixed": 0,
   "disputes_open": 0,
-  "review_items": 47
+  "review_items": 44
  },
  "what": "the run's health in one record: ok / degraded / alarm with the reasons; written by scripts/run_status.py after every Watch run",
  "main_last_commit_age_days": 0,
- "runs_7d": 22,
- "previous_run_utc": "2026-11-16T20:16:05Z",
- "hours_since_previous_run": 4.7,
- "run_id": "43992152204.1"
+ "runs_7d": 23,
+ "previous_run_utc": "2026-11-17T01:00:45Z",
+ "hours_since_previous_run": 6.0,
+ "run_id": "44035364081.1"
 }

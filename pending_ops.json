@@ -28,22 +28,6 @@
    "pending": [],
    "recent": [
     {
-     "block": 26337073,
-     "tx": "0x03e876e4fad5867d3dc27e838189b1ec2611983e5b9c54d353ec27a77679fa33",
-     "id": "0x768443615fbdd96792a1aee9d44b8bd95e1c2028e2dbda540db72830f32dc730",
-     "index": 0,
-     "target": "0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
-     "value": 0,
-     "eta": 1793915387,
-     "selector": "0x3dbb202b",
-     "signature": "sendMessage(address,bytes,uint32)",
-     "calls": 1,
-     "still_queued": false,
-     "final_state": "executed",
-     "queued_at": 1793742587,
-     "decoded": "cross-chain message"
-    },
-    {
      "block": 26350520,
      "tx": "0xcfb5a7ffe4b60ca85a24f96e3ac7793ea3776e82ee5acd2c0a25700f6b856f66",
      "id": "0x31788560395a3db04e3fa7c79b58eb9a1a7ccc72ecb020c3d4865dfd76d44cef",
@@ -663,7 +647,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 3780000,
+   "window_blocks": 3901935,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -775,7 +759,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 3768224,
+   "window_blocks": 3901935,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -795,7 +779,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 3756521,
+   "window_blocks": 3889389,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -851,7 +835,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/mainnet",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 100498,
+   "window_blocks": 100598,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -1047,7 +1031,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 0,
    "window_blocks": 3000000,
-   "window_days_est": 3.6,
+   "window_days_est": 3.5,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62"
@@ -1067,7 +1051,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 86400,
    "window_blocks": 3000000,
-   "window_days_est": 3.6,
+   "window_days_est": 3.5,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x14b107cf534239c59571b066cb6497a321da897c"
@@ -1108,9 +1092,9 @@
    ]
   }
  ],
- "discovered_utc": "2026-11-17T19:11:42Z",
+ "discovered_utc": "2026-11-18T01:09:51Z",
  "discovered": 15,
- "squads_utc": "2026-11-17T19:18:38Z",
+ "squads_utc": "2026-11-18T01:15:18Z",
  "not_shown": [
   "squads"
  ]

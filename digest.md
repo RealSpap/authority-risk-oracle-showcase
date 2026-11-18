@@ -3,16 +3,16 @@
 ## Needs a person, 2026-11-18T01:26:02Z: 70 item(s) (priority 1: 58, priority 2: 9, priority 3: 3); oldest 38.2 d
 
 ### Overdue: 18 priority-1 item(s) waiting for more than 2 day(s), back in the alarm
-- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (6.0 d): AddedOwner 0x61C2…0e44 (aave_payloads_guardian)
-- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (6.0 d): AddedOwner 0x2694…CbF1 (aave_payloads_guardian)
-- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (6.0 d): AddedOwner 0xb291…Afef (aave_payloads_guardian)
-- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (6.0 d): AddedOwner 0x985F…f235 (aave_payloads_guardian)
-- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (6.0 d): AddedOwner 0x9EF7…0403 (aave_payloads_guardian)
-- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (6.0 d): RemovedOwner 0xebED…FE29 (aave_payloads_guardian)
-- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (6.0 d): RemovedOwner 0xbd4D…f1F7 (aave_payloads_guardian)
-- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (6.0 d): RemovedOwner 0x936C…9EF3 (aave_payloads_guardian)
-- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (6.0 d): RemovedOwner 0x0D23…c0E9 (aave_payloads_guardian)
-- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (6.0 d): RemovedOwner 0x4C30…099f (aave_payloads_guardian)
+- **Safe AddedOwner** ethereum-l1 0xCe52…6710 (6.0 d): AddedOwner 0x61C2…0e44 (aave_payloads_guardian)
+- **Safe AddedOwner** ethereum-l1 0xCe52…6710 (6.0 d): AddedOwner 0x2694…CbF1 (aave_payloads_guardian)
+- **Safe AddedOwner** ethereum-l1 0xCe52…6710 (6.0 d): AddedOwner 0xb291…Afef (aave_payloads_guardian)
+- **Safe AddedOwner** ethereum-l1 0xCe52…6710 (6.0 d): AddedOwner 0x985F…f235 (aave_payloads_guardian)
+- **Safe AddedOwner** ethereum-l1 0xCe52…6710 (6.0 d): AddedOwner 0x9EF7…0403 (aave_payloads_guardian)
+- **Safe RemovedOwner** ethereum-l1 0xCe52…6710 (6.0 d): RemovedOwner 0xebED…FE29 (aave_payloads_guardian)
+- **Safe RemovedOwner** ethereum-l1 0xCe52…6710 (6.0 d): RemovedOwner 0xbd4D…f1F7 (aave_payloads_guardian)
+- **Safe RemovedOwner** ethereum-l1 0xCe52…6710 (6.0 d): RemovedOwner 0x936C…9EF3 (aave_payloads_guardian)
+- **Safe RemovedOwner** ethereum-l1 0xCe52…6710 (6.0 d): RemovedOwner 0x0D23…c0E9 (aave_payloads_guardian)
+- **Safe RemovedOwner** ethereum-l1 0xCe52…6710 (6.0 d): RemovedOwner 0x4C30…099f (aave_payloads_guardian)
 - **Safe AddedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (5.4 d): AddedOwner 0x25f9…7f85 (gmx_timelock_multisig, gmx_v1_vault)
 - **Safe AddedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (5.4 d): AddedOwner 0x936C…2a4e (gmx_timelock_multisig, gmx_v1_vault)
 - **Safe AddedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (5.4 d): AddedOwner 0x6091…a6F5 (gmx_timelock_multisig, gmx_v1_vault)
@@ -23,16 +23,16 @@
 - **Safe RemovedOwner** arbitrum 0x58F582455b54d7c83d03BCeed95FAf72B37fdDD7 (5.1 d): RemovedOwner 0xeAA5…12Ea (gmx_v1_vault)
 
 ### Something happened: read before trusting the score (58)
-- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (6.0 d): AddedOwner 0x61C2…0e44 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (6.0 d): AddedOwner 0x2694…CbF1 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (6.0 d): AddedOwner 0xb291…Afef (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (6.0 d): AddedOwner 0x985F…f235 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (6.0 d): AddedOwner 0x9EF7…0403 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (6.0 d): RemovedOwner 0xebED…FE29 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (6.0 d): RemovedOwner 0xbd4D…f1F7 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (6.0 d): RemovedOwner 0x936C…9EF3 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (6.0 d): RemovedOwner 0x0D23…c0E9 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** ethereum-l1 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (6.0 d): RemovedOwner 0x4C30…099f (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** ethereum-l1 0xCe52…6710 (6.0 d): AddedOwner 0x61C2…0e44 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** ethereum-l1 0xCe52…6710 (6.0 d): AddedOwner 0x2694…CbF1 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** ethereum-l1 0xCe52…6710 (6.0 d): AddedOwner 0xb291…Afef (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** ethereum-l1 0xCe52…6710 (6.0 d): AddedOwner 0x985F…f235 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** ethereum-l1 0xCe52…6710 (6.0 d): AddedOwner 0x9EF7…0403 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** ethereum-l1 0xCe52…6710 (6.0 d): RemovedOwner 0xebED…FE29 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** ethereum-l1 0xCe52…6710 (6.0 d): RemovedOwner 0xbd4D…f1F7 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** ethereum-l1 0xCe52…6710 (6.0 d): RemovedOwner 0x936C…9EF3 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** ethereum-l1 0xCe52…6710 (6.0 d): RemovedOwner 0x0D23…c0E9 (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** ethereum-l1 0xCe52…6710 (6.0 d): RemovedOwner 0x4C30…099f (aave_payloads_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (5.4 d): AddedOwner 0x25f9…7f85 (gmx_timelock_multisig, gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (5.4 d): AddedOwner 0x936C…2a4e (gmx_timelock_multisig, gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** arbitrum 0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D (5.4 d): AddedOwner 0x6091…a6F5 (gmx_timelock_multisig, gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
@@ -110,16 +110,16 @@
 - **ACT NOW** Ethereum L1 (Sepolia): 39 targets, first entry turns stale in 60 h (2026-11-20 13:04 UTC); oldest update 2026-11-11 13:04 UTC
 
 ## Safe authority changes, last 7 days
-- ethereum-l1: RemovedOwner 0xebED…FE29 on 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (aave_payloads_guardian), tx 388febf169649d55ae77665754ee44226d5f201ea03d1655602201bb090231a6
-- ethereum-l1: AddedOwner 0x61C2…0e44 on 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (aave_payloads_guardian), tx 388febf169649d55ae77665754ee44226d5f201ea03d1655602201bb090231a6
-- ethereum-l1: RemovedOwner 0xbd4D…f1F7 on 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (aave_payloads_guardian), tx 388febf169649d55ae77665754ee44226d5f201ea03d1655602201bb090231a6
-- ethereum-l1: AddedOwner 0x2694…CbF1 on 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (aave_payloads_guardian), tx 388febf169649d55ae77665754ee44226d5f201ea03d1655602201bb090231a6
-- ethereum-l1: RemovedOwner 0x936C…9EF3 on 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (aave_payloads_guardian), tx 388febf169649d55ae77665754ee44226d5f201ea03d1655602201bb090231a6
-- ethereum-l1: AddedOwner 0xb291…Afef on 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (aave_payloads_guardian), tx 388febf169649d55ae77665754ee44226d5f201ea03d1655602201bb090231a6
-- ethereum-l1: RemovedOwner 0x0D23…c0E9 on 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (aave_payloads_guardian), tx 388febf169649d55ae77665754ee44226d5f201ea03d1655602201bb090231a6
-- ethereum-l1: AddedOwner 0x985F…f235 on 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (aave_payloads_guardian), tx 388febf169649d55ae77665754ee44226d5f201ea03d1655602201bb090231a6
-- ethereum-l1: RemovedOwner 0x4C30…099f on 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (aave_payloads_guardian), tx 388febf169649d55ae77665754ee44226d5f201ea03d1655602201bb090231a6
-- ethereum-l1: AddedOwner 0x9EF7…0403 on 0xCe52ab41C40575B072A18C9700091Ccbe4A06710 (aave_payloads_guardian), tx 388febf169649d55ae77665754ee44226d5f201ea03d1655602201bb090231a6
+- ethereum-l1: RemovedOwner 0xebED…FE29 on 0xCe52…6710 (aave_payloads_guardian), tx 388febf169649d55ae77665754ee44226d5f201ea03d1655602201bb090231a6
+- ethereum-l1: AddedOwner 0x61C2…0e44 on 0xCe52…6710 (aave_payloads_guardian), tx 388febf169649d55ae77665754ee44226d5f201ea03d1655602201bb090231a6
+- ethereum-l1: RemovedOwner 0xbd4D…f1F7 on 0xCe52…6710 (aave_payloads_guardian), tx 388febf169649d55ae77665754ee44226d5f201ea03d1655602201bb090231a6
+- ethereum-l1: AddedOwner 0x2694…CbF1 on 0xCe52…6710 (aave_payloads_guardian), tx 388febf169649d55ae77665754ee44226d5f201ea03d1655602201bb090231a6
+- ethereum-l1: RemovedOwner 0x936C…9EF3 on 0xCe52…6710 (aave_payloads_guardian), tx 388febf169649d55ae77665754ee44226d5f201ea03d1655602201bb090231a6
+- ethereum-l1: AddedOwner 0xb291…Afef on 0xCe52…6710 (aave_payloads_guardian), tx 388febf169649d55ae77665754ee44226d5f201ea03d1655602201bb090231a6
+- ethereum-l1: RemovedOwner 0x0D23…c0E9 on 0xCe52…6710 (aave_payloads_guardian), tx 388febf169649d55ae77665754ee44226d5f201ea03d1655602201bb090231a6
+- ethereum-l1: AddedOwner 0x985F…f235 on 0xCe52…6710 (aave_payloads_guardian), tx 388febf169649d55ae77665754ee44226d5f201ea03d1655602201bb090231a6
+- ethereum-l1: RemovedOwner 0x4C30…099f on 0xCe52…6710 (aave_payloads_guardian), tx 388febf169649d55ae77665754ee44226d5f201ea03d1655602201bb090231a6
+- ethereum-l1: AddedOwner 0x9EF7…0403 on 0xCe52…6710 (aave_payloads_guardian), tx 388febf169649d55ae77665754ee44226d5f201ea03d1655602201bb090231a6
 - arbitrum: RemovedOwner 0xebED…FE29 on 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (aave_guardian), tx 2e83ea0dbe32b8a9244324238b879db124c5b17b38594b6eb0e2d45f7dac47cb
 - arbitrum: AddedOwner 0x61C2…0e44 on 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (aave_guardian), tx 2e83ea0dbe32b8a9244324238b879db124c5b17b38594b6eb0e2d45f7dac47cb
 - arbitrum: RemovedOwner 0xbd4D…f1F7 on 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (aave_guardian), tx 2e83ea0dbe32b8a9244324238b879db124c5b17b38594b6eb0e2d45f7dac47cb

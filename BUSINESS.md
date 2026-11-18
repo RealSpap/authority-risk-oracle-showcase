@@ -27,8 +27,7 @@ this isn't a hypothetical category:
 - LlamaRisk's **LlamaGuard PT**, built on Chainlink CRE, is this project's target
   operating model running in production: an automated oracle that pushes risk
   parameters on-chain, owned by Aave governance, with LlamaRisk holding a bounded
-  parameter-tuning role. It covers **collateral risk** (Pendle PT pricing). In what was
-  read, nothing equivalent exists yet for **authority risk**.
+  parameter-tuning role. It covers **collateral risk** (Pendle PT pricing). In what was read for this section, nothing equivalent exists for **authority risk**; tools that read authority facts do exist, see the paragraph on the gap below.
 - A related signal from Aave governance: LlamaRisk proposed a four-layer risk framework
   to Aave governance in June 2026 (announced 9 June, after the KelpDAO exploit; Unchained),
   for asset listing, review and deprecation across Aave V3, V4 and Aave Horizon. One
@@ -47,15 +46,7 @@ this isn't a hypothetical category:
   live on-chain feed of administrator authority that a third-party contract can read. This
   project sits in that gap.
 
-That's the gap: every live, paid, on-chain risk oracle found in this market covers
-market/collateral risk (prices, liquidity, LTV). None covers admin-key concentration,
-multisig weakness, timelock delay, or oracle-signer authority as a continuous,
-on-chain, independently-computed product. The closest existing offerings --
-Hypernative, Blockaid -- sell this as a closed enterprise dashboard, not a composable
-on-chain primitive, and Gauntlet/Chaos Labs/LlamaRisk are paid *by the protocol they
-rate*, the same conflict of interest this project's own prior research
-(`defi-admin-key-risk`) documented in a real incident (Wasabi Protocol, $5.9M lost,
-2026).
+That's the gap, as far as the pages read on 18 November 2026 show. Every live, paid, on-chain risk oracle found in this market covers market/collateral risk (prices, liquidity, LTV). Tools that read authority facts do exist now. [Helius Watchtower](https://github.com/helius-labs/watchtower) grades the upgrade authority, admin keys, threshold and time lock of a Solana program and alerts on changes; it runs on the user's own machine with their own Helius API key. [Staking Rewards](https://api-docs.stakingrewards.com/ratings-api/monitored-protocols) monitors the contracts of the protocols it rates (Ethereum, HyperEVM, Base and Arbitrum on that page) for contract upgrades, timelock, admin, multisig and role changes, and serves the alerts through an API. [ownerwatch](https://github.com/imal1ice/ownerwatch) is a self-hosted monitor that alerts on admin, role and proxy changes of EVM contracts. None of these three pages describes a score, or these facts, published as a contract that other contracts call, which is what this project publishes. Gauntlet, Chaos Labs and LlamaRisk are paid *by the protocol they rate*, the same conflict of interest this project's own prior research (`defi-admin-key-risk`) documented in a real incident (Wasabi Protocol, $5.9M lost, 2026).
 
 ## Where this fits: the gap a real emerging standard leaves open
 

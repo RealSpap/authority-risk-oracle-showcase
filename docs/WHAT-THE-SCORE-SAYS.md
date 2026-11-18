@@ -26,7 +26,7 @@ Read it as **exposure**. A bare key with no delay scores near 0. A well-spread m
 ## How to use it
 
 - **As a gate on exposure.** Refuse to depend on a contract whose label is stale, whose delay was not read, or whose composite is under the line you choose. [Fourteen lines do it.](../integrations/authority_facts_gate.py)
-- **Watch changes more than the static number.** Our own test points that way: the Watch reports queued operations, admin changes and signer changes as they happen, which a snapshot cannot.
+- **Watch changes more than the static number.** Our own test points that way: the Watch reports queued operations, admin changes and signer changes at its next run, hours after the change ([how long a change can stay unseen](LIMITS.md#how-long-a-change-can-stay-unseen)), which a snapshot cannot.
 - **Check it.** `python3 scripts/prove.py` replays the numbers we publish against the chain in about ten seconds.
 
 ## What would change this page

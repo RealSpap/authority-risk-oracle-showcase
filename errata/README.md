@@ -11,3 +11,4 @@ Write to contact@realspap.com, or open an issue on this repository. Give the pla
 | Entry | Date | Network concerned | What was wrong | Status |
 |---|---|---|---|---|
 | [E-2026-11-12-erc8004-validation-registry.md](E-2026-11-12-erc8004-validation-registry.md) | 2026-11-12 | Ethereum mainnet, Base mainnet and five other mainnets | An address named as the ERC-8004 ValidationRegistry in a thread post of 2026-11-06 is the team's testnet entry; the mainnet entry is a different address | Corrected |
+| [E-2026-11-16-erc8183-message-459-command.md](E-2026-11-16-erc8183-message-459-command.md) | 2026-11-16 | None (a command in a forum post) | The command of message 459 of the ERC-8183 thread could not run as displayed: typographic quotation marks in its first version, a backslash before each square bracket in its second | Corrected in place, three versions dated |

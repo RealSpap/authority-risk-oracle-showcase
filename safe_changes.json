@@ -7,8 +7,8 @@
    "events": [],
    "control": 56,
    "status": "ok",
-   "fromBlock": 111525471,
-   "toBlock": 117224565,
+   "fromBlock": 111728982,
+   "toBlock": 117426532,
    "days_read": 7
   },
   {
@@ -128,8 +128,8 @@
    ],
    "control": 16,
    "status": "ok",
-   "fromBlock": 26390134,
-   "toBlock": 26440394,
+   "fromBlock": 26391937,
+   "toBlock": 26442199,
    "days_read": 7
   },
   {
@@ -341,10 +341,10 @@
      "timestamp": 1794947369
     }
    ],
-   "control": 24,
+   "control": 30,
    "status": "ok",
-   "fromBlock": 523214091,
-   "toBlock": 525259116,
+   "fromBlock": 523287526,
+   "toBlock": 525332090,
    "days_read": 7
   },
   {
@@ -464,8 +464,8 @@
    ],
    "control": null,
    "status": "UNREAD (call budget exhausted)",
-   "fromBlock": 55955612,
-   "toBlock": 58979612,
+   "fromBlock": 56064012,
+   "toBlock": 59088015,
    "days_read": 7
   },
   {
@@ -474,8 +474,8 @@
    "events": [],
    "control": 0,
    "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 103 execution(s) from other Safes on the window's tail)",
-   "fromBlock": 48472476,
-   "toBlock": 49592360,
+   "fromBlock": 48512574,
+   "toBlock": 49632597,
    "days_read": 7,
    "control_witness": 103
   },
@@ -596,31 +596,141 @@
    ],
    "control": 7,
    "status": "ok",
-   "fromBlock": 37438386,
-   "toBlock": 38041547,
+   "fromBlock": 37460011,
+   "toBlock": 38063167,
    "days_read": 7
   },
   {
    "ecosystem": "monad",
    "safes": 13,
-   "events": [],
-   "control": 0,
-   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 2 execution(s) from other Safes on the window's tail)",
-   "fromBlock": 123156499,
-   "toBlock": 123240522,
-   "days_read": 0.3,
-   "control_witness": 2
+   "events": [
+    {
+     "name": "RemovedOwner",
+     "value": "0xebED\u2026FE29",
+     "block": 123305670,
+     "tx": "ebb1c32a055e05044cb38300e5f511e45483b48c76176c9a5995193ed46e4945",
+     "safe": "0x056E4C4E80D1D14a637ccbD0412CDAAEc5B51F4E",
+     "groups": [
+      "aave_guardian"
+     ],
+     "timestamp": 1795006747
+    },
+    {
+     "name": "AddedOwner",
+     "value": "0x61C2\u20260e44",
+     "block": 123305670,
+     "tx": "ebb1c32a055e05044cb38300e5f511e45483b48c76176c9a5995193ed46e4945",
+     "safe": "0x056E4C4E80D1D14a637ccbD0412CDAAEc5B51F4E",
+     "groups": [
+      "aave_guardian"
+     ],
+     "timestamp": 1795006747
+    },
+    {
+     "name": "RemovedOwner",
+     "value": "0xbd4D\u2026f1F7",
+     "block": 123305670,
+     "tx": "ebb1c32a055e05044cb38300e5f511e45483b48c76176c9a5995193ed46e4945",
+     "safe": "0x056E4C4E80D1D14a637ccbD0412CDAAEc5B51F4E",
+     "groups": [
+      "aave_guardian"
+     ],
+     "timestamp": 1795006747
+    },
+    {
+     "name": "AddedOwner",
+     "value": "0x2694\u2026CbF1",
+     "block": 123305670,
+     "tx": "ebb1c32a055e05044cb38300e5f511e45483b48c76176c9a5995193ed46e4945",
+     "safe": "0x056E4C4E80D1D14a637ccbD0412CDAAEc5B51F4E",
+     "groups": [
+      "aave_guardian"
+     ],
+     "timestamp": 1795006747
+    },
+    {
+     "name": "RemovedOwner",
+     "value": "0x936C\u20269EF3",
+     "block": 123305670,
+     "tx": "ebb1c32a055e05044cb38300e5f511e45483b48c76176c9a5995193ed46e4945",
+     "safe": "0x056E4C4E80D1D14a637ccbD0412CDAAEc5B51F4E",
+     "groups": [
+      "aave_guardian"
+     ],
+     "timestamp": 1795006747
+    },
+    {
+     "name": "AddedOwner",
+     "value": "0xb291\u2026Afef",
+     "block": 123305670,
+     "tx": "ebb1c32a055e05044cb38300e5f511e45483b48c76176c9a5995193ed46e4945",
+     "safe": "0x056E4C4E80D1D14a637ccbD0412CDAAEc5B51F4E",
+     "groups": [
+      "aave_guardian"
+     ],
+     "timestamp": 1795006747
+    },
+    {
+     "name": "RemovedOwner",
+     "value": "0x0D23\u2026c0E9",
+     "block": 123305670,
+     "tx": "ebb1c32a055e05044cb38300e5f511e45483b48c76176c9a5995193ed46e4945",
+     "safe": "0x056E4C4E80D1D14a637ccbD0412CDAAEc5B51F4E",
+     "groups": [
+      "aave_guardian"
+     ],
+     "timestamp": 1795006747
+    },
+    {
+     "name": "AddedOwner",
+     "value": "0x985F\u2026f235",
+     "block": 123305670,
+     "tx": "ebb1c32a055e05044cb38300e5f511e45483b48c76176c9a5995193ed46e4945",
+     "safe": "0x056E4C4E80D1D14a637ccbD0412CDAAEc5B51F4E",
+     "groups": [
+      "aave_guardian"
+     ],
+     "timestamp": 1795006747
+    },
+    {
+     "name": "RemovedOwner",
+     "value": "0x4C30\u2026099f",
+     "block": 123305670,
+     "tx": "ebb1c32a055e05044cb38300e5f511e45483b48c76176c9a5995193ed46e4945",
+     "safe": "0x056E4C4E80D1D14a637ccbD0412CDAAEc5B51F4E",
+     "groups": [
+      "aave_guardian"
+     ],
+     "timestamp": 1795006747
+    },
+    {
+     "name": "AddedOwner",
+     "value": "0x9EF7\u20260403",
+     "block": 123305670,
+     "tx": "ebb1c32a055e05044cb38300e5f511e45483b48c76176c9a5995193ed46e4945",
+     "safe": "0x056E4C4E80D1D14a637ccbD0412CDAAEc5B51F4E",
+     "groups": [
+      "aave_guardian"
+     ],
+     "timestamp": 1795006747
+    }
+   ],
+   "control": 1,
+   "status": "ok",
+   "fromBlock": 123226580,
+   "toBlock": 123310883,
+   "days_read": 0.3
   },
   {
    "ecosystem": "hyperliquid",
    "safes": 5,
    "events": [],
    "control": 0,
-   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 14 execution(s) from other Safes on the window's tail)",
-   "fromBlock": 51311851,
-   "toBlock": 51575370,
+   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 23 execution(s) from other Safes on the window's tail)",
+   "fromBlock": 51333788,
+   "toBlock": 51597308,
    "days_read": 3.0,
-   "control_witness": 14
+   "control_witness": 23
   }
  ]
 }

@@ -687,20 +687,24 @@
    "first_seen_utc": "2026-11-12T23:38:04Z",
    "due_utc": "2026-11-15T22:38:10Z",
    "notice_hours": 71.0,
-   "state": "queued",
+   "state": "resolved",
    "chain": "arbitrum",
    "timelock": "Arbitrum L2 Treasury Timelock",
-   "what": "value transfer or empty call"
+   "what": "value transfer or empty call",
+   "resolved_seen_utc": "2026-11-19T13:00:44Z",
+   "final_state": "executed"
   },
   "arbitrum:0xbfc1feca8b09a5c5d3effe7429ebe24b9c09ef58:0x292aad5b79dacbc5d884ad36d57c4bd6b79abc3caa3ca9357e1530a4c99994c2": {
    "outcome": "warned",
    "first_seen_utc": "2026-11-12T23:38:04Z",
    "due_utc": "2026-11-15T22:50:19Z",
    "notice_hours": 71.2,
-   "state": "queued",
+   "state": "resolved",
    "chain": "arbitrum",
    "timelock": "Arbitrum L2 Treasury Timelock",
-   "what": "parameter change"
+   "what": "parameter change",
+   "resolved_seen_utc": "2026-11-19T13:00:44Z",
+   "final_state": "executed"
   },
   "ethereum:0xe8dc0fab349ea169283c48ccfd09d797e6db7c94:0x1fe5e3e892708310bbfcf50efc03a1b8e21e0d0042035d7e8315e0cd5f26d85b": {
    "outcome": "warned",
@@ -843,10 +847,12 @@
    "first_seen_utc": "2026-11-18T13:00:46Z",
    "due_utc": "2026-11-19T09:56:46Z",
    "notice_hours": 20.9,
-   "state": "queued",
+   "state": "resolved",
    "chain": "plasma",
    "timelock": "plasma timelock 0xabd3\u20265072, found by the independent reader (1 tracked contract)",
-   "what": "parameter change"
+   "what": "parameter change",
+   "resolved_seen_utc": "2026-11-19T13:00:44Z",
+   "final_state": "unknown"
   },
   "ethereum:0x6d903f6003cca6255d85cca4d3b5e5146dc33925:0x86b41fd84764a2e73ccd29c1e33c93497a70d7e84b7445804752980fa039fee0": {
    "outcome": "warned",
@@ -869,7 +875,7 @@
    "what": "unknown"
   }
  },
- "updated_utc": "2026-11-19T07:00:48Z",
+ "updated_utc": "2026-11-19T13:00:44Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
   "warned": 57,

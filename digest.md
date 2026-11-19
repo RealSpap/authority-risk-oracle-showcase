@@ -1,8 +1,8 @@
 # Authority risk digest, 2026-11-19 01:24 UTC
 
-## Needs a person, 2026-11-19T01:24:10Z: 60 item(s) (priority 1: 48, priority 2: 9, priority 3: 3); oldest 39.2 d
+## Needs a person, 2026-11-19T01:24:10Z: 57 item(s) (priority 1: 45, priority 2: 9, priority 3: 3); oldest 39.2 d
 
-### Overdue: 10 priority-1 item(s) waiting for more than 2 day(s), back in the alarm
+### Overdue: 8 priority-1 item(s) waiting for more than 2 day(s), back in the alarm
 - **Safe AddedOwner** arbitrum 0x8D1d…3e0D (6.4 d): AddedOwner 0x25f9…7f85 (gmx_timelock_multisig, gmx_v1_vault)
 - **Safe AddedOwner** arbitrum 0x8D1d…3e0D (6.4 d): AddedOwner 0x936C…2a4e (gmx_timelock_multisig, gmx_v1_vault)
 - **Safe AddedOwner** arbitrum 0x8D1d…3e0D (6.4 d): AddedOwner 0x6091…a6F5 (gmx_timelock_multisig, gmx_v1_vault)
@@ -11,10 +11,8 @@
 - **Safe RemovedOwner** arbitrum 0x8D1d…3e0D (6.4 d): RemovedOwner 0xeAA5…12Ea (gmx_timelock_multisig, gmx_v1_vault)
 - **Safe AddedOwner** arbitrum 0x58F582455b54d7c83d03BCeed95FAf72B37fdDD7 (6.1 d): AddedOwner 0xcBFa…2c2e (gmx_v1_vault)
 - **Safe RemovedOwner** arbitrum 0x58F582455b54d7c83d03BCeed95FAf72B37fdDD7 (6.1 d): RemovedOwner 0xeAA5…12Ea (gmx_v1_vault)
-- **queued operation executable** arbitrum 0x6A075E9a02eef6978DD66cB63DE430a8c0C419E9 (3.0 d): value transfer or empty call: 0x via Arbitrum L2 Treasury Timelock
-- **queued operation executable** arbitrum 0xF3FC178157fb3c87548bAA86F9d24BA38E649B58 (3.0 d): parameter change: transfer(address,address,uint256) via Arbitrum L2 Treasury Timelock
 
-### Something happened: read before trusting the score (48)
+### Something happened: read before trusting the score (45)
 - **Safe AddedOwner** arbitrum 0x8D1d…3e0D (6.4 d): AddedOwner 0x25f9…7f85 (gmx_timelock_multisig, gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** arbitrum 0x8D1d…3e0D (6.4 d): AddedOwner 0x936C…2a4e (gmx_timelock_multisig, gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** arbitrum 0x8D1d…3e0D (6.4 d): AddedOwner 0x6091…a6F5 (gmx_timelock_multisig, gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
@@ -23,8 +21,6 @@
 - **Safe RemovedOwner** arbitrum 0x8D1d…3e0D (6.4 d): RemovedOwner 0xeAA5…12Ea (gmx_timelock_multisig, gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** arbitrum 0x58F582455b54d7c83d03BCeed95FAf72B37fdDD7 (6.1 d): AddedOwner 0xcBFa…2c2e (gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe RemovedOwner** arbitrum 0x58F582455b54d7c83d03BCeed95FAf72B37fdDD7 (6.1 d): RemovedOwner 0xeAA5…12Ea (gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **queued operation executable** arbitrum 0x6A075E9a02eef6978DD66cB63DE430a8c0C419E9 (3.0 d): value transfer or empty call: 0x via Arbitrum L2 Treasury Timelock. To do: read the call before it lands. (pending_ops.json)
-- **queued operation executable** arbitrum 0xF3FC178157fb3c87548bAA86F9d24BA38E649B58 (3.0 d): parameter change: transfer(address,address,uint256) via Arbitrum L2 Treasury Timelock. To do: read the call before it lands. (pending_ops.json)
 - **Safe AddedOwner** base 0x360c0a69Ed2912351227a0b745f890CB2eBDbcFe (2.0 d): AddedOwner 0x61C2…0e44 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** base 0x360c0a69Ed2912351227a0b745f890CB2eBDbcFe (2.0 d): AddedOwner 0x2694…CbF1 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** base 0x360c0a69Ed2912351227a0b745f890CB2eBDbcFe (2.0 d): AddedOwner 0xb291…Afef (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
@@ -58,7 +54,6 @@
 - **Safe RemovedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (1.0 d): RemovedOwner 0x936C…9EF3 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe RemovedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (1.0 d): RemovedOwner 0x0D23…c0E9 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe RemovedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (1.0 d): RemovedOwner 0x4C30…099f (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **queued operation executable within 48 h** plasma 0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34 (0.5 d): parameter change: setRateLimits((uint32,uint256,uint256)[]) via plasma timelock 0xabd3…5072, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
 - **queued operation executable within 48 h** ethereum 0xd19d4B5d358258f05D7B411E21A1460D11B0876F (0.2 d): cross-chain message: sendMessage(address,uint256,bytes) via Compound Governance Timelock. To do: read the call before it lands. (pending_ops.json)
 - **admin transfer in flight** robinhood 0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d (0.0 d): 0x9db4…1a53 designated (pendingOwner() on the contract (Ownable2Step), a contract). To do: identify the designated admin; when it accepts, the admin read changes. (second_opinion.json pending_admin)
 - **methodology changed** tempo  (0.0 d): Tempo (Moderato): 0x4b8b9f2507 -> 0x2e2887de42 on 15 target(s). To do: expected after a release of the scorer; otherwise a push by a key that should not hold the updater role. (methodology.json)

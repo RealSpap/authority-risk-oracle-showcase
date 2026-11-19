@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-11-19T07:15:19Z",
+ "generated_utc": "2026-11-19T13:12:26Z",
  "wake_days": 14,
  "safes": 42,
  "read": 42,
@@ -7,13 +7,23 @@
  "changes": [
   {
    "delta": 2,
-   "idle_days": 1.7,
+   "idle_days": 0.2,
    "woke": false,
    "safe": "ethereum-l1:0xfa77\u20266a66",
    "governs": [
     "ethereum-l1:0xc5f0f7b66764f6ec8c8dff7ba683102295e16409"
    ],
-   "previous_run": "2026-11-19T01:13:21Z"
+   "previous_run": "2026-11-19T07:15:19Z"
+  },
+  {
+   "delta": 2,
+   "idle_days": 1.7,
+   "woke": false,
+   "safe": "monad:0x8b73\u2026788b",
+   "governs": [
+    "monad:0xd651346d7c789536ebf06dc72ae3c8502cd695cc"
+   ],
+   "previous_run": "2026-11-19T07:15:19Z"
   }
  ],
  "never_executed": [
@@ -177,10 +187,10 @@
    "never_executed": false
   },
   "ethereum-l1:701af90d53a786de": {
-   "nonce": 2207,
+   "nonce": 2209,
    "observed_since": "2026-10-11T06:47:22Z",
-   "idle_since": "2026-11-19T07:15:19Z",
-   "last_moved": "2026-11-19T07:15:19Z",
+   "idle_since": "2026-11-19T13:12:26Z",
+   "last_moved": "2026-11-19T13:12:26Z",
    "governs": [
     "ethereum-l1:0xc5f0f7b66764f6ec8c8dff7ba683102295e16409"
    ],
@@ -210,10 +220,10 @@
    "never_executed": false
   },
   "monad:d104c354d63359d9": {
-   "nonce": 86,
+   "nonce": 88,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-11-17T19:16:54Z",
-   "last_moved": "2026-11-17T19:16:54Z",
+   "idle_since": "2026-11-19T13:12:26Z",
+   "last_moved": "2026-11-19T13:12:26Z",
    "governs": [
     "monad:0xd651346d7c789536ebf06dc72ae3c8502cd695cc"
    ],

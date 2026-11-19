@@ -851,16 +851,26 @@
    "chain": "ethereum",
    "timelock": "Compound Governance Timelock",
    "what": "cross-chain message"
+  },
+  "robinhood:0x0da180b14721ce46a83669b4816cb652caa1001d:0x23e681f79235e85fe0d386ffedaaacf291d820209e457f962090981cc3aebb41": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-11-19T01:00:54Z",
+   "due_utc": "2026-11-19T19:40:15Z",
+   "notice_hours": 18.7,
+   "state": "queued",
+   "chain": "robinhood",
+   "timelock": "robinhood timelock 0x0da1\u2026001d, found by the independent reader (1 tracked contract)",
+   "what": "unknown"
   }
  },
- "updated_utc": "2026-11-18T19:00:47Z",
+ "updated_utc": "2026-11-19T01:00:54Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
-  "warned": 56,
+  "warned": 57,
   "seen_without_notice": 0,
   "missed": 1,
   "baseline": 26,
-  "warned_with_a_known_notice": 56,
+  "warned_with_a_known_notice": 57,
   "shortest_notice_hours": 14.0,
   "median_notice_hours": 21.2,
   "note": "warned: seen while queued and not yet executable (the notice is real); seen_without_notice: still queued but already executable when first seen; missed: queued after the ledger started and already applied when first seen (faster than the 6-hour cadence); baseline: applied before the ledger started, counted as neither."

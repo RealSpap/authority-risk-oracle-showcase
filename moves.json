@@ -1,9 +1,81 @@
 {
- "generated_utc": "2026-11-18T19:17:47Z",
+ "generated_utc": "2026-11-19T01:14:50Z",
  "compared": 202,
- "new_this_run": 0,
+ "new_this_run": 3,
  "first_seen_oracles": [],
  "moves": [
+  {
+   "run_utc": "2026-11-19T01:14:50Z",
+   "oracle": "solana-devnet",
+   "target": "FL3X2pRsQ9zHENpZSKDRREtccwJuei8yg9fwDu9UN69Q",
+   "composite": [
+    38,
+    41
+   ],
+   "methodology_changed": false,
+   "axes": [
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 60,
+     "to": 69,
+     "why": "more signatures are now required (60 \u2192 69)"
+    }
+   ],
+   "block": null,
+   "lastUpdated": [
+    1794347247,
+    1795033343
+   ]
+  },
+  {
+   "run_utc": "2026-11-19T01:14:50Z",
+   "oracle": "tempo-moderato",
+   "target": "0x20c000000000000000000000c412ec89d0c08be5",
+   "composite": [
+    39,
+    39
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 42,
+     "to": 43,
+     "why": "more signatures are now required (42 \u2192 43)"
+    }
+   ],
+   "block": 44865040,
+   "lastUpdated": [
+    1794347490,
+    1795033617
+   ]
+  },
+  {
+   "run_utc": "2026-11-19T01:14:50Z",
+   "oracle": "tempo-moderato",
+   "target": "0x20c00000000000000000000058d0b8b2cfdb358c",
+   "composite": [
+    39,
+    39
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 42,
+     "to": 43,
+     "why": "more signatures are now required (42 \u2192 43)"
+    }
+   ],
+   "block": 44865040,
+   "lastUpdated": [
+    1794347490,
+    1795033617
+   ]
+  },
   {
    "run_utc": "2026-11-11T06:34:23Z",
    "oracle": "plasma",

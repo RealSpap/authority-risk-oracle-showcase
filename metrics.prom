@@ -1,6 +1,6 @@
 # HELP aro_run_timestamp_seconds UTC time of the last Watch run (Unix seconds)
 # TYPE aro_run_timestamp_seconds gauge
-aro_run_timestamp_seconds 1795028447
+aro_run_timestamp_seconds 1795050054
 # HELP aro_oracle_read 1 when the oracle was read at the last run, 0 when it was not (its targets are then unknown, not zero)
 # TYPE aro_oracle_read gauge
 aro_oracle_read{oracle="Robinhood Chain"} 1
@@ -18,7 +18,7 @@ aro_oracle_targets{oracle="Robinhood Chain"} 63
 aro_oracle_targets{oracle="Ethereum L1 (Sepolia)"} 39
 aro_oracle_targets{oracle="Arbitrum (Sepolia)"} 13
 aro_oracle_targets{oracle="Base (Sepolia)"} 13
-aro_oracle_targets{oracle="Tempo (Moderato)"} 14
+aro_oracle_targets{oracle="Tempo (Moderato)"} 15
 aro_oracle_targets{oracle="Plasma"} 9
 aro_oracle_targets{oracle="Monad"} 9
 aro_oracle_targets{oracle="Hyperliquid (HyperEVM)"} 16
@@ -36,15 +36,15 @@ aro_oracle_stale_targets{oracle="Hyperliquid (HyperEVM)"} 0
 aro_oracle_stale_targets{oracle="Solana (Devnet)"} 0
 # HELP aro_targets Targets tracked across the oracles that were read
 # TYPE aro_targets gauge
-aro_targets 202
+aro_targets 203
 # HELP aro_targets_stale Targets whose score is stale
 # TYPE aro_targets_stale gauge
 aro_targets_stale 0
 # HELP aro_status The run's health, one series per state, 1 for the current one
 # TYPE aro_status gauge
 aro_status{state="ok"} 0
-aro_status{state="degraded"} 1
-aro_status{state="alarm"} 0
+aro_status{state="degraded"} 0
+aro_status{state="alarm"} 1
 # HELP aro_chain_ok 1 when the hash-chained event log verifies
 # TYPE aro_chain_ok gauge
 aro_chain_ok 1
@@ -54,15 +54,15 @@ aro_signed 1
 # HELP aro_alerts_active Alerts firing now, by severity
 # TYPE aro_alerts_active gauge
 aro_alerts_active{severity="high"} 2
-aro_alerts_active{severity="medium"} 4
-aro_alerts_active{severity="info"} 201
+aro_alerts_active{severity="medium"} 5
+aro_alerts_active{severity="info"} 139
 # HELP aro_second_opinion Targets by verdict of the independent reader
 # TYPE aro_second_opinion gauge
-aro_second_opinion{result="agree"} 135
+aro_second_opinion{result="agree"} 134
 aro_second_opinion{result="disagree"} 3
-aro_second_opinion{result="corroborated"} 9
-aro_second_opinion{result="unreadable"} 39
-aro_second_opinion{result="native"} 16
+aro_second_opinion{result="corroborated"} 8
+aro_second_opinion{result="unreadable"} 41
+aro_second_opinion{result="native"} 17
 # HELP aro_contracts_paused Tracked contracts that answer paused() true now
 # TYPE aro_contracts_paused gauge
 aro_contracts_paused 0
@@ -261,7 +261,7 @@ aro_target_score{chain="solana-devnet",target="USXyiSTsPEWz55pSK7sZoUL79ntoVGQba
 aro_target_score{chain="solana-devnet",target="Gmso1uvJnLbawvw7yezdfCDcPydwW2s2iqG3w6MDucLo"} 51
 aro_target_score{chain="solana-devnet",target="1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78"} 70
 aro_target_score{chain="solana-devnet",target="HumaXepHnjaRCpjYTokxY4UtaJcmx41prQ8cxGmFC5fn"} 66
-aro_target_score{chain="solana-devnet",target="FL3X2pRsQ9zHENpZSKDRREtccwJuei8yg9fwDu9UN69Q"} 38
+aro_target_score{chain="solana-devnet",target="FL3X2pRsQ9zHENpZSKDRREtccwJuei8yg9fwDu9UN69Q"} 41
 aro_target_score{chain="solana-devnet",target="ExponentnaRg3CQbW6dqQNZKXp7gtZ9DGMp1cwC4HAS7"} 51
 aro_target_score{chain="solana-devnet",target="FLASH6Lo6h3iasJKWDs2F8TkW2UKf3s15C8PMGuVfgBn"} 39
 aro_target_score{chain="solana-devnet",target="sSo1iU21jBrU9VaJ8PJib1MtorefUV4fzC9GURa2KNn"} 40
@@ -279,6 +279,7 @@ aro_target_score{chain="tempo-moderato",target="0x9a044ae05e5e6290dcf56afd695485
 aro_target_score{chain="tempo-moderato",target="0x83a1491f3e7f8daab8f787a631334b9ca7a87023"} 9
 aro_target_score{chain="tempo-moderato",target="0xc609656ed9ef219c98c8e549bf729144f211f06e"} 61
 aro_target_score{chain="tempo-moderato",target="0x10ee9aac980a180dd4dcfc96c746d60b0ea88f97"} 55
+aro_target_score{chain="tempo-moderato",target="0xe80694d6fec5d676ad4b7d51478559be8cc54f3e"} 9
 # HELP aro_target_stale 1 when the score is stale
 # TYPE aro_target_stale gauge
 aro_target_stale{chain="arbitrum-sepolia",target="0x3c3d99fd298f679dbc2cecd132b4ec4d0f5e6e72"} 0
@@ -483,3 +484,4 @@ aro_target_stale{chain="tempo-moderato",target="0x9a044ae05e5e6290dcf56afd695485
 aro_target_stale{chain="tempo-moderato",target="0x83a1491f3e7f8daab8f787a631334b9ca7a87023"} 0
 aro_target_stale{chain="tempo-moderato",target="0xc609656ed9ef219c98c8e549bf729144f211f06e"} 0
 aro_target_stale{chain="tempo-moderato",target="0x10ee9aac980a180dd4dcfc96c746d60b0ea88f97"} 0
+aro_target_stale{chain="tempo-moderato",target="0xe80694d6fec5d676ad4b7d51478559be8cc54f3e"} 0

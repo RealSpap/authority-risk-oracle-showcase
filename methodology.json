@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-11-18T19:17:46Z",
+ "generated_utc": "2026-11-19T01:14:49Z",
  "method_version": "2026.11.1",
  "method_version_date": "2026-11-02",
  "registry_read": true,
@@ -10,6 +10,13 @@
     "ethereum-l1-sepolia"
    ],
    "targets": 38
+  },
+  {
+   "hash": "0x2e2887de421b8ceafcb04a516301e07e85220b6ef505da6eb8605b263db8ce8f",
+   "oracles": [
+    "tempo-moderato"
+   ],
+   "targets": 15
   }
  ],
  "hashes": {
@@ -77,17 +84,27 @@
    "method_version": "2026.11.1",
    "method_version_date": "2026-11-02"
   },
-  "0x4b8b9f250720ac31fdabaebb0a869cf64699eed816cb0f02de3ef13bcf637368": {
+  "0x2e2887de421b8ceafcb04a516301e07e85220b6ef505da6eb8605b263db8ce8f": {
    "oracles": {
-    "tempo-moderato": 14
+    "tempo-moderato": 15
    },
-   "targets": 14,
-   "method_version": "2026.11.1",
-   "method_version_date": "2026-11-02"
+   "targets": 15,
+   "method_version": null,
+   "method_version_date": null
   }
  },
  "mixed": [],
- "changes": [],
+ "changes": [
+  {
+   "oracle": "tempo-moderato",
+   "name": "Tempo (Moderato)",
+   "chain": "tempo",
+   "from": "0x4b8b9f250720ac31fdabaebb0a869cf64699eed816cb0f02de3ef13bcf637368",
+   "to": "0x2e2887de421b8ceafcb04a516301e07e85220b6ef505da6eb8605b263db8ce8f",
+   "targets": 15,
+   "run_utc": "2026-11-19T01:14:49Z"
+  }
+ ],
  "retired": [
   {
    "oracle": "ethereum-l1-sepolia",

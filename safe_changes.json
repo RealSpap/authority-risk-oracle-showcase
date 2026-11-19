@@ -7,8 +7,8 @@
    "events": [],
    "control": 62,
    "status": "ok",
-   "fromBlock": 112146329,
-   "toBlock": 117840617,
+   "fromBlock": 112349938,
+   "toBlock": 118044821,
    "days_read": 7
   },
   {
@@ -17,86 +17,14 @@
    "events": [],
    "control": 16,
    "status": "ok",
-   "fromBlock": 26395510,
-   "toBlock": 26445775,
+   "fromBlock": 26397313,
+   "toBlock": 26447578,
    "days_read": 7
   },
   {
    "ecosystem": "arbitrum",
    "safes": 14,
    "events": [
-    {
-     "name": "RemovedOwner",
-     "value": "0x49C9\u20262Da3",
-     "block": 523497773,
-     "tx": "4407569190fcb39de55de60650f0e56947c5abf7f25ef5cc0a9db7f6c8a44d5b",
-     "safe": "0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D",
-     "groups": [
-      "gmx_timelock_multisig",
-      "gmx_v1_vault"
-     ],
-     "timestamp": 1794467104
-    },
-    {
-     "name": "AddedOwner",
-     "value": "0x25f9\u20267f85",
-     "block": 523497773,
-     "tx": "4407569190fcb39de55de60650f0e56947c5abf7f25ef5cc0a9db7f6c8a44d5b",
-     "safe": "0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D",
-     "groups": [
-      "gmx_timelock_multisig",
-      "gmx_v1_vault"
-     ],
-     "timestamp": 1794467104
-    },
-    {
-     "name": "RemovedOwner",
-     "value": "0xD794\u2026b398",
-     "block": 523497925,
-     "tx": "4e2391798c435533b256e00aa19e0cebef994870c1637ee52f4dc1dd3aac727e",
-     "safe": "0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D",
-     "groups": [
-      "gmx_timelock_multisig",
-      "gmx_v1_vault"
-     ],
-     "timestamp": 1794467152
-    },
-    {
-     "name": "AddedOwner",
-     "value": "0x936C\u20262a4e",
-     "block": 523497925,
-     "tx": "4e2391798c435533b256e00aa19e0cebef994870c1637ee52f4dc1dd3aac727e",
-     "safe": "0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D",
-     "groups": [
-      "gmx_timelock_multisig",
-      "gmx_v1_vault"
-     ],
-     "timestamp": 1794467152
-    },
-    {
-     "name": "RemovedOwner",
-     "value": "0xeAA5\u202612Ea",
-     "block": 523498070,
-     "tx": "a4ba20a8d7f5a880f4f0a2a461c04bb38fc133dfa308f7bea2fca0989160d392",
-     "safe": "0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D",
-     "groups": [
-      "gmx_timelock_multisig",
-      "gmx_v1_vault"
-     ],
-     "timestamp": 1794467195
-    },
-    {
-     "name": "AddedOwner",
-     "value": "0x6091\u2026a6F5",
-     "block": 523498070,
-     "tx": "a4ba20a8d7f5a880f4f0a2a461c04bb38fc133dfa308f7bea2fca0989160d392",
-     "safe": "0x8D1d2e24eC641eDC6a1ebe0F3aE7af0EBC573e0D",
-     "groups": [
-      "gmx_timelock_multisig",
-      "gmx_v1_vault"
-     ],
-     "timestamp": 1794467195
-    },
     {
      "name": "RemovedOwner",
      "value": "0xeAA5\u202612Ea",
@@ -230,10 +158,10 @@
      "timestamp": 1794947369
     }
    ],
-   "control": 28,
+   "control": 25,
    "status": "ok",
-   "fromBlock": 523432551,
-   "toBlock": 525479398,
+   "fromBlock": 523500311,
+   "toBlock": 525549119,
    "days_read": 7
   },
   {
@@ -353,8 +281,8 @@
    ],
    "control": null,
    "status": "UNREAD (call budget exhausted)",
-   "fromBlock": 56278797,
-   "toBlock": 59302799,
+   "fromBlock": 56387527,
+   "toBlock": 59411531,
    "days_read": 7
   },
   {
@@ -362,11 +290,11 @@
    "safes": 4,
    "events": [],
    "control": 0,
-   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 108 execution(s) from other Safes on the window's tail)",
-   "fromBlock": 48589115,
-   "toBlock": 49712152,
+   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 110 execution(s) from other Safes on the window's tail)",
+   "fromBlock": 48629606,
+   "toBlock": 49752738,
    "days_read": 7,
-   "control_witness": 108
+   "control_witness": 110
   },
   {
    "ecosystem": "plasma",
@@ -485,19 +413,20 @@
    ],
    "control": 7,
    "status": "ok",
-   "fromBlock": 37502959,
-   "toBlock": 38106117,
+   "fromBlock": 37524769,
+   "toBlock": 38127910,
    "days_read": 7
   },
   {
    "ecosystem": "monad",
    "safes": 13,
    "events": [],
-   "control": 3,
-   "status": "ok",
-   "fromBlock": 123366469,
-   "toBlock": 123451167,
-   "days_read": 0.3
+   "control": 0,
+   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 10 execution(s) from other Safes on the window's tail)",
+   "fromBlock": 123437787,
+   "toBlock": 123522718,
+   "days_read": 0.3,
+   "control_witness": 10
   },
   {
    "ecosystem": "hyperliquid",
@@ -505,8 +434,8 @@
    "events": [],
    "control": 1,
    "status": "ok",
-   "fromBlock": 51377407,
-   "toBlock": 51640927,
+   "fromBlock": 51399659,
+   "toBlock": 51663179,
    "days_read": 3.0
   }
  ]

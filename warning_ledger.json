@@ -769,30 +769,36 @@
    "first_seen_utc": "2026-11-16T19:00:52Z",
    "due_utc": "2026-11-17T16:07:51Z",
    "notice_hours": 21.1,
-   "state": "queued",
+   "state": "resolved",
    "chain": "arbitrum",
    "timelock": "arbitrum timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
-   "what": "parameter change"
+   "what": "parameter change",
+   "resolved_seen_utc": "2026-11-19T19:00:49Z",
+   "final_state": "unknown"
   },
   "plasma:0x4d6ce4f4498d59eed397bcbc687805a07f9b2346:0xad439f3c48e2b1cf9de9b2448c5ccd48f96f48ae5d8accf2b0eda662866e4215": {
    "outcome": "warned",
    "first_seen_utc": "2026-11-16T19:00:52Z",
    "due_utc": "2026-11-17T16:10:34Z",
    "notice_hours": 21.2,
-   "state": "queued",
+   "state": "resolved",
    "chain": "plasma",
    "timelock": "plasma timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
-   "what": "parameter change"
+   "what": "parameter change",
+   "resolved_seen_utc": "2026-11-19T19:00:49Z",
+   "final_state": "unknown"
   },
   "plasma:0x4d6ce4f4498d59eed397bcbc687805a07f9b2346:0x848414b8c617be83c29d04227e86fdc1cfff4c8611b63d3c3254ffd97930c04d": {
    "outcome": "warned",
    "first_seen_utc": "2026-11-16T19:00:52Z",
    "due_utc": "2026-11-17T16:11:46Z",
    "notice_hours": 21.2,
-   "state": "queued",
+   "state": "resolved",
    "chain": "plasma",
    "timelock": "plasma timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
-   "what": "parameter change"
+   "what": "parameter change",
+   "resolved_seen_utc": "2026-11-19T19:00:49Z",
+   "final_state": "unknown"
   },
   "ethereum:0xe8dc0fab349ea169283c48ccfd09d797e6db7c94:0xb0289f92009409e09b8b87150e10486ab753b7c13d049702caca3221a622d81a": {
    "outcome": "warned",
@@ -873,16 +879,26 @@
    "chain": "robinhood",
    "timelock": "robinhood timelock 0x0da1\u2026001d, found by the independent reader (1 tracked contract)",
    "what": "unknown"
+  },
+  "arbitrum:0x4d6ce4f4498d59eed397bcbc687805a07f9b2346:0xd438873df28f8132f729bed3a69995668eb1775573cc920527263ee506359814": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-11-19T19:00:49Z",
+   "due_utc": "2026-11-20T15:57:50Z",
+   "notice_hours": 21.0,
+   "state": "queued",
+   "chain": "arbitrum",
+   "timelock": "arbitrum timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
+   "what": "parameter change"
   }
  },
- "updated_utc": "2026-11-19T13:00:44Z",
+ "updated_utc": "2026-11-19T19:00:49Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
-  "warned": 57,
+  "warned": 58,
   "seen_without_notice": 0,
   "missed": 1,
   "baseline": 26,
-  "warned_with_a_known_notice": 57,
+  "warned_with_a_known_notice": 58,
   "shortest_notice_hours": 14.0,
   "median_notice_hours": 21.2,
   "note": "warned: seen while queued and not yet executable (the notice is real); seen_without_notice: still queued but already executable when first seen; missed: queued after the ledger started and already applied when first seen (faster than the 6-hour cadence); baseline: applied before the ledger started, counted as neither."

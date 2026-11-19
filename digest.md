@@ -1,6 +1,6 @@
 # Authority risk digest, 2026-11-19 01:24 UTC
 
-## Needs a person, 2026-11-19T01:24:10Z: 57 item(s) (priority 1: 45, priority 2: 9, priority 3: 3); oldest 39.2 d
+## Needs a person, 2026-11-19T01:24:10Z: 54 item(s) (priority 1: 42, priority 2: 9, priority 3: 3); oldest 39.2 d
 
 ### Overdue: 8 priority-1 item(s) waiting for more than 2 day(s), back in the alarm
 - **Safe AddedOwner** arbitrum 0x8D1d…3e0D (6.4 d): AddedOwner 0x25f9…7f85 (gmx_timelock_multisig, gmx_v1_vault)
@@ -12,7 +12,7 @@
 - **Safe AddedOwner** arbitrum 0x58F582455b54d7c83d03BCeed95FAf72B37fdDD7 (6.1 d): AddedOwner 0xcBFa…2c2e (gmx_v1_vault)
 - **Safe RemovedOwner** arbitrum 0x58F582455b54d7c83d03BCeed95FAf72B37fdDD7 (6.1 d): RemovedOwner 0xeAA5…12Ea (gmx_v1_vault)
 
-### Something happened: read before trusting the score (45)
+### Something happened: read before trusting the score (42)
 - **Safe AddedOwner** arbitrum 0x8D1d…3e0D (6.4 d): AddedOwner 0x25f9…7f85 (gmx_timelock_multisig, gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** arbitrum 0x8D1d…3e0D (6.4 d): AddedOwner 0x936C…2a4e (gmx_timelock_multisig, gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** arbitrum 0x8D1d…3e0D (6.4 d): AddedOwner 0x6091…a6F5 (gmx_timelock_multisig, gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
@@ -21,19 +21,16 @@
 - **Safe RemovedOwner** arbitrum 0x8D1d…3e0D (6.4 d): RemovedOwner 0xeAA5…12Ea (gmx_timelock_multisig, gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** arbitrum 0x58F582455b54d7c83d03BCeed95FAf72B37fdDD7 (6.1 d): AddedOwner 0xcBFa…2c2e (gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe RemovedOwner** arbitrum 0x58F582455b54d7c83d03BCeed95FAf72B37fdDD7 (6.1 d): RemovedOwner 0xeAA5…12Ea (gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** base 0x360c0a69Ed2912351227a0b745f890CB2eBDbcFe (2.0 d): AddedOwner 0x61C2…0e44 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** base 0x360c0a69Ed2912351227a0b745f890CB2eBDbcFe (2.0 d): AddedOwner 0x2694…CbF1 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** base 0x360c0a69Ed2912351227a0b745f890CB2eBDbcFe (2.0 d): AddedOwner 0xb291…Afef (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** base 0x360c0a69Ed2912351227a0b745f890CB2eBDbcFe (2.0 d): AddedOwner 0x985F…f235 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** base 0x360c0a69Ed2912351227a0b745f890CB2eBDbcFe (2.0 d): AddedOwner 0x9EF7…0403 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** base 0x360c0a69Ed2912351227a0b745f890CB2eBDbcFe (2.0 d): RemovedOwner 0xebED…FE29 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** base 0x360c0a69Ed2912351227a0b745f890CB2eBDbcFe (2.0 d): RemovedOwner 0xbd4D…f1F7 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** base 0x360c0a69Ed2912351227a0b745f890CB2eBDbcFe (2.0 d): RemovedOwner 0x936C…9EF3 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** base 0x360c0a69Ed2912351227a0b745f890CB2eBDbcFe (2.0 d): RemovedOwner 0x0D23…c0E9 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** base 0x360c0a69Ed2912351227a0b745f890CB2eBDbcFe (2.0 d): RemovedOwner 0x4C30…099f (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **queued operation executable** arbitrum 0x5126A82E52F78B73fdE29B0D9800170e77AbfdcA (1.2 d): parameter change: setLzDelegate(address) via arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
-- **queued operation executable** plasma 0x5126A82E52F78B73fdE29B0D9800170e77AbfdcA (1.2 d): parameter change: setLzDelegate(address) via plasma timelock 0x4d6c…2346, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
-- **queued operation executable** plasma 0x9926955e0Dd681Dc303370C52f4Ad0a4dd061687 (1.2 d): parameter change: updateMaster() via plasma timelock 0x4d6c…2346, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
+- **Safe AddedOwner** base 0x360c…bcFe (2.0 d): AddedOwner 0x61C2…0e44 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** base 0x360c…bcFe (2.0 d): AddedOwner 0x2694…CbF1 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** base 0x360c…bcFe (2.0 d): AddedOwner 0xb291…Afef (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** base 0x360c…bcFe (2.0 d): AddedOwner 0x985F…f235 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** base 0x360c…bcFe (2.0 d): AddedOwner 0x9EF7…0403 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** base 0x360c…bcFe (2.0 d): RemovedOwner 0xebED…FE29 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** base 0x360c…bcFe (2.0 d): RemovedOwner 0xbd4D…f1F7 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** base 0x360c…bcFe (2.0 d): RemovedOwner 0x936C…9EF3 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** base 0x360c…bcFe (2.0 d): RemovedOwner 0x0D23…c0E9 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** base 0x360c…bcFe (2.0 d): RemovedOwner 0x4C30…099f (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (1.0 d): AddedOwner 0x61C2…0e44 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (1.0 d): AddedOwner 0x2694…CbF1 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (1.0 d): AddedOwner 0xb291…Afef (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)

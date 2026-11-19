@@ -5,7 +5,7 @@ X-WR-CALNAME:Authority Risk Oracle: timelock queue
 X-WR-CALDESC:Operations queued behind the watched timelocks, at the time they become executable
 BEGIN:VEVENT
 UID:0x949a364cfd692d52a4f5217cae22f1e72a822967c6e6ee5fec8b238af144a2ef-0@realspap.github.io-0x86b41fd84764a2e7
-DTSTAMP:20261119T130817Z
+DTSTAMP:20261119T191112Z
 DTSTART:20261120T185823Z
 DTEND:20261120T192823Z
 SUMMARY:Compound Governance Timelock: sendMessage becomes executable
@@ -14,7 +14,7 @@ URL:https://realspap.github.io/oracle/
 END:VEVENT
 BEGIN:VEVENT
 UID:0x27074d28451511742ccebde3b7bc730554de08f051ec75768a08f0a9966012be-0@realspap.github.io-0x2f037893252a8e16
-DTSTAMP:20261119T130817Z
+DTSTAMP:20261119T191112Z
 DTSTART:20261122T005521Z
 DTEND:20261122T012521Z
 SUMMARY:Arbitrum L2 Core Governor Timelock: 0x928c169a becomes executable
@@ -22,35 +22,17 @@ DESCRIPTION:0x928c169a on 0x0000000000000000000000000000000000000064 (arbitrum)\
 URL:https://realspap.github.io/oracle/
 END:VEVENT
 BEGIN:VEVENT
-UID:0x1fa9b1023b635f2a78ba24c3be0fc9bb7813c27f6c988acb2b1a790188e72154-0@realspap.github.io-0xe7f3cd54d77c68bb
-DTSTAMP:20261119T130817Z
-DTSTART:20261117T160751Z
-DTEND:20261117T163751Z
-SUMMARY:arbitrum timelock 0x4d6c…2346\, found by the independent reader (1 tracked contract): 0xd59b2fdb becomes executable
-DESCRIPTION:0xd59b2fdb on 0x5126A82E52F78B73fdE29B0D9800170e77AbfdcA (arbitrum)\nqueued in tx 0x1fa9b1023b635f2a78ba24c3be0fc9bb7813c27f6c988acb2b1a790188e72154\nhttps://realspap.github.io/oracle/
-URL:https://realspap.github.io/oracle/
-END:VEVENT
-BEGIN:VEVENT
-UID:0xdab19286beeabb1c3b30315045ac74ae6db139b8c1db533344ca5b0b712300e2-0@realspap.github.io-0xad439f3c48e2b1cf
-DTSTAMP:20261119T130817Z
-DTSTART:20261117T161034Z
-DTEND:20261117T164034Z
-SUMMARY:plasma timelock 0x4d6c…2346\, found by the independent reader (1 tracked contract): 0xcf1a0ddc becomes executable
-DESCRIPTION:0xcf1a0ddc on 0x9926955e0Dd681Dc303370C52f4Ad0a4dd061687 (plasma)\nqueued in tx 0xdab19286beeabb1c3b30315045ac74ae6db139b8c1db533344ca5b0b712300e2\nhttps://realspap.github.io/oracle/
-URL:https://realspap.github.io/oracle/
-END:VEVENT
-BEGIN:VEVENT
-UID:0x90fde7d5ffca20a2eb747b78d29e146f4886f774884174bd717c208b9508bcf4-0@realspap.github.io-0x848414b8c617be83
-DTSTAMP:20261119T130817Z
-DTSTART:20261117T161146Z
-DTEND:20261117T164146Z
-SUMMARY:plasma timelock 0x4d6c…2346\, found by the independent reader (1 tracked contract): 0xd59b2fdb becomes executable
-DESCRIPTION:0xd59b2fdb on 0x5126A82E52F78B73fdE29B0D9800170e77AbfdcA (plasma)\nqueued in tx 0x90fde7d5ffca20a2eb747b78d29e146f4886f774884174bd717c208b9508bcf4\nhttps://realspap.github.io/oracle/
+UID:0xd0b7d32f325cd154329746e24930c3dcb27da594e8f2f3a1ffdd5a330b75f5d4-0@realspap.github.io-0xd438873df28f8132
+DTSTAMP:20261119T191112Z
+DTSTART:20261120T155750Z
+DTEND:20261120T162750Z
+SUMMARY:arbitrum timelock 0x4d6c…2346\, found by the independent reader (1 tracked contract): 0xcf1a0ddc becomes executable
+DESCRIPTION:0xcf1a0ddc on 0x1eE00C305C51Ff3bE60162456A9B533C07cD9288 (arbitrum)\nqueued in tx 0xd0b7d32f325cd154329746e24930c3dcb27da594e8f2f3a1ffdd5a330b75f5d4\nhttps://realspap.github.io/oracle/
 URL:https://realspap.github.io/oracle/
 END:VEVENT
 BEGIN:VEVENT
 UID:0xf25babccd6cc7bf4195ab690f86f965114de373cb71ca4ce2cc02d88b00807f5-0@realspap.github.io-0x23e681f79235e85f
-DTSTAMP:20261119T130817Z
+DTSTAMP:20261119T191112Z
 DTSTART:20261119T194015Z
 DTEND:20261119T201015Z
 SUMMARY:robinhood timelock 0x0da1…001d\, found by the independent reader (1 tracked contract): 0xd86fac1b becomes executable

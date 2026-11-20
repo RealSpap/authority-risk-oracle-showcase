@@ -875,10 +875,12 @@
    "first_seen_utc": "2026-11-19T01:00:54Z",
    "due_utc": "2026-11-19T19:40:15Z",
    "notice_hours": 18.7,
-   "state": "queued",
+   "state": "resolved",
    "chain": "robinhood",
    "timelock": "robinhood timelock 0x0da1\u2026001d, found by the independent reader (1 tracked contract)",
-   "what": "unknown"
+   "what": "unknown",
+   "resolved_seen_utc": "2026-11-20T01:00:53Z",
+   "final_state": "unknown"
   },
   "arbitrum:0x4d6ce4f4498d59eed397bcbc687805a07f9b2346:0xd438873df28f8132f729bed3a69995668eb1775573cc920527263ee506359814": {
    "outcome": "warned",
@@ -891,7 +893,7 @@
    "what": "parameter change"
   }
  },
- "updated_utc": "2026-11-19T19:00:49Z",
+ "updated_utc": "2026-11-20T01:00:53Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
   "warned": 58,

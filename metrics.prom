@@ -1,6 +1,6 @@
 # HELP aro_run_timestamp_seconds UTC time of the last Watch run (Unix seconds)
 # TYPE aro_run_timestamp_seconds gauge
-aro_run_timestamp_seconds 1795114849
+aro_run_timestamp_seconds 1795136453
 # HELP aro_oracle_read 1 when the oracle was read at the last run, 0 when it was not (its targets are then unknown, not zero)
 # TYPE aro_oracle_read gauge
 aro_oracle_read{oracle="Robinhood Chain"} 1
@@ -31,7 +31,7 @@ aro_oracle_stale_targets{oracle="Arbitrum (Sepolia)"} 0
 aro_oracle_stale_targets{oracle="Base (Sepolia)"} 0
 aro_oracle_stale_targets{oracle="Tempo (Moderato)"} 0
 aro_oracle_stale_targets{oracle="Plasma"} 0
-aro_oracle_stale_targets{oracle="Monad"} 0
+aro_oracle_stale_targets{oracle="Monad"} 9
 aro_oracle_stale_targets{oracle="Hyperliquid (HyperEVM)"} 0
 aro_oracle_stale_targets{oracle="Solana (Devnet)"} 0
 # HELP aro_targets Targets tracked across the oracles that were read
@@ -39,12 +39,12 @@ aro_oracle_stale_targets{oracle="Solana (Devnet)"} 0
 aro_targets 203
 # HELP aro_targets_stale Targets whose score is stale
 # TYPE aro_targets_stale gauge
-aro_targets_stale 0
+aro_targets_stale 9
 # HELP aro_status The run's health, one series per state, 1 for the current one
 # TYPE aro_status gauge
 aro_status{state="ok"} 0
-aro_status{state="degraded"} 1
-aro_status{state="alarm"} 0
+aro_status{state="degraded"} 0
+aro_status{state="alarm"} 1
 # HELP aro_chain_ok 1 when the hash-chained event log verifies
 # TYPE aro_chain_ok gauge
 aro_chain_ok 1
@@ -54,8 +54,8 @@ aro_signed 1
 # HELP aro_alerts_active Alerts firing now, by severity
 # TYPE aro_alerts_active gauge
 aro_alerts_active{severity="high"} 0
-aro_alerts_active{severity="medium"} 5
-aro_alerts_active{severity="info"} 139
+aro_alerts_active{severity="medium"} 3
+aro_alerts_active{severity="info"} 38
 # HELP aro_second_opinion Targets by verdict of the independent reader
 # TYPE aro_second_opinion gauge
 aro_second_opinion{result="agree"} 135
@@ -211,9 +211,9 @@ aro_target_score{chain="robinhood-chain",target="0x4b37359bf291abe8453692db58d51
 aro_target_score{chain="robinhood-chain",target="0x83341f891f898cb5e0cacc8a70501bba83d9cecf"} 8
 aro_target_score{chain="robinhood-chain",target="0xa203a21dccb461e415daa342e8e635b6cee0ccb3"} 8
 aro_target_score{chain="robinhood-chain",target="0xee27d5ae494300902d90454e8630a3f1c68c9c52"} 52
-aro_target_score{chain="robinhood-chain",target="0x6f475642a6e85809b1c36fa62763669b1b48dd5b"} 49
-aro_target_score{chain="robinhood-chain",target="0xc39161c743d0307eb9bcc9fef03eeb9dc4802de7"} 49
-aro_target_score{chain="robinhood-chain",target="0xe1844c5d63a9543023008d332bd3d2e6f1fe1043"} 49
+aro_target_score{chain="robinhood-chain",target="0x6f475642a6e85809b1c36fa62763669b1b48dd5b"} 51
+aro_target_score{chain="robinhood-chain",target="0xc39161c743d0307eb9bcc9fef03eeb9dc4802de7"} 51
+aro_target_score{chain="robinhood-chain",target="0xe1844c5d63a9543023008d332bd3d2e6f1fe1043"} 51
 aro_target_score{chain="robinhood-chain",target="0x0bfbcf9fa4f9c56b0f40a671ad40e0805a091865"} 44
 aro_target_score{chain="robinhood-chain",target="0xe51960f1b45f1c9fb6d166e6a884f866fc70433b"} 31
 aro_target_score{chain="robinhood-chain",target="0x292fc50e4eb66c3f6514b9e402dbc25961824d62"} 43
@@ -363,15 +363,15 @@ aro_target_stale{chain="hyperliquid-hyperevm",target="0xa822a9ceb6d6cb5b565bd100
 aro_target_stale{chain="hyperliquid-hyperevm",target="0x2df1c51e09aecf9cacb7bc98cb1742757f163df7"} 0
 aro_target_stale{chain="hyperliquid-hyperevm",target="0x72c98246a98bfe64022a3190e7710e157497170c"} 0
 aro_target_stale{chain="hyperliquid-hyperevm",target="0xffaa4a3d97fe9107cef8a3f48c069f577ff76cc1"} 0
-aro_target_stale{chain="monad",target="0xd691b0afed67f96cec28ab6308cbe5b2c103b7e9"} 0
-aro_target_stale{chain="monad",target="0x188d586ddcf52439676ca21a244753fa19f9ea8e"} 0
-aro_target_stale{chain="monad",target="0x36878c6fca7e0e8a88f90dc410cfbbca5b695c95"} 0
-aro_target_stale{chain="monad",target="0xd651346d7c789536ebf06dc72ae3c8502cd695cc"} 0
-aro_target_stale{chain="monad",target="0x32841a8511d5c2c5b253f45668780b99139e476d"} 0
-aro_target_stale{chain="monad",target="0x8271e06e5887fe5ba05234f5315c19f3ec90e8ad"} 0
-aro_target_stale{chain="monad",target="0xad663ac84052b52be4ed1b27ba416505e84a00bf"} 0
-aro_target_stale{chain="monad",target="0x34793fb9935f7bb5e5ae920fb963f39063e7a615"} 0
-aro_target_stale{chain="monad",target="0xba4dd672062de8feedb665dd4410658864483f1e"} 0
+aro_target_stale{chain="monad",target="0xd691b0afed67f96cec28ab6308cbe5b2c103b7e9"} 1
+aro_target_stale{chain="monad",target="0x188d586ddcf52439676ca21a244753fa19f9ea8e"} 1
+aro_target_stale{chain="monad",target="0x36878c6fca7e0e8a88f90dc410cfbbca5b695c95"} 1
+aro_target_stale{chain="monad",target="0xd651346d7c789536ebf06dc72ae3c8502cd695cc"} 1
+aro_target_stale{chain="monad",target="0x32841a8511d5c2c5b253f45668780b99139e476d"} 1
+aro_target_stale{chain="monad",target="0x8271e06e5887fe5ba05234f5315c19f3ec90e8ad"} 1
+aro_target_stale{chain="monad",target="0xad663ac84052b52be4ed1b27ba416505e84a00bf"} 1
+aro_target_stale{chain="monad",target="0x34793fb9935f7bb5e5ae920fb963f39063e7a615"} 1
+aro_target_stale{chain="monad",target="0xba4dd672062de8feedb665dd4410658864483f1e"} 1
 aro_target_stale{chain="plasma",target="0x6c50b8ca8eeaa1c75dee5b5ea79772acabc92f48"} 0
 aro_target_stale{chain="plasma",target="0x061d8e131f26512348ee5fa42e2df1ba9d6505e9"} 0
 aro_target_stale{chain="plasma",target="0x888888888889758f76e7103c6cbf23abbf58f946"} 0

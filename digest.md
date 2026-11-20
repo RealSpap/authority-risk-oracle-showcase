@@ -1,6 +1,6 @@
 # Authority risk digest, 2026-11-19 01:24 UTC
 
-## Needs a person, 2026-11-19T01:24:10Z: 54 item(s) (priority 1: 42, priority 2: 9, priority 3: 3); oldest 39.2 d
+## Needs a person, 2026-11-19T01:24:10Z: 53 item(s) (priority 1: 41, priority 2: 9, priority 3: 3); oldest 39.2 d
 
 ### Overdue: 8 priority-1 item(s) waiting for more than 2 day(s), back in the alarm
 - **Safe AddedOwner** arbitrum 0x8D1d…3e0D (6.4 d): AddedOwner 0x25f9…7f85 (gmx_timelock_multisig, gmx_v1_vault)
@@ -9,18 +9,18 @@
 - **Safe RemovedOwner** arbitrum 0x8D1d…3e0D (6.4 d): RemovedOwner 0x49C9…2Da3 (gmx_timelock_multisig, gmx_v1_vault)
 - **Safe RemovedOwner** arbitrum 0x8D1d…3e0D (6.4 d): RemovedOwner 0xD794…b398 (gmx_timelock_multisig, gmx_v1_vault)
 - **Safe RemovedOwner** arbitrum 0x8D1d…3e0D (6.4 d): RemovedOwner 0xeAA5…12Ea (gmx_timelock_multisig, gmx_v1_vault)
-- **Safe AddedOwner** arbitrum 0x58F582455b54d7c83d03BCeed95FAf72B37fdDD7 (6.1 d): AddedOwner 0xcBFa…2c2e (gmx_v1_vault)
-- **Safe RemovedOwner** arbitrum 0x58F582455b54d7c83d03BCeed95FAf72B37fdDD7 (6.1 d): RemovedOwner 0xeAA5…12Ea (gmx_v1_vault)
+- **Safe AddedOwner** arbitrum 0x58F5…dDD7 (6.1 d): AddedOwner 0xcBFa…2c2e (gmx_v1_vault)
+- **Safe RemovedOwner** arbitrum 0x58F5…dDD7 (6.1 d): RemovedOwner 0xeAA5…12Ea (gmx_v1_vault)
 
-### Something happened: read before trusting the score (42)
+### Something happened: read before trusting the score (41)
 - **Safe AddedOwner** arbitrum 0x8D1d…3e0D (6.4 d): AddedOwner 0x25f9…7f85 (gmx_timelock_multisig, gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** arbitrum 0x8D1d…3e0D (6.4 d): AddedOwner 0x936C…2a4e (gmx_timelock_multisig, gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** arbitrum 0x8D1d…3e0D (6.4 d): AddedOwner 0x6091…a6F5 (gmx_timelock_multisig, gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe RemovedOwner** arbitrum 0x8D1d…3e0D (6.4 d): RemovedOwner 0x49C9…2Da3 (gmx_timelock_multisig, gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe RemovedOwner** arbitrum 0x8D1d…3e0D (6.4 d): RemovedOwner 0xD794…b398 (gmx_timelock_multisig, gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe RemovedOwner** arbitrum 0x8D1d…3e0D (6.4 d): RemovedOwner 0xeAA5…12Ea (gmx_timelock_multisig, gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** arbitrum 0x58F582455b54d7c83d03BCeed95FAf72B37fdDD7 (6.1 d): AddedOwner 0xcBFa…2c2e (gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** arbitrum 0x58F582455b54d7c83d03BCeed95FAf72B37fdDD7 (6.1 d): RemovedOwner 0xeAA5…12Ea (gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** arbitrum 0x58F5…dDD7 (6.1 d): AddedOwner 0xcBFa…2c2e (gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** arbitrum 0x58F5…dDD7 (6.1 d): RemovedOwner 0xeAA5…12Ea (gmx_v1_vault). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** base 0x360c…bcFe (2.0 d): AddedOwner 0x61C2…0e44 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** base 0x360c…bcFe (2.0 d): AddedOwner 0x2694…CbF1 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** base 0x360c…bcFe (2.0 d): AddedOwner 0xb291…Afef (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
@@ -54,7 +54,6 @@
 - **queued operation executable within 48 h** ethereum 0xd19d4B5d358258f05D7B411E21A1460D11B0876F (0.2 d): cross-chain message: sendMessage(address,uint256,bytes) via Compound Governance Timelock. To do: read the call before it lands. (pending_ops.json)
 - **admin transfer in flight** robinhood 0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d (0.0 d): 0x9db4…1a53 designated (pendingOwner() on the contract (Ownable2Step), a contract). To do: identify the designated admin; when it accepts, the admin read changes. (second_opinion.json pending_admin)
 - **methodology changed** tempo  (0.0 d): Tempo (Moderato): 0x4b8b9f2507 -> 0x2e2887de42 on 15 target(s). To do: expected after a release of the scorer; otherwise a push by a key that should not hold the updater role. (methodology.json)
-- **queued operation executable within 48 h** robinhood 0x14b107CF534239c59571B066cB6497a321Da897C (0.0 d): 0xd86fac1b via robinhood timelock 0x0da1…001d, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
 
 ### Decide (9)
 - **Safe guard to identify** ethereum-l1 0x2cc440b721d2cafd6d64908d6d8c4acc57f8afc3 (39.2 d): 0x74ab…8d29: contract, owned by 0xa075…c344. To do: say what this guard checks and who can change it. (second_opinion.json guard_detail)
@@ -94,8 +93,8 @@
 - arbitrum: AddedOwner 0x985F…f235 on 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (aave_guardian), tx 2e83ea0dbe32b8a9244324238b879db124c5b17b38594b6eb0e2d45f7dac47cb
 - arbitrum: RemovedOwner 0x4C30…099f on 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (aave_guardian), tx 2e83ea0dbe32b8a9244324238b879db124c5b17b38594b6eb0e2d45f7dac47cb
 - arbitrum: AddedOwner 0x9EF7…0403 on 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (aave_guardian), tx 2e83ea0dbe32b8a9244324238b879db124c5b17b38594b6eb0e2d45f7dac47cb
-- arbitrum: RemovedOwner 0xeAA5…12Ea on 0x58F582455b54d7c83d03BCeed95FAf72B37fdDD7 (gmx_v1_vault), tx f25430e6aac3539b5584dfb22285e4a6982208f9fbe35319ff195335f3b7d682
-- arbitrum: AddedOwner 0xcBFa…2c2e on 0x58F582455b54d7c83d03BCeed95FAf72B37fdDD7 (gmx_v1_vault), tx f25430e6aac3539b5584dfb22285e4a6982208f9fbe35319ff195335f3b7d682
+- arbitrum: RemovedOwner 0xeAA5…12Ea on 0x58F5…dDD7 (gmx_v1_vault), tx f25430e6aac3539b5584dfb22285e4a6982208f9fbe35319ff195335f3b7d682
+- arbitrum: AddedOwner 0xcBFa…2c2e on 0x58F5…dDD7 (gmx_v1_vault), tx f25430e6aac3539b5584dfb22285e4a6982208f9fbe35319ff195335f3b7d682
 - arbitrum: RemovedOwner 0xeAA5…12Ea on 0x8D1d…3e0D (gmx_timelock_multisig, gmx_v1_vault), tx a4ba20a8d7f5a880f4f0a2a461c04bb38fc133dfa308f7bea2fca0989160d392
 - arbitrum: AddedOwner 0x6091…a6F5 on 0x8D1d…3e0D (gmx_timelock_multisig, gmx_v1_vault), tx a4ba20a8d7f5a880f4f0a2a461c04bb38fc133dfa308f7bea2fca0989160d392
 - arbitrum: RemovedOwner 0xD794…b398 on 0x8D1d…3e0D (gmx_timelock_multisig, gmx_v1_vault), tx 4e2391798c435533b256e00aa19e0cebef994870c1637ee52f4dc1dd3aac727e

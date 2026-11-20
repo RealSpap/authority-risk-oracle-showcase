@@ -1,6 +1,6 @@
 {
- "run_utc": "2026-11-19T19:00:49Z",
- "previous_run_utc": "2026-11-19T13:00:44Z",
+ "run_utc": "2026-11-20T01:00:53Z",
+ "previous_run_utc": "2026-11-19T19:00:49Z",
  "schedule": "every 6 hours (GitHub Actions, cron 17 */6 * * *)",
  "oracles": [
   {
@@ -9,18 +9,18 @@
    "kind": "evm",
    "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
    "read_ok": true,
-   "block": 155573905,
+   "block": 155664354,
    "targets": 63,
    "stale": 0,
    "retired": 0,
-   "lastUpdated": 1794350120,
+   "lastUpdated": 1795123834,
    "maxStaleness": 777600,
    "freshness": {
-    "watch_read_at": 1795114852,
-    "block": 155573905,
-    "block_time": 1795114848,
-    "newest_push": 1794350120,
-    "oldest_push": 1794350120
+    "watch_read_at": 1795136458,
+    "block": 155664354,
+    "block_time": 1795136452,
+    "newest_push": 1795123834,
+    "oldest_push": 1795123834
    },
    "self_watch": {
     "read": true,
@@ -46,16 +46,16 @@
    "kind": "evm",
    "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
    "read_ok": true,
-   "block": 12170306,
+   "block": 12172047,
    "targets": 39,
    "stale": 0,
    "retired": 1,
    "lastUpdated": 1794402258,
    "maxStaleness": 777600,
    "freshness": {
-    "watch_read_at": 1795114856,
-    "block": 12170306,
-    "block_time": 1795114848,
+    "watch_read_at": 1795136459,
+    "block": 12172047,
+    "block_time": 1795136448,
     "newest_push": 1794402258,
     "oldest_push": 1790180194
    },
@@ -83,18 +83,18 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 330821067,
+   "block": 330896206,
    "targets": 13,
    "stale": 0,
    "retired": 0,
-   "lastUpdated": 1794349702,
+   "lastUpdated": 1795123114,
    "maxStaleness": 777600,
    "freshness": {
-    "watch_read_at": 1795114861,
-    "block": 330821067,
-    "block_time": 1795114857,
-    "newest_push": 1794349702,
-    "oldest_push": 1794349702
+    "watch_read_at": 1795136461,
+    "block": 330896206,
+    "block_time": 1795136459,
+    "newest_push": 1795123114,
+    "oldest_push": 1795123114
    },
    "self_watch": {
     "read": true,
@@ -120,16 +120,16 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 60964966,
+   "block": 61072967,
    "targets": 13,
    "stale": 0,
    "retired": 0,
    "lastUpdated": 1795033809,
    "maxStaleness": 777600,
    "freshness": {
-    "watch_read_at": 1795114866,
-    "block": 60964966,
-    "block_time": 1795114862,
+    "watch_read_at": 1795136465,
+    "block": 61072967,
+    "block_time": 1795136462,
     "newest_push": 1795033809,
     "oldest_push": 1795033809
    },
@@ -157,16 +157,16 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 44985350,
+   "block": 45025234,
    "targets": 15,
    "stale": 0,
    "retired": 0,
    "lastUpdated": 1795033617,
    "maxStaleness": 777600,
    "freshness": {
-    "watch_read_at": 1795114871,
-    "block": 44985350,
-    "block_time": 1795114866,
+    "watch_read_at": 1795136466,
+    "block": 45025234,
+    "block_time": 1795136465,
     "newest_push": 1795033617,
     "oldest_push": 1795033617
    },
@@ -194,16 +194,16 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 39280345,
+   "block": 39298876,
    "targets": 9,
    "stale": 0,
    "retired": 0,
    "lastUpdated": 1795034018,
    "maxStaleness": 777600,
    "freshness": {
-    "watch_read_at": 1795114877,
-    "block": 39280345,
-    "block_time": 1795114869,
+    "watch_read_at": 1795136471,
+    "block": 39298876,
+    "block_time": 1795136467,
     "newest_push": 1795034018,
     "oldest_push": 1795034018
    },
@@ -231,16 +231,16 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 81105712,
+   "block": 81173707,
    "targets": 9,
-   "stale": 0,
+   "stale": 9,
    "retired": 0,
    "lastUpdated": 1794357672,
    "maxStaleness": 777600,
    "freshness": {
-    "watch_read_at": 1795114913,
-    "block": 81105712,
-    "block_time": 1795114878,
+    "watch_read_at": 1795136500,
+    "block": 81173707,
+    "block_time": 1795136471,
     "newest_push": 1794357672,
     "oldest_push": 1794357672
    },
@@ -268,18 +268,18 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 70062724,
+   "block": 70084663,
    "targets": 16,
    "stale": 0,
    "retired": 0,
-   "lastUpdated": 1794349795,
+   "lastUpdated": 1795123486,
    "maxStaleness": 777600,
    "freshness": {
-    "watch_read_at": 1795115046,
-    "block": 70062724,
-    "block_time": 1795114931,
-    "newest_push": 1794349795,
-    "oldest_push": 1794349795
+    "watch_read_at": 1795136627,
+    "block": 70084663,
+    "block_time": 1795136511,
+    "newest_push": 1795123486,
+    "oldest_push": 1795123486
    },
    "self_watch": {
     "read": false,
@@ -296,7 +296,7 @@
      }
     },
     "error": "getLogs: RateLimited: [{'code': -32005, 'message': 'Log response size exceeded. Maximum allowed number of requested blocks",
-    "unread_blocks": 285154
+    "unread_blocks": 307093
    }
   },
   {
@@ -312,7 +312,7 @@
    "lastUpdated": 1795033349,
    "maxStaleness": 777600,
    "freshness": {
-    "watch_read_at": 1795115050,
+    "watch_read_at": 1795136630,
     "block": null,
     "block_time": null,
     "newest_push": 1795033349,
@@ -322,7 +322,7 @@
   }
  ],
  "total_targets": 203,
- "stale_total": 0,
+ "stale_total": 9,
  "retired_total": 1,
  "retired": [
   {
@@ -333,11 +333,68 @@
    "lastUpdated": 1790180194
   }
  ],
- "movers": [],
+ "movers": [
+  {
+   "oracle": "Robinhood Chain",
+   "target": "0x6f475642a6e85809b1c36fa62763669b1b48dd5b",
+   "label": "LayerZero V2 EndpointV2 (Robinhood Chain)",
+   "field": "multisigScore",
+   "before": 90,
+   "after": 95
+  },
+  {
+   "oracle": "Robinhood Chain",
+   "target": "0x6f475642a6e85809b1c36fa62763669b1b48dd5b",
+   "label": "LayerZero V2 EndpointV2 (Robinhood Chain)",
+   "field": "compositeScore",
+   "before": 49,
+   "after": 51
+  },
+  {
+   "oracle": "Robinhood Chain",
+   "target": "0xc39161c743d0307eb9bcc9fef03eeb9dc4802de7",
+   "label": "LayerZero V2 SendUln302 (Robinhood Chain)",
+   "field": "multisigScore",
+   "before": 90,
+   "after": 95
+  },
+  {
+   "oracle": "Robinhood Chain",
+   "target": "0xc39161c743d0307eb9bcc9fef03eeb9dc4802de7",
+   "label": "LayerZero V2 SendUln302 (Robinhood Chain)",
+   "field": "compositeScore",
+   "before": 49,
+   "after": 51
+  },
+  {
+   "oracle": "Robinhood Chain",
+   "target": "0xe1844c5d63a9543023008d332bd3d2e6f1fe1043",
+   "label": "LayerZero V2 ReceiveUln302 (Robinhood Chain)",
+   "field": "multisigScore",
+   "before": 90,
+   "after": 95
+  },
+  {
+   "oracle": "Robinhood Chain",
+   "target": "0xe1844c5d63a9543023008d332bd3d2e6f1fe1043",
+   "label": "LayerZero V2 ReceiveUln302 (Robinhood Chain)",
+   "field": "compositeScore",
+   "before": 49,
+   "after": 51
+  }
+ ],
  "alerts": [
-  "Hyperliquid (HyperEVM): the scan of the oracle's own role events has not advanced for several runs ~ 14 runs, scanned to block 69777570, chain at block 70062724"
+  "Monad: 0xd691\u2026b7e9 turned stale (last update 2026-11-11T00:41:12Z)",
+  "Monad: 0x188d\u2026ea8e turned stale (last update 2026-11-11T00:41:12Z)",
+  "Monad: 0x3687\u20265c95 turned stale (last update 2026-11-11T00:41:12Z)",
+  "Monad: 0xd651\u202695cc turned stale (last update 2026-11-11T00:41:12Z)",
+  "Monad: 0x3284\u2026476d turned stale (last update 2026-11-11T00:41:12Z)",
+  "Monad: Curve DEX (StableSwap-NG Factory + fee-receiver) turned stale (last update 2026-11-11T00:41:12Z)",
+  "Monad: 0xad66\u202600bf turned stale (last update 2026-11-11T00:41:12Z)",
+  "Monad: 0x3479\u2026a615 turned stale (last update 2026-11-11T00:41:12Z)",
+  "Monad: 0xba4d\u20263f1e turned stale (last update 2026-11-11T00:41:12Z)"
  ],
  "unread": [],
  "note": "The Zcash commitments are verified by the dashboard itself. An oracle in `unread` has unknown targets, not zero.",
- "run_id": "44593738224.1"
+ "run_id": "44650310288.1"
 }

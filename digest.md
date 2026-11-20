@@ -1,8 +1,8 @@
 # Authority risk digest, 2026-11-20 01:24 UTC
 
-## Needs a person, 2026-11-20T01:23:56Z: 36 item(s) (priority 1: 24, priority 2: 9, priority 3: 3); oldest 40.2 d
+## Needs a person, 2026-11-20T01:23:56Z: 35 item(s) (priority 1: 23, priority 2: 9, priority 3: 3); oldest 40.2 d
 
-### Something happened: read before trusting the score (24)
+### Something happened: read before trusting the score (23)
 - **Safe AddedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (2.0 d): AddedOwner 0x61C2…0e44 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (2.0 d): AddedOwner 0x2694…CbF1 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (2.0 d): AddedOwner 0xb291…Afef (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
@@ -23,7 +23,6 @@
 - **Safe RemovedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (2.0 d): RemovedOwner 0x936C…9EF3 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe RemovedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (2.0 d): RemovedOwner 0x0D23…c0E9 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe RemovedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (2.0 d): RemovedOwner 0x4C30…099f (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **queued operation executable within 48 h** ethereum 0xd19d4B5d358258f05D7B411E21A1460D11B0876F (1.2 d): cross-chain message: sendMessage(address,uint256,bytes) via Compound Governance Timelock. To do: read the call before it lands. (pending_ops.json)
 - **queued operation executable within 48 h** arbitrum 0x1eE00C305C51Ff3bE60162456A9B533C07cD9288 (0.2 d): parameter change: updateMaster() via arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
 - **admin transfer in flight** robinhood 0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d (0.0 d): 0x9db4…1a53 designated (pendingOwner() on the contract (Ownable2Step), a contract). To do: identify the designated admin; when it accepts, the admin read changes. (second_opinion.json pending_admin)
 - **queued operation executable within 48 h** arbitrum 0x0000000000000000000000000000000000000064 (0.0 d): parameter change: sendTxToL1(address,bytes) via Arbitrum L2 Core Governor Timelock. To do: read the call before it lands. (pending_ops.json)

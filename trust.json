@@ -1,33 +1,33 @@
 {
  "schemaVersion": 1,
- "generated_utc": "2026-11-20T13:38:54Z",
+ "generated_utc": "2026-11-20T19:24:27Z",
  "rule_version": "1",
  "rule": "(version 1). For each target, every reason that applies is listed with its dimension, a state and an effect. A dimension takes the worst state\nof its reasons. For the status, a reason with effect \"decides\" counts for the state it carries, one with effect \"degrades\" counts for PARTIAL at most, one with\neffect \"info\" for nothing. The status is the first line that matches, from the top:\n\n  UNAVAILABLE  a dimension is unavailable: the oracle holding the target was not read this run, or the trust computation itself failed (trust_not_computed).\n  DISPUTED     a dimension is disputed: an open public dispute, or the independent reader disagrees and nobody has reviewed it.\n  STALE        a dimension is stale: the on-chain score is stale, a pause or Safe-activity state has not been readable for 3 days or more (or for a time that\n               is not known), the Watch run itself is older than 8 hours, the run or one of its input files is dated more than 10 minutes after the\n               present time (an age that is negative says nothing about now), or the independent reader's file is from an earlier run than the Watch's.\n  UNVERIFIED   the independent reader did not read this target (no record, unreadable, or its input file missing), there is nothing to read\n               independently (a native entity), or the score is dated later than the block it was read at (its staleness can never show).\n  PARTIAL      something was checked and something was not: an incomplete reading (modules or admin members not all read, signers not classified, an admin\n               the reader cannot contradict: a contract it did not resolve, a program-derived address), a method that differs or is fixed by decision, an\n               alert not delivered, an unsigned run, a signing key that is not pinned (or cannot be compared), a broken journal, an input file that could not\n               be read or is from an earlier run; the reasons say what.\n  VERIFIED     none of the above. It means the checks listed here passed: not that the contract is safe, and not that the score is right.\n\nA reason whose effect is \"info\" is listed and sets its dimension's state, but never moves the status (a contract with no pause getter, money that no\nsource figures). The eight dimensions: reading, coverage, method, signature, journal, notification, financial_exposure, surveillance.\nUnknown is never ok: an input that could not be read puts its dimension in \"unverified\", not in \"ok\".\n\nWHEN IT IS COMPUTED. trust.json is recomputed only when the Watch runs, right after the files of the run are written. If the Watch stops, the file that stays\npublished keeps its statuses: the rule cannot see its own silence. A consumer must compare `generated_utc` to the present time and decide how old is too old for its use (the Watch is scheduled every 6 hours, but GitHub can start a\nrun hours late, so a file a few hours old can still be the latest one).",
  "rule_sha256": "26c6a093628a5caa399392e83ec9d8c01604fd5af4dc7b585bad91e43eed64b2",
  "error": null,
  "targets": 203,
  "counts": {
-  "VERIFIED": 99,
-  "PARTIAL": 36,
-  "STALE": 10,
-  "DISPUTED": 2,
-  "UNVERIFIED": 56,
+  "VERIFIED": 72,
+  "PARTIAL": 33,
+  "STALE": 48,
+  "DISPUTED": 3,
+  "UNVERIFIED": 47,
   "UNAVAILABLE": 0
  },
  "dimension_counts": {
   "reading": {
-   "ok": 115,
+   "ok": 89,
    "not_applicable": 0,
-   "partial": 20,
-   "unverified": 56,
-   "stale": 10,
-   "disputed": 2,
+   "partial": 16,
+   "unverified": 47,
+   "stale": 48,
+   "disputed": 3,
    "unavailable": 0
   },
   "coverage": {
-   "ok": 175,
+   "ok": 181,
    "not_applicable": 0,
-   "partial": 28,
+   "partial": 22,
    "unverified": 0,
    "stale": 0,
    "disputed": 0,
@@ -93,7 +93,7 @@
   "signature_key": "pinned",
   "journal": "ok",
   "alert_channels": 1,
-  "watch_run_utc": "2026-11-20T13:00:48Z",
+  "watch_run_utc": "2026-11-20T19:00:53Z",
   "inputs_unread": []
  },
  "by_target": {
@@ -904,7 +904,7 @@
    "retry_may_help": true
   },
   "ethereum-l1:0x1f98431c8ad98523631ae4a59f267346ea31f984": {
-   "status": "VERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -919,6 +919,12 @@
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
     },
     {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -926,7 +932,7 @@
     }
    ],
    "dimensions": {
-    "reading": "ok",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -935,10 +941,10 @@
     "financial_exposure": "ok",
     "surveillance": "ok"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "ethereum-l1:0x2f39d218133afab8f2b819b1066c7e434ad94e9e": {
-   "status": "VERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -953,6 +959,12 @@
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
     },
     {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -960,7 +972,7 @@
     }
    ],
    "dimensions": {
-    "reading": "ok",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -969,10 +981,10 @@
     "financial_exposure": "ok",
     "surveillance": "ok"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "ethereum-l1:0xbe286431454714f511008713973d3b053a2d38f3": {
-   "status": "PARTIAL",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -993,6 +1005,12 @@
      "detail": "the admin is a contract the reader did not resolve to a key, a Safe or a timelock: its agreement with the score checks nothing"
     },
     {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -1000,7 +1018,7 @@
     }
    ],
    "dimensions": {
-    "reading": "partial",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -1058,13 +1076,19 @@
    "retry_may_help": false
   },
   "ethereum-l1:0xc139190f447e929f090edeb554d95abb8b18ac1c": {
-   "status": "VERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
      "dimension": "method",
      "effect": "info",
      "detail": "this method hash has no version in data/method_versions.json"
+    },
+    {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
     },
     {
      "code": "side_roles_not_covered",
@@ -1074,7 +1098,7 @@
     }
    ],
    "dimensions": {
-    "reading": "ok",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -1083,10 +1107,10 @@
     "financial_exposure": "ok",
     "surveillance": "ok"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "ethereum-l1:0x73e35c5c35a274e34ade6eb13cc7f62aee323728": {
-   "status": "VERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -1101,6 +1125,12 @@
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
     },
     {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -1108,7 +1138,7 @@
     }
    ],
    "dimensions": {
-    "reading": "ok",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -1117,10 +1147,10 @@
     "financial_exposure": "ok",
     "surveillance": "ok"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "ethereum-l1:0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34": {
-   "status": "VERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -1135,6 +1165,12 @@
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
     },
     {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -1142,7 +1178,7 @@
     }
    ],
    "dimensions": {
-    "reading": "ok",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -1151,10 +1187,10 @@
     "financial_exposure": "ok",
     "surveillance": "ok"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "ethereum-l1:0x211cc4dd073734da055fbf44a2b4667d5e5fe5d2": {
-   "status": "VERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -1169,6 +1205,12 @@
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
     },
     {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -1176,7 +1218,7 @@
     }
    ],
    "dimensions": {
-    "reading": "ok",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -1185,10 +1227,10 @@
     "financial_exposure": "ok",
     "surveillance": "ok"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "ethereum-l1:0x58538e6a46e07434d7e7375bc268d3cb839c0133": {
-   "status": "VERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -1201,6 +1243,12 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
     },
     {
      "code": "side_roles_not_covered",
@@ -1210,7 +1258,7 @@
     }
    ],
    "dimensions": {
-    "reading": "ok",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -1219,10 +1267,10 @@
     "financial_exposure": "ok",
     "surveillance": "ok"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "ethereum-l1:0xc3d688b66703497daa19211eedff47f25384cdc3": {
-   "status": "VERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -1235,10 +1283,16 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
     }
    ],
    "dimensions": {
-    "reading": "ok",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -1247,10 +1301,10 @@
     "financial_exposure": "ok",
     "surveillance": "ok"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "ethereum-l1:0x02c3ea4e34c0cbd694d2adfa2c690eecbc1793ee": {
-   "status": "PARTIAL",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -1271,6 +1325,12 @@
      "detail": "the admin is a contract the reader did not resolve to a key, a Safe or a timelock: its agreement with the score checks nothing"
     },
     {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -1278,7 +1338,7 @@
     }
    ],
    "dimensions": {
-    "reading": "partial",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -1290,7 +1350,7 @@
    "retry_may_help": false
   },
   "ethereum-l1:0x000000000004444c5dc75cb358380d2e3de08a90": {
-   "status": "VERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -1305,6 +1365,12 @@
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
     },
     {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -1312,7 +1378,7 @@
     }
    ],
    "dimensions": {
-    "reading": "ok",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -1321,10 +1387,10 @@
     "financial_exposure": "ok",
     "surveillance": "ok"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "ethereum-l1:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb": {
-   "status": "VERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -1339,6 +1405,12 @@
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
     },
     {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -1346,7 +1418,7 @@
     }
    ],
    "dimensions": {
-    "reading": "ok",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -1355,16 +1427,22 @@
     "financial_exposure": "ok",
     "surveillance": "ok"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "ethereum-l1:0x2260fac5e5542a773aa44fbcfedf7c193bc2c599": {
-   "status": "VERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
      "dimension": "method",
      "effect": "info",
      "detail": "this method hash has no version in data/method_versions.json"
+    },
+    {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
     },
     {
      "code": "side_roles_not_covered",
@@ -1374,7 +1452,7 @@
     }
    ],
    "dimensions": {
-    "reading": "ok",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -1383,10 +1461,10 @@
     "financial_exposure": "ok",
     "surveillance": "ok"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "ethereum-l1:0xe3490297a08d6fc8da46edb7b6142e4f461b62d3": {
-   "status": "VERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -1401,6 +1479,12 @@
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
     },
     {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -1408,7 +1492,7 @@
     }
    ],
    "dimensions": {
-    "reading": "ok",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -1417,10 +1501,10 @@
     "financial_exposure": "ok",
     "surveillance": "ok"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "ethereum-l1:0xae7ab96520de3a18e5e111b5eaab095312d7fe84": {
-   "status": "UNVERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "independent_read_unreadable",
@@ -1441,6 +1525,12 @@
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
     },
     {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -1448,7 +1538,7 @@
     }
    ],
    "dimensions": {
-    "reading": "unverified",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -1460,13 +1550,19 @@
    "retry_may_help": false
   },
   "ethereum-l1:0x858646372cc42e1a627fce94aa7a7033e7cf075a": {
-   "status": "VERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
      "dimension": "method",
      "effect": "info",
      "detail": "this method hash has no version in data/method_versions.json"
+    },
+    {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
     },
     {
      "code": "side_roles_not_covered",
@@ -1476,7 +1572,7 @@
     }
    ],
    "dimensions": {
-    "reading": "ok",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -1485,10 +1581,10 @@
     "financial_exposure": "ok",
     "surveillance": "ok"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "ethereum-l1:0x6a8cbed756804b16e05e741edabd5cb544ae21bf": {
-   "status": "PARTIAL",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -1509,6 +1605,12 @@
      "detail": "the admin is a contract the reader did not resolve to a key, a Safe or a timelock: its agreement with the score checks nothing"
     },
     {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -1516,7 +1618,7 @@
     }
    ],
    "dimensions": {
-    "reading": "partial",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -1528,7 +1630,7 @@
    "retry_may_help": false
   },
   "ethereum-l1:0x1d8f8f00cfa6758d7be78336684788fb0ee0fa46": {
-   "status": "UNVERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "independent_read_unreadable",
@@ -1549,6 +1651,12 @@
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
     },
     {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -1556,7 +1664,7 @@
     }
    ],
    "dimensions": {
-    "reading": "unverified",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -1568,7 +1676,7 @@
    "retry_may_help": false
   },
   "ethereum-l1:0x5d39e06b825c1f2b80bf2756a73e28efaa128ba0": {
-   "status": "VERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -1589,6 +1697,12 @@
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
     },
     {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -1596,7 +1710,7 @@
     }
    ],
    "dimensions": {
-    "reading": "ok",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -1605,10 +1719,10 @@
     "financial_exposure": "unverified",
     "surveillance": "ok"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "ethereum-l1:0xf403c135812408bfbe8713b5a23a04b3d48aae31": {
-   "status": "VERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -1621,6 +1735,12 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
     },
     {
      "code": "side_roles_not_covered",
@@ -1630,7 +1750,7 @@
     }
    ],
    "dimensions": {
-    "reading": "ok",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -1639,10 +1759,10 @@
     "financial_exposure": "ok",
     "surveillance": "ok"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "ethereum-l1:0x55555815a5595991c3a0ff119b59aef6c8b55555": {
-   "status": "VERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -1655,10 +1775,16 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
     }
    ],
    "dimensions": {
-    "reading": "ok",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -1667,10 +1793,10 @@
     "financial_exposure": "ok",
     "surveillance": "ok"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "ethereum-l1:0x94643e86aa5e38ddac6c7791c1297f4e40cd96c1": {
-   "status": "VERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -1683,10 +1809,16 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
     }
    ],
    "dimensions": {
-    "reading": "ok",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -1695,10 +1827,10 @@
     "financial_exposure": "ok",
     "surveillance": "ok"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "ethereum-l1:0xbeef047a543e45807105e51a8bbefcc5950fcfba": {
-   "status": "VERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -1711,10 +1843,16 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
     }
    ],
    "dimensions": {
-    "reading": "ok",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -1723,10 +1861,10 @@
     "financial_exposure": "ok",
     "surveillance": "ok"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "ethereum-l1:0xbeef01735c132ada46aa9aa4c54623caa92a64cb": {
-   "status": "VERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -1739,10 +1877,16 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
     }
    ],
    "dimensions": {
-    "reading": "ok",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -1751,10 +1895,10 @@
     "financial_exposure": "ok",
     "surveillance": "ok"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "ethereum-l1:0xbeef088055857739c12cd3765f20b7679def0f51": {
-   "status": "VERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -1767,10 +1911,16 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
     }
    ],
    "dimensions": {
-    "reading": "ok",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -1779,10 +1929,10 @@
     "financial_exposure": "ok",
     "surveillance": "ok"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "ethereum-l1:0xbeef0c075da5d01112ae5cf34d257074fb5ddb2f": {
-   "status": "VERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -1795,10 +1945,16 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
+    },
+    {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
     }
    ],
    "dimensions": {
-    "reading": "ok",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -1807,10 +1963,10 @@
     "financial_exposure": "ok",
     "surveillance": "ok"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "ethereum-l1:0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2": {
-   "status": "UNVERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "independent_read_unreadable",
@@ -1837,6 +1993,12 @@
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
     },
     {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -1844,7 +2006,7 @@
     }
    ],
    "dimensions": {
-    "reading": "unverified",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -1856,7 +2018,7 @@
    "retry_may_help": false
   },
   "ethereum-l1:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": {
-   "status": "VERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -1869,10 +2031,16 @@
      "dimension": "financial_exposure",
      "effect": "info",
      "detail": "no source figures the money behind this contract"
+    },
+    {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
     }
    ],
    "dimensions": {
-    "reading": "ok",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -1881,10 +2049,10 @@
     "financial_exposure": "unverified",
     "surveillance": "ok"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "ethereum-l1:0xdac17f958d2ee523a2206206994597c13d831ec7": {
-   "status": "PARTIAL",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -1905,6 +2073,12 @@
      "detail": "the admin is a contract the reader did not resolve to a key, a Safe or a timelock: its agreement with the score checks nothing"
     },
     {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -1912,7 +2086,7 @@
     }
    ],
    "dimensions": {
-    "reading": "partial",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -1924,7 +2098,7 @@
    "retry_may_help": false
   },
   "ethereum-l1:0x6b175474e89094c44da98b954eedeac495271d0f": {
-   "status": "UNVERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "independent_read_unreadable",
@@ -1951,6 +2125,12 @@
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
     },
     {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -1958,7 +2138,7 @@
     }
    ],
    "dimensions": {
-    "reading": "unverified",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -1970,7 +2150,7 @@
    "retry_may_help": false
   },
   "ethereum-l1:0xdc035d45d973e3ec169d2276ddab16f1e407384f": {
-   "status": "UNVERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "independent_read_unreadable",
@@ -1997,6 +2177,12 @@
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
     },
     {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -2004,7 +2190,7 @@
     }
    ],
    "dimensions": {
-    "reading": "unverified",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -2016,7 +2202,7 @@
    "retry_may_help": false
   },
   "ethereum-l1:0x6c3ea9036406852006290770bedfcaba0e23a0e8": {
-   "status": "VERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -2031,6 +2217,12 @@
      "detail": "no source figures the money behind this contract"
     },
     {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -2038,7 +2230,7 @@
     }
    ],
    "dimensions": {
-    "reading": "ok",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -2047,10 +2239,10 @@
     "financial_exposure": "unverified",
     "surveillance": "ok"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "ethereum-l1:0xc5f0f7b66764f6ec8c8dff7ba683102295e16409": {
-   "status": "VERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -2065,6 +2257,12 @@
      "detail": "no source figures the money behind this contract"
     },
     {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -2072,7 +2270,7 @@
     }
    ],
    "dimensions": {
-    "reading": "ok",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -2081,10 +2279,10 @@
     "financial_exposure": "unverified",
     "surveillance": "ok"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "ethereum-l1:0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a": {
-   "status": "PARTIAL",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -2111,6 +2309,12 @@
      "detail": "the admin is a contract the reader did not resolve to a key, a Safe or a timelock: its agreement with the score checks nothing"
     },
     {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -2118,7 +2322,7 @@
     }
    ],
    "dimensions": {
-    "reading": "partial",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -2130,7 +2334,7 @@
    "retry_may_help": false
   },
   "ethereum-l1:0x888888888889758f76e7103c6cbf23abbf58f946": {
-   "status": "VERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -2151,6 +2355,12 @@
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
     },
     {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -2158,7 +2368,7 @@
     }
    ],
    "dimensions": {
-    "reading": "ok",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -2167,10 +2377,10 @@
     "financial_exposure": "unverified",
     "surveillance": "ok"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "ethereum-l1:0x08ae3be30958cdd1847ec58fffd4c451a87fdf01": {
-   "status": "UNVERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "independent_read_unreadable",
@@ -2197,6 +2407,12 @@
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
     },
     {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -2204,7 +2420,7 @@
     }
    ],
    "dimensions": {
-    "reading": "unverified",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -2216,7 +2432,7 @@
    "retry_may_help": false
   },
   "ethereum-l1:0x52aa899454998be5b000ad077a46bbe360f4e497": {
-   "status": "VERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -2237,6 +2453,12 @@
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
     },
     {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -2244,7 +2466,7 @@
     }
    ],
    "dimensions": {
-    "reading": "ok",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -2253,10 +2475,10 @@
     "financial_exposure": "unverified",
     "surveillance": "ok"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "ethereum-l1:0x49048044d57e1c92a77f79988d21fa8faf74e97e": {
-   "status": "VERIFIED",
+   "status": "STALE",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -2269,10 +2491,16 @@
      "dimension": "financial_exposure",
      "effect": "info",
      "detail": "no source figures the money behind this contract"
+    },
+    {
+     "code": "score_stale",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the on-chain score is stale (isStale)"
     }
    ],
    "dimensions": {
-    "reading": "ok",
+    "reading": "stale",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -2281,17 +2509,11 @@
     "financial_exposure": "unverified",
     "surveillance": "ok"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "hyperliquid:0xea394cd63ca3a5c8a130bb2b955cc71c22e5ea6c": {
    "status": "UNVERIFIED",
    "reasons": [
-    {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
     {
      "code": "native_entity",
      "dimension": "reading",
@@ -2309,12 +2531,6 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
-    },
-    {
-     "code": "scan_gap",
-     "dimension": "surveillance",
-     "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2339,12 +2555,6 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "money_unknown",
      "dimension": "financial_exposure",
      "effect": "info",
@@ -2367,12 +2577,6 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
-    },
-    {
-     "code": "scan_gap",
-     "dimension": "surveillance",
-     "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2397,12 +2601,6 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "money_unknown",
      "dimension": "financial_exposure",
      "effect": "info",
@@ -2425,12 +2623,6 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
-    },
-    {
-     "code": "scan_gap",
-     "dimension": "surveillance",
-     "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2455,12 +2647,6 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "money_unknown",
      "dimension": "financial_exposure",
      "effect": "info",
@@ -2483,12 +2669,6 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
-    },
-    {
-     "code": "scan_gap",
-     "dimension": "surveillance",
-     "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2513,12 +2693,6 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "money_unknown",
      "dimension": "financial_exposure",
      "effect": "info",
@@ -2541,12 +2715,6 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
-    },
-    {
-     "code": "scan_gap",
-     "dimension": "surveillance",
-     "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2571,18 +2739,6 @@
    "status": "DISPUTED",
    "reasons": [
     {
-     "code": "admin_events_unread",
-     "dimension": "coverage",
-     "effect": "degrades",
-     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
-    },
-    {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "oracle_self_watch_unread",
      "dimension": "surveillance",
      "effect": "degrades",
@@ -2604,13 +2760,7 @@
      "code": "safe_signers_unclassified",
      "dimension": "reading",
      "effect": "degrades",
-     "detail": "1 signer(s) of the Safe could not be classified (key, Safe, timelock, contract)"
-    },
-    {
-     "code": "scan_gap",
-     "dimension": "surveillance",
-     "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
+     "detail": "4 signer(s) of the Safe could not be classified (key, Safe, timelock, contract)"
     },
     {
      "code": "side_roles_not_covered",
@@ -2621,7 +2771,7 @@
    ],
    "dimensions": {
     "reading": "disputed",
-    "coverage": "partial",
+    "coverage": "ok",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
@@ -2634,18 +2784,6 @@
   "hyperliquid:0x8888888c43cbb7e1c4132542e46831bffd866ed3": {
    "status": "UNVERIFIED",
    "reasons": [
-    {
-     "code": "admin_events_unread",
-     "dimension": "coverage",
-     "effect": "degrades",
-     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
-    },
-    {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
     {
      "code": "independent_read_unreadable",
      "dimension": "reading",
@@ -2671,12 +2809,6 @@
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
     },
     {
-     "code": "scan_gap",
-     "dimension": "surveillance",
-     "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
-    },
-    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -2685,7 +2817,7 @@
    ],
    "dimensions": {
     "reading": "unverified",
-    "coverage": "partial",
+    "coverage": "ok",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
@@ -2698,18 +2830,6 @@
   "hyperliquid:0x8888888192a4a0593c13532ba48449fc24c3beda": {
    "status": "UNVERIFIED",
    "reasons": [
-    {
-     "code": "admin_events_unread",
-     "dimension": "coverage",
-     "effect": "degrades",
-     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
-    },
-    {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
     {
      "code": "independent_read_unreadable",
      "dimension": "reading",
@@ -2729,12 +2849,6 @@
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
     },
     {
-     "code": "scan_gap",
-     "dimension": "surveillance",
-     "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
-    },
-    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -2743,7 +2857,7 @@
    ],
    "dimensions": {
     "reading": "unverified",
-    "coverage": "partial",
+    "coverage": "ok",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
@@ -2754,26 +2868,8 @@
    "retry_may_help": false
   },
   "hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109": {
-   "status": "UNVERIFIED",
+   "status": "DISPUTED",
    "reasons": [
-    {
-     "code": "admin_events_unread",
-     "dimension": "coverage",
-     "effect": "degrades",
-     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
-    },
-    {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
-     "code": "independent_read_unreadable",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "holder probes not all answered (RPC)"
-    },
     {
      "code": "oracle_self_watch_unread",
      "dimension": "surveillance",
@@ -2787,10 +2883,16 @@
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
     },
     {
-     "code": "scan_gap",
-     "dimension": "surveillance",
+     "code": "reader_disagrees",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the score says one key does everything (10), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisi"
+    },
+    {
+     "code": "safe_signers_unclassified",
+     "dimension": "reading",
      "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
+     "detail": "8 signer(s) of the Safe could not be classified (key, Safe, timelock, contract)"
     },
     {
      "code": "side_roles_not_covered",
@@ -2800,8 +2902,8 @@
     }
    ],
    "dimensions": {
-    "reading": "unverified",
-    "coverage": "partial",
+    "reading": "disputed",
+    "coverage": "ok",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
@@ -2814,12 +2916,6 @@
   "hyperliquid:0xdfc24b077bc1425ad1dea75bcb6f8158e10df303": {
    "status": "UNVERIFIED",
    "reasons": [
-    {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
     {
      "code": "native_entity",
      "dimension": "reading",
@@ -2837,12 +2933,6 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
-    },
-    {
-     "code": "scan_gap",
-     "dimension": "surveillance",
-     "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2867,12 +2957,6 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "native_entity",
      "dimension": "reading",
      "effect": "decides",
@@ -2889,12 +2973,6 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
-    },
-    {
-     "code": "scan_gap",
-     "dimension": "surveillance",
-     "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2919,12 +2997,6 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "native_entity",
      "dimension": "reading",
      "effect": "decides",
@@ -2941,12 +3013,6 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
-    },
-    {
-     "code": "scan_gap",
-     "dimension": "surveillance",
-     "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2971,12 +3037,6 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "native_entity",
      "dimension": "reading",
      "effect": "decides",
@@ -2993,12 +3053,6 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
-    },
-    {
-     "code": "scan_gap",
-     "dimension": "surveillance",
-     "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -3023,12 +3077,6 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "native_entity",
      "dimension": "reading",
      "effect": "decides",
@@ -3045,12 +3093,6 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
-    },
-    {
-     "code": "scan_gap",
-     "dimension": "surveillance",
-     "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -3072,26 +3114,8 @@
    "retry_may_help": false
   },
   "hyperliquid:0x72c98246a98bfe64022a3190e7710e157497170c": {
-   "status": "UNVERIFIED",
+   "status": "PARTIAL",
    "reasons": [
-    {
-     "code": "admin_events_unread",
-     "dimension": "coverage",
-     "effect": "degrades",
-     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
-    },
-    {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
-     "code": "independent_read_unreadable",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "holder probes not all answered (RPC)"
-    },
     {
      "code": "oracle_self_watch_unread",
      "dimension": "surveillance",
@@ -3105,10 +3129,10 @@
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
     },
     {
-     "code": "scan_gap",
-     "dimension": "surveillance",
+     "code": "reader_cannot_contradict",
+     "dimension": "reading",
      "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
+     "detail": "the admin is a contract the reader did not resolve to a key, a Safe or a timelock: its agreement with the score checks nothing"
     },
     {
      "code": "side_roles_not_covered",
@@ -3118,8 +3142,8 @@
     }
    ],
    "dimensions": {
-    "reading": "unverified",
-    "coverage": "partial",
+    "reading": "partial",
+    "coverage": "ok",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
@@ -3130,20 +3154,8 @@
    "retry_may_help": false
   },
   "hyperliquid:0xffaa4a3d97fe9107cef8a3f48c069f577ff76cc1": {
-   "status": "UNVERIFIED",
+   "status": "PARTIAL",
    "reasons": [
-    {
-     "code": "admin_events_unread",
-     "dimension": "coverage",
-     "effect": "degrades",
-     "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
-    },
-    {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
     {
      "code": "money_unknown",
      "dimension": "financial_exposure",
@@ -3163,12 +3175,6 @@
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
     },
     {
-     "code": "scan_gap",
-     "dimension": "surveillance",
-     "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
-    },
-    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -3176,8 +3182,8 @@
     }
    ],
    "dimensions": {
-    "reading": "unverified",
-    "coverage": "partial",
+    "reading": "ok",
+    "coverage": "ok",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
@@ -3185,7 +3191,7 @@
     "financial_exposure": "unverified",
     "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "monad:0xd691b0afed67f96cec28ab6308cbe5b2c103b7e9": {
    "status": "STALE",

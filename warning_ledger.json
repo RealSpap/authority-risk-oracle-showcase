@@ -865,10 +865,12 @@
    "first_seen_utc": "2026-11-18T19:00:47Z",
    "due_utc": "2026-11-20T18:58:23Z",
    "notice_hours": 48.0,
-   "state": "queued",
+   "state": "resolved",
    "chain": "ethereum",
    "timelock": "Compound Governance Timelock",
-   "what": "cross-chain message"
+   "what": "cross-chain message",
+   "resolved_seen_utc": "2026-11-20T19:00:53Z",
+   "final_state": "executed"
   },
   "robinhood:0x0da180b14721ce46a83669b4816cb652caa1001d:0x23e681f79235e85fe0d386ffedaaacf291d820209e457f962090981cc3aebb41": {
    "outcome": "warned",
@@ -903,7 +905,7 @@
    "what": "parameter change"
   }
  },
- "updated_utc": "2026-11-20T13:00:48Z",
+ "updated_utc": "2026-11-20T19:00:53Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
   "warned": 59,

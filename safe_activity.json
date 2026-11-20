@@ -1,34 +1,45 @@
 {
- "generated_utc": "2026-11-20T13:20:23Z",
+ "generated_utc": "2026-11-20T19:13:45Z",
  "wake_days": 14,
  "safes": 42,
  "read": 42,
  "woke": [
-  "ethereum-l1:0x0a0e\u2026f8dd"
+  "arbitrum:0x5f0b\u2026841f",
+  "base:0x0a0e\u2026f8dd",
+  "robinhood:0x9db4\u20261a53"
  ],
  "changes": [
   {
-   "delta": 1,
-   "idle_days": 33.7,
+   "delta": 3,
+   "idle_days": 18.8,
    "woke": true,
-   "safe": "ethereum-l1:0x0a0e\u2026f8dd",
+   "safe": "arbitrum:0x5f0b\u2026841f",
    "governs": [
-    "ethereum-l1:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
-    "ethereum-l1:0xbeef047a543e45807105e51a8bbefcc5950fcfba",
-    "ethereum-l1:0xbeef088055857739c12cd3765f20b7679def0f51",
-    "ethereum-l1:0xbeef0c075da5d01112ae5cf34d257074fb5ddb2f"
+    "arbitrum:0xffa10065ce1d1c42fabc46e06b84ed8ffeb4bae5"
    ],
-   "previous_run": "2026-11-20T07:14:54Z"
+   "previous_run": "2026-11-20T13:20:23Z"
   },
   {
-   "delta": 3,
-   "idle_days": 2.7,
-   "woke": false,
-   "safe": "ethereum-l1:0x3b0a\u20261862",
+   "delta": 1,
+   "idle_days": 34.0,
+   "woke": true,
+   "safe": "base:0x0a0e\u2026f8dd",
    "governs": [
-    "ethereum-l1:0x2cc440b721d2cafd6d64908d6d8c4acc57f8afc3"
+    "base:0xbeef010f9cb27031ad51e3333f9af9c6b1228183",
+    "base:0xbeef2d50b428675a1921bc6bbf4bfb9d8cf1461a"
    ],
-   "previous_run": "2026-11-20T07:14:54Z"
+   "previous_run": "2026-11-20T13:20:23Z"
+  },
+  {
+   "delta": 1,
+   "idle_days": 23.0,
+   "woke": true,
+   "safe": "robinhood:0x9db4\u20261a53",
+   "governs": [
+    "robinhood:0x5c98b2d892b37c9a1d3b69472bddc172a64cdc09",
+    "robinhood:0xd01c774d4a66408326bc65728ac5ae5aaf004032"
+   ],
+   "previous_run": "2026-11-20T13:20:23Z"
   }
  ],
  "never_executed": [
@@ -39,10 +50,10 @@
  "unread_chains": [],
  "by_safe": {
   "arbitrum:569110bd097c8358": {
-   "nonce": 112,
+   "nonce": 115,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-11-01T22:15:04Z",
-   "last_moved": "2026-11-01T22:15:04Z",
+   "idle_since": "2026-11-20T19:13:45Z",
+   "last_moved": "2026-11-20T19:13:45Z",
    "governs": [
     "arbitrum:0xffa10065ce1d1c42fabc46e06b84ed8ffeb4bae5"
    ],
@@ -71,10 +82,10 @@
    "never_executed": false
   },
   "base:31e3ad0247904d1a": {
-   "nonce": 100,
+   "nonce": 101,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-10-17T18:53:18Z",
-   "last_moved": "2026-10-17T18:53:18Z",
+   "idle_since": "2026-11-20T19:13:45Z",
+   "last_moved": "2026-11-20T19:13:45Z",
    "governs": [
     "base:0xbeef010f9cb27031ad51e3333f9af9c6b1228183",
     "base:0xbeef2d50b428675a1921bc6bbf4bfb9d8cf1461a"
@@ -207,6 +218,7 @@
    "observed_since": "2026-11-18T13:17:10Z",
    "idle_since": "2026-11-18T13:17:10Z",
    "governs": [
+    "hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109",
     "hyperliquid:0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec"
    ],
    "safe": "hyperliquid:0x18a8\u2026f8f1",
@@ -412,10 +424,10 @@
    "never_executed": false
   },
   "robinhood:e9dd09b69ced8259": {
-   "nonce": 63,
+   "nonce": 64,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-10-28T19:13:00Z",
-   "last_moved": "2026-10-28T19:13:00Z",
+   "idle_since": "2026-11-20T19:13:45Z",
+   "last_moved": "2026-11-20T19:13:45Z",
    "governs": [
     "robinhood:0x5c98b2d892b37c9a1d3b69472bddc172a64cdc09",
     "robinhood:0xd01c774d4a66408326bc65728ac5ae5aaf004032"

@@ -1,22 +1,20 @@
 {
- "run_utc": "2026-11-20T01:00:53Z",
- "state": "alarm",
+ "run_utc": "2026-11-20T07:00:46Z",
+ "state": "degraded",
  "health": {
   "state": "degraded",
   "reasons": [
-   "role scan incomplete on 1 oracle(s) (hyperliquid-hyperevm), 307093 blocks not read yet: a role event inside them was not seen yet"
+   "role scan incomplete on 1 oracle(s) (hyperliquid-hyperevm), 329073 blocks not read yet: a role event inside them was not seen yet"
   ]
  },
  "findings": {
-  "state": "alarm",
+  "state": "degraded",
   "reasons": [
-   "9 alarm(s) raised by the watch",
    "3 second-opinion disagreement(s) to review"
   ]
  },
  "reasons": [
-  "9 alarm(s) raised by the watch",
-  "role scan incomplete on 1 oracle(s) (hyperliquid-hyperevm), 307093 blocks not read yet: a role event inside them was not seen yet",
+  "role scan incomplete on 1 oracle(s) (hyperliquid-hyperevm), 329073 blocks not read yet: a role event inside them was not seen yet",
   "9 of 203 targets stale on the oracles",
   "1 retired target(s) listed apart, not counted stale (information, no change of state; names in latest.json `retired`)",
   "3 second-opinion disagreement(s) to review",
@@ -30,9 +28,9 @@
   "targets": 203,
   "stale": 9,
   "retired": 1,
-  "alarms": 9,
+  "alarms": 0,
   "unread": [],
-  "role_scan_behind_blocks": 307093,
+  "role_scan_behind_blocks": 329073,
   "chain_ok": true,
   "chain_entries": 334,
   "signed": true,
@@ -53,7 +51,7 @@
  "what": "the run's health in one record: ok / degraded / alarm with the reasons; written by scripts/run_status.py after every Watch run",
  "main_last_commit_age_days": 1,
  "runs_7d": 28,
- "previous_run_utc": "2026-11-19T19:00:49Z",
+ "previous_run_utc": "2026-11-20T01:00:53Z",
  "hours_since_previous_run": 6.0,
- "run_id": "44650310288.1"
+ "run_id": "44691767732.1"
 }

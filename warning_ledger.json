@@ -891,16 +891,26 @@
    "chain": "arbitrum",
    "timelock": "arbitrum timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
    "what": "parameter change"
+  },
+  "ethereum:0xe8dc0fab349ea169283c48ccfd09d797e6db7c94:0xa1ca841370380727e4cb104e298dd8e2e231cba25b4009cd1ba31d9b88faebb7": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-11-20T13:00:48Z",
+   "due_utc": "2026-11-21T10:01:23Z",
+   "notice_hours": 21.0,
+   "state": "queued",
+   "chain": "ethereum",
+   "timelock": "Ethena Timelock",
+   "what": "parameter change"
   }
  },
- "updated_utc": "2026-11-20T07:00:46Z",
+ "updated_utc": "2026-11-20T13:00:48Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
-  "warned": 58,
+  "warned": 59,
   "seen_without_notice": 0,
   "missed": 1,
   "baseline": 26,
-  "warned_with_a_known_notice": 58,
+  "warned_with_a_known_notice": 59,
   "shortest_notice_hours": 14.0,
   "median_notice_hours": 21.2,
   "note": "warned: seen while queued and not yet executable (the notice is real); seen_without_notice: still queued but already executable when first seen; missed: queued after the ledger started and already applied when first seen (faster than the 6-hour cadence); baseline: applied before the ledger started, counted as neither."

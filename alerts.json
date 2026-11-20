@@ -1,6 +1,6 @@
 {
- "evaluated_utc": "2026-11-20T07:16:37Z",
- "run_utc": "2026-11-20T07:00:46Z",
+ "evaluated_utc": "2026-11-20T13:22:26Z",
+ "run_utc": "2026-11-20T13:00:48Z",
  "rules": [
   "score dropped by 10 or more",
   "score fell under 40",
@@ -34,29 +34,29 @@
    "title": "Uniswap V3",
    "score": 85,
    "delta": 0,
-   "tvl_usd": 678659270.3987048,
+   "tvl_usd": 672468949.5834064,
    "first_seen": "2026-11-18T13:18:47Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 85,
     "previous_composite": 85,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "contract",
      "path": "owner() -> owner() of the holder (timelock 172800s)",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 627,
-     "since_score_push_seconds": 756421
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 870,
+     "since_score_push_seconds": 778271
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x1f98431c8ad98523631ae4a59f267346ea31f984 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x1f98431c8ad98523631ae4a59f267346ea31f984 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -67,29 +67,29 @@
    "title": "Aave V3",
    "score": 78,
    "delta": 0,
-   "tvl_usd": 12899774367.873634,
+   "tvl_usd": 12922121382.017656,
    "first_seen": "2026-11-18T13:18:47Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 78,
     "previous_composite": 78,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "contract",
      "path": "owner() -> owner() of the holder (contract)",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 627,
-     "since_score_push_seconds": 756421
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 870,
+     "since_score_push_seconds": 778271
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x2f39d218133afab8f2b819b1066c7e434ad94e9e --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x2f39d218133afab8f2b819b1066c7e434ad94e9e --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -100,29 +100,29 @@
    "title": "Sky Lending",
    "score": 81,
    "delta": 0,
-   "tvl_usd": 2080519407.7506776,
+   "tvl_usd": 2139153515.4299908,
    "first_seen": "2026-11-18T13:18:47Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 81,
     "previous_composite": 81,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "contract",
      "path": "authority() (AccessManaged: the AccessManager holds every role)",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 627,
-     "since_score_push_seconds": 756421
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 870,
+     "since_score_push_seconds": 778271
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xbe286431454714f511008713973d3b053a2d38f3 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xbe286431454714f511008713973d3b053a2d38f3 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -133,29 +133,29 @@
    "title": "Ethena USDtb",
    "score": 2,
    "delta": 0,
-   "tvl_usd": 314711668.0672551,
+   "tvl_usd": 314741154.8512838,
    "first_seen": "2026-11-18T13:18:47Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 2,
     "previous_composite": 2,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "eoa",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 628,
-     "since_score_push_seconds": 756422
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 871,
+     "since_score_push_seconds": 778272
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xc139190f447e929f090edeb554d95abb8b18ac1c --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xc139190f447e929f090edeb554d95abb8b18ac1c --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -166,29 +166,29 @@
    "title": "Ethena USDtb",
    "score": 73,
    "delta": 0,
-   "tvl_usd": 314711668.0672551,
+   "tvl_usd": 314741154.8512838,
    "first_seen": "2026-11-18T13:18:47Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 73,
     "previous_composite": 73,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "timelock",
      "path": "owner()",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 628,
-     "since_score_push_seconds": 756422
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 871,
+     "since_score_push_seconds": 778272
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x73e35c5c35a274e34ade6eb13cc7f62aee323728 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x73e35c5c35a274e34ade6eb13cc7f62aee323728 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -199,29 +199,29 @@
    "title": "Ethena USDe",
    "score": 57,
    "delta": 0,
-   "tvl_usd": 4894607846.34009,
+   "tvl_usd": 4891190197.522474,
    "first_seen": "2026-11-18T13:18:47Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 57,
     "previous_composite": 57,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "timelock",
      "path": "owner()",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 628,
-     "since_score_push_seconds": 756422
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 871,
+     "since_score_push_seconds": 778272
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -232,29 +232,29 @@
    "title": "Ethena USDe",
    "score": 57,
    "delta": 0,
-   "tvl_usd": 4894607846.34009,
+   "tvl_usd": 4891190197.522474,
    "first_seen": "2026-11-18T13:18:47Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 57,
     "previous_composite": 57,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "timelock",
      "path": "owner()",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 628,
-     "since_score_push_seconds": 756422
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 871,
+     "since_score_push_seconds": 778272
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x211cc4dd073734da055fbf44a2b4667d5e5fe5d2 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x211cc4dd073734da055fbf44a2b4667d5e5fe5d2 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -265,29 +265,29 @@
    "title": "Ethena USDe",
    "score": 57,
    "delta": 0,
-   "tvl_usd": 4894607846.34009,
+   "tvl_usd": 4891190197.522474,
    "first_seen": "2026-11-18T13:18:47Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 57,
     "previous_composite": 57,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "timelock",
      "path": "owner()",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 628,
-     "since_score_push_seconds": 756422
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 871,
+     "since_score_push_seconds": 778272
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x58538e6a46e07434d7e7375bc268d3cb839c0133 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x58538e6a46e07434d7e7375bc268d3cb839c0133 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -298,29 +298,29 @@
    "title": "Compound V3",
    "score": 79,
    "delta": 0,
-   "tvl_usd": 950654186.5107228,
+   "tvl_usd": 956803410.2476107,
    "first_seen": "2026-11-18T13:18:47Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 79,
     "previous_composite": 79,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "timelock",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 628,
-     "since_score_push_seconds": 756422
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 871,
+     "since_score_push_seconds": 778272
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xc3d688b66703497daa19211eedff47f25384cdc3 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xc3d688b66703497daa19211eedff47f25384cdc3 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -331,29 +331,29 @@
    "title": "SparkLend",
    "score": 78,
    "delta": 0,
-   "tvl_usd": 3632133110.244167,
+   "tvl_usd": 3616510575.228578,
    "first_seen": "2026-11-18T13:18:47Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 78,
     "previous_composite": 78,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "contract",
      "path": "owner()",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 628,
-     "since_score_push_seconds": 756422
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 871,
+     "since_score_push_seconds": 778272
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x02c3ea4e34c0cbd694d2adfa2c690eecbc1793ee --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x02c3ea4e34c0cbd694d2adfa2c690eecbc1793ee --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -364,29 +364,29 @@
    "title": "Uniswap V4",
    "score": 85,
    "delta": 0,
-   "tvl_usd": 674303738.6119078,
+   "tvl_usd": 673693396.7941709,
    "first_seen": "2026-11-18T13:18:47Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 85,
     "previous_composite": 85,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "timelock",
      "path": "owner()",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 628,
-     "since_score_push_seconds": 756422
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 871,
+     "since_score_push_seconds": 778272
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x000000000004444c5dc75cb358380d2e3de08a90 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x000000000004444c5dc75cb358380d2e3de08a90 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -397,29 +397,29 @@
    "title": "Morpho Blue",
    "score": 56,
    "delta": 0,
-   "tvl_usd": 4393489673.130621,
+   "tvl_usd": 4379118316.271991,
    "first_seen": "2026-11-18T13:18:47Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 56,
     "previous_composite": 56,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "safe",
      "path": "owner()",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 628,
-     "since_score_push_seconds": 756422
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 871,
+     "since_score_push_seconds": 778272
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -430,29 +430,29 @@
    "title": "WBTC",
    "score": 52,
    "delta": 0,
-   "tvl_usd": 7198453102.174335,
+   "tvl_usd": 7192505838.660225,
    "first_seen": "2026-11-18T13:18:47Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 52,
     "previous_composite": 52,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "contract",
      "path": "owner() -> owner() of the holder (contract)",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 629,
-     "since_score_push_seconds": 756423
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 872,
+     "since_score_push_seconds": 778273
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x2260fac5e5542a773aa44fbcfedf7c193bc2c599 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x2260fac5e5542a773aa44fbcfedf7c193bc2c599 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -463,29 +463,29 @@
    "title": "Ethena USDe",
    "score": 73,
    "delta": 0,
-   "tvl_usd": 4894607846.34009,
+   "tvl_usd": 4891190197.522474,
    "first_seen": "2026-11-18T13:18:47Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 73,
     "previous_composite": 73,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "timelock",
      "path": "owner()",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 629,
-     "since_score_push_seconds": 756423
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 872,
+     "since_score_push_seconds": 778273
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xe3490297a08d6fc8da46edb7b6142e4f461b62d3 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xe3490297a08d6fc8da46edb7b6142e4f461b62d3 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -496,29 +496,29 @@
    "title": "Lido",
    "score": 80,
    "delta": 0,
-   "tvl_usd": 16995863553.240593,
+   "tvl_usd": 16950702990.984896,
    "first_seen": "2026-11-18T13:18:47Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 80,
     "previous_composite": 80,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "unreadable",
      "path": null,
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 629,
-     "since_score_push_seconds": 756423
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 872,
+     "since_score_push_seconds": 778273
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xae7ab96520de3a18e5e111b5eaab095312d7fe84 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xae7ab96520de3a18e5e111b5eaab095312d7fe84 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -529,29 +529,29 @@
    "title": "EigenCloud",
    "score": 60,
    "delta": 0,
-   "tvl_usd": 4373440111.120963,
+   "tvl_usd": 4404734300.268469,
    "first_seen": "2026-11-18T13:18:47Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 60,
     "previous_composite": 60,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "safe",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 629,
-     "since_score_push_seconds": 756423
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 872,
+     "since_score_push_seconds": 778273
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x858646372cc42e1a627fce94aa7a7033e7cf075a --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x858646372cc42e1a627fce94aa7a7033e7cf075a --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -562,29 +562,29 @@
    "title": "Curve DEX",
    "score": 81,
    "delta": 0,
-   "tvl_usd": 958830788.9942584,
+   "tvl_usd": 962544923.5185382,
    "first_seen": "2026-11-18T13:18:47Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 81,
     "previous_composite": 81,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "contract",
      "path": "admin()",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 629,
-     "since_score_push_seconds": 756423
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 872,
+     "since_score_push_seconds": 778273
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x6a8cbed756804b16e05e741edabd5cb544ae21bf --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x6a8cbed756804b16e05e741edabd5cb544ae21bf --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -595,29 +595,29 @@
    "title": "Rocket Pool",
    "score": 22,
    "delta": 0,
-   "tvl_usd": 825997517.7581179,
+   "tvl_usd": 834458921.8193301,
    "first_seen": "2026-11-18T13:18:47Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 22,
     "previous_composite": 22,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "unreadable",
      "path": null,
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 629,
-     "since_score_push_seconds": 756423
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 872,
+     "since_score_push_seconds": 778273
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x1d8f8f00cfa6758d7be78336684788fb0ee0fa46 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x1d8f8f00cfa6758d7be78336684788fb0ee0fa46 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -634,23 +634,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 47,
     "previous_composite": 47,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "contract",
      "path": "owner() -> owner() of the holder (contract)",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 629,
-     "since_score_push_seconds": 756423
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 872,
+     "since_score_push_seconds": 778273
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x5d39e06b825c1f2b80bf2756a73e28efaa128ba0 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x5d39e06b825c1f2b80bf2756a73e28efaa128ba0 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -661,29 +661,29 @@
    "title": "Convex Finance",
    "score": 43,
    "delta": 0,
-   "tvl_usd": 401306505.6033359,
+   "tvl_usd": 401513402.5249221,
    "first_seen": "2026-11-18T13:18:47Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 43,
     "previous_composite": 43,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "contract",
      "path": "owner() -> owner() of the holder (contract)",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 629,
-     "since_score_push_seconds": 756423
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 872,
+     "since_score_push_seconds": 778273
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xf403c135812408bfbe8713b5a23a04b3d48aae31 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xf403c135812408bfbe8713b5a23a04b3d48aae31 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -694,29 +694,29 @@
    "title": "0x5555\u20265555",
    "score": 19,
    "delta": 0,
-   "tvl_usd": 1219339909.2411985,
+   "tvl_usd": 1226058213.710685,
    "first_seen": "2026-11-18T13:18:47Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 19,
     "previous_composite": 19,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "eoa",
      "path": "owner()",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 629,
-     "since_score_push_seconds": 756423
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 872,
+     "since_score_push_seconds": 778273
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x55555815a5595991c3a0ff119b59aef6c8b55555 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x55555815a5595991c3a0ff119b59aef6c8b55555 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -727,29 +727,29 @@
    "title": "0x9464\u202696c1",
    "score": 2,
    "delta": 0,
-   "tvl_usd": 650041433.8492454,
+   "tvl_usd": 653623024.3780912,
    "first_seen": "2026-11-18T13:18:47Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 2,
     "previous_composite": 2,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "eoa",
      "path": "owner()",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 629,
-     "since_score_push_seconds": 756423
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 872,
+     "since_score_push_seconds": 778273
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x94643e86aa5e38ddac6c7791c1297f4e40cd96c1 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x94643e86aa5e38ddac6c7791c1297f4e40cd96c1 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -760,30 +760,70 @@
    "title": "0xbeef\u2026cfba",
    "score": 73,
    "delta": 0,
-   "tvl_usd": 72528556.98998635,
+   "tvl_usd": 72528132.29084714,
    "first_seen": "2026-11-18T13:18:47Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 73,
     "previous_composite": 73,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "safe",
      "path": "owner()",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 629,
-     "since_score_push_seconds": 756423
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 872,
+     "since_score_push_seconds": 778273
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xbeef047a543e45807105e51a8bbefcc5950fcfba --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xbeef047a543e45807105e51a8bbefcc5950fcfba --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
+  },
+  {
+   "rule": "the Safe that governs this contract, observed idle for 14 days or more, executed a transaction (nonce moved), with money behind it",
+   "severity": "medium",
+   "chain": "Ethereum L1",
+   "target": "0xbeef047a543e45807105e51a8bbefcc5950fcfba",
+   "title": "0xbeef\u2026cfba",
+   "score": 73,
+   "delta": 0,
+   "tvl_usd": 72528132.29084714,
+   "first_seen": "2026-11-20T13:22:26Z",
+   "new": true,
+   "evidence": [],
+   "reading": {
+    "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
+    "composite": 73,
+    "previous_composite": 73,
+    "score_last_updated": 1794402258,
+    "second_opinion": {
+     "kind": "safe",
+     "path": "owner()",
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 872,
+     "since_score_push_seconds": 778273
+    },
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xbeef047a543e45807105e51a8bbefcc5950fcfba --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
+    "reproduce_exact": false
+   },
+   "previous_run": "2026-11-20T07:00:46Z",
+   "safe_wake": {
+    "safe": "0x0a0e\u2026f8dd",
+    "delta": 1,
+    "idle_days": 33.7,
+    "previous_run": "2026-11-20T07:14:54Z"
+   },
+   "notified": true,
+   "delivered": []
   },
   {
    "rule": "score pushed more than 7 days ago (the oracle marks it stale at 9)",
@@ -793,30 +833,70 @@
    "title": "0xbeef\u202664cb",
    "score": 73,
    "delta": 0,
-   "tvl_usd": 78275910.60643747,
+   "tvl_usd": 78127228.62118919,
    "first_seen": "2026-11-18T13:18:47Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 73,
     "previous_composite": 73,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "safe",
      "path": "owner()",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 630,
-     "since_score_push_seconds": 756424
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 873,
+     "since_score_push_seconds": 778274
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xbeef01735c132ada46aa9aa4c54623caa92a64cb --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xbeef01735c132ada46aa9aa4c54623caa92a64cb --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
+  },
+  {
+   "rule": "the Safe that governs this contract, observed idle for 14 days or more, executed a transaction (nonce moved), with money behind it",
+   "severity": "medium",
+   "chain": "Ethereum L1",
+   "target": "0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+   "title": "0xbeef\u202664cb",
+   "score": 73,
+   "delta": 0,
+   "tvl_usd": 78127228.62118919,
+   "first_seen": "2026-11-20T13:22:26Z",
+   "new": true,
+   "evidence": [],
+   "reading": {
+    "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
+    "composite": 73,
+    "previous_composite": 73,
+    "score_last_updated": 1794402258,
+    "second_opinion": {
+     "kind": "safe",
+     "path": "owner()",
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 873,
+     "since_score_push_seconds": 778274
+    },
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xbeef01735c132ada46aa9aa4c54623caa92a64cb --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
+    "reproduce_exact": false
+   },
+   "previous_run": "2026-11-20T07:00:46Z",
+   "safe_wake": {
+    "safe": "0x0a0e\u2026f8dd",
+    "delta": 1,
+    "idle_days": 33.7,
+    "previous_run": "2026-11-20T07:14:54Z"
+   },
+   "notified": true,
+   "delivered": []
   },
   {
    "rule": "score pushed more than 7 days ago (the oracle marks it stale at 9)",
@@ -826,30 +906,70 @@
    "title": "0xbeef\u20260f51",
    "score": 73,
    "delta": 0,
-   "tvl_usd": 115135528.56532203,
+   "tvl_usd": 116944067.1738904,
    "first_seen": "2026-11-18T13:18:47Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 73,
     "previous_composite": 73,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "contract",
      "path": "owner() -> owner() of the holder (safe 5-of-10)",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 631,
-     "since_score_push_seconds": 756425
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 874,
+     "since_score_push_seconds": 778275
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xbeef088055857739c12cd3765f20b7679def0f51 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xbeef088055857739c12cd3765f20b7679def0f51 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
+  },
+  {
+   "rule": "the Safe that governs this contract, observed idle for 14 days or more, executed a transaction (nonce moved), with money behind it",
+   "severity": "medium",
+   "chain": "Ethereum L1",
+   "target": "0xbeef088055857739c12cd3765f20b7679def0f51",
+   "title": "0xbeef\u20260f51",
+   "score": 73,
+   "delta": 0,
+   "tvl_usd": 116944067.1738904,
+   "first_seen": "2026-11-20T13:22:26Z",
+   "new": true,
+   "evidence": [],
+   "reading": {
+    "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
+    "composite": 73,
+    "previous_composite": 73,
+    "score_last_updated": 1794402258,
+    "second_opinion": {
+     "kind": "contract",
+     "path": "owner() -> owner() of the holder (safe 5-of-10)",
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 874,
+     "since_score_push_seconds": 778275
+    },
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xbeef088055857739c12cd3765f20b7679def0f51 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
+    "reproduce_exact": false
+   },
+   "previous_run": "2026-11-20T07:00:46Z",
+   "safe_wake": {
+    "safe": "0x0a0e\u2026f8dd",
+    "delta": 1,
+    "idle_days": 33.7,
+    "previous_run": "2026-11-20T07:14:54Z"
+   },
+   "notified": true,
+   "delivered": []
   },
   {
    "rule": "score pushed more than 7 days ago (the oracle marks it stale at 9)",
@@ -859,30 +979,70 @@
    "title": "0xbeef\u2026db2f",
    "score": 73,
    "delta": 0,
-   "tvl_usd": 158255237.3078263,
+   "tvl_usd": 159226671.4230677,
    "first_seen": "2026-11-18T13:18:47Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 73,
     "previous_composite": 73,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "contract",
      "path": "owner() -> owner() of the holder (safe 5-of-10)",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 631,
-     "since_score_push_seconds": 756425
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 874,
+     "since_score_push_seconds": 778275
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xbeef0c075da5d01112ae5cf34d257074fb5ddb2f --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xbeef0c075da5d01112ae5cf34d257074fb5ddb2f --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
+  },
+  {
+   "rule": "the Safe that governs this contract, observed idle for 14 days or more, executed a transaction (nonce moved), with money behind it",
+   "severity": "medium",
+   "chain": "Ethereum L1",
+   "target": "0xbeef0c075da5d01112ae5cf34d257074fb5ddb2f",
+   "title": "0xbeef\u2026db2f",
+   "score": 73,
+   "delta": 0,
+   "tvl_usd": 159226671.4230677,
+   "first_seen": "2026-11-20T13:22:26Z",
+   "new": true,
+   "evidence": [],
+   "reading": {
+    "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
+    "composite": 73,
+    "previous_composite": 73,
+    "score_last_updated": 1794402258,
+    "second_opinion": {
+     "kind": "contract",
+     "path": "owner() -> owner() of the holder (safe 5-of-10)",
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 874,
+     "since_score_push_seconds": 778275
+    },
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xbeef0c075da5d01112ae5cf34d257074fb5ddb2f --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
+    "reproduce_exact": false
+   },
+   "previous_run": "2026-11-20T07:00:46Z",
+   "safe_wake": {
+    "safe": "0x0a0e\u2026f8dd",
+    "delta": 1,
+    "idle_days": 33.7,
+    "previous_run": "2026-11-20T07:14:54Z"
+   },
+   "notified": true,
+   "delivered": []
   },
   {
    "rule": "score pushed more than 7 days ago (the oracle marks it stale at 9)",
@@ -898,23 +1058,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 100,
     "previous_composite": 100,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "unreadable",
      "path": null,
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 631,
-     "since_score_push_seconds": 756425
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 874,
+     "since_score_push_seconds": 778275
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -931,23 +1091,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 2,
     "previous_composite": 2,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "eoa",
      "path": "owner()",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 631,
-     "since_score_push_seconds": 756425
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 874,
+     "since_score_push_seconds": 778275
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -964,23 +1124,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 40,
     "previous_composite": 40,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "contract",
      "path": "owner()",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 631,
-     "since_score_push_seconds": 756425
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 874,
+     "since_score_push_seconds": 778275
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xdac17f958d2ee523a2206206994597c13d831ec7 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xdac17f958d2ee523a2206206994597c13d831ec7 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -997,23 +1157,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 81,
     "previous_composite": 81,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "unreadable",
      "path": null,
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 631,
-     "since_score_push_seconds": 756425
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 874,
+     "since_score_push_seconds": 778275
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x6b175474e89094c44da98b954eedeac495271d0f --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x6b175474e89094c44da98b954eedeac495271d0f --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -1030,23 +1190,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 81,
     "previous_composite": 81,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "unreadable",
      "path": null,
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 631,
-     "since_score_push_seconds": 756425
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 874,
+     "since_score_push_seconds": 778275
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xdc035d45d973e3ec169d2276ddab16f1e407384f --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xdc035d45d973e3ec169d2276ddab16f1e407384f --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -1063,23 +1223,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 2,
     "previous_composite": 2,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "eoa",
      "path": "owner()",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 631,
-     "since_score_push_seconds": 756425
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 874,
+     "since_score_push_seconds": 778275
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x6c3ea9036406852006290770bedfcaba0e23a0e8 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x6c3ea9036406852006290770bedfcaba0e23a0e8 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -1096,23 +1256,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 47,
     "previous_composite": 47,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "safe",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 631,
-     "since_score_push_seconds": 756425
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 874,
+     "since_score_push_seconds": 778275
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xc5f0f7b66764f6ec8c8dff7ba683102295e16409 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0xc5f0f7b66764f6ec8c8dff7ba683102295e16409 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -1129,23 +1289,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 60,
     "previous_composite": 60,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "contract",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 632,
-     "since_score_push_seconds": 756426
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 875,
+     "since_score_push_seconds": 778276
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -1162,23 +1322,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 43,
     "previous_composite": 43,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "safe",
      "path": "owner()",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 632,
-     "since_score_push_seconds": 756426
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 875,
+     "since_score_push_seconds": 778276
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x888888888889758f76e7103c6cbf23abbf58f946 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x888888888889758f76e7103c6cbf23abbf58f946 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -1195,23 +1355,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 53,
     "previous_composite": 53,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "unreadable",
      "path": null,
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 632,
-     "since_score_push_seconds": 756426
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 875,
+     "since_score_push_seconds": 778276
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x08ae3be30958cdd1847ec58fffd4c451a87fdf01 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x08ae3be30958cdd1847ec58fffd4c451a87fdf01 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -1228,23 +1388,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 77,
     "previous_composite": 77,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "timelock",
      "path": "EIP-1967 admin",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 632,
-     "since_score_push_seconds": 756426
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 875,
+     "since_score_push_seconds": 778276
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x52aa899454998be5b000ad077a46bbe360f4e497 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x52aa899454998be5b000ad077a46bbe360f4e497 --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -1261,23 +1421,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
-    "oracle_block": 12173733,
-    "oracle_read_at": 1795158052,
+    "oracle_block": 12175371,
+    "oracle_read_at": 1795179659,
     "composite": 56,
     "previous_composite": 56,
     "score_last_updated": 1794402258,
     "second_opinion": {
      "kind": "safe",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 26454725,
-     "block_end": 26454727,
-     "read_gap_seconds": 632,
-     "since_score_push_seconds": 756426
+     "block_start": 26456539,
+     "block_end": 26456541,
+     "read_gap_seconds": 875,
+     "since_score_push_seconds": 778276
     },
-    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x49048044d57e1c92a77f79988d21fa8faf74e97e --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12173733",
+    "reproduce": "cast call 0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906 'getScore(address)' 0x49048044d57e1c92a77f79988d21fa8faf74e97e --rpc-url https://ethereum-sepolia-rpc.publicnode.com --block 12175371",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": false
   },
   {
@@ -1288,62 +1448,29 @@
    "title": "Kinetiq kmHYPE",
    "score": 4,
    "delta": 0,
-   "tvl_usd": 32273669.712204915,
+   "tvl_usd": 31555274.12580546,
    "first_seen": "2026-11-18T13:18:47Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 70106643,
-    "oracle_read_at": 1795158245,
+    "oracle_block": 70128530,
+    "oracle_read_at": 1795179844,
     "composite": 4,
     "previous_composite": 4,
     "score_last_updated": 1795123486,
     "second_opinion": {
      "kind": "safe",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 51750094,
-     "block_end": 51750101,
-     "read_gap_seconds": 451,
-     "since_score_push_seconds": 35210
+     "block_start": 51772308,
+     "block_end": 51772321,
+     "read_gap_seconds": 712,
+     "since_score_push_seconds": 57070
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec --rpc-url https://998.rpc.thirdweb.com --block 70106643",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec --rpc-url https://998.rpc.thirdweb.com --block 70128530",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
-   "notified": true
-  },
-  {
-   "rule": "the independent reader disagrees with the admin-key score, with money behind it",
-   "severity": "medium",
-   "chain": "Hyperliquid",
-   "target": "0x393d0b87ed38fc779fd9611144ae649ba6082109",
-   "title": "Kinetiq kHYPE",
-   "score": 4,
-   "delta": 0,
-   "tvl_usd": 654261901.2148068,
-   "first_seen": "2026-11-18T19:17:45Z",
-   "new": false,
-   "evidence": [],
-   "reading": {
-    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 70106643,
-    "oracle_read_at": 1795158245,
-    "composite": 4,
-    "previous_composite": 4,
-    "score_last_updated": 1795123486,
-    "second_opinion": {
-     "kind": "safe",
-     "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 51750094,
-     "block_end": 51750101,
-     "read_gap_seconds": 456,
-     "since_score_push_seconds": 35215
-    },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x393d0b87ed38fc779fd9611144ae649ba6082109 --rpc-url https://998.rpc.thirdweb.com --block 70106643",
-    "reproduce_exact": false
-   },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": true
   },
   {
@@ -1360,23 +1487,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 155785431,
-    "oracle_read_at": 1795158049,
+    "oracle_block": 155870617,
+    "oracle_read_at": 1795179651,
     "composite": 1,
     "previous_composite": 1,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "eoa",
      "path": "owner()",
-     "block_start": 118871382,
-     "block_end": 118871790,
-     "read_gap_seconds": 776,
-     "since_score_push_seconds": 34991
+     "block_start": 119077362,
+     "block_end": 119078269,
+     "read_gap_seconds": 1101,
+     "since_score_push_seconds": 56918
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 155785431",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 155870617",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-20T01:00:53Z",
+   "previous_run": "2026-11-20T07:00:46Z",
    "notified": true
   }
  ],
@@ -1389,8 +1516,8 @@
    "target": "0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d",
    "title": "0xfe7e\u20269b0d",
    "first_seen": "2026-10-10T21:14:27Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 152,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 153,
    "score": 1,
    "delta": 0,
    "tvl_usd": null
@@ -1403,11 +1530,11 @@
    "target": "0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec",
    "title": "Kinetiq kmHYPE",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 143,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 144,
    "score": 4,
    "delta": 0,
-   "tvl_usd": 32273669.712204915
+   "tvl_usd": 31555274.12580546
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|ethereum-l1:0x1f98431c8ad98523631ae4a59f267346ea31f984",
@@ -1417,11 +1544,11 @@
    "target": "0x1f98431c8ad98523631ae4a59f267346ea31f984",
    "title": "Uniswap V3",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 85,
    "delta": 0,
-   "tvl_usd": 678659270.3987048
+   "tvl_usd": 672468949.5834064
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|ethereum-l1:0x2f39d218133afab8f2b819b1066c7e434ad94e9e",
@@ -1431,11 +1558,11 @@
    "target": "0x2f39d218133afab8f2b819b1066c7e434ad94e9e",
    "title": "Aave V3",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 78,
    "delta": 0,
-   "tvl_usd": 12899774367.873634
+   "tvl_usd": 12922121382.017656
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|ethereum-l1:0xbe286431454714f511008713973d3b053a2d38f3",
@@ -1445,11 +1572,11 @@
    "target": "0xbe286431454714f511008713973d3b053a2d38f3",
    "title": "Sky Lending",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 81,
    "delta": 0,
-   "tvl_usd": 2080519407.7506776
+   "tvl_usd": 2139153515.4299908
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|ethereum-l1:0xc139190f447e929f090edeb554d95abb8b18ac1c",
@@ -1459,11 +1586,11 @@
    "target": "0xc139190f447e929f090edeb554d95abb8b18ac1c",
    "title": "Ethena USDtb",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 2,
    "delta": 0,
-   "tvl_usd": 314711668.0672551
+   "tvl_usd": 314741154.8512838
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|ethereum-l1:0x73e35c5c35a274e34ade6eb13cc7f62aee323728",
@@ -1473,11 +1600,11 @@
    "target": "0x73e35c5c35a274e34ade6eb13cc7f62aee323728",
    "title": "Ethena USDtb",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 73,
    "delta": 0,
-   "tvl_usd": 314711668.0672551
+   "tvl_usd": 314741154.8512838
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|ethereum-l1:0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34",
@@ -1487,11 +1614,11 @@
    "target": "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34",
    "title": "Ethena USDe",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 57,
    "delta": 0,
-   "tvl_usd": 4894607846.34009
+   "tvl_usd": 4891190197.522474
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|ethereum-l1:0x211cc4dd073734da055fbf44a2b4667d5e5fe5d2",
@@ -1501,11 +1628,11 @@
    "target": "0x211cc4dd073734da055fbf44a2b4667d5e5fe5d2",
    "title": "Ethena USDe",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 57,
    "delta": 0,
-   "tvl_usd": 4894607846.34009
+   "tvl_usd": 4891190197.522474
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|ethereum-l1:0x58538e6a46e07434d7e7375bc268d3cb839c0133",
@@ -1515,11 +1642,11 @@
    "target": "0x58538e6a46e07434d7e7375bc268d3cb839c0133",
    "title": "Ethena USDe",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 57,
    "delta": 0,
-   "tvl_usd": 4894607846.34009
+   "tvl_usd": 4891190197.522474
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|ethereum-l1:0xc3d688b66703497daa19211eedff47f25384cdc3",
@@ -1529,11 +1656,11 @@
    "target": "0xc3d688b66703497daa19211eedff47f25384cdc3",
    "title": "Compound V3",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 79,
    "delta": 0,
-   "tvl_usd": 950654186.5107228
+   "tvl_usd": 956803410.2476107
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|ethereum-l1:0x02c3ea4e34c0cbd694d2adfa2c690eecbc1793ee",
@@ -1543,11 +1670,11 @@
    "target": "0x02c3ea4e34c0cbd694d2adfa2c690eecbc1793ee",
    "title": "SparkLend",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 78,
    "delta": 0,
-   "tvl_usd": 3632133110.244167
+   "tvl_usd": 3616510575.228578
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|ethereum-l1:0x000000000004444c5dc75cb358380d2e3de08a90",
@@ -1557,11 +1684,11 @@
    "target": "0x000000000004444c5dc75cb358380d2e3de08a90",
    "title": "Uniswap V4",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 85,
    "delta": 0,
-   "tvl_usd": 674303738.6119078
+   "tvl_usd": 673693396.7941709
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|ethereum-l1:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",
@@ -1571,11 +1698,11 @@
    "target": "0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",
    "title": "Morpho Blue",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 56,
    "delta": 0,
-   "tvl_usd": 4393489673.130621
+   "tvl_usd": 4379118316.271991
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|ethereum-l1:0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
@@ -1585,11 +1712,11 @@
    "target": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
    "title": "WBTC",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 52,
    "delta": 0,
-   "tvl_usd": 7198453102.174335
+   "tvl_usd": 7192505838.660225
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|ethereum-l1:0xe3490297a08d6fc8da46edb7b6142e4f461b62d3",
@@ -1599,11 +1726,11 @@
    "target": "0xe3490297a08d6fc8da46edb7b6142e4f461b62d3",
    "title": "Ethena USDe",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 73,
    "delta": 0,
-   "tvl_usd": 4894607846.34009
+   "tvl_usd": 4891190197.522474
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|ethereum-l1:0xae7ab96520de3a18e5e111b5eaab095312d7fe84",
@@ -1613,11 +1740,11 @@
    "target": "0xae7ab96520de3a18e5e111b5eaab095312d7fe84",
    "title": "Lido",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 80,
    "delta": 0,
-   "tvl_usd": 16995863553.240593
+   "tvl_usd": 16950702990.984896
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|ethereum-l1:0x858646372cc42e1a627fce94aa7a7033e7cf075a",
@@ -1627,11 +1754,11 @@
    "target": "0x858646372cc42e1a627fce94aa7a7033e7cf075a",
    "title": "EigenCloud",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 60,
    "delta": 0,
-   "tvl_usd": 4373440111.120963
+   "tvl_usd": 4404734300.268469
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|ethereum-l1:0x6a8cbed756804b16e05e741edabd5cb544ae21bf",
@@ -1641,11 +1768,11 @@
    "target": "0x6a8cbed756804b16e05e741edabd5cb544ae21bf",
    "title": "Curve DEX",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 81,
    "delta": 0,
-   "tvl_usd": 958830788.9942584
+   "tvl_usd": 962544923.5185382
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|ethereum-l1:0x1d8f8f00cfa6758d7be78336684788fb0ee0fa46",
@@ -1655,11 +1782,11 @@
    "target": "0x1d8f8f00cfa6758d7be78336684788fb0ee0fa46",
    "title": "Rocket Pool",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 22,
    "delta": 0,
-   "tvl_usd": 825997517.7581179
+   "tvl_usd": 834458921.8193301
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|ethereum-l1:0x5d39e06b825c1f2b80bf2756a73e28efaa128ba0",
@@ -1669,8 +1796,8 @@
    "target": "0x5d39e06b825c1f2b80bf2756a73e28efaa128ba0",
    "title": "0x5d39\u20268ba0",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 47,
    "delta": 0,
    "tvl_usd": null
@@ -1683,11 +1810,11 @@
    "target": "0xf403c135812408bfbe8713b5a23a04b3d48aae31",
    "title": "Convex Finance",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 43,
    "delta": 0,
-   "tvl_usd": 401306505.6033359
+   "tvl_usd": 401513402.5249221
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|ethereum-l1:0x55555815a5595991c3a0ff119b59aef6c8b55555",
@@ -1697,11 +1824,11 @@
    "target": "0x55555815a5595991c3a0ff119b59aef6c8b55555",
    "title": "0x5555\u20265555",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 19,
    "delta": 0,
-   "tvl_usd": 1219339909.2411985
+   "tvl_usd": 1226058213.710685
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|ethereum-l1:0x94643e86aa5e38ddac6c7791c1297f4e40cd96c1",
@@ -1711,11 +1838,11 @@
    "target": "0x94643e86aa5e38ddac6c7791c1297f4e40cd96c1",
    "title": "0x9464\u202696c1",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 2,
    "delta": 0,
-   "tvl_usd": 650041433.8492454
+   "tvl_usd": 653623024.3780912
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|ethereum-l1:0xbeef047a543e45807105e51a8bbefcc5950fcfba",
@@ -1725,11 +1852,11 @@
    "target": "0xbeef047a543e45807105e51a8bbefcc5950fcfba",
    "title": "0xbeef\u2026cfba",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 73,
    "delta": 0,
-   "tvl_usd": 72528556.98998635
+   "tvl_usd": 72528132.29084714
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|ethereum-l1:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
@@ -1739,11 +1866,11 @@
    "target": "0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
    "title": "0xbeef\u202664cb",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 73,
    "delta": 0,
-   "tvl_usd": 78275910.60643747
+   "tvl_usd": 78127228.62118919
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|ethereum-l1:0xbeef088055857739c12cd3765f20b7679def0f51",
@@ -1753,11 +1880,11 @@
    "target": "0xbeef088055857739c12cd3765f20b7679def0f51",
    "title": "0xbeef\u20260f51",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 73,
    "delta": 0,
-   "tvl_usd": 115135528.56532203
+   "tvl_usd": 116944067.1738904
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|ethereum-l1:0xbeef0c075da5d01112ae5cf34d257074fb5ddb2f",
@@ -1767,11 +1894,11 @@
    "target": "0xbeef0c075da5d01112ae5cf34d257074fb5ddb2f",
    "title": "0xbeef\u2026db2f",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 73,
    "delta": 0,
-   "tvl_usd": 158255237.3078263
+   "tvl_usd": 159226671.4230677
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|ethereum-l1:0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
@@ -1781,8 +1908,8 @@
    "target": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
    "title": "0xc02a\u20266cc2",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 100,
    "delta": 0,
    "tvl_usd": null
@@ -1795,8 +1922,8 @@
    "target": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
    "title": "0xa0b8\u2026eb48",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 2,
    "delta": 0,
    "tvl_usd": null
@@ -1809,8 +1936,8 @@
    "target": "0xdac17f958d2ee523a2206206994597c13d831ec7",
    "title": "0xdac1\u20261ec7",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 40,
    "delta": 0,
    "tvl_usd": null
@@ -1823,8 +1950,8 @@
    "target": "0x6b175474e89094c44da98b954eedeac495271d0f",
    "title": "0x6b17\u20261d0f",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 81,
    "delta": 0,
    "tvl_usd": null
@@ -1837,8 +1964,8 @@
    "target": "0xdc035d45d973e3ec169d2276ddab16f1e407384f",
    "title": "0xdc03\u2026384f",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 81,
    "delta": 0,
    "tvl_usd": null
@@ -1851,8 +1978,8 @@
    "target": "0x6c3ea9036406852006290770bedfcaba0e23a0e8",
    "title": "0x6c3e\u2026a0e8",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 2,
    "delta": 0,
    "tvl_usd": null
@@ -1865,8 +1992,8 @@
    "target": "0xc5f0f7b66764f6ec8c8dff7ba683102295e16409",
    "title": "0xc5f0\u20266409",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 47,
    "delta": 0,
    "tvl_usd": null
@@ -1879,8 +2006,8 @@
    "target": "0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
    "title": "0x8315\u2026ed3a",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 60,
    "delta": 0,
    "tvl_usd": null
@@ -1893,8 +2020,8 @@
    "target": "0x888888888889758f76e7103c6cbf23abbf58f946",
    "title": "0x8888\u2026f946",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 43,
    "delta": 0,
    "tvl_usd": null
@@ -1907,8 +2034,8 @@
    "target": "0x08ae3be30958cdd1847ec58fffd4c451a87fdf01",
    "title": "0x08ae\u2026df01",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 53,
    "delta": 0,
    "tvl_usd": null
@@ -1921,8 +2048,8 @@
    "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
    "title": "0x52aa\u2026e497",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 77,
    "delta": 0,
    "tvl_usd": null
@@ -1935,11 +2062,91 @@
    "target": "0x49048044d57e1c92a77f79988d21fa8faf74e97e",
    "title": "0x4904\u2026e97e",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-20T07:16:37Z",
-   "times": 14,
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 15,
    "score": 56,
    "delta": 0,
    "tvl_usd": null
+  },
+  {
+   "key": "the Safe that governs this contract, observed idle for 14 days or more, executed a transaction (nonce moved), with money behind it|ethereum-l1:0xbeef047a543e45807105e51a8bbefcc5950fcfba",
+   "rule": "the Safe that governs this contract, observed idle for 14 days or more, executed a transaction (nonce moved), with money behind it",
+   "severity": "medium",
+   "chain": "Ethereum L1",
+   "target": "0xbeef047a543e45807105e51a8bbefcc5950fcfba",
+   "title": "0xbeef\u2026cfba",
+   "first_seen": "2026-11-20T13:22:26Z",
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 1,
+   "score": 73,
+   "delta": 0,
+   "tvl_usd": 72528132.29084714,
+   "safe_wake": {
+    "safe": "0x0a0e\u2026f8dd",
+    "delta": 1,
+    "idle_days": 33.7,
+    "previous_run": "2026-11-20T07:14:54Z"
+   }
+  },
+  {
+   "key": "the Safe that governs this contract, observed idle for 14 days or more, executed a transaction (nonce moved), with money behind it|ethereum-l1:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+   "rule": "the Safe that governs this contract, observed idle for 14 days or more, executed a transaction (nonce moved), with money behind it",
+   "severity": "medium",
+   "chain": "Ethereum L1",
+   "target": "0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
+   "title": "0xbeef\u202664cb",
+   "first_seen": "2026-11-20T13:22:26Z",
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 1,
+   "score": 73,
+   "delta": 0,
+   "tvl_usd": 78127228.62118919,
+   "safe_wake": {
+    "safe": "0x0a0e\u2026f8dd",
+    "delta": 1,
+    "idle_days": 33.7,
+    "previous_run": "2026-11-20T07:14:54Z"
+   }
+  },
+  {
+   "key": "the Safe that governs this contract, observed idle for 14 days or more, executed a transaction (nonce moved), with money behind it|ethereum-l1:0xbeef088055857739c12cd3765f20b7679def0f51",
+   "rule": "the Safe that governs this contract, observed idle for 14 days or more, executed a transaction (nonce moved), with money behind it",
+   "severity": "medium",
+   "chain": "Ethereum L1",
+   "target": "0xbeef088055857739c12cd3765f20b7679def0f51",
+   "title": "0xbeef\u20260f51",
+   "first_seen": "2026-11-20T13:22:26Z",
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 1,
+   "score": 73,
+   "delta": 0,
+   "tvl_usd": 116944067.1738904,
+   "safe_wake": {
+    "safe": "0x0a0e\u2026f8dd",
+    "delta": 1,
+    "idle_days": 33.7,
+    "previous_run": "2026-11-20T07:14:54Z"
+   }
+  },
+  {
+   "key": "the Safe that governs this contract, observed idle for 14 days or more, executed a transaction (nonce moved), with money behind it|ethereum-l1:0xbeef0c075da5d01112ae5cf34d257074fb5ddb2f",
+   "rule": "the Safe that governs this contract, observed idle for 14 days or more, executed a transaction (nonce moved), with money behind it",
+   "severity": "medium",
+   "chain": "Ethereum L1",
+   "target": "0xbeef0c075da5d01112ae5cf34d257074fb5ddb2f",
+   "title": "0xbeef\u2026db2f",
+   "first_seen": "2026-11-20T13:22:26Z",
+   "last_seen": "2026-11-20T13:22:26Z",
+   "times": 1,
+   "score": 73,
+   "delta": 0,
+   "tvl_usd": 159226671.4230677,
+   "safe_wake": {
+    "safe": "0x0a0e\u2026f8dd",
+    "delta": 1,
+    "idle_days": 33.7,
+    "previous_run": "2026-11-20T07:14:54Z"
+   }
   },
   {
    "key": "the independent reader disagrees with the admin-key score, with money behind it|hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109",

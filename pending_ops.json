@@ -104,9 +104,25 @@
    "address": "0xE8Dc0Fab349EA169283C48Ccfd09d797E6DB7c94",
    "family": "oz",
    "status": "ok",
-   "queued_events": 247,
-   "latest_queued": 1794927215,
-   "pending": [],
+   "queued_events": 251,
+   "latest_queued": 1795168883,
+   "pending": [
+    {
+     "block": 26455577,
+     "tx": "0xfa19ea2e043d6afc22d87de328d997e8b233ca3f34c3ae40a8c8188c172b27ee",
+     "id": "0xa1ca841370380727e4cb104e298dd8e2e231cba25b4009cd1ba31d9b88faebb7",
+     "index": 0,
+     "target": "0x1a44076050125825900e736c501f859c50fE728c",
+     "value": 0,
+     "selector": "0x6dbd9f90",
+     "delay": 86400,
+     "signature": "setConfig(address,address,(uint32,uint32,bytes)[])",
+     "calls": 4,
+     "ready_at": 1795255283,
+     "state": "waiting",
+     "decoded": "parameter change"
+    }
+   ],
    "recent": [
     {
      "block": 26405406,
@@ -202,6 +218,22 @@
      "still_queued": false,
      "final_state": "executed",
      "queued_at": 1794927215,
+     "decoded": "parameter change"
+    },
+    {
+     "block": 26455577,
+     "tx": "0xfa19ea2e043d6afc22d87de328d997e8b233ca3f34c3ae40a8c8188c172b27ee",
+     "id": "0xa1ca841370380727e4cb104e298dd8e2e231cba25b4009cd1ba31d9b88faebb7",
+     "index": 0,
+     "target": "0x1a44076050125825900e736c501f859c50fE728c",
+     "value": 0,
+     "selector": "0x6dbd9f90",
+     "delay": 86400,
+     "signature": "setConfig(address,address,(uint32,uint32,bytes)[])",
+     "calls": 4,
+     "still_queued": true,
+     "final_state": null,
+     "queued_at": 1795168883,
      "decoded": "parameter change"
     }
    ],
@@ -411,7 +443,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 4320000,
+   "window_blocks": 4382608,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -538,7 +570,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 4289361,
+   "window_blocks": 4382608,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -558,7 +590,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 4274204,
+   "window_blocks": 4382608,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -614,7 +646,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/mainnet",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 100598,
+   "window_blocks": 100198,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -779,7 +811,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 0,
    "window_blocks": 3000000,
-   "window_days_est": 3.8,
+   "window_days_est": 3.6,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62"
@@ -815,7 +847,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 86400,
    "window_blocks": 3000000,
-   "window_days_est": 3.8,
+   "window_days_est": 3.5,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x14b107cf534239c59571b066cb6497a321da897c"
@@ -856,9 +888,9 @@
    ]
   }
  ],
- "discovered_utc": "2026-11-20T07:10:16Z",
+ "discovered_utc": "2026-11-20T13:14:25Z",
  "discovered": 15,
- "squads_utc": "2026-11-20T07:16:23Z",
+ "squads_utc": "2026-11-20T13:22:06Z",
  "not_shown": [
   "squads"
  ]

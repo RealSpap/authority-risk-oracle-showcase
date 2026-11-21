@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-11-20T19:15:05Z",
- "tracked_tvl_usd": 90497058456,
+ "generated_utc": "2026-11-21T01:14:01Z",
+ "tracked_tvl_usd": 90096394502,
  "contracts": 203,
  "causes": {
   "side_role_plain_key": {
@@ -8,7 +8,7 @@
    "contracts": 4,
    "with_tvl": 3,
    "out_of_scope": 0,
-   "tvl_usd": 1339262604,
+   "tvl_usd": 1345700493,
    "share_of_tracked": 0.015,
    "targets": [
     "base:0xbeef010f9cb27031ad51e3333f9af9c6b1228183",
@@ -25,10 +25,10 @@
   },
   "plain_key_admin": {
    "label": "the admin is a plain key",
-   "contracts": 16,
+   "contracts": 15,
    "with_tvl": 12,
    "out_of_scope": 0,
-   "tvl_usd": 2799802749,
+   "tvl_usd": 2812682356,
    "share_of_tracked": 0.031,
    "targets": [
     "ethereum-l1:0x55555815a5595991c3a0ff119b59aef6c8b55555",
@@ -43,7 +43,6 @@
     "robinhood:0xb24b143ad6bb5be9559ccc75f34a2261b7456904",
     "robinhood:0xbeeff033f34c046626b8d0a041844c5d1a5409dd",
     "robinhood:0xd5c6c79692715145098a65d1eb1f2a10c524f8e8",
-    "robinhood:0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d",
     "solana:7sf3tcwm58vhtkjmwuw2p3t6ubx7ue5vkxpmnxjuz1hn",
     "solana:so1enddq2ykqhiprh3wvipa8hdispxwy6z3z6tmcpao",
     "tempo:0x83a1491f3e7f8daab8f787a631334b9ca7a87023"
@@ -61,7 +60,6 @@
     "robinhood:0x7f03effbd7ceb22a3f80dd468f67ef27826acd85": "chain_figure",
     "robinhood:0xd5c6c79692715145098a65d1eb1f2a10c524f8e8": "chain_figure",
     "robinhood:0xb24b143ad6bb5be9559ccc75f34a2261b7456904": "none",
-    "robinhood:0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d": "none",
     "solana:7sf3tcwm58vhtkjmwuw2p3t6ubx7ue5vkxpmnxjuz1hn": "chain_figure",
     "solana:so1enddq2ykqhiprh3wvipa8hdispxwy6z3z6tmcpao": "chain_figure",
     "tempo:0x83a1491f3e7f8daab8f787a631334b9ca7a87023": "held_by_contract"
@@ -69,10 +67,10 @@
   },
   "keys_only_multisig": {
    "label": "the admin multisig is made of plain keys only",
-   "contracts": 57,
+   "contracts": 58,
    "with_tvl": 39,
    "out_of_scope": 1,
-   "tvl_usd": 9356863516,
+   "tvl_usd": 9271052530,
    "share_of_tracked": 0.103,
    "targets": [
     "arbitrum:0x1a3c9b1d2f0529d97f2afc5136cc23e58f1fd35b",
@@ -111,6 +109,7 @@
     "robinhood:0xd540f47f214dc7d6d244e62a6ae7e06b586ef44a",
     "robinhood:0xe129d4cb2d454c4acfac909d1576453a9b835f61",
     "robinhood:0xf28704c691290547924e2129d407da36bda8ce0f",
+    "robinhood:0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d",
     "solana:1oopbojg58dgkuvkkezkgyg9dvrmpgeem1avjohkf78",
     "solana:2lecshuwdy9xi7mefghtfjqnskk4kdtrcpvab56dp2nq",
     "solana:4qp6fx6tnzky5wropq9wuygtfxxkwe6vizxfhg3rdag8",
@@ -170,6 +169,7 @@
     "robinhood:0x128a800cbc615cc110bff16e475865c67631603a": "none",
     "robinhood:0x5c98b2d892b37c9a1d3b69472bddc172a64cdc09": "none",
     "robinhood:0xd01c774d4a66408326bc65728ac5ae5aaf004032": "none",
+    "robinhood:0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d": "none",
     "solana:7u3hehxydlhncoerrtycnokbqybwgzls6jsdqgav5pff": "chain_figure",
     "solana:driftyha39mwei3m9aunc5mzrf1jyubsbn6vpcn33uh": "chain_figure",
     "solana:cammczo5yl8w4vff8kvhrk22ggusp5vtaw7grrkgrwqk": "chain_figure",
@@ -198,7 +198,7 @@
    "contracts": 40,
    "with_tvl": 26,
    "out_of_scope": 0,
-   "tvl_usd": 5766802931,
+   "tvl_usd": 5766899248,
    "share_of_tracked": 0.064,
    "targets": [
     "hyperliquid:0x8888888c43cbb7e1c4132542e46831bffd866ed3",
@@ -290,7 +290,7 @@
    "contracts": 4,
    "with_tvl": 2,
    "out_of_scope": 0,
-   "tvl_usd": 70437652,
+   "tvl_usd": 70701945,
    "share_of_tracked": 0.001,
    "targets": [
     "arbitrum:0xffa10065ce1d1c42fabc46e06b84ed8ffeb4bae5",
@@ -320,17 +320,13 @@
   },
   "transfer_in_flight": {
    "label": "an admin transfer is designated and not yet accepted",
-   "contracts": 1,
+   "contracts": 0,
    "with_tvl": 0,
    "out_of_scope": 0,
    "tvl_usd": 0,
    "share_of_tracked": 0.0,
-   "targets": [
-    "robinhood:0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d"
-   ],
-   "money_source": {
-    "robinhood:0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d": "none"
-   }
+   "targets": [],
+   "money_source": {}
   },
   "module_on_safe": {
    "label": "a module is enabled on the admin Safe (executes without the signatures)",
@@ -379,27 +375,23 @@
   "pairs": {
    "side_role_plain_key + plain_key_admin": {
     "contracts": 3,
-    "tvl_usd": 1232743169
+    "tvl_usd": 1239527885
    },
    "side_role_plain_key + keys_only_multisig": {
     "contracts": 1,
-    "tvl_usd": 106519435
+    "tvl_usd": 106172608
    },
    "plain_key_admin + unverified_code": {
     "contracts": 3,
-    "tvl_usd": 58704117
-   },
-   "plain_key_admin + transfer_in_flight": {
-    "contracts": 1,
-    "tvl_usd": 0
+    "tvl_usd": 58350316
    },
    "keys_only_multisig + unverified_code": {
     "contracts": 21,
-    "tvl_usd": 3217889516
+    "tvl_usd": 3227402056
    },
    "keys_only_multisig + one_key_freezes": {
     "contracts": 3,
-    "tvl_usd": 70437652
+    "tvl_usd": 70701945
    },
    "keys_only_multisig + module_on_safe": {
     "contracts": 1,
@@ -412,7 +404,7 @@
   },
   "any_cause": {
    "contracts": 90,
-   "tvl_usd": 14646875563
+   "tvl_usd": 14564881763
   }
  },
  "what": "money at risk by cause, from the independent reads of the run (second_opinion.json, impl_sources.json, pending_ops.json) and DefiLlama (tvl.json, one figure per protocol and chain; a contract with no protocol match counts what it holds by its own account, held_assets.json); a contract can sit under several causes; read a cause as the money a single failure of that kind would expose, not as a sum across causes; written by scripts/risk_by_cause.py after every run",

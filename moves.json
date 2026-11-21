@@ -1,9 +1,33 @@
 {
- "generated_utc": "2026-11-20T19:15:20Z",
+ "generated_utc": "2026-11-21T01:14:23Z",
  "compared": 203,
- "new_this_run": 0,
+ "new_this_run": 1,
  "first_seen_oracles": [],
  "moves": [
+  {
+   "run_utc": "2026-11-21T01:14:23Z",
+   "oracle": "ethereum-l1-sepolia",
+   "target": "0x2f39d218133afab8f2b819b1066c7e434ad94e9e",
+   "composite": [
+    78,
+    78
+   ],
+   "methodology_changed": false,
+   "axes": [
+    {
+     "axis": "oracleAuthorityScore",
+     "label": "price feed",
+     "from": 52,
+     "to": 20,
+     "why": "the price feed moved under fewer hands (52 \u2192 20)"
+    }
+   ],
+   "block": 12178656,
+   "lastUpdated": [
+    1794402258,
+    1795209480
+   ]
+  },
   {
    "run_utc": "2026-11-20T01:14:16Z",
    "oracle": "robinhood-chain",

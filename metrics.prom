@@ -1,6 +1,6 @@
 # HELP aro_run_timestamp_seconds UTC time of the last Watch run (Unix seconds)
 # TYPE aro_run_timestamp_seconds gauge
-aro_run_timestamp_seconds 1795201253
+aro_run_timestamp_seconds 1795222851
 # HELP aro_oracle_read 1 when the oracle was read at the last run, 0 when it was not (its targets are then unknown, not zero)
 # TYPE aro_oracle_read gauge
 aro_oracle_read{oracle="Robinhood Chain"} 1
@@ -26,12 +26,12 @@ aro_oracle_targets{oracle="Solana (Devnet)"} 26
 # HELP aro_oracle_stale_targets Targets of the oracle whose score is older than its maxStaleness
 # TYPE aro_oracle_stale_targets gauge
 aro_oracle_stale_targets{oracle="Robinhood Chain"} 0
-aro_oracle_stale_targets{oracle="Ethereum L1 (Sepolia)"} 38
+aro_oracle_stale_targets{oracle="Ethereum L1 (Sepolia)"} 0
 aro_oracle_stale_targets{oracle="Arbitrum (Sepolia)"} 0
 aro_oracle_stale_targets{oracle="Base (Sepolia)"} 0
 aro_oracle_stale_targets{oracle="Tempo (Moderato)"} 0
 aro_oracle_stale_targets{oracle="Plasma"} 0
-aro_oracle_stale_targets{oracle="Monad"} 9
+aro_oracle_stale_targets{oracle="Monad"} 0
 aro_oracle_stale_targets{oracle="Hyperliquid (HyperEVM)"} 0
 aro_oracle_stale_targets{oracle="Solana (Devnet)"} 0
 # HELP aro_targets Targets tracked across the oracles that were read
@@ -39,7 +39,7 @@ aro_oracle_stale_targets{oracle="Solana (Devnet)"} 0
 aro_targets 203
 # HELP aro_targets_stale Targets whose score is stale
 # TYPE aro_targets_stale gauge
-aro_targets_stale 47
+aro_targets_stale 0
 # HELP aro_status The run's health, one series per state, 1 for the current one
 # TYPE aro_status gauge
 aro_status{state="ok"} 0
@@ -53,13 +53,13 @@ aro_chain_ok 1
 aro_signed 1
 # HELP aro_alerts_active Alerts firing now, by severity
 # TYPE aro_alerts_active gauge
-aro_alerts_active{severity="high"} 0
-aro_alerts_active{severity="medium"} 4
+aro_alerts_active{severity="high"} 3
+aro_alerts_active{severity="medium"} 2
 aro_alerts_active{severity="info"} 0
 # HELP aro_second_opinion Targets by verdict of the independent reader
 # TYPE aro_second_opinion gauge
-aro_second_opinion{result="agree"} 135
-aro_second_opinion{result="disagree"} 3
+aro_second_opinion{result="agree"} 134
+aro_second_opinion{result="disagree"} 4
 aro_second_opinion{result="corroborated"} 9
 aro_second_opinion{result="unreadable"} 39
 aro_second_opinion{result="native"} 17
@@ -71,7 +71,7 @@ aro_contracts_paused 0
 aro_safes 42
 # HELP aro_safes_woke Admin Safes that executed after 14 days or more observed idle, at the last run
 # TYPE aro_safes_woke gauge
-aro_safes_woke 3
+aro_safes_woke 0
 # HELP aro_safes_never_executed Admin Safes still at nonce 0
 # TYPE aro_safes_never_executed gauge
 aro_safes_never_executed 2
@@ -308,45 +308,45 @@ aro_target_stale{chain="base-sepolia",target="0xee8f4ec5672f09119b96ab6fb59c27e1
 aro_target_stale{chain="base-sepolia",target="0x7bfa7c4f149e7415b73bdedfe609237e29cbf34a"} 0
 aro_target_stale{chain="base-sepolia",target="0xbeef010f9cb27031ad51e3333f9af9c6b1228183"} 0
 aro_target_stale{chain="base-sepolia",target="0xbeef2d50b428675a1921bc6bbf4bfb9d8cf1461a"} 0
-aro_target_stale{chain="ethereum-l1-sepolia",target="0x1f98431c8ad98523631ae4a59f267346ea31f984"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0x2f39d218133afab8f2b819b1066c7e434ad94e9e"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0xbe286431454714f511008713973d3b053a2d38f3"} 1
+aro_target_stale{chain="ethereum-l1-sepolia",target="0x1f98431c8ad98523631ae4a59f267346ea31f984"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0x2f39d218133afab8f2b819b1066c7e434ad94e9e"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0xbe286431454714f511008713973d3b053a2d38f3"} 0
 aro_target_stale{chain="ethereum-l1-sepolia",target="0x2cc440b721d2cafd6d64908d6d8c4acc57f8afc3"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0xc139190f447e929f090edeb554d95abb8b18ac1c"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0x73e35c5c35a274e34ade6eb13cc7f62aee323728"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0x211cc4dd073734da055fbf44a2b4667d5e5fe5d2"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0x58538e6a46e07434d7e7375bc268d3cb839c0133"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0xc3d688b66703497daa19211eedff47f25384cdc3"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0x02c3ea4e34c0cbd694d2adfa2c690eecbc1793ee"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0x000000000004444c5dc75cb358380d2e3de08a90"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0xe3490297a08d6fc8da46edb7b6142e4f461b62d3"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0xae7ab96520de3a18e5e111b5eaab095312d7fe84"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0x858646372cc42e1a627fce94aa7a7033e7cf075a"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0x6a8cbed756804b16e05e741edabd5cb544ae21bf"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0x1d8f8f00cfa6758d7be78336684788fb0ee0fa46"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0x5d39e06b825c1f2b80bf2756a73e28efaa128ba0"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0xf403c135812408bfbe8713b5a23a04b3d48aae31"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0x55555815a5595991c3a0ff119b59aef6c8b55555"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0x94643e86aa5e38ddac6c7791c1297f4e40cd96c1"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0xbeef047a543e45807105e51a8bbefcc5950fcfba"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0xbeef01735c132ada46aa9aa4c54623caa92a64cb"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0xbeef088055857739c12cd3765f20b7679def0f51"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0xbeef0c075da5d01112ae5cf34d257074fb5ddb2f"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0xdac17f958d2ee523a2206206994597c13d831ec7"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0x6b175474e89094c44da98b954eedeac495271d0f"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0xdc035d45d973e3ec169d2276ddab16f1e407384f"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0x6c3ea9036406852006290770bedfcaba0e23a0e8"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0xc5f0f7b66764f6ec8c8dff7ba683102295e16409"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0x888888888889758f76e7103c6cbf23abbf58f946"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0x08ae3be30958cdd1847ec58fffd4c451a87fdf01"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0x52aa899454998be5b000ad077a46bbe360f4e497"} 1
-aro_target_stale{chain="ethereum-l1-sepolia",target="0x49048044d57e1c92a77f79988d21fa8faf74e97e"} 1
+aro_target_stale{chain="ethereum-l1-sepolia",target="0xc139190f447e929f090edeb554d95abb8b18ac1c"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0x73e35c5c35a274e34ade6eb13cc7f62aee323728"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0x211cc4dd073734da055fbf44a2b4667d5e5fe5d2"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0x58538e6a46e07434d7e7375bc268d3cb839c0133"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0xc3d688b66703497daa19211eedff47f25384cdc3"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0x02c3ea4e34c0cbd694d2adfa2c690eecbc1793ee"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0x000000000004444c5dc75cb358380d2e3de08a90"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0xe3490297a08d6fc8da46edb7b6142e4f461b62d3"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0xae7ab96520de3a18e5e111b5eaab095312d7fe84"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0x858646372cc42e1a627fce94aa7a7033e7cf075a"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0x6a8cbed756804b16e05e741edabd5cb544ae21bf"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0x1d8f8f00cfa6758d7be78336684788fb0ee0fa46"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0x5d39e06b825c1f2b80bf2756a73e28efaa128ba0"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0xf403c135812408bfbe8713b5a23a04b3d48aae31"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0x55555815a5595991c3a0ff119b59aef6c8b55555"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0x94643e86aa5e38ddac6c7791c1297f4e40cd96c1"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0xbeef047a543e45807105e51a8bbefcc5950fcfba"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0xbeef01735c132ada46aa9aa4c54623caa92a64cb"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0xbeef088055857739c12cd3765f20b7679def0f51"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0xbeef0c075da5d01112ae5cf34d257074fb5ddb2f"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0xdac17f958d2ee523a2206206994597c13d831ec7"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0x6b175474e89094c44da98b954eedeac495271d0f"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0xdc035d45d973e3ec169d2276ddab16f1e407384f"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0x6c3ea9036406852006290770bedfcaba0e23a0e8"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0xc5f0f7b66764f6ec8c8dff7ba683102295e16409"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0x888888888889758f76e7103c6cbf23abbf58f946"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0x08ae3be30958cdd1847ec58fffd4c451a87fdf01"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0x52aa899454998be5b000ad077a46bbe360f4e497"} 0
+aro_target_stale{chain="ethereum-l1-sepolia",target="0x49048044d57e1c92a77f79988d21fa8faf74e97e"} 0
 aro_target_stale{chain="hyperliquid-hyperevm",target="0xea394cd63ca3a5c8a130bb2b955cc71c22e5ea6c"} 0
 aro_target_stale{chain="hyperliquid-hyperevm",target="0x88806a71d74ad0a510b350545c9ae490912f0888"} 0
 aro_target_stale{chain="hyperliquid-hyperevm",target="0x320c8988e3d1b5198f335802d7bfd2728a8fcac6"} 0
@@ -363,15 +363,15 @@ aro_target_stale{chain="hyperliquid-hyperevm",target="0xa822a9ceb6d6cb5b565bd100
 aro_target_stale{chain="hyperliquid-hyperevm",target="0x2df1c51e09aecf9cacb7bc98cb1742757f163df7"} 0
 aro_target_stale{chain="hyperliquid-hyperevm",target="0x72c98246a98bfe64022a3190e7710e157497170c"} 0
 aro_target_stale{chain="hyperliquid-hyperevm",target="0xffaa4a3d97fe9107cef8a3f48c069f577ff76cc1"} 0
-aro_target_stale{chain="monad",target="0xd691b0afed67f96cec28ab6308cbe5b2c103b7e9"} 1
-aro_target_stale{chain="monad",target="0x188d586ddcf52439676ca21a244753fa19f9ea8e"} 1
-aro_target_stale{chain="monad",target="0x36878c6fca7e0e8a88f90dc410cfbbca5b695c95"} 1
-aro_target_stale{chain="monad",target="0xd651346d7c789536ebf06dc72ae3c8502cd695cc"} 1
-aro_target_stale{chain="monad",target="0x32841a8511d5c2c5b253f45668780b99139e476d"} 1
-aro_target_stale{chain="monad",target="0x8271e06e5887fe5ba05234f5315c19f3ec90e8ad"} 1
-aro_target_stale{chain="monad",target="0xad663ac84052b52be4ed1b27ba416505e84a00bf"} 1
-aro_target_stale{chain="monad",target="0x34793fb9935f7bb5e5ae920fb963f39063e7a615"} 1
-aro_target_stale{chain="monad",target="0xba4dd672062de8feedb665dd4410658864483f1e"} 1
+aro_target_stale{chain="monad",target="0xd691b0afed67f96cec28ab6308cbe5b2c103b7e9"} 0
+aro_target_stale{chain="monad",target="0x188d586ddcf52439676ca21a244753fa19f9ea8e"} 0
+aro_target_stale{chain="monad",target="0x36878c6fca7e0e8a88f90dc410cfbbca5b695c95"} 0
+aro_target_stale{chain="monad",target="0xd651346d7c789536ebf06dc72ae3c8502cd695cc"} 0
+aro_target_stale{chain="monad",target="0x32841a8511d5c2c5b253f45668780b99139e476d"} 0
+aro_target_stale{chain="monad",target="0x8271e06e5887fe5ba05234f5315c19f3ec90e8ad"} 0
+aro_target_stale{chain="monad",target="0xad663ac84052b52be4ed1b27ba416505e84a00bf"} 0
+aro_target_stale{chain="monad",target="0x34793fb9935f7bb5e5ae920fb963f39063e7a615"} 0
+aro_target_stale{chain="monad",target="0xba4dd672062de8feedb665dd4410658864483f1e"} 0
 aro_target_stale{chain="plasma",target="0x6c50b8ca8eeaa1c75dee5b5ea79772acabc92f48"} 0
 aro_target_stale{chain="plasma",target="0x061d8e131f26512348ee5fa42e2df1ba9d6505e9"} 0
 aro_target_stale{chain="plasma",target="0x888888888889758f76e7103c6cbf23abbf58f946"} 0

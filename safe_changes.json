@@ -4,21 +4,77 @@
   {
    "ecosystem": "robinhood",
    "safes": 25,
-   "events": [],
-   "control": 50,
+   "events": [
+    {
+     "name": "AddedOwner",
+     "value": "0xe016\u2026970B",
+     "block": 119408102,
+     "tx": "955b15b7a02ccc77fd1329403acf0aebe42d1e927f7ef0b0af9d88fb18ce5a5d",
+     "safe": "0x8c458F866e603335ef179A63a2528F357732f5d5",
+     "groups": [
+      "strato_bridge"
+     ],
+     "timestamp": 1795214052
+    },
+    {
+     "name": "ChangedThreshold",
+     "value": 3,
+     "block": 119408102,
+     "tx": "955b15b7a02ccc77fd1329403acf0aebe42d1e927f7ef0b0af9d88fb18ce5a5d",
+     "safe": "0x8c458F866e603335ef179A63a2528F357732f5d5",
+     "groups": [
+      "strato_bridge"
+     ],
+     "timestamp": 1795214052
+    },
+    {
+     "name": "AddedOwner",
+     "value": "0x8AA3\u20262f71",
+     "block": 119408102,
+     "tx": "955b15b7a02ccc77fd1329403acf0aebe42d1e927f7ef0b0af9d88fb18ce5a5d",
+     "safe": "0x8c458F866e603335ef179A63a2528F357732f5d5",
+     "groups": [
+      "strato_bridge"
+     ],
+     "timestamp": 1795214052
+    },
+    {
+     "name": "AddedOwner",
+     "value": "0x4008\u20261CAD",
+     "block": 119408102,
+     "tx": "955b15b7a02ccc77fd1329403acf0aebe42d1e927f7ef0b0af9d88fb18ce5a5d",
+     "safe": "0x8c458F866e603335ef179A63a2528F357732f5d5",
+     "groups": [
+      "strato_bridge"
+     ],
+     "timestamp": 1795214052
+    },
+    {
+     "name": "AddedOwner",
+     "value": "0x0584\u20264CF5",
+     "block": 119408102,
+     "tx": "955b15b7a02ccc77fd1329403acf0aebe42d1e927f7ef0b0af9d88fb18ce5a5d",
+     "safe": "0x8c458F866e603335ef179A63a2528F357732f5d5",
+     "groups": [
+      "strato_bridge"
+     ],
+     "timestamp": 1795214052
+    }
+   ],
+   "control": 51,
    "status": "ok",
-   "fromBlock": 113590821,
-   "toBlock": 119290899,
+   "fromBlock": 113793505,
+   "toBlock": 119498013,
    "days_read": 7
   },
   {
    "ecosystem": "ethereum-l1",
    "safes": 15,
    "events": [],
-   "control": 19,
+   "control": 26,
    "status": "ok",
-   "fromBlock": 26408075,
-   "toBlock": 26458334,
+   "fromBlock": 26409867,
+   "toBlock": 26460121,
    "days_read": 7
   },
   {
@@ -136,10 +192,10 @@
      "timestamp": 1794947369
     }
    ],
-   "control": 13,
+   "control": 14,
    "status": "ok",
-   "fromBlock": 523950639,
-   "toBlock": 526019611,
+   "fromBlock": 524020624,
+   "toBlock": 526095479,
    "days_read": 7
   },
   {
@@ -148,8 +204,8 @@
    "events": [],
    "control": null,
    "status": "UNREAD (call budget exhausted)",
-   "fromBlock": 57034942,
-   "toBlock": 60058946,
+   "fromBlock": 57142652,
+   "toBlock": 60166653,
    "days_read": 7
   },
   {
@@ -157,11 +213,11 @@
    "safes": 4,
    "events": [],
    "control": 0,
-   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 324 execution(s) from other Safes on the window's tail)",
-   "fromBlock": 48869911,
-   "toBlock": 49992740,
+   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 330 execution(s) from other Safes on the window's tail)",
+   "fromBlock": 48910143,
+   "toBlock": 50032948,
    "days_read": 7,
-   "control_witness": 324
+   "control_witness": 330
   },
   {
    "ecosystem": "plasma",
@@ -280,19 +336,20 @@
    ],
    "control": 9,
    "status": "ok",
-   "fromBlock": 37654174,
-   "toBlock": 38257304,
+   "fromBlock": 37675796,
+   "toBlock": 38278926,
    "days_read": 7
   },
   {
    "ecosystem": "monad",
    "safes": 13,
    "events": [],
-   "control": 1,
-   "status": "ok",
-   "fromBlock": 123862824,
-   "toBlock": 123948125,
-   "days_read": 0.3
+   "control": 0,
+   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 5 execution(s) from other Safes on the window's tail)",
+   "fromBlock": 123933983,
+   "toBlock": 124019275,
+   "days_read": 0.3,
+   "control_witness": 5
   },
   {
    "ecosystem": "hyperliquid",
@@ -300,8 +357,8 @@
    "events": [],
    "control": 1,
    "status": "ok",
-   "fromBlock": 51531146,
-   "toBlock": 51794665,
+   "fromBlock": 51553135,
+   "toBlock": 51816654,
    "days_read": 3.0
   }
  ]

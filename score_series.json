@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-11-21T01:14:21Z",
+ "run_utc": "2026-11-21T07:18:18Z",
  "targets": 203,
  "moves_recorded": 45,
  "series": {
@@ -2518,36 +2518,18 @@
  },
  "calibration": {
   "window_days": 14,
-  "actions": 30,
+  "actions": 28,
   "excluded_undecoded": 0,
   "excluded_other_target": 0,
-  "under_40": 5,
+  "under_40": 4,
   "by_band": {
    "critical": 1,
-   "weak": 4,
+   "weak": 3,
    "moderate": 16,
-   "decent": 9,
+   "decent": 8,
    "strong": 0
   },
   "list": [
-   {
-    "kind": "upgrade executed",
-    "key": "solana:1oopBoJG58DgkUVKkEzKgyG9dvRmpgeEm1AVjoHkF78",
-    "t": "2026-11-07T06:10:48Z",
-    "via": "slot 466386064",
-    "tx": null,
-    "score_then": 70,
-    "band_then": "decent"
-   },
-   {
-    "kind": "upgrade executed",
-    "key": "solana:FL3X2pRsQ9zHENpZSKDRREtccwJuei8yg9fwDu9UN69Q",
-    "t": "2026-11-07T06:10:48Z",
-    "via": "slot 466260432",
-    "tx": null,
-    "score_then": 38,
-    "band_then": "weak"
-   },
    {
     "kind": "timelock op queued (upgrade)",
     "key": "arbitrum:0x52aa899454998be5b000ad077a46bbe360f4e497",

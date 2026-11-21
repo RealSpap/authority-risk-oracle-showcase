@@ -1,17 +1,4 @@
-## Second opinion, 2026-11-21T01:08:33Z
-
-### 1 upgrade(s) executed since the previous run (2026-11-20T19:09:27Z)
-
-- **ADyA8hdefvWN2dbGGWFotbzWxrAvLW83WG6QCVXvJKqw** on solana: program redeployed since the previous run: slot 469811067 -> 471854493 (2026-11-20T19:28:12Z); the score reads who may upgrade, this is an upgrade that happened
-
-The code behind a tracked proxy changed: read what the new implementation does before trusting the score (the private pipeline's implementation check names the selectors added and dropped).
-
-### 2 admin change(s) since the previous run (2026-11-20T19:09:27Z)
-
-- **0x0dc846db6a4ec7b5a3e542f7db88049e9add2541** on robinhood: admin read changed since the previous run: safe 0x8c45…f5d5 2-of-3 [signers: 3 eoa] -> safe 0x8c458f866e603335ef179a63a2528f357732f5d5 3-of-7 (via owner()); signer composition changed since the previous run: 3 eoa -> 7 eoa
-- **0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d** on robinhood: admin read changed since the previous run: eoa 0x3b2b…2f14 (transfer pending to 0x9db4…1a53) -> safe 0x9db4…1a53 3-of-7 (via owner()) (this holder governs 3 tracked contract(s) in all)
-
-The live admin of a tracked contract moved between two watch runs: the published score may be out of date before the next push. Read the case now.
+## Second opinion, 2026-11-21T07:11:13Z
 
 ### 4 disagreement(s) with the published score
 

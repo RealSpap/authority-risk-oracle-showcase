@@ -1,6 +1,6 @@
 {
- "evaluated_utc": "2026-11-21T07:18:18Z",
- "run_utc": "2026-11-21T07:00:49Z",
+ "evaluated_utc": "2026-11-21T13:16:02Z",
+ "run_utc": "2026-11-21T13:00:51Z",
  "rules": [
   "score dropped by 10 or more",
   "score fell under 40",
@@ -34,29 +34,29 @@
    "title": "Kinetiq kmHYPE",
    "score": 4,
    "delta": 0,
-   "tvl_usd": 27673419.577803474,
+   "tvl_usd": 29122476.37328801,
    "first_seen": "2026-11-18T13:18:47Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 70194249,
-    "oracle_read_at": 1795244646,
+    "oracle_block": 70216212,
+    "oracle_read_at": 1795266247,
     "composite": 4,
     "previous_composite": 4,
     "score_last_updated": 1795123486,
     "second_opinion": {
      "kind": "safe",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 51837987,
-     "block_end": 51838003,
-     "read_gap_seconds": 515,
-     "since_score_push_seconds": 121675
+     "block_start": 51859790,
+     "block_end": 51859816,
+     "read_gap_seconds": 424,
+     "since_score_push_seconds": 143185
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec --rpc-url https://998.rpc.thirdweb.com --block 70194249",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec --rpc-url https://998.rpc.thirdweb.com --block 70216212",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-21T01:00:51Z",
+   "previous_run": "2026-11-21T07:00:49Z",
    "notified": true
   },
   {
@@ -67,29 +67,29 @@
    "title": "Kinetiq kHYPE",
    "score": 4,
    "delta": 0,
-   "tvl_usd": 547935236.6088517,
+   "tvl_usd": 577070177.4070287,
    "first_seen": "2026-11-20T19:15:19Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 70194249,
-    "oracle_read_at": 1795244646,
+    "oracle_block": 70216212,
+    "oracle_read_at": 1795266247,
     "composite": 4,
     "previous_composite": 4,
     "score_last_updated": 1795123486,
     "second_opinion": {
      "kind": "safe",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 51837987,
-     "block_end": 51838003,
-     "read_gap_seconds": 524,
-     "since_score_push_seconds": 121684
+     "block_start": 51859790,
+     "block_end": 51859816,
+     "read_gap_seconds": 425,
+     "since_score_push_seconds": 143186
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x393d0b87ed38fc779fd9611144ae649ba6082109 --rpc-url https://998.rpc.thirdweb.com --block 70194249",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x393d0b87ed38fc779fd9611144ae649ba6082109 --rpc-url https://998.rpc.thirdweb.com --block 70216212",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-21T01:00:51Z",
+   "previous_run": "2026-11-21T07:00:49Z",
    "notified": true
   }
  ],
@@ -102,11 +102,11 @@
    "target": "0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec",
    "title": "Kinetiq kmHYPE",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-21T07:18:18Z",
-   "times": 147,
+   "last_seen": "2026-11-21T13:16:02Z",
+   "times": 148,
    "score": 4,
    "delta": 0,
-   "tvl_usd": 27673419.577803474
+   "tvl_usd": 29122476.37328801
   },
   {
    "key": "the independent reader disagrees with the admin-key score, with money behind it|hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109",
@@ -116,11 +116,11 @@
    "target": "0x393d0b87ed38fc779fd9611144ae649ba6082109",
    "title": "Kinetiq kHYPE",
    "first_seen": "2026-11-20T19:15:19Z",
-   "last_seen": "2026-11-21T07:18:18Z",
-   "times": 137,
+   "last_seen": "2026-11-21T13:16:02Z",
+   "times": 138,
    "score": 4,
    "delta": 0,
-   "tvl_usd": 547935236.6088517
+   "tvl_usd": 577070177.4070287
   },
   {
    "key": "an upgrade was executed: the implementation behind this contract changed since the previous run|solana:ADyA8hdefvWN2dbGGWFotbzWxrAvLW83WG6QCVXvJKqw",

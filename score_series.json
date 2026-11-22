@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-11-22T07:01:17Z",
+ "run_utc": "2026-11-22T13:17:11Z",
  "targets": 203,
  "moves_recorded": 45,
  "series": {
@@ -2518,14 +2518,14 @@
  },
  "calibration": {
   "window_days": 14,
-  "actions": 25,
+  "actions": 24,
   "excluded_undecoded": 0,
   "excluded_other_target": 0,
   "under_40": 4,
   "by_band": {
    "critical": 1,
    "weak": 3,
-   "moderate": 14,
+   "moderate": 13,
    "decent": 7,
    "strong": 0
   },
@@ -2717,15 +2717,6 @@
     "via": "plasma timelock 0xabd3\u20265072, found by the independent reader (1 tracked contract)",
     "tx": "0x17abf03b18225f05ed6450501199a7a3dd598bae549d039c473ae5069bd39f5f",
     "score_then": 57,
-    "band_then": "moderate"
-   },
-   {
-    "kind": "timelock op queued (unknown)",
-    "key": "robinhood:0x14b107cf534239c59571b066cb6497a321da897c",
-    "t": "2026-11-18T19:40:15Z",
-    "via": "robinhood timelock 0x0da1\u2026001d, found by the independent reader (1 tracked contract)",
-    "tx": "0xf25babccd6cc7bf4195ab690f86f965114de373cb71ca4ce2cc02d88b00807f5",
-    "score_then": 40,
     "band_then": "moderate"
    },
    {

@@ -915,16 +915,26 @@
    "chain": "ethereum",
    "timelock": "Compound Governance Timelock",
    "what": "cross-chain message"
+  },
+  "arbitrum:0x4d6ce4f4498d59eed397bcbc687805a07f9b2346:0x13a967dc3b57148ce1cff63e202f3489128365bb6981edaa07f2fd99b7d19cb9": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-11-22T13:00:48Z",
+   "due_utc": "2026-11-23T07:32:07Z",
+   "notice_hours": 18.5,
+   "state": "queued",
+   "chain": "arbitrum",
+   "timelock": "arbitrum timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
+   "what": "parameter change"
   }
  },
- "updated_utc": "2026-11-22T06:45:07Z",
+ "updated_utc": "2026-11-22T13:00:48Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
-  "warned": 60,
+  "warned": 61,
   "seen_without_notice": 0,
   "missed": 1,
   "baseline": 26,
-  "warned_with_a_known_notice": 60,
+  "warned_with_a_known_notice": 61,
   "shortest_notice_hours": 14.0,
   "median_notice_hours": 21.2,
   "note": "warned: seen while queued and not yet executable (the notice is real); seen_without_notice: still queued but already executable when first seen; missed: queued after the ledger started and already applied when first seen (faster than the 6-hour cadence); baseline: applied before the ledger started, counted as neither."

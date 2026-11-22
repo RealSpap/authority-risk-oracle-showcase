@@ -249,23 +249,7 @@
    "status": "ok",
    "queued_events": 3,
    "latest_queued": 1794617721,
-   "pending": [
-    {
-     "block": 524016556,
-     "tx": "0x27074d28451511742ccebde3b7bc730554de08f051ec75768a08f0a9966012be",
-     "id": "0x2f037893252a8e160a3d92258189f0432202ad41d7fe7747b591c899faa96a1f",
-     "index": 0,
-     "target": "0x0000000000000000000000000000000000000064",
-     "value": 0,
-     "selector": "0x928c169a",
-     "delay": 691200,
-     "signature": "sendTxToL1(address,bytes)",
-     "calls": 1,
-     "ready_at": 1795308921,
-     "state": "waiting",
-     "decoded": "parameter change"
-    }
-   ],
+   "pending": [],
    "recent": [
     {
      "block": 524016556,
@@ -278,8 +262,8 @@
      "delay": 691200,
      "signature": "sendTxToL1(address,bytes)",
      "calls": 1,
-     "still_queued": true,
-     "final_state": null,
+     "still_queued": false,
+     "final_state": "executed",
      "queued_at": 1794617721,
      "decoded": "parameter change"
     }
@@ -351,7 +335,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 3927272,
+   "window_blocks": 3733333,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -364,7 +348,7 @@
    "address": "0x4d6ce4f4498d59eed397bcbc687805a07f9b2346",
    "family": "oz",
    "status": "ok",
-   "queued_events": 30,
+   "queued_events": 4,
    "latest_queued": 1795103870,
    "pending": [
     {
@@ -384,36 +368,6 @@
     }
    ],
    "recent": [
-    {
-     "block": 522407311,
-     "tx": "0xa2c2dce5703cc844f99b25104f7146bd088f50eb2d462c36a50b48b8ca1e8db9",
-     "id": "0x4c502f73615e5a312e812eeef6b5b73667e29107e38eb0e3bd8c496cbc66756e",
-     "index": 0,
-     "target": "0x87E765B0f76F9071B7Ff8bCa2A1EB8338AcD14C3",
-     "value": 0,
-     "selector": "0x77396ce5",
-     "delay": 86400,
-     "signature": "updateAuth(address,uint256)",
-     "calls": 23,
-     "still_queued": false,
-     "queued_at": 1794152553,
-     "decoded": "parameter change"
-    },
-    {
-     "block": 522512509,
-     "tx": "0x1f5665ed5ff54a4b3765d91d3afc91ac8a4e27dcd3bd96c49200bac9ed62332e",
-     "id": "0x6d50e0a5f907832da836f9865b4cd4a94738e1f6f9756798c50d330f6da40265",
-     "index": 0,
-     "target": "0x52Aa899454998Be5b000Ad077a46Bbe360F4e497",
-     "value": 0,
-     "selector": "0x02c6bb6a",
-     "delay": 86400,
-     "signature": "updateUserSupplyConfigs((address,address,uint8,uint256,uint256,uint256)[])",
-     "calls": 3,
-     "still_queued": false,
-     "queued_at": 1794182480,
-     "decoded": "parameter change"
-    },
     {
      "block": 522757628,
      "tx": "0x834e41bcfb2c49ef49d3f3e8c9570cccf2ca539bdb8882209d9d219e5dc50ef6",
@@ -463,7 +417,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 3927272,
+   "window_blocks": 3733333,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -483,7 +437,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 3914563,
+   "window_blocks": 3744891,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -704,7 +658,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 0,
    "window_blocks": 3000000,
-   "window_days_est": 3.8,
+   "window_days_est": 4.2,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62"
@@ -740,7 +694,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 86400,
    "window_blocks": 3000000,
-   "window_days_est": 3.9,
+   "window_days_est": 4.2,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x14b107cf534239c59571b066cb6497a321da897c"
@@ -781,9 +735,9 @@
    ]
   }
  ],
- "discovered_utc": "2026-11-21T19:11:36Z",
+ "discovered_utc": "2026-11-22T01:09:54Z",
  "discovered": 15,
- "squads_utc": "2026-11-21T19:18:20Z",
+ "squads_utc": "2026-11-22T01:16:38Z",
  "not_shown": [
   "squads"
  ]

@@ -1,6 +1,6 @@
 # Authority risk digest, 2026-11-21 01:25 UTC
 
-## Needs a person, 2026-11-21T01:24:53Z: 44 item(s) (priority 1: 31, priority 2: 10, priority 3: 3); oldest 41.2 d
+## Needs a person, 2026-11-21T01:24:53Z: 43 item(s) (priority 1: 30, priority 2: 10, priority 3: 3); oldest 41.2 d
 
 ### Overdue: 20 priority-1 item(s) waiting for more than 2 day(s), back in the alarm
 - **Safe AddedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (3.0 d): AddedOwner 0x61C2…0e44 (aave_guardian)
@@ -24,7 +24,7 @@
 - **Safe RemovedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (3.0 d): RemovedOwner 0x0D23…c0E9 (aave_guardian)
 - **Safe RemovedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (3.0 d): RemovedOwner 0x4C30…099f (aave_guardian)
 
-### Something happened: read before trusting the score (31)
+### Something happened: read before trusting the score (30)
 - **Safe AddedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (3.0 d): AddedOwner 0x61C2…0e44 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (3.0 d): AddedOwner 0x2694…CbF1 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (3.0 d): AddedOwner 0xb291…Afef (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
@@ -45,7 +45,6 @@
 - **Safe RemovedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (3.0 d): RemovedOwner 0x936C…9EF3 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe RemovedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (3.0 d): RemovedOwner 0x0D23…c0E9 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe RemovedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (3.0 d): RemovedOwner 0x4C30…099f (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **queued operation executable within 48 h** arbitrum 0x0000000000000000000000000000000000000064 (1.0 d): parameter change: sendTxToL1(address,bytes) via Arbitrum L2 Core Governor Timelock. To do: read the call before it lands. (pending_ops.json)
 - **queued operation executable within 48 h** ethereum 0x1a44076050125825900e736c501f859c50fE728c (0.5 d): parameter change: setConfig(address,address,(uint32,uint32,bytes)[]) via Ethena Timelock. To do: read the call before it lands. (pending_ops.json)
 - **queued operation executable** arbitrum 0x1eE00C305C51Ff3bE60162456A9B533C07cD9288 (0.3 d): parameter change: updateMaster() via arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
 - **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (0.0 d): AddedOwner 0xe016…970B (strato_bridge). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
@@ -129,7 +128,7 @@
 - cleared, queued 2026-11-07: arbitrum timelock 0x3fb4…f88a, found by the independent reader (1 tracked contract) -> 0xb21b…3775 fulfillBasicOrder_efficient_6GL6yc((address,uint256,uint256,address,address,address,uint256,uint256,uint8,uint256,uint256,bytes32,uint256,bytes32,bytes32,uint256,(uint256,address)[],bytes))
 - cleared, queued 2026-11-07: arbitrum timelock 0x3fb4…f88a, found by the independent reader (1 tracked contract) -> 0xD10b…715e fulfillBasicOrder_efficient_6GL6yc((address,uint256,uint256,address,address,address,uint256,uint256,uint8,uint256,uint256,bytes32,uint256,bytes32,bytes32,uint256,(uint256,address)[],bytes))
 - cleared, queued 2026-11-07: arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract) -> 0x52Aa899454998Be5b000Ad077a46Bbe360F4e497 addImplementation(address,bytes4[])
-- cleared, queued 2026-11-08: arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract) -> 0x87E765B0f76F9071B7Ff8bCa2A1EB8338AcD14C3 updateAuth(address,uint256)
+- cleared, queued 2026-11-08: arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract) -> 0x87E7…14C3 updateAuth(address,uint256)
 - cleared, queued 2026-11-09: arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract) -> 0x52Aa899454998Be5b000Ad077a46Bbe360F4e497 updateUserSupplyConfigs((address,address,uint8,uint256,uint256,uint256)[])
 - cleared, queued 2026-11-16: arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract) -> 0x5126A82E52F78B73fdE29B0D9800170e77AbfdcA setLzDelegate(address)
 - cleared, queued 2026-11-16: plasma timelock 0x4d6c…2346, found by the independent reader (1 tracked contract) -> 0x9926955e0Dd681Dc303370C52f4Ad0a4dd061687 updateMaster()

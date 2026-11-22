@@ -1,6 +1,6 @@
 {
- "evaluated_utc": "2026-11-21T19:18:40Z",
- "run_utc": "2026-11-21T19:00:47Z",
+ "evaluated_utc": "2026-11-22T01:16:53Z",
+ "run_utc": "2026-11-22T01:00:47Z",
  "rules": [
   "score dropped by 10 or more",
   "score fell under 40",
@@ -34,30 +34,64 @@
    "title": "Kinetiq kmHYPE",
    "score": 4,
    "delta": 0,
-   "tvl_usd": 29819187.989319168,
+   "tvl_usd": 29890525.430538103,
    "first_seen": "2026-11-18T13:18:47Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 70238197,
-    "oracle_read_at": 1795287872,
+    "oracle_block": 70260137,
+    "oracle_read_at": 1795309453,
     "composite": 4,
     "previous_composite": 4,
     "score_last_updated": 1795123486,
     "second_opinion": {
      "kind": "safe",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 51881918,
-     "block_end": 51881933,
-     "read_gap_seconds": 554,
-     "since_score_push_seconds": 164940
+     "block_start": 51903731,
+     "block_end": 51903753,
+     "read_gap_seconds": 438,
+     "since_score_push_seconds": 186405
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec --rpc-url https://998.rpc.thirdweb.com --block 70238197",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec --rpc-url https://998.rpc.thirdweb.com --block 70260137",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-21T13:00:51Z",
+   "previous_run": "2026-11-21T19:00:47Z",
    "notified": true
+  },
+  {
+   "rule": "the independent reader disagrees with the admin-key score, with money behind it",
+   "severity": "medium",
+   "chain": "Hyperliquid",
+   "target": "0x393d0b87ed38fc779fd9611144ae649ba6082109",
+   "title": "Kinetiq kHYPE",
+   "score": 4,
+   "delta": 0,
+   "tvl_usd": 592128376.4965283,
+   "first_seen": "2026-11-22T01:16:53Z",
+   "new": true,
+   "evidence": [],
+   "reading": {
+    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
+    "oracle_block": 70260137,
+    "oracle_read_at": 1795309453,
+    "composite": 4,
+    "previous_composite": 4,
+    "score_last_updated": 1795123486,
+    "second_opinion": {
+     "kind": "safe",
+     "path": "EIP-1967 admin -> ProxyAdmin owner()",
+     "block_start": 51903731,
+     "block_end": 51903753,
+     "read_gap_seconds": 442,
+     "since_score_push_seconds": 186409
+    },
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x393d0b87ed38fc779fd9611144ae649ba6082109 --rpc-url https://998.rpc.thirdweb.com --block 70260137",
+    "reproduce_exact": false
+   },
+   "previous_run": "2026-11-21T19:00:47Z",
+   "notified": true,
+   "delivered": []
   }
  ],
  "history": [
@@ -69,11 +103,11 @@
    "target": "0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec",
    "title": "Kinetiq kmHYPE",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-21T19:18:40Z",
-   "times": 149,
+   "last_seen": "2026-11-22T01:16:53Z",
+   "times": 150,
    "score": 4,
    "delta": 0,
-   "tvl_usd": 29819187.989319168
+   "tvl_usd": 29890525.430538103
   },
   {
    "key": "the independent reader disagrees with the admin-key score, with money behind it|hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109",
@@ -82,12 +116,12 @@
    "chain": "Hyperliquid",
    "target": "0x393d0b87ed38fc779fd9611144ae649ba6082109",
    "title": "Kinetiq kHYPE",
-   "first_seen": "2026-11-20T19:15:19Z",
-   "last_seen": "2026-11-21T13:16:02Z",
-   "times": 138,
+   "first_seen": "2026-11-22T01:16:53Z",
+   "last_seen": "2026-11-22T01:16:53Z",
+   "times": 139,
    "score": 4,
    "delta": 0,
-   "tvl_usd": 577070177.4070287
+   "tvl_usd": 592128376.4965283
   },
   {
    "key": "an upgrade was executed: the implementation behind this contract changed since the previous run|solana:ADyA8hdefvWN2dbGGWFotbzWxrAvLW83WG6QCVXvJKqw",

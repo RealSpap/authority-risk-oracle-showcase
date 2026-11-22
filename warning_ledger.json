@@ -905,16 +905,26 @@
    "chain": "ethereum",
    "timelock": "Ethena Timelock",
    "what": "parameter change"
+  },
+  "ethereum:0x6d903f6003cca6255d85cca4d3b5e5146dc33925:0xa63f3d70ad15535bb74e8df7af6af54852ea2eb1f4d3491d844b7d35245b3a50": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-11-22T06:45:07Z",
+   "due_utc": "2026-11-24T03:51:47Z",
+   "notice_hours": 45.1,
+   "state": "queued",
+   "chain": "ethereum",
+   "timelock": "Compound Governance Timelock",
+   "what": "cross-chain message"
   }
  },
- "updated_utc": "2026-11-22T01:00:47Z",
+ "updated_utc": "2026-11-22T06:45:07Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
-  "warned": 59,
+  "warned": 60,
   "seen_without_notice": 0,
   "missed": 1,
   "baseline": 26,
-  "warned_with_a_known_notice": 59,
+  "warned_with_a_known_notice": 60,
   "shortest_notice_hours": 14.0,
   "median_notice_hours": 21.2,
   "note": "warned: seen while queued and not yet executable (the notice is real); seen_without_notice: still queued but already executable when first seen; missed: queued after the ledger started and already applied when first seen (faster than the 6-hour cadence); baseline: applied before the ledger started, counted as neither."

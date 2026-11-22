@@ -4,8 +4,17 @@ PRODID:-//Authority Risk Oracle//timelock queue//EN
 X-WR-CALNAME:Authority Risk Oracle: timelock queue
 X-WR-CALDESC:Operations queued behind the watched timelocks, at the time they become executable
 BEGIN:VEVENT
+UID:0xf8bfadae3fafcc0690000b80e5d088dcf6a519efb5d7c425e2cebc1aa518fdb8-0@realspap.github.io-0xa63f3d70ad15535b
+DTSTAMP:20261122T065514Z
+DTSTART:20261124T035147Z
+DTEND:20261124T042147Z
+SUMMARY:Compound Governance Timelock: 0xb2267a7b becomes executable
+DESCRIPTION:0xb2267a7b on 0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367 (ethereum)\nqueued in tx 0xf8bfadae3fafcc0690000b80e5d088dcf6a519efb5d7c425e2cebc1aa518fdb8\nhttps://realspap.github.io/oracle/
+URL:https://realspap.github.io/oracle/
+END:VEVENT
+BEGIN:VEVENT
 UID:0xfa19ea2e043d6afc22d87de328d997e8b233ca3f34c3ae40a8c8188c172b27ee-0@realspap.github.io-0xa1ca841370380727
-DTSTAMP:20261122T010954Z
+DTSTAMP:20261122T065514Z
 DTSTART:20261121T100123Z
 DTEND:20261121T103123Z
 SUMMARY:Ethena Timelock: setConfig becomes executable
@@ -14,7 +23,7 @@ URL:https://realspap.github.io/oracle/
 END:VEVENT
 BEGIN:VEVENT
 UID:0xd0b7d32f325cd154329746e24930c3dcb27da594e8f2f3a1ffdd5a330b75f5d4-0@realspap.github.io-0xd438873df28f8132
-DTSTAMP:20261122T010954Z
+DTSTAMP:20261122T065514Z
 DTSTART:20261120T155750Z
 DTEND:20261120T162750Z
 SUMMARY:arbitrum timelock 0x4d6c…2346\, found by the independent reader (1 tracked contract): 0xcf1a0ddc becomes executable

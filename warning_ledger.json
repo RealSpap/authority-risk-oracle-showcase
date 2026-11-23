@@ -955,16 +955,26 @@
    "chain": "plasma",
    "timelock": "plasma timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
    "what": "parameter change"
+  },
+  "plasma:0x4d6ce4f4498d59eed397bcbc687805a07f9b2346:0x5f6002a4f9ee9c872dc8bfe403bec291871af40dc9f47dffb12cad23bff72b97": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-11-23T13:00:52Z",
+   "due_utc": "2026-11-24T07:33:40Z",
+   "notice_hours": 18.5,
+   "state": "queued",
+   "chain": "plasma",
+   "timelock": "plasma timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
+   "what": "upgrade"
   }
  },
- "updated_utc": "2026-11-23T07:00:47Z",
+ "updated_utc": "2026-11-23T13:00:52Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
-  "warned": 64,
+  "warned": 65,
   "seen_without_notice": 0,
   "missed": 1,
   "baseline": 26,
-  "warned_with_a_known_notice": 64,
+  "warned_with_a_known_notice": 65,
   "shortest_notice_hours": 14.0,
   "median_notice_hours": 21.2,
   "note": "warned: seen while queued and not yet executable (the notice is real); seen_without_notice: still queued but already executable when first seen; missed: queued after the ledger started and already applied when first seen (faster than the 6-hour cadence); baseline: applied before the ledger started, counted as neither."

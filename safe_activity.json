@@ -1,10 +1,23 @@
 {
- "generated_utc": "2026-11-23T07:22:17Z",
+ "generated_utc": "2026-11-23T13:17:35Z",
  "wake_days": 14,
  "safes": 42,
  "read": 42,
- "woke": [],
- "changes": [],
+ "woke": [
+  "ethereum-l1:0xcba2\u20269afa"
+ ],
+ "changes": [
+  {
+   "delta": 2,
+   "idle_days": 43.6,
+   "woke": true,
+   "safe": "ethereum-l1:0xcba2\u20269afa",
+   "governs": [
+    "ethereum-l1:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb"
+   ],
+   "previous_run": "2026-11-23T07:22:17Z"
+  }
+ ],
  "never_executed": [
   "robinhood:0x0605\u20269728",
   "tempo:0x6458\u2026fbbc"
@@ -156,9 +169,10 @@
    "never_executed": false
   },
   "ethereum-l1:18c0d155cf0f0269": {
-   "nonce": 282,
+   "nonce": 284,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-10-10T21:12:49Z",
+   "idle_since": "2026-11-23T13:17:35Z",
+   "last_moved": "2026-11-23T13:17:35Z",
    "governs": [
     "ethereum-l1:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb"
    ],

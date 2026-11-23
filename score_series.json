@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-11-23T01:23:14Z",
+ "run_utc": "2026-11-23T07:23:58Z",
  "targets": 203,
  "moves_recorded": 45,
  "series": {
@@ -2518,27 +2518,18 @@
  },
  "calibration": {
   "window_days": 14,
-  "actions": 21,
+  "actions": 23,
   "excluded_undecoded": 0,
   "excluded_other_target": 0,
   "under_40": 4,
   "by_band": {
    "critical": 1,
    "weak": 3,
-   "moderate": 12,
+   "moderate": 14,
    "decent": 5,
    "strong": 0
   },
   "list": [
-   {
-    "kind": "timelock op queued (parameter change)",
-    "key": "arbitrum:0x52aa899454998be5b000ad077a46bbe360f4e497",
-    "t": "2026-11-09T18:37:59Z",
-    "via": "arbitrum timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
-    "tx": "0x834e41bcfb2c49ef49d3f3e8c9570cccf2ca539bdb8882209d9d219e5dc50ef6",
-    "score_then": 59,
-    "band_then": "moderate"
-   },
    {
     "kind": "upgrade executed",
     "key": "robinhood:0x14b107cf534239c59571b066cb6497a321da897c",
@@ -2717,6 +2708,33 @@
     "via": "slot 471854493",
     "tx": null,
     "score_then": 43,
+    "band_then": "moderate"
+   },
+   {
+    "kind": "timelock op queued (parameter change)",
+    "key": "arbitrum:0x52aa899454998be5b000ad077a46bbe360f4e497",
+    "t": "2026-11-23T07:04:27Z",
+    "via": "arbitrum timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
+    "tx": "0xe862de079af562f6bf38a3a8d96cacc59bcd598b8309b0cebe8be74d1daf7d88",
+    "score_then": 59,
+    "band_then": "moderate"
+   },
+   {
+    "kind": "timelock op queued (parameter change)",
+    "key": "plasma:0x52aa899454998be5b000ad077a46bbe360f4e497",
+    "t": "2026-11-23T07:05:06Z",
+    "via": "plasma timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
+    "tx": "0xd954e39b7231f238f4b90be27709f7d1520ab487f494b584954c5a1ecabcbaee",
+    "score_then": 59,
+    "band_then": "moderate"
+   },
+   {
+    "kind": "timelock op queued (parameter change)",
+    "key": "plasma:0x52aa899454998be5b000ad077a46bbe360f4e497",
+    "t": "2026-11-23T07:05:24Z",
+    "via": "plasma timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
+    "tx": "0x5c80dd4ecb81cd36fad8cb0a36f439fff24891faf263065969d77874b5867e01",
+    "score_then": 59,
     "band_then": "moderate"
    }
   ],

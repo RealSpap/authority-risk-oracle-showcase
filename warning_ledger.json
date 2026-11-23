@@ -925,16 +925,46 @@
    "chain": "arbitrum",
    "timelock": "arbitrum timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
    "what": "parameter change"
+  },
+  "arbitrum:0x4d6ce4f4498d59eed397bcbc687805a07f9b2346:0xf89c4aa6833b4072b6c312ba9aa5bc0acc9c908a6b78b1ae0b5e3b5d3fd2ffb4": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-11-23T07:00:47Z",
+   "due_utc": "2026-11-24T07:04:27Z",
+   "notice_hours": 24.1,
+   "state": "queued",
+   "chain": "arbitrum",
+   "timelock": "arbitrum timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
+   "what": "parameter change"
+  },
+  "plasma:0x4d6ce4f4498d59eed397bcbc687805a07f9b2346:0x2c11ebf1e053f9df557d3cff49f1c730c406b9b36ff9c6a733d57ef4d47ff582": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-11-23T07:00:47Z",
+   "due_utc": "2026-11-24T07:05:06Z",
+   "notice_hours": 24.1,
+   "state": "queued",
+   "chain": "plasma",
+   "timelock": "plasma timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
+   "what": "parameter change"
+  },
+  "plasma:0x4d6ce4f4498d59eed397bcbc687805a07f9b2346:0xb3e5ce72335f1144ccf48d4672ff84ad0102278a8730c46816d592a5cfc1da09": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-11-23T07:00:47Z",
+   "due_utc": "2026-11-24T07:05:24Z",
+   "notice_hours": 24.1,
+   "state": "queued",
+   "chain": "plasma",
+   "timelock": "plasma timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
+   "what": "parameter change"
   }
  },
- "updated_utc": "2026-11-23T01:01:11Z",
+ "updated_utc": "2026-11-23T07:00:47Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
-  "warned": 61,
+  "warned": 64,
   "seen_without_notice": 0,
   "missed": 1,
   "baseline": 26,
-  "warned_with_a_known_notice": 61,
+  "warned_with_a_known_notice": 64,
   "shortest_notice_hours": 14.0,
   "median_notice_hours": 21.2,
   "note": "warned: seen while queued and not yet executable (the notice is real); seen_without_notice: still queued but already executable when first seen; missed: queued after the ledger started and already applied when first seen (faster than the 6-hour cadence); baseline: applied before the ledger started, counted as neither."

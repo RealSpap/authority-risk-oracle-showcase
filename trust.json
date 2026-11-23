@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generated_utc": "2026-11-23T01:35:52Z",
+ "generated_utc": "2026-11-23T07:38:26Z",
  "rule_version": "1",
  "rule": "(version 1). For each target, every reason that applies is listed with its dimension, a state and an effect. A dimension takes the worst state\nof its reasons. For the status, a reason with effect \"decides\" counts for the state it carries, one with effect \"degrades\" counts for PARTIAL at most, one with\neffect \"info\" for nothing. The status is the first line that matches, from the top:\n\n  UNAVAILABLE  a dimension is unavailable: the oracle holding the target was not read this run, or the trust computation itself failed (trust_not_computed).\n  DISPUTED     a dimension is disputed: an open public dispute, or the independent reader disagrees and nobody has reviewed it.\n  STALE        a dimension is stale: the on-chain score is stale, a pause or Safe-activity state has not been readable for 3 days or more (or for a time that\n               is not known), the Watch run itself is older than 8 hours, the run or one of its input files is dated more than 10 minutes after the\n               present time (an age that is negative says nothing about now), or the independent reader's file is from an earlier run than the Watch's.\n  UNVERIFIED   the independent reader did not read this target (no record, unreadable, or its input file missing), there is nothing to read\n               independently (a native entity), or the score is dated later than the block it was read at (its staleness can never show).\n  PARTIAL      something was checked and something was not: an incomplete reading (modules or admin members not all read, signers not classified, an admin\n               the reader cannot contradict: a contract it did not resolve, a program-derived address), a method that differs or is fixed by decision, an\n               alert not delivered, an unsigned run, a signing key that is not pinned (or cannot be compared), a broken journal, an input file that could not\n               be read or is from an earlier run; the reasons say what.\n  VERIFIED     none of the above. It means the checks listed here passed: not that the contract is safe, and not that the score is right.\n\nA reason whose effect is \"info\" is listed and sets its dimension's state, but never moves the status (a contract with no pause getter, money that no\nsource figures). The eight dimensions: reading, coverage, method, signature, journal, notification, financial_exposure, surveillance.\nUnknown is never ok: an input that could not be read puts its dimension in \"unverified\", not in \"ok\".\n\nWHEN IT IS COMPUTED. trust.json is recomputed only when the Watch runs, right after the files of the run are written. If the Watch stops, the file that stays\npublished keeps its statuses: the rule cannot see its own silence. A consumer must compare `generated_utc` to the present time and decide how old is too old for its use (the Watch is scheduled every 6 hours, but GitHub can start a\nrun hours late, so a file a few hours old can still be the latest one).",
  "rule_sha256": "26c6a093628a5caa399392e83ec9d8c01604fd5af4dc7b585bad91e43eed64b2",
@@ -8,20 +8,20 @@
  "targets": 203,
  "counts": {
   "VERIFIED": 98,
-  "PARTIAL": 42,
+  "PARTIAL": 44,
   "STALE": 1,
-  "DISPUTED": 3,
-  "UNVERIFIED": 59,
+  "DISPUTED": 4,
+  "UNVERIFIED": 56,
   "UNAVAILABLE": 0
  },
  "dimension_counts": {
   "reading": {
-   "ok": 118,
+   "ok": 119,
    "not_applicable": 0,
-   "partial": 22,
-   "unverified": 59,
+   "partial": 23,
+   "unverified": 56,
    "stale": 1,
-   "disputed": 3,
+   "disputed": 4,
    "unavailable": 0
   },
   "coverage": {
@@ -93,7 +93,7 @@
   "signature_key": "pinned",
   "journal": "ok",
   "alert_channels": 1,
-  "watch_run_utc": "2026-11-23T01:01:11Z",
+  "watch_run_utc": "2026-11-23T07:00:47Z",
   "inputs_unread": []
  },
  "by_target": {
@@ -2287,12 +2287,6 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "native_entity",
      "dimension": "reading",
      "effect": "decides",
@@ -2309,12 +2303,6 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
-    },
-    {
-     "code": "scan_gap",
-     "dimension": "surveillance",
-     "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2339,12 +2327,6 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "money_unknown",
      "dimension": "financial_exposure",
      "effect": "info",
@@ -2367,12 +2349,6 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
-    },
-    {
-     "code": "scan_gap",
-     "dimension": "surveillance",
-     "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2397,12 +2373,6 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "money_unknown",
      "dimension": "financial_exposure",
      "effect": "info",
@@ -2425,12 +2395,6 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
-    },
-    {
-     "code": "scan_gap",
-     "dimension": "surveillance",
-     "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2455,12 +2419,6 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "money_unknown",
      "dimension": "financial_exposure",
      "effect": "info",
@@ -2483,12 +2441,6 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
-    },
-    {
-     "code": "scan_gap",
-     "dimension": "surveillance",
-     "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2513,12 +2465,6 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "money_unknown",
      "dimension": "financial_exposure",
      "effect": "info",
@@ -2541,12 +2487,6 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
-    },
-    {
-     "code": "scan_gap",
-     "dimension": "surveillance",
-     "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2577,18 +2517,6 @@
      "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
     },
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
-     "code": "modules_unread",
-     "dimension": "reading",
-     "effect": "degrades",
-     "detail": "the modules of the Safe could not be read, or the reader did not say whether the list is complete (a module executes without the signatures)"
-    },
-    {
      "code": "oracle_self_watch_unread",
      "dimension": "surveillance",
      "effect": "degrades",
@@ -2605,18 +2533,6 @@
      "dimension": "reading",
      "effect": "decides",
      "detail": "the score says one key does everything (10), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisi"
-    },
-    {
-     "code": "safe_signers_unclassified",
-     "dimension": "reading",
-     "effect": "degrades",
-     "detail": "1 signer(s) of the Safe could not be classified (key, Safe, timelock, contract)"
-    },
-    {
-     "code": "scan_gap",
-     "dimension": "surveillance",
-     "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2647,12 +2563,6 @@
      "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
     },
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "independent_read_unreadable",
      "dimension": "reading",
      "effect": "decides",
@@ -2675,12 +2585,6 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
-    },
-    {
-     "code": "scan_gap",
-     "dimension": "surveillance",
-     "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2711,12 +2615,6 @@
      "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
     },
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "independent_read_unreadable",
      "dimension": "reading",
      "effect": "decides",
@@ -2733,12 +2631,6 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
-    },
-    {
-     "code": "scan_gap",
-     "dimension": "surveillance",
-     "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2760,25 +2652,13 @@
    "retry_may_help": false
   },
   "hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109": {
-   "status": "UNVERIFIED",
+   "status": "DISPUTED",
    "reasons": [
     {
      "code": "admin_events_unread",
      "dimension": "coverage",
      "effect": "degrades",
      "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
-    },
-    {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
-     "code": "independent_read_unreadable",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "holder probes not all answered (RPC)"
     },
     {
      "code": "oracle_self_watch_unread",
@@ -2793,10 +2673,10 @@
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
     },
     {
-     "code": "scan_gap",
-     "dimension": "surveillance",
-     "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
+     "code": "reader_disagrees",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the score says one key does everything (10), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisi"
     },
     {
      "code": "side_roles_not_covered",
@@ -2806,7 +2686,7 @@
     }
    ],
    "dimensions": {
-    "reading": "unverified",
+    "reading": "disputed",
     "coverage": "partial",
     "method": "ok",
     "signature": "ok",
@@ -2820,12 +2700,6 @@
   "hyperliquid:0xdfc24b077bc1425ad1dea75bcb6f8158e10df303": {
    "status": "UNVERIFIED",
    "reasons": [
-    {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
     {
      "code": "native_entity",
      "dimension": "reading",
@@ -2843,12 +2717,6 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
-    },
-    {
-     "code": "scan_gap",
-     "dimension": "surveillance",
-     "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2873,12 +2741,6 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "native_entity",
      "dimension": "reading",
      "effect": "decides",
@@ -2895,12 +2757,6 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
-    },
-    {
-     "code": "scan_gap",
-     "dimension": "surveillance",
-     "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2925,12 +2781,6 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "native_entity",
      "dimension": "reading",
      "effect": "decides",
@@ -2947,12 +2797,6 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
-    },
-    {
-     "code": "scan_gap",
-     "dimension": "surveillance",
-     "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -2977,12 +2821,6 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "native_entity",
      "dimension": "reading",
      "effect": "decides",
@@ -2999,12 +2837,6 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
-    },
-    {
-     "code": "scan_gap",
-     "dimension": "surveillance",
-     "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -3029,12 +2861,6 @@
    "status": "UNVERIFIED",
    "reasons": [
     {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
      "code": "native_entity",
      "dimension": "reading",
      "effect": "decides",
@@ -3051,12 +2877,6 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
-    },
-    {
-     "code": "scan_gap",
-     "dimension": "surveillance",
-     "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
     },
     {
      "code": "side_roles_not_covered",
@@ -3078,25 +2898,13 @@
    "retry_may_help": false
   },
   "hyperliquid:0x72c98246a98bfe64022a3190e7710e157497170c": {
-   "status": "UNVERIFIED",
+   "status": "PARTIAL",
    "reasons": [
     {
      "code": "admin_events_unread",
      "dimension": "coverage",
      "effect": "degrades",
      "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
-    },
-    {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
-    },
-    {
-     "code": "independent_read_unreadable",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "holder probes not all answered (RPC)"
     },
     {
      "code": "oracle_self_watch_unread",
@@ -3111,10 +2919,10 @@
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
     },
     {
-     "code": "scan_gap",
-     "dimension": "surveillance",
+     "code": "reader_cannot_contradict",
+     "dimension": "reading",
      "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
+     "detail": "the admin is a contract the reader did not resolve to a key, a Safe or a timelock: its agreement with the score checks nothing"
     },
     {
      "code": "side_roles_not_covered",
@@ -3124,7 +2932,7 @@
     }
    ],
    "dimensions": {
-    "reading": "unverified",
+    "reading": "partial",
     "coverage": "partial",
     "method": "ok",
     "signature": "ok",
@@ -3136,19 +2944,13 @@
    "retry_may_help": false
   },
   "hyperliquid:0xffaa4a3d97fe9107cef8a3f48c069f577ff76cc1": {
-   "status": "UNVERIFIED",
+   "status": "PARTIAL",
    "reasons": [
     {
      "code": "admin_events_unread",
      "dimension": "coverage",
      "effect": "degrades",
      "detail": "the admin events of the window since the previous record could not be read completely: a transfer started and cancelled inside it was not seen"
-    },
-    {
-     "code": "block_not_honoured",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "the node answered for block 1 as it did for the head: it ignores the block tag, so a read pinned to a block says nothing about that block"
     },
     {
      "code": "money_unknown",
@@ -3169,12 +2971,6 @@
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
     },
     {
-     "code": "scan_gap",
-     "dimension": "surveillance",
-     "effect": "degrades",
-     "detail": "the scan of the oracle's own role events has a hole or has not advanced"
-    },
-    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -3182,7 +2978,7 @@
     }
    ],
    "dimensions": {
-    "reading": "unverified",
+    "reading": "ok",
     "coverage": "partial",
     "method": "ok",
     "signature": "ok",
@@ -3191,7 +2987,7 @@
     "financial_exposure": "unverified",
     "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "monad:0xd691b0afed67f96cec28ab6308cbe5b2c103b7e9": {
    "status": "UNVERIFIED",

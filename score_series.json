@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-11-22T19:21:15Z",
+ "run_utc": "2026-11-23T01:23:14Z",
  "targets": 203,
  "moves_recorded": 45,
  "series": {
@@ -2518,45 +2518,18 @@
  },
  "calibration": {
   "window_days": 14,
-  "actions": 24,
+  "actions": 21,
   "excluded_undecoded": 0,
   "excluded_other_target": 0,
   "under_40": 4,
   "by_band": {
    "critical": 1,
    "weak": 3,
-   "moderate": 13,
-   "decent": 7,
+   "moderate": 12,
+   "decent": 5,
    "strong": 0
   },
   "list": [
-   {
-    "kind": "upgrade executed",
-    "key": "arbitrum:0x9c4ec768c28520b50860ea7a15bd7213a9ff58bf",
-    "t": "2026-11-08T22:16:03Z",
-    "via": "0x9398741a8481787ee064293e2da4ad795fa11b7a",
-    "tx": null,
-    "score_then": 78,
-    "band_then": "decent"
-   },
-   {
-    "kind": "upgrade executed",
-    "key": "arbitrum:0x52aa899454998be5b000ad077a46bbe360f4e497",
-    "t": "2026-11-08T22:16:03Z",
-    "via": "0x8bdd171da967345a23af927051e8860e6b9fafe7",
-    "tx": null,
-    "score_then": 59,
-    "band_then": "moderate"
-   },
-   {
-    "kind": "upgrade executed",
-    "key": "base:0xb125e6687d4313864e53df431d5425969c15eb2f",
-    "t": "2026-11-08T22:16:03Z",
-    "via": "0xb6ef22a5d7c3214c767b39213556e11e46ff8f3e",
-    "tx": null,
-    "score_then": 78,
-    "band_then": "decent"
-   },
    {
     "kind": "timelock op queued (parameter change)",
     "key": "arbitrum:0x52aa899454998be5b000ad077a46bbe360f4e497",

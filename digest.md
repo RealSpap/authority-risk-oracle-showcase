@@ -125,7 +125,7 @@
 - cleared, queued 2026-11-08: arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract) -> 0x87E765B0f76F9071B7Ff8bCa2A1EB8338AcD14C3 updateAuth(address,uint256)
 - cleared, queued 2026-11-09: arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract) -> 0x52Aa899454998Be5b000Ad077a46Bbe360F4e497 updateUserSupplyConfigs((address,address,uint8,uint256,uint256,uint256)[])
 - cleared, queued 2026-11-16: arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract) -> 0x5126A82E52F78B73fdE29B0D9800170e77AbfdcA setLzDelegate(address)
-- cleared, queued 2026-11-16: plasma timelock 0x4d6c…2346, found by the independent reader (1 tracked contract) -> 0x9926955e0Dd681Dc303370C52f4Ad0a4dd061687 updateMaster()
+- cleared, queued 2026-11-16: plasma timelock 0x4d6c…2346, found by the independent reader (1 tracked contract) -> 0x9926…1687 updateMaster()
 - cleared, queued 2026-11-16: plasma timelock 0x4d6c…2346, found by the independent reader (1 tracked contract) -> 0x5126A82E52F78B73fdE29B0D9800170e77AbfdcA setLzDelegate(address)
 - cleared, queued 2026-11-18: plasma timelock 0xabd3…5072, found by the independent reader (1 tracked contract) -> 0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34 setRateLimits((uint32,uint256,uint256)[])
 

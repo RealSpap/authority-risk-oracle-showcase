@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-11-23T13:19:13Z",
+ "run_utc": "2026-11-23T19:16:35Z",
  "targets": 203,
  "moves_recorded": 45,
  "series": {
@@ -2518,27 +2518,18 @@
  },
  "calibration": {
   "window_days": 14,
-  "actions": 26,
+  "actions": 25,
   "excluded_undecoded": 0,
   "excluded_other_target": 0,
   "under_40": 4,
   "by_band": {
    "critical": 1,
    "weak": 3,
-   "moderate": 17,
+   "moderate": 16,
    "decent": 5,
    "strong": 0
   },
   "list": [
-   {
-    "kind": "timelock op queued (parameter change)",
-    "key": "arbitrum:0x52aa899454998be5b000ad077a46bbe360f4e497",
-    "t": "2026-11-09T18:37:59Z",
-    "via": "arbitrum timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
-    "tx": "0x834e41bcfb2c49ef49d3f3e8c9570cccf2ca539bdb8882209d9d219e5dc50ef6",
-    "score_then": 59,
-    "band_then": "moderate"
-   },
    {
     "kind": "upgrade executed",
     "key": "robinhood:0x14b107cf534239c59571b066cb6497a321da897c",

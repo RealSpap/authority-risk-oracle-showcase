@@ -965,16 +965,26 @@
    "chain": "plasma",
    "timelock": "plasma timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
    "what": "upgrade"
+  },
+  "ethereum:0xe8dc0fab349ea169283c48ccfd09d797e6db7c94:0x42693e5ce41b710f8ab22e71d3ecee50a35c7ec44a80a60a13fdc201f8c9bb31": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-11-23T19:00:42Z",
+   "due_utc": "2026-11-24T17:27:35Z",
+   "notice_hours": 22.4,
+   "state": "queued",
+   "chain": "ethereum",
+   "timelock": "Ethena Timelock",
+   "what": "parameter change"
   }
  },
- "updated_utc": "2026-11-23T13:00:52Z",
+ "updated_utc": "2026-11-23T19:00:42Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
-  "warned": 65,
+  "warned": 66,
   "seen_without_notice": 0,
   "missed": 1,
   "baseline": 26,
-  "warned_with_a_known_notice": 65,
+  "warned_with_a_known_notice": 66,
   "shortest_notice_hours": 14.0,
   "median_notice_hours": 21.2,
   "note": "warned: seen while queued and not yet executable (the notice is real); seen_without_notice: still queued but already executable when first seen; missed: queued after the ledger started and already applied when first seen (faster than the 6-hour cadence); baseline: applied before the ledger started, counted as neither."

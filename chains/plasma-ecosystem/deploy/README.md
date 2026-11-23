@@ -170,8 +170,8 @@ this pass -- same testnet contracts as the 2026-09-18 deployment above.
   multisig -- same as every other testnet deploy in this project, and
   explicitly out of scope for a testnet validation pass (see the root
   `README.md`'s "Status" section on the mainnet migration plan).
-- Robinhood Chain's weekly recurring `.github/workflows/update_scores.yml`
-  cron does NOT cover Plasma -- this was a one-time manual push, not a
+- Robinhood Chain's score updater, prepared every week and pushed by hand,
+  does NOT cover Plasma -- this was a one-time manual push, not a
   wired-in recurring job.
 
 ## 2026-09-20 re-push: cross-ecosystem overlaps folded into crossExposureScore, pushed on-chain

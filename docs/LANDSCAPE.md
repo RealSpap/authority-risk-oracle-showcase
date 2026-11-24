@@ -4,7 +4,7 @@ Who else looks at authority risk, what they do better, and where this project is
 
 The side-by-side comparison with the neighbouring tools has one source and one page: [realspap.github.io/oracle/compare](https://realspap.github.io/oracle/compare/).
 
-A competing open-source scanner on the same question is no longer described here: I removed its link on 24 November 2026 because the repository was not found (404), and I withdraw the description I had written from its README in September 2026.
+A competing open-source scanner is no longer listed here. Its repository returns 404, so I removed its name and its link, and I make no claim about it. Read at 17:05Z on 25 November 2026.
 
 The conflict of interest when the rater is paid by the protocol it rates (Gauntlet, Chaos Labs, LlamaRisk) is not theoretical: the earlier research program this project grew out of
 (`defi-admin-key-risk`) documented it in real incidents. And

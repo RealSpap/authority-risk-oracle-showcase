@@ -53,7 +53,7 @@ authority-risk isn't separately priced.
 DeFi coverage premiums (protocols pay USDC per coverage period) using
 research that explicitly includes "upgradability risks" and "emergency
 mechanisms" as pricing inputs
-([Sherlock docs](https://docs.sherlock.xyz/coverage/protocols/pricing)).
+(The page of a third party at the link that was cited here returns 404, so I removed the link. Read at 17:05Z on 25 November 2026.).
 This is live money moving today, not a hypothetical DAO mandate -- the
 closest real precedent for who would pay for this oracle's data as an
 ongoing feed rather than a one-time report.

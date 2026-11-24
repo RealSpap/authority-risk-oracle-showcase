@@ -1,6 +1,6 @@
 # Authority risk digest, 2026-11-23 01:36 UTC
 
-## Needs a person, 2026-11-23T01:35:52Z: 42 item(s) (priority 1: 29, priority 2: 8, priority 3: 5); oldest 43.2 d
+## Needs a person, 2026-11-23T01:35:52Z: 41 item(s) (priority 1: 28, priority 2: 8, priority 3: 5); oldest 43.2 d
 
 ### Overdue: 21 priority-1 item(s) waiting for more than 2 day(s), back in the alarm
 - **Safe AddedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (5.0 d): AddedOwner 0x61C2…0e44 (aave_guardian)
@@ -25,7 +25,7 @@
 - **Safe RemovedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (5.0 d): RemovedOwner 0x4C30…099f (aave_guardian)
 - **queued operation executable** arbitrum 0x1eE00C305C51Ff3bE60162456A9B533C07cD9288 (2.3 d): parameter change: updateMaster() via arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract)
 
-### Something happened: read before trusting the score (29)
+### Something happened: read before trusting the score (28)
 - **Safe AddedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (5.0 d): AddedOwner 0x61C2…0e44 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (5.0 d): AddedOwner 0x2694…CbF1 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (5.0 d): AddedOwner 0xb291…Afef (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
@@ -53,7 +53,6 @@
 - **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (2.0 d): AddedOwner 0x0584…4CF5 (strato_bridge). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe ChangedThreshold** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (2.0 d): ChangedThreshold 3 (strato_bridge). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **queued operation executable** ethereum 0x1a44076050125825900e736c501f859c50fE728c (1.5 d): parameter change: setConfig(address,address,(uint32,uint32,bytes)[]) via Ethena Timelock. To do: read the call before it lands. (pending_ops.json)
-- **queued operation executable within 48 h** ethereum 0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367 (0.8 d): cross-chain message: sendMessage(address,uint256,bytes,uint256) via Compound Governance Timelock. To do: read the call before it lands. (pending_ops.json)
 - **queued operation executable within 48 h** arbitrum 0x87E765B0f76F9071B7Ff8bCa2A1EB8338AcD14C3 (0.5 d): parameter change: updateAuth(address,uint256) via arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
 
 ### Decide (8)

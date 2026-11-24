@@ -1,6 +1,6 @@
 # HELP aro_run_timestamp_seconds UTC time of the last Watch run (Unix seconds)
 # TYPE aro_run_timestamp_seconds gauge
-aro_run_timestamp_seconds 1795460442
+aro_run_timestamp_seconds 1795503648
 # HELP aro_oracle_read 1 when the oracle was read at the last run, 0 when it was not (its targets are then unknown, not zero)
 # TYPE aro_oracle_read gauge
 aro_oracle_read{oracle="Robinhood Chain"} 1
@@ -53,7 +53,7 @@ aro_chain_ok 1
 aro_signed 1
 # HELP aro_alerts_active Alerts firing now, by severity
 # TYPE aro_alerts_active gauge
-aro_alerts_active{severity="high"} 0
+aro_alerts_active{severity="high"} 2
 aro_alerts_active{severity="medium"} 5
 aro_alerts_active{severity="info"} 0
 # HELP aro_second_opinion Targets by verdict of the independent reader
@@ -71,10 +71,10 @@ aro_contracts_paused 0
 aro_safes 42
 # HELP aro_safes_woke Admin Safes that executed after 14 days or more observed idle, at the last run
 # TYPE aro_safes_woke gauge
-aro_safes_woke 1
+aro_safes_woke 3
 # HELP aro_safes_never_executed Admin Safes still at nonce 0
 # TYPE aro_safes_never_executed gauge
-aro_safes_never_executed 2
+aro_safes_never_executed 0
 # HELP aro_target_score Composite score of a tracked contract, 0 to 100, from the oracle's last push
 # TYPE aro_target_score gauge
 aro_target_score{chain="arbitrum-sepolia",target="0x3c3d99fd298f679dbc2cecd132b4ec4d0f5e6e72"} 47

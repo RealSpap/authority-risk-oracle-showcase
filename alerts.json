@@ -1,6 +1,6 @@
 {
- "evaluated_utc": "2026-11-23T19:16:36Z",
- "run_utc": "2026-11-23T19:00:42Z",
+ "evaluated_utc": "2026-11-24T07:16:24Z",
+ "run_utc": "2026-11-24T07:00:48Z",
  "rules": [
   "score dropped by 10 or more",
   "score fell under 40",
@@ -27,16 +27,16 @@
  ],
  "active": [
   {
-   "rule": "a queued change against this contract executes within 48 h",
-   "severity": "medium",
+   "rule": "a queued change against this contract is ready to execute now",
+   "severity": "high",
    "chain": "Arbitrum",
    "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
    "title": "Fluid Lending",
    "score": 59,
    "delta": 0,
-   "tvl_usd": 130202801.2109668,
-   "first_seen": "2026-11-23T07:23:58Z",
-   "new": false,
+   "tvl_usd": 133601285.29042971,
+   "first_seen": "2026-11-24T07:16:24Z",
+   "new": true,
    "evidence": [
     {
      "timelock": "arbitrum timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
@@ -48,29 +48,70 @@
      "selector": "0xac862bfa",
      "signature": "collectRevenue(address[])",
      "ready_at": 1795503867,
-     "state": "waiting"
+     "state": "ready"
     }
    ],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 332058143,
-    "oracle_read_at": 1795460457,
+    "oracle_block": 332216693,
+    "oracle_read_at": 1795503660,
     "composite": 59,
     "previous_composite": 59,
     "score_last_updated": 1795123114,
     "second_opinion": {
      "kind": "timelock",
      "path": "EIP-1967 admin",
-     "block_start": 526896232,
-     "block_end": 526896256,
-     "read_gap_seconds": 548,
-     "since_score_push_seconds": 337891
+     "block_start": 527047614,
+     "block_end": 527047633,
+     "read_gap_seconds": 538,
+     "since_score_push_seconds": 381084
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x52aa899454998be5b000ad077a46bbe360f4e497 --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 332058143",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x52aa899454998be5b000ad077a46bbe360f4e497 --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 332216693",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-23T13:00:52Z",
-   "notified": true
+   "previous_run": "2026-11-23T19:00:42Z",
+   "notified": true,
+   "delivered": []
+  },
+  {
+   "rule": "the Safe that governs this contract, observed idle for 14 days or more, executed a transaction (nonce moved), with money behind it",
+   "severity": "medium",
+   "chain": "Base",
+   "target": "0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",
+   "title": "Morpho Blue",
+   "score": 55,
+   "delta": 0,
+   "tvl_usd": 3425812809.5433583,
+   "first_seen": "2026-11-24T07:16:24Z",
+   "new": true,
+   "evidence": [],
+   "reading": {
+    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
+    "oracle_block": 62908962,
+    "oracle_read_at": 1795503667,
+    "composite": 55,
+    "previous_composite": 55,
+    "score_last_updated": 1795033809,
+    "second_opinion": {
+     "kind": "safe",
+     "path": "owner()",
+     "block_start": 61569131,
+     "block_end": 61569212,
+     "read_gap_seconds": 551,
+     "since_score_push_seconds": 470409
+    },
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb --rpc-url https://sepolia.base.org --block 62908962",
+    "reproduce_exact": false
+   },
+   "previous_run": "2026-11-23T19:00:42Z",
+   "safe_wake": {
+    "safe": "0xcba2\u20269afa",
+    "delta": 1,
+    "idle_days": 44.4,
+    "previous_run": "2026-11-23T19:14:44Z"
+   },
+   "notified": true,
+   "delivered": []
   },
   {
    "rule": "the independent reader disagrees with the admin-key score, with money behind it",
@@ -80,29 +121,29 @@
    "title": "Kinetiq kmHYPE",
    "score": 4,
    "delta": 0,
-   "tvl_usd": 32299691.62904928,
+   "tvl_usd": 31480415.637273815,
    "first_seen": "2026-11-18T13:18:47Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 70413518,
-    "oracle_read_at": 1795460637,
+    "oracle_block": 70457468,
+    "oracle_read_at": 1795503864,
     "composite": 4,
     "previous_composite": 4,
     "score_last_updated": 1795123486,
     "second_opinion": {
      "kind": "safe",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 52057458,
-     "block_end": 52057467,
-     "read_gap_seconds": 444,
-     "since_score_push_seconds": 337595
+     "block_start": 52101362,
+     "block_end": 52101371,
+     "read_gap_seconds": 402,
+     "since_score_push_seconds": 380780
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec --rpc-url https://998.rpc.thirdweb.com --block 70413518",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec --rpc-url https://998.rpc.thirdweb.com --block 70457468",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-23T13:00:52Z",
+   "previous_run": "2026-11-23T19:00:42Z",
    "notified": true
   },
   {
@@ -113,82 +154,42 @@
    "title": "Kinetiq kHYPE",
    "score": 4,
    "delta": 0,
-   "tvl_usd": 620489340.7473714,
+   "tvl_usd": 604305941.182705,
    "first_seen": "2026-11-23T07:23:58Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 70413518,
-    "oracle_read_at": 1795460637,
+    "oracle_block": 70457468,
+    "oracle_read_at": 1795503864,
     "composite": 4,
     "previous_composite": 4,
     "score_last_updated": 1795123486,
     "second_opinion": {
      "kind": "safe",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 52057458,
-     "block_end": 52057467,
-     "read_gap_seconds": 456,
-     "since_score_push_seconds": 337607
+     "block_start": 52101362,
+     "block_end": 52101371,
+     "read_gap_seconds": 412,
+     "since_score_push_seconds": 380790
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x393d0b87ed38fc779fd9611144ae649ba6082109 --rpc-url https://998.rpc.thirdweb.com --block 70413518",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x393d0b87ed38fc779fd9611144ae649ba6082109 --rpc-url https://998.rpc.thirdweb.com --block 70457468",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-23T13:00:52Z",
+   "previous_run": "2026-11-23T19:00:42Z",
    "notified": true
   },
   {
-   "rule": "the Safe that governs this contract, observed idle for 14 days or more, executed a transaction (nonce moved), with money behind it",
-   "severity": "medium",
-   "chain": "Monad",
-   "target": "0x32841a8511d5c2c5b253f45668780b99139e476d",
-   "title": "Steakhouse Financial",
-   "score": 67,
-   "delta": 0,
-   "tvl_usd": 17694547.299305137,
-   "first_seen": "2026-11-23T19:16:36Z",
-   "new": true,
-   "evidence": [],
-   "reading": {
-    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 82190770,
-    "oracle_read_at": 1795460508,
-    "composite": 67,
-    "previous_composite": 67,
-    "score_last_updated": 1795209276,
-    "second_opinion": {
-     "kind": "safe",
-     "path": "owner()",
-     "block_start": 124798571,
-     "block_end": 124798588,
-     "read_gap_seconds": 606,
-     "since_score_push_seconds": 251838
-    },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x32841a8511d5c2c5b253f45668780b99139e476d --rpc-url https://testnet-rpc.monad.xyz/ --block 82190770",
-    "reproduce_exact": false
-   },
-   "previous_run": "2026-11-23T13:00:52Z",
-   "safe_wake": {
-    "safe": "0x0a0e\u2026f8dd",
-    "delta": 1,
-    "idle_days": 37.0,
-    "previous_run": "2026-11-23T13:17:35Z"
-   },
-   "notified": true,
-   "delivered": []
-  },
-  {
-   "rule": "a queued change against this contract executes within 48 h",
-   "severity": "medium",
+   "rule": "a queued change against this contract is ready to execute now",
+   "severity": "high",
    "chain": "Plasma",
    "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
    "title": "Fluid Lending",
    "score": 59,
    "delta": 0,
-   "tvl_usd": 24612231.781577177,
-   "first_seen": "2026-11-23T07:23:58Z",
-   "new": false,
+   "tvl_usd": 24533596.39415486,
+   "first_seen": "2026-11-24T07:16:24Z",
+   "new": true,
    "evidence": [
     {
      "timelock": "plasma timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
@@ -200,7 +201,7 @@
      "selector": "0xac862bfa",
      "signature": "collectRevenue(address[])",
      "ready_at": 1795503906,
-     "state": "waiting"
+     "state": "ready"
     },
     {
      "timelock": "plasma timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
@@ -212,7 +213,7 @@
      "selector": "0x01b88f86",
      "signature": "updateUserBorrowConfigs((address,address,uint8,uint256,uint256,uint256,uint256)[])",
      "ready_at": 1795503924,
-     "state": "waiting"
+     "state": "ready"
     },
     {
      "timelock": "plasma timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
@@ -229,24 +230,105 @@
    ],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 39622836,
-    "oracle_read_at": 1795460475,
+    "oracle_block": 39666024,
+    "oracle_read_at": 1795503677,
     "composite": 59,
     "previous_composite": 59,
     "score_last_updated": 1795034018,
     "second_opinion": {
      "kind": "timelock",
      "path": "EIP-1967 admin",
-     "block_start": 38516086,
-     "block_end": 38516099,
-     "read_gap_seconds": 678,
-     "since_score_push_seconds": 427135
+     "block_start": 38550662,
+     "block_end": 38550676,
+     "read_gap_seconds": 654,
+     "since_score_push_seconds": 470313
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x52aa899454998be5b000ad077a46bbe360f4e497 --rpc-url https://testnet-rpc.plasma.to --block 39622836",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x52aa899454998be5b000ad077a46bbe360f4e497 --rpc-url https://testnet-rpc.plasma.to --block 39666024",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-23T13:00:52Z",
-   "notified": true
+   "previous_run": "2026-11-23T19:00:42Z",
+   "notified": true,
+   "delivered": []
+  },
+  {
+   "rule": "the Safe that governs this contract, observed idle for 14 days or more, executed a transaction (nonce moved), with money behind it",
+   "severity": "medium",
+   "chain": "Robinhood Chain",
+   "target": "0x9d53d5e3bd5e8d4cbfa6db1ca238aea02e651010",
+   "title": "Morpho Blue",
+   "score": 55,
+   "delta": 0,
+   "tvl_usd": 605283372.6393511,
+   "first_seen": "2026-11-24T07:16:24Z",
+   "new": true,
+   "evidence": [],
+   "reading": {
+    "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
+    "oracle_block": 157331018,
+    "oracle_read_at": 1795503654,
+    "composite": 55,
+    "previous_composite": 55,
+    "score_last_updated": 1795123834,
+    "second_opinion": {
+     "kind": "safe",
+     "path": "owner()",
+     "block_start": 122045949,
+     "block_end": 122046508,
+     "read_gap_seconds": 753,
+     "since_score_push_seconds": 380573
+    },
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x9d53d5e3bd5e8d4cbfa6db1ca238aea02e651010 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 157331018",
+    "reproduce_exact": false
+   },
+   "previous_run": "2026-11-23T19:00:42Z",
+   "safe_wake": {
+    "safe": "0x0605\u20269728",
+    "delta": 1,
+    "idle_days": 44.4,
+    "previous_run": "2026-11-23T19:14:44Z"
+   },
+   "notified": true,
+   "delivered": []
+  },
+  {
+   "rule": "the Safe that governs this contract, observed idle for 14 days or more, executed a transaction (nonce moved), with money behind it",
+   "severity": "medium",
+   "chain": "Tempo",
+   "target": "0x10ee9aac980a180dd4dcfc96c746d60b0ea88f97",
+   "title": "Morpho Blue",
+   "score": 55,
+   "delta": 0,
+   "tvl_usd": 71541950.14546299,
+   "first_seen": "2026-11-24T07:16:24Z",
+   "new": true,
+   "evidence": [],
+   "reading": {
+    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
+    "oracle_block": 45693499,
+    "oracle_read_at": 1795503670,
+    "composite": 55,
+    "previous_composite": 55,
+    "score_last_updated": 1795033617,
+    "second_opinion": {
+     "kind": "safe",
+     "path": "owner()",
+     "block_start": 50554394,
+     "block_end": 50554406,
+     "read_gap_seconds": 754,
+     "since_score_push_seconds": 470807
+    },
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x10ee9aac980a180dd4dcfc96c746d60b0ea88f97 --rpc-url https://rpc.moderato.tempo.xyz --block 45693499",
+    "reproduce_exact": false
+   },
+   "previous_run": "2026-11-23T19:00:42Z",
+   "safe_wake": {
+    "safe": "0x6458\u2026fbbc",
+    "delta": 1,
+    "idle_days": 44.4,
+    "previous_run": "2026-11-23T19:14:44Z"
+   },
+   "notified": true,
+   "delivered": []
   }
  ],
  "history": [
@@ -258,11 +340,11 @@
    "target": "0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec",
    "title": "Kinetiq kmHYPE",
    "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-23T19:16:36Z",
-   "times": 157,
+   "last_seen": "2026-11-24T07:16:24Z",
+   "times": 158,
    "score": 4,
    "delta": 0,
-   "tvl_usd": 32299691.62904928
+   "tvl_usd": 31480415.637273815
   },
   {
    "key": "the independent reader disagrees with the admin-key score, with money behind it|hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109",
@@ -272,11 +354,99 @@
    "target": "0x393d0b87ed38fc779fd9611144ae649ba6082109",
    "title": "Kinetiq kHYPE",
    "first_seen": "2026-11-23T07:23:58Z",
-   "last_seen": "2026-11-23T19:16:36Z",
-   "times": 144,
+   "last_seen": "2026-11-24T07:16:24Z",
+   "times": 145,
    "score": 4,
    "delta": 0,
-   "tvl_usd": 620489340.7473714
+   "tvl_usd": 604305941.182705
+  },
+  {
+   "key": "a queued change against this contract is ready to execute now|arbitrum:0x52aa899454998be5b000ad077a46bbe360f4e497",
+   "rule": "a queued change against this contract is ready to execute now",
+   "severity": "high",
+   "chain": "Arbitrum",
+   "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
+   "title": "Fluid Lending",
+   "first_seen": "2026-11-24T07:16:24Z",
+   "last_seen": "2026-11-24T07:16:24Z",
+   "times": 20,
+   "score": 59,
+   "delta": 0,
+   "tvl_usd": 133601285.29042971
+  },
+  {
+   "key": "a queued change against this contract is ready to execute now|plasma:0x52aa899454998be5b000ad077a46bbe360f4e497",
+   "rule": "a queued change against this contract is ready to execute now",
+   "severity": "high",
+   "chain": "Plasma",
+   "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
+   "title": "Fluid Lending",
+   "first_seen": "2026-11-24T07:16:24Z",
+   "last_seen": "2026-11-24T07:16:24Z",
+   "times": 20,
+   "score": 59,
+   "delta": 0,
+   "tvl_usd": 24533596.39415486
+  },
+  {
+   "key": "the Safe that governs this contract, observed idle for 14 days or more, executed a transaction (nonce moved), with money behind it|base:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",
+   "rule": "the Safe that governs this contract, observed idle for 14 days or more, executed a transaction (nonce moved), with money behind it",
+   "severity": "medium",
+   "chain": "Base",
+   "target": "0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",
+   "title": "Morpho Blue",
+   "first_seen": "2026-11-24T07:16:24Z",
+   "last_seen": "2026-11-24T07:16:24Z",
+   "times": 1,
+   "score": 55,
+   "delta": 0,
+   "tvl_usd": 3425812809.5433583,
+   "safe_wake": {
+    "safe": "0xcba2\u20269afa",
+    "delta": 1,
+    "idle_days": 44.4,
+    "previous_run": "2026-11-23T19:14:44Z"
+   }
+  },
+  {
+   "key": "the Safe that governs this contract, observed idle for 14 days or more, executed a transaction (nonce moved), with money behind it|robinhood:0x9d53d5e3bd5e8d4cbfa6db1ca238aea02e651010",
+   "rule": "the Safe that governs this contract, observed idle for 14 days or more, executed a transaction (nonce moved), with money behind it",
+   "severity": "medium",
+   "chain": "Robinhood Chain",
+   "target": "0x9d53d5e3bd5e8d4cbfa6db1ca238aea02e651010",
+   "title": "Morpho Blue",
+   "first_seen": "2026-11-24T07:16:24Z",
+   "last_seen": "2026-11-24T07:16:24Z",
+   "times": 1,
+   "score": 55,
+   "delta": 0,
+   "tvl_usd": 605283372.6393511,
+   "safe_wake": {
+    "safe": "0x0605\u20269728",
+    "delta": 1,
+    "idle_days": 44.4,
+    "previous_run": "2026-11-23T19:14:44Z"
+   }
+  },
+  {
+   "key": "the Safe that governs this contract, observed idle for 14 days or more, executed a transaction (nonce moved), with money behind it|tempo:0x10ee9aac980a180dd4dcfc96c746d60b0ea88f97",
+   "rule": "the Safe that governs this contract, observed idle for 14 days or more, executed a transaction (nonce moved), with money behind it",
+   "severity": "medium",
+   "chain": "Tempo",
+   "target": "0x10ee9aac980a180dd4dcfc96c746d60b0ea88f97",
+   "title": "Morpho Blue",
+   "first_seen": "2026-11-24T07:16:24Z",
+   "last_seen": "2026-11-24T07:16:24Z",
+   "times": 1,
+   "score": 55,
+   "delta": 0,
+   "tvl_usd": 71541950.14546299,
+   "safe_wake": {
+    "safe": "0x6458\u2026fbbc",
+    "delta": 1,
+    "idle_days": 44.4,
+    "previous_run": "2026-11-23T19:14:44Z"
+   }
   },
   {
    "key": "a queued change against this contract executes within 48 h|plasma:0x52aa899454998be5b000ad077a46bbe360f4e497",
@@ -4129,34 +4299,6 @@
    "score": 2,
    "delta": 0,
    "tvl_usd": 612321705.4745829
-  },
-  {
-   "key": "a queued change against this contract is ready to execute now|arbitrum:0x52aa899454998be5b000ad077a46bbe360f4e497",
-   "rule": "a queued change against this contract is ready to execute now",
-   "severity": "high",
-   "chain": "Arbitrum",
-   "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
-   "title": "Fluid Lending",
-   "first_seen": "2026-10-13T19:14:45Z",
-   "last_seen": "2026-10-17T12:58:23Z",
-   "times": 19,
-   "score": 59,
-   "delta": 0,
-   "tvl_usd": 135575525.74365357
-  },
-  {
-   "key": "a queued change against this contract is ready to execute now|plasma:0x52aa899454998be5b000ad077a46bbe360f4e497",
-   "rule": "a queued change against this contract is ready to execute now",
-   "severity": "high",
-   "chain": "Plasma",
-   "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
-   "title": "Fluid Lending",
-   "first_seen": "2026-10-13T19:14:45Z",
-   "last_seen": "2026-10-17T12:58:23Z",
-   "times": 19,
-   "score": 59,
-   "delta": 0,
-   "tvl_usd": 36539990.88695605
   },
   {
    "key": "a queued change against this contract is ready to execute now|robinhood:0x14b107cf534239c59571b066cb6497a321da897c",

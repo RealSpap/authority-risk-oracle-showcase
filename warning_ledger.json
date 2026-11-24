@@ -911,10 +911,12 @@
    "first_seen_utc": "2026-11-22T06:45:07Z",
    "due_utc": "2026-11-24T03:51:47Z",
    "notice_hours": 45.1,
-   "state": "queued",
+   "state": "resolved",
    "chain": "ethereum",
    "timelock": "Compound Governance Timelock",
-   "what": "cross-chain message"
+   "what": "cross-chain message",
+   "resolved_seen_utc": "2026-11-24T07:00:48Z",
+   "final_state": "executed"
   },
   "arbitrum:0x4d6ce4f4498d59eed397bcbc687805a07f9b2346:0x13a967dc3b57148ce1cff63e202f3489128365bb6981edaa07f2fd99b7d19cb9": {
    "outcome": "warned",
@@ -975,18 +977,38 @@
    "chain": "ethereum",
    "timelock": "Ethena Timelock",
    "what": "parameter change"
+  },
+  "ethereum:0x6d903f6003cca6255d85cca4d3b5e5146dc33925:0x685ee6fc179dd528656456bfc36ed4318e93c93a2a58d21e3c91693d87cfd80e": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-11-24T07:00:48Z",
+   "due_utc": "2026-11-26T03:14:59Z",
+   "notice_hours": 44.2,
+   "state": "queued",
+   "chain": "ethereum",
+   "timelock": "Compound Governance Timelock",
+   "what": "cross-chain message"
+  },
+  "ethereum:0x6d903f6003cca6255d85cca4d3b5e5146dc33925:0xb0cb62866bed8c3fee5767c4271fbe1fabd1318107fd708fe26957aef57ae5d0": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-11-24T07:00:48Z",
+   "due_utc": "2026-11-26T03:31:35Z",
+   "notice_hours": 44.5,
+   "state": "queued",
+   "chain": "ethereum",
+   "timelock": "Compound Governance Timelock",
+   "what": "cross-chain message"
   }
  },
- "updated_utc": "2026-11-23T19:00:42Z",
+ "updated_utc": "2026-11-24T07:00:48Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
-  "warned": 66,
+  "warned": 68,
   "seen_without_notice": 0,
   "missed": 1,
   "baseline": 26,
-  "warned_with_a_known_notice": 66,
+  "warned_with_a_known_notice": 68,
   "shortest_notice_hours": 14.0,
-  "median_notice_hours": 21.2,
+  "median_notice_hours": 21.6,
   "note": "warned: seen while queued and not yet executable (the notice is real); seen_without_notice: still queued but already executable when first seen; missed: queued after the ledger started and already applied when first seen (faster than the 6-hour cadence); baseline: applied before the ledger started, counted as neither."
  }
 }

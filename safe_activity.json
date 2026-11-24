@@ -1,36 +1,38 @@
 {
- "generated_utc": "2026-11-23T19:14:44Z",
+ "generated_utc": "2026-11-24T07:14:39Z",
  "wake_days": 14,
  "safes": 42,
  "read": 42,
  "woke": [
-  "monad:0x0a0e\u2026f8dd"
+  "base:0xcba2\u20269afa",
+  "robinhood:0x0605\u20269728",
+  "tempo:0x6458\u2026fbbc"
  ],
  "changes": [
   {
    "delta": 1,
-   "idle_days": 3.0,
-   "woke": false,
-   "safe": "arbitrum:0x5f0b\u2026841f",
-   "governs": [
-    "arbitrum:0xffa10065ce1d1c42fabc46e06b84ed8ffeb4bae5"
-   ],
-   "previous_run": "2026-11-23T13:17:35Z"
-  },
-  {
-   "delta": 1,
-   "idle_days": 3.0,
+   "idle_days": 0.4,
    "woke": false,
    "safe": "base:0x0a0e\u2026f8dd",
    "governs": [
     "base:0xbeef010f9cb27031ad51e3333f9af9c6b1228183",
     "base:0xbeef2d50b428675a1921bc6bbf4bfb9d8cf1461a"
    ],
-   "previous_run": "2026-11-23T13:17:35Z"
+   "previous_run": "2026-11-23T19:14:44Z"
   },
   {
    "delta": 1,
-   "idle_days": 3.2,
+   "idle_days": 44.4,
+   "woke": true,
+   "safe": "base:0xcba2\u20269afa",
+   "governs": [
+    "base:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb"
+   ],
+   "previous_run": "2026-11-23T19:14:44Z"
+  },
+  {
+   "delta": 1,
+   "idle_days": 0.4,
    "woke": false,
    "safe": "ethereum-l1:0x0a0e\u2026f8dd",
    "governs": [
@@ -39,43 +41,30 @@
     "ethereum-l1:0xbeef088055857739c12cd3765f20b7679def0f51",
     "ethereum-l1:0xbeef0c075da5d01112ae5cf34d257074fb5ddb2f"
    ],
-   "previous_run": "2026-11-23T13:17:35Z"
+   "previous_run": "2026-11-23T19:14:44Z"
   },
   {
    "delta": 1,
-   "idle_days": 3.2,
-   "woke": false,
-   "safe": "ethereum-l1:0x3b0a\u20261862",
-   "governs": [
-    "ethereum-l1:0x2cc440b721d2cafd6d64908d6d8c4acc57f8afc3"
-   ],
-   "previous_run": "2026-11-23T13:17:35Z"
-  },
-  {
-   "delta": 1,
-   "idle_days": 37.0,
+   "idle_days": 44.4,
    "woke": true,
-   "safe": "monad:0x0a0e\u2026f8dd",
+   "safe": "robinhood:0x0605\u20269728",
    "governs": [
-    "monad:0x32841a8511d5c2c5b253f45668780b99139e476d"
+    "robinhood:0x9d53d5e3bd5e8d4cbfa6db1ca238aea02e651010"
    ],
-   "previous_run": "2026-11-23T13:17:35Z"
+   "previous_run": "2026-11-23T19:14:44Z"
   },
   {
    "delta": 1,
-   "idle_days": 2.7,
-   "woke": false,
-   "safe": "robinhood:0x8c45\u2026f5d5",
+   "idle_days": 44.4,
+   "woke": true,
+   "safe": "tempo:0x6458\u2026fbbc",
    "governs": [
-    "robinhood:0x0dc846db6a4ec7b5a3e542f7db88049e9add2541"
+    "tempo:0x10ee9aac980a180dd4dcfc96c746d60b0ea88f97"
    ],
-   "previous_run": "2026-11-23T13:17:35Z"
+   "previous_run": "2026-11-23T19:14:44Z"
   }
  ],
- "never_executed": [
-  "robinhood:0x0605\u20269728",
-  "tempo:0x6458\u2026fbbc"
- ],
+ "never_executed": [],
  "stale": 0,
  "unread_chains": [],
  "by_safe": {
@@ -112,10 +101,10 @@
    "never_executed": false
   },
   "base:31e3ad0247904d1a": {
-   "nonce": 102,
+   "nonce": 103,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-11-23T19:14:44Z",
-   "last_moved": "2026-11-23T19:14:44Z",
+   "idle_since": "2026-11-24T07:14:39Z",
+   "last_moved": "2026-11-24T07:14:39Z",
    "governs": [
     "base:0xbeef010f9cb27031ad51e3333f9af9c6b1228183",
     "base:0xbeef2d50b428675a1921bc6bbf4bfb9d8cf1461a"
@@ -145,9 +134,10 @@
    "never_executed": false
   },
   "base:18c0d155cf0f0269": {
-   "nonce": 16,
+   "nonce": 17,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-10-10T21:12:49Z",
+   "idle_since": "2026-11-24T07:14:39Z",
+   "last_moved": "2026-11-24T07:14:39Z",
    "governs": [
     "base:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb"
    ],
@@ -166,10 +156,10 @@
    "never_executed": false
   },
   "ethereum-l1:31e3ad0247904d1a": {
-   "nonce": 143,
+   "nonce": 144,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-11-23T19:14:44Z",
-   "last_moved": "2026-11-23T19:14:44Z",
+   "idle_since": "2026-11-24T07:14:39Z",
+   "last_moved": "2026-11-24T07:14:39Z",
    "governs": [
     "ethereum-l1:0xbeef01735c132ada46aa9aa4c54623caa92a64cb",
     "ethereum-l1:0xbeef047a543e45807105e51a8bbefcc5950fcfba",
@@ -310,14 +300,15 @@
    "never_executed": false
   },
   "robinhood:fff95d40b62c2d93": {
-   "nonce": 0,
+   "nonce": 1,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-10-10T21:12:49Z",
+   "idle_since": "2026-11-24T07:14:39Z",
+   "last_moved": "2026-11-24T07:14:39Z",
    "governs": [
     "robinhood:0x9d53d5e3bd5e8d4cbfa6db1ca238aea02e651010"
    ],
    "safe": "robinhood:0x0605\u20269728",
-   "never_executed": true
+   "never_executed": false
   },
   "robinhood:d07a2565930ac3de": {
    "nonce": 8,
@@ -512,14 +503,15 @@
    "never_executed": false
   },
   "tempo:9ecaf742c4a2ceef": {
-   "nonce": 0,
+   "nonce": 1,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-10-10T21:12:49Z",
+   "idle_since": "2026-11-24T07:14:39Z",
+   "last_moved": "2026-11-24T07:14:39Z",
    "governs": [
     "tempo:0x10ee9aac980a180dd4dcfc96c746d60b0ea88f97"
    ],
    "safe": "tempo:0x6458\u2026fbbc",
-   "never_executed": true
+   "never_executed": false
   },
   "tempo:c0aa391a100e8ad1": {
    "nonce": 38,

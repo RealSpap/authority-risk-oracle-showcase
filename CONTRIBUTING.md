@@ -29,7 +29,7 @@ If you found an error in a reading that is not a score (a wrong label, a missing
 
 Every reading can be redone with public data.
 
-- Read a score from an oracle contract: the command in the README section "Try it in 60 seconds" (`cast call ... getScore(address)`). The score returned must equal the published file for that target.
+- Read a score from an oracle contract: command 2 of the README (`cast call ... getScore(address)`). The score returned must equal the published file for that target.
 - Audit the published state: `python3 scripts/audit_public.py` checks the hash-chained event log, the signed manifest and the schemas, and re-reads scores from the oracles. Expected: `AUDIT PASSED`.
 - Replay a dated measurement: [`research/aave-levels-2026-10-13/`](research/aave-levels-2026-10-13/) reads the privileged roles of Aave V3 Core reserves at a fixed block. Run `python3 mesure-aave-niveaux.py --block 26184127 --compact` from that folder (standard library, public RPC). Expected: the levels written in its README and zero calls in error. A different level at the same block is a finding: open a **Reading error** issue with both outputs.
 

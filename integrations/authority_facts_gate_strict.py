@@ -8,7 +8,7 @@
 authority_facts_gate.py is unchanged: its defaults are an example chosen for the demonstration, not a policy, and this file does not change them; it only lets you choose. The decision itself is the
 `gate` function of that file, called with your lines. Exit 0 = the label passes, 1 = it is refused. A refusal is a message, never a score; the label is trusted as given (no signature is checked).
 """
-import argparse, calendar, json, os, sys, time, urllib.request
+import argparse, calendar, http.client, json, os, sys, time, urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 from authority_facts_gate import gate  # noqa: E402
@@ -35,9 +35,12 @@ def main(argv=None):
     ap.add_argument("--min-composite", type=int, default=60); ap.add_argument("--min-react-hours", type=int, default=24)
     ap.add_argument("--max-age-hours", type=float, help="refuse a label whose last push is older than this"); ap.add_argument("--require-keys", action="store_true", help="refuse a label whose number of keys was not read"); ap.add_argument("--strict", action="store_true", help="--require-keys, and refuse a label that lists anything it did not read")
     a = ap.parse_args(argv)
-    if os.path.isfile(a.label):
-        with open(a.label, encoding="utf-8") as f: label = json.load(f)
-    else: label = json.load(urllib.request.urlopen(a.label, timeout=25))
+    try:
+        if os.path.isfile(a.label):
+            with open(a.label, encoding="utf-8") as f: label = json.load(f)
+        else: label = json.load(urllib.request.urlopen(a.label, timeout=25))
+    except (OSError, ValueError, http.client.HTTPException) as e:   # a label that cannot be read in full is UNREAD, never a traceback and never a pass
+        print("UNREAD: the label could not be read (%s)" % type(e).__name__); return 3
     ok, why = strict_gate(label, a.min_composite, a.min_react_hours, a.require_keys, a.strict, a.max_age_hours)
     print(why); return 0 if ok else 1
 

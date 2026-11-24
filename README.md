@@ -6,7 +6,7 @@
 
 A DeFi contract that can be upgraded or reconfigured has someone who can do it: a key, a multisig, a vote. I read from public chain state who that is, how fast they can act and what stands in the way (keys, a multisig, a timelock), and publish the answer as a score that any contract can read on-chain. It measures exposure, not the chance of an attack. Live on testnets today. Not an audit, not investment advice.
 
-**Don't trust me. Redo it.** Command 1 re-reads the chain and compares it with what I publish: no key, public RPCs, about ten seconds.
+**Don't trust me. Redo it.** Command 1 re-reads the chain and compares it with what I publish: no key, public RPCs, under a minute. A line may say UNREAD when a public node is silent: that is not a failure of the check, it is the check saying it could not read.
 
 ## Three commands
 
@@ -28,7 +28,7 @@ cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 \
   0x1f7d7550B1b028f7571E69A784071F0205FD2EfA \
   --rpc-url https://rpc.testnet.chain.robinhood.com/rpc
 # adminKey, multisig, timelock, oracleAuthority, crossExposure, composite, lastUpdated, methodologyHash
-# 80, 100, 75, 100, 40, 85, 1793136187, 0x05ae8b25...   (read live on 2026-10-28; the fifth value, crossExposure, was 80 on 22 October and is 40 since the push of 27 October with method 2026.10.4, and the time and the hash change at every push)
+# the values change at every push: read the current ones for this target in api/scores.json, they must equal what the chain returns
 ```
 
 **3. Gate a decision on a label**, with an age limit and the strict mode:
@@ -38,10 +38,12 @@ python3 integrations/authority_facts_gate_strict.py https://realspap.github.io/o
 # label of a Uniswap v3 factory on Robinhood Chain mainnet (chain ID 4663)
 ```
 
+This command is expected to end with a refusal (exit 1): the label says it did not read how many keys it takes to move this contract, and `--strict` refuses a label that lists anything it did not read. A refusal is a message, not a score, and not a failure of the command.
+
 The label is that same Uniswap v3 factory on Robinhood Chain mainnet (chain ID 4663).
 
 - **A score is not a status.** A contract can score 100 and be `UNVERIFIED`, and none of these commands reads the status: [details](docs/LIMITS.md#a-score-is-not-a-status).
-- **The composite on the chain is not the cap.** For Robinhood Chain rollup contracts, `l1CappedComposite` (57 against 85 for command 2) is published in `api/scores.json` only: [details](docs/LIMITS.md#the-composite-on-the-chain-is-not-the-cap).
+- **The composite on the chain is not the cap.** For Robinhood Chain rollup contracts, `l1CappedComposite` (lower than the on-chain composite of command 2, both in `api/scores.json`) is published in `api/scores.json` only: [details](docs/LIMITS.md#the-composite-on-the-chain-is-not-the-cap).
 - **One key can replace the Solana devnet program.** Its upgrade authority is a plain account (`BcwteMtYL5wL8dvMYWedPT2V6oh1hTgd8vgKEkQyy9yx`), so one signature can push the scores and replace the program: [replay](docs/LIMITS.md#who-can-replace-the-oracle-itself).
 
 ## Two ways in

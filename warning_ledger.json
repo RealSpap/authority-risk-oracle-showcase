@@ -999,18 +999,48 @@
    "chain": "ethereum",
    "timelock": "Compound Governance Timelock",
    "what": "cross-chain message"
+  },
+  "ethereum:0xe8dc0fab349ea169283c48ccfd09d797e6db7c94:0xcf8be126a09c800df5c3096a3b4982f7e62ba0b45e161199bd6783198cce9b31": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-11-24T19:00:45Z",
+   "due_utc": "2026-11-25T14:36:47Z",
+   "notice_hours": 19.6,
+   "state": "queued",
+   "chain": "ethereum",
+   "timelock": "Ethena Timelock",
+   "what": "parameter change"
+  },
+  "arbitrum:0x4d6ce4f4498d59eed397bcbc687805a07f9b2346:0x3bfe45488453b0b122ced202f326db97e05ef1b567e96a25d09f5a198971ffe8": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-11-24T19:00:45Z",
+   "due_utc": "2026-11-25T14:38:58Z",
+   "notice_hours": 19.6,
+   "state": "queued",
+   "chain": "arbitrum",
+   "timelock": "arbitrum timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
+   "what": "upgrade"
+  },
+  "plasma:0x4d6ce4f4498d59eed397bcbc687805a07f9b2346:0xe3e99c2b96549f9168d1769ee9fff39831d578065a8c82dc1da0bc70ad60421b": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-11-24T19:00:45Z",
+   "due_utc": "2026-11-25T14:37:35Z",
+   "notice_hours": 19.6,
+   "state": "queued",
+   "chain": "plasma",
+   "timelock": "plasma timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
+   "what": "upgrade"
   }
  },
- "updated_utc": "2026-11-24T13:00:53Z",
+ "updated_utc": "2026-11-24T19:00:45Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
-  "warned": 68,
+  "warned": 71,
   "seen_without_notice": 0,
   "missed": 1,
   "baseline": 26,
-  "warned_with_a_known_notice": 68,
+  "warned_with_a_known_notice": 71,
   "shortest_notice_hours": 14.0,
-  "median_notice_hours": 21.6,
+  "median_notice_hours": 21.2,
   "note": "warned: seen while queued and not yet executable (the notice is real); seen_without_notice: still queued but already executable when first seen; missed: queued after the ledger started and already applied when first seen (faster than the 6-hour cadence); baseline: applied before the ledger started, counted as neither."
  }
 }

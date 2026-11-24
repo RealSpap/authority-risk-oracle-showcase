@@ -548,19 +548,21 @@ class TestCrossChainAndRiskByCause(unittest.TestCase):
     def test_cross_chain_publishes_the_sweep_of_each_target_and_the_oldest_per_chain(self):
         with tempfile.TemporaryDirectory() as d:
             a1, a2 = self.fixture(d)
-            json.dump({"swept_utc": "2026-10-21", "valid_days": 30, "targets": {"robinhood:" + a1: {"swept_utc": "2026-08-01"}}}, open(os.path.join(d, "data", "cross_snapshot.json"), "w"))
+            fresh = time.strftime("%Y-%m-%d", time.gmtime(time.time() - 5 * 86400))      # relative to the real clock the script reads: a fixed date expires one day
+            json.dump({"swept_utc": fresh, "valid_days": 30, "targets": {"robinhood:" + a1: {"swept_utc": "2026-08-01"}}}, open(os.path.join(d, "data", "cross_snapshot.json"), "w"))
             out = self.run_script("cross_chain.py", d)
             chains = out["items"][0]["chains"]
             self.assertEqual(chains["robinhood"]["exposure_snapshot_utc"], "2026-08-01")
             self.assertEqual(chains["robinhood"]["targets"][0]["from"], "target")
             self.assertEqual(chains["robinhood"]["exposure_snapshot_expired_targets"], 1)
-            self.assertEqual(chains["base"]["exposure_snapshot_utc"], "2026-10-21")
+            self.assertEqual(chains["base"]["exposure_snapshot_utc"], fresh)
             self.assertEqual(chains["base"]["exposure_snapshot_expired_targets"], 0)
 
     def test_a_target_with_no_date_at_all_is_unknown_not_expired(self):
         with tempfile.TemporaryDirectory() as d:
             a1, a2 = self.fixture(d)
-            json.dump({"valid_days": 30, "targets": {"robinhood:" + a1: {"swept_utc": "2026-10-20"}}}, open(os.path.join(d, "data", "cross_snapshot.json"), "w"))     # no date for the file, none for base
+            fresh = time.strftime("%Y-%m-%d", time.gmtime(time.time() - 5 * 86400))      # relative to the real clock, as in the test above
+            json.dump({"valid_days": 30, "targets": {"robinhood:" + a1: {"swept_utc": fresh}}}, open(os.path.join(d, "data", "cross_snapshot.json"), "w"))     # no date for the file, none for base
             out = self.run_script("cross_chain.py", d)["items"][0]["chains"]
             self.assertEqual((out["robinhood"]["exposure_snapshot_unknown_targets"], out["robinhood"]["exposure_snapshot_expired_targets"]), (0, 0))
             self.assertEqual((out["base"]["exposure_snapshot_utc"], out["base"]["exposure_snapshot_unknown_targets"], out["base"]["exposure_snapshot_expired_targets"]), (None, 1, 0))

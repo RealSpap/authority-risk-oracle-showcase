@@ -26,7 +26,10 @@ class TestReadme(unittest.TestCase):
         self.assertIn("watch/trust.json", read("docs", "LIMITS.md"))   # the README links to this section; the name of the file lives on the page of limits since the README was shortened
 
     def test_the_two_values_of_the_same_reading_are_explained(self):
-        self.assertIn("was 80 on 22 October and is 40 since the push of 27 October", self.R)
+        # 24/11/2026: the README no longer prints a dated example (it went stale at every push); it says the values change at every push and points to the file that holds the current ones
+        self.assertIn("the values change at every push", self.R)
+        self.assertIn("api/scores.json", self.R)
+        self.assertNotIn("was 80 on 22 October", self.R)
 
 
 class TestMethodWords(unittest.TestCase):

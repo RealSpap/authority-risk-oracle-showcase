@@ -119,9 +119,9 @@ class T(unittest.TestCase):
         v, why = rg.run_check(chk, ctx()); self.assertEqual(v, "UNREAD"); self.assertIn("host", why)
 
     def test_the_line_counts_of_the_readme_are_read_in_the_repository(self):
-        chk = {"kind": "lines", "items": [["integrations/authority_facts_gate_strict.py", 46], ["integrations/authority_facts_gate.py", 18]]}
+        chk = {"kind": "lines", "items": [["integrations/authority_facts_gate_strict.py", 49], ["integrations/authority_facts_gate.py", 18]]}
         self.assertEqual(rg.run_check(chk, ctx())[0], "OK")
-        chk["items"][0][1] = 47; v, why = rg.run_check(chk, ctx()); self.assertEqual(v, "DIFFERENCE"); self.assertIn("46", why)
+        chk["items"][0][1] = 50; v, why = rg.run_check(chk, ctx()); self.assertEqual(v, "DIFFERENCE"); self.assertIn("49", why)
         chk["items"] = [["integrations/does_not_exist.py", 1]]; self.assertEqual(rg.run_check(chk, ctx())[0], "UNREAD", "a missing file is unread, not zero lines")
 
     def test_a_claim_with_no_command_is_unread_with_its_cause_and_keeps_its_grade(self):

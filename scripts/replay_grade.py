@@ -214,7 +214,7 @@ _S = [["eip1967.proxy.admin", True, "0xb53127684a568b3173ae13b9f8a6016e243e63b6e
 _ALERTS = {"kind": "json", "url": WATCH + "alerts.json", "path": "active", "op": "len_eq", "expected": 8}
 _HOME = {"kind": "html_count", "url": SITE, "pattern": r'href="p/[A-Za-z0-9-]+\.html"', "op": "eq", "expected": 15}   # the card links only: the one link built by the page's script holds quotes and plus signs
 CHECKS = {
-    "R15": {"kind": "lines", "items": [["integrations/authority_facts_gate_strict.py", 46], ["integrations/authority_facts_gate.py", 18]]},
+    "R15": {"kind": "lines", "items": [["integrations/authority_facts_gate_strict.py", 49], ["integrations/authority_facts_gate.py", 18]]},
     "H01": {"kind": "all", "checks": [{"kind": "json", "url": SITE + "p/index.json", "path": "count", "op": "eq", "expected": 202}, {"kind": "json_distinct", "url": SITE + "p/index.json", "container": "addresses", "item_field": "key", "expected": 9}]},
     "H04": _HOME, "H29": _HOME,
     "H05": dict(_ALERTS, dated=True), "W04": _ALERTS,   # H05 is dated ("at build time"): a moved value is a stale expected result ; W04 is in the present tense: a moved value is a difference

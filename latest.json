@@ -1,6 +1,6 @@
 {
- "run_utc": "2026-11-24T07:00:48Z",
- "previous_run_utc": "2026-11-23T19:00:42Z",
+ "run_utc": "2026-11-24T13:00:53Z",
+ "previous_run_utc": "2026-11-24T07:00:48Z",
  "schedule": "every 6 hours (GitHub Actions, cron 17 */6 * * *)",
  "oracles": [
   {
@@ -9,16 +9,16 @@
    "kind": "evm",
    "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
    "read_ok": true,
-   "block": 157331018,
+   "block": 157401960,
    "targets": 63,
    "stale": 0,
    "retired": 0,
    "lastUpdated": 1795123834,
    "maxStaleness": 777600,
    "freshness": {
-    "watch_read_at": 1795503654,
-    "block": 157331018,
-    "block_time": 1795503647,
+    "watch_read_at": 1795525256,
+    "block": 157401960,
+    "block_time": 1795525253,
     "newest_push": 1795123834,
     "oldest_push": 1795123834
    },
@@ -46,16 +46,16 @@
    "kind": "evm",
    "oracle": "0xB6F8474ccC71AF477c31c2DF663B3942ddfbf906",
    "read_ok": true,
-   "block": 12201024,
+   "block": 12202746,
    "targets": 39,
    "stale": 0,
    "retired": 1,
    "lastUpdated": 1795209480,
    "maxStaleness": 777600,
    "freshness": {
-    "watch_read_at": 1795503657,
-    "block": 12201024,
-    "block_time": 1795503648,
+    "watch_read_at": 1795525258,
+    "block": 12202746,
+    "block_time": 1795525248,
     "newest_push": 1795209480,
     "oldest_push": 1790180194
    },
@@ -83,16 +83,16 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 332216693,
+   "block": 332295374,
    "targets": 13,
    "stale": 0,
    "retired": 0,
    "lastUpdated": 1795123114,
    "maxStaleness": 777600,
    "freshness": {
-    "watch_read_at": 1795503660,
-    "block": 332216693,
-    "block_time": 1795503656,
+    "watch_read_at": 1795525260,
+    "block": 332295374,
+    "block_time": 1795525258,
     "newest_push": 1795123114,
     "oldest_push": 1795123114
    },
@@ -120,16 +120,16 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 62908962,
+   "block": 63016961,
    "targets": 13,
    "stale": 0,
    "retired": 0,
    "lastUpdated": 1795033809,
    "maxStaleness": 777600,
    "freshness": {
-    "watch_read_at": 1795503667,
-    "block": 62908962,
-    "block_time": 1795503661,
+    "watch_read_at": 1795525262,
+    "block": 63016961,
+    "block_time": 1795525261,
     "newest_push": 1795033809,
     "oldest_push": 1795033809
    },
@@ -157,16 +157,16 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 45693499,
+   "block": 45733503,
    "targets": 15,
    "stale": 0,
    "retired": 0,
    "lastUpdated": 1795033617,
    "maxStaleness": 777600,
    "freshness": {
-    "watch_read_at": 1795503670,
-    "block": 45693499,
-    "block_time": 1795503667,
+    "watch_read_at": 1795525264,
+    "block": 45733503,
+    "block_time": 1795525262,
     "newest_push": 1795033617,
     "oldest_push": 1795033617
    },
@@ -194,16 +194,16 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 39666024,
+   "block": 39687618,
    "targets": 9,
    "stale": 0,
    "retired": 0,
    "lastUpdated": 1795034018,
    "maxStaleness": 777600,
    "freshness": {
-    "watch_read_at": 1795503677,
-    "block": 39666024,
-    "block_time": 1795503671,
+    "watch_read_at": 1795525270,
+    "block": 39687618,
+    "block_time": 1795525265,
     "newest_push": 1795034018,
     "oldest_push": 1795034018
    },
@@ -231,21 +231,21 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 82330841,
+   "block": 82400210,
    "targets": 9,
    "stale": 0,
    "retired": 0,
    "lastUpdated": 1795209276,
    "maxStaleness": 777600,
    "freshness": {
-    "watch_read_at": 1795503737,
-    "block": 82330841,
-    "block_time": 1795503677,
+    "watch_read_at": 1795525335,
+    "block": 82400210,
+    "block_time": 1795525270,
     "newest_push": 1795209276,
     "oldest_push": 1795209276
    },
    "self_watch": {
-    "read": false,
+    "read": true,
     "role_events": 0,
     "code_hash": "f33b2e74ee503525",
     "roles": {
@@ -258,8 +258,8 @@
       "updater": false
      }
     },
-    "error": "getLogs: ValueError: [{'code': -32062, 'message': 'Block range is too large'}]",
-    "unread_blocks": 20071
+    "error": null,
+    "unread_blocks": null
    }
   },
   {
@@ -268,16 +268,16 @@
    "kind": "evm",
    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
    "read_ok": true,
-   "block": 70457468,
+   "block": 70479425,
    "targets": 16,
    "stale": 0,
    "retired": 0,
    "lastUpdated": 1795123486,
    "maxStaleness": 777600,
    "freshness": {
-    "watch_read_at": 1795503864,
-    "block": 70457468,
-    "block_time": 1795503748,
+    "watch_read_at": 1795525461,
+    "block": 70479425,
+    "block_time": 1795525345,
     "newest_push": 1795123486,
     "oldest_push": 1795123486
    },
@@ -296,7 +296,7 @@
      }
     },
     "error": "getLogs: RateLimited: [{'code': -32005, 'message': 'Log response size exceeded. Maximum allowed number of requested blocks",
-    "unread_blocks": 631898
+    "unread_blocks": 653855
    }
   },
   {
@@ -312,7 +312,7 @@
    "lastUpdated": 1795033349,
    "maxStaleness": 777600,
    "freshness": {
-    "watch_read_at": 1795503867,
+    "watch_read_at": 1795525464,
     "block": null,
     "block_time": null,
     "newest_push": 1795033349,
@@ -334,10 +334,8 @@
   }
  ],
  "movers": [],
- "alerts": [
-  "Hyperliquid (HyperEVM): the scan of the oracle's own role events has not advanced for several runs ~ 2 runs, scanned to block 69825570, chain at block 70457468"
- ],
+ "alerts": [],
  "unread": [],
  "note": "The Zcash commitments are verified by the dashboard itself. An oracle in `unread` has unknown targets, not zero.",
- "run_id": "45344640804.1"
+ "run_id": "45398990450.1"
 }

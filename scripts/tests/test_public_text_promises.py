@@ -4,14 +4,14 @@
    hours or days: nobody watches a clock on the inbox, so such a sentence is a promise to a stranger that nothing keeps.
 2. Pushes: the scores are pushed by hand, at the latest every nine days (the staleness limit), and the weekly workflow is switched off. No document may say the scores are pushed weekly.
 3. Pages: the signing key is compared on the provenance page of the site; the page `oracle/key/` does not exist.
-No network, standard library only. Dated records (CHANGELOG.md, data/, chains/*/data/) are left as they were written."""
+No network, standard library only. Dated records (CHANGELOG.md, errata/, data/, chains/*/data/) are left as they were written."""
 import os, re, unittest
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 PROSE = (".md", ".html", ".txt")
 SKIP_DIRS = {".git", "node_modules", "tests", "cache", "out", "__pycache__"}
 DATED = ("CHANGELOG.md",)
-DATED_DIRS = ("data" + os.sep, os.path.join("chains", ""))
+DATED_DIRS = ("data" + os.sep, os.path.join("chains", ""), "errata" + os.sep)   # an erratum quotes the sentence it corrects
 
 # a promise of a reply time: "answer ... within 72 hours", "reply within 3 days", "a response in 48 hours"
 REPLY_TIME = re.compile(r"\b(?:answer|reply|respond|response|acknowledg\w+)\b[^.\n]{0,50}?\b(?:within|in|under)\s+\d+\s*(?:hours?|h|days?|business days?)\b"

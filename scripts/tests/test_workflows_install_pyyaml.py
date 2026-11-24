@@ -13,8 +13,13 @@ def yaml_dirs():
 
 
 def runs_suite(text, folder):
-    """True when the workflow runs the folder: `-s <folder>`, or scripts/mutate.py, which replays scripts/tests."""
-    return bool(re.search(r"-s %s(\s|$)" % re.escape(folder), text, re.M)) or (folder == "scripts/tests" and "scripts/mutate.py" in text)
+    """True when the workflow runs the folder: `-s <folder>`, or scripts/mutate.py, which replays scripts/tests. A run limited by `-p <file pattern>` counts only when a matching file imports yaml
+    (structure.yml runs scripts/tests with -p test_check_structure.py, which does not)."""
+    for m in re.finditer(r"-s %s(\s.*)?$" % re.escape(folder), text, re.M):
+        p = re.search(r"-p\s+(\S+)", m.group(0))
+        if not p: return True
+        if any(re.search(r"^(import yaml|from yaml )", open(f, encoding="utf-8").read(), re.M) for f in glob.glob(os.path.join(ROOT, folder, p.group(1)))): return True
+    return folder == "scripts/tests" and "scripts/mutate.py" in text
 
 
 def missing(text, folders):
@@ -47,6 +52,11 @@ class TestWorkflowsInstallPyYaml(unittest.TestCase):
         self.assertEqual(missing(base + pip + "      - run: python3 scripts/mutate.py\n", ["scripts/tests"]), [])
         self.assertEqual(missing(base + run, ["chains/tempo/tests"]), [])   # a folder the workflow does not run is not asked for
         self.assertEqual(missing(base + "      - run: pip install pyyaml\n" + run, ["scripts/tests"]), [])
+        limited = "      - run: python3 -m unittest discover -s scripts/tests -p test_check_structure.py -v\n"   # a run limited to a file that does not import yaml needs no install
+        self.assertEqual(missing(base + limited, ["scripts/tests"]), [])
+        self.assertEqual(missing(base + "      - run: python3 -m unittest discover -s scripts/tests -p test_second_round_texts.py -v\n", ["scripts/tests"]), [])   # no yaml in this file either
+        yaml_file = [os.path.basename(f) for f in glob.glob(os.path.join(ROOT, "scripts", "tests", "*.py")) if re.search(r"^(import yaml|from yaml )", open(f, encoding="utf-8").read(), re.M)][0]
+        self.assertEqual(missing(base + "      - run: python3 -m unittest discover -s scripts/tests -p %s -v\n" % yaml_file, ["scripts/tests"]), ["scripts/tests"])   # a file that imports yaml, without the install
 
 
 if __name__ == "__main__":

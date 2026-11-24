@@ -14,16 +14,16 @@ def read(*p):
 class TestReadme(unittest.TestCase):
     R = read("README.md")
 
-    def test_the_gate_line_count_is_the_real_one_everywhere(self):
-        n = len(read("integrations", "authority_facts_gate.py").splitlines())
-        self.assertEqual(self.R.count("in %d lines" % n), 1)   # the strict gate is the one used in the commands; the simple gate is named once, with its line count
-        self.assertRegex(self.R, r"(?<![0-9])%d lines" % len(read("integrations", "authority_facts_gate_strict.py").splitlines()))
+    def test_a_gate_line_count_written_in_the_readme_is_the_real_one(self):
+        real = {len(read("integrations", "authority_facts_gate.py").splitlines()), len(read("integrations", "authority_facts_gate_strict.py").splitlines())}
+        for n in re.findall(r"(?<![0-9])([0-9]+) lines", self.R):
+            self.assertIn(int(n), real, "the README writes %s lines for a gate; the real counts are %s" % (n, sorted(real)))   # the README no longer states them (shortened on 20 November): a count that comes back must be the real one
         self.assertNotIn("14 lines", self.R)
 
     def test_a_score_is_not_a_status_and_the_chain_composite_is_not_the_cap(self):
         self.assertIn("A score is not a status.", self.R)
         self.assertIn("`l1CappedComposite`", self.R)
-        self.assertIn("watch/trust.json", self.R)
+        self.assertIn("watch/trust.json", read("docs", "LIMITS.md"))   # the README links to this section; the name of the file lives on the page of limits since the README was shortened
 
     def test_the_two_values_of_the_same_reading_are_explained(self):
         self.assertIn("was 80 on 22 October and is 40 since the push of 27 October", self.R)

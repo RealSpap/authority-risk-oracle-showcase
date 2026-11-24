@@ -4,7 +4,7 @@ Who else looks at authority risk, what they do better, and where this project is
 
 The side-by-side comparison with the neighbouring tools has one source and one page: [realspap.github.io/oracle/compare](https://realspap.github.io/oracle/compare/).
 
-The closest open-source scanner on the same question is [Hermes](https://github.com/saintparish4/hermes) (Rust, MIT, created 2026-08-17): it ranks upgrade authorities on Base and Ethereum from ERC-1967 storage slots, following Safe signers, timelocks and AccessControl role holders (role holders only when its index lists them, per its README), and answers "which proxies does a compromise of this key reach". It is a local tool and not an on-chain feed.
+A competing open-source scanner on the same question is no longer described here: I removed its link on 24 November 2026 because the repository was not found (404), and I withdraw the description I had written from its README in September 2026.
 
 The conflict of interest when the rater is paid by the protocol it rates (Gauntlet, Chaos Labs, LlamaRisk) is not theoretical: the earlier research program this project grew out of
 (`defi-admin-key-risk`) documented it in real incidents. And

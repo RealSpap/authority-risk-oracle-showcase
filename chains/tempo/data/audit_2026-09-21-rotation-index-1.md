@@ -260,7 +260,7 @@ is added by this maintenance run. It is recorded as an open lead for a scouting 
 ## Replaying this
 
 ```bash
-D=$(mktemp -d) && git clone --quiet https://github.com/RealSpap/authority-risk-oracle.git "$D/r"
+D=$(mktemp -d) && git clone --quiet https://github.com/RealSpap/authority-risk-oracle-showcase.git "$D/r"
 python3 "$D/r/chains/tempo/scripts/audit_rotation_index.py" 1     # exit 0, "NO DIVERGENCE"
 python3 "$D/r/chains/tempo/scripts/check_new_targets_live.py"     # exit 0, "0 new targets"
 ```

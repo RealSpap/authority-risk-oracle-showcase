@@ -1,6 +1,6 @@
 {
- "evaluated_utc": "2026-11-25T01:17:04Z",
- "run_utc": "2026-11-25T01:00:46Z",
+ "evaluated_utc": "2026-11-25T07:17:56Z",
+ "run_utc": "2026-11-25T07:00:45Z",
  "rules": [
   "score dropped by 10 or more",
   "score fell under 40",
@@ -34,7 +34,7 @@
    "title": "Fluid Lending",
    "score": 59,
    "delta": 0,
-   "tvl_usd": 133694689.874203,
+   "tvl_usd": 133471591.8056403,
    "first_seen": "2026-11-24T07:16:24Z",
    "new": false,
    "evidence": [
@@ -53,24 +53,58 @@
    ],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 332449356,
-    "oracle_read_at": 1795568455,
+    "oracle_block": 332526952,
+    "oracle_read_at": 1795590057,
     "composite": 59,
     "previous_composite": 59,
     "score_last_updated": 1795123114,
     "second_opinion": {
      "kind": "timelock",
      "path": "EIP-1967 admin",
-     "block_start": 527277641,
-     "block_end": 527277659,
-     "read_gap_seconds": 606,
-     "since_score_push_seconds": 445947
+     "block_start": 527352099,
+     "block_end": 527352121,
+     "read_gap_seconds": 620,
+     "since_score_push_seconds": 467563
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x52aa899454998be5b000ad077a46bbe360f4e497 --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 332449356",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x52aa899454998be5b000ad077a46bbe360f4e497 --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 332526952",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-24T19:00:45Z",
+   "previous_run": "2026-11-25T01:00:46Z",
    "notified": true
+  },
+  {
+   "rule": "the independent reader disagrees with the admin-key score, with money behind it",
+   "severity": "medium",
+   "chain": "Hyperliquid",
+   "target": "0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec",
+   "title": "Kinetiq kmHYPE",
+   "score": 4,
+   "delta": 0,
+   "tvl_usd": 28910581.658082962,
+   "first_seen": "2026-11-25T07:17:56Z",
+   "new": true,
+   "evidence": [],
+   "reading": {
+    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
+    "oracle_block": 70545253,
+    "oracle_read_at": 1795590278,
+    "composite": 4,
+    "previous_composite": 4,
+    "score_last_updated": 1795123486,
+    "second_opinion": {
+     "kind": "safe",
+     "path": "EIP-1967 admin -> ProxyAdmin owner()",
+     "block_start": 52189289,
+     "block_end": 52189303,
+     "read_gap_seconds": 479,
+     "since_score_push_seconds": 467271
+    },
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec --rpc-url https://998.rpc.thirdweb.com --block 70545253",
+    "reproduce_exact": false
+   },
+   "previous_run": "2026-11-25T01:00:46Z",
+   "notified": true,
+   "delivered": []
   },
   {
    "rule": "the independent reader disagrees with the admin-key score, with money behind it",
@@ -80,29 +114,29 @@
    "title": "Kinetiq kHYPE",
    "score": 4,
    "delta": 0,
-   "tvl_usd": 566164129.1030864,
+   "tvl_usd": 554980774.9970722,
    "first_seen": "2026-11-24T19:19:00Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 70523273,
-    "oracle_read_at": 1795568658,
+    "oracle_block": 70545253,
+    "oracle_read_at": 1795590278,
     "composite": 4,
     "previous_composite": 4,
     "score_last_updated": 1795123486,
     "second_opinion": {
      "kind": "safe",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 52167313,
-     "block_end": null,
-     "read_gap_seconds": 486,
-     "since_score_push_seconds": 445658
+     "block_start": 52189289,
+     "block_end": 52189303,
+     "read_gap_seconds": 487,
+     "since_score_push_seconds": 467279
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x393d0b87ed38fc779fd9611144ae649ba6082109 --rpc-url https://998.rpc.thirdweb.com --block 70523273",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x393d0b87ed38fc779fd9611144ae649ba6082109 --rpc-url https://998.rpc.thirdweb.com --block 70545253",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-24T19:00:45Z",
+   "previous_run": "2026-11-25T01:00:46Z",
    "notified": true
   },
   {
@@ -113,7 +147,7 @@
    "title": "Fluid Lending",
    "score": 59,
    "delta": 0,
-   "tvl_usd": 24238403.103101563,
+   "tvl_usd": 24341804.52960783,
    "first_seen": "2026-11-24T07:16:24Z",
    "new": false,
    "evidence": [
@@ -156,23 +190,23 @@
    ],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 39730819,
-    "oracle_read_at": 1795568470,
+    "oracle_block": 39752419,
+    "oracle_read_at": 1795590073,
     "composite": 59,
     "previous_composite": 59,
     "score_last_updated": 1795034018,
     "second_opinion": {
      "kind": "timelock",
      "path": "EIP-1967 admin",
-     "block_start": 38611936,
-     "block_end": 38611942,
-     "read_gap_seconds": 728,
-     "since_score_push_seconds": 535180
+     "block_start": 38628582,
+     "block_end": 38628593,
+     "read_gap_seconds": 749,
+     "since_score_push_seconds": 556804
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x52aa899454998be5b000ad077a46bbe360f4e497 --rpc-url https://testnet-rpc.plasma.to --block 39730819",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x52aa899454998be5b000ad077a46bbe360f4e497 --rpc-url https://testnet-rpc.plasma.to --block 39752419",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-24T19:00:45Z",
+   "previous_run": "2026-11-25T01:00:46Z",
    "notified": true
   }
  ],
@@ -185,11 +219,11 @@
    "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
    "title": "Fluid Lending",
    "first_seen": "2026-11-24T07:16:24Z",
-   "last_seen": "2026-11-25T01:17:04Z",
-   "times": 23,
+   "last_seen": "2026-11-25T07:17:56Z",
+   "times": 24,
    "score": 59,
    "delta": 0,
-   "tvl_usd": 133694689.874203
+   "tvl_usd": 133471591.8056403
   },
   {
    "key": "a queued change against this contract is ready to execute now|plasma:0x52aa899454998be5b000ad077a46bbe360f4e497",
@@ -199,11 +233,11 @@
    "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
    "title": "Fluid Lending",
    "first_seen": "2026-11-24T07:16:24Z",
-   "last_seen": "2026-11-25T01:17:04Z",
-   "times": 23,
+   "last_seen": "2026-11-25T07:17:56Z",
+   "times": 24,
    "score": 59,
    "delta": 0,
-   "tvl_usd": 24238403.103101563
+   "tvl_usd": 24341804.52960783
   },
   {
    "key": "the independent reader disagrees with the admin-key score, with money behind it|hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109",
@@ -213,11 +247,11 @@
    "target": "0x393d0b87ed38fc779fd9611144ae649ba6082109",
    "title": "Kinetiq kHYPE",
    "first_seen": "2026-11-24T19:19:00Z",
-   "last_seen": "2026-11-25T01:17:04Z",
-   "times": 147,
+   "last_seen": "2026-11-25T07:17:56Z",
+   "times": 148,
    "score": 4,
    "delta": 0,
-   "tvl_usd": 566164129.1030864
+   "tvl_usd": 554980774.9970722
   },
   {
    "key": "the independent reader disagrees with the admin-key score, with money behind it|hyperliquid:0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec",
@@ -226,12 +260,12 @@
    "chain": "Hyperliquid",
    "target": "0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec",
    "title": "Kinetiq kmHYPE",
-   "first_seen": "2026-11-18T13:18:47Z",
-   "last_seen": "2026-11-24T19:19:00Z",
-   "times": 160,
+   "first_seen": "2026-11-25T07:17:56Z",
+   "last_seen": "2026-11-25T07:17:56Z",
+   "times": 161,
    "score": 4,
    "delta": 0,
-   "tvl_usd": 29836945.259333752
+   "tvl_usd": 28910581.658082962
   },
   {
    "key": "the Safe that governs this contract, observed idle for 14 days or more, executed a transaction (nonce moved), with money behind it|base:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",

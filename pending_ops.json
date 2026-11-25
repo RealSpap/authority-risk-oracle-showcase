@@ -461,7 +461,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 4480000,
+   "window_blocks": 4142465,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -618,7 +618,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 4480000,
+   "window_blocks": 4156701,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -638,7 +638,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 4496654,
+   "window_blocks": 4142465,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -694,7 +694,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/mainnet",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 100699,
+   "window_blocks": 100598,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -732,7 +732,7 @@
    "log_rpc": "https://rpc.plasma.to",
    "delay": 172800,
    "window_blocks": 600000,
-   "window_days_est": 10.8,
+   "window_days_est": 6.9,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x6695c0f8706c5ace3bdf8995073179cca47926dc"
@@ -874,7 +874,7 @@
    "log_rpc": "https://rpc.plasma.to",
    "delay": 86400,
    "window_blocks": 600000,
-   "window_days_est": 10.7,
+   "window_days_est": 6.9,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x52aa899454998be5b000ad077a46bbe360f4e497"
@@ -894,7 +894,7 @@
    "log_rpc": "https://rpc.plasma.to",
    "delay": 172800,
    "window_blocks": 600000,
-   "window_days_est": 10.7,
+   "window_days_est": 6.9,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x9b3ceb22cab2f1b9ace4cd3132c8a123552eda2c"
@@ -930,7 +930,7 @@
    "log_rpc": "https://rpc.plasma.to",
    "delay": 86400,
    "window_blocks": 600000,
-   "window_days_est": 10.8,
+   "window_days_est": 6.9,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34"
@@ -970,7 +970,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 86400,
    "window_blocks": 3000000,
-   "window_days_est": 3.6,
+   "window_days_est": 3.7,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x14b107cf534239c59571b066cb6497a321da897c"
@@ -1011,9 +1011,9 @@
    ]
   }
  ],
- "discovered_utc": "2026-11-25T01:10:53Z",
+ "discovered_utc": "2026-11-25T07:11:08Z",
  "discovered": 15,
- "squads_utc": "2026-11-25T01:16:44Z",
+ "squads_utc": "2026-11-25T07:17:40Z",
  "not_shown": [
   "squads"
  ]

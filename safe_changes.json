@@ -63,8 +63,8 @@
    ],
    "control": 67,
    "status": "ok",
-   "fromBlock": 117025411,
-   "toBlock": 122666916,
+   "fromBlock": 117225027,
+   "toBlock": 122866590,
    "days_read": 7
   },
   {
@@ -73,8 +73,8 @@
    "events": [],
    "control": 31,
    "status": "ok",
-   "fromBlock": 26438602,
-   "toBlock": 26488857,
+   "fromBlock": 26440400,
+   "toBlock": 26490658,
    "days_read": 7
   },
   {
@@ -83,8 +83,8 @@
    "events": [],
    "control": 11,
    "status": "ok",
-   "fromBlock": 525190517,
-   "toBlock": 527279213,
+   "fromBlock": 525259289,
+   "toBlock": 527353771,
    "days_read": 7
   },
   {
@@ -93,8 +93,8 @@
    "events": [],
    "control": null,
    "status": "UNREAD (call budget exhausted)",
-   "fromBlock": 58871587,
-   "toBlock": 61895588,
+   "fromBlock": 58979882,
+   "toBlock": 62003883,
    "days_read": 7
   },
   {
@@ -103,8 +103,8 @@
    "events": [],
    "control": 1,
    "status": "ok",
-   "fromBlock": 49552103,
-   "toBlock": 50675374,
+   "fromBlock": 49592456,
+   "toBlock": 50715741,
    "days_read": 7
   },
   {
@@ -113,30 +113,31 @@
    "events": [],
    "control": 9,
    "status": "ok",
-   "fromBlock": 38019913,
-   "toBlock": 38612287,
+   "fromBlock": 38041588,
+   "toBlock": 38629177,
    "days_read": 7
   },
   {
    "ecosystem": "monad",
    "safes": 13,
    "events": [],
-   "control": 1,
-   "status": "ok",
-   "fromBlock": 125071902,
-   "toBlock": 125157469,
-   "days_read": 0.3
+   "control": 0,
+   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 10 execution(s) from other Safes on the window's tail)",
+   "fromBlock": 125143434,
+   "toBlock": 125229005,
+   "days_read": 0.3,
+   "control_witness": 10
   },
   {
    "ecosystem": "hyperliquid",
    "safes": 5,
    "events": [],
    "control": 0,
-   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 9 execution(s) from other Safes on the window's tail)",
-   "fromBlock": 51904679,
-   "toBlock": 52168199,
+   "status": "ok (quiet: no execution on the tracked Safes in the window; the endpoint served 3 execution(s) from other Safes on the window's tail)",
+   "fromBlock": 51926709,
+   "toBlock": 52190229,
    "days_read": 3.0,
-   "control_witness": 9
+   "control_witness": 3
   }
  ]
 }

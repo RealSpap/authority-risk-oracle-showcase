@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-11-25T13:17:56Z",
+ "run_utc": "2026-11-25T19:17:43Z",
  "targets": 203,
  "moves_recorded": 45,
  "series": {
@@ -2657,15 +2657,6 @@
     "band_then": "decent"
    },
    {
-    "kind": "timelock op queued (parameter change)",
-    "key": "plasma:0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34",
-    "t": "2026-11-18T09:56:46Z",
-    "via": "plasma timelock 0xabd3\u20265072, found by the independent reader (1 tracked contract)",
-    "tx": "0x17abf03b18225f05ed6450501199a7a3dd598bae549d039c473ae5069bd39f5f",
-    "score_then": 57,
-    "band_then": "moderate"
-   },
-   {
     "kind": "admin changed (independent read)",
     "key": "robinhood:0x0dc846db6a4ec7b5a3e542f7db88049e9add2541",
     "t": "2026-11-21T01:08:33Z",
@@ -2735,6 +2726,15 @@
     "via": "slot 472935074",
     "tx": null,
     "score_then": 56,
+    "band_then": "moderate"
+   },
+   {
+    "kind": "timelock op queued (unknown)",
+    "key": "robinhood:0x14b107cf534239c59571b066cb6497a321da897c",
+    "t": "2026-11-25T17:39:32Z",
+    "via": "robinhood timelock 0x0da1\u2026001d, found by the independent reader (1 tracked contract)",
+    "tx": "0xbb013c74e252e4425949cd5b0efd3d08e2ee7c3da3311a53b744cc3dc18bde11",
+    "score_then": 40,
     "band_then": "moderate"
    }
   ],

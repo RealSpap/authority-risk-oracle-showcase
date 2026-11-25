@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-11-25T13:16:02Z",
+ "generated_utc": "2026-11-25T19:15:41Z",
  "wake_days": 14,
  "safes": 42,
  "read": 42,
@@ -7,13 +7,13 @@
  "changes": [
   {
    "delta": 1,
-   "idle_days": 5.2,
+   "idle_days": 2.0,
    "woke": false,
-   "safe": "ethereum-l1:0xfa77\u20266a66",
+   "safe": "arbitrum:0x5f0b\u2026841f",
    "governs": [
-    "ethereum-l1:0xc5f0f7b66764f6ec8c8dff7ba683102295e16409"
+    "arbitrum:0xffa10065ce1d1c42fabc46e06b84ed8ffeb4bae5"
    ],
-   "previous_run": "2026-11-25T07:16:07Z"
+   "previous_run": "2026-11-25T13:16:02Z"
   }
  ],
  "never_executed": [],
@@ -21,10 +21,10 @@
  "unread_chains": [],
  "by_safe": {
   "arbitrum:569110bd097c8358": {
-   "nonce": 116,
+   "nonce": 117,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-11-23T19:14:44Z",
-   "last_moved": "2026-11-23T19:14:44Z",
+   "idle_since": "2026-11-25T19:15:41Z",
+   "last_moved": "2026-11-25T19:15:41Z",
    "governs": [
     "arbitrum:0xffa10065ce1d1c42fabc46e06b84ed8ffeb4bae5"
    ],
@@ -191,6 +191,7 @@
    "observed_since": "2026-11-18T13:17:10Z",
    "idle_since": "2026-11-18T13:17:10Z",
    "governs": [
+    "hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109",
     "hyperliquid:0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec"
    ],
    "safe": "hyperliquid:0x18a8\u2026f8f1",

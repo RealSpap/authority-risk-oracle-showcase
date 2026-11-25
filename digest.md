@@ -3,26 +3,26 @@
 ## Needs a person, 2026-11-24T07:26:25Z: 48 item(s) (priority 1: 34, priority 2: 13, priority 3: 1); oldest 44.4 d
 
 ### Overdue: 26 priority-1 item(s) waiting for more than 2 day(s), back in the alarm
-- **Safe AddedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (6.3 d): AddedOwner 0x61C2…0e44 (aave_guardian)
-- **Safe AddedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (6.3 d): AddedOwner 0x2694…CbF1 (aave_guardian)
-- **Safe AddedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (6.3 d): AddedOwner 0xb291…Afef (aave_guardian)
-- **Safe AddedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (6.3 d): AddedOwner 0x985F…f235 (aave_guardian)
-- **Safe AddedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (6.3 d): AddedOwner 0x9EF7…0403 (aave_guardian)
-- **Safe AddedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (6.3 d): AddedOwner 0x61C2…0e44 (aave_guardian)
-- **Safe AddedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (6.3 d): AddedOwner 0x2694…CbF1 (aave_guardian)
-- **Safe AddedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (6.3 d): AddedOwner 0xb291…Afef (aave_guardian)
-- **Safe AddedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (6.3 d): AddedOwner 0x985F…f235 (aave_guardian)
-- **Safe AddedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (6.3 d): AddedOwner 0x9EF7…0403 (aave_guardian)
-- **Safe RemovedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (6.3 d): RemovedOwner 0xebED…FE29 (aave_guardian)
-- **Safe RemovedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (6.3 d): RemovedOwner 0xbd4D…f1F7 (aave_guardian)
-- **Safe RemovedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (6.3 d): RemovedOwner 0x936C…9EF3 (aave_guardian)
-- **Safe RemovedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (6.3 d): RemovedOwner 0x0D23…c0E9 (aave_guardian)
-- **Safe RemovedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (6.3 d): RemovedOwner 0x4C30…099f (aave_guardian)
-- **Safe RemovedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (6.3 d): RemovedOwner 0xebED…FE29 (aave_guardian)
-- **Safe RemovedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (6.3 d): RemovedOwner 0xbd4D…f1F7 (aave_guardian)
-- **Safe RemovedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (6.3 d): RemovedOwner 0x936C…9EF3 (aave_guardian)
-- **Safe RemovedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (6.3 d): RemovedOwner 0x0D23…c0E9 (aave_guardian)
-- **Safe RemovedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (6.3 d): RemovedOwner 0x4C30…099f (aave_guardian)
+- **Safe AddedOwner** arbitrum 0x1A05…973b (6.3 d): AddedOwner 0x61C2…0e44 (aave_guardian)
+- **Safe AddedOwner** arbitrum 0x1A05…973b (6.3 d): AddedOwner 0x2694…CbF1 (aave_guardian)
+- **Safe AddedOwner** arbitrum 0x1A05…973b (6.3 d): AddedOwner 0xb291…Afef (aave_guardian)
+- **Safe AddedOwner** arbitrum 0x1A05…973b (6.3 d): AddedOwner 0x985F…f235 (aave_guardian)
+- **Safe AddedOwner** arbitrum 0x1A05…973b (6.3 d): AddedOwner 0x9EF7…0403 (aave_guardian)
+- **Safe AddedOwner** plasma 0x19CE…4be6 (6.3 d): AddedOwner 0x61C2…0e44 (aave_guardian)
+- **Safe AddedOwner** plasma 0x19CE…4be6 (6.3 d): AddedOwner 0x2694…CbF1 (aave_guardian)
+- **Safe AddedOwner** plasma 0x19CE…4be6 (6.3 d): AddedOwner 0xb291…Afef (aave_guardian)
+- **Safe AddedOwner** plasma 0x19CE…4be6 (6.3 d): AddedOwner 0x985F…f235 (aave_guardian)
+- **Safe AddedOwner** plasma 0x19CE…4be6 (6.3 d): AddedOwner 0x9EF7…0403 (aave_guardian)
+- **Safe RemovedOwner** arbitrum 0x1A05…973b (6.3 d): RemovedOwner 0xebED…FE29 (aave_guardian)
+- **Safe RemovedOwner** arbitrum 0x1A05…973b (6.3 d): RemovedOwner 0xbd4D…f1F7 (aave_guardian)
+- **Safe RemovedOwner** arbitrum 0x1A05…973b (6.3 d): RemovedOwner 0x936C…9EF3 (aave_guardian)
+- **Safe RemovedOwner** arbitrum 0x1A05…973b (6.3 d): RemovedOwner 0x0D23…c0E9 (aave_guardian)
+- **Safe RemovedOwner** arbitrum 0x1A05…973b (6.3 d): RemovedOwner 0x4C30…099f (aave_guardian)
+- **Safe RemovedOwner** plasma 0x19CE…4be6 (6.3 d): RemovedOwner 0xebED…FE29 (aave_guardian)
+- **Safe RemovedOwner** plasma 0x19CE…4be6 (6.3 d): RemovedOwner 0xbd4D…f1F7 (aave_guardian)
+- **Safe RemovedOwner** plasma 0x19CE…4be6 (6.3 d): RemovedOwner 0x936C…9EF3 (aave_guardian)
+- **Safe RemovedOwner** plasma 0x19CE…4be6 (6.3 d): RemovedOwner 0x0D23…c0E9 (aave_guardian)
+- **Safe RemovedOwner** plasma 0x19CE…4be6 (6.3 d): RemovedOwner 0x4C30…099f (aave_guardian)
 - **queued operation executable** arbitrum 0x1eE00C305C51Ff3bE60162456A9B533C07cD9288 (3.5 d): parameter change: updateMaster() via arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract)
 - **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (3.3 d): AddedOwner 0xe016…970B (strato_bridge)
 - **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (3.3 d): AddedOwner 0x8AA3…2f71 (strato_bridge)
@@ -31,26 +31,26 @@
 - **Safe ChangedThreshold** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (3.3 d): ChangedThreshold 3 (strato_bridge)
 
 ### Something happened: read before trusting the score (34)
-- **Safe AddedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (6.3 d): AddedOwner 0x61C2…0e44 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (6.3 d): AddedOwner 0x2694…CbF1 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (6.3 d): AddedOwner 0xb291…Afef (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (6.3 d): AddedOwner 0x985F…f235 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (6.3 d): AddedOwner 0x9EF7…0403 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (6.3 d): AddedOwner 0x61C2…0e44 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (6.3 d): AddedOwner 0x2694…CbF1 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (6.3 d): AddedOwner 0xb291…Afef (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (6.3 d): AddedOwner 0x985F…f235 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (6.3 d): AddedOwner 0x9EF7…0403 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (6.3 d): RemovedOwner 0xebED…FE29 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (6.3 d): RemovedOwner 0xbd4D…f1F7 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (6.3 d): RemovedOwner 0x936C…9EF3 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (6.3 d): RemovedOwner 0x0D23…c0E9 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** arbitrum 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (6.3 d): RemovedOwner 0x4C30…099f (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (6.3 d): RemovedOwner 0xebED…FE29 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (6.3 d): RemovedOwner 0xbd4D…f1F7 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (6.3 d): RemovedOwner 0x936C…9EF3 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (6.3 d): RemovedOwner 0x0D23…c0E9 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** plasma 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (6.3 d): RemovedOwner 0x4C30…099f (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** arbitrum 0x1A05…973b (6.3 d): AddedOwner 0x61C2…0e44 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** arbitrum 0x1A05…973b (6.3 d): AddedOwner 0x2694…CbF1 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** arbitrum 0x1A05…973b (6.3 d): AddedOwner 0xb291…Afef (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** arbitrum 0x1A05…973b (6.3 d): AddedOwner 0x985F…f235 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** arbitrum 0x1A05…973b (6.3 d): AddedOwner 0x9EF7…0403 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** plasma 0x19CE…4be6 (6.3 d): AddedOwner 0x61C2…0e44 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** plasma 0x19CE…4be6 (6.3 d): AddedOwner 0x2694…CbF1 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** plasma 0x19CE…4be6 (6.3 d): AddedOwner 0xb291…Afef (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** plasma 0x19CE…4be6 (6.3 d): AddedOwner 0x985F…f235 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** plasma 0x19CE…4be6 (6.3 d): AddedOwner 0x9EF7…0403 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** arbitrum 0x1A05…973b (6.3 d): RemovedOwner 0xebED…FE29 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** arbitrum 0x1A05…973b (6.3 d): RemovedOwner 0xbd4D…f1F7 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** arbitrum 0x1A05…973b (6.3 d): RemovedOwner 0x936C…9EF3 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** arbitrum 0x1A05…973b (6.3 d): RemovedOwner 0x0D23…c0E9 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** arbitrum 0x1A05…973b (6.3 d): RemovedOwner 0x4C30…099f (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** plasma 0x19CE…4be6 (6.3 d): RemovedOwner 0xebED…FE29 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** plasma 0x19CE…4be6 (6.3 d): RemovedOwner 0xbd4D…f1F7 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** plasma 0x19CE…4be6 (6.3 d): RemovedOwner 0x936C…9EF3 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** plasma 0x19CE…4be6 (6.3 d): RemovedOwner 0x0D23…c0E9 (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** plasma 0x19CE…4be6 (6.3 d): RemovedOwner 0x4C30…099f (aave_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **queued operation executable** arbitrum 0x1eE00C305C51Ff3bE60162456A9B533C07cD9288 (3.5 d): parameter change: updateMaster() via arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
 - **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (3.3 d): AddedOwner 0xe016…970B (strato_bridge). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (3.3 d): AddedOwner 0x8AA3…2f71 (strato_bridge). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
@@ -96,26 +96,26 @@
 - Ethereum L1 (Sepolia): 39 targets, first entry turns stale in 134 h (2026-11-29 21:18 UTC); oldest update 2026-11-20 21:18 UTC
 
 ## Safe authority changes, last 7 days
-- arbitrum: RemovedOwner 0xebED…FE29 on 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (aave_guardian), tx 2e83ea0dbe32b8a9244324238b879db124c5b17b38594b6eb0e2d45f7dac47cb
-- arbitrum: AddedOwner 0x61C2…0e44 on 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (aave_guardian), tx 2e83ea0dbe32b8a9244324238b879db124c5b17b38594b6eb0e2d45f7dac47cb
-- arbitrum: RemovedOwner 0xbd4D…f1F7 on 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (aave_guardian), tx 2e83ea0dbe32b8a9244324238b879db124c5b17b38594b6eb0e2d45f7dac47cb
-- arbitrum: AddedOwner 0x2694…CbF1 on 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (aave_guardian), tx 2e83ea0dbe32b8a9244324238b879db124c5b17b38594b6eb0e2d45f7dac47cb
-- arbitrum: RemovedOwner 0x936C…9EF3 on 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (aave_guardian), tx 2e83ea0dbe32b8a9244324238b879db124c5b17b38594b6eb0e2d45f7dac47cb
-- arbitrum: AddedOwner 0xb291…Afef on 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (aave_guardian), tx 2e83ea0dbe32b8a9244324238b879db124c5b17b38594b6eb0e2d45f7dac47cb
-- arbitrum: RemovedOwner 0x0D23…c0E9 on 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (aave_guardian), tx 2e83ea0dbe32b8a9244324238b879db124c5b17b38594b6eb0e2d45f7dac47cb
-- arbitrum: AddedOwner 0x985F…f235 on 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (aave_guardian), tx 2e83ea0dbe32b8a9244324238b879db124c5b17b38594b6eb0e2d45f7dac47cb
-- arbitrum: RemovedOwner 0x4C30…099f on 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (aave_guardian), tx 2e83ea0dbe32b8a9244324238b879db124c5b17b38594b6eb0e2d45f7dac47cb
-- arbitrum: AddedOwner 0x9EF7…0403 on 0x1A0581dd5C7C3DA4Ba1CDa7e0BcA7286afc4973b (aave_guardian), tx 2e83ea0dbe32b8a9244324238b879db124c5b17b38594b6eb0e2d45f7dac47cb
-- plasma: RemovedOwner 0xebED…FE29 on 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (aave_guardian), tx d7197d5ec64ed62dbe0c92d19003c9e3b4f2a23b48da30ece4698ca5fde31d9b
-- plasma: AddedOwner 0x61C2…0e44 on 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (aave_guardian), tx d7197d5ec64ed62dbe0c92d19003c9e3b4f2a23b48da30ece4698ca5fde31d9b
-- plasma: RemovedOwner 0xbd4D…f1F7 on 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (aave_guardian), tx d7197d5ec64ed62dbe0c92d19003c9e3b4f2a23b48da30ece4698ca5fde31d9b
-- plasma: AddedOwner 0x2694…CbF1 on 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (aave_guardian), tx d7197d5ec64ed62dbe0c92d19003c9e3b4f2a23b48da30ece4698ca5fde31d9b
-- plasma: RemovedOwner 0x936C…9EF3 on 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (aave_guardian), tx d7197d5ec64ed62dbe0c92d19003c9e3b4f2a23b48da30ece4698ca5fde31d9b
-- plasma: AddedOwner 0xb291…Afef on 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (aave_guardian), tx d7197d5ec64ed62dbe0c92d19003c9e3b4f2a23b48da30ece4698ca5fde31d9b
-- plasma: RemovedOwner 0x0D23…c0E9 on 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (aave_guardian), tx d7197d5ec64ed62dbe0c92d19003c9e3b4f2a23b48da30ece4698ca5fde31d9b
-- plasma: AddedOwner 0x985F…f235 on 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (aave_guardian), tx d7197d5ec64ed62dbe0c92d19003c9e3b4f2a23b48da30ece4698ca5fde31d9b
-- plasma: RemovedOwner 0x4C30…099f on 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (aave_guardian), tx d7197d5ec64ed62dbe0c92d19003c9e3b4f2a23b48da30ece4698ca5fde31d9b
-- plasma: AddedOwner 0x9EF7…0403 on 0x19CE4363FEA478Aa04B9EA2937cc5A2cbcD44be6 (aave_guardian), tx d7197d5ec64ed62dbe0c92d19003c9e3b4f2a23b48da30ece4698ca5fde31d9b
+- arbitrum: RemovedOwner 0xebED…FE29 on 0x1A05…973b (aave_guardian), tx 2e83ea0dbe32b8a9244324238b879db124c5b17b38594b6eb0e2d45f7dac47cb
+- arbitrum: AddedOwner 0x61C2…0e44 on 0x1A05…973b (aave_guardian), tx 2e83ea0dbe32b8a9244324238b879db124c5b17b38594b6eb0e2d45f7dac47cb
+- arbitrum: RemovedOwner 0xbd4D…f1F7 on 0x1A05…973b (aave_guardian), tx 2e83ea0dbe32b8a9244324238b879db124c5b17b38594b6eb0e2d45f7dac47cb
+- arbitrum: AddedOwner 0x2694…CbF1 on 0x1A05…973b (aave_guardian), tx 2e83ea0dbe32b8a9244324238b879db124c5b17b38594b6eb0e2d45f7dac47cb
+- arbitrum: RemovedOwner 0x936C…9EF3 on 0x1A05…973b (aave_guardian), tx 2e83ea0dbe32b8a9244324238b879db124c5b17b38594b6eb0e2d45f7dac47cb
+- arbitrum: AddedOwner 0xb291…Afef on 0x1A05…973b (aave_guardian), tx 2e83ea0dbe32b8a9244324238b879db124c5b17b38594b6eb0e2d45f7dac47cb
+- arbitrum: RemovedOwner 0x0D23…c0E9 on 0x1A05…973b (aave_guardian), tx 2e83ea0dbe32b8a9244324238b879db124c5b17b38594b6eb0e2d45f7dac47cb
+- arbitrum: AddedOwner 0x985F…f235 on 0x1A05…973b (aave_guardian), tx 2e83ea0dbe32b8a9244324238b879db124c5b17b38594b6eb0e2d45f7dac47cb
+- arbitrum: RemovedOwner 0x4C30…099f on 0x1A05…973b (aave_guardian), tx 2e83ea0dbe32b8a9244324238b879db124c5b17b38594b6eb0e2d45f7dac47cb
+- arbitrum: AddedOwner 0x9EF7…0403 on 0x1A05…973b (aave_guardian), tx 2e83ea0dbe32b8a9244324238b879db124c5b17b38594b6eb0e2d45f7dac47cb
+- plasma: RemovedOwner 0xebED…FE29 on 0x19CE…4be6 (aave_guardian), tx d7197d5ec64ed62dbe0c92d19003c9e3b4f2a23b48da30ece4698ca5fde31d9b
+- plasma: AddedOwner 0x61C2…0e44 on 0x19CE…4be6 (aave_guardian), tx d7197d5ec64ed62dbe0c92d19003c9e3b4f2a23b48da30ece4698ca5fde31d9b
+- plasma: RemovedOwner 0xbd4D…f1F7 on 0x19CE…4be6 (aave_guardian), tx d7197d5ec64ed62dbe0c92d19003c9e3b4f2a23b48da30ece4698ca5fde31d9b
+- plasma: AddedOwner 0x2694…CbF1 on 0x19CE…4be6 (aave_guardian), tx d7197d5ec64ed62dbe0c92d19003c9e3b4f2a23b48da30ece4698ca5fde31d9b
+- plasma: RemovedOwner 0x936C…9EF3 on 0x19CE…4be6 (aave_guardian), tx d7197d5ec64ed62dbe0c92d19003c9e3b4f2a23b48da30ece4698ca5fde31d9b
+- plasma: AddedOwner 0xb291…Afef on 0x19CE…4be6 (aave_guardian), tx d7197d5ec64ed62dbe0c92d19003c9e3b4f2a23b48da30ece4698ca5fde31d9b
+- plasma: RemovedOwner 0x0D23…c0E9 on 0x19CE…4be6 (aave_guardian), tx d7197d5ec64ed62dbe0c92d19003c9e3b4f2a23b48da30ece4698ca5fde31d9b
+- plasma: AddedOwner 0x985F…f235 on 0x19CE…4be6 (aave_guardian), tx d7197d5ec64ed62dbe0c92d19003c9e3b4f2a23b48da30ece4698ca5fde31d9b
+- plasma: RemovedOwner 0x4C30…099f on 0x19CE…4be6 (aave_guardian), tx d7197d5ec64ed62dbe0c92d19003c9e3b4f2a23b48da30ece4698ca5fde31d9b
+- plasma: AddedOwner 0x9EF7…0403 on 0x19CE…4be6 (aave_guardian), tx d7197d5ec64ed62dbe0c92d19003c9e3b4f2a23b48da30ece4698ca5fde31d9b
 - robinhood: ChangedThreshold 3 on 0x8c458F866e603335ef179A63a2528F357732f5d5 (strato_bridge), tx 955b15b7a02ccc77fd1329403acf0aebe42d1e927f7ef0b0af9d88fb18ce5a5d
 - robinhood: AddedOwner 0xe016…970B on 0x8c458F866e603335ef179A63a2528F357732f5d5 (strato_bridge), tx 955b15b7a02ccc77fd1329403acf0aebe42d1e927f7ef0b0af9d88fb18ce5a5d
 - robinhood: AddedOwner 0x8AA3…2f71 on 0x8c458F866e603335ef179A63a2528F357732f5d5 (strato_bridge), tx 955b15b7a02ccc77fd1329403acf0aebe42d1e927f7ef0b0af9d88fb18ce5a5d

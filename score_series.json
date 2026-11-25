@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-11-24T19:19:00Z",
+ "run_utc": "2026-11-25T01:17:03Z",
  "targets": 203,
  "moves_recorded": 45,
  "series": {
@@ -2518,27 +2518,18 @@
  },
  "calibration": {
   "window_days": 14,
-  "actions": 25,
+  "actions": 24,
   "excluded_undecoded": 0,
   "excluded_other_target": 0,
   "under_40": 4,
   "by_band": {
    "critical": 1,
    "weak": 3,
-   "moderate": 16,
+   "moderate": 15,
    "decent": 5,
    "strong": 0
   },
   "list": [
-   {
-    "kind": "upgrade executed",
-    "key": "robinhood:0x14b107cf534239c59571b066cb6497a321da897c",
-    "t": "2026-11-10T22:06:24Z",
-    "via": "0x08fc299b608c6c37a601834152e2eab986d4db34",
-    "tx": null,
-    "score_then": 40,
-    "band_then": "moderate"
-   },
    {
     "kind": "upgrade executed",
     "key": "solana:JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",

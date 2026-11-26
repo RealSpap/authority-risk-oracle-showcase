@@ -1,6 +1,6 @@
 # Authority risk digest, 2026-11-26 01:28 UTC
 
-## Needs a person, 2026-11-26T01:28:31Z: 28 item(s) (priority 1: 18, priority 2: 9, priority 3: 1); oldest 46.2 d
+## Needs a person, 2026-11-26T01:28:31Z: 26 item(s) (priority 1: 16, priority 2: 9, priority 3: 1); oldest 46.2 d
 
 ### Overdue: 7 priority-1 item(s) waiting for more than 2 day(s), back in the alarm
 - **queued operation executable** arbitrum 0x1eE00C305C51Ff3bE60162456A9B533C07cD9288 (5.3 d): parameter change: updateMaster() via arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract)
@@ -11,7 +11,7 @@
 - **Safe ChangedThreshold** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (5.0 d): ChangedThreshold 3 (strato_bridge)
 - **queued operation executable** arbitrum 0x87E765B0f76F9071B7Ff8bCa2A1EB8338AcD14C3 (2.5 d): parameter change: updateAuth(address,uint256) via arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract)
 
-### Something happened: read before trusting the score (18)
+### Something happened: read before trusting the score (16)
 - **queued operation executable** arbitrum 0x1eE00C305C51Ff3bE60162456A9B533C07cD9288 (5.3 d): parameter change: updateMaster() via arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
 - **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (5.0 d): AddedOwner 0xe016…970B (strato_bridge). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (5.0 d): AddedOwner 0x8AA3…2f71 (strato_bridge). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
@@ -22,8 +22,6 @@
 - **queued operation executable** arbitrum 0x52Aa899454998Be5b000Ad077a46Bbe360F4e497 (1.8 d): parameter change: collectRevenue(address[]) via arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
 - **queued operation executable** plasma 0x52Aa899454998Be5b000Ad077a46Bbe360F4e497 (1.8 d): parameter change: collectRevenue(address[]) via plasma timelock 0x4d6c…2346, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
 - **queued operation executable** plasma 0x52Aa899454998Be5b000Ad077a46Bbe360F4e497 (1.8 d): parameter change: updateUserBorrowConfigs((address,address,uint8,uint256,uint256,uint256,uint256)[]) via plasma timelock 0x4d6c…2346, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
-- **queued operation executable within 48 h** ethereum 0x676A795fe6E43C17c668de16730c3F690FEB7120 (1.8 d): cross-chain message: sendMessage(address,bytes,uint32) via Compound Governance Timelock. To do: read the call before it lands. (pending_ops.json)
-- **queued operation executable within 48 h** ethereum 0x866E82a600A1414e583f7F13623F1aC5d58b0Afa (1.8 d): cross-chain message: sendMessage(address,bytes,uint32) via Compound Governance Timelock. To do: read the call before it lands. (pending_ops.json)
 - **queued operation executable** plasma 0x52Aa899454998Be5b000Ad077a46Bbe360F4e497 (1.5 d): upgrade: addImplementation(address,bytes4[]) via plasma timelock 0x4d6c…2346, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
 - **queued operation executable** ethereum 0x9D39A5DE30e57443BfF2A8307A4256c8797A3497 (1.2 d): parameter change: setCooldownDuration(uint24) via Ethena Timelock. To do: read the call before it lands. (pending_ops.json)
 - **queued operation executable** arbitrum 0x643E32D5a39C1B0a483BCF2C5c2c55C4b982ac06 (0.2 d): upgrade: upgradeTo(address) via arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
@@ -94,18 +92,11 @@
 - 16 target(s) added since that snapshot are not fingerprinted yet (informational)
 
 ## Solana Squads v4 multisigs (members, threshold, time lock)
-- [CHANGED] 51smH7pBDKJDgmVnVks3gMWaPQFfmQ5s4Fc223yHcjuH (EXPONENT_MS): time lock (s) 14400 -> 36000
 - [CHANGED] 5JZFPx6Qkg9PAgYMn9wHWirsiEQBfeJuE667MWeRBLPN (REWARD_SUPER_MS): member added 86mC…iMLg (permissions 6); member added CjEM…LZKY (permissions 7); member added FbcW…vHW7 (permissions 7); member removed 6Li1…ueL9; member removed BWyV…1w9C
 - [CHANGED] 5Y93cxqp8rGtjDhxGkehewfhFdxLkrCfPDWookCGeASF (JL_ADMIN_MS, ADMIN_MS): member removed 4Sqa…4Jqp; threshold 5 -> 4
 - [CHANGED] 74QKjjvoSrq2cGqFzzQNN8ox3gomYS1mBwcLsbiYaH8j (ADMIN_MS): member added 6vRh…apm9 (permissions 7); member removed 3Cxn…MEMB; member removed FwZd…YJCX
-- [CHANGED] 7FCPipJWVbPbdHymVt1gJYwKciakkJz5GahdQySemvHk (UPGRADE_MS): member added 6vRh…apm9 (permissions 7); member removed 3Cxn…MEMB; member removed FwZd…YJCX
 - [CHANGED] 7VVPGwvWh37LyhL1tVm6pGUzm3S1u6p17H6ttT9ZEFex (DELEGATE_MS): member added DAk1…KiMf (permissions 7)
-- [CHANGED] 7qipzLR9j1JcvdxE1XJEFgvoyFmgBpgw5hMdHBMPcJtM (DRIFT_MS): member removed 3mpT…qAfS
-- [CHANGED] 8Sr4rQJL2aQT3EL97mbrk1T9VMw4pCS2mxMPp2QBzHQq (LULO_MS): member added 9uyE…Jiuy (permissions 7); member added ENbm…tNmU (permissions 7); member added Ggin…bCjh (permissions 7); member added GqRN…1qYz (permissions 7); member added HKzQ…Yhz5 (permissions 7); member removed 2dMW…AYPT; member removed 2fqV…uiBD; member removed 5c9e…A2A4; member removed 6r76…So9G; member removed 9RDE…g8RZ; member removed At3T…MWTh; member removed BQZ9…JUpk; member removed DvJu…KPZk
-- [CHANGED] AEb1u8FK8EuXLcPtprCy8s4NkqBNoP5mfbuEEop2dJGf (SOLSTICE_MS): member added 5kVC…SK1G (permissions 7); member added GG2k…Ub8E (permissions 7)
-- [CHANGED] BQsDWkL417U4tVE2sDnPks469pKdm6YzFgKH77doiEjF (UPGRADE_MS): member added 6M7B…99HV (permissions 2); member added CjEM…LZKY (permissions 5); member removed 2NfC…7gXb; member removed 9FtD…ZMn4
 - [CHANGED] HvYoRSJdVcj6WRWV57yLu2Vmwh1ccqJRdkCwhNsSfRu4 (ADMIN_MS): time lock (s) 0 -> 21600
-- [CHANGED] J3mJ3wz6xkVUk3T8qHnuAYNxsRH3ixHsryYNZAU2vG8P (JL_UPGRADE_MS, UPGRADE_MS): member added 5tjC…LKzv (permissions 7); member removed 8BR8…rz9H
 
 ## Signer accounts (plain EOA, EIP-7702 delegation, contract)
 - [CHANGED] base:0x8769…5838: eoa -> contract

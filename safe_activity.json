@@ -1,59 +1,19 @@
 {
- "generated_utc": "2026-11-26T13:18:05Z",
+ "generated_utc": "2026-11-26T19:16:04Z",
  "wake_days": 14,
  "safes": 42,
  "read": 42,
  "woke": [],
  "changes": [
   {
-   "delta": 1,
-   "idle_days": 13.8,
+   "delta": 4,
+   "idle_days": 0.7,
    "woke": false,
-   "safe": "arbitrum:0x7877\u202675ac",
+   "safe": "robinhood:0x0eea\u2026dfd8",
    "governs": [
-    "arbitrum:0x888888888889758f76e7103c6cbf23abbf58f946"
+    "robinhood:0x1ac9db4a2608ba45d6127b1737949b51bb54b7f3"
    ],
-   "previous_run": "2026-11-26T07:15:45Z"
-  },
-  {
-   "delta": 3,
-   "idle_days": 1.7,
-   "woke": false,
-   "safe": "ethereum-l1:0x3b0a\u20261862",
-   "governs": [
-    "ethereum-l1:0x2cc440b721d2cafd6d64908d6d8c4acc57f8afc3"
-   ],
-   "previous_run": "2026-11-26T07:15:45Z"
-  },
-  {
-   "delta": 2,
-   "idle_days": 13.8,
-   "woke": false,
-   "safe": "ethereum-l1:0x8119\u20266ee1",
-   "governs": [
-    "ethereum-l1:0x888888888889758f76e7103c6cbf23abbf58f946"
-   ],
-   "previous_run": "2026-11-26T07:15:45Z"
-  },
-  {
-   "delta": 1,
-   "idle_days": 13.8,
-   "woke": false,
-   "safe": "plasma:0x7877\u202675ac",
-   "governs": [
-    "plasma:0x888888888889758f76e7103c6cbf23abbf58f946"
-   ],
-   "previous_run": "2026-11-26T07:15:45Z"
-  },
-  {
-   "delta": 1,
-   "idle_days": 13.8,
-   "woke": false,
-   "safe": "robinhood:0x7877\u202675ac",
-   "governs": [
-    "robinhood:0x544bf81c855ae84c1e8b65d5e38770898d01eee2"
-   ],
-   "previous_run": "2026-11-26T07:15:45Z"
+   "previous_run": "2026-11-26T13:18:05Z"
   }
  ],
  "never_executed": [],
@@ -231,6 +191,7 @@
    "observed_since": "2026-11-26T13:18:05Z",
    "idle_since": "2026-11-26T13:18:05Z",
    "governs": [
+    "hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109",
     "hyperliquid:0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec"
    ],
    "safe": "hyperliquid:0x18a8\u2026f8f1",
@@ -312,10 +273,10 @@
    "never_executed": false
   },
   "robinhood:e8bf689e4f96ba54": {
-   "nonce": 531,
+   "nonce": 535,
    "observed_since": "2026-10-10T21:12:49Z",
-   "idle_since": "2026-11-26T01:13:35Z",
-   "last_moved": "2026-11-26T01:13:35Z",
+   "idle_since": "2026-11-26T19:16:04Z",
+   "last_moved": "2026-11-26T19:16:04Z",
    "governs": [
     "robinhood:0x1ac9db4a2608ba45d6127b1737949b51bb54b7f3"
    ],

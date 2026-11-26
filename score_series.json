@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-11-26T13:19:51Z",
+ "run_utc": "2026-11-26T19:18:18Z",
  "targets": 203,
  "moves_recorded": 45,
  "series": {
@@ -2518,27 +2518,18 @@
  },
  "calibration": {
   "window_days": 14,
-  "actions": 23,
+  "actions": 22,
   "excluded_undecoded": 0,
   "excluded_other_target": 0,
-  "under_40": 4,
+  "under_40": 3,
   "by_band": {
    "critical": 1,
-   "weak": 3,
+   "weak": 2,
    "moderate": 14,
    "decent": 5,
    "strong": 0
   },
   "list": [
-   {
-    "kind": "admin changed (independent read)",
-    "key": "solana:4qp6Fx6tnZkY5Wropq9wUYgtFxXKwE6viZxFHg3rdAG8",
-    "t": "2026-11-12T15:54:00Z",
-    "via": null,
-    "tx": null,
-    "score_then": 32,
-    "band_then": "weak"
-   },
    {
     "kind": "timelock op queued (parameter change)",
     "key": "ethereum-l1:0xe3490297a08d6fc8da46edb7b6142e4f461b62d3",

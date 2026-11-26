@@ -1055,16 +1055,36 @@
    "chain": "ethereum",
    "timelock": "ethereum-l1 timelock 0x2386\u20261f4c, found by the independent reader (1 tracked contract)",
    "what": "nested timelock"
+  },
+  "arbitrum:0x4d6ce4f4498d59eed397bcbc687805a07f9b2346:0x679a64848b9b31860a99204df7663736a4499c5ffb45038b626b5522bb2ae9a5": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-11-26T19:00:48Z",
+   "due_utc": "2026-11-27T16:36:42Z",
+   "notice_hours": 21.6,
+   "state": "queued",
+   "chain": "arbitrum",
+   "timelock": "arbitrum timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
+   "what": "authority change"
+  },
+  "plasma:0x4d6ce4f4498d59eed397bcbc687805a07f9b2346:0x84cea19b9108e10fa0c74cd45e81a40bf81c34106e16d9f81bd1ebce6aeb8ea9": {
+   "outcome": "warned",
+   "first_seen_utc": "2026-11-26T19:00:48Z",
+   "due_utc": "2026-11-27T16:36:48Z",
+   "notice_hours": 21.6,
+   "state": "queued",
+   "chain": "plasma",
+   "timelock": "plasma timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
+   "what": "authority change"
   }
  },
- "updated_utc": "2026-11-26T13:00:54Z",
+ "updated_utc": "2026-11-26T19:00:48Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
-  "warned": 73,
+  "warned": 75,
   "seen_without_notice": 0,
   "missed": 1,
   "baseline": 26,
-  "warned_with_a_known_notice": 73,
+  "warned_with_a_known_notice": 75,
   "shortest_notice_hours": 14.0,
   "median_notice_hours": 21.2,
   "note": "warned: seen while queued and not yet executable (the notice is real); seen_without_notice: still queued but already executable when first seen; missed: queued after the ledger started and already applied when first seen (faster than the 6-hour cadence); baseline: applied before the ledger started, counted as neither."

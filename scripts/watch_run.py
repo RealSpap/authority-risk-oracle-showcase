@@ -88,9 +88,21 @@ _rate_spent, _rate_seen, _rate_cap = {}, set(), {}
 FALLBACK_RPC = {"https://rpc.hyperliquid-testnet.xyz/evm": ["https://998.rpc.thirdweb.com", "https://hyperliquid-testnet.drpc.org"]}
 
 
+# 26/11/2026: 998.rpc.thirdweb.com refuses a log range above 1000 blocks with the code -32005, the code of "rate limited", and the words below. That refusal is about the SIZE of the
+# request, not about the pace: waiting does not help and the node is not to be dropped, a narrower range is to be tried (scan_logs). Measured on 26 November 2026: the same node answers 1000, 200 and 100 blocks.
+SIZE_REFUSED = re.compile(r"size exceeded|response size|block range|ranges over|exceeds? max|max(?:imum)? (?:allowed )?(?:number of )?(?:requested )?blocks|too large", re.I)
+RATE_WORDS = re.compile(r"\brate[-_ ]?limit|throttl|too many request|\b429\b", re.I)   # a message that says both is a limit
+
+
+def _size_refused(e):
+    msg = str(e.get("message", "")); return bool(SIZE_REFUSED.search(msg)) and not RATE_WORDS.search(msg)
+
+
 def _rate_limited(out):
     if isinstance(out, dict) and isinstance(out.get("error"), dict):
-        e = out["error"]; return e.get("code") == -32005 or "rate" in str(e.get("message", "")).lower()
+        e = out["error"]
+        if _size_refused(e): return False   # a refused size is not a rate limit, whatever its code
+        return e.get("code") == -32005 or "rate" in str(e.get("message", "")).lower()
     return False
 
 
@@ -297,7 +309,7 @@ def scan_logs(oracle, nodes, since, block):
                     if len(t) < 3: continue
                     found.append({"event": "RoleGranted" if t[0].lower() == TOPIC_GRANTED else "RoleRevoked", "role": ROLE_NAMES.get(t[1].lower(), t[1]),
                                   "account": "0x" + t[2][-40:], "sender": ("0x" + t[3][-40:]) if len(t) > 3 else None, "block": int(l["blockNumber"], 16), "tx": l.get("transactionHash")})
-                pos, answered, done = b + 1, answered + 1, True
+                pos, answered, done, last = b + 1, answered + 1, True, None   # an answer clears the error of a refused wider span: the scan is only as unread as its LAST failure says
                 spans = [x for x in spans if x <= span]   # the next slice starts at the span that worked: a wider one was refused
                 break
             if done: break

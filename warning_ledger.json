@@ -975,10 +975,12 @@
    "first_seen_utc": "2026-11-23T19:00:42Z",
    "due_utc": "2026-11-24T17:27:35Z",
    "notice_hours": 22.4,
-   "state": "queued",
+   "state": "resolved",
    "chain": "ethereum",
    "timelock": "Ethena Timelock",
-   "what": "parameter change"
+   "what": "parameter change",
+   "resolved_seen_utc": "2026-11-26T13:00:54Z",
+   "final_state": "executed"
   },
   "ethereum:0x6d903f6003cca6255d85cca4d3b5e5146dc33925:0x685ee6fc179dd528656456bfc36ed4318e93c93a2a58d21e3c91693d87cfd80e": {
    "outcome": "warned",
@@ -1055,7 +1057,7 @@
    "what": "nested timelock"
   }
  },
- "updated_utc": "2026-11-26T07:00:45Z",
+ "updated_utc": "2026-11-26T13:00:54Z",
  "summary": {
   "since_utc": "2026-10-12T08:35:43Z",
   "warned": 73,

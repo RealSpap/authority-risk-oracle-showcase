@@ -1,7 +1,7 @@
 {
- "swept_utc": "2026-10-21",
+ "swept_utc": "2026-11-27",
  "valid_days": 30,
- "source": "CHANGELOG.md, section 2026.10.4: the table of shared signers (the base of every crossExposureScore) was swept again on 21 October 2026; a push after 20 November 2026 without a new sweep reads any value above 80 as 80",
+ "source": "CHANGELOG.md, section \"Sweep of the shared-signer table, 27 November 2026\": the table of shared signers (the base of every crossExposureScore) was swept again on 27 November 2026; the scorers' own dated constant still reads 21 November 2026, so a push after 21 December 2026 without a new sweep reads any value above 80 as 80",
  "what": "The date of the sweep of the shared-signer table, written by hand at every sweep (scripts/cross_chain.py reads it and says, per protocol and chain, which sweep its crossExposure scores rest on and whether it is past its validity). The scorers do not read this file: it is the Watch's record of a date the scorers' own dated constants carry. Optional, written by hand when a sweep covered only part of the table: `chains` ({\"<chain>\": {\"swept_utc\", \"valid_days\"}}) and `targets` ({\"<chain>:<address, lower case>\": {...}}) override the file's own date for that chain or that target, in that order (target, chain, file); scripts/cross_chain.py publishes the date each target rests on.",
  "chains": {},
  "targets": {}

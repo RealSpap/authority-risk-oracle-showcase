@@ -21,6 +21,10 @@ Each correction is a file in [errata](errata/README.md). A post is not removed t
 - 2026-11-23: the note [The 27 hours before the PumpSwap upgrade](https://realspap.github.io/oracle/notes/the-27-hours/), published on 2026-11-17, gave 13:49:21 UTC as the time of the last write of the buffer and counted 1,258 transactions as writes; my post of 2026-11-18 that links it repeats the count. The transaction of 13:49:21 UTC sends 1 lamport to each of 19 accounts and writes nothing. The last write is at 13:49:06 UTC (block 469350379), the wait is 27 hours 31 minutes 14 seconds, and 1,256 of the 1,260 transactions of the buffer hold a write. The headline figure, 27 h 31 min, the bytes and their SHA-256 are unchanged. The note is corrected in place with the old and the new value; the post is unchanged. Read at 18:56Z on 25 November 2026. Entry: [E-2026-11-23-the-27-hours-last-write](errata/E-2026-11-23-the-27-hours-last-write.md).
 - 2026-11-24: the entry "Recurring updater wired" said that the score updater runs weekly through a workflow. The workflow file is not in this repository, and the scores are pushed by hand. The sentence now says: prepared every week and pushed by hand, at the latest every nine days. The Plasma deploy README carried the same claim and is corrected. The earlier text stays in the history of git. Read at 18:58Z on 25 November 2026. Entry: [E-2026-11-24-the-weekly-job-claim](errata/E-2026-11-24-the-weekly-job-claim.md).
 
+### Sweep of the shared-signer table, 27 November 2026
+
+The table of shared signers was swept again on 27 November 2026 (read at 18:58Z on 27 November): 117 groups on 8 ecosystems, none incomplete. The snapshot is valid for 30 days.
+
 ### Renewal pushes of 18, 19 and 20 November 2026 (all nine oracles; Tempo carries a new hash and a fifteenth target)
 
 | Oracle | methodologyHash | Pushed |

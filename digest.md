@@ -1,30 +1,20 @@
 # Authority risk digest, 2026-11-27 01:28 UTC
 
-## Needs a person, 2026-11-27T01:28:21Z: 35 item(s) (priority 1: 24, priority 2: 10, priority 3: 1); oldest 47.2 d
+## Needs a person, 2026-11-27T01:28:21Z: 30 item(s) (priority 1: 19, priority 2: 10, priority 3: 1); oldest 47.2 d
 
-### Overdue: 10 priority-1 item(s) waiting for more than 2 day(s), back in the alarm
+### Overdue: 5 priority-1 item(s) waiting for more than 2 day(s), back in the alarm
 - **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (6.0 d): AddedOwner 0xe016…970B (strato_bridge)
 - **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (6.0 d): AddedOwner 0x8AA3…2f71 (strato_bridge)
 - **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (6.0 d): AddedOwner 0x4008…1CAD (strato_bridge)
 - **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (6.0 d): AddedOwner 0x0584…4CF5 (strato_bridge)
 - **Safe ChangedThreshold** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (6.0 d): ChangedThreshold 3 (strato_bridge)
-- **queued operation executable** arbitrum 0x87E765B0f76F9071B7Ff8bCa2A1EB8338AcD14C3 (3.5 d): parameter change: updateAuth(address,uint256) via arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract)
-- **queued operation executable** arbitrum 0x52Aa899454998Be5b000Ad077a46Bbe360F4e497 (2.8 d): parameter change: collectRevenue(address[]) via arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract)
-- **queued operation executable** plasma 0x52Aa899454998Be5b000Ad077a46Bbe360F4e497 (2.8 d): parameter change: collectRevenue(address[]) via plasma timelock 0x4d6c…2346, found by the independent reader (1 tracked contract)
-- **queued operation executable** plasma 0x52Aa899454998Be5b000Ad077a46Bbe360F4e497 (2.8 d): parameter change: updateUserBorrowConfigs((address,address,uint8,uint256,uint256,uint256,uint256)[]) via plasma timelock 0x4d6c…2346, found by the independent reader (1 tracked contract)
-- **queued operation executable** plasma 0x52Aa899454998Be5b000Ad077a46Bbe360F4e497 (2.5 d): upgrade: addImplementation(address,bytes4[]) via plasma timelock 0x4d6c…2346, found by the independent reader (1 tracked contract)
 
-### Something happened: read before trusting the score (24)
+### Something happened: read before trusting the score (19)
 - **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (6.0 d): AddedOwner 0xe016…970B (strato_bridge). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (6.0 d): AddedOwner 0x8AA3…2f71 (strato_bridge). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (6.0 d): AddedOwner 0x4008…1CAD (strato_bridge). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (6.0 d): AddedOwner 0x0584…4CF5 (strato_bridge). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe ChangedThreshold** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (6.0 d): ChangedThreshold 3 (strato_bridge). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **queued operation executable** arbitrum 0x87E765B0f76F9071B7Ff8bCa2A1EB8338AcD14C3 (3.5 d): parameter change: updateAuth(address,uint256) via arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
-- **queued operation executable** arbitrum 0x52Aa899454998Be5b000Ad077a46Bbe360F4e497 (2.8 d): parameter change: collectRevenue(address[]) via arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
-- **queued operation executable** plasma 0x52Aa899454998Be5b000Ad077a46Bbe360F4e497 (2.8 d): parameter change: collectRevenue(address[]) via plasma timelock 0x4d6c…2346, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
-- **queued operation executable** plasma 0x52Aa899454998Be5b000Ad077a46Bbe360F4e497 (2.8 d): parameter change: updateUserBorrowConfigs((address,address,uint8,uint256,uint256,uint256,uint256)[]) via plasma timelock 0x4d6c…2346, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
-- **queued operation executable** plasma 0x52Aa899454998Be5b000Ad077a46Bbe360F4e497 (2.5 d): upgrade: addImplementation(address,bytes4[]) via plasma timelock 0x4d6c…2346, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
 - **queued operation executable** arbitrum 0x643E32D5a39C1B0a483BCF2C5c2c55C4b982ac06 (1.2 d): upgrade: upgradeTo(address) via arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
 - **queued operation executable** ethereum 0x31BD060f6c0Ce4284Bb30f2C8C27Ca48542347a7 (1.2 d): parameter change: addOracle(address) via Ethena Timelock. To do: read the call before it lands. (pending_ops.json)
 - **queued operation executable** plasma 0x643E32D5a39C1B0a483BCF2C5c2c55C4b982ac06 (1.2 d): upgrade: upgradeTo(address) via plasma timelock 0x4d6c…2346, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)

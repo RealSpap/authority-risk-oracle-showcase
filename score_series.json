@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-11-27T13:15:52Z",
+ "run_utc": "2026-11-27T19:17:16Z",
  "targets": 203,
  "moves_recorded": 46,
  "series": {
@@ -2564,14 +2564,14 @@
  },
  "calibration": {
   "window_days": 14,
-  "actions": 20,
+  "actions": 24,
   "excluded_undecoded": 0,
   "excluded_other_target": 0,
-  "under_40": 3,
+  "under_40": 5,
   "by_band": {
-   "critical": 1,
+   "critical": 3,
    "weak": 2,
-   "moderate": 14,
+   "moderate": 16,
    "decent": 3,
    "strong": 0
   },
@@ -2754,6 +2754,42 @@
     "via": "robinhood timelock 0x0da1\u2026001d, found by the independent reader (1 tracked contract)",
     "tx": "0xbb013c74e252e4425949cd5b0efd3d08e2ee7c3da3311a53b744cc3dc18bde11",
     "score_then": 40,
+    "band_then": "moderate"
+   },
+   {
+    "kind": "admin changed (independent read)",
+    "key": "robinhood:0x5c98b2d892b37c9a1d3b69472bddc172a64cdc09",
+    "t": "2026-11-27T19:10:57Z",
+    "via": null,
+    "tx": null,
+    "score_then": 2,
+    "band_then": "critical"
+   },
+   {
+    "kind": "admin changed (independent read)",
+    "key": "robinhood:0xd01c774d4a66408326bc65728ac5ae5aaf004032",
+    "t": "2026-11-27T19:10:57Z",
+    "via": null,
+    "tx": null,
+    "score_then": 46,
+    "band_then": "moderate"
+   },
+   {
+    "kind": "admin changed (independent read)",
+    "key": "robinhood:0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d",
+    "t": "2026-11-27T19:10:57Z",
+    "via": null,
+    "tx": null,
+    "score_then": 1,
+    "band_then": "critical"
+   },
+   {
+    "kind": "upgrade executed",
+    "key": "plasma:0x52aa899454998be5b000ad077a46bbe360f4e497",
+    "t": "2026-11-27T19:10:57Z",
+    "via": "0x8bdd171da967345a23af927051e8860e6b9fafe7",
+    "tx": null,
+    "score_then": 59,
     "band_then": "moderate"
    }
   ],

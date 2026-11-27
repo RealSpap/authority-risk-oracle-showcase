@@ -400,36 +400,6 @@
    "latest_queued": 1795711002,
    "pending": [
     {
-     "block": 526454697,
-     "tx": "0xa4aeccf5e0a3f6bbfd749159219619ec02aa283a3870aa55febf80c077c75cdc",
-     "id": "0x13a967dc3b57148ce1cff63e202f3489128365bb6981edaa07f2fd99b7d19cb9",
-     "index": 0,
-     "target": "0x87E765B0f76F9071B7Ff8bCa2A1EB8338AcD14C3",
-     "value": 0,
-     "selector": "0x77396ce5",
-     "delay": 86400,
-     "signature": "updateAuth(address,uint256)",
-     "calls": 2,
-     "ready_at": 1795419127,
-     "state": "ready",
-     "decoded": "parameter change"
-    },
-    {
-     "block": 526735728,
-     "tx": "0xe862de079af562f6bf38a3a8d96cacc59bcd598b8309b0cebe8be74d1daf7d88",
-     "id": "0xf89c4aa6833b4072b6c312ba9aa5bc0acc9c908a6b78b1ae0b5e3b5d3fd2ffb4",
-     "index": 0,
-     "target": "0x52Aa899454998Be5b000Ad077a46Bbe360F4e497",
-     "value": 0,
-     "selector": "0xac862bfa",
-     "delay": 86400,
-     "signature": "collectRevenue(address[])",
-     "calls": 2,
-     "ready_at": 1795503867,
-     "state": "ready",
-     "decoded": "parameter change"
-    },
-    {
      "block": 527146546,
      "tx": "0xe4e1d43f7fc617c738b9c377a1106a06f357b5aea7475359f9bd1ac51ac76f18",
      "id": "0x3bfe45488453b0b122ced202f326db97e05ef1b567e96a25d09f5a198971ffe8",
@@ -456,7 +426,7 @@
      "signature": "updateRole(address,uint256)",
      "calls": 4,
      "ready_at": 1795797402,
-     "state": "waiting",
+     "state": "ready",
      "decoded": "authority change"
     }
    ],
@@ -502,7 +472,7 @@
      "delay": 86400,
      "signature": "updateAuth(address,uint256)",
      "calls": 2,
-     "still_queued": true,
+     "still_queued": false,
      "queued_at": 1795332727,
      "decoded": "parameter change"
     },
@@ -517,7 +487,7 @@
      "delay": 86400,
      "signature": "collectRevenue(address[])",
      "calls": 2,
-     "still_queued": true,
+     "still_queued": false,
      "queued_at": 1795417467,
      "decoded": "parameter change"
     },
@@ -555,7 +525,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 3978947,
+   "window_blocks": 3992079,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -663,7 +633,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/mainnet",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 100498,
+   "window_blocks": 100800,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -717,51 +687,6 @@
    "latest_queued": 1795711008,
    "pending": [
     {
-     "block": 38472455,
-     "tx": "0xd954e39b7231f238f4b90be27709f7d1520ab487f494b584954c5a1ecabcbaee",
-     "id": "0x2c11ebf1e053f9df557d3cff49f1c730c406b9b36ff9c6a733d57ef4d47ff582",
-     "index": 0,
-     "target": "0x52Aa899454998Be5b000Ad077a46Bbe360F4e497",
-     "value": 0,
-     "selector": "0xac862bfa",
-     "delay": 86400,
-     "signature": "collectRevenue(address[])",
-     "calls": 2,
-     "ready_at": 1795503906,
-     "state": "ready",
-     "decoded": "parameter change"
-    },
-    {
-     "block": 38472473,
-     "tx": "0x5c80dd4ecb81cd36fad8cb0a36f439fff24891faf263065969d77874b5867e01",
-     "id": "0xb3e5ce72335f1144ccf48d4672ff84ad0102278a8730c46816d592a5cfc1da09",
-     "index": 0,
-     "target": "0x52Aa899454998Be5b000Ad077a46Bbe360F4e497",
-     "value": 0,
-     "selector": "0x01b88f86",
-     "delay": 86400,
-     "signature": "updateUserBorrowConfigs((address,address,uint8,uint256,uint256,uint256,uint256)[])",
-     "calls": 1,
-     "ready_at": 1795503924,
-     "state": "ready",
-     "decoded": "parameter change"
-    },
-    {
-     "block": 38474169,
-     "tx": "0x18d2b0cdd5815cb3ad9c58cf0a88bc623195958ba6b415f176c5b64c63224750",
-     "id": "0x5f6002a4f9ee9c872dc8bfe403bec291871af40dc9f47dffb12cad23bff72b97",
-     "index": 0,
-     "target": "0x52Aa899454998Be5b000Ad077a46Bbe360F4e497",
-     "value": 0,
-     "selector": "0xf0c01b42",
-     "delay": 86400,
-     "signature": "addImplementation(address,bytes4[])",
-     "calls": 11,
-     "ready_at": 1795505620,
-     "state": "ready",
-     "decoded": "upgrade"
-    },
-    {
      "block": 38577400,
      "tx": "0xa388a5658960760726d5347445afce10646b0ab0750d9b622516cc5969940d0c",
      "id": "0xe3e99c2b96549f9168d1769ee9fff39831d578065a8c82dc1da0bc70ad60421b",
@@ -788,7 +713,7 @@
      "signature": "updateRole(address,uint256)",
      "calls": 4,
      "ready_at": 1795797408,
-     "state": "waiting",
+     "state": "ready",
      "decoded": "authority change"
     }
    ],
@@ -804,7 +729,7 @@
      "delay": 86400,
      "signature": "collectRevenue(address[])",
      "calls": 2,
-     "still_queued": true,
+     "still_queued": false,
      "queued_at": 1795417506,
      "decoded": "parameter change"
     },
@@ -819,7 +744,7 @@
      "delay": 86400,
      "signature": "updateUserBorrowConfigs((address,address,uint8,uint256,uint256,uint256,uint256)[])",
      "calls": 1,
-     "still_queued": true,
+     "still_queued": false,
      "queued_at": 1795417524,
      "decoded": "parameter change"
     },
@@ -834,7 +759,7 @@
      "delay": 86400,
      "signature": "addImplementation(address,bytes4[])",
      "calls": 11,
-     "still_queued": true,
+     "still_queued": false,
      "queued_at": 1795419220,
      "decoded": "upgrade"
     },
@@ -933,7 +858,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 0,
    "window_blocks": 3000000,
-   "window_days_est": 3.6,
+   "window_days_est": 3.9,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62"
@@ -985,7 +910,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 86400,
    "window_blocks": 3000000,
-   "window_days_est": 3.6,
+   "window_days_est": 3.9,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x14b107cf534239c59571b066cb6497a321da897c"
@@ -1026,9 +951,9 @@
    ]
   }
  ],
- "discovered_utc": "2026-11-27T13:10:01Z",
+ "discovered_utc": "2026-11-27T19:10:57Z",
  "discovered": 15,
- "squads_utc": "2026-11-27T13:15:31Z",
+ "squads_utc": "2026-11-27T19:17:00Z",
  "not_shown": [
   "squads"
  ]

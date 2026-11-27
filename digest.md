@@ -1,9 +1,8 @@
 # Authority risk digest, 2026-11-26 01:28 UTC
 
-## Needs a person, 2026-11-26T01:28:31Z: 25 item(s) (priority 1: 15, priority 2: 9, priority 3: 1); oldest 46.2 d
+## Needs a person, 2026-11-26T01:28:31Z: 24 item(s) (priority 1: 14, priority 2: 9, priority 3: 1); oldest 46.2 d
 
-### Overdue: 7 priority-1 item(s) waiting for more than 2 day(s), back in the alarm
-- **queued operation executable** arbitrum 0x1eE00C305C51Ff3bE60162456A9B533C07cD9288 (5.3 d): parameter change: updateMaster() via arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract)
+### Overdue: 6 priority-1 item(s) waiting for more than 2 day(s), back in the alarm
 - **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (5.0 d): AddedOwner 0xe016…970B (strato_bridge)
 - **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (5.0 d): AddedOwner 0x8AA3…2f71 (strato_bridge)
 - **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (5.0 d): AddedOwner 0x4008…1CAD (strato_bridge)
@@ -11,8 +10,7 @@
 - **Safe ChangedThreshold** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (5.0 d): ChangedThreshold 3 (strato_bridge)
 - **queued operation executable** arbitrum 0x87E765B0f76F9071B7Ff8bCa2A1EB8338AcD14C3 (2.5 d): parameter change: updateAuth(address,uint256) via arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract)
 
-### Something happened: read before trusting the score (15)
-- **queued operation executable** arbitrum 0x1eE00C305C51Ff3bE60162456A9B533C07cD9288 (5.3 d): parameter change: updateMaster() via arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
+### Something happened: read before trusting the score (14)
 - **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (5.0 d): AddedOwner 0xe016…970B (strato_bridge). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (5.0 d): AddedOwner 0x8AA3…2f71 (strato_bridge). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (5.0 d): AddedOwner 0x4008…1CAD (strato_bridge). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)

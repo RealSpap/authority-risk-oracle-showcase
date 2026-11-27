@@ -415,7 +415,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 3840000,
+   "window_blocks": 3876923,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -431,21 +431,6 @@
    "queued_events": 95,
    "latest_queued": 1795711002,
    "pending": [
-    {
-     "block": 525661291,
-     "tx": "0xd0b7d32f325cd154329746e24930c3dcb27da594e8f2f3a1ffdd5a330b75f5d4",
-     "id": "0xd438873df28f8132f729bed3a69995668eb1775573cc920527263ee506359814",
-     "index": 0,
-     "target": "0x1eE00C305C51Ff3bE60162456A9B533C07cD9288",
-     "value": 0,
-     "selector": "0xcf1a0ddc",
-     "delay": 86400,
-     "signature": "updateMaster()",
-     "calls": 1,
-     "ready_at": 1795190270,
-     "state": "ready",
-     "decoded": "parameter change"
-    },
     {
      "block": 526454697,
      "tx": "0xa4aeccf5e0a3f6bbfd749159219619ec02aa283a3870aa55febf80c077c75cdc",
@@ -534,7 +519,7 @@
      "delay": 86400,
      "signature": "updateMaster()",
      "calls": 1,
-     "still_queued": true,
+     "still_queued": false,
      "queued_at": 1795103870,
      "decoded": "parameter change"
     },
@@ -602,7 +587,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 3827848,
+   "window_blocks": 3876923,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -622,7 +607,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 3827848,
+   "window_blocks": 3864536,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -710,7 +695,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/mainnet",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 100000,
+   "window_blocks": 100398,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -748,7 +733,7 @@
    "log_rpc": "https://rpc.plasma.to",
    "delay": 172800,
    "window_blocks": 600000,
-   "window_days_est": 6.9,
+   "window_days_est": 10.8,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x6695c0f8706c5ace3bdf8995073179cca47926dc"
@@ -920,7 +905,7 @@
    "log_rpc": "https://rpc.plasma.to",
    "delay": 86400,
    "window_blocks": 600000,
-   "window_days_est": 6.9,
+   "window_days_est": 10.8,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x52aa899454998be5b000ad077a46bbe360f4e497"
@@ -940,7 +925,7 @@
    "log_rpc": "https://rpc.plasma.to",
    "delay": 172800,
    "window_blocks": 600000,
-   "window_days_est": 6.9,
+   "window_days_est": 10.8,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x9b3ceb22cab2f1b9ace4cd3132c8a123552eda2c"
@@ -960,7 +945,7 @@
    "log_rpc": "https://rpc.plasma.to",
    "delay": 86400,
    "window_blocks": 600000,
-   "window_days_est": 6.9,
+   "window_days_est": 10.8,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34"
@@ -980,7 +965,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 0,
    "window_blocks": 3000000,
-   "window_days_est": 8.6,
+   "window_days_est": 3.9,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62"
@@ -1032,7 +1017,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 86400,
    "window_blocks": 3000000,
-   "window_days_est": 8.5,
+   "window_days_est": 3.8,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x14b107cf534239c59571b066cb6497a321da897c"
@@ -1073,9 +1058,9 @@
    ]
   }
  ],
- "discovered_utc": "2026-11-26T19:10:45Z",
+ "discovered_utc": "2026-11-27T01:10:35Z",
  "discovered": 15,
- "squads_utc": "2026-11-26T19:17:58Z",
+ "squads_utc": "2026-11-27T01:16:44Z",
  "not_shown": [
   "squads"
  ]

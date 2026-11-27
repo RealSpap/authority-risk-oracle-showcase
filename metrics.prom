@@ -1,6 +1,6 @@
 # HELP aro_run_timestamp_seconds UTC time of the last Watch run (Unix seconds)
 # TYPE aro_run_timestamp_seconds gauge
-aro_run_timestamp_seconds 1795719648
+aro_run_timestamp_seconds 1795741246
 # HELP aro_oracle_read 1 when the oracle was read at the last run, 0 when it was not (its targets are then unknown, not zero)
 # TYPE aro_oracle_read gauge
 aro_oracle_read{oracle="Robinhood Chain"} 1
@@ -55,13 +55,13 @@ aro_signed 1
 # TYPE aro_alerts_active gauge
 aro_alerts_active{severity="high"} 3
 aro_alerts_active{severity="medium"} 2
-aro_alerts_active{severity="info"} 63
+aro_alerts_active{severity="info"} 92
 # HELP aro_second_opinion Targets by verdict of the independent reader
 # TYPE aro_second_opinion gauge
-aro_second_opinion{result="agree"} 134
+aro_second_opinion{result="agree"} 133
 aro_second_opinion{result="disagree"} 4
-aro_second_opinion{result="corroborated"} 9
-aro_second_opinion{result="unreadable"} 39
+aro_second_opinion{result="corroborated"} 8
+aro_second_opinion{result="unreadable"} 41
 aro_second_opinion{result="native"} 17
 # HELP aro_contracts_paused Tracked contracts that answer paused() true now
 # TYPE aro_contracts_paused gauge
@@ -167,7 +167,7 @@ aro_target_score{chain="monad",target="0x8271e06e5887fe5ba05234f5315c19f3ec90e8a
 aro_target_score{chain="monad",target="0xad663ac84052b52be4ed1b27ba416505e84a00bf"} 44
 aro_target_score{chain="monad",target="0x34793fb9935f7bb5e5ae920fb963f39063e7a615"} 49
 aro_target_score{chain="monad",target="0xba4dd672062de8feedb665dd4410658864483f1e"} 64
-aro_target_score{chain="plasma",target="0x6c50b8ca8eeaa1c75dee5b5ea79772acabc92f48"} 35
+aro_target_score{chain="plasma",target="0x6c50b8ca8eeaa1c75dee5b5ea79772acabc92f48"} 41
 aro_target_score{chain="plasma",target="0x061d8e131f26512348ee5fa42e2df1ba9d6505e9"} 71
 aro_target_score{chain="plasma",target="0x888888888889758f76e7103c6cbf23abbf58f946"} 43
 aro_target_score{chain="plasma",target="0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34"} 57

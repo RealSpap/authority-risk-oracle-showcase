@@ -1,9 +1,345 @@
 {
- "generated_utc": "2026-11-26T19:18:20Z",
+ "generated_utc": "2026-11-27T01:17:06Z",
  "compared": 203,
- "new_this_run": 0,
+ "new_this_run": 14,
  "first_seen_oracles": [],
  "moves": [
+  {
+   "run_utc": "2026-11-27T01:17:06Z",
+   "oracle": "base-sepolia",
+   "target": "0xbeef010f9cb27031ad51e3333f9af9c6b1228183",
+   "composite": [
+    73,
+    73
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 30,
+     "to": 55,
+     "why": "a shared key was removed (30 \u2192 55)"
+    }
+   ],
+   "block": 64096934,
+   "lastUpdated": [
+    1795033809,
+    1795727477
+   ]
+  },
+  {
+   "run_utc": "2026-11-27T01:17:06Z",
+   "oracle": "base-sepolia",
+   "target": "0xbeef2d50b428675a1921bc6bbf4bfb9d8cf1461a",
+   "composite": [
+    73,
+    73
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 30,
+     "to": 55,
+     "why": "a shared key was removed (30 \u2192 55)"
+    }
+   ],
+   "block": 64096934,
+   "lastUpdated": [
+    1795033809,
+    1795727477
+   ]
+  },
+  {
+   "run_utc": "2026-11-27T01:17:06Z",
+   "oracle": "plasma",
+   "target": "0x6c50b8ca8eeaa1c75dee5b5ea79772acabc92f48",
+   "composite": [
+    35,
+    41
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "adminKeyScore",
+     "label": "admin key",
+     "from": 50,
+     "to": 65,
+     "why": "admin power moved to a larger group (50 \u2192 65)"
+    }
+   ],
+   "block": 39903609,
+   "lastUpdated": [
+    1795034018,
+    1795729520
+   ]
+  },
+  {
+   "run_utc": "2026-11-27T01:17:06Z",
+   "oracle": "solana-devnet",
+   "target": "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+   "composite": [
+    47,
+    47
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 40,
+     "to": 80,
+     "why": "a shared key was removed (40 \u2192 80)"
+    }
+   ],
+   "block": null,
+   "lastUpdated": [
+    1795033296,
+    1795729197
+   ]
+  },
+  {
+   "run_utc": "2026-11-27T01:17:06Z",
+   "oracle": "solana-devnet",
+   "target": "7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF",
+   "composite": [
+    56,
+    56
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 100,
+     "why": "a shared key was removed (80 \u2192 100)"
+    }
+   ],
+   "block": null,
+   "lastUpdated": [
+    1795033297,
+    1795729198
+   ]
+  },
+  {
+   "run_utc": "2026-11-27T01:17:06Z",
+   "oracle": "solana-devnet",
+   "target": "GKnHiWh3RRrE1zsNzWxRkomymHc374TvJPSTv2wPeYdB",
+   "composite": [
+    62,
+    62
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 100,
+     "why": "a shared key was removed (80 \u2192 100)"
+    }
+   ],
+   "block": null,
+   "lastUpdated": [
+    1795033309,
+    1795729210
+   ]
+  },
+  {
+   "run_utc": "2026-11-27T01:17:06Z",
+   "oracle": "solana-devnet",
+   "target": "H4ND9aYttUVLFmNypZqLjZ52FYiGvdEB45GmwNoKEjTj",
+   "composite": [
+    46,
+    46
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 40,
+     "to": 80,
+     "why": "a shared key was removed (40 \u2192 80)"
+    }
+   ],
+   "block": null,
+   "lastUpdated": [
+    1795033312,
+    1795729211
+   ]
+  },
+  {
+   "run_utc": "2026-11-27T01:17:06Z",
+   "oracle": "solana-devnet",
+   "target": "7s1da8DduuBFqGra5bJBjpnvL5E9mGzCuMk1Qkh4or2Z",
+   "composite": [
+    55,
+    55
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 60,
+     "to": 100,
+     "why": "a shared key was removed (60 \u2192 100)"
+    }
+   ],
+   "block": null,
+   "lastUpdated": [
+    1795033313,
+    1795729213
+   ]
+  },
+  {
+   "run_utc": "2026-11-27T01:17:06Z",
+   "oracle": "solana-devnet",
+   "target": "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG",
+   "composite": [
+    2,
+    2
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 60,
+     "to": 80,
+     "why": "a shared key was removed (60 \u2192 80)"
+    }
+   ],
+   "block": null,
+   "lastUpdated": [
+    1795033320,
+    1795729218
+   ]
+  },
+  {
+   "run_utc": "2026-11-27T01:17:06Z",
+   "oracle": "solana-devnet",
+   "target": "8szGkuLTAux9XMgZ2vtY39jVSowEcpBfFfD8hXSEqdGC",
+   "composite": [
+    45,
+    45
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 20,
+     "to": 40,
+     "why": "a shared key was removed (20 \u2192 40)"
+    }
+   ],
+   "block": null,
+   "lastUpdated": [
+    1795033323,
+    1795729221
+   ]
+  },
+  {
+   "run_utc": "2026-11-27T01:17:06Z",
+   "oracle": "solana-devnet",
+   "target": "SPoo1Ku8WFXoNDMHPsrGSTSG1Y47rzgn41SLUNakuHy",
+   "composite": [
+    54,
+    54
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 20,
+     "to": 40,
+     "why": "a shared key was removed (20 \u2192 40)"
+    }
+   ],
+   "block": null,
+   "lastUpdated": [
+    1795033327,
+    1795729228
+   ]
+  },
+  {
+   "run_utc": "2026-11-27T01:17:06Z",
+   "oracle": "solana-devnet",
+   "target": "Jito4APyf642JPZPx3hGc6WWJ8zPKtRbRs4P815Awbb",
+   "composite": [
+    54,
+    54
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 20,
+     "to": 40,
+     "why": "a shared key was removed (20 \u2192 40)"
+    }
+   ],
+   "block": null,
+   "lastUpdated": [
+    1795033328,
+    1795729231
+   ]
+  },
+  {
+   "run_utc": "2026-11-27T01:17:06Z",
+   "oracle": "solana-devnet",
+   "target": "5ocnV1qiCgaQR8Jb8xWnVbApfaygJ8tNoZfgPwsgx9kx",
+   "composite": [
+    46,
+    46
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 20,
+     "to": 40,
+     "why": "a shared key was removed (20 \u2192 40)"
+    }
+   ],
+   "block": null,
+   "lastUpdated": [
+    1795033330,
+    1795729234
+   ]
+  },
+  {
+   "run_utc": "2026-11-27T01:17:06Z",
+   "oracle": "solana-devnet",
+   "target": "SP12tWFxD9oJsVWNavTTBZvMbA6gkAmxtVgxdqvyvhY",
+   "composite": [
+    54,
+    54
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 20,
+     "to": 40,
+     "why": "a shared key was removed (20 \u2192 40)"
+    }
+   ],
+   "block": null,
+   "lastUpdated": [
+    1795033333,
+    1795729235
+   ]
+  },
   {
    "run_utc": "2026-11-21T01:14:23Z",
    "oracle": "ethereum-l1-sepolia",

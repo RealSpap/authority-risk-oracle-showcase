@@ -1,9 +1,16 @@
 {
- "generated_utc": "2026-11-26T19:18:18Z",
+ "generated_utc": "2026-11-27T01:17:04Z",
  "method_version": "2026.11.1",
  "method_version_date": "2026-11-02",
  "registry_read": true,
  "unregistered": [
+  {
+   "hash": "0x29c16f8b8a50675ab0a2db33da37318501f187dfb47ecd7a234ab99325337aeb",
+   "oracles": [
+    "base-sepolia"
+   ],
+   "targets": 13
+  },
   {
    "hash": "0xae1451a64f7891c1002ccc93316ccb5050594a277078a4c857debf895f9bb9bb",
    "oracles": [
@@ -12,7 +19,21 @@
    "targets": 38
   },
   {
-   "hash": "0x2e2887de421b8ceafcb04a516301e07e85220b6ef505da6eb8605b263db8ce8f",
+   "hash": "0xf27a659843a050505470fa84a74a26259ba3121376374849f6ce8f0c256d4674",
+   "oracles": [
+    "plasma"
+   ],
+   "targets": 9
+  },
+  {
+   "hash": "0x4d58f4b97b8c2af2fe9eecbe0ba35a145f8797ac9f6abf35575a91d5a068323c",
+   "oracles": [
+    "solana-devnet"
+   ],
+   "targets": 26
+  },
+  {
+   "hash": "0x5cbccaf3907d7079d46f67530479255c3f9f13aa59d1ef6aba9420b674ffd55b",
    "oracles": [
     "tempo-moderato"
    ],
@@ -28,13 +49,13 @@
    "method_version": "2026.11.1",
    "method_version_date": "2026-11-02"
   },
-  "0x39ed8891e019d83889c7b6f2e853ef182a57190fd394f4f1a7167fee1a741bc0": {
+  "0x29c16f8b8a50675ab0a2db33da37318501f187dfb47ecd7a234ab99325337aeb": {
    "oracles": {
     "base-sepolia": 13
    },
    "targets": 13,
-   "method_version": "2026.11.1",
-   "method_version_date": "2026-11-02"
+   "method_version": null,
+   "method_version_date": null
   },
   "0xae1451a64f7891c1002ccc93316ccb5050594a277078a4c857debf895f9bb9bb": {
    "oracles": {
@@ -60,13 +81,13 @@
    "method_version": "2026.11.1",
    "method_version_date": "2026-11-02"
   },
-  "0x3aa3cbf80cdcf7d08aaa4e4a4441cfe56dea15f1a7ea336e20662dc4f262d4ac": {
+  "0xf27a659843a050505470fa84a74a26259ba3121376374849f6ce8f0c256d4674": {
    "oracles": {
     "plasma": 9
    },
    "targets": 9,
-   "method_version": "2026.11.1",
-   "method_version_date": "2026-11-02"
+   "method_version": null,
+   "method_version_date": null
   },
   "0xe2625fb9e688dcffeb302e7cdb5f05f662f60c3d2d439f4fbbe7c3ac4d453d1e": {
    "oracles": {
@@ -76,15 +97,15 @@
    "method_version": "2026.11.1",
    "method_version_date": "2026-11-02"
   },
-  "0x35be9749403c55797c13ba37ef7df5a6291129781661a3125987ae151296a3c9": {
+  "0x4d58f4b97b8c2af2fe9eecbe0ba35a145f8797ac9f6abf35575a91d5a068323c": {
    "oracles": {
     "solana-devnet": 26
    },
    "targets": 26,
-   "method_version": "2026.11.1",
-   "method_version_date": "2026-11-02"
+   "method_version": null,
+   "method_version_date": null
   },
-  "0x2e2887de421b8ceafcb04a516301e07e85220b6ef505da6eb8605b263db8ce8f": {
+  "0x5cbccaf3907d7079d46f67530479255c3f9f13aa59d1ef6aba9420b674ffd55b": {
    "oracles": {
     "tempo-moderato": 15
    },
@@ -94,7 +115,44 @@
   }
  },
  "mixed": [],
- "changes": [],
+ "changes": [
+  {
+   "oracle": "base-sepolia",
+   "name": "Base (Sepolia)",
+   "chain": "base",
+   "from": "0x39ed8891e019d83889c7b6f2e853ef182a57190fd394f4f1a7167fee1a741bc0",
+   "to": "0x29c16f8b8a50675ab0a2db33da37318501f187dfb47ecd7a234ab99325337aeb",
+   "targets": 13,
+   "run_utc": "2026-11-27T01:17:04Z"
+  },
+  {
+   "oracle": "plasma",
+   "name": "Plasma",
+   "chain": "plasma",
+   "from": "0x3aa3cbf80cdcf7d08aaa4e4a4441cfe56dea15f1a7ea336e20662dc4f262d4ac",
+   "to": "0xf27a659843a050505470fa84a74a26259ba3121376374849f6ce8f0c256d4674",
+   "targets": 9,
+   "run_utc": "2026-11-27T01:17:04Z"
+  },
+  {
+   "oracle": "solana-devnet",
+   "name": "Solana (Devnet)",
+   "chain": "solana",
+   "from": "0x35be9749403c55797c13ba37ef7df5a6291129781661a3125987ae151296a3c9",
+   "to": "0x4d58f4b97b8c2af2fe9eecbe0ba35a145f8797ac9f6abf35575a91d5a068323c",
+   "targets": 26,
+   "run_utc": "2026-11-27T01:17:04Z"
+  },
+  {
+   "oracle": "tempo-moderato",
+   "name": "Tempo (Moderato)",
+   "chain": "tempo",
+   "from": "0x2e2887de421b8ceafcb04a516301e07e85220b6ef505da6eb8605b263db8ce8f",
+   "to": "0x5cbccaf3907d7079d46f67530479255c3f9f13aa59d1ef6aba9420b674ffd55b",
+   "targets": 15,
+   "run_utc": "2026-11-27T01:17:04Z"
+  }
+ ],
  "retired": [
   {
    "oracle": "ethereum-l1-sepolia",

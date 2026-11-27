@@ -1,6 +1,6 @@
 # HELP aro_run_timestamp_seconds UTC time of the last Watch run (Unix seconds)
 # TYPE aro_run_timestamp_seconds gauge
-aro_run_timestamp_seconds 1795806044
+aro_run_timestamp_seconds 1795815184
 # HELP aro_oracle_read 1 when the oracle was read at the last run, 0 when it was not (its targets are then unknown, not zero)
 # TYPE aro_oracle_read gauge
 aro_oracle_read{oracle="Robinhood Chain"} 1
@@ -43,8 +43,8 @@ aro_targets_stale 0
 # HELP aro_status The run's health, one series per state, 1 for the current one
 # TYPE aro_status gauge
 aro_status{state="ok"} 0
-aro_status{state="degraded"} 0
-aro_status{state="alarm"} 1
+aro_status{state="degraded"} 1
+aro_status{state="alarm"} 0
 # HELP aro_chain_ok 1 when the hash-chained event log verifies
 # TYPE aro_chain_ok gauge
 aro_chain_ok 1
@@ -53,13 +53,13 @@ aro_chain_ok 1
 aro_signed 1
 # HELP aro_alerts_active Alerts firing now, by severity
 # TYPE aro_alerts_active gauge
-aro_alerts_active{severity="high"} 5
-aro_alerts_active{severity="medium"} 2
-aro_alerts_active{severity="info"} 92
+aro_alerts_active{severity="high"} 1
+aro_alerts_active{severity="medium"} 5
+aro_alerts_active{severity="info"} 63
 # HELP aro_second_opinion Targets by verdict of the independent reader
 # TYPE aro_second_opinion gauge
-aro_second_opinion{result="agree"} 134
-aro_second_opinion{result="disagree"} 4
+aro_second_opinion{result="agree"} 135
+aro_second_opinion{result="disagree"} 3
 aro_second_opinion{result="corroborated"} 9
 aro_second_opinion{result="unreadable"} 39
 aro_second_opinion{result="native"} 17
@@ -182,13 +182,13 @@ aro_target_score{chain="robinhood-chain",target="0x8366a39cc670b4001a1121b8f6a44
 aro_target_score{chain="robinhood-chain",target="0x94bab9693ba2f6358507effcbd372b0660afff9d"} 54
 aro_target_score{chain="robinhood-chain",target="0x000000007a1c8e570011eedf86a2a35593013cba"} 85
 aro_target_score{chain="robinhood-chain",target="0xde770c84fe66e063336b31737cfe9790f18c4087"} 29
-aro_target_score{chain="robinhood-chain",target="0x544bf81c855ae84c1e8b65d5e38770898d01eee2"} 42
+aro_target_score{chain="robinhood-chain",target="0x544bf81c855ae84c1e8b65d5e38770898d01eee2"} 43
 aro_target_score{chain="robinhood-chain",target="0x8271e06e5887fe5ba05234f5315c19f3ec90e8ad"} 1
 aro_target_score{chain="robinhood-chain",target="0x00000000000014aa86c5d3c41765bb24e11bd701"} 100
 aro_target_score{chain="robinhood-chain",target="0x8bceaa40b9acdfaedf85adf4ff01f5ad6517937f"} 85
-aro_target_score{chain="robinhood-chain",target="0x9c3663fa9ab976e67b42939486ec4966cb41a0bb"} 43
-aro_target_score{chain="robinhood-chain",target="0x925f92f055edb79c42b5d45e64a1b74143b90ea0"} 43
-aro_target_score{chain="robinhood-chain",target="0x4472c69d299382f8847ebce4fc6ed8e295510e3e"} 43
+aro_target_score{chain="robinhood-chain",target="0x9c3663fa9ab976e67b42939486ec4966cb41a0bb"} 37
+aro_target_score{chain="robinhood-chain",target="0x925f92f055edb79c42b5d45e64a1b74143b90ea0"} 37
+aro_target_score{chain="robinhood-chain",target="0x4472c69d299382f8847ebce4fc6ed8e295510e3e"} 37
 aro_target_score{chain="robinhood-chain",target="0x322f0929c4625ed5bad873c95208d54e1c003b2d"} 1
 aro_target_score{chain="robinhood-chain",target="0x12f190a9f9d7d37a250758b26824b97ce941bf54"} 1
 aro_target_score{chain="robinhood-chain",target="0x894e1ec2d74ffe5aef8dc8a9e84686accb964f2a"} 1
@@ -206,10 +206,10 @@ aro_target_score{chain="robinhood-chain",target="0x1232813bdd40aa9d53066a880de78
 aro_target_score{chain="robinhood-chain",target="0x1a07cc4bd17e0118bdb54d70990d2158abad7a2d"} 57
 aro_target_score{chain="robinhood-chain",target="0xdf8755334ce7a73ccf6b581c02ea649ae3e864b3"} 57
 aro_target_score{chain="robinhood-chain",target="0xf0ce991ea4a0d2400a4ab49b20ae333f6dce3de9"} 57
-aro_target_score{chain="robinhood-chain",target="0xe0c4ceb92d08ca985bb70fe0a22feb121a9854a8"} 8
-aro_target_score{chain="robinhood-chain",target="0x4b37359bf291abe8453692db58d515a8b013dca9"} 8
-aro_target_score{chain="robinhood-chain",target="0x83341f891f898cb5e0cacc8a70501bba83d9cecf"} 8
-aro_target_score{chain="robinhood-chain",target="0xa203a21dccb461e415daa342e8e635b6cee0ccb3"} 8
+aro_target_score{chain="robinhood-chain",target="0xe0c4ceb92d08ca985bb70fe0a22feb121a9854a8"} 9
+aro_target_score{chain="robinhood-chain",target="0x4b37359bf291abe8453692db58d515a8b013dca9"} 9
+aro_target_score{chain="robinhood-chain",target="0x83341f891f898cb5e0cacc8a70501bba83d9cecf"} 9
+aro_target_score{chain="robinhood-chain",target="0xa203a21dccb461e415daa342e8e635b6cee0ccb3"} 9
 aro_target_score{chain="robinhood-chain",target="0xee27d5ae494300902d90454e8630a3f1c68c9c52"} 52
 aro_target_score{chain="robinhood-chain",target="0x6f475642a6e85809b1c36fa62763669b1b48dd5b"} 51
 aro_target_score{chain="robinhood-chain",target="0xc39161c743d0307eb9bcc9fef03eeb9dc4802de7"} 51
@@ -217,7 +217,7 @@ aro_target_score{chain="robinhood-chain",target="0xe1844c5d63a9543023008d332bd3d
 aro_target_score{chain="robinhood-chain",target="0x0bfbcf9fa4f9c56b0f40a671ad40e0805a091865"} 44
 aro_target_score{chain="robinhood-chain",target="0xe51960f1b45f1c9fb6d166e6a884f866fc70433b"} 31
 aro_target_score{chain="robinhood-chain",target="0x292fc50e4eb66c3f6514b9e402dbc25961824d62"} 43
-aro_target_score{chain="robinhood-chain",target="0x0dc846db6a4ec7b5a3e542f7db88049e9add2541"} 29
+aro_target_score{chain="robinhood-chain",target="0x0dc846db6a4ec7b5a3e542f7db88049e9add2541"} 44
 aro_target_score{chain="robinhood-chain",target="0x159a113e012593d9b3cc63ad45e30f0467e13ef3"} 2
 aro_target_score{chain="robinhood-chain",target="0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62"} 50
 aro_target_score{chain="robinhood-chain",target="0x1195c074f898b7644ba732407619c9804dfe6dce"} 1
@@ -225,7 +225,7 @@ aro_target_score{chain="robinhood-chain",target="0x02a84c1b3bbd7401a5f7fa98a384e
 aro_target_score{chain="robinhood-chain",target="0xbeeff039907422219fb367e525954ddc092854d9"} 49
 aro_target_score{chain="robinhood-chain",target="0xbeefff136e3684273e6aa75a1669b784b373a4fd"} 66
 aro_target_score{chain="robinhood-chain",target="0xfd2fd4b046136b540a56c11c75ac679ae7d1db24"} 29
-aro_target_score{chain="robinhood-chain",target="0xd540f47f214dc7d6d244e62a6ae7e06b586ef44a"} 16
+aro_target_score{chain="robinhood-chain",target="0xd540f47f214dc7d6d244e62a6ae7e06b586ef44a"} 34
 aro_target_score{chain="robinhood-chain",target="0x9d53d5e3bd5e8d4cbfa6db1ca238aea02e651010"} 55
 aro_target_score{chain="robinhood-chain",target="0x7f03effbd7ceb22a3f80dd468f67ef27826acd85"} 2
 aro_target_score{chain="robinhood-chain",target="0xf28704c691290547924e2129d407da36bda8ce0f"} 31
@@ -236,8 +236,8 @@ aro_target_score{chain="robinhood-chain",target="0x16494a80e08bcb9285d87b67149d7
 aro_target_score{chain="robinhood-chain",target="0xb24b143ad6bb5be9559ccc75f34a2261b7456904"} 1
 aro_target_score{chain="robinhood-chain",target="0x128a800cbc615cc110bff16e475865c67631603a"} 31
 aro_target_score{chain="robinhood-chain",target="0x5c98b2d892b37c9a1d3b69472bddc172a64cdc09"} 2
-aro_target_score{chain="robinhood-chain",target="0xd01c774d4a66408326bc65728ac5ae5aaf004032"} 46
-aro_target_score{chain="robinhood-chain",target="0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d"} 1
+aro_target_score{chain="robinhood-chain",target="0xd01c774d4a66408326bc65728ac5ae5aaf004032"} 43
+aro_target_score{chain="robinhood-chain",target="0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d"} 43
 aro_target_score{chain="robinhood-chain",target="0xd42174d3db28b0fa2bd25381c3521b18ae9db490"} 2
 aro_target_score{chain="solana-devnet",target="JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4"} 47
 aro_target_score{chain="solana-devnet",target="7u3HeHxYDLhnCoErrtycNokbQYbWGzLs6JSDqGAv5PfF"} 56

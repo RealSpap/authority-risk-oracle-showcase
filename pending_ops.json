@@ -280,7 +280,7 @@
    "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
    "family": "oz",
    "status": "ok",
-   "queued_events": 9,
+   "queued_events": 3,
    "latest_queued": 1789757831,
    "pending": [],
    "recent": [],
@@ -383,7 +383,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 3978947,
+   "window_blocks": 3495953,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -525,7 +525,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 3992079,
+   "window_blocks": 3495953,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -545,7 +545,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 3992079,
+   "window_blocks": 3495953,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -633,7 +633,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/mainnet",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 100800,
+   "window_blocks": 100498,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -858,7 +858,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 0,
    "window_blocks": 3000000,
-   "window_days_est": 3.9,
+   "window_days_est": 3.4,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62"
@@ -910,10 +910,30 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 86400,
    "window_blocks": 3000000,
-   "window_days_est": 3.9,
+   "window_days_est": 3.5,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x14b107cf534239c59571b066cb6497a321da897c"
+   ]
+  },
+  {
+   "name": "robinhood timelock 0x2724\u20262ccd, found by the independent reader (1 tracked contract)",
+   "chain": "robinhood",
+   "address": "0x272468ec9610972fc42d4fee16e79dc9e0812ccd",
+   "family": "oz",
+   "status": "ok",
+   "queued_events": 0,
+   "latest_queued": null,
+   "pending": [],
+   "recent": [],
+   "discovered": true,
+   "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
+   "delay": 86400,
+   "window_blocks": 3000000,
+   "window_days_est": 3.5,
+   "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
+   "governs": [
+    "0x5c98b2d892b37c9a1d3b69472bddc172a64cdc09"
    ]
   },
   {
@@ -951,9 +971,9 @@
    ]
   }
  ],
- "discovered_utc": "2026-11-27T19:10:57Z",
- "discovered": 15,
- "squads_utc": "2026-11-27T19:17:00Z",
+ "discovered_utc": "2026-11-27T21:44:40Z",
+ "discovered": 16,
+ "squads_utc": "2026-11-27T21:50:43Z",
  "not_shown": [
   "squads"
  ]

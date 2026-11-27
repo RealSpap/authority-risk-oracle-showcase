@@ -1,9 +1,473 @@
 {
- "generated_utc": "2026-11-27T19:17:18Z",
+ "generated_utc": "2026-11-27T21:50:58Z",
  "compared": 203,
- "new_this_run": 0,
+ "new_this_run": 17,
  "first_seen_oracles": [],
  "moves": [
+  {
+   "run_utc": "2026-11-27T21:50:58Z",
+   "oracle": "hyperliquid-hyperevm",
+   "target": "0x320c8988e3d1b5198f335802d7bfd2728a8fcac6",
+   "composite": [
+    32,
+    32
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 60,
+     "to": 100,
+     "why": "a shared key was removed (60 \u2192 100)"
+    }
+   ],
+   "block": 70774107,
+   "lastUpdated": [
+    1795123486,
+    1795814309
+   ]
+  },
+  {
+   "run_utc": "2026-11-27T21:50:58Z",
+   "oracle": "hyperliquid-hyperevm",
+   "target": "0xbf6d3bbce71dbce6f4121bfe2e2cad8c77bbc1fc",
+   "composite": [
+    9,
+    9
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 80,
+     "to": 100,
+     "why": "a shared key was removed (80 \u2192 100)"
+    }
+   ],
+   "block": 70774107,
+   "lastUpdated": [
+    1795123486,
+    1795814309
+   ]
+  },
+  {
+   "run_utc": "2026-11-27T21:50:58Z",
+   "oracle": "robinhood-chain",
+   "target": "0x544bf81c855ae84c1e8b65d5e38770898d01eee2",
+   "composite": [
+    42,
+    43
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "adminKeyScore",
+     "label": "admin key",
+     "from": 70,
+     "to": 65,
+     "why": "admin power moved to a smaller group or a bare key (70 \u2192 65)"
+    },
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 45,
+     "to": 55,
+     "why": "more signatures are now required (45 \u2192 55)"
+    }
+   ],
+   "block": 158616230,
+   "lastUpdated": [
+    1795123834,
+    1795814610
+   ]
+  },
+  {
+   "run_utc": "2026-11-27T21:50:58Z",
+   "oracle": "robinhood-chain",
+   "target": "0x9c3663fa9ab976e67b42939486ec4966cb41a0bb",
+   "composite": [
+    43,
+    37
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "adminKeyScore",
+     "label": "admin key",
+     "from": 65,
+     "to": 50,
+     "why": "admin power moved to a smaller group or a bare key (65 \u2192 50)"
+    }
+   ],
+   "block": 158616230,
+   "lastUpdated": [
+    1795123834,
+    1795814610
+   ]
+  },
+  {
+   "run_utc": "2026-11-27T21:50:58Z",
+   "oracle": "robinhood-chain",
+   "target": "0x925f92f055edb79c42b5d45e64a1b74143b90ea0",
+   "composite": [
+    43,
+    37
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "adminKeyScore",
+     "label": "admin key",
+     "from": 65,
+     "to": 50,
+     "why": "admin power moved to a smaller group or a bare key (65 \u2192 50)"
+    }
+   ],
+   "block": 158616230,
+   "lastUpdated": [
+    1795123834,
+    1795814610
+   ]
+  },
+  {
+   "run_utc": "2026-11-27T21:50:58Z",
+   "oracle": "robinhood-chain",
+   "target": "0x4472c69d299382f8847ebce4fc6ed8e295510e3e",
+   "composite": [
+    43,
+    37
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "adminKeyScore",
+     "label": "admin key",
+     "from": 65,
+     "to": 50,
+     "why": "admin power moved to a smaller group or a bare key (65 \u2192 50)"
+    }
+   ],
+   "block": 158616230,
+   "lastUpdated": [
+    1795123834,
+    1795814610
+   ]
+  },
+  {
+   "run_utc": "2026-11-27T21:50:58Z",
+   "oracle": "robinhood-chain",
+   "target": "0xbeeff0fb1dc19344a87b8479dab60a2e16160737",
+   "composite": [
+    70,
+    70
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 25,
+     "to": 20,
+     "why": "a key is now shared with another tracked protocol (25 \u2192 20)"
+    }
+   ],
+   "block": 158616230,
+   "lastUpdated": [
+    1795123834,
+    1795814610
+   ]
+  },
+  {
+   "run_utc": "2026-11-27T21:50:58Z",
+   "oracle": "robinhood-chain",
+   "target": "0xe0c4ceb92d08ca985bb70fe0a22feb121a9854a8",
+   "composite": [
+    8,
+    9
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "adminKeyScore",
+     "label": "admin key",
+     "from": 15,
+     "to": 10,
+     "why": "admin power moved to a smaller group or a bare key (15 \u2192 10)"
+    },
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 5,
+     "to": 15,
+     "why": "more signatures are now required (5 \u2192 15)"
+    }
+   ],
+   "block": 158616230,
+   "lastUpdated": [
+    1795123834,
+    1795814610
+   ]
+  },
+  {
+   "run_utc": "2026-11-27T21:50:58Z",
+   "oracle": "robinhood-chain",
+   "target": "0x4b37359bf291abe8453692db58d515a8b013dca9",
+   "composite": [
+    8,
+    9
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "adminKeyScore",
+     "label": "admin key",
+     "from": 15,
+     "to": 10,
+     "why": "admin power moved to a smaller group or a bare key (15 \u2192 10)"
+    },
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 5,
+     "to": 15,
+     "why": "more signatures are now required (5 \u2192 15)"
+    }
+   ],
+   "block": 158616230,
+   "lastUpdated": [
+    1795123834,
+    1795814610
+   ]
+  },
+  {
+   "run_utc": "2026-11-27T21:50:58Z",
+   "oracle": "robinhood-chain",
+   "target": "0x83341f891f898cb5e0cacc8a70501bba83d9cecf",
+   "composite": [
+    8,
+    9
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "adminKeyScore",
+     "label": "admin key",
+     "from": 15,
+     "to": 10,
+     "why": "admin power moved to a smaller group or a bare key (15 \u2192 10)"
+    },
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 5,
+     "to": 15,
+     "why": "more signatures are now required (5 \u2192 15)"
+    }
+   ],
+   "block": 158616230,
+   "lastUpdated": [
+    1795123834,
+    1795814610
+   ]
+  },
+  {
+   "run_utc": "2026-11-27T21:50:58Z",
+   "oracle": "robinhood-chain",
+   "target": "0xa203a21dccb461e415daa342e8e635b6cee0ccb3",
+   "composite": [
+    8,
+    9
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "adminKeyScore",
+     "label": "admin key",
+     "from": 15,
+     "to": 10,
+     "why": "admin power moved to a smaller group or a bare key (15 \u2192 10)"
+    },
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 5,
+     "to": 15,
+     "why": "more signatures are now required (5 \u2192 15)"
+    }
+   ],
+   "block": 158616230,
+   "lastUpdated": [
+    1795123834,
+    1795814610
+   ]
+  },
+  {
+   "run_utc": "2026-11-27T21:50:58Z",
+   "oracle": "robinhood-chain",
+   "target": "0x0dc846db6a4ec7b5a3e542f7db88049e9add2541",
+   "composite": [
+    29,
+    44
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "adminKeyScore",
+     "label": "admin key",
+     "from": 45,
+     "to": 60,
+     "why": "admin power moved to a larger group (45 \u2192 60)"
+    },
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 35,
+     "to": 65,
+     "why": "more signatures are now required (35 \u2192 65)"
+    }
+   ],
+   "block": 158616230,
+   "lastUpdated": [
+    1795123834,
+    1795814610
+   ]
+  },
+  {
+   "run_utc": "2026-11-27T21:50:58Z",
+   "oracle": "robinhood-chain",
+   "target": "0xbeeff039907422219fb367e525954ddc092854d9",
+   "composite": [
+    49,
+    49
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 25,
+     "to": 20,
+     "why": "a key is now shared with another tracked protocol (25 \u2192 20)"
+    }
+   ],
+   "block": 158616230,
+   "lastUpdated": [
+    1795123834,
+    1795814610
+   ]
+  },
+  {
+   "run_utc": "2026-11-27T21:50:58Z",
+   "oracle": "robinhood-chain",
+   "target": "0xbeefff136e3684273e6aa75a1669b784b373a4fd",
+   "composite": [
+    66,
+    66
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "crossExposureScore",
+     "label": "shared control",
+     "from": 25,
+     "to": 20,
+     "why": "a key is now shared with another tracked protocol (25 \u2192 20)"
+    }
+   ],
+   "block": 158616230,
+   "lastUpdated": [
+    1795123834,
+    1795814610
+   ]
+  },
+  {
+   "run_utc": "2026-11-27T21:50:58Z",
+   "oracle": "robinhood-chain",
+   "target": "0xd540f47f214dc7d6d244e62a6ae7e06b586ef44a",
+   "composite": [
+    16,
+    34
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "adminKeyScore",
+     "label": "admin key",
+     "from": 40,
+     "to": 50,
+     "why": "admin power moved to a larger group (40 \u2192 50)"
+    },
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 0,
+     "to": 45,
+     "why": "more signatures are now required (0 \u2192 45)"
+    }
+   ],
+   "block": 158616230,
+   "lastUpdated": [
+    1795123834,
+    1795814610
+   ]
+  },
+  {
+   "run_utc": "2026-11-27T21:50:58Z",
+   "oracle": "robinhood-chain",
+   "target": "0xd01c774d4a66408326bc65728ac5ae5aaf004032",
+   "composite": [
+    46,
+    43
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 65,
+     "to": 55,
+     "why": "fewer signatures are now required (65 \u2192 55)"
+    }
+   ],
+   "block": 158616230,
+   "lastUpdated": [
+    1795123834,
+    1795814610
+   ]
+  },
+  {
+   "run_utc": "2026-11-27T21:50:58Z",
+   "oracle": "robinhood-chain",
+   "target": "0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d",
+   "composite": [
+    1,
+    43
+   ],
+   "methodology_changed": true,
+   "axes": [
+    {
+     "axis": "adminKeyScore",
+     "label": "admin key",
+     "from": 2,
+     "to": 65,
+     "why": "admin power moved to a larger group (2 \u2192 65)"
+    },
+    {
+     "axis": "multisigScore",
+     "label": "multisig",
+     "from": 0,
+     "to": 55,
+     "why": "more signatures are now required (0 \u2192 55)"
+    }
+   ],
+   "block": 158616230,
+   "lastUpdated": [
+    1795123834,
+    1795814610
+   ]
+  },
   {
    "run_utc": "2026-11-27T01:17:06Z",
    "oracle": "base-sepolia",

@@ -23,7 +23,7 @@
    "address": "0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
    "family": "compound",
    "status": "ok",
-   "queued_events": 85,
+   "queued_events": 83,
    "latest_queued": 1795491095,
    "pending": [],
    "recent": [
@@ -156,38 +156,6 @@
     }
    ],
    "recent": [
-    {
-     "block": 26405406,
-     "tx": "0x75e4afa406b66ac39b2d4a9faaec04577df7e83cac0b4ff1bf02f7bf56d17005",
-     "id": "0x1fe5e3e892708310bbfcf50efc03a1b8e21e0d0042035d7e8315e0cd5f26d85b",
-     "index": 0,
-     "target": "0xe3490297a08d6fC8Da46Edb7B6142E4F461b62D3",
-     "value": 0,
-     "selector": "0x7cfbc42f",
-     "delay": 86400,
-     "signature": "addSupportedAsset(address,(uint8,bool,uint128,uint128))",
-     "calls": 1,
-     "still_queued": false,
-     "final_state": "executed",
-     "queued_at": 1794565235,
-     "decoded": "parameter change"
-    },
-    {
-     "block": 26405415,
-     "tx": "0x0c6daf9d6977fbe221c4535b7febf38a46c46a58f59ce277bbb512b0996ff015",
-     "id": "0x0ca0fcc4856b87f3df9a74532bd60db58d1310c27c17e7d9bfa8a56846f57a90",
-     "index": 0,
-     "target": "0xe3490297a08d6fC8Da46Edb7B6142E4F461b62D3",
-     "value": 0,
-     "selector": "0x7cfbc42f",
-     "delay": 86400,
-     "signature": "addSupportedAsset(address,(uint8,bool,uint128,uint128))",
-     "calls": 1,
-     "still_queued": false,
-     "final_state": "executed",
-     "queued_at": 1794565343,
-     "decoded": "parameter change"
-    },
     {
      "block": 26435324,
      "tx": "0xbcf11bd519b40a4b7532729e94bf586230e3357619a29d4ad219dff671214d44",
@@ -415,7 +383,7 @@
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 3876923,
+   "window_blocks": 3978947,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -587,7 +555,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 86400,
-   "window_blocks": 3864536,
+   "window_blocks": 3978947,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -607,7 +575,7 @@
    "discovered": true,
    "log_rpc": "https://gateway.tenderly.co/public/arbitrum",
    "delay": 1209600,
-   "window_blocks": 3852229,
+   "window_blocks": 3992079,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
@@ -695,11 +663,28 @@
    "log_rpc": "https://gateway.tenderly.co/public/mainnet",
    "delay": 86400,
    "grace": 1209600,
-   "window_blocks": 100398,
+   "window_blocks": 100498,
    "window_days_est": 14.0,
    "window_note": "the whole 14-day window",
    "governs": [
     "0x52aa899454998be5b000ad077a46bbe360f4e497"
+   ]
+  },
+  {
+   "name": "hyperliquid timelock 0xc5de\u202623d2, found by the independent reader (1 tracked contract)",
+   "chain": "hyperliquid",
+   "address": "0xc5ded4f7f53919c714059a17d31371ae847e23d2",
+   "family": "oz",
+   "status": "UNREAD (Web3RPCError: {'code': -32005, 'message': 'rate limited'})",
+   "queued_events": null,
+   "latest_queued": null,
+   "pending": [],
+   "recent": [],
+   "discovered": true,
+   "log_rpc": "https://rpc.hyperliquid.xyz/evm",
+   "delay": 172800,
+   "governs": [
+    "0xffaa4a3d97fe9107cef8a3f48c069f577ff76cc1"
    ]
   },
   {
@@ -948,7 +933,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 0,
    "window_blocks": 3000000,
-   "window_days_est": 4.1,
+   "window_days_est": 3.6,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62"
@@ -1000,7 +985,7 @@
    "log_rpc": "https://rpc.mainnet.chain.robinhood.com",
    "delay": 86400,
    "window_blocks": 3000000,
-   "window_days_est": 4.0,
+   "window_days_est": 3.6,
    "window_note": "bounded by the RPC budget: a queue event older than this window is not seen; an OpenZeppelin operation never expires",
    "governs": [
     "0x14b107cf534239c59571b066cb6497a321da897c"
@@ -1041,9 +1026,9 @@
    ]
   }
  ],
- "discovered_utc": "2026-11-27T07:09:23Z",
- "discovered": 14,
- "squads_utc": "2026-11-27T07:14:36Z",
+ "discovered_utc": "2026-11-27T13:10:01Z",
+ "discovered": 15,
+ "squads_utc": "2026-11-27T13:15:31Z",
  "not_shown": [
   "squads"
  ]

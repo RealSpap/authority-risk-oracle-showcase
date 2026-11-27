@@ -1,5 +1,5 @@
 {
- "run_utc": "2026-11-27T07:14:56Z",
+ "run_utc": "2026-11-27T13:15:52Z",
  "targets": 203,
  "moves_recorded": 46,
  "series": {
@@ -2564,7 +2564,7 @@
  },
  "calibration": {
   "window_days": 14,
-  "actions": 22,
+  "actions": 20,
   "excluded_undecoded": 0,
   "excluded_other_target": 0,
   "under_40": 3,
@@ -2572,28 +2572,10 @@
    "critical": 1,
    "weak": 2,
    "moderate": 14,
-   "decent": 5,
+   "decent": 3,
    "strong": 0
   },
   "list": [
-   {
-    "kind": "timelock op queued (parameter change)",
-    "key": "ethereum-l1:0xe3490297a08d6fc8da46edb7b6142e4f461b62d3",
-    "t": "2026-11-13T10:20:35Z",
-    "via": "Ethena Timelock",
-    "tx": "0x75e4afa406b66ac39b2d4a9faaec04577df7e83cac0b4ff1bf02f7bf56d17005",
-    "score_then": 73,
-    "band_then": "decent"
-   },
-   {
-    "kind": "timelock op queued (parameter change)",
-    "key": "ethereum-l1:0xe3490297a08d6fc8da46edb7b6142e4f461b62d3",
-    "t": "2026-11-13T10:22:23Z",
-    "via": "Ethena Timelock",
-    "tx": "0x0c6daf9d6977fbe221c4535b7febf38a46c46a58f59ce277bbb512b0996ff015",
-    "score_then": 73,
-    "band_then": "decent"
-   },
    {
     "kind": "admin changed (independent read)",
     "key": "solana:dRiftyHA39MWEi3m9aunc5MzRF1JYuBsbn6VPcn33UH",

@@ -1,6 +1,6 @@
 {
- "evaluated_utc": "2026-11-27T07:14:56Z",
- "run_utc": "2026-11-27T07:00:43Z",
+ "evaluated_utc": "2026-11-27T13:15:52Z",
+ "run_utc": "2026-11-27T13:00:51Z",
  "rules": [
   "score dropped by 10 or more",
   "score fell under 40",
@@ -34,29 +34,29 @@
    "title": "GMX EVM",
    "score": 47,
    "delta": 0,
-   "tvl_usd": 167763439.75191668,
+   "tvl_usd": 167417806.30804044,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 333087082,
-    "oracle_read_at": 1795762850,
+    "oracle_block": 333155312,
+    "oracle_read_at": 1795784459,
     "composite": 47,
     "previous_composite": 47,
     "score_last_updated": 1795123114,
     "second_opinion": {
      "kind": "unreadable",
      "path": null,
-     "block_start": 527942409,
-     "block_end": 527942424,
-     "read_gap_seconds": 519,
-     "since_score_push_seconds": 640255
+     "block_start": 528014035,
+     "block_end": 528014057,
+     "read_gap_seconds": 549,
+     "since_score_push_seconds": 661894
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x3c3d99fd298f679dbc2cecd132b4ec4d0f5e6e72 --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 333087082",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x3c3d99fd298f679dbc2cecd132b4ec4d0f5e6e72 --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 333155312",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -67,29 +67,29 @@
    "title": "Camelot V3",
    "score": 31,
    "delta": 0,
-   "tvl_usd": 2287185.2694143937,
+   "tvl_usd": 2272401.5407823687,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 333087082,
-    "oracle_read_at": 1795762850,
+    "oracle_block": 333155312,
+    "oracle_read_at": 1795784459,
     "composite": 31,
     "previous_composite": 31,
     "score_last_updated": 1795123114,
     "second_opinion": {
      "kind": "safe",
      "path": "owner()",
-     "block_start": 527942409,
-     "block_end": 527942424,
-     "read_gap_seconds": 519,
-     "since_score_push_seconds": 640255
+     "block_start": 528014035,
+     "block_end": 528014057,
+     "read_gap_seconds": 549,
+     "since_score_push_seconds": 661894
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x1a3c9b1d2f0529d97f2afc5136cc23e58f1fd35b --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 333087082",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x1a3c9b1d2f0529d97f2afc5136cc23e58f1fd35b --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 333155312",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -100,29 +100,29 @@
    "title": "Radiant V2",
    "score": 55,
    "delta": 0,
-   "tvl_usd": 154331.30701689387,
+   "tvl_usd": 153906.45926571547,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 333087082,
-    "oracle_read_at": 1795762850,
+    "oracle_block": 333155312,
+    "oracle_read_at": 1795784459,
     "composite": 55,
     "previous_composite": 55,
     "score_last_updated": 1795123114,
     "second_opinion": {
      "kind": "contract",
      "path": "admin fixed in the proxy's bytecode (transparent proxy) -> owner() of the holder (timelock 259200s)",
-     "block_start": 527942409,
-     "block_end": 527942424,
-     "read_gap_seconds": 519,
-     "since_score_push_seconds": 640255
+     "block_start": 528014035,
+     "block_end": 528014057,
+     "read_gap_seconds": 549,
+     "since_score_push_seconds": 661894
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0xe23b4ae3624fb6f7cdef29bc8ead912f1ede6886 --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 333087082",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0xe23b4ae3624fb6f7cdef29bc8ead912f1ede6886 --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 333155312",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -133,29 +133,29 @@
    "title": "Arbitrum (whole chain)",
    "score": 64,
    "delta": 0,
-   "tvl_usd": 1233090113.6123557,
+   "tvl_usd": 1237524925.8836946,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 333087082,
-    "oracle_read_at": 1795762850,
+    "oracle_block": 333155312,
+    "oracle_read_at": 1795784459,
     "composite": 64,
     "previous_composite": 64,
     "score_last_updated": 1795123114,
     "second_opinion": {
      "kind": "unreadable",
      "path": null,
-     "block_start": 527942409,
-     "block_end": 527942424,
-     "read_gap_seconds": 519,
-     "since_score_push_seconds": 640255
+     "block_start": 528014035,
+     "block_end": 528014057,
+     "read_gap_seconds": 549,
+     "since_score_push_seconds": 661894
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x423552c0f05baccac5bfa91c6dcf1dc53a0a1641 --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 333087082",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x423552c0f05baccac5bfa91c6dcf1dc53a0a1641 --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 333155312",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -166,29 +166,29 @@
    "title": "Aave V3",
    "score": 71,
    "delta": 0,
-   "tvl_usd": 412385956.0334372,
+   "tvl_usd": 415766273.27773,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 333087082,
-    "oracle_read_at": 1795762850,
+    "oracle_block": 333155312,
+    "oracle_read_at": 1795784459,
     "composite": 71,
     "previous_composite": 71,
     "score_last_updated": 1795123114,
     "second_opinion": {
      "kind": "contract",
      "path": "owner() -> owner() of the holder (contract)",
-     "block_start": 527942409,
-     "block_end": 527942424,
-     "read_gap_seconds": 519,
-     "since_score_push_seconds": 640255
+     "block_start": 528014035,
+     "block_end": 528014057,
+     "read_gap_seconds": 549,
+     "since_score_push_seconds": 661894
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0xa97684ead0e402dc232d5a977953df7ecbab3cdb --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 333087082",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0xa97684ead0e402dc232d5a977953df7ecbab3cdb --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 333155312",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -199,29 +199,29 @@
    "title": "Compound V3",
    "score": 78,
    "delta": 0,
-   "tvl_usd": 48191242.97918356,
+   "tvl_usd": 48019315.94866841,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 333087082,
-    "oracle_read_at": 1795762850,
+    "oracle_block": 333155312,
+    "oracle_read_at": 1795784459,
     "composite": 78,
     "previous_composite": 78,
     "score_last_updated": 1795123114,
     "second_opinion": {
      "kind": "timelock",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 527942409,
-     "block_end": 527942424,
-     "read_gap_seconds": 519,
-     "since_score_push_seconds": 640255
+     "block_start": 528014035,
+     "block_end": 528014057,
+     "read_gap_seconds": 549,
+     "since_score_push_seconds": 661894
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x9c4ec768c28520b50860ea7a15bd7213a9ff58bf --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 333087082",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x9c4ec768c28520b50860ea7a15bd7213a9ff58bf --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 333155312",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -232,29 +232,29 @@
    "title": "Pendle V2",
    "score": 43,
    "delta": 0,
-   "tvl_usd": 37069285.598839045,
+   "tvl_usd": 37104090.5135966,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 333087082,
-    "oracle_read_at": 1795762850,
+    "oracle_block": 333155312,
+    "oracle_read_at": 1795784459,
     "composite": 43,
     "previous_composite": 43,
     "score_last_updated": 1795123114,
     "second_opinion": {
      "kind": "safe",
      "path": "owner()",
-     "block_start": 527942409,
-     "block_end": 527942424,
-     "read_gap_seconds": 519,
-     "since_score_push_seconds": 640255
+     "block_start": 528014035,
+     "block_end": 528014057,
+     "read_gap_seconds": 549,
+     "since_score_push_seconds": 661894
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x888888888889758f76e7103c6cbf23abbf58f946 --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 333087082",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x888888888889758f76e7103c6cbf23abbf58f946 --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 333155312",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -265,7 +265,7 @@
    "title": "Fluid Lending",
    "score": 59,
    "delta": 0,
-   "tvl_usd": 131139133.10454366,
+   "tvl_usd": 131569512.69145216,
    "first_seen": "2026-11-24T07:16:24Z",
    "new": false,
    "evidence": [
@@ -284,23 +284,23 @@
    ],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 333087082,
-    "oracle_read_at": 1795762850,
+    "oracle_block": 333155312,
+    "oracle_read_at": 1795784459,
     "composite": 59,
     "previous_composite": 59,
     "score_last_updated": 1795123114,
     "second_opinion": {
      "kind": "timelock",
      "path": "EIP-1967 admin",
-     "block_start": 527942409,
-     "block_end": 527942424,
-     "read_gap_seconds": 520,
-     "since_score_push_seconds": 640256
+     "block_start": 528014035,
+     "block_end": 528014057,
+     "read_gap_seconds": 550,
+     "since_score_push_seconds": 661895
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x52aa899454998be5b000ad077a46bbe360f4e497 --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 333087082",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x52aa899454998be5b000ad077a46bbe360f4e497 --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 333155312",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": true
   },
   {
@@ -311,29 +311,29 @@
    "title": "Fluid Lending",
    "score": 59,
    "delta": 0,
-   "tvl_usd": 131139133.10454366,
+   "tvl_usd": 131569512.69145216,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 333087082,
-    "oracle_read_at": 1795762850,
+    "oracle_block": 333155312,
+    "oracle_read_at": 1795784459,
     "composite": 59,
     "previous_composite": 59,
     "score_last_updated": 1795123114,
     "second_opinion": {
      "kind": "timelock",
      "path": "EIP-1967 admin",
-     "block_start": 527942409,
-     "block_end": 527942424,
-     "read_gap_seconds": 520,
-     "since_score_push_seconds": 640256
+     "block_start": 528014035,
+     "block_end": 528014057,
+     "read_gap_seconds": 550,
+     "since_score_push_seconds": 661895
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x52aa899454998be5b000ad077a46bbe360f4e497 --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 333087082",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x52aa899454998be5b000ad077a46bbe360f4e497 --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 333155312",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -344,29 +344,29 @@
    "title": "Uniswap V3",
    "score": 85,
    "delta": 0,
-   "tvl_usd": 90949595.59883128,
+   "tvl_usd": 90968001.52937043,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 333087082,
-    "oracle_read_at": 1795762850,
+    "oracle_block": 333155312,
+    "oracle_read_at": 1795784459,
     "composite": 85,
     "previous_composite": 85,
     "score_last_updated": 1795123114,
     "second_opinion": {
      "kind": "contract",
      "path": "owner() -> owner() of the holder (timelock 172800s)",
-     "block_start": 527942409,
-     "block_end": 527942424,
-     "read_gap_seconds": 520,
-     "since_score_push_seconds": 640256
+     "block_start": 528014035,
+     "block_end": 528014057,
+     "read_gap_seconds": 550,
+     "since_score_push_seconds": 661895
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x1f98431c8ad98523631ae4a59f267346ea31f984 --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 333087082",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x1f98431c8ad98523631ae4a59f267346ea31f984 --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 333155312",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -377,29 +377,29 @@
    "title": "GMX V1 EVM",
    "score": 57,
    "delta": 0,
-   "tvl_usd": 1155819.085757773,
+   "tvl_usd": 1153465.7045079696,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 333087082,
-    "oracle_read_at": 1795762850,
+    "oracle_block": 333155312,
+    "oracle_read_at": 1795784459,
     "composite": 57,
     "previous_composite": 57,
     "score_last_updated": 1795123114,
     "second_opinion": {
      "kind": "unreadable",
      "path": null,
-     "block_start": 527942409,
-     "block_end": 527942424,
-     "read_gap_seconds": 520,
-     "since_score_push_seconds": 640256
+     "block_start": 528014035,
+     "block_end": 528014057,
+     "read_gap_seconds": 550,
+     "since_score_push_seconds": 661895
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x489ee077994b6658eafa855c308275ead8097c4a --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 333087082",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x489ee077994b6658eafa855c308275ead8097c4a --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 333155312",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -416,23 +416,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 333087082,
-    "oracle_read_at": 1795762850,
+    "oracle_block": 333155312,
+    "oracle_read_at": 1795784459,
     "composite": 40,
     "previous_composite": 40,
     "score_last_updated": 1795123114,
     "second_opinion": {
      "kind": "contract",
      "path": "owner()",
-     "block_start": 527942409,
-     "block_end": 527942424,
-     "read_gap_seconds": 520,
-     "since_score_push_seconds": 640256
+     "block_start": 528014035,
+     "block_end": 528014057,
+     "read_gap_seconds": 550,
+     "since_score_push_seconds": 661895
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x6bd780e7fdf01d77e4d475c821f1e7ae05409072 --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 333087082",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x6bd780e7fdf01d77e4d475c821f1e7ae05409072 --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 333155312",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -449,23 +449,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 333087082,
-    "oracle_read_at": 1795762850,
+    "oracle_block": 333155312,
+    "oracle_read_at": 1795784459,
     "composite": 40,
     "previous_composite": 40,
     "score_last_updated": 1795123114,
     "second_opinion": {
      "kind": "safe",
      "path": "owner()",
-     "block_start": 527942409,
-     "block_end": 527942424,
-     "read_gap_seconds": 520,
-     "since_score_push_seconds": 640256
+     "block_start": 528014035,
+     "block_end": 528014057,
+     "read_gap_seconds": 550,
+     "since_score_push_seconds": 661895
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0xffa10065ce1d1c42fabc46e06b84ed8ffeb4bae5 --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 333087082",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0xffa10065ce1d1c42fabc46e06b84ed8ffeb4bae5 --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 333155312",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -482,23 +482,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 333087082,
-    "oracle_read_at": 1795762850,
+    "oracle_block": 333155312,
+    "oracle_read_at": 1795784459,
     "composite": 4,
     "previous_composite": 4,
     "score_last_updated": 1795123114,
     "second_opinion": {
      "kind": "timelock",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 527942409,
-     "block_end": 527942424,
-     "read_gap_seconds": 520,
-     "since_score_push_seconds": 640256
+     "block_start": 528014035,
+     "block_end": 528014057,
+     "read_gap_seconds": 550,
+     "since_score_push_seconds": 661895
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0xff162c694eaa571f685030649814282ea457f169 --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 333087082",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0xff162c694eaa571f685030649814282ea457f169 --rpc-url https://sepolia-rollup.arbitrum.io/rpc --block 333155312",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -509,29 +509,29 @@
    "title": "Hyperliquid Bridge",
    "score": 26,
    "delta": 0,
-   "tvl_usd": 5608555567.639039,
+   "tvl_usd": 5604210622.911361,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 70720908,
-    "oracle_read_at": 1795763053,
+    "oracle_block": 70742761,
+    "oracle_read_at": 1795784651,
     "composite": 26,
     "previous_composite": 26,
     "score_last_updated": 1795123486,
     "second_opinion": {
      "kind": "native",
      "path": null,
-     "block_start": 52364845,
-     "block_end": 52364861,
-     "read_gap_seconds": 387,
-     "since_score_push_seconds": 639954
+     "block_start": 52386846,
+     "block_end": 52386854,
+     "read_gap_seconds": 418,
+     "since_score_push_seconds": 661583
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0xea394cd63ca3a5c8a130bb2b955cc71c22e5ea6c --rpc-url https://998.rpc.thirdweb.com --block 70720908",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0xea394cd63ca3a5c8a130bb2b955cc71c22e5ea6c --rpc-url https://998.rpc.thirdweb.com --block 70742761",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -548,23 +548,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 70720908,
-    "oracle_read_at": 1795763053,
+    "oracle_block": 70742761,
+    "oracle_read_at": 1795784651,
     "composite": 9,
     "previous_composite": 9,
     "score_last_updated": 1795123486,
     "second_opinion": {
      "kind": "native",
      "path": null,
-     "block_start": 52364845,
-     "block_end": 52364861,
-     "read_gap_seconds": 387,
-     "since_score_push_seconds": 639954
+     "block_start": 52386846,
+     "block_end": 52386854,
+     "read_gap_seconds": 418,
+     "since_score_push_seconds": 661583
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x88806a71d74ad0a510b350545c9ae490912f0888 --rpc-url https://998.rpc.thirdweb.com --block 70720908",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x88806a71d74ad0a510b350545c9ae490912f0888 --rpc-url https://998.rpc.thirdweb.com --block 70742761",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -581,23 +581,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 70720908,
-    "oracle_read_at": 1795763053,
+    "oracle_block": 70742761,
+    "oracle_read_at": 1795784651,
     "composite": 32,
     "previous_composite": 32,
     "score_last_updated": 1795123486,
     "second_opinion": {
      "kind": "native",
      "path": null,
-     "block_start": 52364845,
-     "block_end": 52364861,
-     "read_gap_seconds": 387,
-     "since_score_push_seconds": 639954
+     "block_start": 52386846,
+     "block_end": 52386854,
+     "read_gap_seconds": 418,
+     "since_score_push_seconds": 661583
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x320c8988e3d1b5198f335802d7bfd2728a8fcac6 --rpc-url https://998.rpc.thirdweb.com --block 70720908",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x320c8988e3d1b5198f335802d7bfd2728a8fcac6 --rpc-url https://998.rpc.thirdweb.com --block 70742761",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -614,23 +614,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 70720908,
-    "oracle_read_at": 1795763053,
+    "oracle_block": 70742761,
+    "oracle_read_at": 1795784651,
     "composite": 5,
     "previous_composite": 5,
     "score_last_updated": 1795123486,
     "second_opinion": {
      "kind": "native",
      "path": null,
-     "block_start": 52364845,
-     "block_end": 52364861,
-     "read_gap_seconds": 387,
-     "since_score_push_seconds": 639954
+     "block_start": 52386846,
+     "block_end": 52386854,
+     "read_gap_seconds": 418,
+     "since_score_push_seconds": 661583
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x30e96fbd515243d47703e78581b88cba60f51360 --rpc-url https://998.rpc.thirdweb.com --block 70720908",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x30e96fbd515243d47703e78581b88cba60f51360 --rpc-url https://998.rpc.thirdweb.com --block 70742761",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -647,23 +647,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 70720908,
-    "oracle_read_at": 1795763053,
+    "oracle_block": 70742761,
+    "oracle_read_at": 1795784651,
     "composite": 9,
     "previous_composite": 9,
     "score_last_updated": 1795123486,
     "second_opinion": {
      "kind": "native",
      "path": null,
-     "block_start": 52364845,
-     "block_end": 52364861,
-     "read_gap_seconds": 387,
-     "since_score_push_seconds": 639954
+     "block_start": 52386846,
+     "block_end": 52386854,
+     "read_gap_seconds": 418,
+     "since_score_push_seconds": 661583
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0xbf6d3bbce71dbce6f4121bfe2e2cad8c77bbc1fc --rpc-url https://998.rpc.thirdweb.com --block 70720908",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0xbf6d3bbce71dbce6f4121bfe2e2cad8c77bbc1fc --rpc-url https://998.rpc.thirdweb.com --block 70742761",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -674,29 +674,29 @@
    "title": "Kinetiq kmHYPE",
    "score": 4,
    "delta": 0,
-   "tvl_usd": 32493943.749803055,
+   "tvl_usd": 32394126.112498567,
    "first_seen": "2026-11-26T13:19:51Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 70720908,
-    "oracle_read_at": 1795763053,
+    "oracle_block": 70742761,
+    "oracle_read_at": 1795784651,
     "composite": 4,
     "previous_composite": 4,
     "score_last_updated": 1795123486,
     "second_opinion": {
      "kind": "safe",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 52364845,
-     "block_end": 52364861,
-     "read_gap_seconds": 387,
-     "since_score_push_seconds": 639954
+     "block_start": 52386846,
+     "block_end": 52386854,
+     "read_gap_seconds": 418,
+     "since_score_push_seconds": 661583
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec --rpc-url https://998.rpc.thirdweb.com --block 70720908",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec --rpc-url https://998.rpc.thirdweb.com --block 70742761",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": true
   },
   {
@@ -707,29 +707,29 @@
    "title": "Kinetiq kmHYPE",
    "score": 4,
    "delta": 0,
-   "tvl_usd": 32493943.749803055,
+   "tvl_usd": 32394126.112498567,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 70720908,
-    "oracle_read_at": 1795763053,
+    "oracle_block": 70742761,
+    "oracle_read_at": 1795784651,
     "composite": 4,
     "previous_composite": 4,
     "score_last_updated": 1795123486,
     "second_opinion": {
      "kind": "safe",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 52364845,
-     "block_end": 52364861,
-     "read_gap_seconds": 387,
-     "since_score_push_seconds": 639954
+     "block_start": 52386846,
+     "block_end": 52386854,
+     "read_gap_seconds": 418,
+     "since_score_push_seconds": 661583
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec --rpc-url https://998.rpc.thirdweb.com --block 70720908",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec --rpc-url https://998.rpc.thirdweb.com --block 70742761",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -746,23 +746,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 70720908,
-    "oracle_read_at": 1795763053,
+    "oracle_block": 70742761,
+    "oracle_read_at": 1795784651,
     "composite": 4,
     "previous_composite": 4,
     "score_last_updated": 1795123486,
     "second_opinion": {
      "kind": "unreadable",
      "path": null,
-     "block_start": 52364845,
-     "block_end": 52364861,
-     "read_gap_seconds": 389,
-     "since_score_push_seconds": 639956
+     "block_start": 52386846,
+     "block_end": 52386854,
+     "read_gap_seconds": 425,
+     "since_score_push_seconds": 661590
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x8888888c43cbb7e1c4132542e46831bffd866ed3 --rpc-url https://998.rpc.thirdweb.com --block 70720908",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x8888888c43cbb7e1c4132542e46831bffd866ed3 --rpc-url https://998.rpc.thirdweb.com --block 70742761",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -773,30 +773,64 @@
    "title": "Ventuals",
    "score": 31,
    "delta": 0,
-   "tvl_usd": 254399.0465341036,
+   "tvl_usd": 252441.89623272797,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 70720908,
-    "oracle_read_at": 1795763053,
+    "oracle_block": 70742761,
+    "oracle_read_at": 1795784651,
     "composite": 31,
     "previous_composite": 31,
     "score_last_updated": 1795123486,
     "second_opinion": {
      "kind": "unreadable",
      "path": null,
-     "block_start": 52364845,
-     "block_end": 52364861,
-     "read_gap_seconds": 389,
-     "since_score_push_seconds": 639956
+     "block_start": 52386846,
+     "block_end": 52386854,
+     "read_gap_seconds": 425,
+     "since_score_push_seconds": 661590
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x8888888192a4a0593c13532ba48449fc24c3beda --rpc-url https://998.rpc.thirdweb.com --block 70720908",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x8888888192a4a0593c13532ba48449fc24c3beda --rpc-url https://998.rpc.thirdweb.com --block 70742761",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
+  },
+  {
+   "rule": "the independent reader disagrees with the admin-key score, with money behind it",
+   "severity": "medium",
+   "chain": "Hyperliquid",
+   "target": "0x393d0b87ed38fc779fd9611144ae649ba6082109",
+   "title": "Kinetiq kHYPE",
+   "score": 4,
+   "delta": 0,
+   "tvl_usd": 615288381.5304255,
+   "first_seen": "2026-11-27T13:15:52Z",
+   "new": true,
+   "evidence": [],
+   "reading": {
+    "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
+    "oracle_block": 70742761,
+    "oracle_read_at": 1795784651,
+    "composite": 4,
+    "previous_composite": 4,
+    "score_last_updated": 1795123486,
+    "second_opinion": {
+     "kind": "safe",
+     "path": "EIP-1967 admin -> ProxyAdmin owner()",
+     "block_start": 52386846,
+     "block_end": 52386854,
+     "read_gap_seconds": 425,
+     "since_score_push_seconds": 661590
+    },
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x393d0b87ed38fc779fd9611144ae649ba6082109 --rpc-url https://998.rpc.thirdweb.com --block 70742761",
+    "reproduce_exact": false
+   },
+   "previous_run": "2026-11-27T07:00:43Z",
+   "notified": true,
+   "delivered": []
   },
   {
    "rule": "score pushed more than 7 days ago (the oracle marks it stale at 9)",
@@ -806,29 +840,29 @@
    "title": "Kinetiq kHYPE",
    "score": 4,
    "delta": 0,
-   "tvl_usd": 620916509.6654649,
+   "tvl_usd": 615288381.5304255,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 70720908,
-    "oracle_read_at": 1795763053,
+    "oracle_block": 70742761,
+    "oracle_read_at": 1795784651,
     "composite": 4,
     "previous_composite": 4,
     "score_last_updated": 1795123486,
     "second_opinion": {
-     "kind": "unreadable",
+     "kind": "safe",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 52364845,
-     "block_end": 52364861,
-     "read_gap_seconds": 389,
-     "since_score_push_seconds": 639956
+     "block_start": 52386846,
+     "block_end": 52386854,
+     "read_gap_seconds": 425,
+     "since_score_push_seconds": 661590
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x393d0b87ed38fc779fd9611144ae649ba6082109 --rpc-url https://998.rpc.thirdweb.com --block 70720908",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x393d0b87ed38fc779fd9611144ae649ba6082109 --rpc-url https://998.rpc.thirdweb.com --block 70742761",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -839,29 +873,29 @@
    "title": "Hyperliquid HLP",
    "score": 9,
    "delta": 0,
-   "tvl_usd": 152274627.55204767,
+   "tvl_usd": 152358436.49900186,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 70720908,
-    "oracle_read_at": 1795763053,
+    "oracle_block": 70742761,
+    "oracle_read_at": 1795784651,
     "composite": 9,
     "previous_composite": 9,
     "score_last_updated": 1795123486,
     "second_opinion": {
      "kind": "native",
      "path": null,
-     "block_start": 52364845,
-     "block_end": 52364861,
-     "read_gap_seconds": 389,
-     "since_score_push_seconds": 639956
+     "block_start": 52386846,
+     "block_end": 52386854,
+     "read_gap_seconds": 435,
+     "since_score_push_seconds": 661600
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0xdfc24b077bc1425ad1dea75bcb6f8158e10df303 --rpc-url https://998.rpc.thirdweb.com --block 70720908",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0xdfc24b077bc1425ad1dea75bcb6f8158e10df303 --rpc-url https://998.rpc.thirdweb.com --block 70742761",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -872,29 +906,29 @@
    "title": "Unit",
    "score": 9,
    "delta": 0,
-   "tvl_usd": 889040007.8174206,
+   "tvl_usd": 888598465.3569139,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 70720908,
-    "oracle_read_at": 1795763053,
+    "oracle_block": 70742761,
+    "oracle_read_at": 1795784651,
     "composite": 9,
     "previous_composite": 9,
     "score_last_updated": 1795123486,
     "second_opinion": {
      "kind": "native",
      "path": null,
-     "block_start": 52364845,
-     "block_end": 52364861,
-     "read_gap_seconds": 389,
-     "since_score_push_seconds": 639956
+     "block_start": 52386846,
+     "block_end": 52386854,
+     "read_gap_seconds": 435,
+     "since_score_push_seconds": 661600
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x574bafce69d9411f662a433896e74e4f153096fa --rpc-url https://998.rpc.thirdweb.com --block 70720908",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x574bafce69d9411f662a433896e74e4f153096fa --rpc-url https://998.rpc.thirdweb.com --block 70742761",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -905,29 +939,29 @@
    "title": "Unit",
    "score": 9,
    "delta": 0,
-   "tvl_usd": 889040007.8174206,
+   "tvl_usd": 888598465.3569139,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 70720908,
-    "oracle_read_at": 1795763053,
+    "oracle_block": 70742761,
+    "oracle_read_at": 1795784651,
     "composite": 9,
     "previous_composite": 9,
     "score_last_updated": 1795123486,
     "second_opinion": {
      "kind": "native",
      "path": null,
-     "block_start": 52364845,
-     "block_end": 52364861,
-     "read_gap_seconds": 389,
-     "since_score_push_seconds": 639956
+     "block_start": 52386846,
+     "block_end": 52386854,
+     "read_gap_seconds": 435,
+     "since_score_push_seconds": 661600
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x8dafbe89302656a7df43c470e9ebcb4c540835c0 --rpc-url https://998.rpc.thirdweb.com --block 70720908",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x8dafbe89302656a7df43c470e9ebcb4c540835c0 --rpc-url https://998.rpc.thirdweb.com --block 70742761",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -938,29 +972,29 @@
    "title": "Unit",
    "score": 9,
    "delta": 0,
-   "tvl_usd": 889040007.8174206,
+   "tvl_usd": 888598465.3569139,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 70720908,
-    "oracle_read_at": 1795763053,
+    "oracle_block": 70742761,
+    "oracle_read_at": 1795784651,
     "composite": 9,
     "previous_composite": 9,
     "score_last_updated": 1795123486,
     "second_opinion": {
      "kind": "native",
      "path": null,
-     "block_start": 52364845,
-     "block_end": 52364861,
-     "read_gap_seconds": 389,
-     "since_score_push_seconds": 639956
+     "block_start": 52386846,
+     "block_end": 52386854,
+     "read_gap_seconds": 435,
+     "since_score_push_seconds": 661600
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0xa822a9ceb6d6cb5b565bd10098abcfa9cf18d748 --rpc-url https://998.rpc.thirdweb.com --block 70720908",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0xa822a9ceb6d6cb5b565bd10098abcfa9cf18d748 --rpc-url https://998.rpc.thirdweb.com --block 70742761",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -971,29 +1005,29 @@
    "title": "Hyperliquid Bridge",
    "score": 48,
    "delta": 0,
-   "tvl_usd": 82725913.24131013,
+   "tvl_usd": 80093469.488185,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 70720908,
-    "oracle_read_at": 1795763053,
+    "oracle_block": 70742761,
+    "oracle_read_at": 1795784651,
     "composite": 48,
     "previous_composite": 48,
     "score_last_updated": 1795123486,
     "second_opinion": {
      "kind": "native",
      "path": null,
-     "block_start": 52364845,
-     "block_end": 52364861,
-     "read_gap_seconds": 389,
-     "since_score_push_seconds": 639956
+     "block_start": 52386846,
+     "block_end": 52386854,
+     "read_gap_seconds": 435,
+     "since_score_push_seconds": 661600
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x2df1c51e09aecf9cacb7bc98cb1742757f163df7 --rpc-url https://998.rpc.thirdweb.com --block 70720908",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x2df1c51e09aecf9cacb7bc98cb1742757f163df7 --rpc-url https://998.rpc.thirdweb.com --block 70742761",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -1004,29 +1038,29 @@
    "title": "HyperLend Pooled",
    "score": 61,
    "delta": 0,
-   "tvl_usd": 246360018.0480259,
+   "tvl_usd": 248658417.92941445,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 70720908,
-    "oracle_read_at": 1795763053,
+    "oracle_block": 70742761,
+    "oracle_read_at": 1795784651,
     "composite": 61,
     "previous_composite": 61,
     "score_last_updated": 1795123486,
     "second_opinion": {
-     "kind": "unreadable",
+     "kind": "contract",
      "path": "owner()",
-     "block_start": 52364845,
-     "block_end": 52364861,
-     "read_gap_seconds": 389,
-     "since_score_push_seconds": 639956
+     "block_start": 52386846,
+     "block_end": 52386854,
+     "read_gap_seconds": 435,
+     "since_score_push_seconds": 661600
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x72c98246a98bfe64022a3190e7710e157497170c --rpc-url https://998.rpc.thirdweb.com --block 70720908",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x72c98246a98bfe64022a3190e7710e157497170c --rpc-url https://998.rpc.thirdweb.com --block 70742761",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -1043,23 +1077,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 70720908,
-    "oracle_read_at": 1795763053,
+    "oracle_block": 70742761,
+    "oracle_read_at": 1795784651,
     "composite": 47,
     "previous_composite": 47,
     "score_last_updated": 1795123486,
     "second_opinion": {
      "kind": "timelock",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 52364845,
-     "block_end": 52364861,
-     "read_gap_seconds": 389,
-     "since_score_push_seconds": 639956
+     "block_start": 52386846,
+     "block_end": 52386854,
+     "read_gap_seconds": 435,
+     "since_score_push_seconds": 661600
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0xffaa4a3d97fe9107cef8a3f48c069f577ff76cc1 --rpc-url https://998.rpc.thirdweb.com --block 70720908",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0xffaa4a3d97fe9107cef8a3f48c069f577ff76cc1 --rpc-url https://998.rpc.thirdweb.com --block 70742761",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -1070,7 +1104,7 @@
    "title": "Fluid Lending",
    "score": 59,
    "delta": 0,
-   "tvl_usd": 24190076.490562573,
+   "tvl_usd": 23611326.43115487,
    "first_seen": "2026-11-24T07:16:24Z",
    "new": false,
    "evidence": [
@@ -1113,23 +1147,23 @@
    ],
    "reading": {
     "oracle": "0x50840a7667baEa9D05ad4ae3dCeb384724b58720",
-    "oracle_block": 39925197,
-    "oracle_read_at": 1795762857,
+    "oracle_block": 39946808,
+    "oracle_read_at": 1795784466,
     "composite": 59,
     "previous_composite": 59,
     "score_last_updated": 1795729520,
     "second_opinion": {
      "kind": "timelock",
      "path": "EIP-1967 admin",
-     "block_start": 38787832,
-     "block_end": 38787843,
-     "read_gap_seconds": 625,
-     "since_score_push_seconds": 33962
+     "block_start": 38809477,
+     "block_end": 38809488,
+     "read_gap_seconds": 661,
+     "since_score_push_seconds": 55607
     },
-    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x52aa899454998be5b000ad077a46bbe360f4e497 --rpc-url https://testnet-rpc.plasma.to --block 39925197",
+    "reproduce": "cast call 0x50840a7667baEa9D05ad4ae3dCeb384724b58720 'getScore(address)' 0x52aa899454998be5b000ad077a46bbe360f4e497 --rpc-url https://testnet-rpc.plasma.to --block 39946808",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": true
   },
   {
@@ -1140,29 +1174,29 @@
    "title": "Steakhouse Financial",
    "score": 44,
    "delta": 0,
-   "tvl_usd": 558494526.1638019,
+   "tvl_usd": 559791968.7924525,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 44,
     "previous_composite": 44,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "contract",
      "path": "owner() -> owner() of the holder (eoa)",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 687,
-     "since_score_push_seconds": 639701
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 717,
+     "since_score_push_seconds": 661338
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xbeeff033f34c046626b8d0a041844c5d1a5409dd --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xbeeff033f34c046626b8d0a041844c5d1a5409dd --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -1173,29 +1207,29 @@
    "title": "Uniswap V3",
    "score": 85,
    "delta": 0,
-   "tvl_usd": 58883869.05811996,
+   "tvl_usd": 59399484.43739076,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 85,
     "previous_composite": 85,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "contract",
      "path": "owner() -> owner() of the holder (timelock 172800s)",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 687,
-     "since_score_push_seconds": 639701
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 717,
+     "since_score_push_seconds": 661338
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x1f7d7550b1b028f7571e69a784071f0205fd2efa --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x1f7d7550b1b028f7571e69a784071f0205fd2efa --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -1206,29 +1240,29 @@
    "title": "Uniswap V4",
    "score": 85,
    "delta": 0,
-   "tvl_usd": 109668655.17113389,
+   "tvl_usd": 111405741.63290839,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 85,
     "previous_composite": 85,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "timelock",
      "path": "owner() (Arbitrum L1 alias of 0x1a9c8182c09f50c8318d769245bea52c32be35bc on Ethereum L1)",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 687,
-     "since_score_push_seconds": 639701
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 717,
+     "since_score_push_seconds": 661338
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x8366a39cc670b4001a1121b8f6a443a643e40951 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x8366a39cc670b4001a1121b8f6a443a643e40951 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -1239,29 +1273,29 @@
    "title": "Lighter Robinhood Perps",
    "score": 54,
    "delta": 0,
-   "tvl_usd": 97447165.40509446,
+   "tvl_usd": 95774183.3752018,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 54,
     "previous_composite": 54,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "contract",
      "path": "EIP-1967 admin",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 687,
-     "since_score_push_seconds": 639701
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 717,
+     "since_score_push_seconds": 661338
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x94bab9693ba2f6358507effcbd372b0660afff9d --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x94bab9693ba2f6358507effcbd372b0660afff9d --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -1278,23 +1312,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 85,
     "previous_composite": 85,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "timelock",
      "path": "owner() (Arbitrum L1 alias of 0x1a9c8182c09f50c8318d769245bea52c32be35bc on Ethereum L1)",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 687,
-     "since_score_push_seconds": 639701
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 717,
+     "since_score_push_seconds": 661338
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x000000007a1c8e570011eedf86a2a35593013cba --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x000000007a1c8e570011eedf86a2a35593013cba --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -1305,29 +1339,29 @@
    "title": "Spark Savings",
    "score": 29,
    "delta": 0,
-   "tvl_usd": 7172427.588337329,
+   "tvl_usd": 7173225.515338382,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 29,
     "previous_composite": 29,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "timelock",
      "path": "DEFAULT_ADMIN_ROLE member 1 of 1 (AccessControl)",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 688,
-     "since_score_push_seconds": 639702
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 717,
+     "since_score_push_seconds": 661338
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xde770c84fe66e063336b31737cfe9790f18c4087 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xde770c84fe66e063336b31737cfe9790f18c4087 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -1338,29 +1372,29 @@
    "title": "Pendle V2",
    "score": 42,
    "delta": 0,
-   "tvl_usd": 150898.97064079274,
+   "tvl_usd": 150767.5707085287,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 42,
     "previous_composite": 42,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "safe",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 688,
-     "since_score_push_seconds": 639702
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 717,
+     "since_score_push_seconds": 661338
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x544bf81c855ae84c1e8b65d5e38770898d01eee2 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x544bf81c855ae84c1e8b65d5e38770898d01eee2 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -1371,29 +1405,29 @@
    "title": "Curve DEX",
    "score": 1,
    "delta": 0,
-   "tvl_usd": 283506.10723331064,
+   "tvl_usd": 281572.8641629816,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 1,
     "previous_composite": 1,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "eoa",
      "path": "admin()",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 692,
-     "since_score_push_seconds": 639706
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 723,
+     "since_score_push_seconds": 661344
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x8271e06e5887fe5ba05234f5315c19f3ec90e8ad --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x8271e06e5887fe5ba05234f5315c19f3ec90e8ad --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -1404,29 +1438,29 @@
    "title": "Ekubo",
    "score": 100,
    "delta": 0,
-   "tvl_usd": 832465.9619347072,
+   "tvl_usd": 832931.6736842543,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 100,
     "previous_composite": 100,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "unreadable",
      "path": null,
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 692,
-     "since_score_push_seconds": 639706
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 723,
+     "since_score_push_seconds": 661344
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x00000000000014aa86c5d3c41765bb24e11bd701 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x00000000000014aa86c5d3c41765bb24e11bd701 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -1437,29 +1471,29 @@
    "title": "Uniswap V2",
    "score": 85,
    "delta": 0,
-   "tvl_usd": 7867403.493194924,
+   "tvl_usd": 7977250.985660583,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 85,
     "previous_composite": 85,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "unreadable",
      "path": null,
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 692,
-     "since_score_push_seconds": 639706
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 723,
+     "since_score_push_seconds": 661344
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x8bceaa40b9acdfaedf85adf4ff01f5ad6517937f --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x8bceaa40b9acdfaedf85adf4ff01f5ad6517937f --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -1470,29 +1504,29 @@
    "title": "Arcus pTokens",
    "score": 43,
    "delta": 0,
-   "tvl_usd": 190326.98259682616,
+   "tvl_usd": 175896.05901148057,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 43,
     "previous_composite": 43,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "safe",
      "path": "DEFAULT_ADMIN_ROLE member 1 of 1 (AccessControl)",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 692,
-     "since_score_push_seconds": 639706
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 723,
+     "since_score_push_seconds": 661344
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x9c3663fa9ab976e67b42939486ec4966cb41a0bb --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x9c3663fa9ab976e67b42939486ec4966cb41a0bb --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -1503,29 +1537,29 @@
    "title": "Arcus pTokens",
    "score": 43,
    "delta": 0,
-   "tvl_usd": 190326.98259682616,
+   "tvl_usd": 175896.05901148057,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 43,
     "previous_composite": 43,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "safe",
      "path": "beacon owner() (the beacon decides the implementation of every proxy on it)",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 692,
-     "since_score_push_seconds": 639706
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 723,
+     "since_score_push_seconds": 661344
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x925f92f055edb79c42b5d45e64a1b74143b90ea0 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x925f92f055edb79c42b5d45e64a1b74143b90ea0 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -1536,29 +1570,29 @@
    "title": "Arcus pTokens",
    "score": 43,
    "delta": 0,
-   "tvl_usd": 190326.98259682616,
+   "tvl_usd": 175896.05901148057,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 43,
     "previous_composite": 43,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "safe",
      "path": "beacon owner() (the beacon decides the implementation of every proxy on it)",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 693,
-     "since_score_push_seconds": 639707
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 724,
+     "since_score_push_seconds": 661345
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x4472c69d299382f8847ebce4fc6ed8e295510e3e --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x4472c69d299382f8847ebce4fc6ed8e295510e3e --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -1575,23 +1609,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 1,
     "previous_composite": 1,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "unreadable",
      "path": null,
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 693,
-     "since_score_push_seconds": 639707
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 724,
+     "since_score_push_seconds": 661345
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x322f0929c4625ed5bad873c95208d54e1c003b2d --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x322f0929c4625ed5bad873c95208d54e1c003b2d --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -1608,23 +1642,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 1,
     "previous_composite": 1,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "unreadable",
      "path": null,
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 693,
-     "since_score_push_seconds": 639707
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 724,
+     "since_score_push_seconds": 661345
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x12f190a9f9d7d37a250758b26824b97ce941bf54 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x12f190a9f9d7d37a250758b26824b97ce941bf54 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -1641,23 +1675,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 1,
     "previous_composite": 1,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "unreadable",
      "path": null,
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 693,
-     "since_score_push_seconds": 639707
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 724,
+     "since_score_push_seconds": 661345
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x894e1ec2d74ffe5aef8dc8a9e84686accb964f2a --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x894e1ec2d74ffe5aef8dc8a9e84686accb964f2a --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -1674,23 +1708,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 1,
     "previous_composite": 1,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "unreadable",
      "path": null,
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 693,
-     "since_score_push_seconds": 639707
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 724,
+     "since_score_push_seconds": 661345
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xe0444ef8bf4ed74f74fd73686e2ddf4c1c5591e8 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xe0444ef8bf4ed74f74fd73686e2ddf4c1c5591e8 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -1707,23 +1741,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 1,
     "previous_composite": 1,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "unreadable",
      "path": null,
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 693,
-     "since_score_push_seconds": 639707
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 724,
+     "since_score_push_seconds": 661345
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x86923f96303d656e4aa86d9d42d1e57ad2023fdc --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x86923f96303d656e4aa86d9d42d1e57ad2023fdc --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -1734,29 +1768,29 @@
    "title": "0x9934\u20263b57",
    "score": 25,
    "delta": 0,
-   "tvl_usd": 483142.39391105383,
+   "tvl_usd": 463009.6198133673,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 25,
     "previous_composite": 25,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "safe",
      "path": "owner()",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 693,
-     "since_score_push_seconds": 639707
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 724,
+     "since_score_push_seconds": 661345
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x99347d5f70d3838763f6bddcf80304c8aa953b57 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x99347d5f70d3838763f6bddcf80304c8aa953b57 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -1767,29 +1801,29 @@
    "title": "0x3778\u2026d0a8",
    "score": 63,
    "delta": 0,
-   "tvl_usd": 67313.65844036482,
+   "tvl_usd": 67314.85520392543,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 63,
     "previous_composite": 63,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "safe",
      "path": "owner()",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 693,
-     "since_score_push_seconds": 639707
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 725,
+     "since_score_push_seconds": 661346
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x37788ff0c1d4e45a7fe06bc7e71e0cc00121d0a8 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x37788ff0c1d4e45a7fe06bc7e71e0cc00121d0a8 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -1800,29 +1834,29 @@
    "title": "Steakhouse Financial",
    "score": 70,
    "delta": 0,
-   "tvl_usd": 558494526.1638019,
+   "tvl_usd": 559791968.7924525,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 70,
     "previous_composite": 70,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "contract",
      "path": "owner() -> owner() of the holder (safe 5-of-10)",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 694,
-     "since_score_push_seconds": 639708
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 726,
+     "since_score_push_seconds": 661347
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xbeeff0fb1dc19344a87b8479dab60a2e16160737 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xbeeff0fb1dc19344a87b8479dab60a2e16160737 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -1833,29 +1867,29 @@
    "title": "Longbow",
    "score": 33,
    "delta": 0,
-   "tvl_usd": 1515439.4704876207,
+   "tvl_usd": 1518569.763784515,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 33,
     "previous_composite": 33,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "safe",
      "path": "owner()",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 694,
-     "since_score_push_seconds": 639708
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 726,
+     "since_score_push_seconds": 661347
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x026df18fbd2a7639089d0a16293383ec687a5ca1 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x026df18fbd2a7639089d0a16293383ec687a5ca1 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -1866,29 +1900,29 @@
    "title": "Longbow",
    "score": 33,
    "delta": 0,
-   "tvl_usd": 1515439.4704876207,
+   "tvl_usd": 1518569.763784515,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 33,
     "previous_composite": 33,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "safe",
      "path": "owner()",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 694,
-     "since_score_push_seconds": 639708
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 726,
+     "since_score_push_seconds": 661347
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x65dc90cd3a0bcde967c8ae6019d6790b616e78f7 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x65dc90cd3a0bcde967c8ae6019d6790b616e78f7 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -1899,29 +1933,29 @@
    "title": "Longbow",
    "score": 33,
    "delta": 0,
-   "tvl_usd": 1515439.4704876207,
+   "tvl_usd": 1518569.763784515,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 33,
     "previous_composite": 33,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "safe",
      "path": "owner()",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 694,
-     "since_score_push_seconds": 639708
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 727,
+     "since_score_push_seconds": 661348
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xe129d4cb2d454c4acfac909d1576453a9b835f61 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xe129d4cb2d454c4acfac909d1576453a9b835f61 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -1932,29 +1966,29 @@
    "title": "Robinhood Chain (whole chain)",
    "score": 57,
    "delta": 0,
-   "tvl_usd": 988605420.2576964,
+   "tvl_usd": 990554876.4729253,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 57,
     "previous_composite": 57,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "native",
      "path": null,
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 694,
-     "since_score_push_seconds": 639708
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 727,
+     "since_score_push_seconds": 661348
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x23a19d23e89166adedbdcb432518ab01e4272d94 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x23a19d23e89166adedbdcb432518ab01e4272d94 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -1965,29 +1999,29 @@
    "title": "Robinhood Chain (whole chain)",
    "score": 57,
    "delta": 0,
-   "tvl_usd": 988605420.2576964,
+   "tvl_usd": 990554876.4729253,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 57,
     "previous_composite": 57,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "native",
      "path": null,
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 694,
-     "since_score_push_seconds": 639708
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 727,
+     "since_score_push_seconds": 661348
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xbd0d173eeb87d57a09521c24388a12789f33ba96 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xbd0d173eeb87d57a09521c24388a12789f33ba96 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -1998,29 +2032,29 @@
    "title": "Robinhood Chain (whole chain)",
    "score": 57,
    "delta": 0,
-   "tvl_usd": 988605420.2576964,
+   "tvl_usd": 990554876.4729253,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 57,
     "previous_composite": 57,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "native",
      "path": null,
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 694,
-     "since_score_push_seconds": 639708
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 727,
+     "since_score_push_seconds": 661348
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x1232813bdd40aa9d53066a880de78a4be70b90fd --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x1232813bdd40aa9d53066a880de78a4be70b90fd --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -2031,29 +2065,29 @@
    "title": "Robinhood Chain (whole chain)",
    "score": 57,
    "delta": 0,
-   "tvl_usd": 988605420.2576964,
+   "tvl_usd": 990554876.4729253,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 57,
     "previous_composite": 57,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "native",
      "path": null,
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 694,
-     "since_score_push_seconds": 639708
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 727,
+     "since_score_push_seconds": 661348
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x1a07cc4bd17e0118bdb54d70990d2158abad7a2d --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x1a07cc4bd17e0118bdb54d70990d2158abad7a2d --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -2064,29 +2098,29 @@
    "title": "Robinhood Chain (whole chain)",
    "score": 57,
    "delta": 0,
-   "tvl_usd": 988605420.2576964,
+   "tvl_usd": 990554876.4729253,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 57,
     "previous_composite": 57,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "native",
      "path": null,
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 694,
-     "since_score_push_seconds": 639708
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 727,
+     "since_score_push_seconds": 661348
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xdf8755334ce7a73ccf6b581c02ea649ae3e864b3 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xdf8755334ce7a73ccf6b581c02ea649ae3e864b3 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -2097,29 +2131,29 @@
    "title": "Robinhood Chain (whole chain)",
    "score": 57,
    "delta": 0,
-   "tvl_usd": 988605420.2576964,
+   "tvl_usd": 990554876.4729253,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 57,
     "previous_composite": 57,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "native",
      "path": null,
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 694,
-     "since_score_push_seconds": 639708
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 727,
+     "since_score_push_seconds": 661348
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xf0ce991ea4a0d2400a4ab49b20ae333f6dce3de9 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xf0ce991ea4a0d2400a4ab49b20ae333f6dce3de9 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -2130,29 +2164,29 @@
    "title": "Ramses CL V2",
    "score": 8,
    "delta": 0,
-   "tvl_usd": 3059052.552010429,
+   "tvl_usd": 3218312.8227204382,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 8,
     "previous_composite": 8,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "unreadable",
      "path": null,
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 694,
-     "since_score_push_seconds": 639708
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 727,
+     "since_score_push_seconds": 661348
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xe0c4ceb92d08ca985bb70fe0a22feb121a9854a8 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xe0c4ceb92d08ca985bb70fe0a22feb121a9854a8 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -2163,29 +2197,29 @@
    "title": "Ramses CL V2",
    "score": 8,
    "delta": 0,
-   "tvl_usd": 3059052.552010429,
+   "tvl_usd": 3218312.8227204382,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 8,
     "previous_composite": 8,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "unreadable",
      "path": null,
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 694,
-     "since_score_push_seconds": 639708
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 727,
+     "since_score_push_seconds": 661348
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x4b37359bf291abe8453692db58d515a8b013dca9 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x4b37359bf291abe8453692db58d515a8b013dca9 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -2196,29 +2230,29 @@
    "title": "Ramses CL V2",
    "score": 8,
    "delta": 0,
-   "tvl_usd": 3059052.552010429,
+   "tvl_usd": 3218312.8227204382,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 8,
     "previous_composite": 8,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "safe",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 694,
-     "since_score_push_seconds": 639708
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 727,
+     "since_score_push_seconds": 661348
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x83341f891f898cb5e0cacc8a70501bba83d9cecf --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x83341f891f898cb5e0cacc8a70501bba83d9cecf --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -2229,29 +2263,29 @@
    "title": "Ramses CL V2",
    "score": 8,
    "delta": 0,
-   "tvl_usd": 3059052.552010429,
+   "tvl_usd": 3218312.8227204382,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 8,
     "previous_composite": 8,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "safe",
      "path": "owner()",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 695,
-     "since_score_push_seconds": 639709
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 728,
+     "since_score_push_seconds": 661349
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xa203a21dccb461e415daa342e8e635b6cee0ccb3 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xa203a21dccb461e415daa342e8e635b6cee0ccb3 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -2268,23 +2302,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 52,
     "previous_composite": 52,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "unreadable",
      "path": null,
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 695,
-     "since_score_push_seconds": 639709
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 728,
+     "since_score_push_seconds": 661349
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xee27d5ae494300902d90454e8630a3f1c68c9c52 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xee27d5ae494300902d90454e8630a3f1c68c9c52 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -2295,29 +2329,29 @@
    "title": "LayerZero V2",
    "score": 51,
    "delta": 0,
-   "tvl_usd": 333932.0033037823,
+   "tvl_usd": 338073.96410353074,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 51,
     "previous_composite": 51,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "contract",
      "path": "owner()",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 695,
-     "since_score_push_seconds": 639709
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 728,
+     "since_score_push_seconds": 661349
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x6f475642a6e85809b1c36fa62763669b1b48dd5b --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x6f475642a6e85809b1c36fa62763669b1b48dd5b --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -2328,29 +2362,29 @@
    "title": "LayerZero V2",
    "score": 51,
    "delta": 0,
-   "tvl_usd": 333932.0033037823,
+   "tvl_usd": 338073.96410353074,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 51,
     "previous_composite": 51,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "contract",
      "path": "owner()",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 695,
-     "since_score_push_seconds": 639709
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 728,
+     "since_score_push_seconds": 661349
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xc39161c743d0307eb9bcc9fef03eeb9dc4802de7 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xc39161c743d0307eb9bcc9fef03eeb9dc4802de7 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -2361,29 +2395,29 @@
    "title": "LayerZero V2",
    "score": 51,
    "delta": 0,
-   "tvl_usd": 333932.0033037823,
+   "tvl_usd": 338073.96410353074,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 51,
     "previous_composite": 51,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "contract",
      "path": "owner()",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 695,
-     "since_score_push_seconds": 639709
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 728,
+     "since_score_push_seconds": 661349
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xe1844c5d63a9543023008d332bd3d2e6f1fe1043 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xe1844c5d63a9543023008d332bd3d2e6f1fe1043 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -2394,29 +2428,29 @@
    "title": "PancakeSwap AMM V3",
    "score": 44,
    "delta": 0,
-   "tvl_usd": 2840466.212379956,
+   "tvl_usd": 2753913.9024073426,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 44,
     "previous_composite": 44,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "contract",
      "path": "owner() -> owner() of the holder (safe 3-of-6)",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 695,
-     "since_score_push_seconds": 639709
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 728,
+     "since_score_push_seconds": 661349
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x0bfbcf9fa4f9c56b0f40a671ad40e0805a091865 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x0bfbcf9fa4f9c56b0f40a671ad40e0805a091865 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -2427,29 +2461,29 @@
    "title": "SushiSwap V3",
    "score": 31,
    "delta": 0,
-   "tvl_usd": 2754250.4586231406,
+   "tvl_usd": 2726920.2607776425,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 31,
     "previous_composite": 31,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "contract",
      "path": "owner() -> owner() of the holder (safe 2-of-3)",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 695,
-     "since_score_push_seconds": 639709
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 728,
+     "since_score_push_seconds": 661349
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xe51960f1b45f1c9fb6d166e6a884f866fc70433b --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xe51960f1b45f1c9fb6d166e6a884f866fc70433b --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -2460,29 +2494,29 @@
    "title": "Symbiosis",
    "score": 43,
    "delta": 0,
-   "tvl_usd": 408973.8809115896,
+   "tvl_usd": 440465.2829249334,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 43,
     "previous_composite": 43,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "safe",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 695,
-     "since_score_push_seconds": 639709
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 728,
+     "since_score_push_seconds": 661349
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x292fc50e4eb66c3f6514b9e402dbc25961824d62 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x292fc50e4eb66c3f6514b9e402dbc25961824d62 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -2499,23 +2533,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 29,
     "previous_composite": 29,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "safe",
      "path": "owner()",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 695,
-     "since_score_push_seconds": 639709
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 729,
+     "since_score_push_seconds": 661350
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x0dc846db6a4ec7b5a3e542f7db88049e9add2541 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x0dc846db6a4ec7b5a3e542f7db88049e9add2541 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -2526,29 +2560,29 @@
    "title": "Fables",
    "score": 2,
    "delta": 0,
-   "tvl_usd": 9638065.226849446,
+   "tvl_usd": 10025778.178471167,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 2,
     "previous_composite": 2,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "contract",
      "path": "authority() (AccessManaged: the AccessManager holds every role)",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 696,
-     "since_score_push_seconds": 639710
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 730,
+     "since_score_push_seconds": 661351
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x159a113e012593d9b3cc63ad45e30f0467e13ef3 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x159a113e012593d9b3cc63ad45e30f0467e13ef3 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -2559,29 +2593,29 @@
    "title": "Beefy",
    "score": 50,
    "delta": 0,
-   "tvl_usd": 1079522.1184014352,
+   "tvl_usd": 1076451.6034702535,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 50,
     "previous_composite": 50,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "timelock",
      "path": "owner()",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 696,
-     "since_score_push_seconds": 639710
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 730,
+     "since_score_push_seconds": 661351
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -2592,29 +2626,29 @@
    "title": "Snuggle",
    "score": 1,
    "delta": 0,
-   "tvl_usd": 4589112.962655931,
+   "tvl_usd": 4600520.487398264,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 1,
     "previous_composite": 1,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "eoa",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 696,
-     "since_score_push_seconds": 639710
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 730,
+     "since_score_push_seconds": 661351
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x1195c074f898b7644ba732407619c9804dfe6dce --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x1195c074f898b7644ba732407619c9804dfe6dce --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -2625,29 +2659,29 @@
    "title": "PancakeSwap AMM",
    "score": 2,
    "delta": 0,
-   "tvl_usd": 94934.72457403515,
+   "tvl_usd": 94167.82290706475,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 2,
     "previous_composite": 2,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "unreadable",
      "path": null,
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 696,
-     "since_score_push_seconds": 639710
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 730,
+     "since_score_push_seconds": 661351
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x02a84c1b3bbd7401a5f7fa98a384ebc70bb5749e --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x02a84c1b3bbd7401a5f7fa98a384ebc70bb5749e --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -2658,29 +2692,29 @@
    "title": "Steakhouse Financial",
    "score": 49,
    "delta": 0,
-   "tvl_usd": 558494526.1638019,
+   "tvl_usd": 559791968.7924525,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 49,
     "previous_composite": 49,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "timelock",
      "path": "owner()",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 696,
-     "since_score_push_seconds": 639710
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 730,
+     "since_score_push_seconds": 661351
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xbeeff039907422219fb367e525954ddc092854d9 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xbeeff039907422219fb367e525954ddc092854d9 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -2691,29 +2725,29 @@
    "title": "Steakhouse Financial",
    "score": 66,
    "delta": 0,
-   "tvl_usd": 558494526.1638019,
+   "tvl_usd": 559791968.7924525,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 66,
     "previous_composite": 66,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "contract",
      "path": "owner() -> owner() of the holder (safe 5-of-10)",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 696,
-     "since_score_push_seconds": 639710
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 730,
+     "since_score_push_seconds": 661351
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xbeefff136e3684273e6aa75a1669b784b373a4fd --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xbeefff136e3684273e6aa75a1669b784b373a4fd --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -2724,29 +2758,29 @@
    "title": "Spark Liquidity Layer",
    "score": 29,
    "delta": 0,
-   "tvl_usd": 649.1081004540018,
+   "tvl_usd": 649.1033068421169,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 29,
     "previous_composite": 29,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "unreadable",
      "path": null,
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 696,
-     "since_score_push_seconds": 639710
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 730,
+     "since_score_push_seconds": 661351
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xfd2fd4b046136b540a56c11c75ac679ae7d1db24 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xfd2fd4b046136b540a56c11c75ac679ae7d1db24 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -2757,29 +2791,29 @@
    "title": "Meridian Perps",
    "score": 16,
    "delta": 0,
-   "tvl_usd": 1444629.0440794653,
+   "tvl_usd": 1437409.9709324853,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 16,
     "previous_composite": 16,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "safe",
      "path": "owner()",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 696,
-     "since_score_push_seconds": 639710
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 730,
+     "since_score_push_seconds": 661351
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xd540f47f214dc7d6d244e62a6ae7e06b586ef44a --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xd540f47f214dc7d6d244e62a6ae7e06b586ef44a --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -2790,29 +2824,29 @@
    "title": "Morpho Blue",
    "score": 55,
    "delta": 0,
-   "tvl_usd": 620378631.4409809,
+   "tvl_usd": 621768251.3934993,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 55,
     "previous_composite": 55,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "safe",
      "path": "owner()",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 697,
-     "since_score_push_seconds": 639711
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 731,
+     "since_score_push_seconds": 661352
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x9d53d5e3bd5e8d4cbfa6db1ca238aea02e651010 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x9d53d5e3bd5e8d4cbfa6db1ca238aea02e651010 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -2823,29 +2857,29 @@
    "title": "NOXA Fun",
    "score": 2,
    "delta": 0,
-   "tvl_usd": 2390710.3577677025,
+   "tvl_usd": 2358711.0926564904,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 2,
     "previous_composite": 2,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "eoa",
      "path": "owner()",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 698,
-     "since_score_push_seconds": 639712
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 732,
+     "since_score_push_seconds": 661353
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x7f03effbd7ceb22a3f80dd468f67ef27826acd85 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x7f03effbd7ceb22a3f80dd468f67ef27826acd85 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -2856,29 +2890,29 @@
    "title": "UNCX Network V3",
    "score": 31,
    "delta": 0,
-   "tvl_usd": 1834971.6559972,
+   "tvl_usd": 1815334.9387315167,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 31,
     "previous_composite": 31,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "safe",
      "path": "owner()",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 698,
-     "since_score_push_seconds": 639712
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 733,
+     "since_score_push_seconds": 661354
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xf28704c691290547924e2129d407da36bda8ce0f --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xf28704c691290547924e2129d407da36bda8ce0f --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -2889,7 +2923,7 @@
    "title": "Arcus Perps",
    "score": 40,
    "delta": 0,
-   "tvl_usd": 55037789.697147295,
+   "tvl_usd": 55161875.60476123,
    "first_seen": "2026-11-26T19:18:18Z",
    "new": false,
    "evidence": [
@@ -2908,23 +2942,23 @@
    ],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 40,
     "previous_composite": 40,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "timelock",
      "path": "DEFAULT_ADMIN_ROLE member 1 of 3 (AccessControl)",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 698,
-     "since_score_push_seconds": 639712
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 733,
+     "since_score_push_seconds": 661354
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x14b107cf534239c59571b066cb6497a321da897c --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x14b107cf534239c59571b066cb6497a321da897c --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": true
   },
   {
@@ -2935,29 +2969,29 @@
    "title": "Arcus Perps",
    "score": 40,
    "delta": 0,
-   "tvl_usd": 55037789.697147295,
+   "tvl_usd": 55161875.60476123,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 40,
     "previous_composite": 40,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "timelock",
      "path": "DEFAULT_ADMIN_ROLE member 1 of 3 (AccessControl)",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 698,
-     "since_score_push_seconds": 639712
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 733,
+     "since_score_push_seconds": 661354
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x14b107cf534239c59571b066cb6497a321da897c --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x14b107cf534239c59571b066cb6497a321da897c --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -2968,29 +3002,29 @@
    "title": "T3tris Finance",
    "score": 2,
    "delta": 0,
-   "tvl_usd": 682644.3655721438,
+   "tvl_usd": 681990.8451103817,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 2,
     "previous_composite": 2,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "eoa",
      "path": "DEFAULT_ADMIN_ROLE member 1 of 1 (AccessControl)",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 698,
-     "since_score_push_seconds": 639712
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 733,
+     "since_score_push_seconds": 661354
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xd5c6c79692715145098a65d1eb1f2a10c524f8e8 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xd5c6c79692715145098a65d1eb1f2a10c524f8e8 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -3007,23 +3041,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 32,
     "previous_composite": 32,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "safe",
      "path": "owner()",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 698,
-     "since_score_push_seconds": 639712
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 733,
+     "since_score_push_seconds": 661354
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x1ac9db4a2608ba45d6127b1737949b51bb54b7f3 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x1ac9db4a2608ba45d6127b1737949b51bb54b7f3 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -3040,23 +3074,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 43,
     "previous_composite": 43,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "safe",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 698,
-     "since_score_push_seconds": 639712
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 734,
+     "since_score_push_seconds": 661355
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x16494a80e08bcb9285d87b67149d7b01774d82f8 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x16494a80e08bcb9285d87b67149d7b01774d82f8 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -3073,23 +3107,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 1,
     "previous_composite": 1,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "eoa",
      "path": "owner()",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 699,
-     "since_score_push_seconds": 639713
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 735,
+     "since_score_push_seconds": 661356
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xb24b143ad6bb5be9559ccc75f34a2261b7456904 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xb24b143ad6bb5be9559ccc75f34a2261b7456904 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -3106,23 +3140,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 31,
     "previous_composite": 31,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "safe",
      "path": "owner()",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 699,
-     "since_score_push_seconds": 639713
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 735,
+     "since_score_push_seconds": 661356
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x128a800cbc615cc110bff16e475865c67631603a --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x128a800cbc615cc110bff16e475865c67631603a --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -3139,23 +3173,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 2,
     "previous_composite": 2,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "safe",
      "path": "EIP-1967 admin -> ProxyAdmin owner()",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 699,
-     "since_score_push_seconds": 639713
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 735,
+     "since_score_push_seconds": 661356
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x5c98b2d892b37c9a1d3b69472bddc172a64cdc09 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0x5c98b2d892b37c9a1d3b69472bddc172a64cdc09 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -3172,23 +3206,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 46,
     "previous_composite": 46,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "safe",
      "path": "owner()",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 700,
-     "since_score_push_seconds": 639714
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 736,
+     "since_score_push_seconds": 661357
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xd01c774d4a66408326bc65728ac5ae5aaf004032 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xd01c774d4a66408326bc65728ac5ae5aaf004032 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -3205,23 +3239,23 @@
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 1,
     "previous_composite": 1,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "safe",
      "path": "owner()",
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 700,
-     "since_score_push_seconds": 639714
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 737,
+     "since_score_push_seconds": 661358
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   },
   {
@@ -3232,29 +3266,29 @@
    "title": "0xd421\u2026b490",
    "score": 2,
    "delta": 0,
-   "tvl_usd": 53036.936493219786,
+   "tvl_usd": 53043.00627233466,
    "first_seen": "2026-11-27T01:17:04Z",
    "new": false,
    "evidence": [],
    "reading": {
     "oracle": "0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52",
-    "oracle_block": 158404625,
-    "oracle_read_at": 1795762848,
+    "oracle_block": 158495941,
+    "oracle_read_at": 1795784455,
     "composite": 2,
     "previous_composite": 2,
     "score_last_updated": 1795123834,
     "second_opinion": {
      "kind": "unreadable",
      "path": null,
-     "block_start": 124074957,
-     "block_end": 124075379,
-     "read_gap_seconds": 701,
-     "since_score_push_seconds": 639715
+     "block_start": 124273306,
+     "block_end": 124273652,
+     "read_gap_seconds": 738,
+     "since_score_push_seconds": 661359
     },
-    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xd42174d3db28b0fa2bd25381c3521b18ae9db490 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158404625",
+    "reproduce": "cast call 0x9BF45734D09bC7CA39238e767B2af9AAc62a7f52 'getScore(address)' 0xd42174d3db28b0fa2bd25381c3521b18ae9db490 --rpc-url https://rpc.testnet.chain.robinhood.com/rpc --block 158495941",
     "reproduce_exact": false
    },
-   "previous_run": "2026-11-27T01:00:46Z",
+   "previous_run": "2026-11-27T07:00:43Z",
    "notified": false
   }
  ],
@@ -3267,11 +3301,11 @@
    "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
    "title": "Fluid Lending",
    "first_seen": "2026-11-24T07:16:24Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 32,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 33,
    "score": 59,
    "delta": 0,
-   "tvl_usd": 131139133.10454366
+   "tvl_usd": 131569512.69145216
   },
   {
    "key": "a queued change against this contract is ready to execute now|plasma:0x52aa899454998be5b000ad077a46bbe360f4e497",
@@ -3281,11 +3315,11 @@
    "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
    "title": "Fluid Lending",
    "first_seen": "2026-11-24T07:16:24Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 32,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 33,
    "score": 59,
    "delta": 0,
-   "tvl_usd": 24190076.490562573
+   "tvl_usd": 23611326.43115487
   },
   {
    "key": "the independent reader disagrees with the admin-key score, with money behind it|hyperliquid:0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec",
@@ -3295,11 +3329,11 @@
    "target": "0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec",
    "title": "Kinetiq kmHYPE",
    "first_seen": "2026-11-26T13:19:51Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 168,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 169,
    "score": 4,
    "delta": 0,
-   "tvl_usd": 32493943.749803055
+   "tvl_usd": 32394126.112498567
   },
   {
    "key": "a queued change against this contract is ready to execute now|robinhood:0x14b107cf534239c59571b066cb6497a321da897c",
@@ -3309,11 +3343,11 @@
    "target": "0x14b107cf534239c59571b066cb6497a321da897c",
    "title": "Arcus Perps",
    "first_seen": "2026-11-26T19:18:18Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 5,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 6,
    "score": 40,
    "delta": 0,
-   "tvl_usd": 55037789.697147295
+   "tvl_usd": 55161875.60476123
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|hyperliquid:0xea394cd63ca3a5c8a130bb2b955cc71c22e5ea6c",
@@ -3323,11 +3357,11 @@
    "target": "0xea394cd63ca3a5c8a130bb2b955cc71c22e5ea6c",
    "title": "Hyperliquid Bridge",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 18,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 19,
    "score": 26,
    "delta": 0,
-   "tvl_usd": 5608555567.639039
+   "tvl_usd": 5604210622.911361
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|hyperliquid:0x88806a71d74ad0a510b350545c9ae490912f0888",
@@ -3337,8 +3371,8 @@
    "target": "0x88806a71d74ad0a510b350545c9ae490912f0888",
    "title": "0x8880\u20260888",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 18,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 19,
    "score": 9,
    "delta": 0,
    "tvl_usd": null
@@ -3351,8 +3385,8 @@
    "target": "0x320c8988e3d1b5198f335802d7bfd2728a8fcac6",
    "title": "0x320c\u2026cac6",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 18,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 19,
    "score": 32,
    "delta": 0,
    "tvl_usd": null
@@ -3365,8 +3399,8 @@
    "target": "0x30e96fbd515243d47703e78581b88cba60f51360",
    "title": "0x30e9\u20261360",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 18,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 19,
    "score": 5,
    "delta": 0,
    "tvl_usd": null
@@ -3379,8 +3413,8 @@
    "target": "0xbf6d3bbce71dbce6f4121bfe2e2cad8c77bbc1fc",
    "title": "0xbf6d\u2026c1fc",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 18,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 19,
    "score": 9,
    "delta": 0,
    "tvl_usd": null
@@ -3393,11 +3427,11 @@
    "target": "0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec",
    "title": "Kinetiq kmHYPE",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 18,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 19,
    "score": 4,
    "delta": 0,
-   "tvl_usd": 32493943.749803055
+   "tvl_usd": 32394126.112498567
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|hyperliquid:0x8888888c43cbb7e1c4132542e46831bffd866ed3",
@@ -3407,8 +3441,8 @@
    "target": "0x8888888c43cbb7e1c4132542e46831bffd866ed3",
    "title": "0x8888\u20266ed3",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 18,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 19,
    "score": 4,
    "delta": 0,
    "tvl_usd": null
@@ -3421,11 +3455,11 @@
    "target": "0x8888888192a4a0593c13532ba48449fc24c3beda",
    "title": "Ventuals",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 18,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 19,
    "score": 31,
    "delta": 0,
-   "tvl_usd": 254399.0465341036
+   "tvl_usd": 252441.89623272797
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109",
@@ -3435,11 +3469,11 @@
    "target": "0x393d0b87ed38fc779fd9611144ae649ba6082109",
    "title": "Kinetiq kHYPE",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 18,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 19,
    "score": 4,
    "delta": 0,
-   "tvl_usd": 620916509.6654649
+   "tvl_usd": 615288381.5304255
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|hyperliquid:0xdfc24b077bc1425ad1dea75bcb6f8158e10df303",
@@ -3449,11 +3483,11 @@
    "target": "0xdfc24b077bc1425ad1dea75bcb6f8158e10df303",
    "title": "Hyperliquid HLP",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 18,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 19,
    "score": 9,
    "delta": 0,
-   "tvl_usd": 152274627.55204767
+   "tvl_usd": 152358436.49900186
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|hyperliquid:0x574bafce69d9411f662a433896e74e4f153096fa",
@@ -3463,11 +3497,11 @@
    "target": "0x574bafce69d9411f662a433896e74e4f153096fa",
    "title": "Unit",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 18,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 19,
    "score": 9,
    "delta": 0,
-   "tvl_usd": 889040007.8174206
+   "tvl_usd": 888598465.3569139
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|hyperliquid:0x8dafbe89302656a7df43c470e9ebcb4c540835c0",
@@ -3477,11 +3511,11 @@
    "target": "0x8dafbe89302656a7df43c470e9ebcb4c540835c0",
    "title": "Unit",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 18,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 19,
    "score": 9,
    "delta": 0,
-   "tvl_usd": 889040007.8174206
+   "tvl_usd": 888598465.3569139
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|hyperliquid:0xa822a9ceb6d6cb5b565bd10098abcfa9cf18d748",
@@ -3491,11 +3525,11 @@
    "target": "0xa822a9ceb6d6cb5b565bd10098abcfa9cf18d748",
    "title": "Unit",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 18,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 19,
    "score": 9,
    "delta": 0,
-   "tvl_usd": 889040007.8174206
+   "tvl_usd": 888598465.3569139
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|hyperliquid:0x2df1c51e09aecf9cacb7bc98cb1742757f163df7",
@@ -3505,11 +3539,11 @@
    "target": "0x2df1c51e09aecf9cacb7bc98cb1742757f163df7",
    "title": "Hyperliquid Bridge",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 18,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 19,
    "score": 48,
    "delta": 0,
-   "tvl_usd": 82725913.24131013
+   "tvl_usd": 80093469.488185
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|hyperliquid:0x72c98246a98bfe64022a3190e7710e157497170c",
@@ -3519,11 +3553,11 @@
    "target": "0x72c98246a98bfe64022a3190e7710e157497170c",
    "title": "HyperLend Pooled",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 18,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 19,
    "score": 61,
    "delta": 0,
-   "tvl_usd": 246360018.0480259
+   "tvl_usd": 248658417.92941445
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|hyperliquid:0xffaa4a3d97fe9107cef8a3f48c069f577ff76cc1",
@@ -3533,8 +3567,8 @@
    "target": "0xffaa4a3d97fe9107cef8a3f48c069f577ff76cc1",
    "title": "0xffaa\u20266cc1",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 18,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 19,
    "score": 47,
    "delta": 0,
    "tvl_usd": null
@@ -3547,11 +3581,11 @@
    "target": "0x3c3d99fd298f679dbc2cecd132b4ec4d0f5e6e72",
    "title": "0x3c3d\u20266e72",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 47,
    "delta": 0,
-   "tvl_usd": 167763439.75191668
+   "tvl_usd": 167417806.30804044
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|arbitrum:0x1a3c9b1d2f0529d97f2afc5136cc23e58f1fd35b",
@@ -3561,11 +3595,11 @@
    "target": "0x1a3c9b1d2f0529d97f2afc5136cc23e58f1fd35b",
    "title": "Camelot V3",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 31,
    "delta": 0,
-   "tvl_usd": 2287185.2694143937
+   "tvl_usd": 2272401.5407823687
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|arbitrum:0xe23b4ae3624fb6f7cdef29bc8ead912f1ede6886",
@@ -3575,11 +3609,11 @@
    "target": "0xe23b4ae3624fb6f7cdef29bc8ead912f1ede6886",
    "title": "Radiant V2",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 55,
    "delta": 0,
-   "tvl_usd": 154331.30701689387
+   "tvl_usd": 153906.45926571547
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|arbitrum:0x423552c0f05baccac5bfa91c6dcf1dc53a0a1641",
@@ -3589,11 +3623,11 @@
    "target": "0x423552c0f05baccac5bfa91c6dcf1dc53a0a1641",
    "title": "Arbitrum (whole chain)",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 64,
    "delta": 0,
-   "tvl_usd": 1233090113.6123557
+   "tvl_usd": 1237524925.8836946
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|arbitrum:0xa97684ead0e402dc232d5a977953df7ecbab3cdb",
@@ -3603,11 +3637,11 @@
    "target": "0xa97684ead0e402dc232d5a977953df7ecbab3cdb",
    "title": "Aave V3",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 71,
    "delta": 0,
-   "tvl_usd": 412385956.0334372
+   "tvl_usd": 415766273.27773
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|arbitrum:0x9c4ec768c28520b50860ea7a15bd7213a9ff58bf",
@@ -3617,11 +3651,11 @@
    "target": "0x9c4ec768c28520b50860ea7a15bd7213a9ff58bf",
    "title": "Compound V3",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 78,
    "delta": 0,
-   "tvl_usd": 48191242.97918356
+   "tvl_usd": 48019315.94866841
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|arbitrum:0x888888888889758f76e7103c6cbf23abbf58f946",
@@ -3631,11 +3665,11 @@
    "target": "0x888888888889758f76e7103c6cbf23abbf58f946",
    "title": "Pendle V2",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 43,
    "delta": 0,
-   "tvl_usd": 37069285.598839045
+   "tvl_usd": 37104090.5135966
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|arbitrum:0x52aa899454998be5b000ad077a46bbe360f4e497",
@@ -3645,11 +3679,11 @@
    "target": "0x52aa899454998be5b000ad077a46bbe360f4e497",
    "title": "Fluid Lending",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 59,
    "delta": 0,
-   "tvl_usd": 131139133.10454366
+   "tvl_usd": 131569512.69145216
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|arbitrum:0x1f98431c8ad98523631ae4a59f267346ea31f984",
@@ -3659,11 +3693,11 @@
    "target": "0x1f98431c8ad98523631ae4a59f267346ea31f984",
    "title": "Uniswap V3",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 85,
    "delta": 0,
-   "tvl_usd": 90949595.59883128
+   "tvl_usd": 90968001.52937043
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|arbitrum:0x489ee077994b6658eafa855c308275ead8097c4a",
@@ -3673,11 +3707,11 @@
    "target": "0x489ee077994b6658eafa855c308275ead8097c4a",
    "title": "0x489e\u20267c4a",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 57,
    "delta": 0,
-   "tvl_usd": 1155819.085757773
+   "tvl_usd": 1153465.7045079696
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|arbitrum:0x6bd780e7fdf01d77e4d475c821f1e7ae05409072",
@@ -3687,8 +3721,8 @@
    "target": "0x6bd780e7fdf01d77e4d475c821f1e7ae05409072",
    "title": "0x6bd7\u20269072",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 40,
    "delta": 0,
    "tvl_usd": null
@@ -3701,8 +3735,8 @@
    "target": "0xffa10065ce1d1c42fabc46e06b84ed8ffeb4bae5",
    "title": "0xffa1\u2026bae5",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 40,
    "delta": 0,
    "tvl_usd": null
@@ -3715,8 +3749,8 @@
    "target": "0xff162c694eaa571f685030649814282ea457f169",
    "title": "0xff16\u2026f169",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 4,
    "delta": 0,
    "tvl_usd": null
@@ -3729,11 +3763,11 @@
    "target": "0xbeeff033f34c046626b8d0a041844c5d1a5409dd",
    "title": "Steakhouse Financial",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 44,
    "delta": 0,
-   "tvl_usd": 558494526.1638019
+   "tvl_usd": 559791968.7924525
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x1f7d7550b1b028f7571e69a784071f0205fd2efa",
@@ -3743,11 +3777,11 @@
    "target": "0x1f7d7550b1b028f7571e69a784071f0205fd2efa",
    "title": "Uniswap V3",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 85,
    "delta": 0,
-   "tvl_usd": 58883869.05811996
+   "tvl_usd": 59399484.43739076
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x8366a39cc670b4001a1121b8f6a443a643e40951",
@@ -3757,11 +3791,11 @@
    "target": "0x8366a39cc670b4001a1121b8f6a443a643e40951",
    "title": "Uniswap V3",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 85,
    "delta": 0,
-   "tvl_usd": 109668655.17113389
+   "tvl_usd": 111405741.63290839
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x94bab9693ba2f6358507effcbd372b0660afff9d",
@@ -3771,11 +3805,11 @@
    "target": "0x94bab9693ba2f6358507effcbd372b0660afff9d",
    "title": "Lighter Robinhood Perps",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 54,
    "delta": 0,
-   "tvl_usd": 97447165.40509446
+   "tvl_usd": 95774183.3752018
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x000000007a1c8e570011eedf86a2a35593013cba",
@@ -3785,8 +3819,8 @@
    "target": "0x000000007a1c8e570011eedf86a2a35593013cba",
    "title": "Uniswap V3",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 85,
    "delta": 0,
    "tvl_usd": null
@@ -3799,11 +3833,11 @@
    "target": "0xde770c84fe66e063336b31737cfe9790f18c4087",
    "title": "Spark Savings",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 29,
    "delta": 0,
-   "tvl_usd": 7172427.588337329
+   "tvl_usd": 7173225.515338382
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x544bf81c855ae84c1e8b65d5e38770898d01eee2",
@@ -3813,11 +3847,11 @@
    "target": "0x544bf81c855ae84c1e8b65d5e38770898d01eee2",
    "title": "Pendle V2",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 42,
    "delta": 0,
-   "tvl_usd": 150898.97064079274
+   "tvl_usd": 150767.5707085287
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x8271e06e5887fe5ba05234f5315c19f3ec90e8ad",
@@ -3827,11 +3861,11 @@
    "target": "0x8271e06e5887fe5ba05234f5315c19f3ec90e8ad",
    "title": "Curve DEX",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 1,
    "delta": 0,
-   "tvl_usd": 283506.10723331064
+   "tvl_usd": 281572.8641629816
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x00000000000014aa86c5d3c41765bb24e11bd701",
@@ -3841,11 +3875,11 @@
    "target": "0x00000000000014aa86c5d3c41765bb24e11bd701",
    "title": "Ekubo",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 100,
    "delta": 0,
-   "tvl_usd": 832465.9619347072
+   "tvl_usd": 832931.6736842543
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x8bceaa40b9acdfaedf85adf4ff01f5ad6517937f",
@@ -3855,11 +3889,11 @@
    "target": "0x8bceaa40b9acdfaedf85adf4ff01f5ad6517937f",
    "title": "Uniswap V3",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 85,
    "delta": 0,
-   "tvl_usd": 7867403.493194924
+   "tvl_usd": 7977250.985660583
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x9c3663fa9ab976e67b42939486ec4966cb41a0bb",
@@ -3869,11 +3903,11 @@
    "target": "0x9c3663fa9ab976e67b42939486ec4966cb41a0bb",
    "title": "Arcus pTokens",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 43,
    "delta": 0,
-   "tvl_usd": 190326.98259682616
+   "tvl_usd": 175896.05901148057
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x925f92f055edb79c42b5d45e64a1b74143b90ea0",
@@ -3883,11 +3917,11 @@
    "target": "0x925f92f055edb79c42b5d45e64a1b74143b90ea0",
    "title": "Arcus pTokens",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 43,
    "delta": 0,
-   "tvl_usd": 190326.98259682616
+   "tvl_usd": 175896.05901148057
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x4472c69d299382f8847ebce4fc6ed8e295510e3e",
@@ -3897,11 +3931,11 @@
    "target": "0x4472c69d299382f8847ebce4fc6ed8e295510e3e",
    "title": "Arcus pTokens",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 43,
    "delta": 0,
-   "tvl_usd": 190326.98259682616
+   "tvl_usd": 175896.05901148057
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x322f0929c4625ed5bad873c95208d54e1c003b2d",
@@ -3911,8 +3945,8 @@
    "target": "0x322f0929c4625ed5bad873c95208d54e1c003b2d",
    "title": "0x322f\u20263b2d",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 1,
    "delta": 0,
    "tvl_usd": null
@@ -3925,8 +3959,8 @@
    "target": "0x12f190a9f9d7d37a250758b26824b97ce941bf54",
    "title": "0x12f1\u2026bf54",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 1,
    "delta": 0,
    "tvl_usd": null
@@ -3939,8 +3973,8 @@
    "target": "0x894e1ec2d74ffe5aef8dc8a9e84686accb964f2a",
    "title": "0x894e\u20264f2a",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 1,
    "delta": 0,
    "tvl_usd": null
@@ -3953,8 +3987,8 @@
    "target": "0xe0444ef8bf4ed74f74fd73686e2ddf4c1c5591e8",
    "title": "0xe044\u202691e8",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 1,
    "delta": 0,
    "tvl_usd": null
@@ -3967,8 +4001,8 @@
    "target": "0x86923f96303d656e4aa86d9d42d1e57ad2023fdc",
    "title": "0x8692\u20263fdc",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 1,
    "delta": 0,
    "tvl_usd": null
@@ -3981,11 +4015,11 @@
    "target": "0x99347d5f70d3838763f6bddcf80304c8aa953b57",
    "title": "0x9934\u20263b57",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 25,
    "delta": 0,
-   "tvl_usd": 483142.39391105383
+   "tvl_usd": 463009.6198133673
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x37788ff0c1d4e45a7fe06bc7e71e0cc00121d0a8",
@@ -3995,11 +4029,11 @@
    "target": "0x37788ff0c1d4e45a7fe06bc7e71e0cc00121d0a8",
    "title": "0x3778\u2026d0a8",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 63,
    "delta": 0,
-   "tvl_usd": 67313.65844036482
+   "tvl_usd": 67314.85520392543
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0xbeeff0fb1dc19344a87b8479dab60a2e16160737",
@@ -4009,11 +4043,11 @@
    "target": "0xbeeff0fb1dc19344a87b8479dab60a2e16160737",
    "title": "Steakhouse Financial",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 70,
    "delta": 0,
-   "tvl_usd": 558494526.1638019
+   "tvl_usd": 559791968.7924525
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x026df18fbd2a7639089d0a16293383ec687a5ca1",
@@ -4023,11 +4057,11 @@
    "target": "0x026df18fbd2a7639089d0a16293383ec687a5ca1",
    "title": "Longbow",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 33,
    "delta": 0,
-   "tvl_usd": 1515439.4704876207
+   "tvl_usd": 1518569.763784515
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x65dc90cd3a0bcde967c8ae6019d6790b616e78f7",
@@ -4037,11 +4071,11 @@
    "target": "0x65dc90cd3a0bcde967c8ae6019d6790b616e78f7",
    "title": "Longbow",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 33,
    "delta": 0,
-   "tvl_usd": 1515439.4704876207
+   "tvl_usd": 1518569.763784515
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0xe129d4cb2d454c4acfac909d1576453a9b835f61",
@@ -4051,11 +4085,11 @@
    "target": "0xe129d4cb2d454c4acfac909d1576453a9b835f61",
    "title": "Longbow",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 33,
    "delta": 0,
-   "tvl_usd": 1515439.4704876207
+   "tvl_usd": 1518569.763784515
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x23a19d23e89166adedbdcb432518ab01e4272d94",
@@ -4065,11 +4099,11 @@
    "target": "0x23a19d23e89166adedbdcb432518ab01e4272d94",
    "title": "Robinhood Chain (whole chain)",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 57,
    "delta": 0,
-   "tvl_usd": 988605420.2576964
+   "tvl_usd": 990554876.4729253
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0xbd0d173eeb87d57a09521c24388a12789f33ba96",
@@ -4079,11 +4113,11 @@
    "target": "0xbd0d173eeb87d57a09521c24388a12789f33ba96",
    "title": "Robinhood Chain (whole chain)",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 57,
    "delta": 0,
-   "tvl_usd": 988605420.2576964
+   "tvl_usd": 990554876.4729253
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x1232813bdd40aa9d53066a880de78a4be70b90fd",
@@ -4093,11 +4127,11 @@
    "target": "0x1232813bdd40aa9d53066a880de78a4be70b90fd",
    "title": "Robinhood Chain (whole chain)",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 57,
    "delta": 0,
-   "tvl_usd": 988605420.2576964
+   "tvl_usd": 990554876.4729253
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x1a07cc4bd17e0118bdb54d70990d2158abad7a2d",
@@ -4107,11 +4141,11 @@
    "target": "0x1a07cc4bd17e0118bdb54d70990d2158abad7a2d",
    "title": "Robinhood Chain (whole chain)",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 57,
    "delta": 0,
-   "tvl_usd": 988605420.2576964
+   "tvl_usd": 990554876.4729253
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0xdf8755334ce7a73ccf6b581c02ea649ae3e864b3",
@@ -4121,11 +4155,11 @@
    "target": "0xdf8755334ce7a73ccf6b581c02ea649ae3e864b3",
    "title": "Robinhood Chain (whole chain)",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 57,
    "delta": 0,
-   "tvl_usd": 988605420.2576964
+   "tvl_usd": 990554876.4729253
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0xf0ce991ea4a0d2400a4ab49b20ae333f6dce3de9",
@@ -4135,11 +4169,11 @@
    "target": "0xf0ce991ea4a0d2400a4ab49b20ae333f6dce3de9",
    "title": "Robinhood Chain (whole chain)",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 57,
    "delta": 0,
-   "tvl_usd": 988605420.2576964
+   "tvl_usd": 990554876.4729253
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0xe0c4ceb92d08ca985bb70fe0a22feb121a9854a8",
@@ -4149,11 +4183,11 @@
    "target": "0xe0c4ceb92d08ca985bb70fe0a22feb121a9854a8",
    "title": "Ramses CL V2",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 8,
    "delta": 0,
-   "tvl_usd": 3059052.552010429
+   "tvl_usd": 3218312.8227204382
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x4b37359bf291abe8453692db58d515a8b013dca9",
@@ -4163,11 +4197,11 @@
    "target": "0x4b37359bf291abe8453692db58d515a8b013dca9",
    "title": "Ramses CL V2",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 8,
    "delta": 0,
-   "tvl_usd": 3059052.552010429
+   "tvl_usd": 3218312.8227204382
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x83341f891f898cb5e0cacc8a70501bba83d9cecf",
@@ -4177,11 +4211,11 @@
    "target": "0x83341f891f898cb5e0cacc8a70501bba83d9cecf",
    "title": "Ramses CL V2",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 8,
    "delta": 0,
-   "tvl_usd": 3059052.552010429
+   "tvl_usd": 3218312.8227204382
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0xa203a21dccb461e415daa342e8e635b6cee0ccb3",
@@ -4191,11 +4225,11 @@
    "target": "0xa203a21dccb461e415daa342e8e635b6cee0ccb3",
    "title": "Ramses CL V2",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 8,
    "delta": 0,
-   "tvl_usd": 3059052.552010429
+   "tvl_usd": 3218312.8227204382
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0xee27d5ae494300902d90454e8630a3f1c68c9c52",
@@ -4205,8 +4239,8 @@
    "target": "0xee27d5ae494300902d90454e8630a3f1c68c9c52",
    "title": "0xee27\u20269c52",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 52,
    "delta": 0,
    "tvl_usd": null
@@ -4219,11 +4253,11 @@
    "target": "0x6f475642a6e85809b1c36fa62763669b1b48dd5b",
    "title": "LayerZero V2",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 51,
    "delta": 0,
-   "tvl_usd": 333932.0033037823
+   "tvl_usd": 338073.96410353074
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0xc39161c743d0307eb9bcc9fef03eeb9dc4802de7",
@@ -4233,11 +4267,11 @@
    "target": "0xc39161c743d0307eb9bcc9fef03eeb9dc4802de7",
    "title": "LayerZero V2",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 51,
    "delta": 0,
-   "tvl_usd": 333932.0033037823
+   "tvl_usd": 338073.96410353074
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0xe1844c5d63a9543023008d332bd3d2e6f1fe1043",
@@ -4247,11 +4281,11 @@
    "target": "0xe1844c5d63a9543023008d332bd3d2e6f1fe1043",
    "title": "LayerZero V2",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 51,
    "delta": 0,
-   "tvl_usd": 333932.0033037823
+   "tvl_usd": 338073.96410353074
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x0bfbcf9fa4f9c56b0f40a671ad40e0805a091865",
@@ -4261,11 +4295,11 @@
    "target": "0x0bfbcf9fa4f9c56b0f40a671ad40e0805a091865",
    "title": "PancakeSwap AMM V3",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 44,
    "delta": 0,
-   "tvl_usd": 2840466.212379956
+   "tvl_usd": 2753913.9024073426
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0xe51960f1b45f1c9fb6d166e6a884f866fc70433b",
@@ -4275,11 +4309,11 @@
    "target": "0xe51960f1b45f1c9fb6d166e6a884f866fc70433b",
    "title": "SushiSwap V3",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 31,
    "delta": 0,
-   "tvl_usd": 2754250.4586231406
+   "tvl_usd": 2726920.2607776425
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x292fc50e4eb66c3f6514b9e402dbc25961824d62",
@@ -4289,11 +4323,11 @@
    "target": "0x292fc50e4eb66c3f6514b9e402dbc25961824d62",
    "title": "Symbiosis",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 43,
    "delta": 0,
-   "tvl_usd": 408973.8809115896
+   "tvl_usd": 440465.2829249334
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x0dc846db6a4ec7b5a3e542f7db88049e9add2541",
@@ -4303,8 +4337,8 @@
    "target": "0x0dc846db6a4ec7b5a3e542f7db88049e9add2541",
    "title": "STRATO",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 29,
    "delta": 0,
    "tvl_usd": null
@@ -4317,11 +4351,11 @@
    "target": "0x159a113e012593d9b3cc63ad45e30f0467e13ef3",
    "title": "Fables",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 2,
    "delta": 0,
-   "tvl_usd": 9638065.226849446
+   "tvl_usd": 10025778.178471167
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62",
@@ -4331,11 +4365,11 @@
    "target": "0x87673a619fc4f3fc08068a0bb04f60aa2d04ca62",
    "title": "Beefy",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 50,
    "delta": 0,
-   "tvl_usd": 1079522.1184014352
+   "tvl_usd": 1076451.6034702535
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x1195c074f898b7644ba732407619c9804dfe6dce",
@@ -4345,11 +4379,11 @@
    "target": "0x1195c074f898b7644ba732407619c9804dfe6dce",
    "title": "Snuggle",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 1,
    "delta": 0,
-   "tvl_usd": 4589112.962655931
+   "tvl_usd": 4600520.487398264
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x02a84c1b3bbd7401a5f7fa98a384ebc70bb5749e",
@@ -4359,11 +4393,11 @@
    "target": "0x02a84c1b3bbd7401a5f7fa98a384ebc70bb5749e",
    "title": "PancakeSwap AMM",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 2,
    "delta": 0,
-   "tvl_usd": 94934.72457403515
+   "tvl_usd": 94167.82290706475
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0xbeeff039907422219fb367e525954ddc092854d9",
@@ -4373,11 +4407,11 @@
    "target": "0xbeeff039907422219fb367e525954ddc092854d9",
    "title": "Steakhouse Financial",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 49,
    "delta": 0,
-   "tvl_usd": 558494526.1638019
+   "tvl_usd": 559791968.7924525
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0xbeefff136e3684273e6aa75a1669b784b373a4fd",
@@ -4387,11 +4421,11 @@
    "target": "0xbeefff136e3684273e6aa75a1669b784b373a4fd",
    "title": "Steakhouse Financial",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 66,
    "delta": 0,
-   "tvl_usd": 558494526.1638019
+   "tvl_usd": 559791968.7924525
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0xfd2fd4b046136b540a56c11c75ac679ae7d1db24",
@@ -4401,11 +4435,11 @@
    "target": "0xfd2fd4b046136b540a56c11c75ac679ae7d1db24",
    "title": "Spark Liquidity Layer",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 29,
    "delta": 0,
-   "tvl_usd": 649.1081004540018
+   "tvl_usd": 649.1033068421169
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0xd540f47f214dc7d6d244e62a6ae7e06b586ef44a",
@@ -4415,11 +4449,11 @@
    "target": "0xd540f47f214dc7d6d244e62a6ae7e06b586ef44a",
    "title": "Meridian Perps",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 16,
    "delta": 0,
-   "tvl_usd": 1444629.0440794653
+   "tvl_usd": 1437409.9709324853
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x9d53d5e3bd5e8d4cbfa6db1ca238aea02e651010",
@@ -4429,11 +4463,11 @@
    "target": "0x9d53d5e3bd5e8d4cbfa6db1ca238aea02e651010",
    "title": "Morpho Blue",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 55,
    "delta": 0,
-   "tvl_usd": 620378631.4409809
+   "tvl_usd": 621768251.3934993
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x7f03effbd7ceb22a3f80dd468f67ef27826acd85",
@@ -4443,11 +4477,11 @@
    "target": "0x7f03effbd7ceb22a3f80dd468f67ef27826acd85",
    "title": "NOXA Fun",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 2,
    "delta": 0,
-   "tvl_usd": 2390710.3577677025
+   "tvl_usd": 2358711.0926564904
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0xf28704c691290547924e2129d407da36bda8ce0f",
@@ -4457,11 +4491,11 @@
    "target": "0xf28704c691290547924e2129d407da36bda8ce0f",
    "title": "UNCX Network V3",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 31,
    "delta": 0,
-   "tvl_usd": 1834971.6559972
+   "tvl_usd": 1815334.9387315167
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x14b107cf534239c59571b066cb6497a321da897c",
@@ -4471,11 +4505,11 @@
    "target": "0x14b107cf534239c59571b066cb6497a321da897c",
    "title": "Arcus Perps",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 40,
    "delta": 0,
-   "tvl_usd": 55037789.697147295
+   "tvl_usd": 55161875.60476123
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0xd5c6c79692715145098a65d1eb1f2a10c524f8e8",
@@ -4485,11 +4519,11 @@
    "target": "0xd5c6c79692715145098a65d1eb1f2a10c524f8e8",
    "title": "T3tris Finance",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 2,
    "delta": 0,
-   "tvl_usd": 682644.3655721438
+   "tvl_usd": 681990.8451103817
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|robinhood:0x1ac9db4a2608ba45d6127b1737949b51bb54b7f3",
@@ -4499,8 +4533,8 @@
    "target": "0x1ac9db4a2608ba45d6127b1737949b51bb54b7f3",
    "title": "0x1ac9\u2026b7f3",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 32,
    "delta": 0,
    "tvl_usd": null
@@ -4513,8 +4547,8 @@
    "target": "0x16494a80e08bcb9285d87b67149d7b01774d82f8",
    "title": "0x1649\u202682f8",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 43,
    "delta": 0,
    "tvl_usd": null
@@ -4527,8 +4561,8 @@
    "target": "0xb24b143ad6bb5be9559ccc75f34a2261b7456904",
    "title": "0xb24b\u20266904",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 1,
    "delta": 0,
    "tvl_usd": null
@@ -4541,8 +4575,8 @@
    "target": "0x128a800cbc615cc110bff16e475865c67631603a",
    "title": "0x128a\u2026603a",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 31,
    "delta": 0,
    "tvl_usd": null
@@ -4555,8 +4589,8 @@
    "target": "0x5c98b2d892b37c9a1d3b69472bddc172a64cdc09",
    "title": "0x5c98\u2026dc09",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 2,
    "delta": 0,
    "tvl_usd": null
@@ -4569,8 +4603,8 @@
    "target": "0xd01c774d4a66408326bc65728ac5ae5aaf004032",
    "title": "0xd01c\u20264032",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 46,
    "delta": 0,
    "tvl_usd": null
@@ -4583,8 +4617,8 @@
    "target": "0xfe7e25de55e5cbbecccb661f3679f873f72b9b0d",
    "title": "0xfe7e\u20269b0d",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 1,
    "delta": 0,
    "tvl_usd": null
@@ -4597,11 +4631,11 @@
    "target": "0xd42174d3db28b0fa2bd25381c3521b18ae9db490",
    "title": "0xd421\u2026b490",
    "first_seen": "2026-11-27T01:17:04Z",
-   "last_seen": "2026-11-27T07:14:56Z",
-   "times": 15,
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 16,
    "score": 2,
    "delta": 0,
-   "tvl_usd": 53036.936493219786
+   "tvl_usd": 53043.00627233466
   },
   {
    "key": "the independent reader disagrees with the admin-key score, with money behind it|hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109",
@@ -4610,12 +4644,12 @@
    "chain": "Hyperliquid",
    "target": "0x393d0b87ed38fc779fd9611144ae649ba6082109",
    "title": "Kinetiq kHYPE",
-   "first_seen": "2026-11-26T19:18:18Z",
-   "last_seen": "2026-11-27T01:17:04Z",
-   "times": 152,
+   "first_seen": "2026-11-27T13:15:52Z",
+   "last_seen": "2026-11-27T13:15:52Z",
+   "times": 153,
    "score": 4,
    "delta": 0,
-   "tvl_usd": 581986877.6111162
+   "tvl_usd": 615288381.5304255
   },
   {
    "key": "score pushed more than 7 days ago (the oracle marks it stale at 9)|base:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb",

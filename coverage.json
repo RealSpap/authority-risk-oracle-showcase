@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-11-28T01:30:27Z",
+ "generated_utc": "2026-11-28T07:39:14Z",
  "chains": {
   "arbitrum": {
    "oracle": "Arbitrum (Sepolia)",
@@ -88,12 +88,13 @@
    "held_read": 6,
    "pause_answered": 8,
    "roles_read": 8,
-   "admin_safes_nonce_read": 7,
+   "admin_safes_nonce_read": 0,
    "admin_role_probed": 0,
    "blind_spots": [
     "6 contract(s) where no admin slot, owner() or admin() answers: the independent reader cannot classify their admin",
     "paused() or isPaused() answered by 8 of 39 contracts: a pause on the other 31 is not seen, and 'nothing paused' says nothing about them",
     "no pauser, guardian or curator getter answers on 31 of 39 contracts: a change of those hands is not seen there",
+    "no admin Safe nonce read although 8 contract(s) have a Safe in their admin path: a Safe waking up is not seen",
     "no money figure for 13 of 39 contracts (no DefiLlama protocol, no totalAssets() answered): money at risk not computed for them"
    ]
   },
@@ -101,15 +102,15 @@
    "oracle": "Hyperliquid (HyperEVM)",
    "targets": 16,
    "independent_read": {
-    "readable": 2,
-    "unreadable": 4,
+    "readable": 1,
+    "unreadable": 5,
     "native": 10
    },
    "proxies_fingerprinted": 5,
-   "safes": 2,
-   "safes_modules_read": 2,
-   "timelocks_in_admin_path": 0,
-   "timelock_queues_watched": 1,
+   "safes": 0,
+   "safes_modules_read": 0,
+   "timelocks_in_admin_path": 1,
+   "timelock_queues_watched": 0,
    "safe_events": {
     "safes": 5,
     "days": 3.0,
@@ -120,14 +121,15 @@
    "held_read": 0,
    "pause_answered": 0,
    "roles_read": 0,
-   "admin_safes_nonce_read": 1,
-   "admin_role_probed": 1,
+   "admin_safes_nonce_read": 0,
+   "admin_role_probed": 2,
    "blind_spots": [
-    "4 contract(s) where no admin slot, owner() or admin() answers: the independent reader cannot classify their admin",
+    "5 contract(s) where no admin slot, owner() or admin() answers: the independent reader cannot classify their admin",
     "paused() or isPaused() answered by 0 of 16 contracts: a pause on the other 16 is not seen, and 'nothing paused' says nothing about them",
     "no pauser, guardian or curator getter answers on 16 of 16 contracts: a change of those hands is not seen there",
-    "of the unreadable contracts, 1 are AccessControl contracts asked who holds the admin role among the holders already known: a yes proves one holder, never the full list",
+    "of the unreadable contracts, 2 are AccessControl contracts asked who holds the admin role among the holders already known: a yes proves one holder, never the full list",
     "10 native identifier(s) (no code at the address): outside the independent reader's reach, scored by the methodology alone",
+    "1 timelock(s) in admin paths but no timelock queue watched on this chain: queued operations are not seen before they execute",
     "no money figure for 6 of 16 contracts (no DefiLlama protocol, no totalAssets() answered): money at risk not computed for them"
    ]
   },

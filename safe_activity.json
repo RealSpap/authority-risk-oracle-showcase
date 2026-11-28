@@ -1,13 +1,15 @@
 {
- "generated_utc": "2026-11-28T01:17:30Z",
+ "generated_utc": "2026-11-28T07:21:06Z",
  "wake_days": 14,
- "safes": 42,
- "read": 42,
+ "safes": 41,
+ "read": 34,
  "woke": [],
  "changes": [],
  "never_executed": [],
- "stale": 0,
- "unread_chains": [],
+ "stale": 7,
+ "unread_chains": [
+  "ethereum-l1"
+ ],
  "by_safe": {
   "arbitrum:569110bd097c8358": {
    "nonce": 117,
@@ -108,7 +110,9 @@
     "ethereum-l1:0xbeef0c075da5d01112ae5cf34d257074fb5ddb2f"
    ],
    "safe": "ethereum-l1:0x0a0e\u2026f8dd",
-   "never_executed": false
+   "never_executed": false,
+   "stale": true,
+   "stale_since": "2026-11-28T01:17:30Z"
   },
   "ethereum-l1:65143c790d4a5772": {
    "nonce": 32,
@@ -118,7 +122,9 @@
     "ethereum-l1:0x858646372cc42e1a627fce94aa7a7033e7cf075a"
    ],
    "safe": "ethereum-l1:0x369e\u20269111",
-   "never_executed": false
+   "never_executed": false,
+   "stale": true,
+   "stale_since": "2026-11-28T01:17:30Z"
   },
   "ethereum-l1:9f957a8d13d777f4": {
    "nonce": 784,
@@ -129,7 +135,9 @@
     "ethereum-l1:0x2cc440b721d2cafd6d64908d6d8c4acc57f8afc3"
    ],
    "safe": "ethereum-l1:0x3b0a\u20261862",
-   "never_executed": false
+   "never_executed": false,
+   "stale": true,
+   "stale_since": "2026-11-28T01:17:30Z"
   },
   "ethereum-l1:c59526662bce12fe": {
    "nonce": 23,
@@ -140,7 +148,9 @@
     "ethereum-l1:0x49048044d57e1c92a77f79988d21fa8faf74e97e"
    ],
    "safe": "ethereum-l1:0x7bb4\u2026595c",
-   "never_executed": false
+   "never_executed": false,
+   "stale": true,
+   "stale_since": "2026-11-28T01:17:30Z"
   },
   "ethereum-l1:7cdf04dce07e5120": {
    "nonce": 816,
@@ -151,7 +161,9 @@
     "ethereum-l1:0x888888888889758f76e7103c6cbf23abbf58f946"
    ],
    "safe": "ethereum-l1:0x8119\u20266ee1",
-   "never_executed": false
+   "never_executed": false,
+   "stale": true,
+   "stale_since": "2026-11-28T01:17:30Z"
   },
   "ethereum-l1:18c0d155cf0f0269": {
    "nonce": 284,
@@ -162,7 +174,9 @@
     "ethereum-l1:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb"
    ],
    "safe": "ethereum-l1:0xcba2\u20269afa",
-   "never_executed": false
+   "never_executed": false,
+   "stale": true,
+   "stale_since": "2026-11-28T01:17:30Z"
   },
   "ethereum-l1:701af90d53a786de": {
    "nonce": 2214,
@@ -173,18 +187,9 @@
     "ethereum-l1:0xc5f0f7b66764f6ec8c8dff7ba683102295e16409"
    ],
    "safe": "ethereum-l1:0xfa77\u20266a66",
-   "never_executed": false
-  },
-  "hyperliquid:982ff508c289b3fd": {
-   "nonce": 76,
-   "observed_since": "2026-11-26T13:18:05Z",
-   "idle_since": "2026-11-26T13:18:05Z",
-   "governs": [
-    "hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109",
-    "hyperliquid:0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec"
-   ],
-   "safe": "hyperliquid:0x18a8\u2026f8f1",
-   "never_executed": false
+   "never_executed": false,
+   "stale": true,
+   "stale_since": "2026-11-28T01:17:30Z"
   },
   "monad:31e3ad0247904d1a": {
    "nonce": 17,

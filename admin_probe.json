@@ -1,12 +1,20 @@
 {
- "generated_utc": "2026-11-28T01:17:33Z",
- "unreadable_targets": 32,
- "probed_targets": 3,
+ "generated_utc": "2026-11-28T07:21:38Z",
+ "unreadable_targets": 33,
+ "probed_targets": 4,
  "with_holder": [
   "robinhood:0xfd2fd4b046136b540a56c11c75ac679ae7d1db24"
  ],
  "by_target": {
-  "hyperliquid:0xffaa4a3d97fe9107cef8a3f48c069f577ff76cc1": {
+  "hyperliquid:0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec": {
+   "role": "DEFAULT_ADMIN_ROLE",
+   "method": "hasRole(DEFAULT_ADMIN_ROLE, known holder)",
+   "probed": 1,
+   "answered": 1,
+   "holders": [],
+   "complete": false
+  },
+  "hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109": {
    "role": "DEFAULT_ADMIN_ROLE",
    "method": "hasRole(DEFAULT_ADMIN_ROLE, known holder)",
    "probed": 1,

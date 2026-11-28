@@ -1,45 +1,41 @@
 # Authority risk digest, 2026-11-27 22:02 UTC
 
-## Needs a person, 2026-11-27T22:02:19Z: 50 item(s) (priority 1: 40, priority 2: 9, priority 3: 1); oldest 48.0 d
+## Needs a person, 2026-11-27T22:02:19Z: 46 item(s) (priority 1: 36, priority 2: 9, priority 3: 1); oldest 48.0 d
 
-### Overdue: 8 priority-1 item(s) waiting for more than 2 day(s), back in the alarm
-- **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (6.9 d): AddedOwner 0xe016…970B (strato_bridge)
-- **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (6.9 d): AddedOwner 0x8AA3…2f71 (strato_bridge)
-- **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (6.9 d): AddedOwner 0x4008…1CAD (strato_bridge)
-- **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (6.9 d): AddedOwner 0x0584…4CF5 (strato_bridge)
-- **Safe ChangedThreshold** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (6.9 d): ChangedThreshold 3 (strato_bridge)
-- **queued operation executable** arbitrum 0x643E32D5a39C1B0a483BCF2C5c2c55C4b982ac06 (2.1 d): upgrade: upgradeTo(address) via arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract)
+### Overdue: 6 priority-1 item(s) waiting for more than 2 day(s), back in the alarm
+- **Safe AddedOwner** robinhood 0x8c45…f5d5 (6.9 d): AddedOwner 0xe016…970B (strato_bridge)
+- **Safe AddedOwner** robinhood 0x8c45…f5d5 (6.9 d): AddedOwner 0x8AA3…2f71 (strato_bridge)
+- **Safe AddedOwner** robinhood 0x8c45…f5d5 (6.9 d): AddedOwner 0x4008…1CAD (strato_bridge)
+- **Safe AddedOwner** robinhood 0x8c45…f5d5 (6.9 d): AddedOwner 0x0584…4CF5 (strato_bridge)
+- **Safe ChangedThreshold** robinhood 0x8c45…f5d5 (6.9 d): ChangedThreshold 3 (strato_bridge)
 - **queued operation executable** ethereum 0x31BD060f6c0Ce4284Bb30f2C8C27Ca48542347a7 (2.1 d): parameter change: addOracle(address) via Ethena Timelock
-- **queued operation executable** plasma 0x643E32D5a39C1B0a483BCF2C5c2c55C4b982ac06 (2.1 d): upgrade: upgradeTo(address) via plasma timelock 0x4d6c…2346, found by the independent reader (1 tracked contract)
 
-### Something happened: read before trusting the score (40)
-- **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (6.9 d): AddedOwner 0xe016…970B (strato_bridge). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (6.9 d): AddedOwner 0x8AA3…2f71 (strato_bridge). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (6.9 d): AddedOwner 0x4008…1CAD (strato_bridge). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (6.9 d): AddedOwner 0x0584…4CF5 (strato_bridge). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe ChangedThreshold** robinhood 0x8c458F866e603335ef179A63a2528F357732f5d5 (6.9 d): ChangedThreshold 3 (strato_bridge). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **queued operation executable** arbitrum 0x643E32D5a39C1B0a483BCF2C5c2c55C4b982ac06 (2.1 d): upgrade: upgradeTo(address) via arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
+### Something happened: read before trusting the score (36)
+- **Safe AddedOwner** robinhood 0x8c45…f5d5 (6.9 d): AddedOwner 0xe016…970B (strato_bridge). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** robinhood 0x8c45…f5d5 (6.9 d): AddedOwner 0x8AA3…2f71 (strato_bridge). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** robinhood 0x8c45…f5d5 (6.9 d): AddedOwner 0x4008…1CAD (strato_bridge). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** robinhood 0x8c45…f5d5 (6.9 d): AddedOwner 0x0584…4CF5 (strato_bridge). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe ChangedThreshold** robinhood 0x8c45…f5d5 (6.9 d): ChangedThreshold 3 (strato_bridge). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **queued operation executable** ethereum 0x31BD060f6c0Ce4284Bb30f2C8C27Ca48542347a7 (2.1 d): parameter change: addOracle(address) via Ethena Timelock. To do: read the call before it lands. (pending_ops.json)
-- **queued operation executable** plasma 0x643E32D5a39C1B0a483BCF2C5c2c55C4b982ac06 (2.1 d): upgrade: upgradeTo(address) via plasma timelock 0x4d6c…2346, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
 - **Safe AddedOwner** ethereum-l1 0xbbf3f1421D886E9b2c5D716B5192aC998af2012c (1.6 d): AddedOwner 0x4E2f…3799 (compound_v3_pause_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** ethereum-l1 0xbbf3f1421D886E9b2c5D716B5192aC998af2012c (1.6 d): AddedOwner 0xbfeF…0ab2 (compound_v3_pause_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** ethereum-l1 0xbbf3f1421D886E9b2c5D716B5192aC998af2012c (1.6 d): AddedOwner 0x52d4…9888 (compound_v3_pause_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe RemovedOwner** ethereum-l1 0xbbf3f1421D886E9b2c5D716B5192aC998af2012c (1.6 d): RemovedOwner 0xa1bB…2b53 (compound_v3_pause_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **queued operation executable** robinhood 0x14b107CF534239c59571B066cB6497a321Da897C (1.1 d): 0xa5ecb02a via robinhood timelock 0x0da1…001d, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
 - **queued operation executable** ethereum 0x2386DC45AdDed673317eF068992F19421B481F4c (0.6 d): nested timelock: executePayload(address,string,bytes) via ethereum-l1 timelock 0x2386…1f4c, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
-- **Safe AddedOwner** monad 0x9cC876dCb0e99cC040cf5F92880d0Ee9e320CA61 (0.1 d): AddedOwner 0x04bF…cCa5 (euler_pause_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** monad 0x9cC876dCb0e99cC040cf5F92880d0Ee9e320CA61 (0.1 d): AddedOwner 0x297a…E8da (euler_pause_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe AddedOwner** monad 0x9cC876dCb0e99cC040cf5F92880d0Ee9e320CA61 (0.1 d): AddedOwner 0x4597…83f7 (euler_pause_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** monad 0x9cC8…CA61 (0.1 d): AddedOwner 0x04bF…cCa5 (euler_pause_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** monad 0x9cC8…CA61 (0.1 d): AddedOwner 0x297a…E8da (euler_pause_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe AddedOwner** monad 0x9cC8…CA61 (0.1 d): AddedOwner 0x4597…83f7 (euler_pause_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** plasma 0xbe7623D35700700DdC7A92fEe1fe7B0E9E6f1013 (0.1 d): AddedOwner 0x04bF…cCa5 (euler_pause_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** plasma 0xbe7623D35700700DdC7A92fEe1fe7B0E9E6f1013 (0.1 d): AddedOwner 0x297a…E8da (euler_pause_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** plasma 0xbe7623D35700700DdC7A92fEe1fe7B0E9E6f1013 (0.1 d): AddedOwner 0xAc0C…95C4 (euler_pause_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe AddedOwner** robinhood 0x9DB42D3BDA1525963db3B2372C4DAABaf0491A53 (0.1 d): AddedOwner 0x197e…7F99 (orvex). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** monad 0x9cC876dCb0e99cC040cf5F92880d0Ee9e320CA61 (0.1 d): RemovedOwner 0x6dfb…E58e (euler_pause_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** monad 0x9cC876dCb0e99cC040cf5F92880d0Ee9e320CA61 (0.1 d): RemovedOwner 0x7075…672b (euler_pause_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** monad 0x9cC876dCb0e99cC040cf5F92880d0Ee9e320CA61 (0.1 d): RemovedOwner 0x4236…eF60 (euler_pause_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** monad 0x9cC876dCb0e99cC040cf5F92880d0Ee9e320CA61 (0.1 d): RemovedOwner 0x91Ef…90dE (euler_pause_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** monad 0x9cC876dCb0e99cC040cf5F92880d0Ee9e320CA61 (0.1 d): RemovedOwner 0x6901…fc9a (euler_pause_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **Safe RemovedOwner** monad 0x9cC876dCb0e99cC040cf5F92880d0Ee9e320CA61 (0.1 d): RemovedOwner 0x48f4…b51e (euler_pause_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** monad 0x9cC8…CA61 (0.1 d): RemovedOwner 0x6dfb…E58e (euler_pause_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** monad 0x9cC8…CA61 (0.1 d): RemovedOwner 0x7075…672b (euler_pause_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** monad 0x9cC8…CA61 (0.1 d): RemovedOwner 0x4236…eF60 (euler_pause_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** monad 0x9cC8…CA61 (0.1 d): RemovedOwner 0x91Ef…90dE (euler_pause_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** monad 0x9cC8…CA61 (0.1 d): RemovedOwner 0x6901…fc9a (euler_pause_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
+- **Safe RemovedOwner** monad 0x9cC8…CA61 (0.1 d): RemovedOwner 0x48f4…b51e (euler_pause_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe RemovedOwner** plasma 0xbe7623D35700700DdC7A92fEe1fe7B0E9E6f1013 (0.1 d): RemovedOwner 0x6dfb…E58e (euler_pause_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe RemovedOwner** plasma 0xbe7623D35700700DdC7A92fEe1fe7B0E9E6f1013 (0.1 d): RemovedOwner 0x4236…eF60 (euler_pause_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe RemovedOwner** plasma 0xbe7623D35700700DdC7A92fEe1fe7B0E9E6f1013 (0.1 d): RemovedOwner 0x7075…672b (euler_pause_guardian). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
@@ -49,8 +45,6 @@
 - **Safe RemovedOwner** robinhood 0x9DB42D3BDA1525963db3B2372C4DAABaf0491A53 (0.1 d): RemovedOwner 0x0A26…1b1C (orvex). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe RemovedOwner** robinhood 0x9DB42D3BDA1525963db3B2372C4DAABaf0491A53 (0.1 d): RemovedOwner 0x2EC6…331a (orvex). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
 - **Safe RemovedOwner** robinhood 0x9DB42D3BDA1525963db3B2372C4DAABaf0491A53 (0.1 d): RemovedOwner 0x34D4…4faA (orvex). To do: who is the new signer / what changed; then note it in data/digest_acknowledged.json. (safe_changes.json)
-- **queued operation executable** arbitrum 0x51918Bd79C6E5E460783E229Ec018602dAa5Be16 (0.1 d): authority change: updateRole(address,uint256) via arbitrum timelock 0x4d6c…2346, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
-- **queued operation executable** plasma 0x4b8E388710BCeAdBa1C97C8954587BDFB17A6B2f (0.1 d): authority change: updateRole(address,uint256) via plasma timelock 0x4d6c…2346, found by the independent reader (1 tracked contract). To do: read the call before it lands. (pending_ops.json)
 - **methodology changed** hyperliquid  (0.0 d): Hyperliquid (HyperEVM): 0xb595576050 -> 0x77dbff9bd0 on 16 target(s). To do: expected after a release of the scorer; otherwise a push by a key that should not hold the updater role. (methodology.json)
 - **methodology changed** robinhood  (0.0 d): Robinhood Chain: 0xe2625fb9e6 -> 0x6777d52678 on 63 target(s). To do: expected after a release of the scorer; otherwise a push by a key that should not hold the updater role. (methodology.json)
 
@@ -93,15 +87,15 @@
 - plasma: RemovedOwner 0x91Ef…90dE on 0xbe7623D35700700DdC7A92fEe1fe7B0E9E6f1013 (euler_pause_guardian), tx 65c9c8afa03bc11b1710d1a29310c488cdfbc2155b10cd4d01c87871589a7c07
 - plasma: RemovedOwner 0x6901…fc9a on 0xbe7623D35700700DdC7A92fEe1fe7B0E9E6f1013 (euler_pause_guardian), tx 65c9c8afa03bc11b1710d1a29310c488cdfbc2155b10cd4d01c87871589a7c07
 - plasma: RemovedOwner 0x48f4…b51e on 0xbe7623D35700700DdC7A92fEe1fe7B0E9E6f1013 (euler_pause_guardian), tx 65c9c8afa03bc11b1710d1a29310c488cdfbc2155b10cd4d01c87871589a7c07
-- robinhood: ChangedThreshold 3 on 0x8c458F866e603335ef179A63a2528F357732f5d5 (strato_bridge), tx 955b15b7a02ccc77fd1329403acf0aebe42d1e927f7ef0b0af9d88fb18ce5a5d
+- robinhood: ChangedThreshold 3 on 0x8c45…f5d5 (strato_bridge), tx 955b15b7a02ccc77fd1329403acf0aebe42d1e927f7ef0b0af9d88fb18ce5a5d
 - robinhood: RemovedOwner 0x0A26…1b1C on 0x9DB42D3BDA1525963db3B2372C4DAABaf0491A53 (orvex), tx bc7b7355168190315ef21a4ceec53685b20a1dd37ff2d582f239555c8a8302c5
 - robinhood: AddedOwner 0x197e…7F99 on 0x9DB42D3BDA1525963db3B2372C4DAABaf0491A53 (orvex), tx bc7b7355168190315ef21a4ceec53685b20a1dd37ff2d582f239555c8a8302c5
 - robinhood: RemovedOwner 0x2EC6…331a on 0x9DB42D3BDA1525963db3B2372C4DAABaf0491A53 (orvex), tx bc7b7355168190315ef21a4ceec53685b20a1dd37ff2d582f239555c8a8302c5
 - robinhood: RemovedOwner 0x34D4…4faA on 0x9DB42D3BDA1525963db3B2372C4DAABaf0491A53 (orvex), tx bc7b7355168190315ef21a4ceec53685b20a1dd37ff2d582f239555c8a8302c5
-- robinhood: AddedOwner 0xe016…970B on 0x8c458F866e603335ef179A63a2528F357732f5d5 (strato_bridge), tx 955b15b7a02ccc77fd1329403acf0aebe42d1e927f7ef0b0af9d88fb18ce5a5d
-- robinhood: AddedOwner 0x8AA3…2f71 on 0x8c458F866e603335ef179A63a2528F357732f5d5 (strato_bridge), tx 955b15b7a02ccc77fd1329403acf0aebe42d1e927f7ef0b0af9d88fb18ce5a5d
-- robinhood: AddedOwner 0x4008…1CAD on 0x8c458F866e603335ef179A63a2528F357732f5d5 (strato_bridge), tx 955b15b7a02ccc77fd1329403acf0aebe42d1e927f7ef0b0af9d88fb18ce5a5d
-- robinhood: AddedOwner 0x0584…4CF5 on 0x8c458F866e603335ef179A63a2528F357732f5d5 (strato_bridge), tx 955b15b7a02ccc77fd1329403acf0aebe42d1e927f7ef0b0af9d88fb18ce5a5d
+- robinhood: AddedOwner 0xe016…970B on 0x8c45…f5d5 (strato_bridge), tx 955b15b7a02ccc77fd1329403acf0aebe42d1e927f7ef0b0af9d88fb18ce5a5d
+- robinhood: AddedOwner 0x8AA3…2f71 on 0x8c45…f5d5 (strato_bridge), tx 955b15b7a02ccc77fd1329403acf0aebe42d1e927f7ef0b0af9d88fb18ce5a5d
+- robinhood: AddedOwner 0x4008…1CAD on 0x8c45…f5d5 (strato_bridge), tx 955b15b7a02ccc77fd1329403acf0aebe42d1e927f7ef0b0af9d88fb18ce5a5d
+- robinhood: AddedOwner 0x0584…4CF5 on 0x8c45…f5d5 (strato_bridge), tx 955b15b7a02ccc77fd1329403acf0aebe42d1e927f7ef0b0af9d88fb18ce5a5d
 - not attempted: tempo (public RPC returned no control events); monad (public RPC caps eth_getLogs near 100 blocks); hyperliquid (public RPC rate-limits the query)
 
 ## Timelock queue
@@ -137,18 +131,11 @@
 - 16 target(s) added since that snapshot are not fingerprinted yet (informational)
 
 ## Solana Squads v4 multisigs (members, threshold, time lock)
-- [CHANGED] 51smH7pBDKJDgmVnVks3gMWaPQFfmQ5s4Fc223yHcjuH (EXPONENT_MS): time lock (s) 14400 -> 36000
 - [CHANGED] 5JZFPx6Qkg9PAgYMn9wHWirsiEQBfeJuE667MWeRBLPN (REWARD_SUPER_MS): member added 86mC…iMLg (permissions 6); member added CjEM…LZKY (permissions 7); member added FbcW…vHW7 (permissions 7); member removed 6Li1…ueL9; member removed BWyV…1w9C
 - [CHANGED] 5Y93cxqp8rGtjDhxGkehewfhFdxLkrCfPDWookCGeASF (JL_ADMIN_MS, ADMIN_MS): member removed 4Sqa…4Jqp; threshold 5 -> 4
 - [CHANGED] 74QKjjvoSrq2cGqFzzQNN8ox3gomYS1mBwcLsbiYaH8j (ADMIN_MS): member added 6vRh…apm9 (permissions 7); member removed 3Cxn…MEMB; member removed FwZd…YJCX
-- [CHANGED] 7FCPipJWVbPbdHymVt1gJYwKciakkJz5GahdQySemvHk (UPGRADE_MS): member added 6vRh…apm9 (permissions 7); member removed 3Cxn…MEMB; member removed FwZd…YJCX
 - [CHANGED] 7VVPGwvWh37LyhL1tVm6pGUzm3S1u6p17H6ttT9ZEFex (DELEGATE_MS): member added DAk1…KiMf (permissions 7)
-- [CHANGED] 7qipzLR9j1JcvdxE1XJEFgvoyFmgBpgw5hMdHBMPcJtM (DRIFT_MS): member removed 3mpT…qAfS
-- [CHANGED] 8Sr4rQJL2aQT3EL97mbrk1T9VMw4pCS2mxMPp2QBzHQq (LULO_MS): member added 9uyE…Jiuy (permissions 7); member added ENbm…tNmU (permissions 7); member added Ggin…bCjh (permissions 7); member added GqRN…1qYz (permissions 7); member added HKzQ…Yhz5 (permissions 7); member removed 2dMW…AYPT; member removed 2fqV…uiBD; member removed 5c9e…A2A4; member removed 6r76…So9G; member removed 9RDE…g8RZ; member removed At3T…MWTh; member removed BQZ9…JUpk; member removed DvJu…KPZk
-- [CHANGED] AEb1u8FK8EuXLcPtprCy8s4NkqBNoP5mfbuEEop2dJGf (SOLSTICE_MS): member added 5kVC…SK1G (permissions 7); member added GG2k…Ub8E (permissions 7)
-- [CHANGED] BQsDWkL417U4tVE2sDnPks469pKdm6YzFgKH77doiEjF (UPGRADE_MS): member added 6M7B…99HV (permissions 2); member added CjEM…LZKY (permissions 5); member removed 2NfC…7gXb; member removed 9FtD…ZMn4
 - [CHANGED] HvYoRSJdVcj6WRWV57yLu2Vmwh1ccqJRdkCwhNsSfRu4 (ADMIN_MS): time lock (s) 0 -> 21600
-- [CHANGED] J3mJ3wz6xkVUk3T8qHnuAYNxsRH3ixHsryYNZAU2vG8P (JL_UPGRADE_MS, UPGRADE_MS): member added 5tjC…LKzv (permissions 7); member removed 8BR8…rz9H
 
 ## Signer accounts (plain EOA, EIP-7702 delegation, contract)
 - [CHANGED] base:0x8769…5838: eoa -> contract

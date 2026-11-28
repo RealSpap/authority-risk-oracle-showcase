@@ -1,87 +1,15 @@
 {
- "generated_utc": "2026-11-27T22:02:19Z",
- "total": 50,
+ "generated_utc": "2026-11-28T01:30:27Z",
+ "total": 30,
  "by_priority": {
-  "1": 40,
+  "1": 20,
   "2": 9,
   "3": 1
  },
- "overdue": 8,
+ "overdue": 1,
  "overdue_days": 2.0,
- "oldest_days": 48.0,
+ "oldest_days": 48.2,
  "items": [
-  {
-   "priority": 1,
-   "kind": "Safe AddedOwner",
-   "chain": "robinhood",
-   "target": "0x8c458F866e603335ef179A63a2528F357732f5d5",
-   "text": "AddedOwner 0xe016\u2026970B (strato_bridge)",
-   "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
-   "source": "safe_changes.json",
-   "first_seen": "2026-11-21T01:24:53Z",
-   "age_days": 6.9,
-   "overdue": true
-  },
-  {
-   "priority": 1,
-   "kind": "Safe AddedOwner",
-   "chain": "robinhood",
-   "target": "0x8c458F866e603335ef179A63a2528F357732f5d5",
-   "text": "AddedOwner 0x8AA3\u20262f71 (strato_bridge)",
-   "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
-   "source": "safe_changes.json",
-   "first_seen": "2026-11-21T01:24:53Z",
-   "age_days": 6.9,
-   "overdue": true
-  },
-  {
-   "priority": 1,
-   "kind": "Safe AddedOwner",
-   "chain": "robinhood",
-   "target": "0x8c458F866e603335ef179A63a2528F357732f5d5",
-   "text": "AddedOwner 0x4008\u20261CAD (strato_bridge)",
-   "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
-   "source": "safe_changes.json",
-   "first_seen": "2026-11-21T01:24:53Z",
-   "age_days": 6.9,
-   "overdue": true
-  },
-  {
-   "priority": 1,
-   "kind": "Safe AddedOwner",
-   "chain": "robinhood",
-   "target": "0x8c458F866e603335ef179A63a2528F357732f5d5",
-   "text": "AddedOwner 0x0584\u20264CF5 (strato_bridge)",
-   "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
-   "source": "safe_changes.json",
-   "first_seen": "2026-11-21T01:24:53Z",
-   "age_days": 6.9,
-   "overdue": true
-  },
-  {
-   "priority": 1,
-   "kind": "Safe ChangedThreshold",
-   "chain": "robinhood",
-   "target": "0x8c458F866e603335ef179A63a2528F357732f5d5",
-   "text": "ChangedThreshold 3 (strato_bridge)",
-   "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
-   "source": "safe_changes.json",
-   "first_seen": "2026-11-21T01:24:53Z",
-   "age_days": 6.9,
-   "overdue": true
-  },
-  {
-   "priority": 1,
-   "kind": "queued operation executable",
-   "chain": "arbitrum",
-   "target": "0x643E32D5a39C1B0a483BCF2C5c2c55C4b982ac06",
-   "text": "upgrade: upgradeTo(address) via arbitrum timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
-   "todo": "read the call before it lands",
-   "source": "pending_ops.json",
-   "first_seen": "2026-11-25T19:29:53Z",
-   "age_days": 2.1,
-   "overdue": true
-  },
   {
    "priority": 1,
    "kind": "queued operation executable",
@@ -91,19 +19,7 @@
    "todo": "read the call before it lands",
    "source": "pending_ops.json",
    "first_seen": "2026-11-25T19:29:53Z",
-   "age_days": 2.1,
-   "overdue": true
-  },
-  {
-   "priority": 1,
-   "kind": "queued operation executable",
-   "chain": "plasma",
-   "target": "0x643E32D5a39C1B0a483BCF2C5c2c55C4b982ac06",
-   "text": "upgrade: upgradeTo(address) via plasma timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
-   "todo": "read the call before it lands",
-   "source": "pending_ops.json",
-   "first_seen": "2026-11-25T19:29:53Z",
-   "age_days": 2.1,
+   "age_days": 2.3,
    "overdue": true
   },
   {
@@ -115,7 +31,7 @@
    "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
    "source": "safe_changes.json",
    "first_seen": "2026-11-26T07:28:09Z",
-   "age_days": 1.6,
+   "age_days": 1.8,
    "overdue": false
   },
   {
@@ -127,7 +43,7 @@
    "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
    "source": "safe_changes.json",
    "first_seen": "2026-11-26T07:28:09Z",
-   "age_days": 1.6,
+   "age_days": 1.8,
    "overdue": false
   },
   {
@@ -139,7 +55,7 @@
    "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
    "source": "safe_changes.json",
    "first_seen": "2026-11-26T07:28:09Z",
-   "age_days": 1.6,
+   "age_days": 1.8,
    "overdue": false
   },
   {
@@ -151,7 +67,7 @@
    "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
    "source": "safe_changes.json",
    "first_seen": "2026-11-26T07:28:09Z",
-   "age_days": 1.6,
+   "age_days": 1.8,
    "overdue": false
   },
   {
@@ -163,7 +79,7 @@
    "todo": "read the call before it lands",
    "source": "pending_ops.json",
    "first_seen": "2026-11-26T19:29:27Z",
-   "age_days": 1.1,
+   "age_days": 1.3,
    "overdue": false
   },
   {
@@ -175,43 +91,7 @@
    "todo": "read the call before it lands",
    "source": "pending_ops.json",
    "first_seen": "2026-11-27T07:25:34Z",
-   "age_days": 0.6,
-   "overdue": false
-  },
-  {
-   "priority": 1,
-   "kind": "Safe AddedOwner",
-   "chain": "monad",
-   "target": "0x9cC876dCb0e99cC040cf5F92880d0Ee9e320CA61",
-   "text": "AddedOwner 0x04bF\u2026cCa5 (euler_pause_guardian)",
-   "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
-   "source": "safe_changes.json",
-   "first_seen": "2026-11-27T19:27:52Z",
-   "age_days": 0.1,
-   "overdue": false
-  },
-  {
-   "priority": 1,
-   "kind": "Safe AddedOwner",
-   "chain": "monad",
-   "target": "0x9cC876dCb0e99cC040cf5F92880d0Ee9e320CA61",
-   "text": "AddedOwner 0x297a\u2026E8da (euler_pause_guardian)",
-   "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
-   "source": "safe_changes.json",
-   "first_seen": "2026-11-27T19:27:52Z",
-   "age_days": 0.1,
-   "overdue": false
-  },
-  {
-   "priority": 1,
-   "kind": "Safe AddedOwner",
-   "chain": "monad",
-   "target": "0x9cC876dCb0e99cC040cf5F92880d0Ee9e320CA61",
-   "text": "AddedOwner 0x4597\u202683f7 (euler_pause_guardian)",
-   "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
-   "source": "safe_changes.json",
-   "first_seen": "2026-11-27T19:27:52Z",
-   "age_days": 0.1,
+   "age_days": 0.8,
    "overdue": false
   },
   {
@@ -223,7 +103,7 @@
    "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
    "source": "safe_changes.json",
    "first_seen": "2026-11-27T19:27:52Z",
-   "age_days": 0.1,
+   "age_days": 0.3,
    "overdue": false
   },
   {
@@ -235,7 +115,7 @@
    "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
    "source": "safe_changes.json",
    "first_seen": "2026-11-27T19:27:52Z",
-   "age_days": 0.1,
+   "age_days": 0.3,
    "overdue": false
   },
   {
@@ -247,7 +127,7 @@
    "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
    "source": "safe_changes.json",
    "first_seen": "2026-11-27T19:27:52Z",
-   "age_days": 0.1,
+   "age_days": 0.3,
    "overdue": false
   },
   {
@@ -259,79 +139,7 @@
    "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
    "source": "safe_changes.json",
    "first_seen": "2026-11-27T19:27:52Z",
-   "age_days": 0.1,
-   "overdue": false
-  },
-  {
-   "priority": 1,
-   "kind": "Safe RemovedOwner",
-   "chain": "monad",
-   "target": "0x9cC876dCb0e99cC040cf5F92880d0Ee9e320CA61",
-   "text": "RemovedOwner 0x6dfb\u2026E58e (euler_pause_guardian)",
-   "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
-   "source": "safe_changes.json",
-   "first_seen": "2026-11-27T19:27:52Z",
-   "age_days": 0.1,
-   "overdue": false
-  },
-  {
-   "priority": 1,
-   "kind": "Safe RemovedOwner",
-   "chain": "monad",
-   "target": "0x9cC876dCb0e99cC040cf5F92880d0Ee9e320CA61",
-   "text": "RemovedOwner 0x7075\u2026672b (euler_pause_guardian)",
-   "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
-   "source": "safe_changes.json",
-   "first_seen": "2026-11-27T19:27:52Z",
-   "age_days": 0.1,
-   "overdue": false
-  },
-  {
-   "priority": 1,
-   "kind": "Safe RemovedOwner",
-   "chain": "monad",
-   "target": "0x9cC876dCb0e99cC040cf5F92880d0Ee9e320CA61",
-   "text": "RemovedOwner 0x4236\u2026eF60 (euler_pause_guardian)",
-   "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
-   "source": "safe_changes.json",
-   "first_seen": "2026-11-27T19:27:52Z",
-   "age_days": 0.1,
-   "overdue": false
-  },
-  {
-   "priority": 1,
-   "kind": "Safe RemovedOwner",
-   "chain": "monad",
-   "target": "0x9cC876dCb0e99cC040cf5F92880d0Ee9e320CA61",
-   "text": "RemovedOwner 0x91Ef\u202690dE (euler_pause_guardian)",
-   "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
-   "source": "safe_changes.json",
-   "first_seen": "2026-11-27T19:27:52Z",
-   "age_days": 0.1,
-   "overdue": false
-  },
-  {
-   "priority": 1,
-   "kind": "Safe RemovedOwner",
-   "chain": "monad",
-   "target": "0x9cC876dCb0e99cC040cf5F92880d0Ee9e320CA61",
-   "text": "RemovedOwner 0x6901\u2026fc9a (euler_pause_guardian)",
-   "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
-   "source": "safe_changes.json",
-   "first_seen": "2026-11-27T19:27:52Z",
-   "age_days": 0.1,
-   "overdue": false
-  },
-  {
-   "priority": 1,
-   "kind": "Safe RemovedOwner",
-   "chain": "monad",
-   "target": "0x9cC876dCb0e99cC040cf5F92880d0Ee9e320CA61",
-   "text": "RemovedOwner 0x48f4\u2026b51e (euler_pause_guardian)",
-   "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
-   "source": "safe_changes.json",
-   "first_seen": "2026-11-27T19:27:52Z",
-   "age_days": 0.1,
+   "age_days": 0.3,
    "overdue": false
   },
   {
@@ -343,7 +151,7 @@
    "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
    "source": "safe_changes.json",
    "first_seen": "2026-11-27T19:27:52Z",
-   "age_days": 0.1,
+   "age_days": 0.3,
    "overdue": false
   },
   {
@@ -355,7 +163,7 @@
    "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
    "source": "safe_changes.json",
    "first_seen": "2026-11-27T19:27:52Z",
-   "age_days": 0.1,
+   "age_days": 0.3,
    "overdue": false
   },
   {
@@ -367,7 +175,7 @@
    "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
    "source": "safe_changes.json",
    "first_seen": "2026-11-27T19:27:52Z",
-   "age_days": 0.1,
+   "age_days": 0.3,
    "overdue": false
   },
   {
@@ -379,7 +187,7 @@
    "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
    "source": "safe_changes.json",
    "first_seen": "2026-11-27T19:27:52Z",
-   "age_days": 0.1,
+   "age_days": 0.3,
    "overdue": false
   },
   {
@@ -391,7 +199,7 @@
    "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
    "source": "safe_changes.json",
    "first_seen": "2026-11-27T19:27:52Z",
-   "age_days": 0.1,
+   "age_days": 0.3,
    "overdue": false
   },
   {
@@ -403,7 +211,7 @@
    "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
    "source": "safe_changes.json",
    "first_seen": "2026-11-27T19:27:52Z",
-   "age_days": 0.1,
+   "age_days": 0.3,
    "overdue": false
   },
   {
@@ -415,7 +223,7 @@
    "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
    "source": "safe_changes.json",
    "first_seen": "2026-11-27T19:27:52Z",
-   "age_days": 0.1,
+   "age_days": 0.3,
    "overdue": false
   },
   {
@@ -427,7 +235,7 @@
    "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
    "source": "safe_changes.json",
    "first_seen": "2026-11-27T19:27:52Z",
-   "age_days": 0.1,
+   "age_days": 0.3,
    "overdue": false
   },
   {
@@ -439,55 +247,7 @@
    "todo": "who is the new signer / what changed; then note it in data/digest_acknowledged.json",
    "source": "safe_changes.json",
    "first_seen": "2026-11-27T19:27:52Z",
-   "age_days": 0.1,
-   "overdue": false
-  },
-  {
-   "priority": 1,
-   "kind": "queued operation executable",
-   "chain": "arbitrum",
-   "target": "0x51918Bd79C6E5E460783E229Ec018602dAa5Be16",
-   "text": "authority change: updateRole(address,uint256) via arbitrum timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
-   "todo": "read the call before it lands",
-   "source": "pending_ops.json",
-   "first_seen": "2026-11-27T19:27:52Z",
-   "age_days": 0.1,
-   "overdue": false
-  },
-  {
-   "priority": 1,
-   "kind": "queued operation executable",
-   "chain": "plasma",
-   "target": "0x4b8E388710BCeAdBa1C97C8954587BDFB17A6B2f",
-   "text": "authority change: updateRole(address,uint256) via plasma timelock 0x4d6c\u20262346, found by the independent reader (1 tracked contract)",
-   "todo": "read the call before it lands",
-   "source": "pending_ops.json",
-   "first_seen": "2026-11-27T19:27:52Z",
-   "age_days": 0.1,
-   "overdue": false
-  },
-  {
-   "priority": 1,
-   "kind": "methodology changed",
-   "chain": "hyperliquid",
-   "target": null,
-   "text": "Hyperliquid (HyperEVM): 0xb595576050 -> 0x77dbff9bd0 on 16 target(s)",
-   "todo": "expected after a release of the scorer; otherwise a push by a key that should not hold the updater role",
-   "source": "methodology.json",
-   "first_seen": "2026-11-27T22:02:19Z",
-   "age_days": 0.0,
-   "overdue": false
-  },
-  {
-   "priority": 1,
-   "kind": "methodology changed",
-   "chain": "robinhood",
-   "target": null,
-   "text": "Robinhood Chain: 0xe2625fb9e6 -> 0x6777d52678 on 63 target(s)",
-   "todo": "expected after a release of the scorer; otherwise a push by a key that should not hold the updater role",
-   "source": "methodology.json",
-   "first_seen": "2026-11-27T22:02:19Z",
-   "age_days": 0.0,
+   "age_days": 0.3,
    "overdue": false
   },
   {
@@ -499,7 +259,7 @@
    "todo": "say what this guard checks and who can change it",
    "source": "second_opinion.json guard_detail",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 48.0,
+   "age_days": 48.2,
    "overdue": false
   },
   {
@@ -511,7 +271,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 48.0,
+   "age_days": 48.2,
    "overdue": false
   },
   {
@@ -523,7 +283,7 @@
    "todo": "find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen",
    "source": "pending_ops.json",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 48.0,
+   "age_days": 48.2,
    "overdue": false
   },
   {
@@ -535,7 +295,7 @@
    "todo": "find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen",
    "source": "pending_ops.json",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 48.0,
+   "age_days": 48.2,
    "overdue": false
   },
   {
@@ -547,7 +307,7 @@
    "todo": "find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen",
    "source": "pending_ops.json",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 48.0,
+   "age_days": 48.2,
    "overdue": false
   },
   {
@@ -559,7 +319,7 @@
    "todo": "find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen",
    "source": "pending_ops.json",
    "first_seen": "2026-10-17T19:07:19Z",
-   "age_days": 41.1,
+   "age_days": 41.3,
    "overdue": false
   },
   {
@@ -571,7 +331,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-11-26T13:30:51Z",
-   "age_days": 1.4,
+   "age_days": 1.5,
    "overdue": false
   },
   {
@@ -583,7 +343,7 @@
    "todo": "review which role the scorer weighs; then either fix the score or write the note in data/second_opinion_acknowledged.json",
    "source": "second_opinion.json disagreements",
    "first_seen": "2026-11-27T13:26:24Z",
-   "age_days": 0.4,
+   "age_days": 0.5,
    "overdue": false
   },
   {
@@ -595,7 +355,7 @@
    "todo": "find why the queue cannot be read (family getter, RPC range); until then queued operations there are not seen",
    "source": "pending_ops.json",
    "first_seen": "2026-11-27T13:26:24Z",
-   "age_days": 0.4,
+   "age_days": 0.5,
    "overdue": false
   },
   {
@@ -607,7 +367,7 @@
    "todo": "compare with the published admin-key score; holders cannot be listed on this contract",
    "source": "admin_probe.json",
    "first_seen": "2026-10-10T21:24:57Z",
-   "age_days": 48.0,
+   "age_days": 48.2,
    "overdue": false
   }
  ],

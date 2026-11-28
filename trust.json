@@ -1,33 +1,33 @@
 {
  "schemaVersion": 1,
- "generated_utc": "2026-11-28T07:39:15Z",
+ "generated_utc": "2026-11-28T13:34:33Z",
  "rule_version": "1",
  "rule": "(version 1). For each target, every reason that applies is listed with its dimension, a state and an effect. A dimension takes the worst state\nof its reasons. For the status, a reason with effect \"decides\" counts for the state it carries, one with effect \"degrades\" counts for PARTIAL at most, one with\neffect \"info\" for nothing. The status is the first line that matches, from the top:\n\n  UNAVAILABLE  a dimension is unavailable: the oracle holding the target was not read this run, or the trust computation itself failed (trust_not_computed).\n  DISPUTED     a dimension is disputed: an open public dispute, or the independent reader disagrees and nobody has reviewed it.\n  STALE        a dimension is stale: the on-chain score is stale, a pause or Safe-activity state has not been readable for 3 days or more (or for a time that\n               is not known), the Watch run itself is older than 8 hours, the run or one of its input files is dated more than 10 minutes after the\n               present time (an age that is negative says nothing about now), or the independent reader's file is from an earlier run than the Watch's.\n  UNVERIFIED   the independent reader did not read this target (no record, unreadable, or its input file missing), there is nothing to read\n               independently (a native entity), or the score is dated later than the block it was read at (its staleness can never show).\n  PARTIAL      something was checked and something was not: an incomplete reading (modules or admin members not all read, signers not classified, an admin\n               the reader cannot contradict: a contract it did not resolve, a program-derived address), a method that differs or is fixed by decision, an\n               alert not delivered, an unsigned run, a signing key that is not pinned (or cannot be compared), a broken journal, an input file that could not\n               be read or is from an earlier run; the reasons say what.\n  VERIFIED     none of the above. It means the checks listed here passed: not that the contract is safe, and not that the score is right.\n\nA reason whose effect is \"info\" is listed and sets its dimension's state, but never moves the status (a contract with no pause getter, money that no\nsource figures). The eight dimensions: reading, coverage, method, signature, journal, notification, financial_exposure, surveillance.\nUnknown is never ok: an input that could not be read puts its dimension in \"unverified\", not in \"ok\".\n\nWHEN IT IS COMPUTED. trust.json is recomputed only when the Watch runs, right after the files of the run are written. If the Watch stops, the file that stays\npublished keeps its statuses: the rule cannot see its own silence. A consumer must compare `generated_utc` to the present time and decide how old is too old for its use (the Watch is scheduled every 6 hours, but GitHub can start a\nrun hours late, so a file a few hours old can still be the latest one).",
  "rule_sha256": "26c6a093628a5caa399392e83ec9d8c01604fd5af4dc7b585bad91e43eed64b2",
  "error": null,
  "targets": 203,
  "counts": {
-  "VERIFIED": 90,
-  "PARTIAL": 52,
+  "VERIFIED": 99,
+  "PARTIAL": 44,
   "STALE": 1,
-  "DISPUTED": 1,
-  "UNVERIFIED": 59,
+  "DISPUTED": 3,
+  "UNVERIFIED": 56,
   "UNAVAILABLE": 0
  },
  "dimension_counts": {
   "reading": {
-   "ok": 120,
+   "ok": 121,
    "not_applicable": 0,
    "partial": 22,
-   "unverified": 59,
+   "unverified": 56,
    "stale": 1,
-   "disputed": 1,
+   "disputed": 3,
    "unavailable": 0
   },
   "coverage": {
-   "ok": 171,
+   "ok": 181,
    "not_applicable": 0,
-   "partial": 32,
+   "partial": 22,
    "unverified": 0,
    "stale": 0,
    "disputed": 0,
@@ -93,7 +93,7 @@
   "signature_key": "pinned",
   "journal": "ok",
   "alert_channels": 1,
-  "watch_run_utc": "2026-11-28T07:00:49Z",
+  "watch_run_utc": "2026-11-28T13:00:55Z",
   "inputs_unread": []
  },
  "by_target": {
@@ -1121,17 +1121,11 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "none of the seven role getters is recognised on this contract"
-    },
-    {
-     "code": "state_stale_safe_activity",
-     "dimension": "coverage",
-     "effect": "degrades",
-     "detail": "the Safe activity was kept from an earlier run (0.3 days)"
     }
    ],
    "dimensions": {
     "reading": "stale",
-    "coverage": "partial",
+    "coverage": "ok",
     "method": "partial",
     "signature": "ok",
     "journal": "ok",
@@ -1408,7 +1402,7 @@
    "retry_may_help": false
   },
   "ethereum-l1:0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb": {
-   "status": "PARTIAL",
+   "status": "VERIFIED",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -1427,17 +1421,11 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "none of the seven role getters is recognised on this contract"
-    },
-    {
-     "code": "state_stale_safe_activity",
-     "dimension": "coverage",
-     "effect": "degrades",
-     "detail": "the Safe activity was kept from an earlier run (0.3 days)"
     }
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "partial",
+    "coverage": "ok",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
@@ -1445,7 +1433,7 @@
     "financial_exposure": "ok",
     "surveillance": "ok"
    },
-   "retry_may_help": true
+   "retry_may_help": false
   },
   "ethereum-l1:0x2260fac5e5542a773aa44fbcfedf7c193bc2c599": {
    "status": "VERIFIED",
@@ -1550,7 +1538,7 @@
    "retry_may_help": false
   },
   "ethereum-l1:0x858646372cc42e1a627fce94aa7a7033e7cf075a": {
-   "status": "PARTIAL",
+   "status": "VERIFIED",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -1563,17 +1551,11 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "none of the seven role getters is recognised on this contract"
-    },
-    {
-     "code": "state_stale_safe_activity",
-     "dimension": "coverage",
-     "effect": "degrades",
-     "detail": "the Safe activity was kept from an earlier run (0.3 days)"
     }
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "partial",
+    "coverage": "ok",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
@@ -1581,7 +1563,7 @@
     "financial_exposure": "ok",
     "surveillance": "ok"
    },
-   "retry_may_help": true
+   "retry_may_help": false
   },
   "ethereum-l1:0x6a8cbed756804b16e05e741edabd5cb544ae21bf": {
    "status": "PARTIAL",
@@ -1794,7 +1776,7 @@
    "retry_may_help": false
   },
   "ethereum-l1:0xbeef047a543e45807105e51a8bbefcc5950fcfba": {
-   "status": "PARTIAL",
+   "status": "VERIFIED",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -1807,17 +1789,11 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
-    },
-    {
-     "code": "state_stale_safe_activity",
-     "dimension": "coverage",
-     "effect": "degrades",
-     "detail": "the Safe activity was kept from an earlier run (0.3 days)"
     }
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "partial",
+    "coverage": "ok",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
@@ -1825,10 +1801,10 @@
     "financial_exposure": "ok",
     "surveillance": "ok"
    },
-   "retry_may_help": true
+   "retry_may_help": false
   },
   "ethereum-l1:0xbeef01735c132ada46aa9aa4c54623caa92a64cb": {
-   "status": "PARTIAL",
+   "status": "VERIFIED",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -1841,17 +1817,11 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
-    },
-    {
-     "code": "state_stale_safe_activity",
-     "dimension": "coverage",
-     "effect": "degrades",
-     "detail": "the Safe activity was kept from an earlier run (0.3 days)"
     }
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "partial",
+    "coverage": "ok",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
@@ -1859,10 +1829,10 @@
     "financial_exposure": "ok",
     "surveillance": "ok"
    },
-   "retry_may_help": true
+   "retry_may_help": false
   },
   "ethereum-l1:0xbeef088055857739c12cd3765f20b7679def0f51": {
-   "status": "PARTIAL",
+   "status": "VERIFIED",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -1875,17 +1845,11 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
-    },
-    {
-     "code": "state_stale_safe_activity",
-     "dimension": "coverage",
-     "effect": "degrades",
-     "detail": "the Safe activity was kept from an earlier run (0.3 days)"
     }
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "partial",
+    "coverage": "ok",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
@@ -1893,10 +1857,10 @@
     "financial_exposure": "ok",
     "surveillance": "ok"
    },
-   "retry_may_help": true
+   "retry_may_help": false
   },
   "ethereum-l1:0xbeef0c075da5d01112ae5cf34d257074fb5ddb2f": {
-   "status": "PARTIAL",
+   "status": "VERIFIED",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -1909,17 +1873,11 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
-    },
-    {
-     "code": "state_stale_safe_activity",
-     "dimension": "coverage",
-     "effect": "degrades",
-     "detail": "the Safe activity was kept from an earlier run (0.3 days)"
     }
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "partial",
+    "coverage": "ok",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
@@ -1927,7 +1885,7 @@
     "financial_exposure": "ok",
     "surveillance": "ok"
    },
-   "retry_may_help": true
+   "retry_may_help": false
   },
   "ethereum-l1:0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2": {
    "status": "UNVERIFIED",
@@ -2170,7 +2128,7 @@
    "retry_may_help": false
   },
   "ethereum-l1:0xc5f0f7b66764f6ec8c8dff7ba683102295e16409": {
-   "status": "PARTIAL",
+   "status": "VERIFIED",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -2189,17 +2147,11 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "none of the seven role getters is recognised on this contract"
-    },
-    {
-     "code": "state_stale_safe_activity",
-     "dimension": "coverage",
-     "effect": "degrades",
-     "detail": "the Safe activity was kept from an earlier run (0.3 days)"
     }
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "partial",
+    "coverage": "ok",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
@@ -2207,7 +2159,7 @@
     "financial_exposure": "unverified",
     "surveillance": "ok"
    },
-   "retry_may_help": true
+   "retry_may_help": false
   },
   "ethereum-l1:0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a": {
    "status": "PARTIAL",
@@ -2256,7 +2208,7 @@
    "retry_may_help": false
   },
   "ethereum-l1:0x888888888889758f76e7103c6cbf23abbf58f946": {
-   "status": "PARTIAL",
+   "status": "VERIFIED",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -2281,17 +2233,11 @@
      "dimension": "coverage",
      "effect": "info",
      "detail": "none of the seven role getters is recognised on this contract"
-    },
-    {
-     "code": "state_stale_safe_activity",
-     "dimension": "coverage",
-     "effect": "degrades",
-     "detail": "the Safe activity was kept from an earlier run (0.3 days)"
     }
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "partial",
+    "coverage": "ok",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
@@ -2299,7 +2245,7 @@
     "financial_exposure": "unverified",
     "surveillance": "ok"
    },
-   "retry_may_help": true
+   "retry_may_help": false
   },
   "ethereum-l1:0x08ae3be30958cdd1847ec58fffd4c451a87fdf01": {
    "status": "UNVERIFIED",
@@ -2388,7 +2334,7 @@
    "retry_may_help": false
   },
   "ethereum-l1:0x49048044d57e1c92a77f79988d21fa8faf74e97e": {
-   "status": "PARTIAL",
+   "status": "VERIFIED",
    "reasons": [
     {
      "code": "method_version_unregistered",
@@ -2401,17 +2347,11 @@
      "dimension": "financial_exposure",
      "effect": "info",
      "detail": "no source figures the money behind this contract"
-    },
-    {
-     "code": "state_stale_safe_activity",
-     "dimension": "coverage",
-     "effect": "degrades",
-     "detail": "the Safe activity was kept from an earlier run (0.3 days)"
     }
    ],
    "dimensions": {
     "reading": "ok",
-    "coverage": "partial",
+    "coverage": "ok",
     "method": "ok",
     "signature": "ok",
     "journal": "ok",
@@ -2419,7 +2359,7 @@
     "financial_exposure": "unverified",
     "surveillance": "ok"
    },
-   "retry_may_help": true
+   "retry_may_help": false
   },
   "hyperliquid:0xea394cd63ca3a5c8a130bb2b955cc71c22e5ea6c": {
    "status": "UNVERIFIED",
@@ -2676,14 +2616,8 @@
    "retry_may_help": false
   },
   "hyperliquid:0x71f0019cc7fa79e4f42587fb7b9a817d8d2429ec": {
-   "status": "UNVERIFIED",
+   "status": "DISPUTED",
    "reasons": [
-    {
-     "code": "independent_read_unreadable",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "holder probes not all answered (RPC)"
-    },
     {
      "code": "method_version_unregistered",
      "dimension": "method",
@@ -2703,6 +2637,12 @@
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
     },
     {
+     "code": "reader_disagrees",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the score says one key does everything (10), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisi"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -2710,7 +2650,7 @@
     }
    ],
    "dimensions": {
-    "reading": "unverified",
+    "reading": "disputed",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -2820,14 +2760,8 @@
    "retry_may_help": false
   },
   "hyperliquid:0x393d0b87ed38fc779fd9611144ae649ba6082109": {
-   "status": "UNVERIFIED",
+   "status": "DISPUTED",
    "reasons": [
-    {
-     "code": "independent_read_unreadable",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "holder probes not all answered (RPC)"
-    },
     {
      "code": "method_version_unregistered",
      "dimension": "method",
@@ -2847,6 +2781,12 @@
      "detail": "no pause reading for this contract: it has no paused() / isPaused(), or the RPC did not answer for it (the reader cannot tell the two apart)"
     },
     {
+     "code": "reader_disagrees",
+     "dimension": "reading",
+     "effect": "decides",
+     "detail": "the score says one key does everything (10), the live read finds a Safe 4-of-8 via EIP-1967 admin -> ProxyAdmin owner(); the multisig score says no real multisi"
+    },
+    {
      "code": "side_roles_not_covered",
      "dimension": "coverage",
      "effect": "info",
@@ -2854,7 +2794,7 @@
     }
    ],
    "dimensions": {
-    "reading": "unverified",
+    "reading": "disputed",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -3096,14 +3036,8 @@
    "retry_may_help": false
   },
   "hyperliquid:0x72c98246a98bfe64022a3190e7710e157497170c": {
-   "status": "UNVERIFIED",
+   "status": "PARTIAL",
    "reasons": [
-    {
-     "code": "independent_read_unreadable",
-     "dimension": "reading",
-     "effect": "decides",
-     "detail": "holder probes not all answered (RPC)"
-    },
     {
      "code": "method_version_unregistered",
      "dimension": "method",
@@ -3130,7 +3064,7 @@
     }
    ],
    "dimensions": {
-    "reading": "unverified",
+    "reading": "ok",
     "coverage": "ok",
     "method": "ok",
     "signature": "ok",
@@ -3139,7 +3073,7 @@
     "financial_exposure": "ok",
     "surveillance": "partial"
    },
-   "retry_may_help": false
+   "retry_may_help": true
   },
   "hyperliquid:0xffaa4a3d97fe9107cef8a3f48c069f577ff76cc1": {
    "status": "PARTIAL",
